@@ -17,6 +17,9 @@
 /favicons/*
   Cache-Control: public, max-age=604800
 
+/img/*
+  Cache-Control: public, max-age=604800
+
 # Aggressive caching for fingerprinted assets (Astro build outputs to /assets/)
 # Safe for static mode as files are hashed and immutable until rebuild
 # 1 year (31556952 seconds)
