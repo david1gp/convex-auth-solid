@@ -1,0 +1,42 @@
+convex-auth.dev {
+	import shared_config_simple
+	header {
+		Routed "solid"
+	}
+	reverse_proxy localhost:3016
+}
+
+dist.convex-auth.dev {
+	import shared_config_web
+	import shared_config_caching
+	header {
+		Routed "dist"
+	}
+	root * /home/david/Coding/adaptive-convex-auth/public
+	file_server
+}
+
+convex.convex-auth.dev {
+	import shared_config_simple
+	header {
+		Routed "convex"
+	}
+	reverse_proxy localhost:3017
+}
+
+api.convex-auth.dev {
+	import shared_config_simple
+	header {
+		Routed "api"
+	}
+	reverse_proxy localhost:3018
+}
+
+dash.convex-auth.dev {
+	import shared_config_simple
+	header {
+		Routed "dash"
+	}
+	reverse_proxy localhost:3019
+	# reverse_proxy localhost:6791
+}
