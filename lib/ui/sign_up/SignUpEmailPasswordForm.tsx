@@ -27,21 +27,6 @@ interface SignUpEmailPasswordFormProps extends MayHaveClass {
   onSubmit: (values: SignUpFormData) => void
 }
 
-const validateField = (field: keyof SignUpFormData, value: string | boolean) => {
-  let schema
-  if (field === "name") {
-    schema = signUpNameSchema
-  } else if (field === "email") {
-    schema = emailSchema
-  } else if (field === "password") {
-    schema = passwordSchema
-  } else if (field === "terms") {
-    schema = signUpTermsSchema
-    return v.safeParse(schema, value as boolean)
-  }
-  return v.safeParse(schema!, value as string)
-}
-
 export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
   const state = createSignUpUiState()
 
@@ -127,66 +112,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
 
   return (
     <form onSubmit={handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-6", p.class)}>
-      <For each={fieldNames}>
-        {(field) => {
-          if (field === "terms") {
-            return (
-              <Checkbox
-                id="terms"
-                checked={state.terms.get()}
-                onChange={(checked) => {
-                  state.terms.set(checked)
-                  validateOnChange("terms")(checked)
-                }}
-              >
-                <AuthLegalAgree variant={authLegalAgreeVariant.signUp} />
-                <Show when={errors.terms.get()}>
-                  <span id="terms-error" class="text-red-500 block">
-                    {errors.terms.get()}
-                  </span>
-                </Show>
-              </Checkbox>
-            )
-          }
-
-          const isRequired = true
-          const placeholder = `${field.charAt(0).toUpperCase() + field.slice(1)}`
-          const labelText = field === "email" ? "Email" : field === "name" ? "Name" : "Password"
-          const type = field === "password" ? "password" : "text"
-          const valueSignal = field === "name" ? state.name : field === "email" ? state.email : state.password
-          const autoComplete = field === "password" ? "new-password" : "name"
-
-          const debouncedValidate = validateOnChange(field)
-
-          return (
-            <div class="flex flex-col gap-2">
-              <Label for={field} class={isRequired ? "flex items-center gap-1" : ""}>
-                {labelText}
-                {isRequired && <LabelAsterix />}
-              </Label>
-              <InputS
-                id={field}
-                name={field}
-                type={type}
-                autocomplete={autoComplete}
-                placeholder={placeholder}
-                valueSignal={valueSignal}
-                class={classMerge(
-                  "",
-                  errors[field as keyof typeof errors].get() && "border-destructive focus-visible:ring-destructive",
-                )}
-                onInput={(e) => {
-                  valueSignal.set(e.currentTarget.value)
-                  debouncedValidate(e.currentTarget.value)
-                }}
-              />
-              <Show when={errors[field as keyof typeof errors].get()}>
-                <p class="text-destructive">{errors[field as keyof typeof errors].get()}</p>
-              </Show>
-            </div>
-          )
-        }}
-      </For>
+      <For each={fieldNames}>{(field) => FieldSwitch(field, state, errors, validateOnChange)}</For>
 
       <Button
         type="submit"
@@ -198,5 +124,92 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         {state.isSubmitting.get() ? "Signing up..." : "Sign up"}
       </Button>
     </form>
+  )
+}
+
+function validateField(field: keyof SignUpFormData, value: string | boolean) {
+  let schema
+  if (field === "name") {
+    schema = signUpNameSchema
+  } else if (field === "email") {
+    schema = emailSchema
+  } else if (field === "password") {
+    schema = passwordSchema
+  } else if (field === "terms") {
+    schema = signUpTermsSchema
+    return v.safeParse(schema, value as boolean)
+  }
+  return v.safeParse(schema!, value as string)
+}
+
+function FieldSwitch(
+  field: keyof SignUpFormData,
+  state: ReturnType<typeof createSignUpUiState>,
+  errors: { [K in keyof SignUpFormData]: { get: () => string; set: (value: string) => void } },
+  validateOnChange: (field: keyof SignUpFormData) => (value: string | boolean) => void,
+) {
+  if (field === "terms") {
+    return FieldSwitchTerms(state, errors, validateOnChange)
+  }
+
+  const isRequired = true
+  const placeholder = `${field.charAt(0).toUpperCase() + field.slice(1)}`
+  const labelText = field === "email" ? "Email" : field === "name" ? "Name" : "Password"
+  const type = field === "password" ? "password" : "text"
+  const valueSignal = field === "name" ? state.name : field === "email" ? state.email : state.password
+  const autoComplete = field === "password" ? "new-password" : "name"
+
+  const debouncedValidate = validateOnChange(field)
+
+  return (
+    <div class="flex flex-col gap-2">
+      <Label for={field} class={isRequired ? "flex items-center gap-1" : ""}>
+        {labelText}
+        {isRequired && <LabelAsterix />}
+      </Label>
+      <InputS
+        id={field}
+        name={field}
+        type={type}
+        autocomplete={autoComplete}
+        placeholder={placeholder}
+        valueSignal={valueSignal}
+        class={classMerge(
+          "",
+          errors[field as keyof typeof errors].get() && "border-destructive focus-visible:ring-destructive",
+        )}
+        onInput={(e) => {
+          valueSignal.set(e.currentTarget.value)
+          debouncedValidate(e.currentTarget.value)
+        }}
+      />
+      <Show when={errors[field as keyof typeof errors].get()}>
+        <p class="text-destructive">{errors[field as keyof typeof errors].get()}</p>
+      </Show>
+    </div>
+  )
+}
+
+function FieldSwitchTerms(
+  state: ReturnType<typeof createSignUpUiState>,
+  errors: { [K in keyof SignUpFormData]: { get: () => string; set: (value: string) => void } },
+  validateOnChange: (field: keyof SignUpFormData) => (value: string | boolean) => void,
+) {
+  return (
+    <Checkbox
+      id="terms"
+      checked={state.terms.get()}
+      onChange={(checked) => {
+        state.terms.set(checked)
+        validateOnChange("terms")(checked)
+      }}
+    >
+      <AuthLegalAgree variant={authLegalAgreeVariant.signUp} />
+      <Show when={errors.terms.get()}>
+        <span id="terms-error" class="text-red-500 block">
+          {errors.terms.get()}
+        </span>
+      </Show>
+    </Checkbox>
   )
 }
