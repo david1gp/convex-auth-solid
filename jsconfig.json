@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@convex/*": ["./convex/*"],
+      "~auth/*": ["./lib/*"],
+      "~utils/*": ["./node_modules/@adaptive-sm/utils/dist/*"],
+      "~ui/*": ["./node_modules/@adaptive-sm/solid-ui/dist/*"]
+    }
+  },
+  "include": ["src", "lib", "convex", "postcss.config.cjs"]
+}

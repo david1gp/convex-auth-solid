@@ -1,0 +1,101 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    //
+    // dom
+    //
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    //
+    // performance
+    //
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
+    //
+    // my configs
+    //
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": true,
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "moduleDetection": "force",
+    "noUncheckedSideEffectImports": true,
+    //
+    // absolute import paths
+    //
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@convex/*": [
+        "./convex/*"
+      ],
+      "~auth/*": [
+        "./lib/*"
+      ],
+      "~utils/*": [
+        "./node_modules/@adaptive-sm/utils/dist/*"
+      ],
+      "~ui/*": [
+        "./node_modules/@adaptive-sm/solid-ui/dist/*"
+      ]
+    },
+    //
+    // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
+    //
+    "verbatimModuleSyntax": true,
+    //
+    // https://devblogs.microsoft.com/typescript/announcing-typescript-5-8/#the---erasablesyntaxonly-option
+    //
+    "erasableSyntaxOnly": true,
+    //
+    // code quality settings
+    //
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "convex",
+    "src",
+    "test",
+    "postcss.config.cjs"
+  ],
+  "exclude": [
+    ".github",
+    ".vscode",
+    "build",
+    "dist",
+    "export",
+    "out",
+    "data",
+    "docs",
+    "node_modules",
+    "ops",
+    "public"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
