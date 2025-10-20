@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@source '../**/*.{astro,html,md,mdx,ts,tsx}';
+@source '../node_modules/@adaptive-sm/solid-ui/dist/**/*.{astro,html,md,mdx,ts,tsx,js}';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 2560px;
+  --breakpoint-3xl: 3840px;
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+}
+
+/* shadcn setup - https://ui.shadcn.com/docs/installation */
+/* shadcn theming - https://ui.shadcn.com/docs/theming */
+/* background colors - https://tailwindcss.com/docs/background-color */
+@layer base {
+  /*
+  [Tutorial] How to make use of Tailwind Colors directly in CSS Variables
+  https://github.com/shadcn-ui/ui/issues/669
+   */
+  :root {
+
+    --background: hsl(210, 20%, 98%); /* gray-50 */
+    --foreground: hsl(222.2 47.4% 11.2%);
+
+    --muted: hsl(210 40% 96.1%);
+    --muted-foreground: hsl(215 13.8% 34.1%); /* gray-600 */
+
+    --border: hsl(214.3 31.8% 91.4%); /* slate-200 */
+    --input: hsl(214.3 31.8% 91.4%);
+
+    --primary: hsl(238.7 83.5% 66.7%); /* bg-indigo-500 */
+    --primary-foreground: hsl(210 40% 98%);
+
+    --destructive: hsl(0 100% 50%);
+    --destructive-foreground: hsl(210 40% 98%);
+  }
+
+  .dark {
+
+    --background: hsl(224 71.4% 4.1%); /* gray-950 */
+    --foreground: hsl(213 31% 91%);
+
+    --muted: hsl(223 47% 11%);
+    --muted-foreground: hsl(217.9 10.6% 64.9%); /* gray-400 */
+
+    --border: hsl(214.3 31.8% 91.4%); /* slate-200 */
+    --input: hsl(216 34% 17%);
+
+    /*--primary: hsl(210 40% 98%);*/
+    --primary: hsl(217.2, 91.2%, 59.8%);
+    --primary-foreground: hsl(222.2 47.4% 1.2%);
+
+    --destructive: hsl(0 63% 31%);
+    --destructive-foreground: hsl(0 0% 100%);
+  }
+}
+
+/* remove number input native spinner */
+/* https://stackoverflow.com/questions/71296535/how-to-remove-arrow-on-input-type-number-with-tailwind-css */
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    appearance: textfield !important;
+    -moz-appearance: textfield !important;
+  }
+}
+
+/* Invert svg colors in dark mode */
+/* https://stackoverflow.com/questions/39761120/invert-svg-image-using-css */
+/* https://forums.ankiweb.net/t/invert-only-specific-color-of-svg-file/26092/2 */
+@layer base {
+  .dark img.invert-black,
+  .dark svg.invert-black {
+    filter: invert(1) hue-rotate(180deg);
+  }
+};
