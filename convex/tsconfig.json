@@ -14,7 +14,10 @@
     "allowSyntheticDefaultImports": true,
     /* These compiler options are required by Convex */
     "target": "ESNext",
-    "lib": ["ES2021", "dom"],
+    "lib": [
+      "ES2021",
+      "dom"
+    ],
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "isolatedModules": true,
@@ -23,13 +26,28 @@
     "allowImportingTsExtensions": true,
     // absolute import paths
     "paths": {
-      "@convex/*": ["./*"],
-      "@/*": ["../src/*"],
-      "~auth/*": ["../lib/*"],
-      "~ui/*": ["../node_modules/@adaptive-sm/solid-ui/dist/*"],
-      "~utils/*": ["../node_modules/@adaptive-sm/utils/dist/*"]
+      "@convex/*": [
+        "./*"
+      ],
+      "@/*": [
+        "../src/*"
+      ],
+      "~auth/*": [
+        "../lib/*"
+      ],
+      "~ui/*": [
+        "../node_modules/@adaptive-sm/solid-ui/dist/*"
+      ],
+      "~utils/*": [
+        "../node_modules/@adaptive-sm/utils/dist/*"
+      ]
     }
   },
-  "include": ["./**/*"],
-  "exclude": ["./_generated"]
+  "include": [
+    "./**/*",
+    "../lib/convex"
+  ],
+  "exclude": [
+    "./_generated"
+  ]
 }

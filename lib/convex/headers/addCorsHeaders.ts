@@ -1,6 +1,6 @@
 import type { ActionCtx } from "@convex/_generated/server"
-import { getClientOriginFromRequest } from "@convex/auth/headers/getClientOriginFromRequest"
-import { setServerTimingHeaderSingleValue } from "@convex/auth/headers/setServerTimingHeader"
+import { getClientOriginFromRequest } from "~auth/convex/headers/getClientOriginFromRequest"
+import { setServerTimingHeaderSingleValue } from "~auth/convex/headers/setServerTimingHeader"
 
 const allowedMethods = ["OPTIONS", "GET", "POST"] as const
 const allowedHeaders = ["Authorization", "If-Modified-Since", "Content-Type"] as const

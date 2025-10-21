@@ -1,6 +1,6 @@
+import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
 import { readEnvVariable } from "~utils/env/readEnvVariable"
-import type { RegisterEmailV1Type } from "../../../../adaptive-email-generator/dist/registerEmailV1Schema"
 
 export function generateSharedEmailProps() {
   return {

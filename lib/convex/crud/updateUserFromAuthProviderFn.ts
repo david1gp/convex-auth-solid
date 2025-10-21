@@ -1,5 +1,5 @@
 import { type MutationCtx } from "@convex/_generated/server"
-import type { IdUser } from "@convex/auth/IdUser"
+import type { IdUser } from "~auth/convex/IdUser"
 import {
   getUserNameFromCommonAuthProvider,
   type CommonAuthProvider

@@ -49,12 +49,7 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   //
   // 3. Schedule cleanup
   //
-  await ctx.scheduler.runAfter(
-    0,
-    internal.auth.sign_in_email.signInViaEmailEnterOtp3CleanupOldCodesInternalMutation
-      .signInViaEmailEnterOtp3CleanupOldCodesInternalMutation,
-    {},
-  )
+  await ctx.scheduler.runAfter(0, internal.auth.signInViaEmailEnterOtp3CleanupOldCodesInternalMutation, {})
 
   //
   // 4. Return result

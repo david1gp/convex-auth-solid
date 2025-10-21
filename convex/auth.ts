@@ -1,37 +1,38 @@
 import type { MutationCtx } from "@convex/_generated/server"
 import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
-import { createUserFromAuthProviderFn } from "@convex/auth/crud/createUserFromAuthProviderFn"
-import { findUserByEmailFn } from "@convex/auth/crud/findUserByEmailFn"
+import { v } from "convex/values"
+import { createUserFromAuthProviderFn } from "~auth/convex/crud/createUserFromAuthProviderFn"
+import { findUserByEmailFn } from "~auth/convex/crud/findUserByEmailFn"
 import {
   authSessionInsertValidator,
   saveTokenIntoSessionReturnExpiresAtFn,
-} from "@convex/auth/crud/saveTokenIntoSessionReturnExpiresAtFn"
-import type { DocUser, IdAuthUserEmailRegistration } from "@convex/auth/IdUser"
+} from "~auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
+import type { DocUser, IdAuthUserEmailRegistration } from "~auth/convex/IdUser"
 import {
   signInViaEmail2InternalMutationFn,
   signInViaEmailSaveCodeValidator,
-} from "@convex/auth/sign_in_email/signInViaEmail2InternalMutationFn"
+} from "~auth/convex/sign_in_email/signInViaEmail2InternalMutationFn"
 import {
   signInViaEmailEnterOtp2InternalMutationFn,
   signInViaEmailEnterOtp2Validator,
-} from "@convex/auth/sign_in_email/signInViaEmailEnterOtp2InternalMutationFn"
+} from "~auth/convex/sign_in_email/signInViaEmailEnterOtp2InternalMutationFn"
+import { signInViaEmailEnterOtp3CleanupOldCodesFn } from "~auth/convex/sign_in_email/signInViaEmailEnterOtp3CleanupOldCodesFn"
 import {
   notifyTelegramNewSignInInternalActionFn,
   notifyTelegramNewSignUpArgsValidator,
-} from "@convex/auth/sign_in_social/notifyTelegramNewSignInInternalActionFn"
-import { signInUsingSocialAuth3MutationFn } from "@convex/auth/sign_in_social/signInUsingSocialAuth3MutationFn"
-import { notifyTelegramNewSignUpInternalActionFn } from "@convex/auth/sign_up/notifyTelegramNewSignUpInternalActionFn"
+} from "~auth/convex/sign_in_social/notifyTelegramNewSignInInternalActionFn"
+import { signInUsingSocialAuth3MutationFn } from "~auth/convex/sign_in_social/signInUsingSocialAuth3MutationFn"
+import { notifyTelegramNewSignUpInternalActionFn } from "~auth/convex/sign_up/notifyTelegramNewSignUpInternalActionFn"
 import {
   signUp2InternalMutationFn,
   signUpCodeValidator,
   type SignUpCodeValidatorType,
-} from "@convex/auth/sign_up/signUp2InternalMutationFn"
+} from "~auth/convex/sign_up/signUp2InternalMutationFn"
 import {
   signUpConfirmEmail2InternalMutationFn,
   signUpConfirmEmailValidator,
-} from "@convex/auth/sign_up/signUpConfirmEmail2InternalMutationFn"
-import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "@convex/auth/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
-import { v } from "convex/values"
+} from "~auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
+import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "~auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
 import type { UserSession } from "~auth/model/UserSession"
 import { commonAuthProviderValidator } from "~auth/server/social_identity_providers/CommonAuthProvider"
 import type { PromiseResult } from "~utils/result/Result"
@@ -91,6 +92,13 @@ export const signInViaEmail2InternalMutation = internalMutation({
   args: signInViaEmailSaveCodeValidator,
   handler: async (ctx, args): PromiseResult<string> => {
     return signInViaEmail2InternalMutationFn(ctx, args)
+  },
+})
+
+export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMutation({
+  args: {},
+  handler: async (ctx: MutationCtx): Promise<{ deleted: number }> => {
+    return signInViaEmailEnterOtp3CleanupOldCodesFn(ctx)
   },
 })
 

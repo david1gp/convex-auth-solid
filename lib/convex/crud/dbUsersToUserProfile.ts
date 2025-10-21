@@ -1,4 +1,4 @@
-import type { DocUser } from "@convex/auth/IdUser"
+import type { DocUser } from "~auth/convex/IdUser"
 import type { UserProfile } from "~auth/model/UserProfile"
 
 export function dbUsersToUserProfile(u: DocUser): UserProfile {

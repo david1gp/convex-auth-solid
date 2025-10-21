@@ -1,6 +1,6 @@
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
-import { signInUsingSocialAuth2ActionFn } from "@convex/auth/sign_in_social/signInUsingSocialAuth2ActionFn"
+import { signInUsingSocialAuth2ActionFn } from "~auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
 import type { LoginProvider } from "~auth/model/socialLoginProvider"
 import type { UserSession } from "~auth/model/UserSession"

@@ -1,11 +1,4 @@
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
-
-export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMutation({
-  args: {},
-  handler: async (ctx: MutationCtx): Promise<{ deleted: number }> => {
-    return signInViaEmailEnterOtp3CleanupOldCodesFn(ctx)
-  },
-})
+import { type MutationCtx } from "@convex/_generated/server"
 
 export async function signInViaEmailEnterOtp3CleanupOldCodesFn(ctx: MutationCtx): Promise<{ deleted: number }> {
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()

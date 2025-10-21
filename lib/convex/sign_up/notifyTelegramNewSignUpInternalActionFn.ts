@@ -1,6 +1,6 @@
 import { type ActionCtx } from "@convex/_generated/server"
-import { sendTelegramMessageTechnical } from "@convex/auth/sign_in_social/sendTelegramMessageTechnical"
 import { v } from "convex/values"
+import { sendTelegramMessageTechnical } from "~auth/convex/sign_in_social/sendTelegramMessageTechnical"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
 import { userSessionValidator } from "~auth/model/userSessionValidator"
 import { readEnvVariable } from "~utils/env/readEnvVariable"

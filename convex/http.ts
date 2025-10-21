@@ -1,5 +1,5 @@
-import { addHttpRoutesAuth } from "@convex/auth/addHttpRoutesAuth"
 import { httpRouter } from "convex/server"
+import { addHttpRoutesAuth } from "~auth/convex/addHttpRoutesAuth"
 
 const http = httpRouter()
 

@@ -4,8 +4,8 @@ import {
   type RegisterEmailV1Type,
   type SuccessResponseType,
 } from "@adaptive-sm/email-generator"
-import { generateSharedEmailProps } from "@convex/auth/email/generateSharedEmailProps"
-import { sendTelegramMessageTechnical } from "@convex/auth/sign_in_social/sendTelegramMessageTechnical"
+import { generateSharedEmailProps } from "~auth/convex/email/generateSharedEmailProps"
+import { sendTelegramMessageTechnical } from "~auth/convex/sign_in_social/sendTelegramMessageTechnical"
 import { privateEnvVariableName } from "~auth/env/privateEnvVariableName"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"
