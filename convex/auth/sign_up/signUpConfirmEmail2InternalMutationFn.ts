@@ -1,4 +1,4 @@
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx } from "@convex/_generated/server"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@convex/auth/crud/saveTokenIntoSessionReturnExpiresAtFn"
 import { v } from "convex/values"
 import { privateEnvVariableName } from "~auth/env/privateEnvVariableName"
@@ -17,14 +17,7 @@ export const signUpConfirmEmailValidator = v.object({
   code: v.string(),
 })
 
-export const signUpConfirmEmail2InternalMutation = internalMutation({
-  args: signUpConfirmEmailValidator,
-  handler: async (ctx, args): PromiseResult<UserSession> => {
-    return signUpConfirm2MutationFn(ctx, args)
-  },
-})
-
-export async function signUpConfirm2MutationFn(
+export async function signUpConfirmEmail2InternalMutationFn(
   ctx: MutationCtx,
   args: SignUpConfirmValidatorType,
 ): PromiseResult<UserSession> {

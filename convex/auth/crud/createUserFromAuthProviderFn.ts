@@ -1,26 +1,13 @@
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx } from "@convex/_generated/server"
 import type { WithoutSystemFields } from "convex/server"
 import type { UserProfile } from "~auth/model/UserProfile"
 import { userRole } from "~auth/model/userRole"
 import {
-    commonAuthProviderValidator,
-    getUserNameFromCommonAuthProvider,
-    type CommonAuthProvider,
+  getUserNameFromCommonAuthProvider,
+  type CommonAuthProvider
 } from "~auth/server/social_identity_providers/CommonAuthProvider"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocUser } from "../IdUser"
-
-export const createUserFromAuthProvider = internalMutation({
-  args: commonAuthProviderValidator,
-  handler: async (ctx, args) => {
-    const authProvider = args
-    const got = await createUserFromAuthProviderFn(ctx, authProvider)
-    if (!got.success) {
-      throw new Error(got.op + ": " + got.errorMessage)
-    }
-    return got.data
-  },
-})
 
 export type UserFields = WithoutSystemFields<DocUser>
 

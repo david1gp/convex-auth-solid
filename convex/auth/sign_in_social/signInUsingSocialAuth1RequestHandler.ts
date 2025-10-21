@@ -23,7 +23,6 @@ export async function signInUsingSocialAuth1RequestHandler(
     throw new Error("missing code")
   }
 
-  // ctx.runMutation(internal.auth.signInUsingSocialAuth)
   const tokenResult = await signInUsingSocialAuth2ActionFn(ctx, provider, code)
   if (!tokenResult.success) {
     throw new Error(tokenResult.errorMessage)
@@ -46,11 +45,7 @@ export async function signInUsingSocialAuth1RequestHandler(
   // redirectUrl.searchParams.set("redirectUrl", state)
   console.log("user signed in", { state, redirectUrl })
 
-  await ctx.scheduler.runAfter(
-    0,
-    internal.auth.sign_in_social.notifyTelegramNewSignUpInternalAction.notifyTelegramNewSignUpInternalAction,
-    { userSession },
-  )
+  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramNewSignUpInternalAction, { userSession })
 
   return Response.redirect(redirectUrl.toString(), 302)
 }

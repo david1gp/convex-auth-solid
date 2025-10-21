@@ -1,5 +1,4 @@
 import type { MutationCtx } from "@convex/_generated/server"
-import { internalMutation } from "@convex/_generated/server"
 import type { IdAuthUserEmailRegistration } from "@convex/auth/IdUser"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -14,14 +13,7 @@ export const signUpCodeFields = {
 export type SignUpCodeValidatorType = typeof signUpCodeValidator.type
 export const signUpCodeValidator = v.object(signUpCodeFields)
 
-export const signUp2InternalMutation = internalMutation({
-  args: signUpCodeValidator,
-  handler: async (ctx: MutationCtx, args: SignUpCodeValidatorType): Promise<{ id: IdAuthUserEmailRegistration }> => {
-    return signUp2MutationFn(ctx, args)
-  },
-})
-
-export async function signUp2MutationFn(
+export async function signUp2InternalMutationFn(
   ctx: MutationCtx,
   args: SignUpCodeValidatorType,
 ): Promise<{ id: IdAuthUserEmailRegistration }> {

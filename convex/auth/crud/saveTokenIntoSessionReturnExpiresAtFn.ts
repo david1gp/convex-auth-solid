@@ -1,8 +1,18 @@
 import type { Id } from "@convex/_generated/dataModel"
 import type { MutationCtx } from "@convex/_generated/server"
+import { v } from "convex/values"
 import dayjs from "dayjs"
 import type { LoginMethod } from "~auth/model/loginMethod"
+import { loginMethodValidator } from "~auth/model/loginMethodValidator"
 import { tokenValidDurationInDays } from "~auth/server/jwt_token/tokenValidDurationInDays"
+import { vIdUsers } from "../vIdUSers"
+
+export type AuthSessionInsertValidatorType = typeof authSessionInsertValidator.type
+export const authSessionInsertValidator = v.object({
+  userId: vIdUsers,
+  loginMethod: loginMethodValidator,
+  token: v.string(),
+})
 
 export async function saveTokenIntoSessionReturnExpiresAtFn(
   ctx: MutationCtx,

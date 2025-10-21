@@ -1,8 +1,8 @@
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
-import { findUserByEmailFn } from "../crud/findUserByEmailQuery"
+import { findUserByEmailFn } from "../crud/findUserByEmailFn"
 import type { IdUser } from "../IdUser"
 import { generateOtpCode } from "../pw/generateOtpCode"
 
@@ -11,14 +11,7 @@ export const signInViaEmailSaveCodeValidator = v.object({
   email: v.string(),
 })
 
-export const signInViaEmail2InternalMutation = internalMutation({
-  args: signInViaEmailSaveCodeValidator,
-  handler: async (ctx, args): PromiseResult<string> => {
-    return signInViaEmailSaveCode2MutationFn(ctx, args)
-  },
-})
-
-export async function signInViaEmailSaveCode2MutationFn(
+export async function signInViaEmail2InternalMutationFn(
   ctx: MutationCtx,
   args: SignInViaEmailSaveCodeValidatorType,
 ): PromiseResult<string> {

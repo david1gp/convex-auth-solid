@@ -9,7 +9,8 @@ import type { PromiseResult } from "~utils/result/Result"
 export async function signInUsingSocialAuth2ActionFn(
   ctx: ActionCtx,
   provider: LoginProvider,
-  code: string): PromiseResult<UserSession> {
+  code: string,
+): PromiseResult<UserSession> {
   const op = "signInUsingSocialAuth"
 
   // Download oauth provider data
@@ -22,8 +23,5 @@ export async function signInUsingSocialAuth2ActionFn(
   const providerInfo: CommonAuthProvider = providerInfoOrError.data
 
   // Find or create user, create token
-  return ctx.runMutation(
-    internal.auth.sign_in_social.signInUsingSocialAuth3Mutation.signInUsingSocialAuth3Mutation,
-    providerInfo
-  )
+  return ctx.runMutation(internal.auth.signInUsingSocialAuth3Mutation, providerInfo)
 }

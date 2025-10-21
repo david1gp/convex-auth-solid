@@ -1,24 +1,16 @@
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx } from "@convex/_generated/server"
 import { createUserSessionTimes, type UserSession } from "~auth/model/UserSession"
 import {
-    commonAuthProviderValidator,
-    type CommonAuthProvider,
+  type CommonAuthProvider
 } from "~auth/server/social_identity_providers/CommonAuthProvider"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocAuthAccount } from "../IdUser"
-import { createUserFromAuthProviderFn } from "./createUserFromAuthProvider"
+import { createUserFromAuthProviderFn } from "./createUserFromAuthProviderFn"
 import { dbUsersToUserProfile } from "./dbUsersToUserProfile"
-import { findUserByEmailFn } from "./findUserByEmailQuery"
-import { linkAuthToExistingUserFn } from "./linkAuthToExistingUserMutation"
+import { findUserByEmailFn } from "./findUserByEmailFn"
+import { linkAuthToExistingUserFn } from "./linkAuthToExistingUserFn"
 
 export type SignInUsingSocialAuthResultInternal = Omit<UserSession, "token">
-
-export const findOrCreateUserMutation = internalMutation({
-  args: commonAuthProviderValidator,
-  handler: async (ctx, args) => {
-    return findOrCreateUserFn(ctx, args)
-  },
-})
 
 export async function findOrCreateUserFn(
   ctx: MutationCtx,
@@ -42,14 +34,8 @@ export async function findOrCreateUserFn(
 
   // Check for existing user by email
   if (authData.email) {
-    // const existingUser = await ctx.runQuery(internal.auth.findUserByEmailQuery, { email })
     const existingUser = await findUserByEmailFn(ctx, authData.email)
     if (existingUser) {
-      // await ctx.runMutation(internal.auth.linkAuthToExistingUserMutation, {
-      //   userId: existingUser._id,
-      //   provider: authData.provider,
-      //   providerId: authData.providerId,
-      // })
       await linkAuthToExistingUserFn(ctx, existingUser._id, authData.provider, authData.providerId)
       const userProfile = dbUsersToUserProfile(existingUser)
       return createResult({

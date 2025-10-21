@@ -33,10 +33,7 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   //
   // 2. mutation: read db and validate data
   //
-  const mutationResult = await ctx.runMutation(
-    internal.auth.sign_up.signUpConfirmEmail2InternalMutation.signUpConfirmEmail2InternalMutation,
-    { email, code },
-  )
+  const mutationResult = await ctx.runMutation(internal.auth.signUpConfirmEmail2InternalMutation, { email, code })
 
   if (!mutationResult.success) {
     const errorResult = mutationResult
@@ -48,21 +45,12 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   //
   // 3. Schedule cleanup
   //
-  await ctx.scheduler.runAfter(
-    0,
-    internal.auth.sign_up.signUpConfirmEmail3CleanupOldCodesInternalMutation
-      .signUpConfirmEmail3CleanupOldCodesInternalMutation,
-    {},
-  )
+  await ctx.scheduler.runAfter(0, internal.auth.signUpConfirmEmail3CleanupOldCodesInternalMutation, {})
 
   //
   // 4. Notify via Telegram
   //
-  await ctx.scheduler.runAfter(
-    0,
-    internal.auth.sign_in_social.notifyTelegramNewSignUpInternalAction.notifyTelegramNewSignUpInternalAction,
-    { userSession },
-  )
+  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramNewSignUpInternalAction, { userSession })
 
   //
   // 5. Return result

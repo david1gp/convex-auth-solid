@@ -33,10 +33,7 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
   const { email } = validation.output
 
   // Run mutation to save code
-  const codeResult = await ctx.runMutation(
-    internal.auth.sign_in_email.signInViaEmail2InternalMutation.signInViaEmail2InternalMutation,
-    { email },
-  )
+  const codeResult = await ctx.runMutation(internal.auth.signInViaEmail2InternalMutation, { email })
   if (!codeResult.success) {
     const errorResult = codeResult
     console.warn(errorResult)

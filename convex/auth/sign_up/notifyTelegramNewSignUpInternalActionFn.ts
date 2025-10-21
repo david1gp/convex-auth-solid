@@ -1,4 +1,4 @@
-import { internalAction, type ActionCtx } from "@convex/_generated/server"
+import { type ActionCtx } from "@convex/_generated/server"
 import { sendTelegramMessageTechnical } from "@convex/auth/sign_in_social/sendTelegramMessageTechnical"
 import { v } from "convex/values"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
@@ -10,13 +10,6 @@ export const notifyTelegramNewSignUpArgsValidator = v.object({
 })
 
 export type NotifyTelegramNewSignUpArgsType = typeof notifyTelegramNewSignUpArgsValidator.type
-
-export const notifyTelegramNewSignUpInternalAction = internalAction({
-  args: notifyTelegramNewSignUpArgsValidator,
-  handler: async (ctx, args): Promise<void> => {
-    return notifyTelegramNewSignUpInternalActionFn(ctx, args)
-  },
-})
 
 export async function notifyTelegramNewSignUpInternalActionFn(
   ctx: ActionCtx,

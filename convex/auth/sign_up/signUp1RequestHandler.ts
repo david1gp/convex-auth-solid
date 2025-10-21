@@ -33,7 +33,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   }
   const { name, email, pw } = validation.output
 
-  const existingUser = await ctx.runQuery(internal.auth.crud.findUserByEmailQuery.findUserByEmailQuery, { email })
+  const existingUser = await ctx.runQuery(internal.auth.findUserByEmailQuery, { email })
   if (existingUser) {
     const errorMessage = "User with this email already exists"
     const errorResult = createError(op, errorMessage, email)
@@ -49,7 +49,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const code = generateOtpCode()
 
   // Run mutation to save code
-  await ctx.runMutation(internal.auth.sign_up.signUp2InternalMutation.signUp2InternalMutation, {
+  await ctx.runMutation(internal.auth.signUp2InternalMutation, {
     name,
     email,
     hashedPassword: pw && hashedPasswordResult && hashedPasswordResult.success ? hashedPasswordResult.data : undefined,

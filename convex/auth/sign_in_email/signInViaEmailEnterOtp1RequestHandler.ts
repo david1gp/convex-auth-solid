@@ -37,10 +37,7 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   //
   // 2. mutation: read db and validate data
   //
-  const mutationResult = await ctx.runMutation(
-    internal.auth.sign_in_email.signInViaEmailEnterOtp2InternalMutation.signInViaEmailEnterOtp2InternalMutation,
-    { email, code },
-  )
+  const mutationResult = await ctx.runMutation(internal.auth.signInViaEmailEnterOtp2InternalMutation, { email, code })
 
   if (!mutationResult.success) {
     const errorResult = mutationResult

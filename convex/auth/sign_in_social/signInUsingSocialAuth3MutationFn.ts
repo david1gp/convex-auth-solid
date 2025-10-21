@@ -1,28 +1,16 @@
 import type { Id } from "@convex/_generated/dataModel"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
+import { type MutationCtx } from "@convex/_generated/server.js"
 import { privateEnvVariableName } from "~auth/env/privateEnvVariableName"
 import type { UserSession } from "~auth/model/UserSession"
 import { createToken } from "~auth/server/jwt_token/createToken"
 import {
-  commonAuthProviderValidator,
-  type CommonAuthProvider,
+  type CommonAuthProvider
 } from "~auth/server/social_identity_providers/CommonAuthProvider.js"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable.js"
 import { createResult, type PromiseResult } from "~utils/result/Result"
-import { findOrCreateUserFn } from "../crud/findOrCreateUser"
+import { findOrCreateUserFn } from "../crud/findOrCreateUserFn"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "../crud/saveTokenIntoSessionReturnExpiresAtFn"
 
-export const signInUsingSocialAuth3Mutation = internalMutation({
-  args: commonAuthProviderValidator,
-  handler: async (ctx, args): PromiseResult<UserSession> => {
-    return signInUsingSocialAuth3MutationFn(ctx, args)
-    // const got = await signInUsingSocialAuthMutationFn(ctx, args)
-    // if (!got.success) {
-    //   throw new Error(got.op + ": " + got.errorMessage)
-    // }
-    // return got.data
-  },
-})
 
 export async function signInUsingSocialAuth3MutationFn(
   ctx: MutationCtx,

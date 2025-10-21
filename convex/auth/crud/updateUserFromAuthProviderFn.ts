@@ -1,32 +1,14 @@
-import type { Id } from "@convex/_generated/dataModel"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx } from "@convex/_generated/server"
+import type { IdUser } from "@convex/auth/IdUser"
 import {
-    commonAuthProviderValidator,
-    getUserNameFromCommonAuthProvider,
-    type CommonAuthProvider,
+  getUserNameFromCommonAuthProvider,
+  type CommonAuthProvider
 } from "~auth/server/social_identity_providers/CommonAuthProvider"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { vIdUsers } from "../vIdUSers"
-
-export const updateUserFromAuthProvider = internalMutation({
-  args: {
-    userId: vIdUsers,
-    ...commonAuthProviderValidator.fields,
-  },
-  handler: async (ctx, args) => {
-    const { userId: userIdString, ...authProvider } = args
-    const userId = userIdString as Id<"users">
-    const got = await updateUserFromAuthProviderFn(ctx, userId, authProvider)
-    if (!got.success) {
-      throw new Error(got.op + ": " + got.errorMessage)
-    }
-    return got.data
-  },
-})
 
 export async function updateUserFromAuthProviderFn(
   ctx: MutationCtx,
-  userId: Id<"users">,
+  userId: IdUser,
   authProvider: CommonAuthProvider,
 ): PromiseResult<string> {
   const op = "updateUserFromAuthProviderFn"

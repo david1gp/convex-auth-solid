@@ -25,7 +25,7 @@ export async function sendTelegramMessageTechnical(
   const got = await sendTelegramMessageHtml(text, telegramEnvVariables, disableNotification)
   const endedAt = Date.now()
   const durationMs = endedAt - startedAt
-  const op = "notifyTelegramNewSignUpInternalAction"
+  const op = "sendTelegramMessageTechnical"
   // console.log(op, userSession.user.name, userSession.user, got)
   console.log(op, "telegram api call:", got, durationMs, "ms")
   return got

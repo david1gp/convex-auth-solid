@@ -39,7 +39,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   const { email, pw } = validation.output
 
   // Find user by email
-  const user = await ctx.runQuery(internal.auth.crud.findUserByEmailQuery.findUserByEmailQuery, { email })
+  const user = await ctx.runQuery(internal.auth.findUserByEmailQuery, { email })
   if (!user) {
     const errorMessage = "User not found"
     const errorResult = createError(op, errorMessage, email)
@@ -73,14 +73,11 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   const salt = saltResult.data
   const token = await createToken(user._id, salt)
   // Insert session
-  const expiresAt = await ctx.runMutation(
-    internal.auth.crud.authSessionInsertInternalMutation.authSessionInsertInternalMutation,
-    {
-      userId: user._id as IdUser,
-      loginMethod: loginMethod.password,
-      token,
-    },
-  )
+  const expiresAt = await ctx.runMutation(internal.auth.authSessionInsertInternalMutation, {
+    userId: user._id as IdUser,
+    loginMethod: loginMethod.password,
+    token,
+  })
 
   // Create user profile
   const userProfile = dbUsersToUserProfile(user)
