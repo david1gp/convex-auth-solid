@@ -1,5 +1,5 @@
 import { defineSchema } from "convex/server"
-import { authTables } from "../lib/convex/authTables"
+import { authTables } from "~auth/convex/authTables"
 
 const schema = defineSchema({
   // technical
