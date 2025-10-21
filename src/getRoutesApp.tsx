@@ -7,11 +7,11 @@ export function getRoutesApp(): RouteObject[] {
   return [
     {
       path: "/",
-      component: () => <div>Home</div>,
+      component: () => <div class="text-4xl font-bold my-20">Home</div>,
     },
     {
       path: "/overview",
-      component: () => <div>Overview</div>,
+      component: () => <div class="text-4xl font-bold my-20">Overview</div>,
     },
     {
       path: "/demos",
