@@ -1,10 +1,10 @@
-import { createError } from "@adaptive-sm/email-generator"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
 import { signInViaEmailSchema } from "~auth/model/signInSchema"
 import { getBaseUrlApp } from "~auth/url/getBaseUrl"
 import { pageRouteAuth } from "~auth/url/pageRouteAuth"
+import { createError } from "~utils/result/Result"
 import { sendEmailSignIn } from "../email/sendEmailSignIn"
 
 export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

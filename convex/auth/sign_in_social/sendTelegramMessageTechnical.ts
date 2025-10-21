@@ -1,7 +1,7 @@
-import type { PromiseResult } from "@adaptive-sm/email-generator"
 import { privateEnvVariableName } from "~auth/env/privateEnvVariableName"
-import { type TelegramMessageType, sendTelegramMessageHtml } from "~auth/server/messaging/sendTelegramMessage"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"
+import type { PromiseResult } from "~utils/result/Result"
+import { sendTelegramMessageHtml, type TelegramEnvVariableNames } from "~utils/telegram/sendTelegramMessageHtml"
 
 export async function sendTelegramMessageTechnical(
   name: string,
@@ -17,14 +17,12 @@ export async function sendTelegramMessageTechnical(
 <b>${name}</b>
 <pre><code class="json">${serialized}</code></pre>
 `.trim()
-  const telegramProps: TelegramMessageType = {
-    text,
-    chatId: chatId,
-    // topicId: telegramTopicId.signUp,
-    disableNotification,
-  }
   const startedAt = Date.now()
-  const got = await sendTelegramMessageHtml(telegramProps)
+  const telegramEnvVariables = {
+    apiToken: privateEnvVariableName.TELEGRAM_TOKEN,
+    chatId: privateEnvVariableName.TELEGRAM_CHAT_ID,
+  } as const satisfies TelegramEnvVariableNames
+  const got = await sendTelegramMessageHtml(text, telegramEnvVariables, disableNotification)
   const endedAt = Date.now()
   const durationMs = endedAt - startedAt
   const op = "notifyTelegramNewSignUpInternalAction"
