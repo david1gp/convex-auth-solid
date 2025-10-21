@@ -1,8 +1,6 @@
 import { v } from "convex/values"
 import type { UserProfile } from "~auth/model/UserProfile"
-
-// UserRole validator
-export const userRoleValidator = v.union(v.literal("user"), v.literal("admin"), v.literal("dev"))
+import { userRoleValidator } from "~auth/model/userRoleValidator"
 
 // LoginMethod validator
 export const loginMethodValidator = v.union(

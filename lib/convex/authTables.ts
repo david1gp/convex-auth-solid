@@ -1,9 +1,8 @@
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
 import { loginMethodValidator } from "~auth/model/loginMethodValidator"
+import { userRoleValidator } from "~auth/model/userRoleValidator"
 import { vIdUsers } from "./vIdUSers"
-
-const userRoleValidator = v.union(v.literal("user"), v.literal("admin"), v.literal("dev"))
 
 export const authTables = {
   users: defineTable({
