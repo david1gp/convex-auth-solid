@@ -6,7 +6,6 @@
     "paths": {
       "@/*": ["./src/*"],
       "@convex/*": ["./convex/*"],
-      "~auth/*": ["./lib/*"],
       "~ui/*": ["./node_modules/@adaptive-sm/solid-ui/dist/*"],
       "~utils/*": ["./node_modules/@adaptive-sm/utils/dist/*"]
     }

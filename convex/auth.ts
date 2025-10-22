@@ -1,43 +1,43 @@
-import type { ActionCtx, MutationCtx, QueryCtx } from "@convex/_generated/server"
-import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
-import { v } from "convex/values"
-import { createUserFromAuthProviderFn } from "~auth/convex/crud/createUserFromAuthProviderFn"
-import { findUserByEmailFn } from "~auth/convex/crud/findUserByEmailFn"
+import { createUserFromAuthProviderFn } from "@/auth/convex/crud/createUserFromAuthProviderFn"
+import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailFn"
 import {
   authSessionInsertValidator,
   saveTokenIntoSessionReturnExpiresAtFn,
-} from "~auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
-import type { DocUser, IdAuthUserEmailRegistration } from "~auth/convex/IdUser"
+} from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
+import type { DocUser, IdAuthUserEmailRegistration } from "@/auth/convex/IdUser"
 import {
   signInViaEmail2InternalMutationFn,
   signInViaEmailSaveCodeValidator,
-} from "~auth/convex/sign_in_email/signInViaEmail2InternalMutationFn"
+} from "@/auth/convex/sign_in_email/signInViaEmail2InternalMutationFn"
 import {
   signInViaEmailEnterOtp2InternalMutationFn,
   signInViaEmailEnterOtp2Validator,
-} from "~auth/convex/sign_in_email/signInViaEmailEnterOtp2InternalMutationFn"
-import { signInViaEmailEnterOtp3CleanupOldCodesFn } from "~auth/convex/sign_in_email/signInViaEmailEnterOtp3CleanupOldCodesFn"
+} from "@/auth/convex/sign_in_email/signInViaEmailEnterOtp2InternalMutationFn"
+import { signInViaEmailEnterOtp3CleanupOldCodesFn } from "@/auth/convex/sign_in_email/signInViaEmailEnterOtp3CleanupOldCodesFn"
 import {
   notifyTelegramNewSignInInternalActionFn,
   notifyTelegramNewSignUpArgsValidator,
-} from "~auth/convex/sign_in_social/notifyTelegramNewSignInInternalActionFn"
-import { signInUsingSocialAuth3MutationFn } from "~auth/convex/sign_in_social/signInUsingSocialAuth3MutationFn"
-import { notifyTelegramNewSignUpInternalActionFn } from "~auth/convex/sign_up/notifyTelegramNewSignUpInternalActionFn"
+} from "@/auth/convex/sign_in_social/notifyTelegramNewSignInInternalActionFn"
+import { signInUsingSocialAuth3MutationFn } from "@/auth/convex/sign_in_social/signInUsingSocialAuth3MutationFn"
+import { notifyTelegramNewSignUpInternalActionFn } from "@/auth/convex/sign_up/notifyTelegramNewSignUpInternalActionFn"
 import {
   signUp2InternalMutationFn,
   signUpCodeValidator,
   type SignUpCodeValidatorType,
-} from "~auth/convex/sign_up/signUp2InternalMutationFn"
+} from "@/auth/convex/sign_up/signUp2InternalMutationFn"
 import {
   signUpConfirmEmail2InternalMutationFn,
   signUpConfirmEmailValidator,
-} from "~auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
-import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "~auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
-import type { UserSession } from "~auth/model/UserSession"
+} from "@/auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
+import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "@/auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
+import type { UserSession } from "@/auth/model/UserSession"
 import {
   commonAuthProviderValidator,
   type CommonAuthProvider,
-} from "~auth/server/social_identity_providers/CommonAuthProvider"
+} from "@/auth/server/social_identity_providers/CommonAuthProvider"
+import type { ActionCtx, MutationCtx, QueryCtx } from "@convex/_generated/server"
+import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
+import { v } from "convex/values"
 import type { PromiseResult } from "~utils/result/Result"
 
 //

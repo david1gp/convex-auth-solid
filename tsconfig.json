@@ -44,9 +44,6 @@
       "@/*": [
         "./src/*"
       ],
-      "~auth/*": [
-        "./lib/*"
-      ],
       "~utils/*": [
         "./node_modules/@adaptive-sm/utils/dist/*"
       ],

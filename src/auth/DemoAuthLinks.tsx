@@ -1,5 +1,5 @@
-import { pageNameAuth, type PageNameAuth } from "~auth/url/pageNameAuth"
-import { pageRouteAuth } from "~auth/url/pageRouteAuth"
+import { pageNameAuth, type PageNameAuth } from "@/auth/url/pageNameAuth"
+import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { BulletLinksO } from "~ui/interactive/list/BulletLinksO"
 
 export function DemoAuthLinks() {

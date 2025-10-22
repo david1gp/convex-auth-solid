@@ -32,9 +32,6 @@
       "@/*": [
         "../src/*"
       ],
-      "~auth/*": [
-        "../lib/*"
-      ],
       "~ui/*": [
         "../node_modules/@adaptive-sm/solid-ui/dist/*"
       ],

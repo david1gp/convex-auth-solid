@@ -20,7 +20,6 @@ export default defineConfig({
       "@": new URL("./src", import.meta.url).pathname,
       "@convex": new URL("./convex", import.meta.url).pathname,
       "~ui": new URL("./node_modules/@adaptive-sm/solid-ui/dist", import.meta.url).pathname,
-      "~auth": new URL("./lib", import.meta.url).pathname,
       "~utils": new URL("./node_modules/@adaptive-sm/utils/dist", import.meta.url).pathname,
     },
     dedupe: [
