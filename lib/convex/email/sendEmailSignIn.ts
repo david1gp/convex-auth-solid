@@ -1,21 +1,15 @@
-import {
-  apiGenerateEmailLoginCodeV1,
-  type GeneratedEmailType,
-  type LoginCodeV1Type,
-  type RegisterEmailV1Type,
-  type SuccessResponseType,
-} from "@adaptive-sm/email-generator"
+import { apiGenerateEmailLoginCodeV1, type SuccessResponseType } from "@adaptive-sm/email-generator/apiGenerateEmail.js"
+import { type GeneratedEmailType } from "@adaptive-sm/email-generator/GeneratedEmailType.js"
+import { type LoginCodeV1Type } from "@adaptive-sm/email-generator/LoginCodeV1Type.js"
+import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator/RegisterEmailV1Type.js"
 import { generateSharedEmailProps } from "~auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageTechnical } from "~auth/convex/sign_in_social/sendTelegramMessageTechnical"
 import { privateEnvVariableName } from "~auth/env/privateEnvVariableName"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"
 import { createError, type PromiseResult } from "~utils/result/Result"
-// TODO: Create apiGenerateSignInEmailV1 when email generator supports sign in templates
 
 export async function sendEmailSignIn(email: string, code: string, url: string): PromiseResult<null> {
-  // will be done later
-
   const envModeResult = readEnvVariableResult(publicEnvVariableName.PUBLIC_ENV_MODE)
   if (!envModeResult.success) return envModeResult
   const envMode = envModeResult.data

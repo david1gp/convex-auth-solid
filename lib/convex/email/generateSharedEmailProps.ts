@@ -1,4 +1,4 @@
-import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator"
+import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator/RegisterEmailV1Type.d.ts"
 import { publicEnvVariableName } from "~auth/env/publicEnvVariableName"
 import { readEnvVariable } from "~utils/env/readEnvVariable"
 

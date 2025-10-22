@@ -1,9 +1,6 @@
-import {
-  apiGenerateRegisterEmailV1,
-  type GeneratedEmailType,
-  type RegisterEmailV1Type,
-  type SuccessResponseType,
-} from "@adaptive-sm/email-generator"
+import { apiGenerateRegisterEmailV1, type SuccessResponseType } from "@adaptive-sm/email-generator/apiGenerateEmail.js"
+import { type GeneratedEmailType } from "@adaptive-sm/email-generator/GeneratedEmailType.js"
+import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator/RegisterEmailV1Type.js"
 import { generateSharedEmailProps } from "~auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageTechnical } from "~auth/convex/sign_in_social/sendTelegramMessageTechnical"
 import { privateEnvVariableName } from "~auth/env/privateEnvVariableName"
