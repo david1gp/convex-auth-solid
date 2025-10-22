@@ -1,5 +1,5 @@
 convex-auth.dev {
-	import shared_config_simple
+	import shared_config_web
 	header {
 		Routed "solid"
 	}
@@ -37,6 +37,7 @@ dash.convex-auth.dev {
 	header {
 		Routed "dash"
 	}
-	reverse_proxy localhost:3019
+	# reverse_proxy localhost:3019
+	reverse_proxy localhost:6790
 	# reverse_proxy localhost:6791
 }
