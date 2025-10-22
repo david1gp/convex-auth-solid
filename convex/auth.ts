@@ -1,4 +1,4 @@
-import type { MutationCtx } from "@convex/_generated/server"
+import type { ActionCtx, MutationCtx, QueryCtx } from "@convex/_generated/server"
 import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createUserFromAuthProviderFn } from "~auth/convex/crud/createUserFromAuthProviderFn"
@@ -34,7 +34,10 @@ import {
 } from "~auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
 import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "~auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
 import type { UserSession } from "~auth/model/UserSession"
-import { commonAuthProviderValidator } from "~auth/server/social_identity_providers/CommonAuthProvider"
+import {
+  commonAuthProviderValidator,
+  type CommonAuthProvider,
+} from "~auth/server/social_identity_providers/CommonAuthProvider"
 import type { PromiseResult } from "~utils/result/Result"
 
 //
@@ -43,7 +46,7 @@ import type { PromiseResult } from "~utils/result/Result"
 
 export const createUserFromAuthProvider = internalMutation({
   args: commonAuthProviderValidator,
-  handler: async (ctx, args) => {
+  handler: async (ctx: MutationCtx, args: CommonAuthProvider) => {
     const authProvider = args
     const got = await createUserFromAuthProviderFn(ctx, authProvider)
     if (!got.success) {
@@ -55,14 +58,14 @@ export const createUserFromAuthProvider = internalMutation({
 
 export const findUserByEmailQuery = internalQuery({
   args: { email: v.string() },
-  handler: async (ctx, args): Promise<DocUser | null> => {
+  handler: async (ctx: QueryCtx, args): Promise<DocUser | null> => {
     return findUserByEmailFn(ctx, args.email)
   },
 })
 
 export const authSessionInsertInternalMutation = internalMutation({
   args: authSessionInsertValidator,
-  handler: async (ctx, args) => {
+  handler: async (ctx: MutationCtx, args) => {
     return saveTokenIntoSessionReturnExpiresAtFn(ctx, args.loginMethod, args.userId, args.token)
   },
 })
@@ -73,7 +76,7 @@ export const authSessionInsertInternalMutation = internalMutation({
 
 export const signInUsingSocialAuth3Mutation = internalMutation({
   args: commonAuthProviderValidator,
-  handler: async (ctx, args): PromiseResult<UserSession> => {
+  handler: async (ctx: MutationCtx, args): PromiseResult<UserSession> => {
     return signInUsingSocialAuth3MutationFn(ctx, args)
   },
 })
@@ -84,13 +87,13 @@ export const signInUsingSocialAuth3Mutation = internalMutation({
 
 export const signInViaEmailEnterOtp2InternalMutation = internalMutation({
   args: signInViaEmailEnterOtp2Validator,
-  handler: async (ctx, args): PromiseResult<UserSession> => {
+  handler: async (ctx: MutationCtx, args): PromiseResult<UserSession> => {
     return signInViaEmailEnterOtp2InternalMutationFn(ctx, args)
   },
 })
 export const signInViaEmail2InternalMutation = internalMutation({
   args: signInViaEmailSaveCodeValidator,
-  handler: async (ctx, args): PromiseResult<string> => {
+  handler: async (ctx: MutationCtx, args): PromiseResult<string> => {
     return signInViaEmail2InternalMutationFn(ctx, args)
   },
 })
@@ -104,7 +107,7 @@ export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMu
 
 export const notifyTelegramNewSignInInternalAction = internalAction({
   args: notifyTelegramNewSignUpArgsValidator,
-  handler: async (ctx, args): Promise<void> => {
+  handler: async (ctx: ActionCtx, args): Promise<void> => {
     return notifyTelegramNewSignInInternalActionFn(ctx, args)
   },
 })
@@ -122,7 +125,7 @@ export const signUp2InternalMutation = internalMutation({
 
 export const signUpConfirmEmail2InternalMutation = internalMutation({
   args: signUpConfirmEmailValidator,
-  handler: async (ctx, args): PromiseResult<UserSession> => {
+  handler: async (ctx: MutationCtx, args): PromiseResult<UserSession> => {
     return signUpConfirmEmail2InternalMutationFn(ctx, args)
   },
 })
@@ -136,7 +139,7 @@ export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutati
 
 export const notifyTelegramNewSignUpInternalAction = internalAction({
   args: notifyTelegramNewSignUpArgsValidator,
-  handler: async (ctx, args): Promise<void> => {
+  handler: async (ctx: ActionCtx, args): Promise<void> => {
     return notifyTelegramNewSignUpInternalActionFn(ctx, args)
   },
 })
