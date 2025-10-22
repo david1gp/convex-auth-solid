@@ -7,8 +7,8 @@
       "@/*": ["./src/*"],
       "@convex/*": ["./convex/*"],
       "~auth/*": ["./lib/*"],
-      "~utils/*": ["./node_modules/@adaptive-sm/utils/dist/*"],
-      "~ui/*": ["./node_modules/@adaptive-sm/solid-ui/dist/*"]
+      "~ui/*": ["./node_modules/@adaptive-sm/solid-ui/dist/*"],
+      "~utils/*": ["./node_modules/@adaptive-sm/utils/dist/*"]
     }
   },
   "include": ["src", "lib", "convex", "postcss.config.cjs"]
