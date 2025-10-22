@@ -16,7 +16,3 @@ export function getBaseUrlApi(): string | undefined {
 export function getBaseUrlConvex(): string | undefined {
   return readEnvVariable(publicEnvVariableName.PUBLIC_BASE_URL_CONVEX)
 }
-
-export function getBaseUrlSignedIn(): string {
-  return readEnvVariable(publicEnvVariableName.PUBLIC_SIGNED_IN_DEFAULT_PATH) ?? "/"
-}

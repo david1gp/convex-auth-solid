@@ -1,17 +1,13 @@
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
+import { appMotto } from "@/app/text/appMotto"
+import { appName } from "@/app/text/appName"
+import { getBaseUrlSite } from "@/app/url/getBaseUrl"
+import type { LoginCodeV1Type } from "@adaptive-sm/email-generator/LoginCodeV1Type.js"
 import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator/RegisterEmailV1Type.d.ts"
-import { readEnvVariable } from "~utils/env/readEnvVariable"
 
 export function generateSharedEmailProps() {
   return {
-    homepageText:
-      readEnvVariable(publicEnvVariableName.PUBLIC_EMAIL_TEMPLATE_HOMEPAGE_NAME) ??
-      " missing EMAIL_TEMPLATE_HOMEPAGE_NAME",
-    homepageUrl:
-      readEnvVariable(publicEnvVariableName.PUBLIC_EMAIL_TEMPLATE_HOMEPAGE_URL) ??
-      " missing EMAIL_TEMPLATE_HOMEPAGE_URL",
-    mottoText:
-      readEnvVariable(publicEnvVariableName.PUBLIC_EMAIL_TEMPLATE_HOMEPAGE_MOTTO) ??
-      " missing EMAIL_TEMPLATE_HOMEPAGE_MOTTO",
-  } as const satisfies Partial<RegisterEmailV1Type>
+    homepageText: appName(),
+    homepageUrl: getBaseUrlSite() ?? "",
+    mottoText: appMotto(),
+  } as const satisfies Partial<RegisterEmailV1Type | LoginCodeV1Type>
 }

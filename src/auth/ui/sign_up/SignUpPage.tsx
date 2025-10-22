@@ -1,4 +1,4 @@
-import { appName } from "@/app/appName"
+import { appName } from "@/app/text/appName"
 import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { NavBarAuth } from "@/auth/ui/nav/NavBarAuth"

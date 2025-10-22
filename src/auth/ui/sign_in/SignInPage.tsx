@@ -1,4 +1,4 @@
-import { appName } from "@/app/appName"
+import { appName } from "@/app/text/appName"
 import { NavBarAuth } from "@/auth/ui/nav/NavBarAuth"
 import { SignInPageContent } from "@/auth/ui/sign_in/SignInPageContent"
 import type { Component } from "solid-js"

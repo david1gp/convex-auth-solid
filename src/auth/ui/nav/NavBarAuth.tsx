@@ -1,4 +1,4 @@
-import { appName } from "@/app/appName"
+import { appName } from "@/app/text/appName"
 import { NavApp } from "@/auth/ui/nav/NavApp"
 import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
 

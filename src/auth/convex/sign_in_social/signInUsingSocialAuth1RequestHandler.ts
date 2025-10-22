@@ -1,11 +1,10 @@
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 import { getBaseUrlApp } from "@/app/url/getBaseUrl"
 import { signInUsingSocialAuth2ActionFn } from "@/auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn"
 import type { LoginProvider } from "@/auth/model/socialLoginProvider"
 import type { UserSession } from "@/auth/model/UserSession"
+import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
-import { readEnvVariable } from "~utils/env/readEnvVariable"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
 export async function signInUsingSocialAuth1RequestHandler(
@@ -29,7 +28,7 @@ export async function signInUsingSocialAuth1RequestHandler(
   }
   const userSession: UserSession = tokenResult.data
 
-  const defaultStartPage = readEnvVariable(publicEnvVariableName.PUBLIC_SIGNED_IN_DEFAULT_PATH) ?? "/overview"
+  const defaultStartPage = getDefaultUrlSignedIn()
   const state = url.searchParams.get("state") || defaultStartPage
 
   const userSessionSerializedResult = base64urlEncodeObject(userSession)

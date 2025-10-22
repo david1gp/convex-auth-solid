@@ -1,4 +1,4 @@
-import { getMailToContact } from "@/auth/ui/locked/getMailToContact"
+import { urlContactMailTo } from "@/app/text/urlContactMailTo"
 import { For } from "solid-js"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { SuccessPage } from "~ui/static/pages/SuccessPage"
@@ -14,7 +14,7 @@ export function AccessBlocked() {
   return (
     <SuccessPage title={title} subtitle={subtitle}>
       <For each={ps}>{(p) => <p class="my-4">{p}</p>}</For>
-      <LinkButton href={getMailToContact()} class="w-full">
+      <LinkButton href={urlContactMailTo} class="w-full">
         Request access via Email
       </LinkButton>
     </SuccessPage>

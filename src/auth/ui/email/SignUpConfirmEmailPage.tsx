@@ -1,9 +1,9 @@
-import { getBaseUrlSignedIn } from "@/app/url/getBaseUrl"
 import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
 import { emailSchema } from "@/auth/model/emailSchema"
 import { NavApp } from "@/auth/ui/nav/NavApp"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
+import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
 import { mdiEmailSearchOutline } from "@mdi/js"
 import { useNavigate, useSearchParams } from "@solidjs/router"
 import type { Component } from "solid-js"
@@ -57,7 +57,7 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
     const parsing = v.safeParse(schema, got)
     if (!parsing.success) {
       console.warn("error parsing returnPath", got)
-      return getBaseUrlSignedIn()
+      return getDefaultUrlSignedIn()
     }
     return parsing.output
   }

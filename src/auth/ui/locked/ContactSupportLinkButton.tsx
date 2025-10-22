@@ -1,4 +1,4 @@
-import { getMailToContact } from "@/auth/ui/locked/getMailToContact"
+import { urlContactMailTo } from "@/app/text/urlContactMailTo"
 import { mdiEmail } from "@mdi/js"
 import { splitProps } from "solid-js"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -18,7 +18,7 @@ export function ContactSupportLinkButton(p: Omit<LinkButtonProps, "href">) {
     "children",
   ])
   return (
-    <LinkButton icon={p.icon ?? mdiEmail} href={getMailToContact() ?? "#"} {...rest}>
+    <LinkButton icon={p.icon ?? mdiEmail} href={urlContactMailTo} {...rest}>
       Contact support
     </LinkButton>
   )
