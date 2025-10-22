@@ -1,5 +1,5 @@
 import { appName } from "@/app/appName"
-import { apiClientSignUp } from "@/auth/api/apiClient"
+import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { NavBarAuth } from "@/auth/ui/nav/NavBarAuth"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
@@ -54,7 +54,7 @@ function SignUpEmailPasswordSection() {
 
   async function handleSignUp(values: { name: string; email: string; password?: string; terms: boolean }) {
     // console.log("Sign up with email/password:", values)
-    const result = await apiClientSignUp(values)
+    const result = await apiAuthSignUp(values)
     if (!result.success) {
       toastAdd({ title: "Error signing up", description: result.errorMessage })
       return

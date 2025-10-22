@@ -1,4 +1,4 @@
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"
 import type { PromiseResult } from "~utils/result/Result"
 import { sendTelegramMessageHtml, type TelegramEnvVariableNames } from "~utils/telegram/sendTelegramMessageHtml"

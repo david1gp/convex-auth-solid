@@ -1,4 +1,4 @@
-import { publicEnvVariableName } from "@/auth/env/publicEnvVariableName"
+import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 // import { readEnvVariable } from "@/auth/env/readEnvVariable"
 import { readEnvVariable } from "~utils/env/readEnvVariable"
 

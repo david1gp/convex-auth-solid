@@ -1,5 +1,5 @@
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
-import { publicEnvVariableName } from "@/auth/env/publicEnvVariableName"
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
+import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"

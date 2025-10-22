@@ -1,4 +1,4 @@
-import { publicEnvVariableName } from "@/auth/env/publicEnvVariableName"
+import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 

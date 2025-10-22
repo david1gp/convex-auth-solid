@@ -1,4 +1,4 @@
-import { getBaseUrlSignedIn } from "@/auth/url/getBaseUrl"
+import { getBaseUrlSignedIn } from "@/app/url/getBaseUrl"
 import { pagePathIsAuth } from "@/auth/url/pagePathIsAuth"
 
 export function urlSignInRedirectUrl(fromPathname: string | null | undefined = window.document.location.pathname) {

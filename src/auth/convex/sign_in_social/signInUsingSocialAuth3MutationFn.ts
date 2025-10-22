@@ -1,4 +1,4 @@
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import type { UserSession } from "@/auth/model/UserSession"
 import { createToken } from "@/auth/server/jwt_token/createToken"
 import {

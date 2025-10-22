@@ -21,6 +21,8 @@ export const userSessionSchema = v.object({
   expiresAt: dateTimeSchema,
 })
 
+export const userSessionSchemaFromString = v.pipe(v.string(), v.parseJson(), userSessionSchema)
+
 export function createUserSessionTimes(now = dayjs()): Pick<UserSession, "signedInAt" | "expiresAt"> {
   const signedInAt = now
   const expiresAt = signedInAt.add(tokenValidDurationInDays, "days")

@@ -1,5 +1,5 @@
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { userRole } from "@/auth/model/userRole"

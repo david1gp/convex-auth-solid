@@ -1,6 +1,6 @@
 /* @refresh reload */
 
-import { getRoutesAuth } from "@/auth/getRoutesAuth"
+import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
 import { getRoutesApp } from "@/getRoutesApp"
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import { Router } from "@solidjs/router"

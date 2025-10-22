@@ -1,5 +1,5 @@
+import { getBaseUrlApp } from "@/app/url/getBaseUrl"
 import { signInViaEmailSchema } from "@/auth/model/signInSchema"
-import { getBaseUrlApp } from "@/auth/url/getBaseUrl"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"

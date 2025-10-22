@@ -1,9 +1,9 @@
-import { apiClientSignInViaEmailEnterOtp } from "@/auth/api/apiClient"
+import { getBaseUrlSignedIn } from "@/app/url/getBaseUrl"
+import { apiAuthSignInViaEmailEnterOtp } from "@/auth/api/apiAuthSignInViaEmailEnterOtp"
 import { emailSchema } from "@/auth/model/emailSchema"
 import { NavApp } from "@/auth/ui/nav/NavApp"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
-import { getBaseUrlSignedIn } from "@/auth/url/getBaseUrl"
 import { mdiEmailSearchOutline } from "@mdi/js"
 import { useNavigate, useSearchParams } from "@solidjs/router"
 import type { Component } from "solid-js"
@@ -72,7 +72,7 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
   const handleConfirm = async (otp: string, email: string) => {
     state.isSubmitting.set(true)
 
-    const result = await apiClientSignInViaEmailEnterOtp({ email, code: otp })
+    const result = await apiAuthSignInViaEmailEnterOtp({ email, code: otp })
     if (!result.success) {
       toastAdd({ title: "Error entering otp", description: result.errorMessage })
       return

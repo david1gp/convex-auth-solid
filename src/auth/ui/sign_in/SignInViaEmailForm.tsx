@@ -1,4 +1,4 @@
-import { apiClientSignInViaEmail } from "@/auth/api/apiClient"
+import { apiAuthSignInViaEmail } from "@/auth/api/apiAuthSignInViaEmail"
 import { urlSignInEnterOtp } from "@/auth/url/urlSignInEnterOtp"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { mdiLogin } from "@mdi/js"
@@ -81,7 +81,7 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
     })
 
     state.isSubmitting.set(true)
-    const result = await apiClientSignInViaEmail({ email })
+    const result = await apiAuthSignInViaEmail({ email })
     if (!result.success) {
       toastAdd({ title: "Error signing in", description: result.errorMessage })
       return

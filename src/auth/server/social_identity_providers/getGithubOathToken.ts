@@ -1,5 +1,5 @@
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
-import { publicEnvVariableName } from "@/auth/env/publicEnvVariableName"
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
+import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import * as v from "valibot"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"

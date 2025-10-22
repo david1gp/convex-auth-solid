@@ -1,7 +1,7 @@
+import { getBaseUrlApp } from "@/app/url/getBaseUrl"
 import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
 import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
 import { signUpSchema } from "@/auth/model/signUpSchema"
-import { getBaseUrlApp } from "@/auth/url/getBaseUrl"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"

@@ -1,5 +1,5 @@
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { hashPassword } from "@/auth/convex/pw/hashPassword"
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 

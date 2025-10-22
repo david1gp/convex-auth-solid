@@ -1,4 +1,4 @@
-import { privateEnvVariableName } from "@/auth/env/privateEnvVariableName"
+import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { signInViaPwSchema } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"

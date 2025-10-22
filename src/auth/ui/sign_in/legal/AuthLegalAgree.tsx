@@ -1,5 +1,5 @@
+import { getBaseUrlSite } from "@/app/url/getBaseUrl"
 import type { AuthLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
-import { getBaseUrlSite } from "@/auth/url/getBaseUrl"
 import { LinkText } from "~ui/interactive/link/LinkText"
 import { classMerge } from "~ui/utils/ui/classMerge"
 import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"

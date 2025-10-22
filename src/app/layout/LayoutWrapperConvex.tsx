@@ -1,5 +1,5 @@
+import { getBaseUrlConvex } from "@/app/url/getBaseUrl"
 import { ConvexContext } from "@/utils/convex/convexContext"
-import { getBaseUrlConvex } from "@/auth/url/getBaseUrl"
 import { ConvexClient } from "convex/browser"
 import { createEffect } from "solid-js"
 import { Toaster } from "~ui/interactive/toast/Toaster"
