@@ -52,9 +52,10 @@ export default defineConfig({
         "@solid-primitives/keyed",
         "@solid-primitives/scheduled",
         "@solidjs/router",
-        "clsx",
         "dayjs",
-        "tailwind-merge",
+        // disabled because they cause errors in lib consumer
+        // "clsx",
+        // "tailwind-merge",
         "convex",
         "jose",
         "jwt-decode",
