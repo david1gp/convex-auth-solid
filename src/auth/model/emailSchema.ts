@@ -1,4 +1,4 @@
-import { requiredPasswordLength } from "@/auth/ui/sign_up/requiredPasswordLength"
+import { requiredPasswordLength } from "@/auth/model/requiredPasswordLength"
 import * as v from "valibot"
 import { inputMaxLength100, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 

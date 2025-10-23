@@ -13,10 +13,10 @@ import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon0 } from "~ui/static/icon/Icon0"
-import { classArr } from "~ui/utils/ui/classArr"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classArr } from "~ui/utils/classArr"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { EnterOtpForm } from "../email/EnterOtpForm"
 import { createSignInUiState } from "../sign_in/SignInUiState"
-import { EnterOtpForm } from "./EnterOtpForm"
 
 export const SignUpConfirmEmailPage: Component<{}> = () => {
   return (

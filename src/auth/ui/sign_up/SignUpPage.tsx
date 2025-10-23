@@ -1,26 +1,24 @@
 import { appName } from "@/app/text/appName"
-import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
-import { NavBarAuth } from "@/auth/ui/nav/NavBarAuth"
+import { NavApp } from "@/auth/ui/nav/NavApp"
+import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
 import { AuthCoverIllustration } from "@/auth/ui/sign_up/AuthCoverIllustration"
 import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/SignUpEmailPasswordForm"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
 import { mdiArrowRight } from "@mdi/js"
-import { useLocation, useNavigate } from "@solidjs/router"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
+import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Separator } from "~ui/static/separator/Separator"
-import { classMerge } from "~ui/utils/ui/classMerge"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
-import type { MayHaveInnerClassName } from "~ui/utils/ui/MayHaveInnerClassName"
+import { classMerge } from "~ui/utils/classMerge"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { MayHaveInnerClassName } from "~ui/utils/MayHaveInnerClassName"
 import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClassName {}
@@ -29,12 +27,13 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
   return (
     <LayoutWrapperDemo title={"Sign up - " + appName}>
       <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavBarAuth />
+        <NavApp />
         <div class={classMerge("container max-w-7xl mx-auto py-8 px-4", p.innerClass)}>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <AuthCoverIllustration />
             <div class="space-y-8">
-              <h1 class="text-2xl font-bold text-center">Create new account</h1>
+              <SignInWithAnExistingSession class="" />
+              {/* <h1 class="text-2xl font-bold">Create new account</h1> */}
               <SignUpEmailPasswordSection />
               <Separator />
               <SignUpSocialSection />
@@ -49,24 +48,10 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
 }
 
 function SignUpEmailPasswordSection() {
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  async function handleSignUp(values: { name: string; email: string; password?: string; terms: boolean }) {
-    // console.log("Sign up with email/password:", values)
-    const result = await apiAuthSignUp(values)
-    if (!result.success) {
-      toastAdd({ title: "Error signing up", description: result.errorMessage })
-      return
-    }
-    const returnPath = urlSignInRedirectUrl(location.pathname)
-    navigate(urlSignUpConfirmEmail(values.email, "", returnPath))
-  }
-
   return (
     <section class="space-y-4 max-w-2xl">
-      <h2 class="text-xl font-semibold">Sign up via Email/Password</h2>
-      <SignUpEmailPasswordForm onSubmit={handleSignUp} />
+      <h2 class="text-xl font-semibold">{ttt("Create new account")}</h2>
+      <SignUpEmailPasswordForm />
     </section>
   )
 }
