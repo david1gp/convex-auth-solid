@@ -1,4 +1,4 @@
-import { createSignalObject, type SignalObject } from "~ui/utils/ui/createSignalObject"
+import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type SignInUiState = {
   email: SignalObject<string>

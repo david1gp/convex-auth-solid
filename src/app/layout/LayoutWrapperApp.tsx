@@ -2,8 +2,8 @@ import { LayoutWrapperConvex } from "@/app/layout/LayoutWrapperConvex"
 import { SignInPageLoader } from "@/auth/ui/sign_in/SignInPageLoader"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { Match, Switch } from "solid-js"
-import type { HasChildren } from "~ui/utils/ui/HasChildren"
-import type { MayHaveTitle } from "~ui/utils/ui/MayHaveTitle"
+import type { HasChildren } from "~ui/utils/HasChildren"
+import type { MayHaveTitle } from "~ui/utils/MayHaveTitle"
 
 export interface LayoutWrapperAppProps extends HasChildren, MayHaveTitle {}
 

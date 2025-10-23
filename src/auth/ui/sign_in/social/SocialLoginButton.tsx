@@ -4,7 +4,7 @@ import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { buttonVariant, type ButtonSize } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
 export interface SocialLoginButtonProps extends MayHaveClass {

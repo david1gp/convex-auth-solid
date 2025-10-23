@@ -8,12 +8,13 @@ import { SignInViaPasswordForm } from "@/auth/ui/sign_in/SignInViaPasswordForm"
 import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { mdiArrowRight } from "@mdi/js"
+import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
 import { classesGridCols3xl } from "~ui/static/container/classesGridCols"
-import { classArr } from "~ui/utils/ui/classArr"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classArr } from "~ui/utils/classArr"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function SignInPageContent(p: MayHaveClass) {
   return (
@@ -33,19 +34,19 @@ export function SignInPageContent(p: MayHaveClass) {
 
       {/* Sign in via Email/Password */}
       <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-center">Sign in via Email/Password</h2>
+        <h2 class="text-xl font-semibold">{ttt("Sign in via Email/Password")}</h2>
         <SignInViaPasswordForm class={classesCardWrapperP4} />
       </section>
 
       {/* Sign in via Email */}
       <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-center">Sign in via Email</h2>
+        <h2 class="text-xl font-semibold">{ttt("Sign in via Email")}</h2>
         <SignInViaEmailForm class={classesCardWrapperP4} />
       </section>
 
       {/* Sign in via Social Account */}
       <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-center">Sign in via Social Account</h2>
+        <h2 class="text-xl font-semibold">{ttt("Sign in via Social Account")}</h2>
 
         <div class="flex flex-col justify-center gap-2">
           <SocialLoginButton provider="google" size={buttonSize.default} />
@@ -62,8 +63,8 @@ export function SignInPageContent(p: MayHaveClass) {
 
 function NoAccountSection() {
   return (
-    <section class="flex flex-col items-center gap-4">
-      <h2 class="text-xl font-semibold text-center">Don't have an account?</h2>
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl font-semibold">Don't have an account?</h2>
       <LinkButton
         href={pageRouteAuth.signUp}
         iconRight={mdiArrowRight}

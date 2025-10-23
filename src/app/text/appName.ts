@@ -1,3 +1,3 @@
 export function appName(): string {
-  return "Adaptive Convex Auth Demo"
+  return "Adaptive Convex Auth"
 }

@@ -4,8 +4,8 @@ import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { mdiGithub, mdiGoogle } from "@mdi/js"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { classMerge } from "~ui/utils/ui/classMerge"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classMerge } from "~ui/utils/classMerge"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
 interface SocialSignInButtonProps extends MayHaveClass {

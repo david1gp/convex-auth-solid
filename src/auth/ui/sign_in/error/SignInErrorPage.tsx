@@ -5,8 +5,7 @@ import { mdiAlertBoxOutline } from "@mdi/js"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { Icon1 } from "~ui/static/icon/Icon1"
 import { classesPageWrapper } from "~ui/static/page/classesPageWrapper"
-import { classArr } from "~ui/utils/ui/classArr"
-import { getSearchParam } from "~ui/utils/url/getSearchParam"
+import { classArr } from "~ui/utils/classArr"
 
 const classesPageWrapperInner = classArr(
   "max-w-md w-full", // sizing
@@ -20,8 +19,8 @@ export function SignInErrorPage() {
   const tryAgainText = "Try again, if the problem persists contact support"
   // const [searchParams] = useSearchParams()
   const searchParams = new URLSearchParams(document.location.search)
-  const errorMessage = getSearchParam("errorMessage", searchParams)
-  const returnUrl = getSearchParam("returnUrl", searchParams)
+  const errorMessage = searchParams.get("errorMessage")
+  const returnUrl = searchParams.get("returnUrl")
   return (
     <div class={classArr(classesPageWrapper)}>
       <section id={"authenticationError"} class="flex flex-col gap-2">

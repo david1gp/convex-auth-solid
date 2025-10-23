@@ -1,8 +1,8 @@
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { buttonSize } from "~ui/interactive/button/buttonCva"
-import { classArr } from "~ui/utils/ui/classArr"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classArr } from "~ui/utils/classArr"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface SocialLoginButtonsProps extends MayHaveClass {
   redirectPath?: string

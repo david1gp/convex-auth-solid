@@ -8,21 +8,29 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { For, Show } from "solid-js"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { classMerge } from "~ui/utils/ui/classMerge"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
-import type { SolidRouterNavigator } from "~ui/utils/ui/Navigator"
+import { classMerge } from "~ui/utils/classMerge"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { SolidRouterNavigator } from "~ui/utils/Navigator"
 
 dayjs.extend(relativeTime)
 
-export interface SignInWithAnExistingSessionProps extends MayHaveClass {}
+export interface SignInWithAnExistingSessionProps extends MayHaveClass {
+  h2Class?: string
+}
 
 export function SignInWithAnExistingSession(p: SignInWithAnExistingSessionProps) {
   const sessions = userSessionsSignal.get
   return (
     <Show when={sessions().length > 0}>
-      <section class={classMerge("space-y-4 max-w-2xl", p.class)}>
-        <h2 class="text-start">Continue with an existing session</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <section
+        class={classMerge(
+          "space-y-4 max-w-2xl",
+          sessions().length > 4 ? "row-span-3" : sessions().length > 2 ? "row-span-2" : "",
+          p.class,
+        )}
+      >
+        <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>Continue with an existing session</h2>
+        <div class="flex flex-col gap-4">
           <For each={sessions()}>{(session: UserSession) => <SessionButton session={session} />}</For>
         </div>
       </section>

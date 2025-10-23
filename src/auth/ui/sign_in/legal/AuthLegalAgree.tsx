@@ -1,8 +1,8 @@
 import { getBaseUrlSite } from "@/app/url/getBaseUrl"
 import type { AuthLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
 import { LinkText } from "~ui/interactive/link/LinkText"
-import { classMerge } from "~ui/utils/ui/classMerge"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classMerge } from "~ui/utils/classMerge"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface AuthLegalAgreeProps extends MayHaveClass {
   variant: AuthLegalAgreeVariant

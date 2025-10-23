@@ -13,12 +13,12 @@ import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon0 } from "~ui/static/icon/Icon0"
-import { classArr } from "~ui/utils/ui/classArr"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
-import { createSignInUiState } from "../sign_in/SignInUiState"
-import { EnterOtpForm } from "./EnterOtpForm"
+import { classArr } from "~ui/utils/classArr"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { EnterOtpForm } from "../email/EnterOtpForm"
+import { createSignInUiState } from "./SignInUiState"
 
-export const SignInEnterOtpPage: Component<{}> = () => {
+export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
   return (
     <LayoutWrapperDemo title={ttt("Sign In / Enter OTP")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>

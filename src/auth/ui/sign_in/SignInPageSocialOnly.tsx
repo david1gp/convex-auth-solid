@@ -6,9 +6,9 @@ import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
 import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
 import { SocialLoginButtonsSection } from "@/auth/ui/sign_in/social/SocialLoginButtonsSection"
 import { classesBgGray } from "~ui/classes/classesBg"
-import { classArr } from "~ui/utils/ui/classArr"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
-import type { MayHaveInnerClassName } from "~ui/utils/ui/MayHaveInnerClassName"
+import { classArr } from "~ui/utils/classArr"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { MayHaveInnerClassName } from "~ui/utils/MayHaveInnerClassName"
 
 export interface SignInPageSocialOnlyProps extends MayHaveClass, MayHaveInnerClassName {}
 

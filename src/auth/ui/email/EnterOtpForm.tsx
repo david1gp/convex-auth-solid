@@ -6,9 +6,9 @@ import { ttt } from "~ui/i18n/ttt"
 import { Label } from "~ui/input/label/Label"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
-import { classMerge } from "~ui/utils/ui/classMerge"
-import { createSignalObject } from "~ui/utils/ui/createSignalObject"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { classMerge } from "~ui/utils/classMerge"
+import { createSignalObject } from "~ui/utils/createSignalObject"
 import { OtpInput6Numbers } from "./OtpInput6Numbers"
 
 interface EnterOtpFormProps extends MayHaveClass {

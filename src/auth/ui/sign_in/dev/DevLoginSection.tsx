@@ -1,7 +1,7 @@
 import { urlAuthDev } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { useNavigate } from "@solidjs/router"
-import { isDevEnv } from "~ui/env/isDevEnv"
 import { inputMaxLength50 } from "~ui/input/input/inputMaxLength"
 import { InputS } from "~ui/input/input/InputS"
 import { Label } from "~ui/input/label/Label"
@@ -10,12 +10,12 @@ import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
 import { linkIcons } from "~ui/static/icon/linkIcons"
-import { classMerge } from "~ui/utils/ui/classMerge"
-import { createSignalObject } from "~ui/utils/ui/createSignalObject"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classMerge } from "~ui/utils/classMerge"
+import { createSignalObject } from "~ui/utils/createSignalObject"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function DevLoginSection(p: MayHaveClass) {
-  if (!isDevEnv()) return null
+  if (!isDevEnvVite()) return null
 
   const userIdField = "user-id"
 

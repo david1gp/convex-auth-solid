@@ -1,5 +1,5 @@
-import { classMerge } from "~ui/utils/ui/classMerge"
-import type { MayHaveClass } from "~ui/utils/ui/MayHaveClass"
+import { classMerge } from "~ui/utils/classMerge"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface AuthMiniHeroProps extends MayHaveClass {
   headerClass?: string
