@@ -2,11 +2,15 @@ import * as v from "valibot"
 import { createError } from "~utils/result/Result"
 import { resultErrSchemaFromJsonString } from "~utils/result/resultErrSchema"
 
-export function tryParsingFetchErr(op: string, text: string, responseStatusText: string) {
+export function tryParsingFetchErr(op: string, text: string, statusCode: number, responseStatusText: string) {
   const op2 = "tryParsingErr"
   const parsingErr = v.safeParse(resultErrSchemaFromJsonString, text)
   if (!parsingErr.success) {
-    return createError(op + "." + op2, responseStatusText, text)
+    const e = createError(op + "." + op2, responseStatusText, text)
+    e.statusCode = statusCode
+    return e
   }
-  return parsingErr.output
+  const e = parsingErr.output
+  e.statusCode = statusCode
+  return e
 }

@@ -16,7 +16,7 @@ export async function apiAuthSignInViaEmailEnterOtp(props: SignInViaEmailEnterOt
   })
   const text = await response.text()
   if (!response.ok) {
-    return tryParsingFetchErr(op, text, response.statusText)
+    return tryParsingFetchErr(op, text, response.status, response.statusText)
   }
   return parseUserSessionResponse(op, text)
 }

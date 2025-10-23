@@ -14,7 +14,7 @@ export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> 
   })
   const text = await response.text()
   if (!response.ok) {
-    return tryParsingFetchErr(op, text, response.statusText)
+    return tryParsingFetchErr(op, text, response.status, response.statusText)
   }
   return createResult(text)
 }

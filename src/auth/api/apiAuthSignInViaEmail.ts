@@ -14,7 +14,7 @@ export async function apiAuthSignInViaEmail(props: SignInViaEmailType): Promise<
   })
   const text = await response.text()
   if (!response.ok) {
-    return tryParsingFetchErr(op, text, response.statusText)
+    return tryParsingFetchErr(op, text, response.status, response.statusText)
   }
   return createResult(text)
 }
