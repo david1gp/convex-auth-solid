@@ -6,6 +6,7 @@ import type { ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
 import { createError } from "~utils/result/Result"
 import { sendEmailSignIn } from "../email/sendEmailSignIn"
+import { commonApiErrorMessages } from "../sign_up/commonApiErrorMessages"
 
 export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInEmail1HttpHandler"
@@ -16,7 +17,7 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
 
   const textBody = await request.text()
   if (!textBody) {
-    const errorMessage = "Empty body"
+    const errorMessage = commonApiErrorMessages.emptyBody
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -24,7 +25,7 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
   const schema = v.pipe(v.string(), v.parseJson(), signInViaEmailSchema)
   const validation = v.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = "Schema validation failed: " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })

@@ -1,6 +1,7 @@
 import { getBaseUrlApp } from "@/app/url/getBaseUrl"
 import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
 import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
+import { signUpErrorMessages } from "@/auth/convex/sign_up/signUpErrorMessages"
 import { signUpSchema } from "@/auth/model/signUpSchema"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { internal } from "@convex/_generated/api"
@@ -8,6 +9,7 @@ import type { ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
 import { createError } from "~utils/result/Result"
 import { sendEmailSignUp } from "../email/sendEmailSignUp"
+import { commonApiErrorMessages } from "./commonApiErrorMessages"
 
 export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signUp1RequestHandler"
@@ -18,7 +20,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
 
   const textBody = await request.text()
   if (!textBody) {
-    const errorMessage = "Empty body"
+    const errorMessage = commonApiErrorMessages.emptyBody
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -26,7 +28,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const schema = v.pipe(v.string(), v.parseJson(), signUpSchema)
   const validation = v.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = "Schema validation failed: " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -35,7 +37,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
 
   const existingUser = await ctx.runQuery(internal.auth.findUserByEmailQuery, { email })
   if (existingUser) {
-    const errorMessage = "User with this email already exists"
+    const errorMessage = signUpErrorMessages.userAlreadyExists
     const errorResult = createError(op, errorMessage, email)
     console.warn(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 409 })

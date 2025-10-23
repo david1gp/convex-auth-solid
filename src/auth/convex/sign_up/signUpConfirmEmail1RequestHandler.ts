@@ -1,5 +1,5 @@
 import type { UserSession } from "@/auth/model/UserSession"
-import { signUpConfirmEmailSchema } from "@/auth/ui/sign_up/signUpConfirmEmailSchema"
+import { signUpConfirmEmailSchema } from "@/auth/model/signUpConfirmEmailSchema"
 import { internal } from "@convex/_generated/api"
 import { type ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
