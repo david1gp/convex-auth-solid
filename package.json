@@ -34,7 +34,7 @@
     "clean": "rm -rf ./dist",
     "reset": "rm -rf ./node_modules"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@adaptive-sm/solid-ui": "link:@adaptive-sm/solid-ui",
     "@adaptive-sm/utils": "link:@adaptive-sm/utils",
     "@floating-ui/dom": "^1.7.4",
@@ -47,7 +47,6 @@
     "jose": "^6.1.0",
     "jwt-decode": "^4.0.0",
     "solid-js": "1.9.9",
-    "typescript": "^5",
     "valibot": "^1.1.0"
   },
   "devDependencies": {
