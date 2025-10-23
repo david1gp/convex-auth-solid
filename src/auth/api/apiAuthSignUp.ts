@@ -1,8 +1,9 @@
 import { getBaseUrlApi } from "@/app/url/getBaseUrl"
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
+import { tryParsingFetchErr } from "@/auth/api/tryParsingFetchErr"
 import type { SignUpType } from "@/auth/model/signUpSchema"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
-import { type Result, createError, createResult } from "~utils/result/Result"
+import { type Result, createResult } from "~utils/result/Result"
 
 export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> {
   const op = "apiClientSignUp"
@@ -13,7 +14,7 @@ export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> 
   })
   const text = await response.text()
   if (!response.ok) {
-    return createError(op, response.statusText, text)
+    return tryParsingFetchErr(op, text, response.statusText)
   }
   return createResult(text)
 }

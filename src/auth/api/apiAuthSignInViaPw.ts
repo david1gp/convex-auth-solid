@@ -1,8 +1,9 @@
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
+import { tryParsingFetchErr } from "@/auth/api/tryParsingFetchErr"
 import type { SignInViaPwType } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
-import { type Result, createError } from "~utils/result/Result"
+import { type Result } from "~utils/result/Result"
 import { parseUserSessionResponse } from "./parseUserSessionResponse"
 
 export async function apiAuthSignInViaPw(props: SignInViaPwType): Promise<Result<UserSession>> {
@@ -14,7 +15,7 @@ export async function apiAuthSignInViaPw(props: SignInViaPwType): Promise<Result
   })
   const text = await response.text()
   if (!response.ok) {
-    return createError(op, response.statusText, text)
+    return tryParsingFetchErr(op, text, response.statusText)
   }
   return parseUserSessionResponse(op, text)
 }
