@@ -29,21 +29,29 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
       <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>
         <NavApp />
         <div class={classMerge("container max-w-7xl mx-auto py-8 px-4", p.innerClass)}>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <AuthCoverIllustration />
-            <div class="space-y-8">
-              <SignInWithAnExistingSession class="" />
-              {/* <h1 class="text-2xl font-bold">Create new account</h1> */}
-              <SignUpEmailPasswordSection />
-              <Separator />
-              <SignUpSocialSection />
-              <Separator />
-              <HaveAnAccountSection />
-            </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <LeftSide />
+            <RightSide />
           </div>
         </div>
       </div>
     </LayoutWrapperDemo>
+  )
+}
+
+function LeftSide() {
+  return <SignInWithAnExistingSession class="" fallback={<AuthCoverIllustration />} />
+}
+
+function RightSide() {
+  return (
+    <div class="space-y-8">
+      <SignUpEmailPasswordSection />
+      <Separator />
+      <SignUpSocialSection />
+      <Separator />
+      <HaveAnAccountSection />
+    </div>
   )
 }
 

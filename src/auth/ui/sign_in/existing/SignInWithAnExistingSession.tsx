@@ -5,7 +5,7 @@ import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { useNavigate } from "@solidjs/router"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
-import { For, Show } from "solid-js"
+import { For, Show, type JSX } from "solid-js"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { classMerge } from "~ui/utils/classMerge"
@@ -16,12 +16,13 @@ dayjs.extend(relativeTime)
 
 export interface SignInWithAnExistingSessionProps extends MayHaveClass {
   h2Class?: string
+  fallback?: JSX.Element
 }
 
 export function SignInWithAnExistingSession(p: SignInWithAnExistingSessionProps) {
   const sessions = userSessionsSignal.get
   return (
-    <Show when={sessions().length > 0}>
+    <Show when={sessions().length > 0} fallback={p.fallback}>
       <section
         class={classMerge(
           "space-y-4 max-w-2xl",
