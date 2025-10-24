@@ -3,7 +3,7 @@ import { emailSchema, passwordSchema, signUpNameSchema, signUpTermsSchema } from
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
 import { debounceMs } from "@/utils/ui/debounceMs"
-import { mdiAccountCancel } from "@mdi/js"
+import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { ttt } from "~ui/i18n/ttt"
@@ -113,18 +113,10 @@ function handleSubmit(e: SubmitEvent, navigate: NavigateType, state: SignUpUiSta
   e.preventDefault()
   state.isSubmitting.set(true)
 
-  const formData: SignUpFormData = {
-    name: state.name.get(),
-    email: state.email.get(),
-    password: state.password.get(),
-    terms: state.terms.get(),
-  }
-
-  // Validate all fields
-  const nameResult = validateField("name", formData.name)
-  const emailResult = validateField("email", formData.email)
-  const passwordResult = validateField("password", formData.password)
-  const termsResult = validateField("terms", formData.terms)
+  const nameResult = validateField("name", state.name.get())
+  const emailResult = validateField("email", state.email.get())
+  const passwordResult = validateField("password", state.password.get())
+  const termsResult = validateField("terms", state.terms.get())
 
   if (!nameResult.success) {
     errors.name.set(nameResult.issues[0].message)
@@ -140,8 +132,26 @@ function handleSubmit(e: SubmitEvent, navigate: NavigateType, state: SignUpUiSta
   } else errors.terms.set("")
 
   if (nameResult.success && emailResult.success && passwordResult.success && termsResult.success) {
-    // p.onSubmit(formData)
+    const formData: SignUpFormData = {
+      name: state.name.get(),
+      email: state.email.get(),
+      password: state.password.get(),
+      terms: state.terms.get(),
+    }
     handleSignUp(formData, navigate, state, errors)
+  } else {
+    if (!nameResult.success) {
+      toastAdd({ title: nameResult.issues[0].message, icon: mdiAccountCancel, id: "name" })
+    }
+    if (!emailResult.success) {
+      toastAdd({ title: emailResult.issues[0].message, icon: mdiEmailOff, id: "email" })
+    }
+    if (!passwordResult.success) {
+      toastAdd({ title: passwordResult.issues[0].message, icon: mdiLockOff, id: "password" })
+    }
+    if (!termsResult.success) {
+      toastAdd({ title: termsResult.issues[0].message, icon: mdiCheckboxBlankOff, id: "terms" })
+    }
   }
   state.isSubmitting.set(false)
 }
@@ -157,7 +167,7 @@ async function handleSignUp(
   if (!result.success) {
     console.error(result)
     const title = result.errorMessage
-    toastAdd({ title, icon: mdiAccountCancel })
+    toastAdd({ id: "signup-api-error", title, icon: mdiAccountCancel })
     if (result.statusCode === 409) {
       const currentSet = state.alreadyRegisteredEmails.get()
       const newSet = new Set([...currentSet, values.email])
