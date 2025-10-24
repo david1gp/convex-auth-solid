@@ -35,7 +35,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         size={buttonSize.lg}
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="text-lg"
-        disabled={sm.hasErrors() || sm.state.isSubmitting.get()}
+        disabled={sm.state.isSubmitting.get()}
       >
         {sm.state.isSubmitting.get() ? "Signing up..." : "Sign up"}
       </Button>
@@ -81,6 +81,9 @@ function FieldSwitch(
         )}
         onInput={(e) => {
           valueSignal.set(e.currentTarget.value)
+          debouncedValidate(e.currentTarget.value)
+        }}
+        onBlur={(e) => {
           debouncedValidate(e.currentTarget.value)
         }}
       />
