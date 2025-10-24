@@ -21,7 +21,7 @@ export function DevLoginSection(p: MayHaveClass) {
 
   return (
     <section class={classMerge("flex flex-col gap-4", p.class)}>
-      <h2 class="text-xl font-semibold text-center">Developer login</h2>
+      <h2 class="text-xl font-semibold">Developer login</h2>
       <form
         id="devSignInForm"
         // class={classMerge("grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto", p.class)}

@@ -33,9 +33,9 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
       <Button
         type="submit"
         size={buttonSize.lg}
-        variant={buttonVariant.primary}
-        class="h-12 text-lg"
-        disabled={sm.state.isSubmitting.get()}
+        variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+        class="text-lg"
+        disabled={sm.hasErrors() || sm.state.isSubmitting.get()}
       >
         {sm.state.isSubmitting.get() ? "Signing up..." : "Sign up"}
       </Button>
