@@ -70,12 +70,28 @@ export const authEmailLoginCodeFields = {
 }
 
 export const authTables = {
-  users: defineTable(userFields).index("email", ["email"]),
+  users: defineTable(userFields)
+    //
+    .index("email", ["email"]),
+
   authAccounts: defineTable(authAccountFields)
+    //
     .index("userIdAndProvider", ["userId", "provider"])
     .index("providerAndAccountId", ["provider", "providerAccountId"]),
-  authSessions: defineTable(authSessionFields).index("userId", ["userId"]),
-  authRateLimits: defineTable(authRateLimitFields).index("identifier", ["identifier"]),
-  authUserEmailRegistrations: defineTable(authUserEmailRegistrationFields).index("emailCode", ["email", "code"]),
-  authEmailLoginCodes: defineTable(authEmailLoginCodeFields).index("emailCode", ["email", "code"]),
+
+  authSessions: defineTable(authSessionFields)
+    //
+    .index("userId", ["userId"]),
+
+  authRateLimits: defineTable(authRateLimitFields)
+    //
+    .index("identifier", ["identifier"]),
+
+  authUserEmailRegistrations: defineTable(authUserEmailRegistrationFields)
+    //
+    .index("emailCode", ["email", "code"]),
+
+  authEmailLoginCodes: defineTable(authEmailLoginCodeFields)
+    //
+    .index("emailCode", ["email", "code"]),
 } as const
