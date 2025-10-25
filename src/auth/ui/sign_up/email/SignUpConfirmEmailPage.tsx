@@ -1,4 +1,4 @@
-import { apiAuthSignInViaEmailEnterOtp } from "@/auth/api/apiAuthSignInViaEmailEnterOtp"
+import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
 import { emailSchema } from "@/auth/model/emailSchema"
 import { NavApp } from "@/auth/ui/nav/NavApp"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
@@ -14,33 +14,33 @@ import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon0 } from "~ui/static/icon/Icon0"
 import { classArr } from "~ui/utils/classArr"
+import { createSignalObject } from "~ui/utils/createSignalObject"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { EnterOtpForm } from "../email/EnterOtpForm"
-import { createSignInUiState } from "./SignInUiState"
+import { EnterOtpForm } from "../../email/EnterOtpForm"
 
-export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
+export const SignUpConfirmEmailPage: Component<{}> = () => {
   return (
-    <LayoutWrapperDemo title={ttt("Sign In / Enter OTP")}>
+    <LayoutWrapperDemo title={ttt("Sign Up / Confirm Email")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
         <NavApp />
         <div
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >
           <div class="bg-indigo-400 rounded-full p-4 flex items-center justify-center size-70">
-            <Icon0 path={mdiEmailSearchOutline} class="size-55 fill-white text-white" />
+            <Icon0 path={mdiEmailSearchOutline} class="size-52 fill-white text-white" />
           </div>
           {/* <Icon0 path={iconEmailOutlineThin} class="size-30 fill-blue-400 text-blue-400" /> */}
-          <SignInViaEmailEnterOtp class={classArr("max-w-xl", "p-4 mb-4")} />
+          <SignUpConfirmEmail class={classArr("max-w-xl", "p-4 mb-4")} />
         </div>
       </div>
     </LayoutWrapperDemo>
   )
 }
 
-export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
+const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
   const [search] = useSearchParams()
   const navigate = useNavigate()
-  const state = createSignInUiState()
+  const isSubmitting = createSignalObject(false)
 
   function getEmail() {
     const got = search.email
@@ -51,50 +51,50 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
     }
     return parsing.output
   }
-
   function getReturnPath() {
     const got = search.returnPath
     const schema = v.pipe(v.string(), v.minLength(1))
     const parsing = v.safeParse(schema, got)
     if (!parsing.success) {
-      console.warn("error parsing returnUrl", got)
+      console.warn("error parsing returnPath", got)
       return getDefaultUrlSignedIn()
     }
     return parsing.output
   }
 
   // createEffect(() => {
-  //   if (!email()) {
-  //     navigate("/sign-in", { replace: true })
+  //   if (!getEmail()) {
+  //     navigate("/sign-up", { replace: true })
   //   }
   // })
 
   const handleConfirm = async (otp: string, email: string) => {
-    state.isSubmitting.set(true)
+    isSubmitting.set(true)
 
-    const result = await apiAuthSignInViaEmailEnterOtp({ email, code: otp })
+    const result = await apiAuthSignUpConfirmEmail({ email, code: otp })
     if (!result.success) {
-      toastAdd({ title: "Error entering otp", description: result.errorMessage })
+      toastAdd({ title: "Error confirming email", description: result.errorMessage })
       return
     }
-    state.isSubmitting.set(false)
+    isSubmitting.set(false)
 
     const userSession = result.data
     // save user session
     userSessionsSignalAdd(userSession)
     userSessionSignal.set(userSession)
-    // navigate
+
     const returnUrl = getReturnPath()
+    console.log("Registration email confirmation", { otp, email, returnUrl })
     navigate(returnUrl)
   }
 
   return (
     <EnterOtpForm
-      title="Sign In to Your Account"
-      subtitle="Almost there! Enter the code we just emailed you to sign In."
-      sentMessage="A one-time code was sent to"
-      instruction="Enter it below to securely sign in."
-      buttonText="Sign In"
+      title="Verify Your Email"
+      subtitle="Almost there! Confirm your email to activate your account."
+      sentMessage="We’ve sent a 6-digit code to"
+      instruction="Enter it below to verify your email and complete your registration."
+      buttonText="Verify Email"
       email={getEmail()}
       actionFn={handleConfirm}
       class={p.class}

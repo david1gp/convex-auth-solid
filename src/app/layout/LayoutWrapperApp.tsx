@@ -1,5 +1,5 @@
 import { LayoutWrapperConvex } from "@/app/layout/LayoutWrapperConvex"
-import { SignInPageLoader } from "@/auth/ui/sign_in/SignInPageLoader"
+import { SignInPageLoader } from "@/auth/ui/sign_in/page/SignInPageLoader"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { Match, Switch } from "solid-js"
 import type { HasChildren } from "~ui/utils/HasChildren"

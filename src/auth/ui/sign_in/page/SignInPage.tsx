@@ -1,6 +1,6 @@
 import { appName } from "@/app/text/appName"
 import { NavApp } from "@/auth/ui/nav/NavApp"
-import { SignInPageContent } from "@/auth/ui/sign_in/SignInPageContent"
+import { SignInPageContent } from "@/auth/ui/sign_in/page/SignInPageContent"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"

@@ -4,16 +4,16 @@ import { lazy } from "solid-js"
 import type { RouteObject } from "~ui/utils/RouteConfig"
 
 const SignUpPage = lazy(() => import("@/auth/ui/sign_up/SignUpPage").then((c) => ({ default: c.SignUpPage })))
-const SignInPage = lazy(() => import("@/auth/ui/sign_in/SignInPage").then((c) => ({ default: c.SignInPage })))
+const SignInPage = lazy(() => import("@/auth/ui/sign_in/page/SignInPage").then((c) => ({ default: c.SignInPage })))
 const SignInErrorPage = lazy(() =>
   import("@/auth/ui/sign_in/error/SignInErrorPage").then((c) => ({ default: c.SignInErrorPage })),
 )
-const SignedInPage = lazy(() => import("@/auth/ui/sign_in/SignedInPage").then((c) => ({ default: c.SignedInPage })))
+const SignedInPage = lazy(() => import("@/auth/ui/sign_in/page/SignedInPage").then((c) => ({ default: c.SignedInPage })))
 const RegistrationConfirmEmailPage = lazy(() =>
-  import("@/auth/ui/sign_up/SignUpConfirmEmailPage").then((c) => ({ default: c.SignUpConfirmEmailPage })),
+  import("@/auth/ui/sign_up/email/SignUpConfirmEmailPage").then((c) => ({ default: c.SignUpConfirmEmailPage })),
 )
 const SignInViaEmailEnterOtpPage = lazy(() =>
-  import("@/auth/ui/sign_in/SignInViaEmailEnterOtpPage").then((c) => ({ default: c.SignInViaEmailEnterOtpPage })),
+  import("@/auth/ui/sign_in/via_email_enter_otp/SignInViaEmailEnterOtpPage").then((c) => ({ default: c.SignInViaEmailEnterOtpPage })),
 )
 
 export function getRoutesAuth(): RouteObject[] {

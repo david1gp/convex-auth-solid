@@ -1,6 +1,6 @@
 import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
 import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
-import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/addKeyboardListenerAlt"
+import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { useNavigate } from "@solidjs/router"
 import { For, Show } from "solid-js"

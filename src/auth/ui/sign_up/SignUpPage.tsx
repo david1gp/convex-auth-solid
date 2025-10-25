@@ -3,8 +3,7 @@ import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { NavApp } from "@/auth/ui/nav/NavApp"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
-import { AuthCoverIllustration } from "@/auth/ui/sign_up/AuthCoverIllustration"
-import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/SignUpEmailPasswordForm"
+import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPasswordForm"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
@@ -15,6 +14,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
+import { Img } from "~ui/static/img/Img"
 import { Separator } from "~ui/static/separator/Separator"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -41,6 +41,11 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
 
 function LeftSide() {
   return <SignInWithAnExistingSession class="" fallback={<AuthCoverIllustration />} />
+}
+
+export function AuthCoverIllustration(p: MayHaveClass) {
+  const url = "/img/illustrations/auth/sign_in_1.svg"
+  return <Img src={url} alt="Sign up illustration" class={classMerge("hidden lg:flex w-full max-w-3xl", p.class)} />
 }
 
 function RightSide() {

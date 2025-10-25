@@ -3,7 +3,7 @@ import type { Navigator } from "node_modules/@solidjs/router/dist/types"
 import { createEffect } from "solid-js"
 import { ErrorPage } from "~ui/static/pages/ErrorPage"
 import { SuccessPage } from "~ui/static/pages/SuccessPage"
-import { signInLogic } from "./logic/signInLogic.js"
+import { signInLogic } from "../logic/signInLogic.js"
 
 export function SignedInPage() {
   const [searchParams] = useSearchParams()

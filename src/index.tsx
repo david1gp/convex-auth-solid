@@ -1,15 +1,14 @@
 /* @refresh reload */
 
-import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
 import { getRoutesApp } from "@/app/getRoutesApp"
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
+import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
 import { Router } from "@solidjs/router"
 import { render } from "solid-js/web"
 import "./global.css"
 
 const routesApp = [
   {
-    // path: "/*",
     component: LayoutWrapperApp,
     children: getRoutesApp(),
   },
