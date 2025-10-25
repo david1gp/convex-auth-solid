@@ -12,13 +12,16 @@ import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { Checkbox } from "~ui/interactive/check/Checkbox"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
+import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
+import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 import { createSignUpUiState, signUpCreateStateManagement, type SignUpFormData } from "./signUpCreateStateManagement"
 
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}
 
 export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
   const navigate = useNavigate()
-  const sm = signUpCreateStateManagement(navigate)
+  const searchParams = useSearchParamsObject()
+  const sm = signUpCreateStateManagement(navigate, searchParams)
 
   if (isDevEnvVite()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
@@ -28,7 +31,9 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
 
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-6", p.class)}>
-      <For each={fieldNames}>{(field) => FieldSwitch(field, sm.state, sm.errors, sm.validateOnChange)}</For>
+      <For each={fieldNames}>
+        {(field) => FieldSwitch(field, sm.state, sm.errors, sm.validateOnChange, searchParams)}
+      </For>
 
       <Button
         type="submit"
@@ -48,6 +53,7 @@ function FieldSwitch(
   state: ReturnType<typeof createSignUpUiState>,
   errors: { [K in keyof SignUpFormData]: { get: () => string; set: (value: string) => void } },
   validateOnChange: (field: keyof SignUpFormData) => (value: string | boolean) => void,
+  searchParams: SearchParamsObject,
 ) {
   if (field === "terms") {
     return FieldSwitchTerms(state, errors, validateOnChange)
@@ -80,8 +86,12 @@ function FieldSwitch(
           errors[field as keyof typeof errors].get() && "border-destructive focus-visible:ring-destructive",
         )}
         onInput={(e) => {
-          valueSignal.set(e.currentTarget.value)
-          debouncedValidate(e.currentTarget.value)
+          const newValue = e.currentTarget.value
+          valueSignal.set(newValue)
+          if (field === "email") {
+            searchParams.set({ email: newValue })
+          }
+          debouncedValidate(newValue)
         }}
         onBlur={(e) => {
           debouncedValidate(e.currentTarget.value)

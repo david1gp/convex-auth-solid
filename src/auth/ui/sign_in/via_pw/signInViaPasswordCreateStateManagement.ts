@@ -2,6 +2,8 @@ import { debounceMs } from "@/utils/ui/debounceMs"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
+import { createSearchParamSignalObject } from "~ui/utils/router/createSearchParamSignalObject"
 import { emailSchema, passwordSchema } from "../../../model/emailSchema"
 
 export type SignInUiState = {
@@ -11,9 +13,9 @@ export type SignInUiState = {
   isSubmitting: SignalObject<boolean>
 }
 
-export function createSignInUiState(): SignInUiState {
+export function createSignInUiState(searchParams: SearchParamsObject): SignInUiState {
   return {
-    email: createSignalObject(""),
+    email: createSearchParamSignalObject("email", searchParams),
     password: createSignalObject(""),
     //
     isSubmitting: createSignalObject(false),
@@ -45,8 +47,10 @@ export type SignInViaPasswordStateManagement = {
   handleSubmit: (e: SubmitEvent) => void
 }
 
-export function signInViaPasswordCreateStateManagement(): SignInViaPasswordStateManagement {
-  const state = createSignInUiState()
+export function signInViaPasswordCreateStateManagement(
+  searchParams: SearchParamsObject,
+): SignInViaPasswordStateManagement {
+  const state = createSignInUiState(searchParams)
   const errors = createSignInErrorState()
   return {
     state,

@@ -7,15 +7,17 @@ import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import { createSearchParamSignalObject } from "~ui/utils/router/createSearchParamSignalObject"
+import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
 
 export type SignInViaEmailUiState = {
   email: SignalObject<string>
   isSubmitting: SignalObject<boolean>
 }
 
-export function signInViaEmailCreateUiState(): SignInViaEmailUiState {
+export function signInViaEmailCreateUiState(searchParams: SearchParamsObject): SignInViaEmailUiState {
   return {
-    email: createSignalObject(""),
+    email: createSearchParamSignalObject("email", searchParams),
     isSubmitting: createSignalObject(false),
   }
 }
@@ -48,8 +50,9 @@ type LocationType = { pathname: string }
 export function createSignInViaEmailStateManagement(
   navigate: NavigateType,
   location: LocationType,
+  searchParams: SearchParamsObject,
 ): SignInViaEmailStateManagement {
-  const state = signInViaEmailCreateUiState()
+  const state = signInViaEmailCreateUiState(searchParams)
   const errors = createSignInViaEmailErrorState()
 
   return {

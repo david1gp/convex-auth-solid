@@ -10,12 +10,14 @@ import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
+import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 import { createSignInViaEmailStateManagement } from "./signInViaEmailCreateUiState"
 
 export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
   const navigate = useNavigate()
   const location = useLocation()
-  const sm = createSignInViaEmailStateManagement(navigate, location)
+  const searchParams = useSearchParamsObject()
+  const sm = createSignInViaEmailStateManagement(navigate, location, searchParams)
   const emailInputId = "sign-in-via-email-input"
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("space-y-4", p.class)}>
@@ -30,8 +32,10 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
           autocomplete={"email"}
           valueSignal={sm.state.email}
           onInput={(e) => {
-            sm.state.email.set(e.currentTarget.value)
-            sm.validateOnChange("email")(e.currentTarget.value)
+            const newValue = e.currentTarget.value
+            sm.state.email.set(newValue)
+            searchParams.set({ email: newValue })
+            sm.validateOnChange("email")(newValue)
           }}
           onBlur={(e) => sm.validateOnChange("email")(e.currentTarget.value)}
           class={classMerge("w-full", sm.errors.email.get() && "border-destructive focus-visible:ring-destructive")}

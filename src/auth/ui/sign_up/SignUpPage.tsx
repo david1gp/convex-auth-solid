@@ -4,7 +4,7 @@ import { NavApp } from "@/auth/ui/nav/NavApp"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
 import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPasswordForm"
-import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
+import { urlPageSignIn } from "@/auth/url/pageRouteAuth"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { mdiArrowRight } from "@mdi/js"
@@ -19,6 +19,8 @@ import { Separator } from "~ui/static/separator/Separator"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveInnerClassName } from "~ui/utils/MayHaveInnerClassName"
+import { getSearchParamAsString } from "~ui/utils/router/getSearchParam"
+import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClassName {}
@@ -130,16 +132,17 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
 }
 
 function HaveAnAccountSection() {
+  const searchParams = useSearchParamsObject()
   return (
     <section class="space-y-2">
-      <h2 class="text-xl font-semibold">Have an account?</h2>
+      <h2 class="text-xl font-semibold">{ttt("Have an account?")}</h2>
       <LinkButton
-        href={pageRouteAuth.signIn}
+        href={urlPageSignIn(getSearchParamAsString(searchParams, "email"))}
         iconRight={mdiArrowRight}
         size={buttonSize.lg}
         variant={buttonVariant.default}
       >
-        Sign In instead
+        {ttt("Sign In instead")}
       </LinkButton>
     </section>
   )

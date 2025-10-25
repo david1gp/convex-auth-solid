@@ -9,6 +9,8 @@ import * as v from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import { createSearchParamSignalObject } from "~ui/utils/router/createSearchParamSignalObject"
+import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
 
 export type SignUpUiState = {
   isSubmitting: SignalObject<boolean>
@@ -19,11 +21,11 @@ export type SignUpUiState = {
   alreadyRegisteredEmails: SignalObject<Set<string>>
 }
 
-export function createSignUpUiState(): SignUpUiState {
+export function createSignUpUiState(searchParams: SearchParamsObject): SignUpUiState {
   return {
     isSubmitting: createSignalObject(false),
     name: createSignalObject(""),
-    email: createSignalObject(""),
+    email: createSearchParamSignalObject("email", searchParams),
     password: createSignalObject(""),
     terms: createSignalObject(false),
     alreadyRegisteredEmails: createSignalObject(new Set<string>()),
@@ -64,8 +66,11 @@ export type SignUpUiStateManagement = {
 
 type NavigateType = (to: string) => void
 
-export function signUpCreateStateManagement(navigate: NavigateType): SignUpUiStateManagement {
-  const state = createSignUpUiState()
+export function signUpCreateStateManagement(
+  navigate: NavigateType,
+  searchParams: SearchParamsObject,
+): SignUpUiStateManagement {
+  const state = createSignUpUiState(searchParams)
   const errors = createSignUpErrorState()
 
   return {

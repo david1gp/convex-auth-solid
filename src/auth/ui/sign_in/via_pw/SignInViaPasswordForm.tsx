@@ -9,13 +9,14 @@ import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
+import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreateStateManagement"
 
 export function SignInViaPasswordForm(p: MayHaveClass) {
-  const sm = signInViaPasswordCreateStateManagement()
+  const searchParams = useSearchParamsObject()
+  const sm = signInViaPasswordCreateStateManagement(searchParams)
   const emailInputId = "sign-in-via-password-email-input"
   const pwInputId = "sign-in-via-password-pw-input"
-  const showRememberMe = false
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-4", p.class)}>
       <div class="flex flex-col gap-2">
@@ -29,8 +30,10 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
           autocomplete={"email"}
           valueSignal={sm.state.email}
           onInput={(e) => {
-            sm.state.email.set(e.currentTarget.value)
-            sm.validateOnChange("email")(e.currentTarget.value)
+            const newValue = e.currentTarget.value
+            sm.state.email.set(newValue)
+            searchParams.set({ email: newValue })
+            sm.validateOnChange("email")(newValue)
           }}
           onBlur={(e) => sm.validateOnChange("email")(e.currentTarget.value)}
           class={classMerge("w-full", sm.errors.email.get() && "border-destructive focus-visible:ring-destructive")}

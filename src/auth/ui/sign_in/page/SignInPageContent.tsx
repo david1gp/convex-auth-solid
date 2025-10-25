@@ -6,7 +6,7 @@ import { AuthMiniHero } from "@/auth/ui/sign_in/page/AuthMiniHero"
 import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { SignInViaEmailForm } from "@/auth/ui/sign_in/via_email/SignInViaEmailForm"
 import { SignInViaPasswordForm } from "@/auth/ui/sign_in/via_pw/SignInViaPasswordForm"
-import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
+import { urlPageSignUp } from "@/auth/url/pageRouteAuth"
 import { mdiArrowRight } from "@mdi/js"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -15,6 +15,8 @@ import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
 import { classesGridCols3xl } from "~ui/static/container/classesGridCols"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { getSearchParamAsString } from "~ui/utils/router/getSearchParam"
+import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 
 export function SignInPageContent(p: MayHaveClass) {
   return (
@@ -62,17 +64,18 @@ export function SignInPageContent(p: MayHaveClass) {
 }
 
 function NoAccountSection() {
+  const searchParams = useSearchParamsObject()
   return (
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl font-semibold">Don't have an account?</h2>
+      <h2 class="text-xl font-semibold">{ttt("Don't have an account?")}</h2>
       <LinkButton
-        href={pageRouteAuth.signUp}
+        href={urlPageSignUp(getSearchParamAsString(searchParams, "email"))}
         iconRight={mdiArrowRight}
         size={buttonSize.default}
         variant={buttonVariant.default}
         class="w-full"
       >
-        Sign Up instead
+        {ttt("Sign Up instead")}
       </LinkButton>
     </section>
   )
