@@ -22,8 +22,6 @@
     "module": "ESNext",
     "isolatedModules": true,
     "noEmit": true,
-    // my configs
-    "allowImportingTsExtensions": true,
     // absolute import paths
     "paths": {
       "@convex/*": [
@@ -42,7 +40,6 @@
   },
   "include": [
     "./**/*",
-    "../lib/convex"
   ],
   "exclude": [
     "./_generated"

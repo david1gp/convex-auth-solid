@@ -24,7 +24,6 @@ export function NavApp(p: NavAppProps) {
         <p class="text-lg font-semibold flex items-center">{appName()}</p>
       </div>
       {p.children}
-      {/*{Object.values(routeName).filter(name => !routePathRelative[name].includes(":")).map(name => <A href={routePathRelative[name]} class={c}>{name}</A>)}*/}
       <div class="flex flex-wrap">
         <ThemeButton />
         <LogoutButton />
