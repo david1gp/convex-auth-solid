@@ -7,6 +7,7 @@ import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
+import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
 import { sendEmailSignUp } from "../email/sendEmailSignUp"
 import { commonApiErrorMessages } from "./commonApiErrorMessages"
@@ -45,7 +46,8 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
 
   const hashedPasswordResult = pw ? await hashPassword2(pw) : undefined
   if (pw && hashedPasswordResult && !hashedPasswordResult.success) {
-    throw new Error(hashedPasswordResult.errorMessage)
+    console.warn(hashedPasswordResult)
+    return new Response(jsonStringifyPretty(hashedPasswordResult), { status: 500 })
   }
 
   const code = generateOtpCode()
@@ -60,7 +62,11 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
 
   // Send email
   const hostnameApp = getBaseUrlApp()
-  if (!hostnameApp) throw new Error("!env.HOSTNAME_APP")
+  if (!hostnameApp) {
+    const errorMessage = "!env.HOSTNAME_APP"
+    console.error(op, errorMessage)
+    return new Response(errorMessage, { status: 500 })
+  }
   const confirmUrl = new URL(pageRouteAuth.signUpConfirmEmail, hostnameApp)
   confirmUrl.searchParams.set("email", email)
   confirmUrl.searchParams.set("code", code)

@@ -5,6 +5,8 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
+import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
+import { createResultError } from "~utils/result/Result"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
 export async function signInUsingSocialAuth1RequestHandler(
@@ -12,19 +14,27 @@ export async function signInUsingSocialAuth1RequestHandler(
   ctx: ActionCtx,
   request: Request,
 ): Promise<Response> {
+  const op = "signInUsingSocialAuth1RequestHandler"
   const url = new URL(request.url)
   const error = url.searchParams.get("error")
   if (error) {
-    return new Response("oauth returned error value: " + error, { status: 400 })
+    const errorMessage = "oauth returned error value: " + error
+    const err = createResultError(op, errorMessage)
+    console.warn(err)
+    return new Response(jsonStringifyPretty(err), { status: 400 })
   }
   const code = url.searchParams.get("code")
   if (!code || code?.length <= 1) {
-    throw new Error("missing code")
+    const errorMessage = "missing code"
+    const err = createResultError(op, errorMessage)
+    console.warn(err)
+    return new Response(jsonStringifyPretty(err), { status: 400 })
   }
 
   const tokenResult = await signInUsingSocialAuth2ActionFn(ctx, provider, code)
   if (!tokenResult.success) {
-    throw new Error(tokenResult.errorMessage)
+    console.warn(tokenResult)
+    return new Response(jsonStringifyPretty(tokenResult), { status: 400 })
   }
   const userSession: UserSession = tokenResult.data
 
@@ -33,12 +43,18 @@ export async function signInUsingSocialAuth1RequestHandler(
 
   const userSessionSerializedResult = base64urlEncodeObject(userSession)
   if (!userSessionSerializedResult.success) {
-    throw new Error(userSessionSerializedResult.errorMessage)
+    console.warn(userSessionSerializedResult)
+    return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 400 })
   }
   const userSessionSerialized = userSessionSerializedResult.data
 
   const hostnameApp = getBaseUrlApp()
-  if (!hostnameApp) throw new Error("!env.HOSTNAME_APP")
+  if (!hostnameApp) {
+    const errorMessage = "!env.HOSTNAME_APP"
+    const err = createResultError(op, errorMessage)
+    console.error(op, err)
+    return new Response(jsonStringifyPretty(err), { status: 500 })
+  }
   const redirectUrl = new URL(state, hostnameApp)
   redirectUrl.searchParams.set("userSession", userSessionSerialized)
   // redirectUrl.searchParams.set("redirectUrl", state)

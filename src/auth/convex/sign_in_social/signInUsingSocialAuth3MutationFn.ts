@@ -1,16 +1,11 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import type { UserSession } from "@/auth/model/UserSession"
-import { createToken } from "@/auth/server/jwt_token/createToken"
-import {
-  type CommonAuthProvider
-} from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
+import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
+import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
 import type { Id } from "@convex/_generated/dataModel"
 import { type MutationCtx } from "@convex/_generated/server.js"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable.js"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 import { findOrCreateUserFn } from "../crud/findOrCreateUserFn"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "../crud/saveTokenIntoSessionReturnExpiresAtFn"
-
 
 export async function signInUsingSocialAuth3MutationFn(
   ctx: MutationCtx,
@@ -26,10 +21,9 @@ export async function signInUsingSocialAuth3MutationFn(
   const data = foundOrCreatedResult.data
   const userId = data.user.userId
   // data
-  const saltResult = readEnvVariableResult(privateEnvVariableName.AUTH_SECRET)
-  if (!saltResult.success) return saltResult
-  const salt = saltResult.data
-  const token = await createToken(userId, salt)
+  const tokenResult = await crateTokenResult(userId)
+  if (!tokenResult.success) return tokenResult
+  const token = tokenResult.data
   await saveTokenIntoSessionReturnExpiresAtFn(ctx, providerInfo.provider, userId as Id<"users">, token)
   // event
   const r: UserSession = {

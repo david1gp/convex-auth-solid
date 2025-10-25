@@ -44,7 +44,11 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
   const code = codeResult.data
 
   const hostnameApp = getBaseUrlApp()
-  if (!hostnameApp) throw new Error("!env.HOSTNAME_APP")
+  if (!hostnameApp) {
+    const errorMessage = "!env.HOSTNAME_APP"
+    console.error(op, errorMessage)
+    return new Response(errorMessage, { status: 500 })
+  }
 
   // Send email
   const confirmUrl = new URL(pageRouteAuth.signInEnterOtp, hostnameApp)

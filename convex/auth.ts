@@ -4,7 +4,7 @@ import {
   authSessionInsertValidator,
   saveTokenIntoSessionReturnExpiresAtFn,
 } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
-import type { DocUser, IdAuthUserEmailRegistration } from "@/auth/convex/IdUser"
+import type { DocUser } from "@/auth/convex/IdUser"
 import {
   signInViaEmail2InternalMutationFn,
   signInViaEmailSaveCodeValidator,
@@ -20,40 +20,23 @@ import {
 } from "@/auth/convex/sign_in_social/notifyTelegramNewSignInInternalActionFn"
 import { signInUsingSocialAuth3MutationFn } from "@/auth/convex/sign_in_social/signInUsingSocialAuth3MutationFn"
 import { notifyTelegramNewSignUpInternalActionFn } from "@/auth/convex/sign_up/notifyTelegramNewSignUpInternalActionFn"
-import {
-  signUp2InternalMutationFn,
-  signUpCodeValidator,
-  type SignUpCodeValidatorType,
-} from "@/auth/convex/sign_up/signUp2InternalMutationFn"
+import { signUp2InternalMutationFn, signUpCodeValidator } from "@/auth/convex/sign_up/signUp2InternalMutationFn"
 import {
   signUpConfirmEmail2InternalMutationFn,
   signUpConfirmEmailValidator,
 } from "@/auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
 import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "@/auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
-import type { UserSession } from "@/auth/model/UserSession"
 import {
-  commonAuthProviderValidator,
-  type CommonAuthProvider,
+  commonAuthProviderValidator
 } from "@/auth/server/social_identity_providers/CommonAuthProvider"
-import type { ActionCtx, MutationCtx, QueryCtx } from "@convex/_generated/server"
+import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
 import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
 import { v } from "convex/values"
-import type { PromiseResult } from "~utils/result/Result"
-
-//
-// Crud
 //
 
 export const createUserFromAuthProvider = internalMutation({
   args: commonAuthProviderValidator,
-  handler: async (ctx: MutationCtx, args: CommonAuthProvider) => {
-    const authProvider = args
-    const got = await createUserFromAuthProviderFn(ctx, authProvider)
-    if (!got.success) {
-      throw new Error(got.op + ": " + got.errorMessage)
-    }
-    return got.data
-  },
+  handler: createUserFromAuthProviderFn,
 })
 
 export const findUserByEmailQuery = internalQuery({
@@ -76,9 +59,7 @@ export const authSessionInsertInternalMutation = internalMutation({
 
 export const signInUsingSocialAuth3Mutation = internalMutation({
   args: commonAuthProviderValidator,
-  handler: async (ctx: MutationCtx, args): PromiseResult<UserSession> => {
-    return signInUsingSocialAuth3MutationFn(ctx, args)
-  },
+  handler: signInUsingSocialAuth3MutationFn,
 })
 
 //
@@ -87,29 +68,21 @@ export const signInUsingSocialAuth3Mutation = internalMutation({
 
 export const signInViaEmailEnterOtp2InternalMutation = internalMutation({
   args: signInViaEmailEnterOtp2Validator,
-  handler: async (ctx: MutationCtx, args): PromiseResult<UserSession> => {
-    return signInViaEmailEnterOtp2InternalMutationFn(ctx, args)
-  },
+  handler: signInViaEmailEnterOtp2InternalMutationFn,
 })
 export const signInViaEmail2InternalMutation = internalMutation({
   args: signInViaEmailSaveCodeValidator,
-  handler: async (ctx: MutationCtx, args): PromiseResult<string> => {
-    return signInViaEmail2InternalMutationFn(ctx, args)
-  },
+  handler: signInViaEmail2InternalMutationFn,
 })
 
 export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMutation({
   args: {},
-  handler: async (ctx: MutationCtx): Promise<{ deleted: number }> => {
-    return signInViaEmailEnterOtp3CleanupOldCodesFn(ctx)
-  },
+  handler: signInViaEmailEnterOtp3CleanupOldCodesFn,
 })
 
 export const notifyTelegramNewSignInInternalAction = internalAction({
   args: notifyTelegramNewSignUpArgsValidator,
-  handler: async (ctx: ActionCtx, args): Promise<void> => {
-    return notifyTelegramNewSignInInternalActionFn(ctx, args)
-  },
+  handler: notifyTelegramNewSignInInternalActionFn,
 })
 
 //
@@ -118,28 +91,20 @@ export const notifyTelegramNewSignInInternalAction = internalAction({
 
 export const signUp2InternalMutation = internalMutation({
   args: signUpCodeValidator,
-  handler: async (ctx: MutationCtx, args: SignUpCodeValidatorType): Promise<{ id: IdAuthUserEmailRegistration }> => {
-    return signUp2InternalMutationFn(ctx, args)
-  },
+  handler: signUp2InternalMutationFn,
 })
 
 export const signUpConfirmEmail2InternalMutation = internalMutation({
   args: signUpConfirmEmailValidator,
-  handler: async (ctx: MutationCtx, args): PromiseResult<UserSession> => {
-    return signUpConfirmEmail2InternalMutationFn(ctx, args)
-  },
+  handler: signUpConfirmEmail2InternalMutationFn,
 })
 
 export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutation({
   args: {},
-  handler: async (ctx: MutationCtx): Promise<{ deleted: number }> => {
-    return signUpConfirmEmail3CleanupOldCodesInternalMutationFn(ctx)
-  },
+  handler: signUpConfirmEmail3CleanupOldCodesInternalMutationFn,
 })
 
 export const notifyTelegramNewSignUpInternalAction = internalAction({
   args: notifyTelegramNewSignUpArgsValidator,
-  handler: async (ctx: ActionCtx, args): Promise<void> => {
-    return notifyTelegramNewSignUpInternalActionFn(ctx, args)
-  },
+  handler: notifyTelegramNewSignUpInternalActionFn,
 })

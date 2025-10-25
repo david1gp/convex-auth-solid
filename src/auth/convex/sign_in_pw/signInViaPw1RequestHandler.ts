@@ -1,13 +1,11 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { signInViaPwSchema } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"
-import { createToken } from "@/auth/server/jwt_token/createToken"
+import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
 import { nowIso } from "~utils/date/nowIso"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
 import { createError } from "~utils/result/Result"
 import { dbUsersToUserProfile } from "../crud/dbUsersToUserProfile"
 import type { IdUser } from "../IdUser"
@@ -64,14 +62,14 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   }
 
   // Create token
-  const saltResult = readEnvVariableResult(privateEnvVariableName.AUTH_SECRET)
-  if (!saltResult.success) {
-    const errorResult = saltResult
+  const tokenResult = await crateTokenResult(user._id)
+  if (!tokenResult.success) {
+    const errorResult = tokenResult
     console.warn(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 500 })
   }
-  const salt = saltResult.data
-  const token = await createToken(user._id, salt)
+  const token = tokenResult.data
+
   // Insert session
   const expiresAt = await ctx.runMutation(internal.auth.authSessionInsertInternalMutation, {
     userId: user._id as IdUser,

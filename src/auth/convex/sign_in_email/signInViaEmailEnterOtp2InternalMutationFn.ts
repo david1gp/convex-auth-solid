@@ -1,12 +1,10 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
-import { createToken } from "@/auth/server/jwt_token/createToken"
+import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 import type { DocUser } from "../IdUser"
 import { dbUsersToUserProfile } from "../crud/dbUsersToUserProfile"
@@ -54,10 +52,10 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   //
   // 3. Create session
   //
-  const saltResult = readEnvVariableResult(privateEnvVariableName.AUTH_SECRET)
-  if (!saltResult.success) return saltResult
-  const salt = saltResult.data
-  const token = await createToken(userId, salt)
+  const tokenResult = await crateTokenResult(userId)
+  if (!tokenResult.success) return tokenResult
+  const token = tokenResult.data
+
   const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 
   //

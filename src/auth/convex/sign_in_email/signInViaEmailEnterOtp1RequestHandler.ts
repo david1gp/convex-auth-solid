@@ -3,6 +3,7 @@ import { signInViaEmailEnterOtpSchema } from "@/auth/model/signInSchema"
 import { internal } from "@convex/_generated/api"
 import { type ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
+import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
@@ -56,7 +57,8 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   //
   const userSessionSerializedResult = base64urlEncodeObject(userSession)
   if (!userSessionSerializedResult.success) {
-    throw new Error(userSessionSerializedResult.errorMessage)
+    console.error(op, userSessionSerializedResult.errorMessage)
+    return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 400 })
   }
 
   return new Response(JSON.stringify(userSession, null, 2))

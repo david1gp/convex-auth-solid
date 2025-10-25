@@ -3,6 +3,7 @@ import { signUpConfirmEmailSchema } from "@/auth/model/signUpConfirmEmailSchema"
 import { internal } from "@convex/_generated/api"
 import { type ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
+import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
 export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
@@ -57,7 +58,8 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   //
   const userSessionSerializedResult = base64urlEncodeObject(userSession)
   if (!userSessionSerializedResult.success) {
-    throw new Error(userSessionSerializedResult.errorMessage)
+    console.error(userSessionSerializedResult)
+    return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 500 })
   }
 
   return new Response(JSON.stringify(userSession, null, 2))

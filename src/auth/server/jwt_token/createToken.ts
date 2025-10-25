@@ -3,11 +3,11 @@ import { tokenValidDurationInDays } from "./tokenValidDurationInDays"
 
 export async function createToken(
   userId: string,
-  secret: string,
+  secretSalt: string,
   expiresInDays = tokenValidDurationInDays,
 ): Promise<string> {
-  if (!secret) throw new Error("env.AUTH_SECRET is empty / not set")
-  const encodedSecret = new TextEncoder().encode(secret)
+  if (!secretSalt) return ""
+  const encodedSecret = new TextEncoder().encode(secretSalt)
   const alg = "HS256"
   const jwt = await new SignJWT()
     .setProtectedHeader({ alg })
