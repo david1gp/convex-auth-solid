@@ -7,5 +7,4 @@ export const pageNameAuth = {
   signIn: "signIn",
   signInEnterOtp: "signInEnterOtp",
   signInError: "signInError",
-  signedIn: "signedIn",
 } as const

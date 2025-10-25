@@ -8,7 +8,6 @@ export const pageRouteAuth = {
   signIn: "/sign-in",
   signInEnterOtp: "/sign-in-enter-otp",
   signInError: "/sign-in-error",
-  signedIn: "/signed-in",
 } as const satisfies Record<PageNameAuth, string>
 
 export function urlPageSignUp(email?: string) {

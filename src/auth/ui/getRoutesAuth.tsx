@@ -8,12 +8,13 @@ const SignInPage = lazy(() => import("@/auth/ui/sign_in/page/SignInPage").then((
 const SignInErrorPage = lazy(() =>
   import("@/auth/ui/sign_in/error/SignInErrorPage").then((c) => ({ default: c.SignInErrorPage })),
 )
-const SignedInPage = lazy(() => import("@/auth/ui/sign_in/page/SignedInPage").then((c) => ({ default: c.SignedInPage })))
 const RegistrationConfirmEmailPage = lazy(() =>
   import("@/auth/ui/sign_up/email/SignUpConfirmEmailPage").then((c) => ({ default: c.SignUpConfirmEmailPage })),
 )
 const SignInViaEmailEnterOtpPage = lazy(() =>
-  import("@/auth/ui/sign_in/via_email_enter_otp/SignInViaEmailEnterOtpPage").then((c) => ({ default: c.SignInViaEmailEnterOtpPage })),
+  import("@/auth/ui/sign_in/via_email_enter_otp/SignInViaEmailEnterOtpPage").then((c) => ({
+    default: c.SignInViaEmailEnterOtpPage,
+  })),
 )
 
 export function getRoutesAuth(): RouteObject[] {
@@ -23,7 +24,6 @@ export function getRoutesAuth(): RouteObject[] {
     signIn: SignInPage,
     signInEnterOtp: SignInViaEmailEnterOtpPage,
     signInError: SignInErrorPage,
-    signedIn: SignedInPage,
   } as const satisfies Record<PageNameAuth, RouteObject["component"]>
   return Object.entries(routeMapping).map(([routeKey, component]) => ({
     path: pageRouteAuth[routeKey as PageNameAuth],
