@@ -6,6 +6,7 @@ import { useNavigate } from "@solidjs/router"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import { For, Show, type JSX } from "solid-js"
+import { ttt } from "~ui/i18n/ttt"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { classesCardWrapper } from "~ui/static/container/classesCardWrapper"
@@ -35,6 +36,11 @@ export function SignInWithAnExistingSession(p: SignInWithAnExistingSessionProps)
         <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>Continue with an existing session</h2>
         <div class="flex flex-col gap-4">
           <For each={sessions()}>{(session: UserSession) => <SessionButton session={session} />}</For>
+        </div>
+        <div class="flex justify-end">
+          <Button variant={buttonVariant.subtle} onClick={deleteAllSessions}>
+            {ttt("Delete all earlier sessions")}
+          </Button>
         </div>
       </section>
     </Show>
@@ -89,4 +95,8 @@ function SessionImageFallback(p: { name: string }) {
       <span class="">{p.name.charAt(0).toUpperCase()}</span>
     </div>
   )
+}
+
+function deleteAllSessions() {
+  userSessionsSignal.set([])
 }
