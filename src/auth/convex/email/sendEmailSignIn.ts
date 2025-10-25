@@ -2,7 +2,7 @@ import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageTechnical } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
-import { apiGenerateEmailLoginCodeV1, type SuccessResponseType } from "@adaptive-sm/email-generator/apiGenerateEmail.js"
+import { apiGenerateEmailLoginCodeV1 } from "@adaptive-sm/email-generator/apiGenerateEmail.js"
 import { type GeneratedEmailType } from "@adaptive-sm/email-generator/GeneratedEmailType.js"
 import { type LoginCodeV1Type } from "@adaptive-sm/email-generator/LoginCodeV1Type.js"
 import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator/RegisterEmailV1Type.js"
@@ -27,7 +27,7 @@ export async function generateEmailSignIn(code: string, url: string): PromiseRes
   return createError(op, "not implemented yet")
 }
 
-export async function apiGenerateEmailLoginCode(props: LoginCodeV1Type): PromiseResult<SuccessResponseType> {
+export async function apiGenerateEmailLoginCode(props: LoginCodeV1Type): PromiseResult<GeneratedEmailType> {
   const op = "apiGenerateEmailLoginCodeV1"
   const baseUrlResult = readEnvVariableResult(privateEnvVariableName.BASE_URL_EMAIL_GENERATOR)
   if (!baseUrlResult.success) return baseUrlResult

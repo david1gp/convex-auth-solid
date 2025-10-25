@@ -35,6 +35,7 @@
     "reset": "rm -rf ./node_modules"
   },
   "dependencies": {
+    "@adaptive-sm/email-generator": "link:@adaptive-sm/email-generator",
     "@adaptive-sm/solid-ui": "link:@adaptive-sm/solid-ui",
     "@adaptive-sm/utils": "link:@adaptive-sm/utils",
     "@floating-ui/dom": "^1.7.4",
