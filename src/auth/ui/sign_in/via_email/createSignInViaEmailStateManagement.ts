@@ -3,23 +3,27 @@ import { emailSchema } from "@/auth/model/emailSchema"
 import { urlSignInEnterOtp } from "@/auth/url/urlSignInEnterOtp"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { debounceMs } from "@/utils/ui/debounceMs"
+import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
+import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import { createSearchParamSignalObject } from "~ui/utils/router/createSearchParamSignalObject"
-import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
 
 export type SignInViaEmailUiState = {
   email: SignalObject<string>
   isSubmitting: SignalObject<boolean>
 }
 
-export function signInViaEmailCreateUiState(searchParams: SearchParamsObject): SignInViaEmailUiState {
+function signInViaEmailCreateUiState(searchParams: SearchParamsObject): SignInViaEmailUiState {
   return {
     email: createSearchParamSignalObject("email", searchParams),
     isSubmitting: createSignalObject(false),
   }
+}
+
+function fillTestData(state: SignInViaEmailUiState) {
+  state.email.set("test@example.com")
 }
 
 export type SignInViaEmailErrorState = {
@@ -38,6 +42,7 @@ export type SignInViaEmailFormData = {
 
 export type SignInViaEmailStateManagement = {
   state: SignInViaEmailUiState
+  fillTestData: () => void
   errors: SignInViaEmailErrorState
   hasErrors: () => boolean
   validateOnChange: (field: keyof SignInViaEmailFormData) => Scheduled<[value: string]>
@@ -57,6 +62,7 @@ export function createSignInViaEmailStateManagement(
 
   return {
     state,
+    fillTestData: () => fillTestData(state),
     errors,
     hasErrors: () => hasErrors(errors),
     validateOnChange: (field: keyof SignInViaEmailFormData) => validateOnChange(field, errors),

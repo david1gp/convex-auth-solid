@@ -1,3 +1,6 @@
+import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiLogin } from "@mdi/js"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -9,7 +12,6 @@ import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreateStateManagement"
 
 export function SignInViaPasswordForm(p: MayHaveClass) {
@@ -17,6 +19,9 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
   const sm = signInViaPasswordCreateStateManagement(searchParams)
   const emailInputId = "sign-in-via-password-email-input"
   const pwInputId = "sign-in-via-password-pw-input"
+  if (isDevEnvVite()) {
+    addKeyboardListenerAlt("t", sm.fillTestData)
+  }
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-4", p.class)}>
       <div class="flex flex-col gap-2">

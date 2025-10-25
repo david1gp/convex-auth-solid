@@ -1,3 +1,6 @@
+import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiLogin } from "@mdi/js"
 import { useLocation, useNavigate } from "@solidjs/router"
 import { Show, type Component } from "solid-js"
@@ -10,14 +13,16 @@ import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
-import { createSignInViaEmailStateManagement } from "./signInViaEmailCreateUiState"
+import { createSignInViaEmailStateManagement } from "./createSignInViaEmailStateManagement"
 
 export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
   const navigate = useNavigate()
   const location = useLocation()
   const searchParams = useSearchParamsObject()
   const sm = createSignInViaEmailStateManagement(navigate, location, searchParams)
+  if (isDevEnvVite()) {
+    addKeyboardListenerAlt("t", sm.fillTestData)
+  }
   const emailInputId = "sign-in-via-email-input"
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("space-y-4", p.class)}>

@@ -1,9 +1,9 @@
 import { debounceMs } from "@/utils/ui/debounceMs"
+import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
+import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
-import { createSearchParamSignalObject } from "~ui/utils/router/createSearchParamSignalObject"
 import { emailSchema, passwordSchema } from "../../../model/emailSchema"
 
 export type SignInUiState = {
@@ -20,6 +20,11 @@ export function createSignInUiState(searchParams: SearchParamsObject): SignInUiS
     //
     isSubmitting: createSignalObject(false),
   }
+}
+
+function fillTestData(state: SignInUiState) {
+  state.email.set("test@example.com")
+  state.password.set("121212121212")
 }
 
 export type SignInErrorState = {
@@ -41,6 +46,7 @@ export type SignInFormData = {
 
 export type SignInViaPasswordStateManagement = {
   state: SignInUiState
+  fillTestData: () => void
   errors: SignInErrorState
   hasErrors: () => boolean
   validateOnChange: (field: keyof SignInFormData) => Scheduled<[value: string]>
@@ -54,6 +60,7 @@ export function signInViaPasswordCreateStateManagement(
   const errors = createSignInErrorState()
   return {
     state,
+    fillTestData: () => fillTestData(state),
     errors,
     hasErrors: () => hasErrors(errors),
     validateOnChange: (field: keyof SignInFormData) => validateOnChange(field, errors),
