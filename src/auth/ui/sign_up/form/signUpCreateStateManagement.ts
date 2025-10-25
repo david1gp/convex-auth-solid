@@ -3,14 +3,14 @@ import { emailSchema, passwordSchema, signUpNameSchema, signUpTermsSchema } from
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
 import { debounceMs } from "@/utils/ui/debounceMs"
+import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
+import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import { createSearchParamSignalObject } from "~ui/utils/router/createSearchParamSignalObject"
-import type { SearchParamsObject } from "~ui/utils/router/SearchParamsObject"
 
 export type SignUpUiState = {
   isSubmitting: SignalObject<boolean>

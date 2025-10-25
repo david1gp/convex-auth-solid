@@ -7,6 +7,8 @@ import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPassw
 import { urlPageSignIn } from "@/auth/url/pageRouteAuth"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
+import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiArrowRight } from "@mdi/js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
@@ -19,8 +21,6 @@ import { Separator } from "~ui/static/separator/Separator"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveInnerClassName } from "~ui/utils/MayHaveInnerClassName"
-import { getSearchParamAsString } from "~ui/utils/router/getSearchParam"
-import { useSearchParamsObject } from "~ui/utils/router/useSearchParamsObject"
 import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClassName {}

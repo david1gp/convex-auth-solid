@@ -9,7 +9,6 @@ export function DemoAuthLinks() {
     { key: "signIn", label: "Sign In" },
     { key: "signInEnterOtp", label: "Sign In Enter OTP" },
     { key: "signInError", label: "Sign In Error" },
-    { key: "signedIn", label: "Signed In" },
   ] as const satisfies { key: PageNameAuth; label: string }[]
 
   const urlObjects = authLinks.reduce(
