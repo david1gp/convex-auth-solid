@@ -1,5 +1,5 @@
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
-import { addRouteWithCors } from "@/auth/convex/headers/addRouteWithCors"
+import { addRouteWithCors } from "@/auth/convex/headers/cors/addRouteWithCors"
 import { signInViaEmail1RequestHandler } from "@/auth/convex/sign_in_email/signInViaEmail1RequestHandler"
 import { signInViaEmailEnterOtp1RequestHandler } from "@/auth/convex/sign_in_email/signInViaEmailEnterOtp1RequestHandler"
 import { signInViaPw1RequestHandler } from "@/auth/convex/sign_in_pw/signInViaPw1RequestHandler"

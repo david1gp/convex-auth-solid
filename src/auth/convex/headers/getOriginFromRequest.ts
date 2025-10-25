@@ -1,4 +1,4 @@
-export function getClientOriginFromRequest(req: Request): string | null {
+export function getOriginFromRequest(req: Request): string | null {
   const origin = req.headers.get("origin")
   if (origin) {
     return origin
