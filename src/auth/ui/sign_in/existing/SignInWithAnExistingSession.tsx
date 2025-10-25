@@ -8,6 +8,8 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { For, Show, type JSX } from "solid-js"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
+import { classesCardWrapper } from "~ui/static/container/classesCardWrapper"
+import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { SolidRouterNavigator } from "~ui/utils/Navigator"
@@ -48,7 +50,11 @@ function SessionButton(p: SessionButtonProps) {
   return (
     <Button
       variant={buttonVariant.outline}
-      class="flex items-center p-4 border-gray-300 dark:border-gray-500"
+      class={classArr(
+        //
+        "flex items-center p-4",
+        classesCardWrapper,
+      )}
       onClick={() => sessionOnClick(navigate, p.session)}
     >
       <div class="flex items-center gap-3 w-full">
