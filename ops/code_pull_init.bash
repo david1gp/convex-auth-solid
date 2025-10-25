@@ -12,5 +12,9 @@ rsync -avh ../adaptive-convex-auth/src/app/env/ ./src/app/env/ --delete-after
 rsync -avh ../adaptive-convex-auth/src/app/url/ ./src/app/url/ --delete-after
 rsync -avh ../adaptive-convex-auth/src/app/text/ ./src/app/text/ --delete-after
 
+# org
+rsync -avh ../adaptive-convex-auth/src/org/ ./src/org/ --delete-after
+
 scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 bash $scriptDir/code_pull_update.bash
+bun run convex codegen
