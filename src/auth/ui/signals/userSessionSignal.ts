@@ -1,6 +1,6 @@
 import { userSessionSchema, type UserSession } from "@/auth/model/UserSession"
 import * as v from "valibot"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import { createSignalObject, type SetterSimplified, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
 const userSessionsSessionStorageKey = "userSession"
@@ -31,12 +31,10 @@ function createUserSessionsSignal(): SignalObject<UserSession | null> {
   }
 
   // Override the set method to also save to localStorage
-  const originalSet = signal.set
+  const originalSet: SetterSimplified<UserSession | null> = signal.set
   signal.set = (value) => {
     const result = originalSet(value)
-    if (result) {
-      userSessionSaveToSessionStorage(result)
-    }
+    userSessionSaveToSessionStorage(value)
     return result
   }
 
@@ -55,7 +53,7 @@ function userSessionLoadFromSessionStorage(): Result<UserSession> {
   return createResult(parsing.output)
 }
 
-function userSessionSaveToSessionStorage(sessions: UserSession) {
+function userSessionSaveToSessionStorage(sessions: UserSession | null) {
   const op = "userSessionSaveToSessionStorage"
   const serialized = JSON.stringify(sessions, null, 2)
   sessionStorage.setItem(userSessionsSessionStorageKey, serialized)

@@ -46,7 +46,7 @@ function createUserSessionsSignal(): SignalObject<UserSession[]> {
   const originalSet = signal.set
   signal.set = (value) => {
     const result = originalSet(value)
-    userSessionsSaveToLocalStorage(result)
+    userSessionsSaveToLocalStorage(value)
     return result
   }
 
