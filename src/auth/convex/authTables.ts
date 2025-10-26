@@ -1,5 +1,6 @@
 import { loginMethodValidator } from "@/auth/model/loginMethodValidator"
 import { userRoleValidator } from "@/auth/model/userRoleValidator"
+import { fieldsCreatedAtUpdatedAt, fieldsCreatedAtUpdatedAtDeletedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
 import { vIdUsers } from "./vIdUSers"
@@ -24,8 +25,7 @@ export const authAccountFields = {
   provider: v.string(),
   providerAccountId: v.string(),
   // meta times
-  createdAt: v.string(),
-  updatedAt: v.string(),
+  ...fieldsCreatedAtUpdatedAt,
 }
 
 export const authSessionFields = {
@@ -34,11 +34,9 @@ export const authSessionFields = {
   // data
   loginMethod: v.union(loginMethodValidator),
   token: v.string(),
-  // meta times
-  createdAt: v.string(),
-  updatedAt: v.string(),
   expiresAt: v.string(),
-  deletedAt: v.optional(v.string()),
+  // meta times
+  ...fieldsCreatedAtUpdatedAtDeletedAt,
 }
 
 export const authRateLimitFields = {
