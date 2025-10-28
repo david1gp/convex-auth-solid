@@ -1,6 +1,6 @@
 import { appName } from "@/app/text/appName"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
-import { NavApp } from "@/auth/ui/nav/NavApp"
+import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
 import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPasswordForm"
@@ -29,7 +29,7 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
   return (
     <LayoutWrapperDemo title={"Sign up - " + appName}>
       <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavApp />
+        <NavAuth />
         <div class={classMerge("container max-w-7xl mx-auto py-8 px-4", p.innerClass)}>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <LeftSide />

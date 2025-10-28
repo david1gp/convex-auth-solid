@@ -1,7 +1,7 @@
 import type { PageNameAuth } from "@/auth/url/pageNameAuth"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { lazy } from "solid-js"
-import type { RouteObject } from "~ui/utils/RouteConfig"
+import type { RouteComponent, RouteObject } from "~ui/utils/RouteConfig"
 
 const SignUpPage = lazy(() => import("@/auth/ui/sign_up/SignUpPage").then((c) => ({ default: c.SignUpPage })))
 const SignInPage = lazy(() => import("@/auth/ui/sign_in/page/SignInPage").then((c) => ({ default: c.SignInPage })))
@@ -24,7 +24,7 @@ export function getRoutesAuth(): RouteObject[] {
     signIn: SignInPage,
     signInEnterOtp: SignInViaEmailEnterOtpPage,
     signInError: SignInErrorPage,
-  } as const satisfies Record<PageNameAuth, RouteObject["component"]>
+  } as const satisfies Record<PageNameAuth, RouteComponent>
   return Object.entries(routeMapping).map(([routeKey, component]) => ({
     path: pageRouteAuth[routeKey as PageNameAuth],
     component,

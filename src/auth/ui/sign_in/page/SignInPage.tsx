@@ -1,5 +1,5 @@
 import { appName } from "@/app/text/appName"
-import { NavApp } from "@/auth/ui/nav/NavApp"
+import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { SignInPageContent } from "@/auth/ui/sign_in/page/SignInPageContent"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
@@ -14,7 +14,7 @@ export function SignInPage(p: SignInPageContent2Props) {
   return (
     <LayoutWrapperDemo title={ttt("Sign In - " + appName)}>
       <div class={classArr("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavApp />
+        <NavAuth />
         <SignInPageContent class={p.innerClass} />
       </div>
     </LayoutWrapperDemo>

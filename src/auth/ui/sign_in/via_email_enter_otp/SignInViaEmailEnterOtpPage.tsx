@@ -1,4 +1,4 @@
-import { NavApp } from "@/auth/ui/nav/NavApp"
+import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { mdiEmailSearchOutline } from "@mdi/js"
 import { useNavigate, useSearchParams } from "@solidjs/router"
 import type { Component } from "solid-js"
@@ -15,7 +15,7 @@ export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
   return (
     <LayoutWrapperDemo title={ttt("Sign In / Enter OTP")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
-        <NavApp />
+        <NavAuth />
         <div
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >

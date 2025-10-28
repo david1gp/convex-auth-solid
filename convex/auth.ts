@@ -1,10 +1,10 @@
 import { createUserFromAuthProviderFn } from "@/auth/convex/crud/createUserFromAuthProviderFn"
 import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailFn"
+import { usernameAvailableFields, usernameAvailableFn } from "@/auth/convex/usernameAvailableFn"
 import {
   authSessionInsertValidator,
   saveTokenIntoSessionReturnExpiresAtFn,
 } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
-import type { DocUser } from "@/auth/convex/IdUser"
 import {
   signInViaEmail2InternalMutationFn,
   signInViaEmailSaveCodeValidator,
@@ -26,9 +26,7 @@ import {
   signUpConfirmEmailValidator,
 } from "@/auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
 import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "@/auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
-import {
-  commonAuthProviderValidator
-} from "@/auth/server/social_identity_providers/CommonAuthProvider"
+import { commonAuthProviderValidator } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
 import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -41,16 +39,13 @@ export const createUserFromAuthProvider = internalMutation({
 
 export const findUserByEmailQuery = internalQuery({
   args: { email: v.string() },
-  handler: async (ctx: QueryCtx, args): Promise<DocUser | null> => {
-    return findUserByEmailFn(ctx, args.email)
-  },
+  handler: async (ctx: QueryCtx, args) => findUserByEmailFn(ctx, args.email),
 })
 
 export const authSessionInsertInternalMutation = internalMutation({
   args: authSessionInsertValidator,
-  handler: async (ctx: MutationCtx, args) => {
-    return saveTokenIntoSessionReturnExpiresAtFn(ctx, args.loginMethod, args.userId, args.token)
-  },
+  handler: async (ctx: MutationCtx, args) =>
+    saveTokenIntoSessionReturnExpiresAtFn(ctx, args.loginMethod, args.userId, args.token),
 })
 
 //
@@ -107,4 +102,9 @@ export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutati
 export const notifyTelegramNewSignUpInternalAction = internalAction({
   args: notifyTelegramNewSignUpArgsValidator,
   handler: notifyTelegramNewSignUpInternalActionFn,
+})
+
+export const usernameAvailableQuery = internalQuery({
+  args: usernameAvailableFields,
+  handler: async (ctx: QueryCtx, args) => usernameAvailableFn(ctx, args),
 })

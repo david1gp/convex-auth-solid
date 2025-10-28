@@ -1,6 +1,6 @@
 import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
 import { emailSchema } from "@/auth/model/emailSchema"
-import { NavApp } from "@/auth/ui/nav/NavApp"
+import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
@@ -22,7 +22,7 @@ export const SignUpConfirmEmailPage: Component<{}> = () => {
   return (
     <LayoutWrapperDemo title={ttt("Sign Up / Confirm Email")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
-        <NavApp />
+        <NavAuth />
         <div
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >

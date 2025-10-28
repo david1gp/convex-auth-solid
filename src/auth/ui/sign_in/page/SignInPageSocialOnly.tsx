@@ -1,5 +1,5 @@
 // import { AuthMiniHero } from "@/auth/AuthMiniHero"
-import { NavApp } from "@/auth/ui/nav/NavApp"
+import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { DevLoginSection } from "@/auth/ui/sign_in/dev/DevLoginSection"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
@@ -16,7 +16,7 @@ export function SignInPageSocialOnly(p: SignInPageSocialOnlyProps) {
   return (
     <div class={classArr("min-h-dvh w-full", classesBgGray, p.class)}>
       <div class={classArr("container max-w-7xl mx-auto", "space-y-8", "dark:text-white", "py-4 px-4", p.innerClass)}>
-        <NavApp />
+        <NavAuth />
         {/* <AuthMiniHero /> */}
         <SignInWithAnExistingSession class="" />
         <SocialLoginButtonsSection class="" />

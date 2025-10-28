@@ -3,11 +3,12 @@ import { userRoleValidator } from "@/auth/model/userRoleValidator"
 import { fieldsCreatedAtUpdatedAt, fieldsCreatedAtUpdatedAtDeletedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
-import { vIdUsers } from "./vIdUSers"
+import { vIdUser } from "./vIdUser"
 
 export const userFields = {
   // data
   name: v.string(),
+  username: v.optional(v.string()),
   image: v.optional(v.string()),
   email: v.optional(v.string()),
   emailVerifiedAt: v.optional(v.string()),
@@ -20,7 +21,7 @@ export const userFields = {
 
 export const authAccountFields = {
   // ids
-  userId: vIdUsers,
+  userId: vIdUser,
   // data
   provider: v.string(),
   providerAccountId: v.string(),
@@ -30,7 +31,7 @@ export const authAccountFields = {
 
 export const authSessionFields = {
   // ids
-  userId: vIdUsers,
+  userId: vIdUser,
   // data
   loginMethod: v.union(loginMethodValidator),
   token: v.string(),
@@ -59,7 +60,7 @@ export const authUserEmailRegistrationFields = {
 
 export const authEmailLoginCodeFields = {
   // data
-  userId: vIdUsers,
+  userId: vIdUser,
   code: v.string(),
   email: v.string(),
   // meta
@@ -70,7 +71,8 @@ export const authEmailLoginCodeFields = {
 export const authTables = {
   users: defineTable(userFields)
     //
-    .index("email", ["email"]),
+    .index("email", ["email"])
+    .index("username", ["username"]),
 
   authAccounts: defineTable(authAccountFields)
     //

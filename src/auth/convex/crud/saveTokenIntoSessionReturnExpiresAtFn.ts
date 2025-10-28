@@ -5,11 +5,11 @@ import type { Id } from "@convex/_generated/dataModel"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import dayjs from "dayjs"
-import { vIdUsers } from "../vIdUSers"
+import { vIdUser } from "../vIdUser"
 
 export type AuthSessionInsertValidatorType = typeof authSessionInsertValidator.type
 export const authSessionInsertValidator = v.object({
-  userId: vIdUsers,
+  userId: vIdUser,
   loginMethod: loginMethodValidator,
   token: v.string(),
 })

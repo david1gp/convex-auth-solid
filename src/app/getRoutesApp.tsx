@@ -1,4 +1,4 @@
-import { NavApp } from "@/auth/ui/nav/NavApp"
+import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { lazy } from "solid-js"
 import { PageWrapper2 } from "~ui/static/page/PageWrapper2"
 import type { RouteObject } from "~ui/utils/RouteConfig"
@@ -25,7 +25,7 @@ export function getRoutesApp(): RouteObject[] {
 function HomePage() {
   return (
     <PageWrapper2>
-      <NavApp />
+      <NavAuth />
       <div class="py-20">
         <h1 class="text-4xl font-bold">Home</h1>
         <p>this is a private page seen only to logged in users</p>
@@ -41,7 +41,7 @@ function HomePage() {
 function Overview() {
   return (
     <PageWrapper2>
-      <NavApp />
+      <NavAuth />
       <div class="py-20">
         <h1 class="text-4xl font-bold">Overview</h1>
         <p>this is a private page seen only to logged in users</p>

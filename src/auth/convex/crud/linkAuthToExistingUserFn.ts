@@ -3,10 +3,10 @@ import type { LoginProvider } from "@/auth/model/socialLoginProvider"
 import type { Id } from "@convex/_generated/dataModel"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { vIdUsers } from "../vIdUSers"
+import { vIdUser } from "../vIdUser"
 
 export const linkAuthToExistingUserValidator = v.object({
-  userId: vIdUsers,
+  userId: vIdUser,
   provider: socialLoginProviderValidator,
   providerId: v.string(),
 })
