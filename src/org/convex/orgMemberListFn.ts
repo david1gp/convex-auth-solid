@@ -1,12 +1,12 @@
 import type { DocOrgMember } from "@/org/convex/IdOrg"
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { vIdOrgs } from "./vIdOrgs"
+import { vIdOrg } from "./vIdOrg"
 
 export type OrgMembersListValidatorType = typeof orgMembersListValidator.type
 
 export const orgMembersListFields = {
-  orgId: vIdOrgs,
+  orgId: vIdOrg,
 } as const
 
 export const orgMembersListValidator = v.object(orgMembersListFields)

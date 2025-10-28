@@ -3,12 +3,12 @@ import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocOrg } from "./IdOrg"
-import { vIdOrgs } from "./vIdOrgs"
+import { vIdOrg } from "./vIdOrg"
 
 export type OrgEditValidatorType = typeof orgEditValidator.type
 
 export const orgEditFields = {
-  orgId: vIdOrgs,
+  orgId: vIdOrg,
   // data
   name: v.optional(v.string()),
   slug: v.optional(v.string()),

@@ -1,11 +1,11 @@
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { vIdOrgs } from "./vIdOrgs"
+import { vIdOrg } from "./vIdOrg"
 
 export type OrgDeleteValidatorType = typeof orgDeleteValidator.type
 
 export const orgDeleteFields = {
-  orgId: vIdOrgs,
+  orgId: vIdOrg,
 } as const
 
 export const orgDeleteValidator = v.object(orgDeleteFields)

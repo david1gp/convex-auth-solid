@@ -2,8 +2,8 @@ import { orgRoleValidator } from "@/org/model/orgRoleValidator"
 import { fieldsCreatedAtUpdatedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
-import { vIdUsers } from "../../auth/convex/vIdUSers"
-import { vIdOrgs } from "./vIdOrgs"
+import { vIdUser } from "../../auth/convex/vIdUser"
+import { vIdOrg } from "./vIdOrg"
 
 export const orgDataFields = {
   // data
@@ -21,11 +21,11 @@ export const orgFields = {
 
 export const orgMemberDataFields = {
   // ids
-  orgId: vIdOrgs,
-  userId: vIdUsers,
+  orgId: vIdOrg,
+  userId: vIdUser,
   // data
   role: orgRoleValidator,
-  invitedBy: vIdUsers,
+  invitedBy: vIdUser,
 } as const
 
 export const orgMemberFields = {

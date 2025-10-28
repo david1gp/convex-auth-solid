@@ -2,10 +2,10 @@ import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocOrg } from "./IdOrg"
-import { vIdOrgs } from "./vIdOrgs"
+import { vIdOrg } from "./vIdOrg"
 
 export const orgGetFields = {
-  orgId: vIdOrgs,
+  orgId: vIdOrg,
   updatedAt: v.optional(v.string()),
 } as const
 
