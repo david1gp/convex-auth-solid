@@ -4,9 +4,10 @@ import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 // import { nowIso } from "../../utils/nowIso"
+import { workspaceHandleAvailableFn } from "@/workspace/convex/workspaceHandleAvailableFn"
 import { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
 import * as va from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createError, createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export type WorkspaceCreateValidatorType = typeof workspaceCreateValidator.type
 
@@ -23,6 +24,13 @@ export async function workspaceCreateFn(
   const parse = va.safeParse(workspaceDataSchema, args)
   if (!parse.success) {
     return createResultError(op, va.summarize(parse.issues))
+  }
+
+  const handleAvailableResult = await workspaceHandleAvailableFn(ctx, { workspaceHandle: args.workspaceHandle })
+  if (!handleAvailableResult.success) return handleAvailableResult
+  if (!handleAvailableResult.data) {
+    const errorMessage = "Handle not available, please try a different one"
+    return createError(op, errorMessage, args.workspaceHandle)
   }
 
   const now = nowIso()
