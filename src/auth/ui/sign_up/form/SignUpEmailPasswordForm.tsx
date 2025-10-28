@@ -6,6 +6,8 @@ import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { useNavigate } from "@solidjs/router"
 import { For, Show } from "solid-js"
+import type { JSX } from "solid-js/jsx-runtime"
+import { ttt } from "~ui/i18n/ttt"
 import { InputS } from "~ui/input/input/InputS"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
@@ -14,7 +16,14 @@ import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { Checkbox } from "~ui/interactive/check/Checkbox"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import { createSignUpUiState, signUpCreateStateManagement, type SignUpFormData } from "./signUpCreateStateManagement"
+import type { SignalObject } from "~ui/utils/createSignalObject"
+import {
+  createSignUpUiState,
+  signUpCreateStateManagement,
+  signUpFormField,
+  type SignUpFormData,
+  type SignUpFormField,
+} from "./signUpCreateStateManagement"
 
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}
 
@@ -27,7 +36,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
 
-  const fieldNames: (keyof SignUpFormData)[] = ["name", "email", "password", "terms"]
+  const fieldNames: SignUpFormField[] = Object.values(signUpFormField)
 
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-6", p.class)}>
@@ -40,9 +49,9 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         size={buttonSize.lg}
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="text-lg"
-        disabled={sm.state.isSubmitting.get()}
+        disabled={sm.isSubmitting.get()}
       >
-        {sm.state.isSubmitting.get() ? "Signing up..." : "Sign up"}
+        {sm.isSubmitting.get() ? "Signing up..." : "Sign up"}
       </Button>
     </form>
   )
@@ -58,13 +67,35 @@ function FieldSwitch(
   if (field === "terms") {
     return FieldSwitchTerms(state, errors, validateOnChange)
   }
+  type FormInputField = Exclude<SignUpFormField, "terms">
 
   const isRequired = true
-  const placeholder = `${field.charAt(0).toUpperCase() + field.slice(1)}`
-  const labelText = field === "email" ? "Email" : field === "name" ? "Name" : "Password"
-  const type = field === "password" ? "password" : "text"
-  const valueSignal = field === "name" ? state.name : field === "email" ? state.email : state.password
-  const autoComplete = field === "password" ? "new-password" : "name"
+
+  const labelTexts = {
+    name: ttt("Name"),
+    email: ttt("Email"),
+    password: ttt("Password"),
+  } as const satisfies Record<FormInputField, string>
+  const labelText = labelTexts[field]
+  const placeholder = labelText
+
+  const inputType = field === signUpFormField.password ? "password" : "text"
+
+  const valueSignals = {
+    name: state.name,
+    email: state.email,
+    password: state.password,
+  } as const satisfies Record<FormInputField, SignalObject<string>>
+
+  const valueSignal = valueSignals[field]
+
+  const autoCompleteValues = {
+    name: "name",
+    email: "email",
+    password: "new-password",
+  } as const satisfies Record<FormInputField, JSX.HTMLAutocomplete>
+
+  const autoComplete = autoCompleteValues[field]
 
   const debouncedValidate = validateOnChange(field)
 
@@ -77,7 +108,7 @@ function FieldSwitch(
       <InputS
         id={field}
         name={field}
-        type={type}
+        type={inputType}
         autocomplete={autoComplete}
         placeholder={placeholder}
         valueSignal={valueSignal}

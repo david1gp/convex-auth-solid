@@ -12,8 +12,16 @@ import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
+export type SignUpFormField = keyof typeof signUpFormField
+
+export const signUpFormField = {
+  name: "name",
+  email: "email",
+  password: "password",
+  terms: "terms",
+} as const
+
 export type SignUpUiState = {
-  isSubmitting: SignalObject<boolean>
   name: SignalObject<string>
   email: SignalObject<string>
   password: SignalObject<string>
@@ -23,9 +31,8 @@ export type SignUpUiState = {
 
 export function createSignUpUiState(searchParams: SearchParamsObject): SignUpUiState {
   return {
-    isSubmitting: createSignalObject(false),
     name: createSignalObject(""),
-    email: createSearchParamSignalObject("email", searchParams),
+    email: createSearchParamSignalObject(signUpFormField.email, searchParams),
     password: createSignalObject(""),
     terms: createSignalObject(false),
     alreadyRegisteredEmails: createSignalObject(new Set<string>()),
@@ -56,6 +63,7 @@ export type SignUpFormData = {
 }
 
 export type SignUpUiStateManagement = {
+  isSubmitting: SignalObject<boolean>
   state: SignUpUiState
   errors: SignUpErrorState
   hasErrors: () => boolean
@@ -70,21 +78,22 @@ export function signUpCreateStateManagement(
   navigate: NavigateType,
   searchParams: SearchParamsObject,
 ): SignUpUiStateManagement {
+  const isSubmitting = createSignalObject(false)
   const state = createSignUpUiState(searchParams)
   const errors = createSignUpErrorState()
 
   return {
+    isSubmitting,
     state,
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state),
     validateOnChange: (field: keyof SignUpFormData) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, state, errors),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, isSubmitting, state, errors),
   }
 }
 
 function hasErrors(errors: SignUpErrorState): boolean {
-  // console.log("hasErrors",{errors:errors.email})
   return !!errors.email.get() || !!errors.name.get() || !!errors.password.get() || !!errors.terms.get()
 }
 
@@ -100,7 +109,7 @@ function validateOnChange(field: keyof SignUpFormData, state: SignUpUiState, err
     const result = validateField(field, value)
     const errorSig = errors[field as keyof typeof errors]
     if (result.success) {
-      if (field === "email") {
+      if (field === signUpFormField.email) {
         const emailValue = value as string
         if (state.alreadyRegisteredEmails.get().has(emailValue)) {
           errorSig.set("Email already registered, please sign in instead")
@@ -114,14 +123,24 @@ function validateOnChange(field: keyof SignUpFormData, state: SignUpUiState, err
   }, debounceMs)
 }
 
-function handleSubmit(e: SubmitEvent, navigate: NavigateType, state: SignUpUiState, errors: SignUpErrorState) {
+function handleSubmit(
+  e: SubmitEvent,
+  navigate: NavigateType,
+  isSubmitting: SignalObject<boolean>,
+  state: SignUpUiState,
+  errors: SignUpErrorState,
+) {
   e.preventDefault()
-  state.isSubmitting.set(true)
 
-  const nameResult = validateField("name", state.name.get())
-  const emailResult = validateField("email", state.email.get())
-  const passwordResult = validateField("password", state.password.get())
-  const termsResult = validateField("terms", state.terms.get())
+  const name = state.name.get()
+  const email = state.email.get()
+  const password = state.password.get()
+  const terms = state.terms.get()
+
+  const nameResult = validateField(signUpFormField.name, name)
+  const emailResult = validateField(signUpFormField.email, email)
+  const passwordResult = validateField(signUpFormField.password, password)
+  const termsResult = validateField(signUpFormField.terms, terms)
 
   if (!nameResult.success) {
     errors.name.set(nameResult.issues[0].message)
@@ -136,15 +155,9 @@ function handleSubmit(e: SubmitEvent, navigate: NavigateType, state: SignUpUiSta
     errors.terms.set(termsResult.issues[0].message)
   } else errors.terms.set("")
 
-  if (nameResult.success && emailResult.success && passwordResult.success && termsResult.success) {
-    const formData: SignUpFormData = {
-      name: state.name.get(),
-      email: state.email.get(),
-      password: state.password.get(),
-      terms: state.terms.get(),
-    }
-    handleSignUp(formData, navigate, state, errors)
-  } else {
+  const isSuccess = nameResult.success && emailResult.success && passwordResult.success && termsResult.success
+
+  if (!isSuccess) {
     if (!nameResult.success) {
       toastAdd({ title: nameResult.issues[0].message, icon: mdiAccountCancel, id: "name" })
     }
@@ -157,8 +170,20 @@ function handleSubmit(e: SubmitEvent, navigate: NavigateType, state: SignUpUiSta
     if (!termsResult.success) {
       toastAdd({ title: termsResult.issues[0].message, icon: mdiCheckboxBlankOff, id: "terms" })
     }
+    return
   }
-  state.isSubmitting.set(false)
+
+  isSubmitting.set(true)
+
+  const formData: SignUpFormData = {
+    name: state.name.get(),
+    email: state.email.get(),
+    password: state.password.get(),
+    terms: state.terms.get(),
+  }
+  handleSignUp(formData, navigate, state, errors)
+
+  isSubmitting.set(false)
 }
 
 async function handleSignUp(
@@ -197,13 +222,13 @@ export type HandleSignUpData = {
 
 function validateField(field: keyof SignUpFormData, value: string | boolean) {
   let schema
-  if (field === "name") {
+  if (field === signUpFormField.name) {
     schema = signUpNameSchema
-  } else if (field === "email") {
+  } else if (field === signUpFormField.email) {
     schema = emailSchema
-  } else if (field === "password") {
+  } else if (field === signUpFormField.password) {
     schema = passwordSchema
-  } else if (field === "terms") {
+  } else if (field === signUpFormField.terms) {
     schema = signUpTermsSchema
     return v.safeParse(schema, value as boolean)
   }
