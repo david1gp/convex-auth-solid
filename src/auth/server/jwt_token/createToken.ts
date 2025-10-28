@@ -6,6 +6,7 @@ export async function createToken(
   secretSalt: string,
   expiresInDays = tokenValidDurationInDays,
 ): Promise<string> {
+  const op = "createToken"
   if (!secretSalt) return ""
   const encodedSecret = new TextEncoder().encode(secretSalt)
   const alg = "HS256"

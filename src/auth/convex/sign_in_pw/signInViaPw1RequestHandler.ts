@@ -2,7 +2,7 @@ import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMess
 import { loginMethod } from "@/auth/model/loginMethod"
 import { signInViaPwSchema } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"
-import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
+import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as v from "valibot"
@@ -63,7 +63,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   }
 
   // Create token
-  const tokenResult = await crateTokenResult(user._id)
+  const tokenResult = await createTokenResult(user._id)
   if (!tokenResult.success) {
     const errorResult = tokenResult
     console.warn(errorResult)

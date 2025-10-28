@@ -2,7 +2,7 @@ import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTo
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { userRole } from "@/auth/model/userRole"
-import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
+import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -60,8 +60,10 @@ export async function signUpConfirmEmail2InternalMutationFn(
   //
   // 3. Create session
   //
-  const tokenResult = await crateTokenResult(userId)
-  if (!tokenResult.success) return tokenResult
+  const tokenResult = await createTokenResult(userId)
+  if (!tokenResult.success) {
+    return tokenResult
+  }
   const token = tokenResult.data
   const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 

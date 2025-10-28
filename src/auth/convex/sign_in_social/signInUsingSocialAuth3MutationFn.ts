@@ -1,5 +1,5 @@
 import type { UserSession } from "@/auth/model/UserSession"
-import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
+import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
 import type { Id } from "@convex/_generated/dataModel"
 import { type MutationCtx } from "@convex/_generated/server.js"
@@ -21,7 +21,7 @@ export async function signInUsingSocialAuth3MutationFn(
   const data = foundOrCreatedResult.data
   const userId = data.user.userId
   // data
-  const tokenResult = await crateTokenResult(userId)
+  const tokenResult = await createTokenResult(userId)
   if (!tokenResult.success) return tokenResult
   const token = tokenResult.data
   await saveTokenIntoSessionReturnExpiresAtFn(ctx, providerInfo.provider, userId as Id<"users">, token)

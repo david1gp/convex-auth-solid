@@ -1,7 +1,7 @@
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
-import { crateTokenResult } from "@/auth/server/jwt_token/crateTokenResult"
+import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -52,7 +52,7 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   //
   // 3. Create session
   //
-  const tokenResult = await crateTokenResult(userId)
+  const tokenResult = await createTokenResult(userId)
   if (!tokenResult.success) return tokenResult
   const token = tokenResult.data
 
