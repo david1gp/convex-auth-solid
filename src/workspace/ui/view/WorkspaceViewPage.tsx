@@ -14,7 +14,7 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function WorkspaceViewPage() {
   const params = useParams()
-  const getWorkspaceHandle = () => params.handle
+  const getWorkspaceHandle = () => params.workspaceHandle
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>

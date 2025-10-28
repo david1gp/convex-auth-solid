@@ -11,17 +11,17 @@ const mode = formMode.edit
 
 export function WorkspaceEditPage() {
   const params = useParams()
-  const getHandle = () => params.handle
+  const getWorkspaceHandle = () => params.workspaceHandle
   const getReturnPath = () => params.returnPath
   return (
     <Switch>
-      <Match when={!getHandle()}>
+      <Match when={!getWorkspaceHandle()}>
         <ErrorPage title={ttt("Missing :workspaceHandle in path")} />
       </Match>
-      <Match when={getHandle()}>
+      <Match when={getWorkspaceHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getHandle()} />
-          <WorkspaceMutate mode={mode} workspaceHandle={getHandle()!} returnPath={getReturnPath()} />
+          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()} />
+          <WorkspaceMutate mode={mode} workspaceHandle={getWorkspaceHandle()!} returnPath={getReturnPath()} />
         </PageWrapper>
       </Match>
     </Switch>
