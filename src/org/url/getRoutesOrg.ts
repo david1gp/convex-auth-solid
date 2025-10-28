@@ -4,29 +4,29 @@ import { lazy } from "solid-js"
 import type { RouteComponent, RouteObject } from "~ui/utils/RouteConfig"
 import { objectEntries } from "~utils/obj/objectEntries"
 
-const WorkspaceListPage = lazy(() =>
-  import("@/workspace/ui/list/WorkspaceListPage").then((c) => ({ default: c.WorkspaceListPage })),
+const OrgListPage = lazy(() =>
+  import("@/org/ui/list/OrgListPage").then((c) => ({ default: c.OrgListPage })),
 )
-const WorkspaceEditPage = lazy(() =>
-  import("@/workspace/ui/mutate/WorkspaceEditPage").then((c) => ({ default: c.WorkspaceEditPage })),
+const OrgEditPage = lazy(() =>
+  import("@/org/ui/mutate/OrgEditPage").then((c) => ({ default: c.OrgEditPage })),
 )
-const WorkspaceViewPage = lazy(() =>
-  import("@/workspace/ui/view/WorkspaceViewPage").then((c) => ({ default: c.WorkspaceViewPage })),
+const OrgViewPage = lazy(() =>
+  import("@/app/demos/TodoPage").then((c) => ({ default: c.TodoPage })),
 )
-const WorkspaceAddPage = lazy(() =>
-  import("@/workspace/ui/mutate/WorkspaceAddPage").then((c) => ({ default: c.WorkspaceAddPage })),
+const OrgAddPage = lazy(() =>
+  import("@/org/ui/mutate/OrgAddPage").then((c) => ({ default: c.OrgAddPage })),
 )
-const WorkspaceRemovePage = lazy(() =>
-  import("@/workspace/ui/mutate/WorkspaceDeletePage").then((c) => ({ default: c.WorkspaceDeletePage })),
+const OrgRemovePage = lazy(() =>
+  import("@/org/ui/mutate/OrgDeletePage").then((c) => ({ default: c.OrgDeletePage })),
 )
 
-export function getRoutesWorkspace(): RouteObject[] {
+export function getRoutesOrg(): RouteObject[] {
   const routeMapping = {
-    orgList: WorkspaceListPage,
-    orgAdd: WorkspaceAddPage,
-    orgView: WorkspaceViewPage,
-    orgEdit: WorkspaceEditPage,
-    orgRemove: WorkspaceRemovePage,
+    orgList: OrgListPage,
+    orgAdd: OrgAddPage,
+    orgView: OrgViewPage,
+    orgEdit: OrgEditPage,
+    orgRemove: OrgRemovePage,
   } as const satisfies Record<PageNameOrg, RouteComponent>
   return objectEntries(routeMapping).map(([routeKey, component]) => ({
     path: pageRouteOrg[routeKey as PageNameOrg],

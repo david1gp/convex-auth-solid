@@ -3,6 +3,8 @@
 import { getRoutesApp } from "@/app/getRoutesApp"
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
+import { getRoutesOrg } from "@/org/url/getRoutesOrg"
+import { getRoutesWorkspace } from "@/workspace/url/getRoutesWorkspace"
 import { Router } from "@solidjs/router"
 import { render } from "solid-js/web"
 import "./global.css"
@@ -10,7 +12,7 @@ import "./global.css"
 const routesApp = [
   {
     component: LayoutWrapperApp,
-    children: getRoutesApp(),
+    children: [...getRoutesApp(), ...getRoutesOrg(), ...getRoutesWorkspace()],
   },
 ]
 
