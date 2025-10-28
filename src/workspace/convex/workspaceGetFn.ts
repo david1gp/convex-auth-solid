@@ -18,7 +18,7 @@ export async function workspaceGetFn(
   const op = "workspaceGetFn"
   let workspace = await ctx.db
     .query("workspaces")
-    .withIndex("handle", (q) => q.eq("handle", args.workspaceHandle))
+    .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", args.workspaceHandle))
     .unique()
   if (!workspace) {
     return createResultError(op, "Workspace not found", args.workspaceHandle)

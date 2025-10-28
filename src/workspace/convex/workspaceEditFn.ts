@@ -12,8 +12,8 @@ export const workspaceEditFields = {
   workspaceHandle: v.string(),
   // data
   name: v.optional(v.string()),
+  description: v.optional(v.string()),
   image: v.optional(v.string()),
-  prompt: v.optional(v.string()),
 } as const
 
 export const workspaceEditValidator = v.object(workspaceEditFields)
@@ -29,7 +29,7 @@ export async function workspaceEditFn(ctx: MutationCtx, args: WorkspaceEditValid
 
   const workspace = await ctx.db
     .query("workspaces")
-    .withIndex("handle", (q) => q.eq("handle", args.workspaceHandle))
+    .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", args.workspaceHandle))
     .unique()
   if (!workspace) {
     return createResultError(op, "Workspace not found", args.workspaceHandle)

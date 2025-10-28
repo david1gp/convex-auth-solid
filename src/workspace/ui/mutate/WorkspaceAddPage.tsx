@@ -2,7 +2,10 @@ import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
-import { workspaceCreateFormStateManagement, type WorkspaceFormData } from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+import {
+  workspaceCreateFormStateManagement,
+  type WorkspaceFormData,
+} from "@/workspace/ui/form/workspaceCreateFormStateManagement"
 import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
 import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { api } from "@convex/_generated/api"
@@ -32,7 +35,8 @@ export interface WorkspaceAddProps extends MayHaveReturnPath, MayHaveClass {}
 export function WorkspaceAdd(p: WorkspaceAddProps) {
   const navigator = useNavigate()
   const actionFn = createMutation(api.workspace.workspaceCreateMutation)
-  async function action(data: WorkspaceFormData): Promise<void> {
+
+  async function createAction(data: WorkspaceFormData): Promise<void> {
     const workspaceIdResult = await actionFn({
       token: userTokenGet(),
       // data
@@ -47,6 +51,7 @@ export function WorkspaceAdd(p: WorkspaceAddProps) {
     const url = p.returnPath ?? urlWorkspaceView(workspaceIdResult.data)
     navigator(url)
   }
-  const sm = workspaceCreateFormStateManagement(action)
+
+  const sm = workspaceCreateFormStateManagement({ create: createAction })
   return <WorkspaceForm mode={formMode.add} sm={sm} class={p.class} />
 }

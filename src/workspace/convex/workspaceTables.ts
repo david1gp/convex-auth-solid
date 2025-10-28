@@ -7,9 +7,9 @@ import { v } from "convex/values"
 export const workspaceDataFields = {
   userId: v.optional(vIdUser),
   orgId: v.optional(vIdOrg),
+  workspaceHandle: v.string(),
   // data
   name: v.string(),
-  handle: v.string(),
   description: v.optional(v.string()),
   image: v.optional(v.string()),
 } as const
@@ -22,5 +22,5 @@ export const workspaceFields = {
 export const workspaceTables = {
   workspaces: defineTable(workspaceFields)
     //
-    .index("handle", ["handle"]),
+    .index("workspaceHandle", ["workspaceHandle"]),
 } as const

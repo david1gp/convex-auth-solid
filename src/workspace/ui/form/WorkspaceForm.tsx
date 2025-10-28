@@ -4,7 +4,7 @@ import {
 } from "@/workspace/ui/form/workspaceCreateFormStateManagement"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
+import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
 import { InputS } from "~ui/input/input/InputS"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
@@ -30,7 +30,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
       <h1 class="text-2xl font-bold mt-6 mb-2">{getWorkspaceTitle(p.mode)}</h1>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <NameField sm={p.sm} />
-        <HandleField sm={p.sm} />
+        {p.mode === formMode.add && <HandleField sm={p.sm} />}
         <DescriptionField sm={p.sm} />
         <ImageField sm={p.sm} />
         <ButtonIcon
@@ -76,19 +76,19 @@ function NameField(p: HasOrgFormStateManagement) {
 function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={workspaceFormField.handle}>
+      <Label for={workspaceFormField.workspaceHandle}>
         Handle <LabelAsterix />
       </Label>
       <InputS
-        id={workspaceFormField.handle}
+        id={workspaceFormField.workspaceHandle}
         placeholder={ttt("Enter workspace handle")}
         autocomplete="organization-title"
         valueSignal={p.sm.state.handle}
         onInput={(e) => {
           p.sm.state.handle.set(e.currentTarget.value)
-          p.sm.validateOnChange(workspaceFormField.handle)(e.currentTarget.value)
+          p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.handle)(e.currentTarget.value)}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.handle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
       />

@@ -4,12 +4,17 @@ import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
-import { workspaceCreateFormStateManagement, type WorkspaceFormData } from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+import {
+  workspaceCreateFormStateManagement,
+  type WorkspaceFormActions,
+  type WorkspaceFormData,
+} from "@/workspace/ui/form/workspaceCreateFormStateManagement"
 import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
 import { urlWorkspaceList, urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
 import { Show, createEffect } from "solid-js"
+import { ttt } from "~ui/i18n/ttt"
 import { formMode, type HasFormModeMutate } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
@@ -25,35 +30,51 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
     workspaceHandle: p.workspaceHandle,
   }) as () => DocWorkspace | undefined
 
-  const editAction = createMutation(api.workspace.workspaceEditMutation)
-  const deleteAction = createMutation(api.workspace.workspaceDeleteMutation)
-  async function action(data: WorkspaceFormData): Promise<void> {
-    const workspaceIdResult =
-      p.mode === formMode.edit
-        ? await editAction({
-            // auth
-            token: userTokenGet(),
-            // id
-            workspaceHandle: p.workspaceHandle,
-            // data
-            ...data,
-          })
-        : await deleteAction({
-            // auth
-            token: userTokenGet(),
-            // id
-            workspaceHandle: p.workspaceHandle,
-          })
-    if (!workspaceIdResult.success) {
-      console.error(workspaceIdResult)
-      toastAdd({ title: workspaceIdResult.errorMessage, variant: toastVariant.error })
+  const editMutation = createMutation(api.workspace.workspaceEditMutation)
+  const deleteMutation = createMutation(api.workspace.workspaceDeleteMutation)
+
+  async function editAction(data: Partial<WorkspaceFormData>) {
+    const editResult = await editMutation({
+      // auth
+      token: userTokenGet(),
+      // data
+      ...data,
+      // id
+      workspaceHandle: p.workspaceHandle,
+    })
+    if (!editResult.success) {
+      console.error(editResult)
+      toastAdd({ title: editResult.errorMessage, variant: toastVariant.error })
+      return
+    }
+    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlWorkspaceView(p.workspaceHandle) : urlWorkspaceList()
+    navigator(url)
+  }
+  async function removeAction() {
+    const deleteResult = await deleteMutation({
+      // auth
+      token: userTokenGet(),
+      // id
+      workspaceHandle: p.workspaceHandle,
+    })
+    if (!deleteResult.success) {
+      console.error(deleteResult)
+      toastAdd({ title: deleteResult.errorMessage, variant: toastVariant.error })
       return
     }
     const url = (p.returnPath ?? p.mode === formMode.edit) ? urlWorkspaceView(p.workspaceHandle) : urlWorkspaceList()
     navigator(url)
   }
 
-  const sm = workspaceCreateFormStateManagement(action)
+  const actions: WorkspaceFormActions = {}
+  if (p.mode === formMode.edit) {
+    actions.edit = editAction
+  }
+  if (p.mode === formMode.remove) {
+    actions.delete = removeAction
+  }
+
+  const sm = workspaceCreateFormStateManagement(actions)
 
   createEffect(() => {
     const ws = getWorkspace()
@@ -71,5 +92,5 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
 }
 
 function LoadingWorkspace() {
-  return <div class="opacity-80">Loading workspace...</div>
+  return <div class="opacity-80">{ttt("Loading workspace...")}</div>
 }

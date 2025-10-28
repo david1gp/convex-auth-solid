@@ -1,5 +1,5 @@
 import { debounceMs } from "@/utils/ui/debounceMs"
-import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
+import type { DocWorkspace, IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import { workspaceDataSchemaFields } from "@/workspace/model/workspaceSchema"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
@@ -10,15 +10,18 @@ import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObj
 export type WorkspaceFormField = keyof typeof workspaceFormField
 
 export const workspaceFormField = {
+  // id
+  workspaceHandle: "workspaceHandle",
+  // data
   name: "name",
-  handle: "handle",
   description: "description",
   image: "image",
 } as const
 
 export type WorkspaceFormData = {
+  workspaceHandle: string
+  // data
   name: string
-  handle: string
   description: string
   image: string
 }
@@ -48,6 +51,7 @@ function workspaceCreateState(): WorkspaceFormState {
 
 export type WorkspaceFormStateManagement = {
   isSaving: SignalObject<boolean>
+  serverState: SignalObject<DocWorkspace>
   state: WorkspaceFormState
   errors: WorkspaceFormErrorState
   hasErrors: () => boolean
@@ -57,27 +61,54 @@ export type WorkspaceFormStateManagement = {
   handleSubmit: (e: SubmitEvent) => Promise<void>
 }
 
-export type WorkspaceFormSubmitAction = (state: WorkspaceFormData) => Promise<void>
+function createWorkspaceFormData(): WorkspaceFormData {
+  return { name: "", workspaceHandle: "", description: "", image: "" }
+}
 
-export function workspaceCreateFormStateManagement(onSubmit: WorkspaceFormSubmitAction): WorkspaceFormStateManagement {
+function createEmptyDocWorkspace(): DocWorkspace {
+  const now = new Date()
+  const iso = now.toISOString()
+  return {
+    ...createWorkspaceFormData(),
+    _id: "" as IdWorkspace,
+    createdAt: iso,
+    updatedAt: iso,
+    _creationTime: now.getMilliseconds(),
+  }
+}
+
+export type WorkspaceFormCreateFn = (state: WorkspaceFormData) => Promise<void>
+export type WorkspaceFormEditFn = (state: Partial<WorkspaceFormData>) => Promise<void>
+export type WorkspaceFormDelteFn = () => Promise<void>
+
+export type WorkspaceFormActions = {
+  create?: WorkspaceFormCreateFn
+  edit?: WorkspaceFormEditFn
+  delete?: WorkspaceFormDelteFn
+}
+
+export function workspaceCreateFormStateManagement(actions: WorkspaceFormActions): WorkspaceFormStateManagement {
+  const serverState = createSignalObject(createEmptyDocWorkspace())
   const isSaving = createSignalObject(false)
   const state = workspaceCreateState()
   const errors = workspaceCreateState()
   return {
     isSaving,
+    serverState,
     state,
-    loadData: (data: DocWorkspace) => loadData(data, state),
+    loadData: (data: DocWorkspace) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state),
     validateOnChange: (field: WorkspaceFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, state, errors, onSubmit),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
 }
 
-function loadData(data: DocWorkspace, state: WorkspaceFormState): void {
+function loadData(data: DocWorkspace, serverState: SignalObject<DocWorkspace>, state: WorkspaceFormState): void {
+  serverState.set(data)
   state.name.set(data.name)
-  state.handle.set(data.handle)
+  state.handle.set(data.workspaceHandle)
   state.description.set(data.description ?? "")
   state.image.set(data.image ?? "")
 }
@@ -108,8 +139,8 @@ function validateField(field: WorkspaceFormField, value: string) {
   let schema
   if (field === workspaceFormField.name) {
     schema = workspaceDataSchemaFields.name
-  } else if (field === workspaceFormField.handle) {
-    schema = workspaceDataSchemaFields.handle
+  } else if (field === workspaceFormField.workspaceHandle) {
+    schema = workspaceDataSchemaFields.workspaceHandle
   } else if (field === workspaceFormField.description) {
     schema = workspaceDataSchemaFields.description
   } else if (field === workspaceFormField.image) {
@@ -121,21 +152,22 @@ function validateField(field: WorkspaceFormField, value: string) {
 async function handleSubmit(
   e: SubmitEvent,
   isSaving: SignalObject<boolean>,
+  serverState: SignalObject<DocWorkspace>,
   state: WorkspaceFormState,
   errors: WorkspaceFormErrorState,
-  onSubmit: WorkspaceFormSubmitAction,
+  actions: WorkspaceFormActions,
 ): Promise<void> {
   e.preventDefault()
 
   const name = state.name.get()
-  const handle = state.handle.get()
+  const workspaceHandle = state.handle.get()
   const description = state.description.get()
   const image = state.image.get()
 
-  const nameResult = validateField("name", name)
-  const handleResult = validateField("handle", handle)
-  const descriptionResult = validateField("description", description)
-  const imageResult = validateField("image", image)
+  const nameResult = validateField(workspaceFormField.name, name)
+  const handleResult = validateField(workspaceFormField.workspaceHandle, workspaceHandle)
+  const descriptionResult = validateField(workspaceFormField.description, description)
+  const imageResult = validateField(workspaceFormField.image, image)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
   errors.handle.set(handleResult.success ? "" : handleResult.issues[0].message)
@@ -160,8 +192,31 @@ async function handleSubmit(
     return
   }
 
-  const data: WorkspaceFormData = { name, handle, description, image }
   isSaving.set(true)
-  await onSubmit(data)
+
+  if (actions.create) {
+    const data: WorkspaceFormData = { name, workspaceHandle, description, image }
+    await actions.create(data)
+  }
+
+  if (actions.edit) {
+    const data: Partial<WorkspaceFormData> = {}
+    const ss = serverState.get()
+    if (name !== ss.name) {
+      data.name = name
+    }
+    if (description !== ss.description) {
+      data.description = description
+    }
+    if (image !== ss.image) {
+      data.image = image
+    }
+    await actions.edit(data)
+  }
+
+  if (actions.delete) {
+    await actions.delete()
+  }
+
   isSaving.set(false)
 }

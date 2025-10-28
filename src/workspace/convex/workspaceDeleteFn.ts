@@ -12,7 +12,7 @@ export const workspaceDeleteValidator = v.object(workspaceDeleteFields)
 export async function workspaceDeleteFn(ctx: MutationCtx, args: WorkspaceDeleteValidatorType): Promise<null> {
   const ws = await ctx.db
     .query("workspaces")
-    .withIndex("handle", (q) => q.eq("handle", args.workspaceHandle))
+    .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", args.workspaceHandle))
     .unique()
   if (!ws) return null // idempotent
   await ctx.db.delete(ws._id)
