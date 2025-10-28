@@ -1,7 +1,11 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg } from "@/org/convex/IdOrg"
 import type { HasOrgHandle } from "@/org/model/HasOrgHandle"
-import { orgCreateFormStateManagement, type OrgFormData } from "@/org/ui/form/orgCreateFormStateManagement"
+import {
+  orgCreateFormStateManagement,
+  type OrgFormActions,
+  type OrgFormData,
+} from "@/org/ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/ui/form/OrgForm"
 import { urlOrgList, urlOrgView } from "@/org/url/urlOrg"
 import { createMutation } from "@/utils/convex/createMutation"
@@ -25,30 +29,23 @@ export function OrgMutate(p: OrgMutateProps) {
     handle: p.orgHandle,
   }) as () => DocOrg | undefined
 
-  const editAction = createMutation(api.org.orgEditMutation)
-  const deleteAction = createMutation(api.org.orgDeleteMutation)
-  async function action(data: OrgFormData): Promise<void> {
+  const editMutation = createMutation(api.org.orgEditMutation)
+  const deleteMutation = createMutation(api.org.orgDeleteMutation)
+
+  async function editAction(data: Partial<OrgFormData>) {
     const org = getOrg()
     if (!org) {
       console.warn("no org")
       return
     }
-    const orgIdResult =
-      p.mode === formMode.edit
-        ? await editAction({
-            // auth
-            token: userTokenGet(),
-            // id
-            orgId: org._id,
-            // data
-            ...data,
-          })
-        : await deleteAction({
-            // auth
-            token: userTokenGet(),
-            // id
-            orgId: org._id,
-          })
+    const orgIdResult = await editMutation({
+      // auth
+      token: userTokenGet(),
+      // id
+      orgId: org._id,
+      // data
+      ...data,
+    })
     if (!orgIdResult.success) {
       console.error(orgIdResult)
       toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
@@ -58,7 +55,34 @@ export function OrgMutate(p: OrgMutateProps) {
     navigator(url)
   }
 
-  const sm = orgCreateFormStateManagement(action)
+  async function deleteAction() {
+    const org = getOrg()
+    if (!org) {
+      console.warn("no org")
+      return
+    }
+    const orgIdResult = await deleteMutation({
+      // auth
+      token: userTokenGet(),
+      // id
+      orgId: org._id,
+    })
+    if (!orgIdResult.success) {
+      console.error(orgIdResult)
+      toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
+      return
+    }
+    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlOrgView(p.orgHandle) : urlOrgList()
+    navigator(url)
+  }
+
+  const actions: OrgFormActions = {}
+  if (p.mode === formMode.edit) {
+    actions.edit = editAction
+    actions.delete = deleteAction
+  }
+
+  const sm = orgCreateFormStateManagement(actions)
 
   createEffect(() => {
     const o = getOrg()

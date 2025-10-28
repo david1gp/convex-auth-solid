@@ -2,7 +2,7 @@ import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { orgListFindNameByHandle } from "@/org/ui/list/orgListSignal"
 import { urlOrgList, urlOrgView } from "@/org/url/urlOrg"
 import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
-import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
+import { urlWorkspaceList, urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -22,6 +22,9 @@ export function NavAppDir(p: NavAppDirProps) {
     <NavAuth class={p.class}>
       <LinkButton variant={buttonVariant.link} href={urlOrgList()}>
         {ttt("Organizations")}
+      </LinkButton>
+      <LinkButton variant={buttonVariant.link} href={urlWorkspaceList()}>
+        {ttt("Workspaces")}
       </LinkButton>
       <NavAppBreadcrumbtsLoader {...p} />
     </NavAuth>
@@ -55,7 +58,10 @@ function NavAppBreadcrumbtsLoader(p: NavAppDirProps) {
         {(workspaceName) => (
           <>
             <div class="text-muted-foreground py-3 select-none">/</div>
-            <LinkButton variant={buttonVariant.link} href={p.workspaceHandle ? urlWorkspaceView(p.workspaceHandle) : ""}>
+            <LinkButton
+              variant={buttonVariant.link}
+              href={p.workspaceHandle ? urlWorkspaceView(p.workspaceHandle) : ""}
+            >
               {workspaceName()}
             </LinkButton>
           </>

@@ -1,10 +1,10 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import { createMutation } from "@/utils/convex/createMutation"
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { orgCreateFormStateManagement, type OrgFormData } from "@/org/ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/ui/form/OrgForm"
 import { urlOrgView } from "@/org/url/urlOrg"
+import { createMutation } from "@/utils/convex/createMutation"
+import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
 import { ttt } from "~ui/i18n/ttt"
@@ -47,6 +47,6 @@ export function OrgAdd(p: OrgAddProps) {
     const url = p.returnPath ?? urlOrgView(orgIdResult.data)
     navigator(url)
   }
-  const sm = orgCreateFormStateManagement(action)
+  const sm = orgCreateFormStateManagement({ create: action })
   return <OrgForm mode={formMode.add} sm={sm} class={p.class} />
 }

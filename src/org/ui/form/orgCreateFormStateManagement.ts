@@ -1,4 +1,4 @@
-import type { DocOrg } from "@/org/convex/IdOrg"
+import type { DocOrg, IdOrg } from "@/org/convex/IdOrg"
 import { orgDataSchemaFields } from "@/org/model/orgSchema"
 import { orgFormField, type OrgFormField } from "@/org/ui/form/orgFormField"
 import { debounceMs } from "@/utils/ui/debounceMs"
@@ -48,6 +48,7 @@ function orgCreateState(): OrgFormState {
 
 export type OrgFormStateManagement = {
   isSaving: SignalObject<boolean>
+  serverState: SignalObject<DocOrg>
   state: OrgFormState
   errors: OrgFormErrorState
   hasErrors: () => boolean
@@ -57,25 +58,52 @@ export type OrgFormStateManagement = {
   handleSubmit: (e: SubmitEvent) => Promise<void>
 }
 
-export type OrgFormSubmitAction = (state: OrgFormData) => Promise<void>
+function createOrgFormData(): OrgFormData {
+  return { name: "", orgHandle: "", description: "", url: "", image: "" }
+}
 
-export function orgCreateFormStateManagement(onSubmit: OrgFormSubmitAction): OrgFormStateManagement {
+function createEmptyDocOrg(): DocOrg {
+  const now = new Date()
+  const iso = now.toISOString()
+  return {
+    ...createOrgFormData(),
+    _id: "" as IdOrg,
+    createdAt: iso,
+    updatedAt: iso,
+    _creationTime: now.getMilliseconds(),
+  }
+}
+
+export type OrgFormCreateFn = (state: OrgFormData) => Promise<void>
+export type OrgFormEditFn = (state: Partial<OrgFormData>) => Promise<void>
+export type OrgFormDeleteFn = () => Promise<void>
+
+export type OrgFormActions = {
+  create?: OrgFormCreateFn
+  edit?: OrgFormEditFn
+  delete?: OrgFormDeleteFn
+}
+
+export function orgCreateFormStateManagement(actions: OrgFormActions): OrgFormStateManagement {
+  const serverState = createSignalObject(createEmptyDocOrg())
   const isSaving = createSignalObject(false)
   const state = orgCreateState()
   const errors = orgCreateState()
   return {
     isSaving,
+    serverState,
     state,
-    loadData: (data: DocOrg) => loadData(data, state),
+    loadData: (data: DocOrg) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state),
     validateOnChange: (field: OrgFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, state, errors, onSubmit),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
 }
 
-function loadData(data: DocOrg, state: OrgFormState): void {
+function loadData(data: DocOrg, serverState: SignalObject<DocOrg>, state: OrgFormState): void {
+  serverState.set(data)
   state.name.set(data.name)
   state.orgHandle.set(data.orgHandle)
   state.description.set(data.description ?? "")
@@ -131,9 +159,10 @@ function validateField(field: OrgFormField, value: string) {
 async function handleSubmit(
   e: SubmitEvent,
   isSaving: SignalObject<boolean>,
+  serverState: SignalObject<DocOrg>,
   state: OrgFormState,
   errors: OrgFormErrorState,
-  onSubmit: OrgFormSubmitAction,
+  actions: OrgFormActions,
 ): Promise<void> {
   e.preventDefault()
 
@@ -177,8 +206,34 @@ async function handleSubmit(
     return
   }
 
-  const data: OrgFormData = { name, orgHandle, description, url, image }
   isSaving.set(true)
-  await onSubmit(data)
+
+  if (actions.create) {
+    const data: OrgFormData = { name, orgHandle, description, url, image }
+    await actions.create(data)
+  }
+
+  if (actions.edit) {
+    const data: Partial<OrgFormData> = {}
+    const ss = serverState.get()
+    if (name !== ss.name) {
+      data.name = name
+    }
+    if (description !== ss.description) {
+      data.description = description
+    }
+    if (url !== ss.url) {
+      data.url = url
+    }
+    if (image !== ss.image) {
+      data.image = image
+    }
+    await actions.edit(data)
+  }
+
+  if (actions.delete) {
+    await actions.delete()
+  }
+
   isSaving.set(false)
 }
