@@ -1,3 +1,4 @@
+import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 import type { UserSession } from "@/auth/model/UserSession"
 import { signUpConfirmEmailSchema } from "@/auth/model/signUpConfirmEmailSchema"
 import { internal } from "@convex/_generated/api"
@@ -13,18 +14,18 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   // 1. validate request
   //
   if (request.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
   }
   const textBody = await request.text()
   if (!textBody) {
-    const errorMessage = "Body is empty"
+    const errorMessage = commonApiErrorMessages.emptyBody
     console.warn(op, errorMessage, textBody)
     return new Response(JSON.stringify({ errorMessage }), { status: 400 })
   }
   const schema = v.pipe(v.string(), v.parseJson(), signUpConfirmEmailSchema)
   const validation = v.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = "Schema error:" + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
     console.warn(op, errorMessage)
     return new Response(JSON.stringify({ errorMessage }), { status: 400 })
   }

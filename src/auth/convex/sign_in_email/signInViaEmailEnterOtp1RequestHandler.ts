@@ -15,7 +15,7 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   // 1. validate request
   //
   if (request.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
   }
 
   const textBody = await request.text()
@@ -62,5 +62,5 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
     return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 400 })
   }
 
-  return new Response(JSON.stringify(userSession, null, 2))
+  return new Response(jsonStringifyPretty(userSession))
 }

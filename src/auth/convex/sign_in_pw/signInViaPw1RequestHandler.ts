@@ -16,7 +16,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   const op = "signInPw1HttpHandler"
 
   if (request.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
   }
 
   const body = await request.text()

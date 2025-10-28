@@ -12,7 +12,7 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
   const op = "signInEmail1HttpHandler"
 
   if (request.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
   }
 
   const textBody = await request.text()

@@ -16,7 +16,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const op = "signUp1RequestHandler"
 
   if (request.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
   }
 
   const textBody = await request.text()
