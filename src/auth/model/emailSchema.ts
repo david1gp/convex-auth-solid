@@ -15,9 +15,9 @@ export const signUpTermsSchema = v.pipe(
 
 export const emailSchema = v.pipe(
   v.string(),
-  v.minLength(1, "Email is required"),
+  v.nonEmpty("Please enter your email"),
   v.maxLength(inputMaxLength100, "Only a max length of 100 is allowed"),
-  v.email("Please enter a valid email"),
+  v.email("The email is badly formatted"),
 )
 
 export const passwordSchema = v.pipe(
