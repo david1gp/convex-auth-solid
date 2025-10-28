@@ -1,21 +1,64 @@
+import type { IdUser } from "@/auth/convex/IdUser"
+import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import type { IdOrgMember } from "@/org/convex/IdOrg"
-import { orgMemberDataFields } from "@/org/convex/orgTables"
+import { orgRoleValidator } from "@/org/model/orgRoleValidator"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
+import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { vIdUser } from "../../auth/convex/vIdUser"
 
 export type OrgMemberCreateValidatorType = typeof orgMemberCreateValidator.type
 
-export const orgMemberCreateFields = orgMemberDataFields
+export const orgMemberCreateFields = {
+  token: v.string(),
+  // id
+  orgHandle: v.string(),
+  userId: vIdUser,
+  // data
+  role: orgRoleValidator,
+  // meta
+  // invitedBy: vIdUser,
+} as const
 
 export const orgMemberCreateValidator = v.object(orgMemberCreateFields)
 
-export async function orgMemberCreateFn(ctx: MutationCtx, args: OrgMemberCreateValidatorType): Promise<IdOrgMember> {
+export async function orgMemberCreateFn(
+  ctx: MutationCtx,
+  args: OrgMemberCreateValidatorType,
+): PromiseResult<IdOrgMember> {
+  const op = "orgMemberCreateFn"
+
+  const verifiedResult = await verifyTokenResult(args.token)
+  if (!verifiedResult.success) {
+    console.info(verifiedResult)
+    return verifiedResult
+  }
+  const invitedBy = verifiedResult.data.sub as IdUser
+
+  const user = await ctx.db.get(args.userId)
+  if (!user) {
+    const errorMessage = "user not found"
+    console.info(op, errorMessage, args.userId)
+    return createResultError(op, errorMessage, args.userId)
+  }
+
+  const org = await ctx.db
+    .query("orgs")
+    .withIndex("orgHandle", (q) => q.eq("orgHandle", args.orgHandle))
+    .unique()
+  if (!org) {
+    return createResultError(op, "Organization not found", args.orgHandle)
+  }
+
   const now = nowIso()
   const orgMemberId = await ctx.db.insert("orgMembers", {
-    ...args,
+    orgId: org._id,
+    userId: args.userId,
+    role: args.role,
+    invitedBy: invitedBy,
     joinedAt: now,
     updatedAt: now,
   })
-  return orgMemberId
+  return createResult(orgMemberId)
 }

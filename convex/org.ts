@@ -1,5 +1,3 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgCreateFields, orgCreateFn } from "@/org/convex/orgCreateFn"
 import { orgDeleteFields, orgDeleteFn } from "@/org/convex/orgDeleteFn"
 import { orgEditFields, orgEditFn } from "@/org/convex/orgEditFn"
@@ -49,16 +47,9 @@ export const orgDeleteMutation = mutation({
 })
 
 export const orgMemberCreateMutation = mutation({
-  args: createTokenValidator(orgMemberCreateFields),
+  args: orgMemberCreateFields,
   handler: async (ctx, args) => {
-    const verifiedResult = await verifyTokenResult(args.token)
-    if (!verifiedResult.success) {
-      console.info(verifiedResult)
-      return verifiedResult
-    }
-    const { token, ...rest } = args
-    const data = { ...rest, invitedBy: verifiedResult.data.sub as IdUser }
-    return orgMemberCreateFn(ctx, data)
+    return orgMemberCreateFn(ctx, args)
   },
 })
 
@@ -76,10 +67,10 @@ export const orgMemberGetQuery = query({
 
 export const orgMembersListQuery = query({
   args: createTokenValidator(orgMembersListFields),
-  handler: async (ctx, args) => await authQuery(ctx, args, orgMemberListFn),
+  handler: async (ctx, args) => await authQueryR(ctx, args, orgMemberListFn),
 })
 
 export const orgMemberDeleteMutation = mutation({
   args: createTokenValidator(orgMemberDeleteFields),
-  handler: async (ctx, args) => authMutation(ctx, args, orgMemberDeleteFn),
+  handler: async (ctx, args) => authMutationR(ctx, args, orgMemberDeleteFn),
 })
