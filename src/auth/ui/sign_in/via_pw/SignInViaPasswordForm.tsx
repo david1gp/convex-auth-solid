@@ -50,7 +50,8 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
       </div>
       <div class="flex flex-col gap-2">
         <Label for={pwInputId}>
-          Password <LabelAsterix />
+          {ttt("Password")}
+          <LabelAsterix />
         </Label>
         <InputS
           id={pwInputId}

@@ -94,24 +94,15 @@ function handleSubmit(
   errors: SignInViaEmailErrorState,
 ) {
   e.preventDefault()
-  state.isSubmitting.set(true)
-
   const emailResult = validateField("email", state.email.get())
 
   if (!emailResult.success) {
     errors.email.set(emailResult.issues[0].message)
-    state.isSubmitting.set(false)
-    return
   } else {
     errors.email.set("")
   }
 
-  if (emailResult.success) {
-    console.log("Sign in via email submitted", {
-      email: state.email.get(),
-    })
-    handleSignInViaEmail(state.email.get(), navigate, location, state, errors)
-  }
+  handleSignInViaEmail(state.email.get(), navigate, location, state, errors)
 }
 
 async function handleSignInViaEmail(
@@ -121,13 +112,17 @@ async function handleSignInViaEmail(
   state: SignInViaEmailUiState,
   errors: SignInViaEmailErrorState,
 ) {
+  console.log("Sign in via email submitted", {
+    email: state.email.get(),
+  })
+  state.isSubmitting.set(true)
   const result = await apiAuthSignInViaEmail({ email })
+  state.isSubmitting.set(false)
+
   if (!result.success) {
     toastAdd({ title: "Error signing in", description: result.errorMessage })
-    state.isSubmitting.set(false)
     return
   }
-  state.isSubmitting.set(false)
 
   const returnPath = urlSignInRedirectUrl(location.pathname)
   const url = urlSignInEnterOtp(email, "", returnPath)

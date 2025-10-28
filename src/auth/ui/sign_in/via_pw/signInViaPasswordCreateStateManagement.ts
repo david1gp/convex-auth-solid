@@ -1,8 +1,10 @@
+import { apiAuthSignInViaPw } from "@/auth/api/apiAuthSignInViaPw"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
+import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 import { emailSchema, passwordSchema } from "../../../model/emailSchema"
 
@@ -84,12 +86,14 @@ function validateOnChange(field: keyof SignInFormData, errors: SignInErrorState)
   }, debounceMs)
 }
 
-function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignInErrorState) {
+async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignInErrorState) {
   e.preventDefault()
-  state.isSubmitting.set(true)
 
-  const emailResult = validateField("email", state.email.get())
-  const passwordResult = validateField("password", state.password.get())
+  const email = state.email.get()
+  const password = state.password.get()
+
+  const emailResult = validateField("email", email)
+  const passwordResult = validateField("password", password)
 
   if (!emailResult.success) {
     errors.email.set(emailResult.issues[0].message)
@@ -98,13 +102,27 @@ function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignInErrorS
     errors.password.set(passwordResult.issues[0].message)
   } else errors.password.set("")
 
-  if (emailResult.success && passwordResult.success) {
-    console.log("Sign in via password submitted", {
-      email: state.email.get(),
-      password: state.password.get(),
-    })
+  const isSuccess = emailResult.success && passwordResult.success
+  if (!isSuccess) {
+    return
   }
+
+  console.log("Sign in via password submitted", {
+    email: state.email.get(),
+    password: state.password.get(),
+  })
+
+  state.isSubmitting.set(true)
+  const result = await apiAuthSignInViaPw({ email, pw: password })
   state.isSubmitting.set(false)
+
+  if (!result.success) {
+    toastAdd({ title: "Error signing in", description: result.errorMessage })
+    return
+  }
+
+  // const returnPath = urlSignInRedirectUrl(location.pathname)
+  // navigate(returnPath)
 }
 
 function validateField(field: keyof SignInFormData, value: string) {

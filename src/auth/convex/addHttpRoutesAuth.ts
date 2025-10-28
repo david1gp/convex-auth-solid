@@ -20,8 +20,7 @@ export function addHttpRoutesAuth(http: HttpRouter) {
   addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaGoogle, httpMethod.GET, async (ctx, request) => {
     return signInUsingSocialAuth1RequestHandler(socialLoginProvider.google, ctx, request)
   })
-
-  // Dev auth routes
+  // Oauth / Dev
   addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaDev, httpMethod.GET, async (ctx, request) => {
     return signInUsingSocialAuth1RequestHandler(loginProvider.dev, ctx, request)
   })

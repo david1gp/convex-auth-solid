@@ -1,3 +1,4 @@
+import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 import type { UserSession } from "@/auth/model/UserSession"
 import { signInViaEmailEnterOtpSchema } from "@/auth/model/signInSchema"
 import { internal } from "@convex/_generated/api"
@@ -19,7 +20,7 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
 
   const textBody = await request.text()
   if (!textBody) {
-    const errorMessage = "Empty body"
+    const errorMessage = commonApiErrorMessages.emptyBody
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -27,7 +28,7 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   const schema = v.pipe(v.string(), v.parseJson(), signInViaEmailEnterOtpSchema)
   const validation = v.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = "Schema validation failed: " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })

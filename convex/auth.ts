@@ -1,6 +1,5 @@
 import { createUserFromAuthProviderFn } from "@/auth/convex/crud/createUserFromAuthProviderFn"
 import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailFn"
-import { usernameAvailableFields, usernameAvailableFn } from "@/auth/convex/usernameAvailableFn"
 import {
   authSessionInsertValidator,
   saveTokenIntoSessionReturnExpiresAtFn,
@@ -26,6 +25,7 @@ import {
   signUpConfirmEmailValidator,
 } from "@/auth/convex/sign_up/signUpConfirmEmail2InternalMutationFn"
 import { signUpConfirmEmail3CleanupOldCodesInternalMutationFn } from "@/auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutationFn"
+import { usernameAvailableFields, usernameAvailableFn } from "@/auth/convex/usernameAvailableFn"
 import { commonAuthProviderValidator } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
 import { internalAction, internalMutation, internalQuery } from "@convex/_generated/server"
@@ -104,6 +104,9 @@ export const notifyTelegramNewSignUpInternalAction = internalAction({
   handler: notifyTelegramNewSignUpInternalActionFn,
 })
 
+//
+// username
+//
 export const usernameAvailableQuery = internalQuery({
   args: usernameAvailableFields,
   handler: async (ctx: QueryCtx, args) => usernameAvailableFn(ctx, args),

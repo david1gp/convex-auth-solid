@@ -1,3 +1,4 @@
+import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { signInViaPwSchema } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"
@@ -20,7 +21,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
 
   const body = await request.text()
   if (!body) {
-    const errorMessage = "body is emtpy"
+    const errorMessage = commonApiErrorMessages.emptyBody
     const errorResult = createError(op, errorMessage, body)
     console.warn(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -28,7 +29,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   const schema = v.pipe(v.string(), v.parseJson(), signInViaPwSchema)
   const validation = v.safeParse(schema, body)
   if (!validation.success) {
-    const errorMessage = "schema validation failed: " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, body)
     console.warn(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
