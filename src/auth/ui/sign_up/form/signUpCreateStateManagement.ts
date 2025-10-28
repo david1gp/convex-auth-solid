@@ -17,14 +17,21 @@ export type SignUpFormField = keyof typeof signUpFormField
 export const signUpFormField = {
   name: "name",
   email: "email",
-  password: "password",
+  pw: "pw",
   terms: "terms",
 } as const
+
+export const signUpFormFieldIcon = {
+  name: mdiAccountCancel,
+  email: mdiEmailOff,
+  pw: mdiLockOff,
+  terms: mdiCheckboxBlankOff,
+} as const satisfies Record<SignUpFormField, string>
 
 export type SignUpUiState = {
   name: SignalObject<string>
   email: SignalObject<string>
-  password: SignalObject<string>
+  pw: SignalObject<string>
   terms: SignalObject<boolean>
   alreadyRegisteredEmails: SignalObject<Set<string>>
 }
@@ -33,7 +40,7 @@ export function createSignUpUiState(searchParams: SearchParamsObject): SignUpUiS
   return {
     name: createSignalObject(""),
     email: createSearchParamSignalObject(signUpFormField.email, searchParams),
-    password: createSignalObject(""),
+    pw: createSignalObject(""),
     terms: createSignalObject(false),
     alreadyRegisteredEmails: createSignalObject(new Set<string>()),
   }
@@ -42,7 +49,7 @@ export function createSignUpUiState(searchParams: SearchParamsObject): SignUpUiS
 export type SignUpErrorState = {
   name: SignalObject<string>
   email: SignalObject<string>
-  password: SignalObject<string>
+  pw: SignalObject<string>
   terms: SignalObject<string>
 }
 
@@ -50,7 +57,7 @@ export function createSignUpErrorState(): SignUpErrorState {
   return {
     name: createSignalObject(""),
     email: createSignalObject(""),
-    password: createSignalObject(""),
+    pw: createSignalObject(""),
     terms: createSignalObject(""),
   }
 }
@@ -58,8 +65,7 @@ export function createSignUpErrorState(): SignUpErrorState {
 export type SignUpFormData = {
   name: string
   email: string
-  password: string
-  terms: boolean
+  pw: string
 }
 
 export type SignUpUiStateManagement = {
@@ -68,7 +74,7 @@ export type SignUpUiStateManagement = {
   errors: SignUpErrorState
   hasErrors: () => boolean
   fillTestData: () => void
-  validateOnChange: (field: keyof SignUpFormData) => Scheduled<[value: string | boolean]>
+  validateOnChange: (field: SignUpFormField) => Scheduled<[value: string | boolean]>
   handleSubmit: (e: SubmitEvent) => void
 }
 
@@ -88,23 +94,23 @@ export function signUpCreateStateManagement(
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state),
-    validateOnChange: (field: keyof SignUpFormData) => validateOnChange(field, state, errors),
+    validateOnChange: (field: SignUpFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, isSubmitting, state, errors),
   }
 }
 
 function hasErrors(errors: SignUpErrorState): boolean {
-  return !!errors.email.get() || !!errors.name.get() || !!errors.password.get() || !!errors.terms.get()
+  return !!errors.email.get() || !!errors.name.get() || !!errors.pw.get() || !!errors.terms.get()
 }
 
 function fillTestData(state: SignUpUiState) {
   state.name.set("Test Name")
   state.email.set("test@example.com")
-  state.password.set("121212121212")
+  state.pw.set("121212121212")
   state.terms.set(true)
 }
 
-function validateOnChange(field: keyof SignUpFormData, state: SignUpUiState, errors: SignUpErrorState) {
+function validateOnChange(field: SignUpFormField, state: SignUpUiState, errors: SignUpErrorState) {
   return debounce((value: string | boolean) => {
     const result = validateField(field, value)
     const errorSig = errors[field as keyof typeof errors]
@@ -134,12 +140,12 @@ function handleSubmit(
 
   const name = state.name.get()
   const email = state.email.get()
-  const password = state.password.get()
+  const pw = state.pw.get()
   const terms = state.terms.get()
 
   const nameResult = validateField(signUpFormField.name, name)
   const emailResult = validateField(signUpFormField.email, email)
-  const passwordResult = validateField(signUpFormField.password, password)
+  const pwResult = validateField(signUpFormField.pw, pw)
   const termsResult = validateField(signUpFormField.terms, terms)
 
   if (!nameResult.success) {
@@ -148,27 +154,27 @@ function handleSubmit(
   if (!emailResult.success) {
     errors.email.set(emailResult.issues[0].message)
   } else errors.email.set("")
-  if (!passwordResult.success) {
-    errors.password.set(passwordResult.issues[0].message)
-  } else errors.password.set("")
+  if (!pwResult.success) {
+    errors.pw.set(pwResult.issues[0].message)
+  } else errors.pw.set("")
   if (!termsResult.success) {
     errors.terms.set(termsResult.issues[0].message)
   } else errors.terms.set("")
 
-  const isSuccess = nameResult.success && emailResult.success && passwordResult.success && termsResult.success
+  const isSuccess = nameResult.success && emailResult.success && pwResult.success && termsResult.success
 
   if (!isSuccess) {
     if (!nameResult.success) {
-      toastAdd({ title: nameResult.issues[0].message, icon: mdiAccountCancel, id: "name" })
+      toastAdd({ title: nameResult.issues[0].message, icon: signUpFormFieldIcon.name, id: signUpFormField.name })
     }
     if (!emailResult.success) {
-      toastAdd({ title: emailResult.issues[0].message, icon: mdiEmailOff, id: "email" })
+      toastAdd({ title: emailResult.issues[0].message, icon: signUpFormFieldIcon.email, id: signUpFormField.email })
     }
-    if (!passwordResult.success) {
-      toastAdd({ title: passwordResult.issues[0].message, icon: mdiLockOff, id: "password" })
+    if (!pwResult.success) {
+      toastAdd({ title: pwResult.issues[0].message, icon: signUpFormFieldIcon.pw, id: signUpFormField.pw })
     }
     if (!termsResult.success) {
-      toastAdd({ title: termsResult.issues[0].message, icon: mdiCheckboxBlankOff, id: "terms" })
+      toastAdd({ title: termsResult.issues[0].message, icon: signUpFormFieldIcon.terms, id: signUpFormField.terms })
     }
     return
   }
@@ -176,10 +182,9 @@ function handleSubmit(
   isSubmitting.set(true)
 
   const formData: SignUpFormData = {
-    name: state.name.get(),
-    email: state.email.get(),
-    password: state.password.get(),
-    terms: state.terms.get(),
+    name: name,
+    email: email,
+    pw: pw,
   }
   handleSignUp(formData, navigate, state, errors)
 
@@ -216,17 +221,16 @@ async function handleSignUp(
 export type HandleSignUpData = {
   name: string
   email: string
-  password?: string | undefined
-  terms: boolean
+  pw: string
 }
 
-function validateField(field: keyof SignUpFormData, value: string | boolean) {
+function validateField(field: SignUpFormField, value: string | boolean) {
   let schema
   if (field === signUpFormField.name) {
     schema = signUpNameSchema
   } else if (field === signUpFormField.email) {
     schema = emailSchema
-  } else if (field === signUpFormField.password) {
+  } else if (field === signUpFormField.pw) {
     schema = passwordSchema
   } else if (field === signUpFormField.terms) {
     schema = signUpTermsSchema

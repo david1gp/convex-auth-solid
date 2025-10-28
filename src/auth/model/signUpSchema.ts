@@ -6,5 +6,5 @@ export type SignUpType = v.InferOutput<typeof signUpSchema>
 export const signUpSchema = v.object({
   name: signUpNameSchema,
   email: emailSchema,
-  pw: v.optional(passwordSchema),
+  pw: passwordSchema,
 })

@@ -18,11 +18,11 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
 import type { SignalObject } from "~ui/utils/createSignalObject"
 import {
-  createSignUpUiState,
   signUpCreateStateManagement,
   signUpFormField,
-  type SignUpFormData,
+  type SignUpErrorState,
   type SignUpFormField,
+  type SignUpUiState,
 } from "./signUpCreateStateManagement"
 
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}
@@ -58,13 +58,13 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
 }
 
 function FieldSwitch(
-  field: keyof SignUpFormData,
-  state: ReturnType<typeof createSignUpUiState>,
-  errors: { [K in keyof SignUpFormData]: { get: () => string; set: (value: string) => void } },
-  validateOnChange: (field: keyof SignUpFormData) => (value: string | boolean) => void,
+  field: SignUpFormField,
+  state: SignUpUiState,
+  errors: SignUpErrorState,
+  validateOnChange: (field: SignUpFormField) => (value: string | boolean) => void,
   searchParams: SearchParamsObject,
 ) {
-  if (field === "terms") {
+  if (field === signUpFormField.terms) {
     return FieldSwitchTerms(state, errors, validateOnChange)
   }
   type FormInputField = Exclude<SignUpFormField, "terms">
@@ -74,17 +74,17 @@ function FieldSwitch(
   const labelTexts = {
     name: ttt("Name"),
     email: ttt("Email"),
-    password: ttt("Password"),
+    pw: ttt("Password"),
   } as const satisfies Record<FormInputField, string>
   const labelText = labelTexts[field]
   const placeholder = labelText
 
-  const inputType = field === signUpFormField.password ? "password" : "text"
+  const inputType = field === signUpFormField.pw ? "password" : "text"
 
   const valueSignals = {
     name: state.name,
     email: state.email,
-    password: state.password,
+    pw: state.pw,
   } as const satisfies Record<FormInputField, SignalObject<string>>
 
   const valueSignal = valueSignals[field]
@@ -92,7 +92,7 @@ function FieldSwitch(
   const autoCompleteValues = {
     name: "name",
     email: "email",
-    password: "new-password",
+    pw: "new-password",
   } as const satisfies Record<FormInputField, JSX.HTMLAutocomplete>
 
   const autoComplete = autoCompleteValues[field]
@@ -136,17 +136,17 @@ function FieldSwitch(
 }
 
 function FieldSwitchTerms(
-  state: ReturnType<typeof createSignUpUiState>,
-  errors: { [K in keyof SignUpFormData]: { get: () => string; set: (value: string) => void } },
-  validateOnChange: (field: keyof SignUpFormData) => (value: string | boolean) => void,
+  state: SignUpUiState,
+  errors: SignUpErrorState,
+  validateOnChange: (field: SignUpFormField) => (value: string | boolean) => void,
 ) {
   return (
     <Checkbox
-      id="terms"
+      id={signUpFormField.terms}
       checked={state.terms.get()}
       onChange={(checked) => {
         state.terms.set(checked)
-        validateOnChange("terms")(checked)
+        validateOnChange(signUpFormField.terms)(checked)
       }}
     >
       <AuthLegalAgree variant={authLegalAgreeVariant.signUp} />

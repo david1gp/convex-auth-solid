@@ -44,11 +44,12 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
     return new Response(JSON.stringify(errorResult), { status: 409 })
   }
 
-  const hashedPasswordResult = pw ? await hashPassword2(pw) : undefined
-  if (pw && hashedPasswordResult && !hashedPasswordResult.success) {
+  const hashedPasswordResult = await hashPassword2(pw)
+  if (!hashedPasswordResult.success) {
     console.warn(hashedPasswordResult)
     return new Response(jsonStringifyPretty(hashedPasswordResult), { status: 500 })
   }
+  const hashedPassword = hashedPasswordResult.data
 
   const code = generateOtpCode()
 
@@ -56,7 +57,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   await ctx.runMutation(internal.auth.signUp2InternalMutation, {
     name,
     email,
-    hashedPassword: pw && hashedPasswordResult && hashedPasswordResult.success ? hashedPasswordResult.data : undefined,
+    hashedPassword,
     code,
   })
 
