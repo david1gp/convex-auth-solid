@@ -1,4 +1,6 @@
 import { apiAuthSignInViaPw } from "@/auth/api/apiAuthSignInViaPw"
+import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
+import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
@@ -121,8 +123,10 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
     return
   }
 
-  // const returnPath = urlSignInRedirectUrl(location.pathname)
-  // navigate(returnPath)
+  const userSession = result.data
+  userSessionsSignalAdd(userSession)
+  userSessionSignal.set(userSession)
+  console.log("Signed in via password successfully")
 }
 
 function validateField(field: keyof SignInFormData, value: string) {
