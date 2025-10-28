@@ -5,12 +5,12 @@ import { orgDeleteFields, orgDeleteFn } from "@/org/convex/orgDeleteFn"
 import { orgEditFields, orgEditFn } from "@/org/convex/orgEditFn"
 import { orgGetFields, orgGetFn } from "@/org/convex/orgGetFn"
 import { orgListFn, orgsListFields } from "@/org/convex/orgListFn"
-import { orgSlugAvailableFields, orgSlugAvailableFn } from "@/org/convex/orgSlugAvailableFn"
 import { orgMemberCreateFields, orgMemberCreateFn } from "@/org/convex/orgMemberCreateFn"
 import { orgMemberDeleteFields, orgMemberDeleteFn } from "@/org/convex/orgMemberDeleteFn"
 import { orgMemberEditFields, orgMemberEditFn } from "@/org/convex/orgMemberEditFn"
 import { orgMemberGetFields, orgMemberGetFn } from "@/org/convex/orgMemberGetFn"
 import { orgMemberListFn, orgMembersListFields } from "@/org/convex/orgMemberListFn"
+import { orgSlugAvailableFields, orgSlugAvailableFn } from "@/org/convex/orgSlugAvailableFn"
 import { mutation, query } from "@convex/_generated/server"
 import { authMutation } from "@convex/utils/authMutation"
 import { authMutationR } from "@convex/utils/authMutationR"
@@ -20,7 +20,7 @@ import { createTokenValidator } from "@convex/utils/createTokenValidator"
 
 export const orgCreateMutation = mutation({
   args: createTokenValidator(orgCreateFields),
-  handler: async (ctx, args) => authMutation(ctx, args, orgCreateFn),
+  handler: async (ctx, args) => authMutationR(ctx, args, orgCreateFn),
 })
 
 export const orgEditMutation = mutation({

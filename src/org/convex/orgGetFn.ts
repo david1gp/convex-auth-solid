@@ -2,10 +2,9 @@ import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocOrg } from "./IdOrg"
-import { vIdOrg } from "./vIdOrg"
 
 export const orgGetFields = {
-  orgId: vIdOrg,
+  slug: v.string(),
   updatedAt: v.optional(v.string()),
 } as const
 
@@ -14,9 +13,12 @@ export const orgGetValidator = v.object(orgGetFields)
 
 export async function orgGetFn(ctx: QueryCtx, args: OrgGetValidatorType): PromiseResult<DocOrg | null> {
   const op = "orgGetFn"
-  let org = await ctx.db.get(args.orgId)
+  const org = await ctx.db
+    .query("orgs")
+    .withIndex("slug", (q) => q.eq("slug", args.slug))
+    .unique()
   if (!org) {
-    return createResultError(op, "Organization not found", args.orgId)
+    return createResultError(op, "Organization not found", args.slug)
   }
   if (args.updatedAt && args.updatedAt === org.updatedAt) {
     return createResult(null)

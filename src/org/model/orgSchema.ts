@@ -1,17 +1,17 @@
 import type { DocOrg } from "@/org/convex/IdOrg"
 import type { OrgModel } from "@/org/model/OrgModel"
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
+import { slugSchema } from "@/utils/valibot/slugSchema"
 import {
   string0to2000Schema,
   string0to500Schema,
-  string1to50Schema,
-  string5to25Schema,
+  string1to50Schema
 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"
 
 export const orgDataSchemaFields = {
   name: string1to50Schema,
-  slug: string5to25Schema,
+  slug: slugSchema,
   description: v.optional(string0to2000Schema),
   url: v.optional(string0to500Schema),
   image: v.optional(string0to500Schema),

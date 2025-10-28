@@ -1,4 +1,3 @@
-
 export type HasOrgSlug = {
-  orgSlug?: string
+  orgSlug: string
 }
