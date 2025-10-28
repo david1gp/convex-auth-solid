@@ -11,16 +11,16 @@ const mode = formMode.remove
 
 export function OrgDeletePage() {
   const params = useParams()
-  const getHandle = () => params.handle
+  const getOrgHandle = () => params.orgHandle
   return (
     <Switch>
-      <Match when={!getHandle()}>
+      <Match when={!getOrgHandle()}>
         <ErrorPage title={ttt("Missing :orgHandle in path")} />
       </Match>
-      <Match when={getHandle()}>
+      <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} orgHandle={getHandle()} />
-          <OrgMutate mode={mode} orgHandle={getHandle()!} />
+          <NavAppDir getPageTitle={getPageTitle} orgHandle={getOrgHandle()} />
+          <OrgMutate mode={mode} orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
     </Switch>

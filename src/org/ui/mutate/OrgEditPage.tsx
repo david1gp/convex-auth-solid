@@ -1,5 +1,6 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
 import { OrgMutate } from "@/org/ui/mutate/OrgMutate"
+import { OrgMemberListPage } from "@/org/ui_members/list/OrgMemberListPage"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -11,18 +12,19 @@ const mode = formMode.edit
 
 export function OrgEditPage() {
   const params = useParams()
-  const getHandle = () => params.handle
+  const getOrgHandle = () => params.orgHandle
   const getReturnPath = () => params.returnPath
   return (
     <Switch>
-      <Match when={!getHandle()}>
+      <Match when={!getOrgHandle()}>
         <ErrorPage title={ttt("Missing :orgHandle in path")} />
       </Match>
-      <Match when={getHandle()}>
+      <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} orgHandle={getHandle()} />
-          <OrgMutate mode={mode} orgHandle={getHandle()!} returnPath={getReturnPath()} />
+          <NavAppDir getPageTitle={getPageTitle} orgHandle={getOrgHandle()} />
+          <OrgMutate mode={mode} orgHandle={getOrgHandle()!} returnPath={getReturnPath()} />
         </PageWrapper>
+        <OrgMemberListPage />
       </Match>
     </Switch>
   )

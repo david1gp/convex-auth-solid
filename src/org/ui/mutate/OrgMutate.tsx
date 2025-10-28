@@ -26,7 +26,7 @@ export function OrgMutate(p: OrgMutateProps) {
   const navigator = useNavigate()
   const getOrg = createQuery(api.org.orgGetQuery, {
     token: userTokenGet(),
-    handle: p.orgHandle,
+    orgHandle: p.orgHandle,
   }) as () => DocOrg | undefined
 
   const editMutation = createMutation(api.org.orgEditMutation)
@@ -79,6 +79,8 @@ export function OrgMutate(p: OrgMutateProps) {
   const actions: OrgFormActions = {}
   if (p.mode === formMode.edit) {
     actions.edit = editAction
+  }
+  if (p.mode === formMode.remove) {
     actions.delete = deleteAction
   }
 
