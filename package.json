@@ -2,6 +2,9 @@
   "name": "@adaptive-sm/convex-auth",
   "version": "0.0.0",
   "scripts": {
+    "cc": "bun run convex codegen",
+    "t": "bun run tsc",
+    "type-check": "bun run tsc",
     "build": "bun run vite:build",
     "frontend:deploy": "bun run vite:deploy && tag:frontend",
     "frontend:upload": "bun run wrangler pages deploy ./dist --commit-dirty=true --project-name=postmaschine-app",
