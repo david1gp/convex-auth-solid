@@ -10,7 +10,7 @@ import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObj
 
 export type OrgFormData = {
   name: string
-  slug: string
+  handle: string
   description: string
   url: string
   image: string
@@ -18,7 +18,7 @@ export type OrgFormData = {
 
 export type OrgFormState = {
   name: SignalObject<string>
-  slug: SignalObject<string>
+  handle: SignalObject<string>
   description: SignalObject<string>
   url: SignalObject<string>
   image: SignalObject<string>
@@ -26,7 +26,7 @@ export type OrgFormState = {
 
 export type OrgFormErrorState = {
   name: SignalObject<string>
-  slug: SignalObject<string>
+  handle: SignalObject<string>
   description: SignalObject<string>
   url: SignalObject<string>
   image: SignalObject<string>
@@ -35,7 +35,7 @@ export type OrgFormErrorState = {
 function orgCreateState(): OrgFormState {
   return {
     name: createSignalObject(""),
-    slug: createSignalObject(""),
+    handle: createSignalObject(""),
     description: createSignalObject(""),
     url: createSignalObject(""),
     image: createSignalObject(""),
@@ -73,7 +73,7 @@ export function orgCreateFormStateManagement(onSubmit: OrgFormSubmitAction): Org
 
 function loadData(data: DocOrg, state: OrgFormState): void {
   state.name.set(data.name)
-  state.slug.set(data.slug)
+  state.handle.set(data.handle)
   state.description.set(data.description ?? "")
   state.url.set(data.url ?? "")
   state.image.set(data.image ?? "")
@@ -82,7 +82,7 @@ function loadData(data: DocOrg, state: OrgFormState): void {
 function hasErrors(errors: OrgFormErrorState) {
   return (
     !!errors.name.get() ||
-    !!errors.slug.get() ||
+    !!errors.handle.get() ||
     !!errors.description.get() ||
     !!errors.url.get() ||
     !!errors.image.get()
@@ -90,7 +90,7 @@ function hasErrors(errors: OrgFormErrorState) {
 }
 function fillTestData(state: OrgFormState) {
   state.name.set("Test Organization")
-  state.slug.set("test-organization")
+  state.handle.set("test-organization")
   state.description.set("Test description")
   state.url.set("")
   state.image.set("")
@@ -112,8 +112,8 @@ function validateField(field: OrgFormField, value: string) {
   let schema
   if (field === orgFormField.name) {
     schema = orgDataSchemaFields.name
-  } else if (field === orgFormField.slug) {
-    schema = orgDataSchemaFields.slug
+  } else if (field === orgFormField.handle) {
+    schema = orgDataSchemaFields.handle
   } else if (field === orgFormField.description) {
     schema = orgDataSchemaFields.description
   } else if (field === orgFormField.url) {
@@ -134,32 +134,32 @@ async function handleSubmit(
   e.preventDefault()
 
   const name = state.name.get()
-  const slug = state.slug.get()
+  const handle = state.handle.get()
   const description = state.description.get()
   const url = state.url.get()
   const image = state.image.get()
 
   const nameResult = validateField(orgFormField.name, name)
-  const slugResult = validateField(orgFormField.slug, slug)
+  const handleResult = validateField(orgFormField.handle, handle)
   const descriptionResult = validateField(orgFormField.description, description)
   const urlResult = validateField(orgFormField.url, url)
   const imageResult = validateField(orgFormField.image, image)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
-  errors.slug.set(slugResult.success ? "" : slugResult.issues[0].message)
+  errors.handle.set(handleResult.success ? "" : handleResult.issues[0].message)
   errors.description.set(descriptionResult.success ? "" : descriptionResult.issues[0].message)
   errors.url.set(urlResult.success ? "" : urlResult.issues[0].message)
   errors.image.set(imageResult.success ? "" : imageResult.issues[0].message)
 
   const isSuccess =
-    nameResult.success && slugResult.success && descriptionResult.success && urlResult.success && imageResult.success
+    nameResult.success && handleResult.success && descriptionResult.success && urlResult.success && imageResult.success
 
   if (!isSuccess) {
     if (!nameResult.success) {
       toastAdd({ title: nameResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.name })
     }
-    if (!slugResult.success) {
-      toastAdd({ title: slugResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.slug })
+    if (!handleResult.success) {
+      toastAdd({ title: handleResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.handle })
     }
     if (!descriptionResult.success) {
       toastAdd({ title: descriptionResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.description })
@@ -173,7 +173,7 @@ async function handleSubmit(
     return
   }
 
-  const data: OrgFormData = { name, slug, description, url, image }
+  const data: OrgFormData = { name, handle, description, url, image }
   isSaving.set(true)
   await onSubmit(data)
   isSaving.set(false)

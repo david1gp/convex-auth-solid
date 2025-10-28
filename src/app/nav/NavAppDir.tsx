@@ -1,7 +1,7 @@
 import { NavAuth } from "@/auth/ui/nav/NavAuth"
-import { orgListFindNameBySlug } from "@/org/ui/list/orgListSignal"
+import { orgListFindNameByHandle } from "@/org/ui/list/orgListSignal"
 import { urlOrgList, urlOrgView } from "@/org/url/urlOrg"
-import { workspaceListFindNameBySlug } from "@/workspace/ui/list/workspaceListSignal"
+import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
 import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -12,8 +12,8 @@ import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface NavAppDirProps extends MayHaveChildren, MayHaveClass {
-  orgSlug?: string
-  workspaceSlug?: string
+  orgHandle?: string
+  workspaceHandle?: string
   getPageTitle?: (orgName?: string, workspaceName?: string) => string
 }
 
@@ -35,27 +35,27 @@ function NavAppBreadcrumbtsLoader(p: NavAppDirProps) {
         {(getPageTitle) => (
           <SetPageTitle
             title={getPageTitle()(
-              p.orgSlug && orgListFindNameBySlug(p.orgSlug),
-              p.workspaceSlug && workspaceListFindNameBySlug(p.workspaceSlug),
+              p.orgHandle && orgListFindNameByHandle(p.orgHandle),
+              p.workspaceHandle && workspaceListFindNameByHandle(p.workspaceHandle),
             )}
           />
         )}
       </Show>
-      <Show when={p.orgSlug && orgListFindNameBySlug(p.orgSlug)}>
+      <Show when={p.orgHandle && orgListFindNameByHandle(p.orgHandle)}>
         {(orgName) => (
           <>
             <div class="text-muted-foreground py-3 select-none">/</div>
-            <LinkButton variant={buttonVariant.link} href={p.orgSlug ? urlOrgView(p.orgSlug) : ""}>
+            <LinkButton variant={buttonVariant.link} href={p.orgHandle ? urlOrgView(p.orgHandle) : ""}>
               {orgName()}
             </LinkButton>
           </>
         )}
       </Show>
-      <Show when={p.workspaceSlug && workspaceListFindNameBySlug(p.workspaceSlug)}>
+      <Show when={p.workspaceHandle && workspaceListFindNameByHandle(p.workspaceHandle)}>
         {(workspaceName) => (
           <>
             <div class="text-muted-foreground py-3 select-none">/</div>
-            <LinkButton variant={buttonVariant.link} href={p.workspaceSlug ? urlWorkspaceView(p.workspaceSlug) : ""}>
+            <LinkButton variant={buttonVariant.link} href={p.workspaceHandle ? urlWorkspaceView(p.workspaceHandle) : ""}>
               {workspaceName()}
             </LinkButton>
           </>

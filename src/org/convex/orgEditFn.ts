@@ -13,7 +13,7 @@ export const orgEditFields = {
   orgId: vIdOrg,
   // data
   name: v.optional(v.string()),
-  slug: v.optional(v.string()),
+  handle: v.optional(v.string()),
   description: v.optional(v.string()),
   url: v.optional(v.string()),
   image: v.optional(v.string()),

@@ -4,13 +4,13 @@ import { orgCreateFields, orgCreateFn } from "@/org/convex/orgCreateFn"
 import { orgDeleteFields, orgDeleteFn } from "@/org/convex/orgDeleteFn"
 import { orgEditFields, orgEditFn } from "@/org/convex/orgEditFn"
 import { orgGetFields, orgGetFn } from "@/org/convex/orgGetFn"
+import { orgHandleAvailableFields, orgHandleAvailableFn } from "@/org/convex/orgHandleAvailableFn"
 import { orgListFn, orgsListFields } from "@/org/convex/orgListFn"
 import { orgMemberCreateFields, orgMemberCreateFn } from "@/org/convex/orgMemberCreateFn"
 import { orgMemberDeleteFields, orgMemberDeleteFn } from "@/org/convex/orgMemberDeleteFn"
 import { orgMemberEditFields, orgMemberEditFn } from "@/org/convex/orgMemberEditFn"
 import { orgMemberGetFields, orgMemberGetFn } from "@/org/convex/orgMemberGetFn"
 import { orgMemberListFn, orgMembersListFields } from "@/org/convex/orgMemberListFn"
-import { orgSlugAvailableFields, orgSlugAvailableFn } from "@/org/convex/orgSlugAvailableFn"
 import { mutation, query } from "@convex/_generated/server"
 import { authMutation } from "@convex/utils/authMutation"
 import { authMutationR } from "@convex/utils/authMutationR"
@@ -33,9 +33,9 @@ export const orgGetQuery = query({
   handler: async (ctx, args) => authQueryR(ctx, args, orgGetFn),
 })
 
-export const orgSlugAvailable = query({
-  args: createTokenValidator(orgSlugAvailableFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgSlugAvailableFn),
+export const orgHandleAvailable = query({
+  args: createTokenValidator(orgHandleAvailableFields),
+  handler: async (ctx, args) => authQueryR(ctx, args, orgHandleAvailableFn),
 })
 
 export const orgsListQuery = query({

@@ -4,7 +4,7 @@ import { createResult, createResultError, type PromiseResult } from "~utils/resu
 import type { DocOrg } from "./IdOrg"
 
 export const orgGetFields = {
-  slug: v.string(),
+  handle: v.string(),
   updatedAt: v.optional(v.string()),
 } as const
 
@@ -15,10 +15,10 @@ export async function orgGetFn(ctx: QueryCtx, args: OrgGetValidatorType): Promis
   const op = "orgGetFn"
   const org = await ctx.db
     .query("orgs")
-    .withIndex("slug", (q) => q.eq("slug", args.slug))
+    .withIndex("handle", (q) => q.eq("handle", args.handle))
     .unique()
   if (!org) {
-    return createResultError(op, "Organization not found", args.slug)
+    return createResultError(op, "Organization not found", args.handle)
   }
   if (args.updatedAt && args.updatedAt === org.updatedAt) {
     return createResult(null)

@@ -11,16 +11,16 @@ const mode = formMode.remove
 
 export function WorkspaceDeletePage() {
   const params = useParams()
-  const getSlug = () => params.slug
+  const getHandle = () => params.handle
   return (
     <Switch>
-      <Match when={!getSlug()}>
-        <ErrorPage title={ttt("Missing :slug in path")} />
+      <Match when={!getHandle()}>
+        <ErrorPage title={ttt("Missing :workspaceHandle in path")} />
       </Match>
-      <Match when={getSlug()}>
+      <Match when={getHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} workspaceSlug={getSlug()} />
-          <WorkspaceMutate mode={mode} workspaceSlug={getSlug()!} />
+          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getHandle()} />
+          <WorkspaceMutate mode={mode} workspaceHandle={getHandle()!} />
         </PageWrapper>
       </Match>
     </Switch>

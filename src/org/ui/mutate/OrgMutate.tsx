@@ -1,6 +1,6 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg } from "@/org/convex/IdOrg"
-import type { HasOrgSlug } from "@/org/model/HasOrgSlug"
+import type { HasOrgHandle } from "@/org/model/HasOrgHandle"
 import { orgCreateFormStateManagement, type OrgFormData } from "@/org/ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/ui/form/OrgForm"
 import { urlOrgList, urlOrgView } from "@/org/url/urlOrg"
@@ -15,14 +15,14 @@ import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
-interface OrgMutateProps extends HasOrgSlug, HasFormModeMutate, MayHaveReturnPath, MayHaveClass {}
+interface OrgMutateProps extends HasOrgHandle, HasFormModeMutate, MayHaveReturnPath, MayHaveClass {}
 
 export function OrgMutate(p: OrgMutateProps) {
   const op = "OrgMutate"
   const navigator = useNavigate()
   const getOrg = createQuery(api.org.orgGetQuery, {
     token: userTokenGet(),
-    slug: p.orgSlug,
+    handle: p.orgHandle,
   }) as () => DocOrg | undefined
 
   const editAction = createMutation(api.org.orgEditMutation)
@@ -54,7 +54,7 @@ export function OrgMutate(p: OrgMutateProps) {
       toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlOrgView(p.orgSlug) : urlOrgList()
+    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlOrgView(p.orgHandle) : urlOrgList()
     navigator(url)
   }
 

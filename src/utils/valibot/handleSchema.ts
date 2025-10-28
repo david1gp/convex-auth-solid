@@ -6,7 +6,7 @@ const regexMessage2 = "no consecutive hyphens"
 const regexMessage3 = "no leading hyphens"
 const regexMessage4 = "no trailing hyphens"
 
-export const slugSchema = v.pipe(
+export const handleSchema = v.pipe(
   v.string(),
   v.regex(/^[a-z0-9-]+$/, regexMessage1),
   v.regex(/^(?!.*--)/, regexMessage2),

@@ -11,17 +11,17 @@ const mode = formMode.edit
 
 export function OrgEditPage() {
   const params = useParams()
-  const getSlug = () => params.slug
+  const getHandle = () => params.handle
   const getReturnPath = () => params.returnPath
   return (
     <Switch>
-      <Match when={!getSlug()}>
-        <ErrorPage title={ttt("Missing :slug in path")} />
+      <Match when={!getHandle()}>
+        <ErrorPage title={ttt("Missing :orgHandle in path")} />
       </Match>
-      <Match when={getSlug()}>
+      <Match when={getHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} orgSlug={getSlug()} />
-          <OrgMutate mode={mode} orgSlug={getSlug()!} returnPath={getReturnPath()} />
+          <NavAppDir getPageTitle={getPageTitle} orgHandle={getHandle()} />
+          <OrgMutate mode={mode} orgHandle={getHandle()!} returnPath={getReturnPath()} />
         </PageWrapper>
       </Match>
     </Switch>

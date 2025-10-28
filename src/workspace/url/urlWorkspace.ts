@@ -8,14 +8,18 @@ export function urlWorkspaceAdd() {
   return pageRouteWorkspace.workspaceAdd
 }
 
-export function urlWorkspaceView(slug: string) {
-  return pageRouteWorkspace.workspaceView.replace(":slug", slug)
+export function urlWorkspaceView(workspaceHandle: string) {
+  return replaceWorkspaceHandle(pageRouteWorkspace.workspaceView, workspaceHandle)
 }
 
-export function urlWorkspaceEdit(slug: string) {
-  return pageRouteWorkspace.workspaceEdit.replace(":slug", slug)
+export function urlWorkspaceEdit(workspaceHandle: string) {
+  return replaceWorkspaceHandle(pageRouteWorkspace.workspaceEdit, workspaceHandle)
 }
 
-export function urlWorkspaceRemove(slug: string) {
-  return pageRouteWorkspace.workspaceRemove.replace(":slug", slug)
+export function urlWorkspaceRemove(workspaceHandle: string) {
+  return replaceWorkspaceHandle(pageRouteWorkspace.workspaceRemove, workspaceHandle)
+}
+
+function replaceWorkspaceHandle(url: string, workspaceHandle: string) {
+  return url.replace(":workspaceHandle", workspaceHandle)
 }

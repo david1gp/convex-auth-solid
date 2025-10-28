@@ -5,7 +5,7 @@ export type PageRouteOrg = keyof typeof pageRouteOrg
 export const pageRouteOrg = {
   orgList: "/w/list",
   orgAdd: "/w/add",
-  orgView: "/w/:slug/view",
-  orgEdit: "/w/:slug/edit",
-  orgRemove: "/w/:slug/remove",
+  orgView: "/w/:orgHandle/view",
+  orgEdit: "/w/:orgHandle/edit",
+  orgRemove: "/w/:orgHandle/remove",
 } as const satisfies Record<PageNameOrg, string>

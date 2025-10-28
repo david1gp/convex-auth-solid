@@ -9,7 +9,7 @@ export const workspaceDataFields = {
   orgId: v.optional(vIdOrg),
   // data
   name: v.string(),
-  slug: v.string(),
+  handle: v.string(),
   description: v.optional(v.string()),
   image: v.optional(v.string()),
 } as const
@@ -22,5 +22,5 @@ export const workspaceFields = {
 export const workspaceTables = {
   workspaces: defineTable(workspaceFields)
     //
-    .index("slug", ["slug"]),
+    .index("handle", ["handle"]),
 } as const

@@ -1,5 +1,5 @@
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
-import { slugSchema } from "@/utils/valibot/slugSchema"
+import { handleSchema } from "@/utils/valibot/handleSchema"
 import {
   string0to2000Schema,
   string0to500Schema,
@@ -13,7 +13,7 @@ export const workspaceDataSchemaFields = {
   userId: v.optional(string1to50Schema),
   orgId: v.optional(string1to50Schema),
   name: v.pipe(string1to50Schema),
-  slug: v.pipe(slugSchema),
+  handle: v.pipe(handleSchema),
   description: v.optional(string0to2000Schema),
   image: v.optional(string0to500Schema),
 } as const

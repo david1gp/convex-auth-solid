@@ -28,7 +28,7 @@ export function OrgForm(p: OrgContentProps) {
       <h1 class="text-2xl font-bold mt-6 mb-2">{getOrgTitle(p.mode)}</h1>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <NameField sm={p.sm} />
-        <SlugField sm={p.sm} />
+        <HandleField sm={p.sm} />
         <DescriptionField sm={p.sm} />
         <UrlField sm={p.sm} />
         <ImageField sm={p.sm} />
@@ -73,28 +73,28 @@ function NameField(p: HasOrgFormStateManagement) {
   )
 }
 
-function SlugField(p: HasOrgFormStateManagement) {
+function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={orgFormField.slug}>
+      <Label for={orgFormField.handle}>
         {ttt("Organization Handle")}
         <LabelAsterix />
       </Label>
       <InputS
-        id={orgFormField.slug}
+        id={orgFormField.handle}
         placeholder={ttt("your-company-name")}
         autocomplete="organization"
-        valueSignal={p.sm.state.slug}
+        valueSignal={p.sm.state.handle}
         onInput={(e) => {
-          p.sm.state.slug.set(e.currentTarget.value)
-          p.sm.validateOnChange(orgFormField.slug)(e.currentTarget.value)
+          p.sm.state.handle.set(e.currentTarget.value)
+          p.sm.validateOnChange(orgFormField.handle)(e.currentTarget.value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.slug)(e.currentTarget.value)}
-        class={classMerge("w-full", p.sm.errors.slug.get() && "border-destructive focus-visible:ring-destructive")}
+        onBlur={(e) => p.sm.validateOnChange(orgFormField.handle)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.handle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
       />
-      <Show when={p.sm.errors.slug.get()}>
-        <p class="text-destructive">{p.sm.errors.slug.get()}</p>
+      <Show when={p.sm.errors.handle.get()}>
+        <p class="text-destructive">{p.sm.errors.handle.get()}</p>
       </Show>
     </div>
   )

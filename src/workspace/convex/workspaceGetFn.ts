@@ -4,7 +4,7 @@ import { createResult, createResultError, type PromiseResult } from "~utils/resu
 import type { DocWorkspace } from "./IdWorkspace"
 
 export const workspaceGetFields = {
-  workspaceSlug: v.string(),
+  workspaceHandle: v.string(),
   updatedAt: v.optional(v.string()),
 } as const
 
@@ -18,10 +18,10 @@ export async function workspaceGetFn(
   const op = "workspaceGetFn"
   let workspace = await ctx.db
     .query("workspaces")
-    .withIndex("slug", (q) => q.eq("slug", args.workspaceSlug))
+    .withIndex("handle", (q) => q.eq("handle", args.workspaceHandle))
     .unique()
   if (!workspace) {
-    return createResultError(op, "Workspace not found", args.workspaceSlug)
+    return createResultError(op, "Workspace not found", args.workspaceHandle)
   }
   if (args.updatedAt && args.updatedAt === workspace.updatedAt) {
     return createResult(null)

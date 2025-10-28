@@ -2,8 +2,8 @@ import { workspaceCreateFields, workspaceCreateFn } from "@/workspace/convex/wor
 import { workspaceDeleteFields, workspaceDeleteFn } from "@/workspace/convex/workspaceDeleteFn"
 import { workspaceEditFields, workspaceEditFn } from "@/workspace/convex/workspaceEditFn"
 import { workspaceGetFields, workspaceGetFn } from "@/workspace/convex/workspaceGetFn"
+import { workspaceHandleAvailableFields, workspaceHandleAvailableFn } from "@/workspace/convex/workspaceHandleAvailableFn"
 import { workspaceListFields, workspaceListFn } from "@/workspace/convex/workspaceListFn"
-import { workspaceSlugAvailableFields, workspaceSlugAvailableFn } from "@/workspace/convex/workspaceSlugAvailableFn"
 import { mutation, query } from "@convex/_generated/server"
 import { authMutation } from "@convex/utils/authMutation"
 import { authMutationR } from "@convex/utils/authMutationR"
@@ -26,9 +26,9 @@ export const workspaceGetQuery = query({
   handler: async (ctx, args) => authQueryR(ctx, args, workspaceGetFn),
 })
 
-export const workspaceSlugAvailable = query({
-  args: createTokenValidator(workspaceSlugAvailableFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, workspaceSlugAvailableFn),
+export const workspaceHandleAvailable = query({
+  args: createTokenValidator(workspaceHandleAvailableFields),
+  handler: async (ctx, args) => authQueryR(ctx, args, workspaceHandleAvailableFn),
 })
 
 export const workspacesListQuery = query({

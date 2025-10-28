@@ -4,7 +4,7 @@ import { v } from "convex/values"
 export type WorkspaceDeleteValidatorType = typeof workspaceDeleteValidator.type
 
 export const workspaceDeleteFields = {
-  workspaceSlug: v.string(),
+  workspaceHandle: v.string(),
 } as const
 
 export const workspaceDeleteValidator = v.object(workspaceDeleteFields)
@@ -12,7 +12,7 @@ export const workspaceDeleteValidator = v.object(workspaceDeleteFields)
 export async function workspaceDeleteFn(ctx: MutationCtx, args: WorkspaceDeleteValidatorType): Promise<null> {
   const ws = await ctx.db
     .query("workspaces")
-    .withIndex("slug", (q) => q.eq("slug", args.workspaceSlug))
+    .withIndex("handle", (q) => q.eq("handle", args.workspaceHandle))
     .unique()
   if (!ws) return null // idempotent
   await ctx.db.delete(ws._id)

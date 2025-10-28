@@ -1,6 +1,6 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
-import type { HasWorkspaceSlug } from "@/workspace/model/HasWorkspaceSlug"
-import { workspaceListFindNameBySlug } from "@/workspace/ui/list/workspaceListSignal"
+import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
+import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
 import { urlWorkspaceEdit } from "@/workspace/url/urlWorkspace"
 import { useParams } from "@solidjs/router"
 import { Match, Show, Switch } from "solid-js"
@@ -14,16 +14,16 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function WorkspaceViewPage() {
   const params = useParams()
-  const getWorkspaceSlug = () => params.slug
+  const getWorkspaceHandle = () => params.handle
   return (
     <Switch>
-      <Match when={!getWorkspaceSlug()}>
-        <ErrorPage title={ttt("Missing :slug in path")} />
+      <Match when={!getWorkspaceHandle()}>
+        <ErrorPage title={ttt("Missing :workspaceHandle in path")} />
       </Match>
-      <Match when={getWorkspaceSlug()}>
+      <Match when={getWorkspaceHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} workspaceSlug={getWorkspaceSlug()} />
-          <WorkspaceView workspaceSlug={getWorkspaceSlug()!} />
+          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()} />
+          <WorkspaceView workspaceHandle={getWorkspaceHandle()!} />
         </PageWrapper>
       </Match>
     </Switch>
@@ -38,15 +38,15 @@ function getPageTitle(orgName?: string, workspaceName?: string) {
   return title
 }
 
-interface WorkspaceViewProps extends HasWorkspaceSlug, MayHaveClass {}
+interface WorkspaceViewProps extends HasWorkspaceHandle, MayHaveClass {}
 
 function WorkspaceView(p: WorkspaceViewProps) {
   return (
     <div class="flex flex-wrap items-center gap-4">
-      <Show when={p.workspaceSlug && workspaceListFindNameBySlug(p.workspaceSlug)}>
-        <h1 class="text-2xl font-bold">{workspaceListFindNameBySlug(p.workspaceSlug)}</h1>
+      <Show when={p.workspaceHandle && workspaceListFindNameByHandle(p.workspaceHandle)}>
+        <h1 class="text-2xl font-bold">{workspaceListFindNameByHandle(p.workspaceHandle)}</h1>
       </Show>
-      <LinkButton href={urlWorkspaceEdit(p.workspaceSlug)} variant={buttonVariant.default} icon={formIcon.edit}>
+      <LinkButton href={urlWorkspaceEdit(p.workspaceHandle)} variant={buttonVariant.default} icon={formIcon.edit}>
         {ttt("Edit")}
       </LinkButton>
     </div>

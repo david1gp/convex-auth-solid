@@ -3,7 +3,7 @@ import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
-import type { HasWorkspaceSlug } from "@/workspace/model/HasWorkspaceSlug"
+import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
 import { workspaceCreateFormStateManagement, type WorkspaceFormData } from "@/workspace/ui/form/workspaceCreateFormStateManagement"
 import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
 import { urlWorkspaceList, urlWorkspaceView } from "@/workspace/url/urlWorkspace"
@@ -15,14 +15,14 @@ import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
-interface WorkspaceMutateProps extends HasWorkspaceSlug, HasFormModeMutate, MayHaveReturnPath, MayHaveClass {}
+interface WorkspaceMutateProps extends HasWorkspaceHandle, HasFormModeMutate, MayHaveReturnPath, MayHaveClass {}
 
 export function WorkspaceMutate(p: WorkspaceMutateProps) {
   const op = "WorkspaceMutate"
   const navigator = useNavigate()
   const getWorkspace = createQuery(api.workspace.workspaceGetQuery, {
     token: userTokenGet(),
-    workspaceSlug: p.workspaceSlug,
+    workspaceHandle: p.workspaceHandle,
   }) as () => DocWorkspace | undefined
 
   const editAction = createMutation(api.workspace.workspaceEditMutation)
@@ -34,7 +34,7 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
             // auth
             token: userTokenGet(),
             // id
-            workspaceSlug: p.workspaceSlug,
+            workspaceHandle: p.workspaceHandle,
             // data
             ...data,
           })
@@ -42,14 +42,14 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
             // auth
             token: userTokenGet(),
             // id
-            workspaceSlug: p.workspaceSlug,
+            workspaceHandle: p.workspaceHandle,
           })
     if (!workspaceIdResult.success) {
       console.error(workspaceIdResult)
       toastAdd({ title: workspaceIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlWorkspaceView(p.workspaceSlug) : urlWorkspaceList()
+    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlWorkspaceView(p.workspaceHandle) : urlWorkspaceList()
     navigator(url)
   }
 

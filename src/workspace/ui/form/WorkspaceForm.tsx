@@ -30,7 +30,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
       <h1 class="text-2xl font-bold mt-6 mb-2">{getWorkspaceTitle(p.mode)}</h1>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <NameField sm={p.sm} />
-        <SlugField sm={p.sm} />
+        <HandleField sm={p.sm} />
         <DescriptionField sm={p.sm} />
         <ImageField sm={p.sm} />
         <ButtonIcon
@@ -73,27 +73,27 @@ function NameField(p: HasOrgFormStateManagement) {
   )
 }
 
-function SlugField(p: HasOrgFormStateManagement) {
+function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={workspaceFormField.slug}>
-        Slug <LabelAsterix />
+      <Label for={workspaceFormField.handle}>
+        Handle <LabelAsterix />
       </Label>
       <InputS
-        id={workspaceFormField.slug}
-        placeholder={ttt("Enter workspace slug")}
+        id={workspaceFormField.handle}
+        placeholder={ttt("Enter workspace handle")}
         autocomplete="organization-title"
-        valueSignal={p.sm.state.slug}
+        valueSignal={p.sm.state.handle}
         onInput={(e) => {
-          p.sm.state.slug.set(e.currentTarget.value)
-          p.sm.validateOnChange(workspaceFormField.slug)(e.currentTarget.value)
+          p.sm.state.handle.set(e.currentTarget.value)
+          p.sm.validateOnChange(workspaceFormField.handle)(e.currentTarget.value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.slug)(e.currentTarget.value)}
-        class={classMerge("w-full", p.sm.errors.slug.get() && "border-destructive focus-visible:ring-destructive")}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.handle)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.handle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
       />
-      <Show when={p.sm.errors.slug.get()}>
-        <p class="text-destructive">{p.sm.errors.slug.get()}</p>
+      <Show when={p.sm.errors.handle.get()}>
+        <p class="text-destructive">{p.sm.errors.handle.get()}</p>
       </Show>
     </div>
   )

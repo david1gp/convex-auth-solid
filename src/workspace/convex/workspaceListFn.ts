@@ -5,7 +5,7 @@ import { v } from "convex/values"
 export type WorkspaceListValidatorType = typeof workspaceListValidator.type
 
 export const workspaceListFields = {
-  // orgSlug: v.string(), // TODO list workspaces by org
+  // orgHandle: v.string(), // TODO list workspaces by org
 } as const
 
 export const workspaceListValidator = v.object(workspaceListFields)

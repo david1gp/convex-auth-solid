@@ -11,28 +11,28 @@ export type WorkspaceFormField = keyof typeof workspaceFormField
 
 export const workspaceFormField = {
   name: "name",
-  slug: "slug",
+  handle: "handle",
   description: "description",
   image: "image",
 } as const
 
 export type WorkspaceFormData = {
   name: string
-  slug: string
+  handle: string
   description: string
   image: string
 }
 
 export type WorkspaceFormState = {
   name: SignalObject<string>
-  slug: SignalObject<string>
+  handle: SignalObject<string>
   description: SignalObject<string>
   image: SignalObject<string>
 }
 
 export type WorkspaceFormErrorState = {
   name: SignalObject<string>
-  slug: SignalObject<string>
+  handle: SignalObject<string>
   description: SignalObject<string>
   image: SignalObject<string>
 }
@@ -40,7 +40,7 @@ export type WorkspaceFormErrorState = {
 function workspaceCreateState(): WorkspaceFormState {
   return {
     name: createSignalObject(""),
-    slug: createSignalObject(""),
+    handle: createSignalObject(""),
     description: createSignalObject(""),
     image: createSignalObject(""),
   }
@@ -77,17 +77,17 @@ export function workspaceCreateFormStateManagement(onSubmit: WorkspaceFormSubmit
 
 function loadData(data: DocWorkspace, state: WorkspaceFormState): void {
   state.name.set(data.name)
-  state.slug.set(data.slug)
+  state.handle.set(data.handle)
   state.description.set(data.description ?? "")
   state.image.set(data.image ?? "")
 }
 
 function hasErrors(errors: WorkspaceFormErrorState) {
-  return !!errors.name.get() || !!errors.slug.get() || !!errors.description.get() || !!errors.image.get()
+  return !!errors.name.get() || !!errors.handle.get() || !!errors.description.get() || !!errors.image.get()
 }
 function fillTestData(state: WorkspaceFormState) {
   state.name.set("Test Workspace")
-  state.slug.set("test-workspace")
+  state.handle.set("test-workspace")
   state.description.set("Test description")
   state.image.set("")
 }
@@ -108,8 +108,8 @@ function validateField(field: WorkspaceFormField, value: string) {
   let schema
   if (field === workspaceFormField.name) {
     schema = workspaceDataSchemaFields.name
-  } else if (field === workspaceFormField.slug) {
-    schema = workspaceDataSchemaFields.slug
+  } else if (field === workspaceFormField.handle) {
+    schema = workspaceDataSchemaFields.handle
   } else if (field === workspaceFormField.description) {
     schema = workspaceDataSchemaFields.description
   } else if (field === workspaceFormField.image) {
@@ -128,28 +128,28 @@ async function handleSubmit(
   e.preventDefault()
 
   const name = state.name.get()
-  const slug = state.slug.get()
+  const handle = state.handle.get()
   const description = state.description.get()
   const image = state.image.get()
 
   const nameResult = validateField("name", name)
-  const slugResult = validateField("slug", slug)
+  const handleResult = validateField("handle", handle)
   const descriptionResult = validateField("description", description)
   const imageResult = validateField("image", image)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
-  errors.slug.set(slugResult.success ? "" : slugResult.issues[0].message)
+  errors.handle.set(handleResult.success ? "" : handleResult.issues[0].message)
   errors.description.set(descriptionResult.success ? "" : descriptionResult.issues[0].message)
   errors.image.set(imageResult.success ? "" : imageResult.issues[0].message)
 
-  const isSuccess = nameResult.success && slugResult.success && descriptionResult.success && imageResult.success
+  const isSuccess = nameResult.success && handleResult.success && descriptionResult.success && imageResult.success
 
   if (!isSuccess) {
     if (!nameResult.success) {
       toastAdd({ title: nameResult.issues[0].message, icon: mdiAlertCircle, id: "name" })
     }
-    if (!slugResult.success) {
-      toastAdd({ title: slugResult.issues[0].message, icon: mdiAlertCircle, id: "slug" })
+    if (!handleResult.success) {
+      toastAdd({ title: handleResult.issues[0].message, icon: mdiAlertCircle, id: "handle" })
     }
     if (!descriptionResult.success) {
       toastAdd({ title: descriptionResult.issues[0].message, icon: mdiAlertCircle, id: "description" })
@@ -160,7 +160,7 @@ async function handleSubmit(
     return
   }
 
-  const data: WorkspaceFormData = { name, slug, description, image }
+  const data: WorkspaceFormData = { name, handle, description, image }
   isSaving.set(true)
   await onSubmit(data)
   isSaving.set(false)

@@ -2,7 +2,7 @@ export type OrgFormField = keyof typeof orgFormField
 
 export const orgFormField = {
   name: "name",
-  slug: "slug",
+  handle: "handle",
   description: "description",
   url: "url",
   image: "image",

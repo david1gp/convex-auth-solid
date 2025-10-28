@@ -90,12 +90,12 @@ export function workspaceListSaveToLocalStorage(workspaces: WorkspaceModel[]) {
   localStorage.setItem(workspaceListLocalStorageKey, serialized)
 }
 
-export function workspaceListFindBySlug(slug: string): WorkspaceModel | undefined {
+export function workspaceListFindByHandle(handle: string): WorkspaceModel | undefined {
   const workspaceList = workspaceListSignal.get()
-  return workspaceList.find((w) => w.slug === slug)
+  return workspaceList.find((w) => w.handle === handle)
 }
-export function workspaceListFindNameBySlug(slug: string): string | undefined {
-  const org = workspaceListFindBySlug(slug)
+export function workspaceListFindNameByHandle(handle: string): string | undefined {
+  const org = workspaceListFindByHandle(handle)
   if (!org) return undefined
   return org.name
 }

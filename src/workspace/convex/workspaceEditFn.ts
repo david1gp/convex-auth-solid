@@ -9,7 +9,7 @@ import type { DocWorkspace } from "./IdWorkspace"
 export type WorkspaceEditValidatorType = typeof workspaceEditValidator.type
 
 export const workspaceEditFields = {
-  workspaceSlug: v.string(),
+  workspaceHandle: v.string(),
   // data
   name: v.optional(v.string()),
   image: v.optional(v.string()),
@@ -29,12 +29,12 @@ export async function workspaceEditFn(ctx: MutationCtx, args: WorkspaceEditValid
 
   const workspace = await ctx.db
     .query("workspaces")
-    .withIndex("slug", (q) => q.eq("slug", args.workspaceSlug))
+    .withIndex("handle", (q) => q.eq("handle", args.workspaceHandle))
     .unique()
   if (!workspace) {
-    return createResultError(op, "Workspace not found", args.workspaceSlug)
+    return createResultError(op, "Workspace not found", args.workspaceHandle)
   }
-  const { workspaceSlug, ...partial } = args
+  const { workspaceHandle, ...partial } = args
   const patch: Partial<DocWorkspace> = partial
   patch.updatedAt = nowIso()
 
