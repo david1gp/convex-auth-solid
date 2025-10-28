@@ -1,8 +1,10 @@
 export type OrgFormField = keyof typeof orgFormField
 
 export const orgFormField = {
+  // id
+  orgHandle: "orgHandle",
+  // data
   name: "name",
-  handle: "handle",
   description: "description",
   url: "url",
   image: "image",

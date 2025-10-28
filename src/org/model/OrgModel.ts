@@ -4,7 +4,7 @@ import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt
 
 export type OrgDataModel = {
   name: string
-  handle: string
+  orgHandle: string
   description?: string
   url?: string
   image?: string

@@ -88,9 +88,9 @@ export function orgListSaveToLocalStorage(orgs: OrgModel[]) {
   localStorage.setItem(orgListLocalStorageKey, serialized)
 }
 
-export function orgListFindByHandle(handle: string): OrgModel | undefined {
+export function orgListFindByHandle(orgHandle: string): OrgModel | undefined {
   const orgList = orgListSignal.get()
-  return orgList.find((o) => o.handle === handle)
+  return orgList.find((o) => o.orgHandle === orgHandle)
 }
 
 export function orgListFindNameByHandle(handle: string): string | undefined {

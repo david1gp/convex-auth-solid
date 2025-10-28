@@ -6,9 +6,10 @@ import { vIdUser } from "../../auth/convex/vIdUser"
 import { vIdOrg } from "./vIdOrg"
 
 export const orgDataFields = {
+  // id
+  orgHandle: v.string(),
   // data
   name: v.string(),
-  handle: v.string(),
   description: v.optional(v.string()),
   url: v.optional(v.string()),
   image: v.optional(v.string()),
@@ -39,7 +40,7 @@ export const orgMemberFields = {
 export const orgTables = {
   orgs: defineTable(orgFields)
     //
-    .index("handle", ["handle"]),
+    .index("orgHandle", ["orgHandle"]),
 
   orgMembers: defineTable(orgMemberFields)
     //

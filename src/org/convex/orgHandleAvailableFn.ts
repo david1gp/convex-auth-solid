@@ -16,7 +16,7 @@ export async function orgHandleAvailableFn(
   const op = "orgHandleAvailableFn"
   const org = await ctx.db
     .query("orgs")
-    .withIndex("handle", (q) => q.eq("handle", args.orgHandle))
+    .withIndex("orgHandle", (q) => q.eq("orgHandle", args.orgHandle))
     .unique()
 
   if (org) {

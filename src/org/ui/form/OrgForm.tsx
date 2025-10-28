@@ -2,7 +2,7 @@ import type { OrgFormStateManagement } from "@/org/ui/form/orgCreateFormStateMan
 import { orgFormField } from "@/org/ui/form/orgFormField"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
+import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
 import { InputS } from "~ui/input/input/InputS"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
@@ -28,7 +28,7 @@ export function OrgForm(p: OrgContentProps) {
       <h1 class="text-2xl font-bold mt-6 mb-2">{getOrgTitle(p.mode)}</h1>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <NameField sm={p.sm} />
-        <HandleField sm={p.sm} />
+        {p.mode === formMode.add && <HandleField sm={p.sm} />}
         <DescriptionField sm={p.sm} />
         <UrlField sm={p.sm} />
         <ImageField sm={p.sm} />
@@ -76,25 +76,25 @@ function NameField(p: HasOrgFormStateManagement) {
 function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={orgFormField.handle}>
+      <Label for={orgFormField.orgHandle}>
         {ttt("Organization Handle")}
         <LabelAsterix />
       </Label>
       <InputS
-        id={orgFormField.handle}
+        id={orgFormField.orgHandle}
         placeholder={ttt("your-company-name")}
         autocomplete="organization"
-        valueSignal={p.sm.state.handle}
+        valueSignal={p.sm.state.orgHandle}
         onInput={(e) => {
-          p.sm.state.handle.set(e.currentTarget.value)
-          p.sm.validateOnChange(orgFormField.handle)(e.currentTarget.value)
+          p.sm.state.orgHandle.set(e.currentTarget.value)
+          p.sm.validateOnChange(orgFormField.orgHandle)(e.currentTarget.value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.handle)(e.currentTarget.value)}
-        class={classMerge("w-full", p.sm.errors.handle.get() && "border-destructive focus-visible:ring-destructive")}
+        onBlur={(e) => p.sm.validateOnChange(orgFormField.orgHandle)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.orgHandle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
       />
-      <Show when={p.sm.errors.handle.get()}>
-        <p class="text-destructive">{p.sm.errors.handle.get()}</p>
+      <Show when={p.sm.errors.orgHandle.get()}>
+        <p class="text-destructive">{p.sm.errors.orgHandle.get()}</p>
       </Show>
     </div>
   )

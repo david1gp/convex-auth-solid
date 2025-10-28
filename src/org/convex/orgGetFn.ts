@@ -15,7 +15,7 @@ export async function orgGetFn(ctx: QueryCtx, args: OrgGetValidatorType): Promis
   const op = "orgGetFn"
   const org = await ctx.db
     .query("orgs")
-    .withIndex("handle", (q) => q.eq("handle", args.handle))
+    .withIndex("orgHandle", (q) => q.eq("orgHandle", args.handle))
     .unique()
   if (!org) {
     return createResultError(op, "Organization not found", args.handle)
