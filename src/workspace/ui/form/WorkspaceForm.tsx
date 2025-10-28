@@ -1,37 +1,152 @@
-import type { WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+import {
+  workspaceFormField,
+  type WorkspaceFormStateManagement,
+} from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
 import { InputS } from "~ui/input/input/InputS"
+import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
+import { Label } from "~ui/input/label/Label"
+import { LabelAsterix } from "~ui/input/label/LabelAsterix"
 import { TextareaS } from "~ui/input/textarea/TextareaS"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import { classMerge } from "~ui/utils/classMerge"
+import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { classMerge } from "~ui/utils/classMerge"
 
-export interface WorkspaceContentProps extends MayHaveClass {
-  mode: FormMode
+interface HasOrgFormStateManagement {
   sm: WorkspaceFormStateManagement
+}
+
+export interface WorkspaceContentProps extends MayHaveClass, HasOrgFormStateManagement {
+  mode: FormMode
 }
 
 export function WorkspaceForm(p: WorkspaceContentProps) {
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
       <h1 class="text-2xl font-bold mt-6 mb-2">{getWorkspaceTitle(p.mode)}</h1>
-      <form class="flex flex-col gap-6" onSubmit={p.sm.handleSubmit}>
-        <InputS id="name" placeholder="Name" valueSignal={p.sm.state.name} class="w-full" />
-        <InputS id="slug" placeholder="Slug" valueSignal={p.sm.state.slug} class="w-full" />
-        <TextareaS
-          id="prompt"
-          placeholder="Description (optional)"
-          valueSignal={p.sm.state.description}
+      <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
+        <NameField sm={p.sm} />
+        <SlugField sm={p.sm} />
+        <DescriptionField sm={p.sm} />
+        <ImageField sm={p.sm} />
+        <ButtonIcon
+          type="submit"
+          disabled={p.sm.isSaving.get()}
+          icon={getFormIcon(p.mode)}
+          variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
-        />
-        <InputS id="image" placeholder="Image (optional)" valueSignal={p.sm.state.image} class="w-full" />
-        <ButtonIcon type="submit" disabled={p.sm.isSaving.get()} icon={getFormIcon(p.mode)}>
+        >
           {p.sm.isSaving.get() ? "Saving..." : getWorkspaceTitle(p.mode)}
         </ButtonIcon>
       </form>
     </section>
+  )
+}
+
+function NameField(p: HasOrgFormStateManagement) {
+  return (
+    <div class="flex flex-col gap-2">
+      <Label for={workspaceFormField.name}>
+        Name <LabelAsterix />
+      </Label>
+      <InputS
+        id={workspaceFormField.name}
+        placeholder={ttt("Enter workspace name")}
+        autocomplete="organization"
+        valueSignal={p.sm.state.name}
+        onInput={(e) => {
+          p.sm.state.name.set(e.currentTarget.value)
+          p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)
+        }}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
+        maxLength={inputMaxLength50}
+      />
+      <Show when={p.sm.errors.name.get()}>
+        <p class="text-destructive">{p.sm.errors.name.get()}</p>
+      </Show>
+    </div>
+  )
+}
+
+function SlugField(p: HasOrgFormStateManagement) {
+  return (
+    <div class="flex flex-col gap-2">
+      <Label for={workspaceFormField.slug}>
+        Slug <LabelAsterix />
+      </Label>
+      <InputS
+        id={workspaceFormField.slug}
+        placeholder={ttt("Enter workspace slug")}
+        autocomplete="organization-title"
+        valueSignal={p.sm.state.slug}
+        onInput={(e) => {
+          p.sm.state.slug.set(e.currentTarget.value)
+          p.sm.validateOnChange(workspaceFormField.slug)(e.currentTarget.value)
+        }}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.slug)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.slug.get() && "border-destructive focus-visible:ring-destructive")}
+        maxLength={inputMaxLength25}
+      />
+      <Show when={p.sm.errors.slug.get()}>
+        <p class="text-destructive">{p.sm.errors.slug.get()}</p>
+      </Show>
+    </div>
+  )
+}
+
+function DescriptionField(p: HasOrgFormStateManagement) {
+  return (
+    <div class="flex flex-col gap-2">
+      <Label for={workspaceFormField.description}>Description</Label>
+      <TextareaS
+        id={workspaceFormField.description}
+        placeholder={ttt("Enter workspace description")}
+        valueSignal={p.sm.state.description}
+        onInput={(e) => {
+          p.sm.state.description.set(e.currentTarget.value)
+          p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)
+        }}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)}
+        class={classMerge(
+          "w-full",
+          p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
+        )}
+        maxLength={urlMaxLength}
+      />
+      <Show when={p.sm.errors.description.get()}>
+        <p class="text-destructive">{p.sm.errors.description.get()}</p>
+      </Show>
+    </div>
+  )
+}
+
+function ImageField(p: HasOrgFormStateManagement) {
+  return (
+    <div class="flex flex-col gap-2">
+      <Label for={workspaceFormField.image}>Image URL</Label>
+      <InputS
+        id={workspaceFormField.image}
+        type="url"
+        placeholder={ttt("Enter image URL")}
+        autocomplete="url"
+        valueSignal={p.sm.state.image}
+        onInput={(e) => {
+          p.sm.state.image.set(e.currentTarget.value)
+          p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)
+        }}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
+        maxLength={urlMaxLength}
+      />
+      <Show when={p.sm.errors.image.get()}>
+        <p class="text-destructive">{p.sm.errors.image.get()}</p>
+      </Show>
+    </div>
   )
 }
 

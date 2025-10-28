@@ -47,7 +47,7 @@ function WorkspaceView(p: WorkspaceViewProps) {
         <h1 class="text-2xl font-bold">{workspaceListFindNameBySlug(p.workspaceSlug)}</h1>
       </Show>
       <LinkButton href={urlWorkspaceEdit(p.workspaceSlug)} variant={buttonVariant.default} icon={formIcon.edit}>
-        Edit
+        {ttt("Edit")}
       </LinkButton>
     </div>
   )
