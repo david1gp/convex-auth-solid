@@ -3,7 +3,6 @@
     "target": "esnext",
     "module": "Preserve",
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "noEmit": true,
     //
