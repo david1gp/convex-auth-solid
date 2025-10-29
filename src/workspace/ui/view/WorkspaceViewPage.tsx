@@ -42,7 +42,7 @@ interface WorkspaceViewProps extends HasWorkspaceHandle, MayHaveClass {}
 
 function WorkspaceView(p: WorkspaceViewProps) {
   return (
-    <div class="flex flex-wrap items-center gap-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
       <Show when={p.workspaceHandle && workspaceListFindNameByHandle(p.workspaceHandle)}>
         <h1 class="text-2xl font-bold">{workspaceListFindNameByHandle(p.workspaceHandle)}</h1>
       </Show>

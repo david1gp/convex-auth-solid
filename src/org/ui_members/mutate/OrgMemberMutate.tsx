@@ -9,12 +9,14 @@ import {
 } from "@/org/ui_members/form/orgMemberEditFormStateManagement"
 import { OrgMemberForm } from "@/org/ui_members/form/OrgMemberForm"
 import { urlOrgMemberList, urlOrgMemberView } from "@/org/url_member/urlOrgMember"
+import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
 import { Show, createEffect } from "solid-js"
+import { ttt } from "~ui/i18n/ttt"
 import { formMode, type HasFormModeMutate } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
@@ -105,12 +107,12 @@ export function OrgMemberMutate(p: OrgMemberMutateProps) {
   })
 
   return (
-    <Show when={getMember()} fallback={<LoadingMember />}>
+    <Show when={getMember()} fallback={<OrgMemberLoading />}>
       <OrgMemberForm mode={p.mode} sm={sm} />
     </Show>
   )
 }
 
-function LoadingMember() {
-  return <div class="opacity-80">Loading organization member...</div>
+function OrgMemberLoading() {
+  return <LoadingSection loadingSubject={ttt("Organization Member")} />
 }

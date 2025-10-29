@@ -1,5 +1,8 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import { PageHeader } from "@/ui/header/PageHeader"
+import { NoData } from "@/ui/illustrations/NoData"
+import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import { workspaceListSignal } from "@/workspace/ui/list/workspaceListSignal"
@@ -11,6 +14,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
+import type { HasClassAndChildren } from "~ui/utils/HasClassAndChildren"
 import type { Result, ResultOk } from "~utils/result/Result"
 
 export function WorkspaceListPage() {
@@ -43,26 +47,35 @@ function WorkspaceListLoader(p: {}) {
   })
 
   return (
-    <section id="workspaces" class="p-6">
-      <div class="flex flex-wrap items-center gap-4">
-        <h1 class="text-2xl font-bold">Workspaces</h1>
+    <>
+      <PageHeader title={ttt("Workspaces")} subtitle={ttt("Manage different Initiatives, isolated from each other")}>
         <WorkspaceCreateLink />
-      </div>
-
-      <p class="text-lg mb-4">Manage different Initiatives, isolated from each other</p>
+      </PageHeader>
 
       <Switch fallback={<p>Fallback content</p>}>
         <Match when={getWorkspacesResult() === undefined}>
-          <WorkspaceLoading />
+          <WorkspacesLoading />
         </Match>
         <Match when={!hasWorkspaces(getWorkspacesResult())}>
-          <WorkspaceEmpty />
+          <NoWorkspaces />
         </Match>
         <Match when={true}>
           <WorkspaceList getWorkspaces={getWorkspaces(getWorkspacesResult())} />
         </Match>
       </Switch>
-    </section>
+    </>
+  )
+}
+
+function WorkspacesLoading() {
+  return <LoadingSection loadingSubject={ttt("Workspaces")} />
+}
+
+export function NoWorkspaces(p: HasClassAndChildren) {
+  return (
+    <NoData noDataText={ttt("No Workspaces")} class={p.class}>
+      {p.children}
+    </NoData>
   )
 }
 
@@ -90,19 +103,6 @@ function hasWorkspaces(workspacesResult: Result<Workspace[]> | undefined): Works
   const workspaces = workspacesResult.data
   if (workspaces.length <= 0) return null
   return workspaces
-}
-
-function WorkspaceLoading() {
-  return <h2>Loading...</h2>
-}
-
-function WorkspaceEmpty() {
-  return (
-    <div>
-      <h2>Empty...</h2>
-      <WorkspaceCreateLink />
-    </div>
-  )
 }
 
 function WorkspaceLink(p: { workspace: Workspace }) {

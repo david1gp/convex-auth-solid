@@ -1,6 +1,5 @@
-import { ContactSupportLinkButton } from "@/auth/ui/locked/ContactSupportLinkButton"
-import { DevLoginSection } from "@/auth/ui/sign_in/dev/DevLoginSection"
-import { SocialLoginButtonsSection } from "@/auth/ui/sign_in/social/SocialLoginButtonsSection"
+import { ContactSupportLinkButton } from "@/ui/links/ContactSupportLinkButton"
+import { GoSignInLinkButton } from "@/ui/links/GoSignInLinkButton"
 import { mdiAlertBoxOutline } from "@mdi/js"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { Icon1 } from "~ui/static/icon/Icon1"
@@ -39,8 +38,7 @@ export function SignInErrorPage() {
       </section>
       <section id={"tryAgain"} class="container max-w-7xl mx-auto text-center space-y-8">
         <h2>{tryAgainText}</h2>
-        <SocialLoginButtonsSection class="" />
-        <DevLoginSection class="border rounded-xl p-4 mx-auto" />
+        <GoSignInLinkButton />
         <ContactSupportLinkButton
           size={buttonSize.lg}
           variant={buttonVariant.link}

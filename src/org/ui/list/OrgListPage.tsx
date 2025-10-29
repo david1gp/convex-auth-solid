@@ -3,6 +3,9 @@ import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg } from "@/org/convex/IdOrg"
 import { orgListSignal } from "@/org/ui/list/orgListSignal"
 import { urlOrgAdd, urlOrgView } from "@/org/url/urlOrg"
+import { PageHeader } from "@/ui/header/PageHeader"
+import { NoData } from "@/ui/illustrations/NoData"
+import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
@@ -11,6 +14,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
+import type { HasClassAndChildren } from "~ui/utils/HasClassAndChildren"
 import type { Result, ResultOk } from "~utils/result/Result"
 
 export function OrgListPage() {
@@ -43,26 +47,35 @@ function OrgListLoader() {
   })
 
   return (
-    <section id="orgs" class="p-6">
-      <div class="flex flex-wrap items-center gap-4">
-        <h1 class="text-2xl font-bold">{ttt("Organizations")}</h1>
+    <>
+      <PageHeader title={ttt("Organizations")} subtitle={ttt("Manage all Organizations")}>
         <OrgCreateLink />
-      </div>
+      </PageHeader>
 
-      <p class="text-lg mb-4">{ttt("Manage different Organizations, isolated from each other")}</p>
-
-      <Switch fallback={<p>Fallback content</p>}>
+      <Switch>
         <Match when={getOrgsResult() === undefined}>
-          <OrgLoading />
+          <OrgsLoading />
         </Match>
         <Match when={!hasOrgs(getOrgsResult())}>
-          <OrgEmpty />
+          <NoOrgs />
         </Match>
         <Match when={true}>
           <OrgList getOrgs={getOrgs(getOrgsResult())} />
         </Match>
       </Switch>
-    </section>
+    </>
+  )
+}
+
+function OrgsLoading() {
+  return <LoadingSection loadingSubject={ttt("Organizations")} />
+}
+
+function NoOrgs(p: HasClassAndChildren) {
+  return (
+    <NoData noDataText={ttt("No Organizations")} class={p.class}>
+      {p.children}
+    </NoData>
   )
 }
 
@@ -90,19 +103,6 @@ function hasOrgs(orgsResult: Result<Org[]> | undefined): Org[] | null {
   const orgs = orgsResult.data
   if (orgs.length <= 0) return null
   return orgs
-}
-
-function OrgLoading() {
-  return <h2>{ttt("Loading...")}</h2>
-}
-
-function OrgEmpty() {
-  return (
-    <div>
-      <h2>{ttt("Empty...")}</h2>
-      <OrgCreateLink />
-    </div>
-  )
 }
 
 function OrgLink(p: { org: Org }) {

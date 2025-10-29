@@ -8,12 +8,14 @@ import {
 } from "@/org/ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/ui/form/OrgForm"
 import { urlOrgList, urlOrgView } from "@/org/url/urlOrg"
+import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
 import { Show, createEffect } from "solid-js"
+import { ttt } from "~ui/i18n/ttt"
 import { formMode, type HasFormModeMutate } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
@@ -95,12 +97,12 @@ export function OrgMutate(p: OrgMutateProps) {
   })
 
   return (
-    <Show when={getOrg()} fallback={<LoadingOrg />}>
+    <Show when={getOrg()} fallback={<OrgLoading />}>
       <OrgForm mode={p.mode} sm={sm} />
     </Show>
   )
 }
 
-function LoadingOrg() {
-  return <div class="opacity-80">Loading organization...</div>
+function OrgLoading() {
+  return <LoadingSection loadingSubject={ttt("Organization")} />
 }

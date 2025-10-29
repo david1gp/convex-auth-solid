@@ -1,4 +1,5 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
@@ -85,12 +86,12 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
   })
 
   return (
-    <Show when={getWorkspace()} fallback={<LoadingWorkspace />}>
+    <Show when={getWorkspace()} fallback={<WorkspaceLoading />}>
       <WorkspaceForm mode={p.mode} sm={sm} />
     </Show>
   )
 }
 
-function LoadingWorkspace() {
-  return <div class="opacity-80">{ttt("Loading workspace...")}</div>
+function WorkspaceLoading() {
+  return <LoadingSection loadingSubject={ttt("Workspace")} />
 }

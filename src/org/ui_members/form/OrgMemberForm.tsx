@@ -1,11 +1,10 @@
+import { orgRole } from "@/org/model/orgRole"
 import type { OrgMemberFormStateManagement } from "@/org/ui_members/form/orgMemberEditFormStateManagement"
 import { orgMemberFormField } from "@/org/ui_members/form/orgMemberFormField"
-import { orgRole } from "@/org/model/orgRole"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
+import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
-
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -52,7 +51,10 @@ function RoleField(p: HasOrgMemberFormStateManagement) {
           p.sm.state.role.set(e.currentTarget.value)
           p.sm.validateOnChange(orgMemberFormField.role)(e.currentTarget.value)
         }}
-        class={classMerge("w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500", p.sm.errors.role.get() && "border-destructive focus-visible:ring-destructive")}
+        class={classMerge(
+          "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+          p.sm.errors.role.get() && "border-destructive focus-visible:ring-destructive",
+        )}
       >
         <option value={orgRole.member}>{ttt("Member")}</option>
         <option value={orgRole.guest}>{ttt("Guest")}</option>

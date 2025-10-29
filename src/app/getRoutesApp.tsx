@@ -1,55 +1,38 @@
-import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { lazy } from "solid-js"
-import { PageWrapper2 } from "~ui/static/page/PageWrapper2"
 import type { RouteObject } from "~ui/utils/RouteConfig"
 
-const DemoAuthLinks = lazy(() => import("@/auth/ui/DemoAuthLinks").then((c) => ({ default: c.DemoAuthLinks })))
+export const OverviewPage = lazy(() => import("@/app/pages/OverviewPage").then((c) => ({ default: c.OverviewPage })))
+export const TodoPage = lazy(() => import("@/ui/pages/TodoPage").then((c) => ({ default: c.TodoPage })))
+export const LoadingPage = lazy(() => import("@/ui/pages/LoadingPage").then((c) => ({ default: c.LoadingPage })))
+export const DemoLoaders = lazy(() => import("@/ui/loaders/DemoLoaders").then((c) => ({ default: c.DemoLoaders })))
+
+export const DemoAuthLinks = lazy(() => import("@/auth/ui/DemoAuthLinks").then((c) => ({ default: c.DemoAuthLinks })))
 
 export function getRoutesApp(): RouteObject[] {
   return [
     {
       path: "/",
-      component: HomePage,
+      component: OverviewPage,
     },
     {
       path: "/overview",
-      component: Overview,
+      component: OverviewPage,
     },
     {
       path: "/demos",
       component: () => <DemoAuthLinks />,
     },
+    {
+      path: "/demo/todo",
+      component: () => <TodoPage />,
+    },
+    {
+      path: "/demo/loading",
+      component: () => <LoadingPage />,
+    },
+    {
+      path: "/demo/loaders",
+      component: () => <DemoLoaders />,
+    },
   ]
-}
-
-function HomePage() {
-  return (
-    <PageWrapper2>
-      <NavAuth />
-      <div class="py-20">
-        <h1 class="text-4xl font-bold">Home</h1>
-        <p>this is a private page seen only to logged in users</p>
-      </div>
-      <div>
-        <h2>auth links</h2>
-        <DemoAuthLinks />
-      </div>
-    </PageWrapper2>
-  )
-}
-
-function Overview() {
-  return (
-    <PageWrapper2>
-      <NavAuth />
-      <div class="py-20">
-        <h1 class="text-4xl font-bold">Overview</h1>
-        <p>this is a private page seen only to logged in users</p>
-      </div>
-      <div>
-        <h2>auth links</h2>
-        <DemoAuthLinks />
-      </div>
-    </PageWrapper2>
-  )
 }

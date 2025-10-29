@@ -2,7 +2,10 @@ import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgMember } from "@/org/convex/IdOrg"
 import type { HasOrgHandle } from "@/org/model/HasOrgHandle"
+import { NoOrgMembers } from "@/org/ui_members/list/NoOrgMembers"
 import { urlOrgMemberAdd, urlOrgMemberView } from "@/org/url_member/urlOrgMember"
+import { PageHeader } from "@/ui/header/PageHeader"
+import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
@@ -57,26 +60,23 @@ function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
   })
 
   return (
-    <section id="org-members" class="p-6">
-      <div class="flex flex-wrap items-center gap-4">
-        <h1 class="text-2xl font-bold">{ttt("Organization Members")}</h1>
+    <>
+      <PageHeader title={ttt("Organization Members")} subtitle={ttt("Manage members of this organization")}>
         <OrgMemberCreateLink orgHandle={p.orgHandle} />
-      </div>
-
-      <p class="text-lg mb-4">{ttt("Manage members of this organization")}</p>
+      </PageHeader>
 
       <Switch fallback={<p>Fallback content</p>}>
         <Match when={getOrgMembersResult() === undefined}>
           <OrgMemberLoading />
         </Match>
         <Match when={!hasOrgMembers(getOrgMembersResult())}>
-          <OrgMemberEmpty orgHandle={p.orgHandle} />
+          <NoOrgMembers />
         </Match>
         <Match when={true}>
           <OrgMemberList orgHandle={p.orgHandle} getOrgMembers={getOrgMembers(getOrgMembersResult())} />
         </Match>
       </Switch>
-    </section>
+    </>
   )
 }
 
@@ -107,16 +107,7 @@ function hasOrgMembers(orgMembersResult: Result<OrgMember[]> | undefined): OrgMe
 }
 
 function OrgMemberLoading() {
-  return <h2>{ttt("Loading...")}</h2>
-}
-
-function OrgMemberEmpty(p: HasOrgHandle) {
-  return (
-    <div>
-      <h2>{ttt("Empty...")}</h2>
-      <OrgMemberCreateLink orgHandle={p.orgHandle} />
-    </div>
-  )
+  return <LoadingSection loadingSubject={ttt("Organization Members")} />
 }
 
 interface OrgMemberLinkProps extends HasOrgHandle {

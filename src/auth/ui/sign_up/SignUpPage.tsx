@@ -20,10 +20,10 @@ import { Img } from "~ui/static/img/Img"
 import { Separator } from "~ui/static/separator/Separator"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { MayHaveInnerClassName } from "~ui/utils/MayHaveInnerClassName"
+import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
 import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
-interface SignUpPageProps extends MayHaveClass, MayHaveInnerClassName {}
+interface SignUpPageProps extends MayHaveClass, MayHaveInnerClass {}
 
 export const SignUpPage: Component<SignUpPageProps> = (p) => {
   return (

@@ -11,7 +11,7 @@ const OrgEditPage = lazy(() =>
   import("@/org/ui/mutate/OrgEditPage").then((c) => ({ default: c.OrgEditPage })),
 )
 const OrgViewPage = lazy(() =>
-  import("@/app/demos/TodoPage").then((c) => ({ default: c.TodoPage })),
+  import("@/ui/pages/TodoPage").then((c) => ({ default: c.TodoPage })),
 )
 const OrgAddPage = lazy(() =>
   import("@/org/ui/mutate/OrgAddPage").then((c) => ({ default: c.OrgAddPage })),

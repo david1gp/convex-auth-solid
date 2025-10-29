@@ -8,9 +8,9 @@ import { SocialLoginButtonsSection } from "@/auth/ui/sign_in/social/SocialLoginB
 import { classesBgGray } from "~ui/classes/classesBg"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { MayHaveInnerClassName } from "~ui/utils/MayHaveInnerClassName"
+import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
 
-export interface SignInPageSocialOnlyProps extends MayHaveClass, MayHaveInnerClassName {}
+export interface SignInPageSocialOnlyProps extends MayHaveClass, MayHaveInnerClass {}
 
 export function SignInPageSocialOnly(p: SignInPageSocialOnlyProps) {
   return (
