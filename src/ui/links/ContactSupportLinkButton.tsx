@@ -1,25 +1,15 @@
 import { urlContactMailTo } from "@/app/text/urlContactMailTo"
 import { mdiEmail } from "@mdi/js"
 import { splitProps } from "solid-js"
+import { ttt } from "~ui/i18n/ttt"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { LinkButtonProps } from "~ui/interactive/link/LinkButtonProps"
 
 export function ContactSupportLinkButton(p: Omit<LinkButtonProps, "href">) {
-  const [, rest] = splitProps(p, [
-    // "class",
-    // "href",
-    // "variant",
-    // "size",
-    // "newTab",
-    // "isLoading",
-    "icon",
-    // "iconRight",
-    // "iconClass",
-    "children",
-  ])
+  const [, rest] = splitProps(p, ["icon", "children"])
   return (
     <LinkButton icon={p.icon ?? mdiEmail} href={urlContactMailTo} {...rest}>
-      Contact support
+      {ttt("Contact support")}
     </LinkButton>
   )
 }
