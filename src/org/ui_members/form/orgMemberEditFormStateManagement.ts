@@ -57,7 +57,7 @@ function createEmptyDocOrgMember(): DocOrgMember {
     userId: "" as any,
     role: "member",
     invitedBy: "" as any,
-    joinedAt: iso,
+    createdAt: iso,
     updatedAt: iso,
     _creationTime: now.getMilliseconds(),
   }

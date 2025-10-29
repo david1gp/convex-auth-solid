@@ -3,13 +3,21 @@ import { orgDeleteFields, orgDeleteFn } from "@/org/convex/orgDeleteFn"
 import { orgEditFields, orgEditFn } from "@/org/convex/orgEditFn"
 import { orgGetFields, orgGetFn } from "@/org/convex/orgGetFn"
 import { orgHandleAvailableFields, orgHandleAvailableFn } from "@/org/convex/orgHandleAvailableFn"
+import { orgInvitationAcceptFields, orgInvitationAcceptFn } from "@/org/convex/orgInvitationAccept"
+import { orgInvitationCreateFields, orgInvitationCreateFn } from "@/org/convex/orgInvitationCreate"
+import { orgInvitationGetFields, orgInvitationGetFn } from "@/org/convex/orgInvitationGet"
+import { orgInvitationResendFields, orgInvitationResendFn } from "@/org/convex/orgInvitationResend"
 import { orgListFn, orgsListFields } from "@/org/convex/orgListFn"
 import { orgMemberCreateFields, orgMemberCreateFn } from "@/org/convex/orgMemberCreateFn"
 import { orgMemberDeleteFields, orgMemberDeleteFn } from "@/org/convex/orgMemberDeleteFn"
 import { orgMemberEditFields, orgMemberEditFn } from "@/org/convex/orgMemberEditFn"
 import { orgMemberGetFields, orgMemberGetFn } from "@/org/convex/orgMemberGetFn"
+import {
+  getOrgMemberHandleAndRoleQueryFn,
+  getOrgMemberHandleAndRoleValidator,
+} from "@/org/convex/orgMemberGetHandleAndRoleFn"
 import { orgMemberListFn, orgMembersListFields } from "@/org/convex/orgMemberListFn"
-import { mutation, query } from "@convex/_generated/server"
+import { internalQuery, mutation, query } from "@convex/_generated/server"
 import { authMutation } from "@convex/utils/authMutation"
 import { authMutationR } from "@convex/utils/authMutationR"
 import { authQuery } from "@convex/utils/authQuery"
@@ -73,4 +81,39 @@ export const orgMembersListQuery = query({
 export const orgMemberDeleteMutation = mutation({
   args: createTokenValidator(orgMemberDeleteFields),
   handler: async (ctx, args) => authMutationR(ctx, args, orgMemberDeleteFn),
+})
+
+export const orgInvitationCreateMutation = mutation({
+  args: orgInvitationCreateFields,
+  handler: async (ctx, args) => {
+    return orgInvitationCreateFn(ctx, args)
+  },
+})
+
+export const orgInvitationResendMutation = mutation({
+  args: orgInvitationResendFields,
+  handler: async (ctx, args) => {
+    return orgInvitationResendFn(ctx, args)
+  },
+})
+
+export const orgInvitationAcceptMutation = mutation({
+  args: orgInvitationAcceptFields,
+  handler: async (ctx, args) => {
+    return orgInvitationAcceptFn(ctx, args)
+  },
+})
+
+export const orgInvitationGetQuery = query({
+  args: orgInvitationGetFields,
+  handler: async (ctx, args) => {
+    return await orgInvitationGetFn(ctx, args)
+  },
+})
+
+export const getOrgMemberHandleAndRoleQuery = internalQuery({
+  args: getOrgMemberHandleAndRoleValidator,
+  handler: async (ctx, args) => {
+    return await getOrgMemberHandleAndRoleQueryFn(ctx, args)
+  },
 })

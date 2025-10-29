@@ -57,7 +57,7 @@ export async function orgMemberCreateFn(
     userId: args.userId,
     role: args.role,
     invitedBy: invitedBy,
-    joinedAt: now,
+    createdAt: now,
     updatedAt: now,
   })
   return createResult(orgMemberId)

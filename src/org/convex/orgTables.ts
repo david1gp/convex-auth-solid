@@ -33,8 +33,30 @@ export const orgMemberFields = {
   // data
   ...orgMemberDataFields,
   // meta
-  joinedAt: v.string(),
-  updatedAt: v.string(),
+  ...fieldsCreatedAtUpdatedAt,
+}
+
+export const orgInvitationDataFields = {
+  // ids
+  orgId: vIdOrg,
+  invitedEmail: v.string(),
+  // data
+  invitationCode: v.string(),
+  role: orgRoleValidator,
+  invitedBy: vIdUser,
+  // server processing
+  emailSendAt: v.optional(v.string()),
+  emailSendAmount: v.number(),
+  // acceptance
+  acceptedAt: v.optional(v.string()),
+  declinedAt: v.optional(v.string()),
+} as const
+
+export const orgInvitationFields = {
+  // data
+  ...orgInvitationDataFields,
+  // meta
+  ...fieldsCreatedAtUpdatedAt,
 }
 
 export const orgTables = {
@@ -46,4 +68,9 @@ export const orgTables = {
     //
     .index("orgId", ["orgId"])
     .index("userId", ["userId"]),
+
+  orgInvitations: defineTable(orgInvitationFields)
+    //
+    .index("invitedEmail", ["invitedEmail"])
+    .index("invitationCode", ["invitationCode"]),
 } as const
