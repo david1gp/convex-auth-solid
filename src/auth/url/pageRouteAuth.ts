@@ -1,3 +1,4 @@
+import { serializeUrlParams } from "~utils/url/serializeUrlParams"
 import type { PageNameAuth, pageNameAuth } from "./pageNameAuth"
 
 export type PageRouteAuth = keyof typeof pageNameAuth
@@ -10,10 +11,21 @@ export const pageRouteAuth = {
   signInError: "/sign-in-error",
 } as const satisfies Record<PageNameAuth, string>
 
-export function urlPageSignUp(email?: string) {
-  return pageRouteAuth.signUp + (email ? "?email=" + email : "")
+export function urlPageSignUp(email?: string, returnUrl?: string) {
+  return pageRouteAuth.signUp + "?" + serializeSearchParams(email, returnUrl)
 }
 
-export function urlPageSignIn(email?: string) {
-  return pageRouteAuth.signIn + (email ? "?email=" + email : "")
+export function urlPageSignIn(email?: string, returnUrl?: string) {
+  return pageRouteAuth.signIn + "?" + serializeSearchParams(email, returnUrl)
+}
+
+function serializeSearchParams(email?: string, returnUrl?: string) {
+  const obj: Record<string, string> = {}
+  if (email) {
+    obj.email = email
+  }
+  if (returnUrl) {
+    obj.returnUrl = returnUrl
+  }
+  return serializeUrlParams(obj)
 }

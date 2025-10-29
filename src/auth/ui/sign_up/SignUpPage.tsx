@@ -74,28 +74,12 @@ function SignUpEmailPasswordSection() {
 function SignUpSocialSection() {
   const buttonClasses = ""
   const btnSize = buttonSize.lg
-
-  function handleSocialSignUp(provider: (typeof socialLoginProvider)[keyof typeof socialLoginProvider]) {
-    // Empty function - will be implemented later
-    console.log("Sign up with social:", provider)
-  }
-
   return (
     <section class="flex flex-col gap-4 max-w-2xl">
       <h2 class="text-xl font-semibold">Sign up via social account</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <SocialSignUpButton
-          provider={socialLoginProvider.google}
-          size={btnSize}
-          class={buttonClasses}
-          onClick={() => handleSocialSignUp(socialLoginProvider.google)}
-        />
-        <SocialSignUpButton
-          provider={socialLoginProvider.github}
-          size={btnSize}
-          class={buttonClasses}
-          onClick={() => handleSocialSignUp(socialLoginProvider.github)}
-        />
+        <SocialSignUpButton provider={socialLoginProvider.google} size={btnSize} class={buttonClasses} />
+        <SocialSignUpButton provider={socialLoginProvider.github} size={btnSize} class={buttonClasses} />
       </div>
     </section>
   )
@@ -105,26 +89,28 @@ interface SocialSignUpButtonProps {
   provider: (typeof socialLoginProvider)[keyof typeof socialLoginProvider]
   size?: (typeof buttonSize)[keyof typeof buttonSize]
   class?: string
-  onClick: () => void
 }
 
 function SocialSignUpButton(p: SocialSignUpButtonProps) {
+  const searchParams = useSearchParamsObject()
   const props = socialProviderButtonProps[p.provider]
-  const { background, mdiIconPath } = props
-  const currentUrl = urlSignInRedirectUrl()
+
   const text = "Sign up with " + capitalizeFirstLetter(p.provider)
-  const url = urlAuthProvider(p.provider, currentUrl) // Reuse for now, adapt later for sign up
+
+  function getUrl() {
+    const returnUrl = getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
+    return urlAuthProvider(p.provider, returnUrl)
+  }
 
   return (
     <LinkButton
-      href={url}
-      icon={mdiIconPath}
+      href={getUrl()}
+      icon={props.mdiIconPath}
       iconClass="fill-white"
       size={p.size}
-      style={{ background }}
+      style={{ background: props.background }}
       variant={buttonVariant.primary}
       class={p.class}
-      onClick={p.onClick}
     >
       {text}
     </LinkButton>
@@ -133,15 +119,15 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
 
 function HaveAnAccountSection() {
   const searchParams = useSearchParamsObject()
+  function getUrl() {
+    const email = getSearchParamAsString(searchParams, "email")
+    const returnUrl = getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
+    return urlPageSignIn(email, returnUrl)
+  }
   return (
     <section class="space-y-2">
       <h2 class="text-xl font-semibold">{ttt("Have an account?")}</h2>
-      <LinkButton
-        href={urlPageSignIn(getSearchParamAsString(searchParams, "email"))}
-        iconRight={mdiArrowRight}
-        size={buttonSize.lg}
-        variant={buttonVariant.default}
-      >
+      <LinkButton href={getUrl()} iconRight={mdiArrowRight} size={buttonSize.lg} variant={buttonVariant.default}>
         {ttt("Sign In instead")}
       </LinkButton>
     </section>

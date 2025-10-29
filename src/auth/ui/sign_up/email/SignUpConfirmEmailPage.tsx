@@ -1,13 +1,13 @@
 import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
-import { emailSchema } from "@/auth/model/emailSchema"
 import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
-import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
+import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
+import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiEmailSearchOutline } from "@mdi/js"
-import { useNavigate, useSearchParams } from "@solidjs/router"
+import { useNavigate } from "@solidjs/router"
 import type { Component } from "solid-js"
-import * as v from "valibot"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
@@ -38,35 +38,16 @@ export const SignUpConfirmEmailPage: Component<{}> = () => {
 }
 
 const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
-  const [search] = useSearchParams()
+  const searchParams = useSearchParamsObject()
   const navigate = useNavigate()
   const isSubmitting = createSignalObject(false)
 
   function getEmail() {
-    const got = search.email
-    const parsing = v.safeParse(emailSchema, got)
-    if (!parsing.success) {
-      console.error("error parsing email search param", got)
-      return ""
-    }
-    return parsing.output
+    return getSearchParamAsString(searchParams, "email")
   }
-  function getReturnPath() {
-    const got = search.returnPath
-    const schema = v.pipe(v.string(), v.minLength(1))
-    const parsing = v.safeParse(schema, got)
-    if (!parsing.success) {
-      console.warn("error parsing returnPath", got)
-      return getDefaultUrlSignedIn()
-    }
-    return parsing.output
+  function getReturnUrl() {
+    return getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
   }
-
-  // createEffect(() => {
-  //   if (!getEmail()) {
-  //     navigate("/sign-up", { replace: true })
-  //   }
-  // })
 
   const handleConfirm = async (otp: string, email: string) => {
     isSubmitting.set(true)
@@ -83,7 +64,7 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
     userSessionsSignalAdd(userSession)
     userSessionSignal.set(userSession)
 
-    const returnUrl = getReturnPath()
+    const returnUrl = getReturnUrl()
     console.log("Registration email confirmation", { otp, email, returnUrl })
     navigate(returnUrl)
   }

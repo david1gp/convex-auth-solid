@@ -7,6 +7,7 @@ import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { SignInViaEmailForm } from "@/auth/ui/sign_in/via_email/SignInViaEmailForm"
 import { SignInViaPasswordForm } from "@/auth/ui/sign_in/via_pw/SignInViaPasswordForm"
 import { urlPageSignUp } from "@/auth/url/pageRouteAuth"
+import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
 import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiArrowRight } from "@mdi/js"
@@ -65,11 +66,16 @@ export function SignInPageContent(p: MayHaveClass) {
 
 function NoAccountSection() {
   const searchParams = useSearchParamsObject()
+  function getUrl() {
+    const email = getSearchParamAsString(searchParams, "email")
+    const returnUrl = getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
+    return urlPageSignUp(email, returnUrl)
+  }
   return (
     <section class="flex flex-col gap-4">
       <h2 class="text-xl font-semibold">{ttt("Don't have an account?")}</h2>
       <LinkButton
-        href={urlPageSignUp(getSearchParamAsString(searchParams, "email"))}
+        href={getUrl()}
         iconRight={mdiArrowRight}
         size={buttonSize.default}
         variant={buttonVariant.default}
