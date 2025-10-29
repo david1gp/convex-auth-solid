@@ -3,6 +3,7 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { userRole } from "@/auth/model/userRole"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
+import { orgMemberGetHandleAndRoleFn } from "@/org/convex/orgMemberGetHandleAndRoleFn"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -58,9 +59,14 @@ export async function signUpConfirmEmail2InternalMutationFn(
   })
 
   //
-  // 3. Create session
+  // 3. Check for org membership
   //
-  const tokenResult = await createTokenResult(userId)
+  const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
+
+  //
+  // 4. Create session
+  //
+  const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) {
     return tokenResult
   }
@@ -68,21 +74,21 @@ export async function signUpConfirmEmail2InternalMutationFn(
   const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 
   //
-  // 4. Mark code as consumed
+  // 5. Mark code as consumed
   //
   await ctx.db.patch(registration._id, { consumedAt: nowIso() })
 
   //
-  // 5. Create user profile
+  // 6. Create user profile
   //
   const createdUser = await ctx.db.get(userId)
   if (!createdUser) {
     return createError(op, "Error finding created user", userId)
   }
-  const userProfile = dbUsersToUserProfile(createdUser)
+  const userProfile = dbUsersToUserProfile(createdUser, orgHandle, orgRole)
 
   //
-  // 6. Create and return user session
+  // 7. Create and return user session
   //
   const userSession: UserSession = {
     token,

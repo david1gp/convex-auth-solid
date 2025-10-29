@@ -1,4 +1,5 @@
 import { userRoleSchema, type UserRole } from "@/auth/model/userRole"
+import { orgRoleSchema, type OrgRole } from "@/org/model/orgRole"
 import * as v from "valibot"
 import { inputMaxLength100, inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
@@ -12,6 +13,8 @@ export type UserProfile = {
   emailVerifiedAt?: string
   hasPw: boolean
   role: UserRole
+  orgHandle?: string
+  orgRole?: OrgRole
   createdAt: string
   deletedAt?: string
 }
@@ -30,6 +33,8 @@ export const userProfileSchema = v.object({
   emailVerifiedAt: v.optional(dateTimeSchema),
   hasPw: v.boolean(),
   role: userRoleSchema,
+  orgHandle: v.optional(v.string()),
+  orgRole: v.optional(orgRoleSchema),
   createdAt: dateTimeSchema,
   deletedAt: v.optional(dateTimeSchema),
 })

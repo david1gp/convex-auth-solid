@@ -2,6 +2,7 @@ import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTo
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
+import { orgMemberGetHandleAndRoleFn } from "@/org/convex/orgMemberGetHandleAndRoleFn"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -47,24 +48,30 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   if (!user) {
     return createError(op, "User not found", userId)
   }
-  const userProfile = dbUsersToUserProfile(user as DocUser)
 
   //
-  // 3. Create session
+  // 3. Check for org membership
   //
-  const tokenResult = await createTokenResult(userId)
+  const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
+
+  const userProfile = dbUsersToUserProfile(user as DocUser, orgHandle, orgRole)
+
+  //
+  // 4. Create session
+  //
+  const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) return tokenResult
   const token = tokenResult.data
 
   const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 
   //
-  // 4. Mark code as consumed
+  // 5. Mark code as consumed
   //
   await ctx.db.patch(loginCode._id, { consumedAt: nowIso() })
 
   //
-  // 5. Create and return user session
+  // 6. Create and return user session
   //
   const userSession: UserSession = {
     token,

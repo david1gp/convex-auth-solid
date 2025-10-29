@@ -120,7 +120,7 @@ export async function orgInvitationAccept(
   })
 
   // Create user profile
-  const userProfile = dbUsersToUserProfile(userDoc)
+  const userProfile = dbUsersToUserProfile(userDoc, org.orgHandle, invitation.role)
 
   // Create and return user session
   const userSession: UserSession = {

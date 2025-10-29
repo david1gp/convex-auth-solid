@@ -1,6 +1,8 @@
+import type { IdUser } from "@/auth/convex/IdUser"
 import type { UserSession } from "@/auth/model/UserSession"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
+import { orgMemberGetHandleAndRoleFn } from "@/org/convex/orgMemberGetHandleAndRoleFn"
 import type { Id } from "@convex/_generated/dataModel"
 import { type MutationCtx } from "@convex/_generated/server.js"
 import { createResult, type PromiseResult } from "~utils/result/Result"
@@ -19,9 +21,13 @@ export async function signInUsingSocialAuth3MutationFn(
     return foundOrCreatedResult
   }
   const data = foundOrCreatedResult.data
-  const userId = data.user.userId
+  const userId = data.user.userId as IdUser
+
+  // Check for org membership
+  const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
+
   // data
-  const tokenResult = await createTokenResult(userId)
+  const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) return tokenResult
   const token = tokenResult.data
   await saveTokenIntoSessionReturnExpiresAtFn(ctx, providerInfo.provider, userId as Id<"users">, token)

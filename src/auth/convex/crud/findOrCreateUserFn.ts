@@ -1,7 +1,6 @@
 import { createUserSessionTimes, type UserSession } from "@/auth/model/UserSession"
-import {
-  type CommonAuthProvider
-} from "@/auth/server/social_identity_providers/CommonAuthProvider"
+import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
+import { orgMemberGetHandleAndRoleFn } from "@/org/convex/orgMemberGetHandleAndRoleFn"
 import { type MutationCtx } from "@convex/_generated/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocAuthAccount } from "../IdUser"
@@ -28,7 +27,8 @@ export async function findOrCreateUserFn(
   if (existingAuthAccount) {
     const user = await ctx.db.get(existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
-    const userProfile = dbUsersToUserProfile(user)
+    const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, user._id)
+    const userProfile = dbUsersToUserProfile(user, orgHandle, orgRole)
     return createResult({ user: userProfile, signedInMethod: authData.provider, ...createUserSessionTimes() })
   }
 
@@ -37,7 +37,8 @@ export async function findOrCreateUserFn(
     const existingUser = await findUserByEmailFn(ctx, authData.email)
     if (existingUser) {
       await linkAuthToExistingUserFn(ctx, existingUser._id, authData.provider, authData.providerId)
-      const userProfile = dbUsersToUserProfile(existingUser)
+      const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, existingUser._id)
+      const userProfile = dbUsersToUserProfile(existingUser, orgHandle, orgRole)
       return createResult({
         user: userProfile,
         signedInMethod: authData.provider,

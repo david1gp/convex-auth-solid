@@ -62,8 +62,13 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
     return new Response(JSON.stringify(errorResult), { status: 401 })
   }
 
+  // Check for org membership
+  const { orgHandle, orgRole } = await ctx.runQuery(internal.org.getOrgMemberHandleAndRoleQuery, {
+    userId: user._id as IdUser,
+  })
+
   // Create token
-  const tokenResult = await createTokenResult(user._id)
+  const tokenResult = await createTokenResult(user._id, orgHandle, orgRole)
   if (!tokenResult.success) {
     const errorResult = tokenResult
     console.warn(errorResult)
@@ -79,7 +84,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   })
 
   // Create user profile
-  const userProfile = dbUsersToUserProfile(user)
+  const userProfile = dbUsersToUserProfile(user, orgHandle, orgRole)
 
   // Create user session
   const userSession: UserSession = {
