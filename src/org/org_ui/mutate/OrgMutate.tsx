@@ -1,5 +1,5 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrg } from "@/org/convex/IdOrg"
+import type { DocOrg } from "@/org/org_convex/IdOrg"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import {
   orgCreateFormStateManagement,

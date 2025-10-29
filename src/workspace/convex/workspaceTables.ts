@@ -1,5 +1,5 @@
 import { vIdUser } from "@/auth/convex/vIdUser"
-import { vIdOrg } from "@/org/convex/vIdOrg"
+import { vIdOrg } from "@/org/org_convex/vIdOrg"
 import { fieldsCreatedAtUpdatedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"

@@ -1,4 +1,4 @@
-import type { IdOrg } from "@/org/convex/IdOrg"
+import type { IdOrg } from "@/org/org_convex/IdOrg"
 import type { HasConvexSystemFields } from "@/utils/convex/HasConvexSystemFields"
 import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt"
 

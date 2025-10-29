@@ -1,4 +1,4 @@
-import type { DocOrg } from "@/org/convex/IdOrg"
+import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 

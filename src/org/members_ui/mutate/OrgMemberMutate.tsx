@@ -1,5 +1,5 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgMember, IdOrgMember } from "@/org/convex/IdOrg"
+import type { DocOrgMember, IdOrgMember } from "@/org/member_convex/IdOrgMember"
 import { urlOrgMemberList, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import {
   orgMemberEditFormStateManagement,

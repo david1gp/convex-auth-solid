@@ -1,4 +1,4 @@
-import type { DocOrgMember } from "@/org/convex/IdOrg"
+import type { DocOrgMember } from "@/org/member_convex/IdOrgMember"
 import { orgMemberFormField, type OrgMemberFormField } from "@/org/members_ui/form/orgMemberFormField"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { debounceMs } from "@/utils/ui/debounceMs"

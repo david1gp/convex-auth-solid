@@ -1,6 +1,6 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { vIdUser } from "@/auth/convex/vIdUser"
-import { orgMemberGetByUserIdFn } from "@/org/convex/orgMemberGetByUserIdFn"
+import { orgMemberGetByUserIdFn } from "@/org/member_convex/orgMemberGetByUserIdFn"
 import type { OrgRole } from "@/org/org_model/orgRole"
 import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"

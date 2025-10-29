@@ -1,5 +1,4 @@
 import { emailSchema } from "@/auth/model/emailSchema"
-import type { DocOrgInvitation } from "@/org/convex/IdOrg"
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { orgRoleSchema } from "@/org/org_model/orgRole"
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
@@ -7,6 +6,7 @@ import { handleSchema } from "@/utils/valibot/handleSchema"
 import { stringSchema1to50 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
+import type { DocOrgInvitation } from "../invitation_convex/IdOrgInvitation"
 
 export const orgInvitationDataSchemaFields = {
   orgId: handleSchema,

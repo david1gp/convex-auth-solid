@@ -1,6 +1,6 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgMember } from "@/org/convex/IdOrg"
+import type { DocOrgMember } from "@/org/member_convex/IdOrgMember"
 import { urlOrgMemberAdd, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import { NoOrgMembers } from "@/org/members_ui/list/NoOrgMembers"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"

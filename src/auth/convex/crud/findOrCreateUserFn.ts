@@ -1,6 +1,6 @@
 import { createUserSessionTimes, type UserSession } from "@/auth/model/UserSession"
 import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
-import { orgMemberGetHandleAndRoleFn } from "@/org/convex/orgMemberGetHandleAndRoleFn"
+import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
 import { type MutationCtx } from "@convex/_generated/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocAuthAccount } from "../IdUser"

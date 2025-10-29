@@ -3,7 +3,7 @@ import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgMember } from "./IdOrg"
+import type { DocOrgMember } from "./IdOrgMember"
 import { vIdOrgMembers } from "./vIdOrgMembers"
 
 export type OrgMemberEditValidatorType = typeof orgMemberEditValidator.type

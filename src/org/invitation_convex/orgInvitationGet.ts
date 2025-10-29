@@ -1,7 +1,7 @@
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrg } from "./IdOrg"
+import type { DocOrg } from "../org_convex/IdOrg"
 
 export const orgInvitationGetFields = {
   orgHandle: v.string(),

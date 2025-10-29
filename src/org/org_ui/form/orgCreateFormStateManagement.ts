@@ -1,4 +1,4 @@
-import type { DocOrg, IdOrg } from "@/org/convex/IdOrg"
+import type { DocOrg, IdOrg } from "@/org/org_convex/IdOrg"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
 import { debounceMs } from "@/utils/ui/debounceMs"

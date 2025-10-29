@@ -1,10 +1,10 @@
-import type { DocOrgMember } from "@/org/convex/IdOrg"
 import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
 import { orgRoleSchema } from "@/org/org_model/orgRole"
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
 import { handleSchema } from "@/utils/valibot/handleSchema"
 import { stringSchema1to50 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"
+import type { DocOrgMember } from "../member_convex/IdOrgMember"
 
 export const orgMemberDataSchemaFields = {
   orgId: stringSchema1to50,

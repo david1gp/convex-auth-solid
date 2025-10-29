@@ -1,5 +1,5 @@
 import { authTables } from "@/auth/convex/authTables"
-import { orgTables } from "@/org/convex/orgTables"
+import { orgTables } from "@/org/org_convex/orgTables"
 import { workspaceTables } from "@/workspace/convex/workspaceTables"
 import { defineSchema } from "convex/server"
 

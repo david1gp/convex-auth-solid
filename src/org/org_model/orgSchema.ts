@@ -1,4 +1,4 @@
-import type { DocOrg } from "@/org/convex/IdOrg"
+import type { DocOrg } from "@/org/org_convex/IdOrg"
 import type { OrgModel } from "@/org/org_model/OrgModel"
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
 import { handleSchema } from "@/utils/valibot/handleSchema"

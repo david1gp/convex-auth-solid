@@ -1,6 +1,6 @@
 import type { IdUser } from "@/auth/convex/IdUser"
-import type { DocOrgMember } from "@/org/convex/IdOrg"
 import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
+import type { DocOrgMember } from "./IdOrgMember"
 
 export async function orgMemberGetByUserIdFn(
   ctx: QueryCtx | MutationCtx,

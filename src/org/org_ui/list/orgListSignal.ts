@@ -1,4 +1,4 @@
-import type { IdOrg } from "@/org/convex/IdOrg"
+import type { IdOrg } from "@/org/org_convex/IdOrg"
 import type { OrgModel } from "@/org/org_model/OrgModel"
 import { orgSchema } from "@/org/org_model/orgSchema"
 import { cachePrefix } from "@/utils/ui/cachePrefix"

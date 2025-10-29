@@ -1,11 +1,11 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import type { IdOrgInvitation } from "@/org/convex/IdOrg"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import { sendEmailOrgInvitation } from "../../auth/convex/email/sendEmailOrgInvitation"
+import type { IdOrgInvitation } from "./IdOrgInvitation"
 
 export type OrgInvitationResendValidatorType = typeof orgInvitationResendValidator.type
 

@@ -1,7 +1,7 @@
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgMember } from "./IdOrg"
+import type { DocOrgMember } from "./IdOrgMember"
 import { vIdOrgMembers } from "./vIdOrgMembers"
 
 export const orgMemberGetFields = {
