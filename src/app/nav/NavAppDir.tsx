@@ -1,6 +1,6 @@
 import { NavAuth } from "@/auth/ui/nav/NavAuth"
-import { orgListFindNameByHandle } from "@/org/ui/list/orgListSignal"
-import { urlOrgList, urlOrgView } from "@/org/url/urlOrg"
+import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
+import { urlOrgList, urlOrgView } from "@/org/org_url/urlOrg"
 import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
 import { urlWorkspaceList, urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"

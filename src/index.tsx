@@ -3,7 +3,7 @@
 import { getRoutesApp } from "@/app/getRoutesApp"
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
-import { getRoutesOrg } from "@/org/url/getRoutesOrg"
+import { getRoutesOrg } from "@/org/org_url/getRoutesOrg"
 import { getRoutesWorkspace } from "@/workspace/url/getRoutesWorkspace"
 import { Router } from "@solidjs/router"
 import { render } from "solid-js/web"

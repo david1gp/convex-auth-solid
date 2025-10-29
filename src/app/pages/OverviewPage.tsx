@@ -1,6 +1,6 @@
 import { DemoAuthLinks } from "@/app/getRoutesApp"
 import { NavAuth } from "@/auth/ui/nav/NavAuth"
-import { urlOrgList } from "@/org/url/urlOrg"
+import { urlOrgList } from "@/org/org_url/urlOrg"
 import { urlWorkspaceList } from "@/workspace/url/urlWorkspace"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
