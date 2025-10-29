@@ -28,7 +28,6 @@
 
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-
 }
 
 /* shadcn setup - https://ui.shadcn.com/docs/installation */
@@ -40,7 +39,6 @@
   https://github.com/shadcn-ui/ui/issues/669
    */
   :root {
-
     --background: hsl(210, 20%, 98%); /* gray-50 */
     --foreground: hsl(222.2 47.4% 11.2%);
 
@@ -58,7 +56,6 @@
   }
 
   .dark {
-
     --background: hsl(224 71.4% 4.1%); /* gray-950 */
     --foreground: hsl(213 31% 91%);
 
@@ -77,19 +74,6 @@
   }
 }
 
-/* remove number input native spinner */
-/* https://stackoverflow.com/questions/71296535/how-to-remove-arrow-on-input-type-number-with-tailwind-css */
-@layer base {
-  input[type='number']::-webkit-outer-spin-button,
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number'] {
-    -webkit-appearance: none;
-    margin: 0;
-    appearance: textfield !important;
-    -moz-appearance: textfield !important;
-  }
-}
-
 /* Invert svg colors in dark mode */
 /* https://stackoverflow.com/questions/39761120/invert-svg-image-using-css */
 /* https://forums.ankiweb.net/t/invert-only-specific-color-of-svg-file/26092/2 */
@@ -98,4 +82,17 @@
   .dark svg.invert-black {
     filter: invert(1) hue-rotate(180deg);
   }
-};
+}
+
+/* Remove number input native spinner */
+/* https://stackoverflow.com/questions/71296535/how-to-remove-arrow-on-input-type-number-with-tailwind-css */
+@layer base {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    margin: 0;
+    appearance: textfield !important;
+    -moz-appearance: textfield !important;
+  }
+}
