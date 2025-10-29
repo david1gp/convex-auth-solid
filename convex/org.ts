@@ -15,6 +15,7 @@ import { orgCreateFields, orgCreateFn } from "@/org/org_convex/orgCreateFn"
 import { orgDeleteFields, orgDeleteFn } from "@/org/org_convex/orgDeleteFn"
 import { orgEditFields, orgEditFn } from "@/org/org_convex/orgEditFn"
 import { orgGetFields, orgGetFn } from "@/org/org_convex/orgGetFn"
+import { orgGetPageFields, orgGetPageFn } from "@/org/org_convex/orgGetPageFn"
 import { orgHandleAvailableFields, orgHandleAvailableFn } from "@/org/org_convex/orgHandleAvailableFn"
 import { orgListFn, orgsListFields } from "@/org/org_convex/orgListFn"
 import { internalQuery, mutation, query } from "@convex/_generated/server"
@@ -32,6 +33,11 @@ export const orgCreateMutation = mutation({
 export const orgEditMutation = mutation({
   args: createTokenValidator(orgEditFields),
   handler: async (ctx, args) => authMutationR(ctx, args, orgEditFn),
+})
+
+export const orgGetPageQuery = query({
+  args: createTokenValidator(orgGetPageFields),
+  handler: async (ctx, args) => authQueryR(ctx, args, orgGetPageFn),
 })
 
 export const orgGetQuery = query({
