@@ -1,6 +1,6 @@
 import type { OrgMemberFormStateManagement } from "@/org/members_ui/form/orgMemberEditFormStateManagement"
 import { orgMemberFormField } from "@/org/members_ui/form/orgMemberFormField"
-import { orgRole } from "@/org/model/orgRole"
+import { orgRole } from "@/org/org_model/orgRole"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { getFormTitle, type FormMode } from "~ui/input/form/formMode"

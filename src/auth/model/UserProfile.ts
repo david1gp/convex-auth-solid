@@ -1,7 +1,8 @@
+import { emailSchema } from "@/auth/model/emailSchema"
 import { userRoleSchema, type UserRole } from "@/auth/model/userRole"
-import { orgRoleSchema, type OrgRole } from "@/org/model/orgRole"
+import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
+import { stringSchema0to500, stringSchema1to50, stringSchema5to25 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"
-import { inputMaxLength100, inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export type UserProfile = {
@@ -19,17 +20,12 @@ export type UserProfile = {
   deletedAt?: string
 }
 
-const string1to50Schema = v.pipe(v.string(), v.minLength(1), v.maxLength(inputMaxLength50))
-const string5to25Schema = v.pipe(v.string(), v.minLength(5), v.maxLength(inputMaxLength25))
-const string0to500Schema = v.pipe(v.string(), v.minLength(5), v.maxLength(urlMaxLength))
-const string0to100Schema = v.pipe(v.string(), v.minLength(5), v.maxLength(inputMaxLength100))
-
 export const userProfileSchema = v.object({
-  userId: string1to50Schema,
-  name: string1to50Schema,
-  username: v.optional(string5to25Schema),
-  image: v.optional(string0to500Schema),
-  email: v.optional(string0to100Schema),
+  userId: stringSchema1to50,
+  name: stringSchema1to50,
+  username: v.optional(stringSchema5to25),
+  image: v.optional(stringSchema0to500),
+  email: v.optional(emailSchema),
   emailVerifiedAt: v.optional(dateTimeSchema),
   hasPw: v.boolean(),
   role: userRoleSchema,

@@ -1,6 +1,6 @@
 import type { DocOrgMember } from "@/org/convex/IdOrg"
 import { orgMemberFormField, type OrgMemberFormField } from "@/org/members_ui/form/orgMemberFormField"
-import { orgRoleSchema, type OrgRole } from "@/org/model/orgRole"
+import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"

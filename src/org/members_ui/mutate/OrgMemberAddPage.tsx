@@ -3,11 +3,11 @@ import type { IdUser } from "@/auth/convex/IdUser"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import {
-    orgMemberEditFormStateManagement,
-    type OrgMemberFormData,
+  orgMemberEditFormStateManagement,
+  type OrgMemberFormData,
 } from "@/org/members_ui/form/orgMemberEditFormStateManagement"
 import { OrgMemberForm } from "@/org/members_ui/form/OrgMemberForm"
-import type { HasOrgHandle } from "@/org/model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"

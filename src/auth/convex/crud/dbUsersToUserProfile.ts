@@ -1,6 +1,6 @@
 import type { DocUser } from "@/auth/convex/IdUser"
 import type { UserProfile } from "@/auth/model/UserProfile"
-import type { OrgRole } from "@/org/model/orgRole"
+import type { OrgRole } from "@/org/org_model/orgRole"
 
 export function dbUsersToUserProfile(u: DocUser, orgHandle?: string, orgRole?: OrgRole): UserProfile {
   const { _id, _creationTime, hashedPassword, ...rest } = u

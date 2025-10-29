@@ -2,13 +2,13 @@ import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgMember, IdOrgMember } from "@/org/convex/IdOrg"
 import { urlOrgMemberList, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import {
-    orgMemberEditFormStateManagement,
-    type OrgMemberFormActions,
-    type OrgMemberFormData,
+  orgMemberEditFormStateManagement,
+  type OrgMemberFormActions,
+  type OrgMemberFormData,
 } from "@/org/members_ui/form/orgMemberEditFormStateManagement"
 import { OrgMemberForm } from "@/org/members_ui/form/OrgMemberForm"
-import type { HasOrgHandle } from "@/org/model/HasOrgHandle"
-import type { HasOrgMemberId } from "@/org/model/HasOrgMemberId"
+import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgMemberId } from "@/org/org_model/HasOrgMemberId"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"

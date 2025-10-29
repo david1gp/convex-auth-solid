@@ -1,7 +1,7 @@
 import type { IdOrg } from "@/org/convex/IdOrg"
 import { orgHandleAvailableFn } from "@/org/convex/orgHandleAvailableFn"
 import { orgDataFields } from "@/org/convex/orgTables"
-import { orgDataSchemaFields } from "@/org/model/orgSchema"
+import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as va from "valibot"

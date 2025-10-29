@@ -1,6 +1,6 @@
 import type { UserProfile } from "@/auth/model/UserProfile"
 import { userRoleValidator } from "@/auth/model/userRoleValidator"
-import { orgRoleValidator } from "@/org/model/orgRoleValidator"
+import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
 import { v } from "convex/values"
 
 // LoginMethod validator

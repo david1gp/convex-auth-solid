@@ -1,10 +1,10 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg } from "@/org/convex/IdOrg"
-import type { HasOrgHandle } from "@/org/model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import {
-    orgCreateFormStateManagement,
-    type OrgFormActions,
-    type OrgFormData,
+  orgCreateFormStateManagement,
+  type OrgFormActions,
+  type OrgFormData,
 } from "@/org/org_ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { urlOrgList, urlOrgView } from "@/org/org_url/urlOrg"

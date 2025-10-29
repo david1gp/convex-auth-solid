@@ -1,0 +1,22 @@
+import type { IdUser } from "@/auth/convex/IdUser"
+import type { IdOrg, IdOrgInvitation } from "@/org/convex/IdOrg"
+import type { OrgRole } from "@/org/org_model/orgRole"
+import type { HasConvexSystemFields } from "@/utils/convex/HasConvexSystemFields"
+import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt"
+
+export type OrgInvitationDataModel = {
+  orgId: IdOrg
+  invitedEmail: string
+  invitationCode: string
+  role: OrgRole
+  invitedBy: IdUser
+  emailSendAt?: string
+  emailSendAmount: number
+  acceptedAt?: string
+  declinedAt?: string
+}
+
+export interface OrgInvitationModel
+  extends HasConvexSystemFields<IdOrgInvitation>,
+    OrgInvitationDataModel,
+    HasCreatedAtUpdatedAt {}

@@ -1,6 +1,6 @@
 import type { IdOrg } from "@/org/convex/IdOrg"
-import type { OrgModel } from "@/org/model/OrgModel"
-import { orgSchema } from "@/org/model/orgSchema"
+import type { OrgModel } from "@/org/org_model/OrgModel"
+import { orgSchema } from "@/org/org_model/orgSchema"
 import { cachePrefix } from "@/utils/ui/cachePrefix"
 import * as v from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"

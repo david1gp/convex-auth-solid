@@ -1,7 +1,6 @@
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import type { IdUser } from "@/auth/convex/IdUser"
+import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import type { IdOrgInvitation } from "@/org/convex/IdOrg"
-import { orgRoleValidator } from "@/org/model/orgRoleValidator"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"

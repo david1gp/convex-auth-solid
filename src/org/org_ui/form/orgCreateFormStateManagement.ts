@@ -1,5 +1,5 @@
 import type { DocOrg, IdOrg } from "@/org/convex/IdOrg"
-import { orgDataSchemaFields } from "@/org/model/orgSchema"
+import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { mdiAlertCircle } from "@mdi/js"

@@ -1,4 +1,4 @@
-import { orgDataSchemaFields } from "@/org/model/orgSchema"
+import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as va from "valibot"
