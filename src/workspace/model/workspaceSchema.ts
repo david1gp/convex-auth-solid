@@ -1,6 +1,6 @@
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
 import { handleSchema } from "@/utils/valibot/handleSchema"
-import { stringSchema0to2000, stringSchema0to500, stringSchema1to50 } from "@/utils/valibot/stringSchema"
+import { stringSchema0to500, stringSchema0to5000, stringSchema1to50 } from "@/utils/valibot/stringSchema"
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
 import * as v from "valibot"
@@ -11,7 +11,7 @@ export const workspaceDataSchemaFields = {
   workspaceHandle: v.pipe(handleSchema),
   // data
   name: v.pipe(stringSchema1to50),
-  description: v.optional(stringSchema0to2000),
+  description: v.optional(stringSchema0to5000),
   image: v.optional(stringSchema0to500),
 } as const
 
