@@ -70,7 +70,7 @@ export type OrgMemberFormRemoveFn = () => Promise<void>
 export type OrgMemberFormActions = {
   add?: OrgMemberFormAddFn
   edit?: OrgMemberFormEditFn
-  remove?: OrgMemberFormEditFn
+  remove?: OrgMemberFormRemoveFn
 }
 
 export function orgMemberEditFormStateManagement(actions: OrgMemberFormActions): OrgMemberFormStateManagement {
@@ -154,6 +154,10 @@ async function handleSubmit(
   if (actions.edit) {
     const data: OrgMemberFormData = { userId, role: role as OrgRole }
     await actions.edit(data)
+  }
+
+  if (actions.remove) {
+    await actions.remove()
   }
 
   isSaving.set(false)
