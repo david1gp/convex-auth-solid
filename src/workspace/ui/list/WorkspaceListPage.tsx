@@ -14,7 +14,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import type { HasClassAndChildren } from "~ui/utils/HasClassAndChildren"
+import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 import type { Result, ResultOk } from "~utils/result/Result"
 
 export function WorkspaceListPage() {
@@ -71,7 +71,7 @@ function WorkspacesLoading() {
   return <LoadingSection loadingSubject={ttt("Workspaces")} />
 }
 
-export function NoWorkspaces(p: HasClassAndChildren) {
+export function NoWorkspaces(p: MayHaveClassAndChildren) {
   return (
     <NoData noDataText={ttt("No Workspaces")} class={p.class}>
       {p.children}

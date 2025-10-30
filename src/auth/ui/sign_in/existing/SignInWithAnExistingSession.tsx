@@ -13,7 +13,7 @@ import { classesCardWrapper } from "~ui/static/container/classesCardWrapper"
 import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { SolidRouterNavigator } from "~ui/utils/Navigator"
+import type { NavigateTo } from "~ui/utils/NavigateTo"
 
 dayjs.extend(relativeTime)
 
@@ -52,7 +52,7 @@ export interface SessionButtonProps extends MayHaveClass {
 }
 
 function SessionButton(p: SessionButtonProps) {
-  const navigate = useNavigate() as SolidRouterNavigator
+  const navigate: NavigateTo = useNavigate()
   return (
     <Button
       variant={buttonVariant.outline}
@@ -75,7 +75,7 @@ function SessionButton(p: SessionButtonProps) {
   )
 }
 
-function sessionOnClick(navigate: SolidRouterNavigator, session: UserSession) {
+function sessionOnClick(navigate: NavigateTo, session: UserSession) {
   userSessionSignal.set(session)
   const url = urlSignInRedirectUrl()
   navigate(url)

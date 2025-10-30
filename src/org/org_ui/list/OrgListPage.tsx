@@ -14,7 +14,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import type { HasClassAndChildren } from "~ui/utils/HasClassAndChildren"
+import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 import type { Result, ResultOk } from "~utils/result/Result"
 
 export function OrgListPage() {
@@ -71,7 +71,7 @@ function OrgsLoading() {
   return <LoadingSection loadingSubject={ttt("Organizations")} />
 }
 
-function NoOrgs(p: HasClassAndChildren) {
+function NoOrgs(p: MayHaveClassAndChildren) {
   return (
     <NoData noDataText={ttt("No Organizations")} class={p.class}>
       {p.children}

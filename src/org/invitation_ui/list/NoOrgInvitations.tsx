@@ -1,8 +1,8 @@
 import { NoData } from "@/ui/illustrations/NoData"
 import { ttt } from "~ui/i18n/ttt"
-import type { HasClassAndChildren } from "~ui/utils/HasClassAndChildren"
+import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 
-export function NoOrgInvitations(p: HasClassAndChildren) {
+export function NoOrgInvitations(p: MayHaveClassAndChildren) {
   return (
     <NoData noDataText={ttt("No Organization Invitations")} class={p.class}>
       {p.children}

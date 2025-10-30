@@ -2,10 +2,10 @@ import { LayoutWrapperConvex } from "@/app/layout/LayoutWrapperConvex"
 import { SignInPageLoader } from "@/auth/ui/sign_in/page/SignInPageLoader"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { Match, Switch } from "solid-js"
-import type { HasChildren } from "~ui/utils/HasChildren"
+import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 import type { MayHaveTitle } from "~ui/utils/MayHaveTitle"
 
-export interface LayoutWrapperAppProps extends HasChildren, MayHaveTitle {}
+export interface LayoutWrapperAppProps extends MayHaveChildren, MayHaveTitle {}
 
 export function LayoutWrapperApp(p: LayoutWrapperAppProps) {
   return (
