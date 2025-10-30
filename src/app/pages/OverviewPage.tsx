@@ -1,6 +1,7 @@
 import { DemoAuthLinks } from "@/app/getRoutesApp"
-import { NavAuth } from "@/auth/ui/nav/NavAuth"
+import { NavAppDir } from "@/app/nav/NavAppDir"
 import { urlOrgList } from "@/org/org_url/urlOrg"
+import { PageHeader } from "@/ui/header/PageHeader"
 import { urlWorkspaceList } from "@/workspace/url/urlWorkspace"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -10,11 +11,11 @@ import { PageWrapper2 } from "~ui/static/page/PageWrapper2"
 export function OverviewPage() {
   return (
     <PageWrapper2>
-      <NavAuth />
-      <div class="py-20">
-        <h1 class="text-4xl font-bold">{ttt("Overview")}</h1>
-        <p>{ttt("this is a private page seen only to logged in users")}</p>
-      </div>
+      <NavAppDir />
+      <PageHeader
+        title={ttt("Overview")}
+        subtitle={ttt("this is a private page seen only to logged in users")}
+      ></PageHeader>
 
       <div>
         <LinkButton variant={buttonVariant.link} href={urlOrgList()}>
