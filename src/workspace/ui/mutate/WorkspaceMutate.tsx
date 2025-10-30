@@ -48,8 +48,7 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
       toastAdd({ title: editResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlWorkspaceView(p.workspaceHandle) : urlWorkspaceList()
-    navigator(url)
+    navigator(getReturnPath())
   }
   async function removeAction() {
     const deleteResult = await deleteMutation({
@@ -63,8 +62,12 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
       toastAdd({ title: deleteResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlWorkspaceView(p.workspaceHandle) : urlWorkspaceList()
-    navigator(url)
+    navigator(getReturnPath())
+  }
+  function getReturnPath() {
+    if (p.returnPath) return p.returnPath
+    if (p.mode === formMode.edit) return urlWorkspaceView(p.workspaceHandle)
+    return urlWorkspaceList()
   }
 
   const actions: WorkspaceFormActions = {}

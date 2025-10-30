@@ -68,8 +68,8 @@ function NoAccountSection() {
   const searchParams = useSearchParamsObject()
   function getUrl() {
     const email = getSearchParamAsString(searchParams, "email")
-    const returnUrl = getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
-    return urlPageSignUp(email, returnUrl)
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    return urlPageSignUp(email, returnPath)
   }
   return (
     <section class="flex flex-col gap-4">

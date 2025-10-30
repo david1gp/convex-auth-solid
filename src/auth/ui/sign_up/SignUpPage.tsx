@@ -97,14 +97,14 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
 
   const text = "Sign up with " + capitalizeFirstLetter(p.provider)
 
-  function getUrl() {
-    const returnUrl = getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
-    return urlAuthProvider(p.provider, returnUrl)
+  function getReturnPath() {
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    return urlAuthProvider(p.provider, returnPath)
   }
 
   return (
     <LinkButton
-      href={getUrl()}
+      href={getReturnPath()}
       icon={props.mdiIconPath}
       iconClass="fill-white"
       size={p.size}
@@ -121,8 +121,8 @@ function HaveAnAccountSection() {
   const searchParams = useSearchParamsObject()
   function getUrl() {
     const email = getSearchParamAsString(searchParams, "email")
-    const returnUrl = getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
-    return urlPageSignIn(email, returnUrl)
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    return urlPageSignIn(email, returnPath)
   }
   return (
     <section class="space-y-2">

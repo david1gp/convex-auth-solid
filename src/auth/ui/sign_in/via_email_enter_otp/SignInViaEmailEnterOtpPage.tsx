@@ -1,15 +1,22 @@
+import { apiAuthSignInViaEmailEnterOtp } from "@/auth/api/apiAuthSignInViaEmailEnterOtp"
 import { NavAuth } from "@/auth/ui/nav/NavAuth"
+import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
+import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
+import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import type { NavigateTo } from "@/utils/ui/NavigateTo"
+import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
+import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiEmailSearchOutline } from "@mdi/js"
-import { useNavigate, useSearchParams } from "@solidjs/router"
+import { useNavigate } from "@solidjs/router"
 import type { Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
+import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon0 } from "~ui/static/icon/Icon0"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { EnterOtpForm } from "../../email/EnterOtpForm"
-import { signInViaEmailEnterOtpCreateStateManagement } from "./signInViaEmailEnterOtpCreateStateManagement"
 
 export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
   return (
@@ -31,15 +38,13 @@ export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
 }
 
 export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
-  const [search] = useSearchParams()
   const navigate = useNavigate()
-  const sm = signInViaEmailEnterOtpCreateStateManagement(navigate)
-  const email = sm.getEmail(search)
-  const returnPath = sm.getReturnPath(search)
-  const handleConfirm = async (otp: string, emailParam: string) => {
-    await sm.handleConfirm(otp, emailParam, returnPath)
+  const searchParams = useSearchParamsObject()
+  const email = getSearchParamAsString(searchParams, "email")
+  async function handleSubmit(otp: string, emailParam: string) {
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    return handleConfirm(otp, emailParam, returnPath, navigate)
   }
-
   return (
     <EnterOtpForm
       title="Sign In to Your Account"
@@ -48,8 +53,22 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
       instruction="Enter it below to securely sign in."
       buttonText="Sign In"
       email={email}
-      actionFn={handleConfirm}
+      actionFn={handleSubmit}
       class={p.class}
     />
   )
+}
+
+async function handleConfirm(otp: string, email: string, returnPath: string, navigate: NavigateTo) {
+  const result = await apiAuthSignInViaEmailEnterOtp({ email, code: otp })
+  if (!result.success) {
+    toastAdd({ title: "Error entering otp", description: result.errorMessage })
+    return
+  }
+  const userSession = result.data
+  // save user session
+  userSessionsSignalAdd(userSession)
+  userSessionSignal.set(userSession)
+  // navigate
+  navigate(returnPath)
 }

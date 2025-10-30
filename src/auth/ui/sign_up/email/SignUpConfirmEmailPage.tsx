@@ -3,6 +3,7 @@ import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import type { NavigateTo } from "@/utils/ui/NavigateTo"
 import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
 import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiEmailSearchOutline } from "@mdi/js"
@@ -14,7 +15,6 @@ import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon0 } from "~ui/static/icon/Icon0"
 import { classArr } from "~ui/utils/classArr"
-import { createSignalObject } from "~ui/utils/createSignalObject"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { EnterOtpForm } from "../../email/EnterOtpForm"
 
@@ -40,35 +40,15 @@ export const SignUpConfirmEmailPage: Component<{}> = () => {
 const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
   const searchParams = useSearchParamsObject()
   const navigate = useNavigate()
-  const isSubmitting = createSignalObject(false)
-
   function getEmail() {
     return getSearchParamAsString(searchParams, "email")
   }
-  function getReturnUrl() {
-    return getSearchParamAsString(searchParams, "returnUrl") ?? urlSignInRedirectUrl()
+  function getReturnPath() {
+    return getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
   }
-
-  const handleConfirm = async (otp: string, email: string) => {
-    isSubmitting.set(true)
-
-    const result = await apiAuthSignUpConfirmEmail({ email, code: otp })
-    if (!result.success) {
-      toastAdd({ title: "Error confirming email", description: result.errorMessage })
-      return
-    }
-    isSubmitting.set(false)
-
-    const userSession = result.data
-    // save user session
-    userSessionsSignalAdd(userSession)
-    userSessionSignal.set(userSession)
-
-    const returnUrl = getReturnUrl()
-    console.log("Registration email confirmation", { otp, email, returnUrl })
-    navigate(returnUrl)
+  async function handleSubmit(otp: string, emailParam: string) {
+    return handleConfirm(otp, emailParam, getReturnPath(), navigate)
   }
-
   return (
     <EnterOtpForm
       title="Verify Your Email"
@@ -77,8 +57,22 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
       instruction="Enter it below to verify your email and complete your registration."
       buttonText="Verify Email"
       email={getEmail()}
-      actionFn={handleConfirm}
+      actionFn={handleSubmit}
       class={p.class}
     />
   )
+}
+
+async function handleConfirm(otp: string, email: string, returnPath: string, navigate: NavigateTo) {
+  const result = await apiAuthSignUpConfirmEmail({ email, code: otp })
+  if (!result.success) {
+    toastAdd({ title: "Error confirming email", description: result.errorMessage })
+    return
+  }
+  const userSession = result.data
+  // save user session
+  userSessionsSignalAdd(userSession)
+  userSessionSignal.set(userSession)
+  // navigate
+  navigate(returnPath)
 }

@@ -19,7 +19,6 @@ export function SignInErrorPage() {
   // const [searchParams] = useSearchParams()
   const searchParams = new URLSearchParams(document.location.search)
   const errorMessage = searchParams.get("errorMessage")
-  const returnUrl = searchParams.get("returnUrl")
   return (
     <div class={classArr(classesPageWrapper)}>
       <section id={"authenticationError"} class="flex flex-col gap-2">

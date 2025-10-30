@@ -58,11 +58,7 @@ export function OrgMemberMutate(p: OrgMemberMutateProps) {
       toastAdd({ title: result.errorMessage, variant: toastVariant.error })
       return
     }
-    const url =
-      (p.returnPath ?? p.mode === formMode.edit)
-        ? urlOrgMemberView(p.orgHandle, p.memberId)
-        : urlOrgMemberList(p.orgHandle)
-    navigator(url)
+    navigator(getReturnPath())
   }
 
   async function deleteAction() {
@@ -81,11 +77,12 @@ export function OrgMemberMutate(p: OrgMemberMutateProps) {
       toastAdd({ title: result.errorMessage, variant: toastVariant.error })
       return
     }
-    const url =
-      (p.returnPath ?? p.mode === formMode.edit)
-        ? urlOrgMemberView(p.orgHandle, p.memberId)
-        : urlOrgMemberList(p.orgHandle)
-    navigator(url)
+    navigator(getReturnPath())
+  }
+  function getReturnPath() {
+    if (p.returnPath) return p.returnPath
+    if (p.mode === formMode.edit) return urlOrgMemberView(p.orgHandle, p.memberId)
+    return urlOrgMemberList(p.orgHandle)
   }
 
   const actions: OrgMemberFormActions = {}

@@ -11,21 +11,21 @@ export const pageRouteAuth = {
   signInError: "/sign-in-error",
 } as const satisfies Record<PageNameAuth, string>
 
-export function urlPageSignUp(email?: string, returnUrl?: string) {
-  return pageRouteAuth.signUp + "?" + serializeSearchParams(email, returnUrl)
+export function urlPageSignUp(email?: string, returnPath?: string) {
+  return pageRouteAuth.signUp + "?" + serializeSearchParams(email, returnPath)
 }
 
-export function urlPageSignIn(email?: string, returnUrl?: string) {
-  return pageRouteAuth.signIn + "?" + serializeSearchParams(email, returnUrl)
+export function urlPageSignIn(email?: string, returnPath?: string) {
+  return pageRouteAuth.signIn + "?" + serializeSearchParams(email, returnPath)
 }
 
-function serializeSearchParams(email?: string, returnUrl?: string) {
+function serializeSearchParams(email?: string, returnPath?: string) {
   const obj: Record<string, string> = {}
   if (email) {
     obj.email = email
   }
-  if (returnUrl) {
-    obj.returnUrl = returnUrl
+  if (returnPath) {
+    obj.returnPath = returnPath
   }
   return serializeUrlParams(obj)
 }
