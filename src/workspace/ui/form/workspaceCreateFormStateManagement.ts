@@ -28,14 +28,14 @@ export type WorkspaceFormData = {
 
 export type WorkspaceFormState = {
   name: SignalObject<string>
-  handle: SignalObject<string>
+  workspaceHandle: SignalObject<string>
   description: SignalObject<string>
   image: SignalObject<string>
 }
 
 export type WorkspaceFormErrorState = {
   name: SignalObject<string>
-  handle: SignalObject<string>
+  workspaceHandle: SignalObject<string>
   description: SignalObject<string>
   image: SignalObject<string>
 }
@@ -43,7 +43,7 @@ export type WorkspaceFormErrorState = {
 function workspaceCreateState(): WorkspaceFormState {
   return {
     name: createSignalObject(""),
-    handle: createSignalObject(""),
+    workspaceHandle: createSignalObject(""),
     description: createSignalObject(""),
     image: createSignalObject(""),
   }
@@ -99,7 +99,7 @@ export function workspaceCreateFormStateManagement(actions: WorkspaceFormActions
     loadData: (data: DocWorkspace) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
-    fillTestData: () => fillTestData(state),
+    fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: WorkspaceFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
@@ -108,34 +108,46 @@ export function workspaceCreateFormStateManagement(actions: WorkspaceFormActions
 function loadData(data: DocWorkspace, serverState: SignalObject<DocWorkspace>, state: WorkspaceFormState): void {
   serverState.set(data)
   state.name.set(data.name)
-  state.handle.set(data.workspaceHandle)
+  state.workspaceHandle.set(data.workspaceHandle)
   state.description.set(data.description ?? "")
   state.image.set(data.image ?? "")
 }
 
 function hasErrors(errors: WorkspaceFormErrorState) {
-  return !!errors.name.get() || !!errors.handle.get() || !!errors.description.get() || !!errors.image.get()
+  return !!errors.name.get() || !!errors.workspaceHandle.get() || !!errors.description.get() || !!errors.image.get()
 }
-function fillTestData(state: WorkspaceFormState) {
+function fillTestData(state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
   state.name.set("Test Workspace")
-  state.handle.set("test-workspace")
+  state.workspaceHandle.set("test-workspace")
   state.description.set("Test description")
   state.image.set("")
+  for (const field of Object.values(workspaceFormField)) {
+    updateFieldError(field, state[field].get(), state, errors)
+  }
 }
 
 function validateOnChange(field: WorkspaceFormField, state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
   return debounce((value: string) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field as keyof typeof errors]
-    if (result.success) {
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
-function validateField(field: WorkspaceFormField, value: string) {
+function updateFieldError(
+  field: WorkspaceFormField,
+  value: string,
+  state: WorkspaceFormState,
+  errors: WorkspaceFormErrorState,
+) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field as keyof typeof errors]
+  if (result.success) {
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
+}
+
+function validateFieldResult(field: WorkspaceFormField, value: string) {
   let schema
   if (field === workspaceFormField.name) {
     schema = workspaceDataSchemaFields.name
@@ -160,17 +172,17 @@ async function handleSubmit(
   e.preventDefault()
 
   const name = state.name.get()
-  const workspaceHandle = state.handle.get()
+  const workspaceHandle = state.workspaceHandle.get()
   const description = state.description.get()
   const image = state.image.get()
 
-  const nameResult = validateField(workspaceFormField.name, name)
-  const handleResult = validateField(workspaceFormField.workspaceHandle, workspaceHandle)
-  const descriptionResult = validateField(workspaceFormField.description, description)
-  const imageResult = validateField(workspaceFormField.image, image)
+  const nameResult = validateFieldResult(workspaceFormField.name, name)
+  const handleResult = validateFieldResult(workspaceFormField.workspaceHandle, workspaceHandle)
+  const descriptionResult = validateFieldResult(workspaceFormField.description, description)
+  const imageResult = validateFieldResult(workspaceFormField.image, image)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
-  errors.handle.set(handleResult.success ? "" : handleResult.issues[0].message)
+  errors.workspaceHandle.set(handleResult.success ? "" : handleResult.issues[0].message)
   errors.description.set(descriptionResult.success ? "" : descriptionResult.issues[0].message)
   errors.image.set(imageResult.success ? "" : imageResult.issues[0].message)
 

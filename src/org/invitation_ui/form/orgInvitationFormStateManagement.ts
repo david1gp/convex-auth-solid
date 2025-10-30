@@ -45,6 +45,7 @@ export type OrgInvitationFormStateManagement = {
   state: OrgInvitationFormState
   errors: OrgInvitationFormErrorState
   hasErrors: () => boolean
+  fillTestData: () => void
   loadData: (data: DocOrgInvitation) => void
   validateOnChange: (field: OrgInvitationFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => Promise<void>
@@ -91,6 +92,7 @@ export function orgInvitationFormStateManagement(actions: OrgInvitationFormActio
     loadData: (data: DocOrgInvitation) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
+    fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: OrgInvitationFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
@@ -110,23 +112,36 @@ function hasErrors(errors: OrgInvitationFormErrorState) {
   return !!errors.invitedEmail.get() || !!errors.role.get()
 }
 
+function fillTestData(state: OrgInvitationFormState, errors: OrgInvitationFormErrorState) {
+  state.invitedEmail.set("test@example.com")
+  state.role.set("member")
+
+  for (const field of Object.values(orgInvitationFormField)) {
+    updateFieldError(field, state[field].get(), state, errors)
+  }
+}
+
 function validateOnChange(
   field: OrgInvitationFormField,
   state: OrgInvitationFormState,
   errors: OrgInvitationFormErrorState,
 ) {
   return debounce((value: string) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field as keyof typeof errors]
-    if (result.success) {
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
-function validateField(field: OrgInvitationFormField, value: string) {
+function updateFieldError(field: OrgInvitationFormField, value: string, state: OrgInvitationFormState, errors: OrgInvitationFormErrorState) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field as keyof typeof errors]
+  if (result.success) {
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
+}
+
+function validateFieldResult(field: OrgInvitationFormField, value: string) {
   if (field === orgInvitationFormField.invitedEmail) {
     return v.safeParse(emailSchema, value)
   }
@@ -150,8 +165,8 @@ async function handleSubmit(
   const role = state.role.get()
   const invitationCode = serverState.get().invitationCode || "temp-code"
 
-  const invitedEmailResult = validateField(orgInvitationFormField.invitedEmail, invitedEmail)
-  const roleResult = validateField(orgInvitationFormField.role, role)
+  const invitedEmailResult = validateFieldResult(orgInvitationFormField.invitedEmail, invitedEmail)
+  const roleResult = validateFieldResult(orgInvitationFormField.role, role)
 
   errors.invitedEmail.set(invitedEmailResult.success ? "" : invitedEmailResult.issues[0].message)
   errors.role.set(roleResult.success ? "" : roleResult.issues[0].message)

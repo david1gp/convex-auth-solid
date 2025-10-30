@@ -1,3 +1,5 @@
+import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import {
   workspaceFormField,
   type WorkspaceFormStateManagement,
@@ -25,6 +27,9 @@ export interface WorkspaceContentProps extends MayHaveClass, HasOrgFormStateMana
 }
 
 export function WorkspaceForm(p: WorkspaceContentProps) {
+  if (isDevEnvVite()) {
+    addKeyboardListenerAlt("t", p.sm.fillTestData)
+  }
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
       <h1 class="text-2xl font-bold mt-6 mb-2">{getWorkspaceTitle(p.mode)}</h1>
@@ -83,17 +88,17 @@ function HandleField(p: HasOrgFormStateManagement) {
         id={workspaceFormField.workspaceHandle}
         placeholder={ttt("Enter workspace handle")}
         autocomplete="organization-title"
-        valueSignal={p.sm.state.handle}
+        valueSignal={p.sm.state.workspaceHandle}
         onInput={(e) => {
-          p.sm.state.handle.set(e.currentTarget.value)
+          p.sm.state.workspaceHandle.set(e.currentTarget.value)
           p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)}
-        class={classMerge("w-full", p.sm.errors.handle.get() && "border-destructive focus-visible:ring-destructive")}
+        class={classMerge("w-full", p.sm.errors.workspaceHandle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
       />
-      <Show when={p.sm.errors.handle.get()}>
-        <p class="text-destructive">{p.sm.errors.handle.get()}</p>
+      <Show when={p.sm.errors.workspaceHandle.get()}>
+        <p class="text-destructive">{p.sm.errors.workspaceHandle.get()}</p>
       </Show>
     </div>
   )

@@ -31,9 +31,9 @@ export interface OrgAddProps extends MayHaveReturnPath, MayHaveClass {}
 
 export function OrgAdd(p: OrgAddProps) {
   const navigator = useNavigate()
-  const actionFn = createMutation(api.org.orgCreateMutation)
-  async function action(data: OrgFormData): Promise<void> {
-    const orgIdResult = await actionFn({
+  const addMutation = createMutation(api.org.orgCreateMutation)
+  async function addAction(data: OrgFormData): Promise<void> {
+    const orgIdResult = await addMutation({
       token: userTokenGet(),
       // data
       ...data,
@@ -47,6 +47,6 @@ export function OrgAdd(p: OrgAddProps) {
     const url = p.returnPath ?? urlOrgView(orgIdResult.data)
     navigator(url)
   }
-  const sm = orgCreateFormStateManagement({ create: action })
+  const sm = orgCreateFormStateManagement({ create: addAction })
   return <OrgForm mode={formMode.add} sm={sm} class={p.class} />
 }

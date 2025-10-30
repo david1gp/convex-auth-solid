@@ -26,9 +26,12 @@ export function createSignInUiState(searchParams: SearchParamsObject): SignInUiS
   }
 }
 
-function fillTestData(state: SignInUiState) {
+function fillTestData(state: SignInUiState, errors: SignInErrorState) {
   state.email.set("test@example.com")
   state.password.set("121212121212")
+  for (const field of Object.values(signInViaPwFormField)) {
+    updateFieldError(field, state[field].get(), state, errors)
+  }
 }
 
 export type SignInErrorState = {
@@ -43,6 +46,23 @@ export function createSignInErrorState(): SignInErrorState {
   }
 }
 
+function updateFieldError(field: SignInViaPwFormField, value: string, state: SignInUiState, errors: SignInErrorState) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field]
+  if (result.success) {
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
+}
+
+export const signInViaPwFormField = {
+  email: "email",
+  password: "password",
+} as const
+
+export type SignInViaPwFormField = keyof typeof signInViaPwFormField
+
 export type SignInFormData = {
   email: string
   password: string
@@ -53,7 +73,7 @@ export type SignInViaPasswordStateManagement = {
   fillTestData: () => void
   errors: SignInErrorState
   hasErrors: () => boolean
-  validateOnChange: (field: keyof SignInFormData) => Scheduled<[value: string]>
+  validateOnChange: (field: SignInViaPwFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => void
 }
 
@@ -64,10 +84,10 @@ export function signInViaPasswordCreateStateManagement(
   const errors = createSignInErrorState()
   return {
     state,
-    fillTestData: () => fillTestData(state),
+    fillTestData: () => fillTestData(state, errors),
     errors,
     hasErrors: () => hasErrors(errors),
-    validateOnChange: (field: keyof SignInFormData) => validateOnChange(field, errors),
+    validateOnChange: (field: SignInViaPwFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, state, errors),
   }
 }
@@ -76,15 +96,9 @@ function hasErrors(errors: SignInErrorState): boolean {
   return !!errors.email.get() || !!errors.password.get()
 }
 
-function validateOnChange(field: keyof SignInFormData, errors: SignInErrorState) {
+function validateOnChange(field: SignInViaPwFormField, state: SignInUiState, errors: SignInErrorState) {
   return debounce((value: string) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field]
-    if (result.success) {
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
@@ -94,8 +108,8 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
   const email = state.email.get()
   const password = state.password.get()
 
-  const emailResult = validateField("email", email)
-  const passwordResult = validateField("password", password)
+  const emailResult = validateFieldResult("email", email)
+  const passwordResult = validateFieldResult("password", password)
 
   if (!emailResult.success) {
     errors.email.set(emailResult.issues[0].message)
@@ -129,7 +143,7 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
   console.log("Signed in via password successfully")
 }
 
-function validateField(field: keyof SignInFormData, value: string) {
+function validateFieldResult(field: keyof SignInFormData, value: string) {
   const schema = field === "email" ? emailSchema : passwordSchema
   return v.safeParse(schema, value)
 }

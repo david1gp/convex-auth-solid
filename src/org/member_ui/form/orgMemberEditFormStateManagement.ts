@@ -43,6 +43,7 @@ export type OrgMemberFormStateManagement = {
   state: OrgMemberFormState
   errors: OrgMemberFormErrorState
   hasErrors: () => boolean
+  fillTestData: () => void
   loadData: (data: DocOrgMember) => void
   validateOnChange: (field: OrgMemberFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => Promise<void>
@@ -85,6 +86,7 @@ export function orgMemberEditFormStateManagement(actions: OrgMemberFormActions):
     loadData: (data: DocOrgMember) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
+    fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: OrgMemberFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
@@ -99,19 +101,36 @@ function hasErrors(errors: OrgMemberFormErrorState) {
   return !!errors.role.get()
 }
 
+function fillTestData(state: OrgMemberFormState, errors: OrgMemberFormErrorState) {
+  state.role.set("member")
+
+  for (const field of Object.values(orgMemberFormField)) {
+    updateFieldError(field, state[field].get(), state, errors)
+  }
+}
+
 function validateOnChange(field: OrgMemberFormField, state: OrgMemberFormState, errors: OrgMemberFormErrorState) {
   return debounce((value: string) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field as keyof typeof errors]
-    if (result.success) {
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
-function validateField(field: OrgMemberFormField, value: string) {
+function updateFieldError(
+  field: OrgMemberFormField,
+  value: string,
+  state: OrgMemberFormState,
+  errors: OrgMemberFormErrorState,
+) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field as keyof typeof errors]
+  if (result.success) {
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
+}
+
+function validateFieldResult(field: OrgMemberFormField, value: string) {
   if (field === orgMemberFormField.role) {
     return v.safeParse(orgRoleSchema, value)
   }
@@ -131,7 +150,7 @@ async function handleSubmit(
   const userId = state.userId.get()
   const role = state.role.get()
 
-  const roleResult = validateField(orgMemberFormField.role, role)
+  const roleResult = validateFieldResult(orgMemberFormField.role, role)
 
   errors.role.set(roleResult.success ? "" : roleResult.issues[0].message)
 

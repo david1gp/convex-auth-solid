@@ -22,8 +22,9 @@ function signInViaEmailCreateUiState(searchParams: SearchParamsObject): SignInVi
   }
 }
 
-function fillTestData(state: SignInViaEmailUiState) {
+function fillTestData(state: SignInViaEmailUiState, errors: SignInViaEmailErrorState) {
   state.email.set("test@example.com")
+  updateFieldError(signInViaEmailFormField.email, state.email.get(), state, errors)
 }
 
 export type SignInViaEmailErrorState = {
@@ -36,6 +37,27 @@ export function createSignInViaEmailErrorState(): SignInViaEmailErrorState {
   }
 }
 
+function updateFieldError(
+  field: SignInViaEmailFormField,
+  value: string,
+  state: SignInViaEmailUiState,
+  errors: SignInViaEmailErrorState,
+) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field]
+  if (result.success) {
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
+}
+
+export const signInViaEmailFormField = {
+  email: "email",
+} as const
+
+export type SignInViaEmailFormField = keyof typeof signInViaEmailFormField
+
 export type SignInViaEmailFormData = {
   email: string
 }
@@ -45,7 +67,7 @@ export type SignInViaEmailStateManagement = {
   fillTestData: () => void
   errors: SignInViaEmailErrorState
   hasErrors: () => boolean
-  validateOnChange: (field: keyof SignInViaEmailFormData) => Scheduled<[value: string]>
+  validateOnChange: (field: SignInViaEmailFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => void
 }
 
@@ -62,10 +84,10 @@ export function createSignInViaEmailStateManagement(
 
   return {
     state,
-    fillTestData: () => fillTestData(state),
+    fillTestData: () => fillTestData(state, errors),
     errors,
     hasErrors: () => hasErrors(errors),
-    validateOnChange: (field: keyof SignInViaEmailFormData) => validateOnChange(field, errors),
+    validateOnChange: (field: SignInViaEmailFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, location, state, errors),
   }
 }
@@ -74,15 +96,13 @@ function hasErrors(errors: SignInViaEmailErrorState): boolean {
   return !!errors.email.get()
 }
 
-function validateOnChange(field: keyof SignInViaEmailFormData, errors: SignInViaEmailErrorState) {
+function validateOnChange(
+  field: SignInViaEmailFormField,
+  state: SignInViaEmailUiState,
+  errors: SignInViaEmailErrorState,
+) {
   return debounce((value: string) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field]
-    if (result.success) {
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
@@ -94,7 +114,7 @@ function handleSubmit(
   errors: SignInViaEmailErrorState,
 ) {
   e.preventDefault()
-  const emailResult = validateField("email", state.email.get())
+  const emailResult = validateFieldResult("email", state.email.get())
 
   if (!emailResult.success) {
     errors.email.set(emailResult.issues[0].message)
@@ -129,7 +149,7 @@ async function handleSignInViaEmail(
   navigate(url)
 }
 
-function validateField(field: keyof SignInViaEmailFormData, value: string) {
+function validateFieldResult(field: keyof SignInViaEmailFormData, value: string) {
   const schema = emailSchema
   return v.safeParse(schema, value)
 }

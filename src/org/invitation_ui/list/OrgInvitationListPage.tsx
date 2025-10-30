@@ -2,7 +2,7 @@ import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { NoOrgInvitations } from "@/org/invitation_ui/list/NoOrgInvitations"
-import { urlOrgInvitationAdd, urlOrgInvitationView } from "@/org/invitation_url/pageRouteOrgInvitation"
+import { urlOrgInvitationAdd, urlOrgInvitationView } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
@@ -115,7 +115,7 @@ interface OrgInvitationLinkProps extends HasOrgHandle {
 }
 
 function OrgInvitationLink(p: OrgInvitationLinkProps) {
-  return <LinkButton href={urlOrgInvitationView(p.orgHandle, p.invitationCode)}>{p.invitation.invitedEmail}</LinkButton>
+  return <LinkButton href={urlOrgInvitationView(p.orgHandle, p.invitation.invitationCode)}>{p.invitation.invitedEmail}</LinkButton>
 }
 
 function OrgInvitationCreateLink(p: HasOrgHandle) {

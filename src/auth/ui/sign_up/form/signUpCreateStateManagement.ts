@@ -93,7 +93,7 @@ export function signUpCreateStateManagement(
     state,
     errors,
     hasErrors: () => hasErrors(errors),
-    fillTestData: () => fillTestData(state),
+    fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: SignUpFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, isSubmitting, state, errors),
   }
@@ -103,29 +103,41 @@ function hasErrors(errors: SignUpErrorState): boolean {
   return !!errors.email.get() || !!errors.name.get() || !!errors.pw.get() || !!errors.terms.get()
 }
 
-function fillTestData(state: SignUpUiState) {
+function fillTestData(state: SignUpUiState, errors: SignUpErrorState) {
   state.name.set("Test Name")
   state.email.set("test@example.com")
   state.pw.set("121212121212")
   state.terms.set(true)
+  for (const field of Object.values(signUpFormField)) {
+    updateFieldError(field, state[field].get(), state, errors)
+  }
+}
+
+function updateFieldError(
+  field: SignUpFormField,
+  value: string | boolean,
+  state: SignUpUiState,
+  errors: SignUpErrorState,
+) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field as keyof typeof errors]
+  if (result.success) {
+    if (field === signUpFormField.email) {
+      const emailValue = value as string
+      if (state.alreadyRegisteredEmails.get().has(emailValue)) {
+        errorSig.set("Email already registered, please sign in instead")
+        return
+      }
+    }
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
 }
 
 function validateOnChange(field: SignUpFormField, state: SignUpUiState, errors: SignUpErrorState) {
   return debounce((value: string | boolean) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field as keyof typeof errors]
-    if (result.success) {
-      if (field === signUpFormField.email) {
-        const emailValue = value as string
-        if (state.alreadyRegisteredEmails.get().has(emailValue)) {
-          errorSig.set("Email already registered, please sign in instead")
-          return
-        }
-      }
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
@@ -143,10 +155,10 @@ function handleSubmit(
   const pw = state.pw.get()
   const terms = state.terms.get()
 
-  const nameResult = validateField(signUpFormField.name, name)
-  const emailResult = validateField(signUpFormField.email, email)
-  const pwResult = validateField(signUpFormField.pw, pw)
-  const termsResult = validateField(signUpFormField.terms, terms)
+  const nameResult = validateFieldResult(signUpFormField.name, name)
+  const emailResult = validateFieldResult(signUpFormField.email, email)
+  const pwResult = validateFieldResult(signUpFormField.pw, pw)
+  const termsResult = validateFieldResult(signUpFormField.terms, terms)
 
   if (!nameResult.success) {
     errors.name.set(nameResult.issues[0].message)
@@ -224,7 +236,7 @@ export type HandleSignUpData = {
   pw: string
 }
 
-function validateField(field: SignUpFormField, value: string | boolean) {
+function validateFieldResult(field: SignUpFormField, value: string | boolean) {
   let schema
   if (field === signUpFormField.name) {
     schema = signUpNameSchema

@@ -1,6 +1,8 @@
-import type { OrgInvitationFormStateManagement } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
+import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { orgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
+import type { OrgInvitationFormStateManagement } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 import { orgRole } from "@/org/org_model/orgRole"
+import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
@@ -19,6 +21,9 @@ export interface OrgInvitationContentProps extends MayHaveClass, HasOrgInvitatio
 }
 
 export function OrgInvitationForm(p: OrgInvitationContentProps) {
+  if (isDevEnvVite()) {
+    addKeyboardListenerAlt("t", p.sm.fillTestData)
+  }
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
       <h1 class="text-2xl font-bold mt-6 mb-2">{getOrgInvitationTitle(p.mode)}</h1>
