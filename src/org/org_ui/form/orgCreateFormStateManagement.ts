@@ -2,6 +2,7 @@ import type { DocOrg, IdOrg } from "@/org/org_convex/IdOrg"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
 import { debounceMs } from "@/utils/ui/debounceMs"
+import { handleGenerate } from "@/utils/valibot/handleSchema"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
@@ -96,7 +97,7 @@ export function orgCreateFormStateManagement(actions: OrgFormActions): OrgFormSt
     loadData: (data: DocOrg) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
-    fillTestData: () => fillTestData(state),
+    fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: OrgFormField) => validateOnChange(field, state, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
@@ -120,27 +121,43 @@ function hasErrors(errors: OrgFormErrorState) {
     !!errors.image.get()
   )
 }
-function fillTestData(state: OrgFormState) {
+function fillTestData(state: OrgFormState, errors: OrgFormErrorState) {
   state.name.set("Test Organization")
   state.orgHandle.set("test-organization")
   state.description.set("Test description")
-  state.url.set("")
-  state.image.set("")
+  state.url.set("https://example.com")
+  state.image.set("/logo.svg")
+
+  for (const field of Object.values(orgFormField)) {
+    updateFieldError(field, state[field].get(), state, errors)
+  }
 }
 
 function validateOnChange(field: OrgFormField, state: OrgFormState, errors: OrgFormErrorState) {
   return debounce((value: string) => {
-    const result = validateField(field, value)
-    const errorSig = errors[field as keyof typeof errors]
-    if (result.success) {
-      errorSig.set("")
-    } else {
-      errorSig.set(result.issues[0].message)
-    }
+    updateFieldError(field, value, state, errors)
+    autoFillHandle(field, value, state, errors)
   }, debounceMs)
 }
 
-function validateField(field: OrgFormField, value: string) {
+function updateFieldError(field: OrgFormField, value: string, state: OrgFormState, errors: OrgFormErrorState) {
+  const result = validateFieldResult(field, value)
+  const errorSig = errors[field as keyof typeof errors]
+  if (result.success) {
+    errorSig.set("")
+  } else {
+    errorSig.set(result.issues[0].message)
+  }
+}
+
+function autoFillHandle(field: OrgFormField, value: string, state: OrgFormState, errors: OrgFormErrorState) {
+  if (field !== orgFormField.name) return
+  const handle = handleGenerate(value)
+  state.orgHandle.set(handle)
+  updateFieldError(orgFormField.orgHandle, value, state, errors)
+}
+
+function validateFieldResult(field: OrgFormField, value: string) {
   let schema
   if (field === orgFormField.name) {
     schema = orgDataSchemaFields.name
@@ -172,11 +189,11 @@ async function handleSubmit(
   const url = state.url.get()
   const image = state.image.get()
 
-  const nameResult = validateField(orgFormField.name, name)
-  const handleResult = validateField(orgFormField.orgHandle, orgHandle)
-  const descriptionResult = validateField(orgFormField.description, description)
-  const urlResult = validateField(orgFormField.url, url)
-  const imageResult = validateField(orgFormField.image, image)
+  const nameResult = validateFieldResult(orgFormField.name, name)
+  const handleResult = validateFieldResult(orgFormField.orgHandle, orgHandle)
+  const descriptionResult = validateFieldResult(orgFormField.description, description)
+  const urlResult = validateFieldResult(orgFormField.url, url)
+  const imageResult = validateFieldResult(orgFormField.image, image)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
   errors.orgHandle.set(handleResult.success ? "" : handleResult.issues[0].message)
