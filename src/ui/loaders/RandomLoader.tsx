@@ -4,9 +4,9 @@
 import { LoaderShuffle4Dots } from "@/ui/loaders/LoaderShuffle4Dots"
 import { LoaderShuffle9Squares } from "@/ui/loaders/LoaderShuffle9Squares"
 import { LoaderSpin4Square } from "@/ui/loaders/LoaderSpin4Square"
-import type { HasClass } from "~ui/utils/HasClass"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
-export function RandomLoader(p: HasClass) {
+export function RandomLoader(p: MayHaveClass) {
   const i = new Date().getSeconds() % 3
   switch (i) {
     default:
