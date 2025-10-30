@@ -1,5 +1,5 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
-import { OrgMemberMutate } from "@/org/members_ui/mutate/OrgMemberMutate"
+import { OrgMemberMutate } from "@/org/member_ui/mutate/OrgMemberMutate"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -7,9 +7,9 @@ import { formMode, getFormTitle } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { ErrorPage } from "~ui/static/pages/ErrorPage"
 
-const mode = formMode.remove
+const mode = formMode.edit
 
-export function OrgMemberDeletePage() {
+export function OrgMemberEditPage() {
   const params = useParams()
   const getOrgHandle = () => params.orgHandle
   const getMemberId = () => params.memberId

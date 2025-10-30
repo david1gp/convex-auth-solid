@@ -1,5 +1,5 @@
 import { NavAppDir } from "@/app/nav/NavAppDir"
-import { OrgMemberListPage } from "@/org/members_ui/list/OrgMemberListPage"
+import { OrgMemberListPage } from "@/org/member_ui/list/OrgMemberListPage"
 import { OrgMutate } from "@/org/org_ui/mutate/OrgMutate"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"

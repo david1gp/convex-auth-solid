@@ -1,5 +1,5 @@
-import type { OrgMemberFormStateManagement } from "@/org/members_ui/form/orgMemberEditFormStateManagement"
-import { orgMemberFormField } from "@/org/members_ui/form/orgMemberFormField"
+import type { OrgMemberFormStateManagement } from "@/org/member_ui/form/orgMemberEditFormStateManagement"
+import { orgMemberFormField } from "@/org/member_ui/form/orgMemberFormField"
 import { orgRole } from "@/org/org_model/orgRole"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"

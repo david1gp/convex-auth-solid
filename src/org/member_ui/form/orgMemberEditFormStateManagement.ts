@@ -1,5 +1,5 @@
 import type { DocOrgMember } from "@/org/member_convex/IdOrgMember"
-import { orgMemberFormField, type OrgMemberFormField } from "@/org/members_ui/form/orgMemberFormField"
+import { orgMemberFormField, type OrgMemberFormField } from "@/org/member_ui/form/orgMemberFormField"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { mdiAlertCircle } from "@mdi/js"
