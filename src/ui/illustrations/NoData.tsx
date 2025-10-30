@@ -14,7 +14,7 @@ export function NoData(p: NoDataProps) {
     <>
       <section id={p.id} class={classMerge(classesCardWrapper, "lg:px-8", "col-span-full flex-1", p.class)}>
         <SeparatorWithText class={"text-3xl text-center py-6"}>
-          <h2 class={"text-3xl mx-4"}>{p.noDataText ?? "No Data"}</h2>
+          <h2 class={"text-3xl m-4"}>{p.noDataText ?? "No Data"}</h2>
         </SeparatorWithText>
       </section>
       <RandomIllustrationPopsy class="max-w-3xl" />
