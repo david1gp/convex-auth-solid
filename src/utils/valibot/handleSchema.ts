@@ -8,10 +8,20 @@ const regexMessage4 = "no trailing hyphens"
 
 export const handleSchema = v.pipe(
   v.string(),
+  v.nonEmpty(),
+  v.minLength(3),
   v.regex(/^[a-z0-9-]+$/, regexMessage1),
   v.regex(/^(?!.*--)/, regexMessage2),
   v.regex(/^[^-]/, regexMessage3),
   v.regex(/[^-]$/, regexMessage4),
-  v.minLength(3),
   v.maxLength(inputMaxLength25),
 )
+
+export function handleGenerate(name: string) {
+  return name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+}
