@@ -44,7 +44,7 @@ export function OrgAdd(p: OrgAddProps) {
       return
     }
     // const orgId = await getMutationAdd(p.session, state)
-    const url = p.returnPath ?? urlOrgView(orgIdResult.data)
+    const url = p.returnPath ?? urlOrgView(sm.state.orgHandle.get())
     navigator(url)
   }
   const sm = orgCreateFormStateManagement({ create: addAction })

@@ -106,7 +106,7 @@ function hasOrgs(orgsResult: Result<Org[]> | undefined): Org[] | null {
 }
 
 function OrgLink(p: { org: Org }) {
-  return <LinkButton href={urlOrgView(p.org._id)}>{p.org.name}</LinkButton>
+  return <LinkButton href={urlOrgView(p.org.orgHandle)}>{p.org.name}</LinkButton>
 }
 
 function OrgCreateLink() {

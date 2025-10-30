@@ -53,8 +53,7 @@ export function OrgMutate(p: OrgMutateProps) {
       toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlOrgView(p.orgHandle) : urlOrgList()
-    navigator(url)
+    navigator(getReturnPath())
   }
 
   async function deleteAction() {
@@ -74,8 +73,12 @@ export function OrgMutate(p: OrgMutateProps) {
       toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = (p.returnPath ?? p.mode === formMode.edit) ? urlOrgView(p.orgHandle) : urlOrgList()
-    navigator(url)
+    navigator(getReturnPath())
+  }
+  function getReturnPath() {
+    if (p.returnPath) return p.returnPath
+    if (p.mode === formMode.edit) return urlOrgView(p.orgHandle)
+    return urlOrgList()
   }
 
   const actions: OrgFormActions = {}
