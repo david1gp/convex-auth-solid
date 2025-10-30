@@ -49,7 +49,6 @@ export const orgInvitationDataFields = {
   emailSendAmount: v.number(),
   // acceptance
   acceptedAt: v.optional(v.string()),
-  declinedAt: v.optional(v.string()),
 } as const
 
 export const orgInvitationFields = {

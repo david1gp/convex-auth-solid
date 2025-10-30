@@ -9,15 +9,18 @@ import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 import type { DocOrgInvitation } from "../invitation_convex/IdOrgInvitation"
 
 export const orgInvitationDataSchemaFields = {
+  // ids
   orgId: handleSchema,
   invitedEmail: emailSchema,
+  // data
   invitationCode: stringSchema1to50,
   role: orgRoleSchema,
   invitedBy: handleSchema,
+  // server processing
   emailSendAt: v.optional(dateTimeSchema),
   emailSendAmount: v.number(),
+  // acceptance
   acceptedAt: v.optional(dateTimeSchema),
-  declinedAt: v.optional(dateTimeSchema),
 } as const
 
 export const orgInvitationSchema = v.object({

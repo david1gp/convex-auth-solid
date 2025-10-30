@@ -8,13 +8,15 @@ import type { IdOrgInvitation } from "../invitation_convex/IdOrgInvitation"
 export type OrgInvitationDataModel = {
   orgId: IdOrg
   invitedEmail: string
+  // data
   invitationCode: string
   role: OrgRole
   invitedBy: IdUser
+  // server processing
   emailSendAt?: string
   emailSendAmount: number
+  // acceptance
   acceptedAt?: string
-  declinedAt?: string
 }
 
 export interface OrgInvitationModel
