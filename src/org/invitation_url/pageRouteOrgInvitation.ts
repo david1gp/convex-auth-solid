@@ -1,6 +1,6 @@
 import type { PageNameOrgInvitation } from "@/org/invitation_url/pageNameOrgInvitation"
 
-export type PageRouteOrgMember = keyof typeof pageRouteOrgInvitation
+export type PageRouteOrgInvitation = keyof typeof pageRouteOrgInvitation
 
 export const pageRouteOrgInvitation = {
   orgInvitationList: "/w/:orgHandle/invitations",

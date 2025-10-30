@@ -22,7 +22,7 @@ export const orgInvitationCreateFields = {
 
 export const orgInvitationCreateValidator = v.object(orgInvitationCreateFields)
 
-export async function orgInvitationCreate(
+export async function orgInvitationCreateFn(
   ctx: MutationCtx,
   args: OrgInvitationCreateValidatorType,
 ): PromiseResult<IdOrgInvitation> {
@@ -75,11 +75,4 @@ export async function orgInvitationCreate(
   }
 
   return createResult(orgInvitationId)
-}
-
-export async function orgInvitationCreateFn(
-  ctx: MutationCtx,
-  args: OrgInvitationCreateValidatorType,
-): PromiseResult<IdOrgInvitation> {
-  return await orgInvitationCreate(ctx, args)
 }

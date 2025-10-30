@@ -18,7 +18,7 @@ export const orgInvitationResendFields = {
 
 export const orgInvitationResendValidator = v.object(orgInvitationResendFields)
 
-export async function orgInvitationResend(
+export async function orgInvitationResendFn(
   ctx: MutationCtx,
   args: OrgInvitationResendValidatorType,
 ): PromiseResult<IdOrgInvitation> {
@@ -65,11 +65,4 @@ export async function orgInvitationResend(
   }
 
   return createResult(existingInvitation._id)
-}
-
-export async function orgInvitationResendFn(
-  ctx: MutationCtx,
-  args: OrgInvitationResendValidatorType,
-): PromiseResult<IdOrgInvitation> {
-  return await orgInvitationResend(ctx, args)
 }

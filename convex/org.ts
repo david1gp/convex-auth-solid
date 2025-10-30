@@ -1,7 +1,8 @@
-import { orgInvitationAcceptFields, orgInvitationAcceptFn } from "@/org/invitation_convex/orgInvitationAccept"
-import { orgInvitationCreateFields, orgInvitationCreateFn } from "@/org/invitation_convex/orgInvitationCreate"
-import { orgInvitationGetFields, orgInvitationGetFn } from "@/org/invitation_convex/orgInvitationGet"
-import { orgInvitationResendFields, orgInvitationResendFn } from "@/org/invitation_convex/orgInvitationResend"
+import { orgInvitationAcceptFields, orgInvitationAcceptFn } from "@/org/invitation_convex/orgInvitationAcceptFn"
+import { orgInvitationCreateFields, orgInvitationCreateFn } from "@/org/invitation_convex/orgInvitationCreateFn"
+import { orgInvitationGetFields, orgInvitationGetFn } from "@/org/invitation_convex/orgInvitationGetFn"
+import { orgInvitationResendFields, orgInvitationResendFn } from "@/org/invitation_convex/orgInvitationResendFn"
+import { orgInvitationsListFn, orgInvitationsListValidator } from "@/org/invitation_convex/orgInvitationsListFn"
 import { orgMemberCreateFields, orgMemberCreateFn } from "@/org/member_convex/orgMemberCreateFn"
 import { orgMemberDeleteFields, orgMemberDeleteFn } from "@/org/member_convex/orgMemberDeleteFn"
 import { orgMemberEditFields, orgMemberEditFn } from "@/org/member_convex/orgMemberEditFn"
@@ -62,9 +63,7 @@ export const orgDeleteMutation = mutation({
 
 export const orgMemberCreateMutation = mutation({
   args: orgMemberCreateFields,
-  handler: async (ctx, args) => {
-    return orgMemberCreateFn(ctx, args)
-  },
+  handler: orgMemberCreateFn,
 })
 
 export const orgMemberEditMutation = mutation({
@@ -105,16 +104,17 @@ export const orgInvitationResendMutation = mutation({
 
 export const orgInvitationAcceptMutation = mutation({
   args: orgInvitationAcceptFields,
-  handler: async (ctx, args) => {
-    return orgInvitationAcceptFn(ctx, args)
-  },
+  handler: orgInvitationAcceptFn,
 })
 
 export const orgInvitationGetQuery = query({
   args: orgInvitationGetFields,
-  handler: async (ctx, args) => {
-    return await orgInvitationGetFn(ctx, args)
-  },
+  handler: orgInvitationGetFn,
+})
+
+export const orgInvitationsListQuery = query({
+  args: orgInvitationsListValidator,
+  handler: orgInvitationsListFn,
 })
 
 export const getOrgMemberHandleAndRoleQuery = internalQuery({

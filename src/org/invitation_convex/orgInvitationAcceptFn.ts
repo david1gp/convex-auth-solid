@@ -21,7 +21,7 @@ export const orgInvitationAcceptFields = {
 
 export const orgInvitationAcceptValidator = v.object(orgInvitationAcceptFields)
 
-export async function orgInvitationAccept(
+export async function orgInvitationAcceptFn(
   ctx: MutationCtx,
   args: OrgInvitationAcceptValidatorType,
 ): PromiseResult<UserSession> {
@@ -132,11 +132,4 @@ export async function orgInvitationAccept(
   }
 
   return createResult(userSession)
-}
-
-export async function orgInvitationAcceptFn(
-  ctx: MutationCtx,
-  args: OrgInvitationAcceptValidatorType,
-): PromiseResult<UserSession> {
-  return await orgInvitationAccept(ctx, args)
 }
