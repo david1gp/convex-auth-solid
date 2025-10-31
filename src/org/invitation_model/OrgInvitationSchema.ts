@@ -3,19 +3,23 @@ import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationMod
 import { orgRoleSchema } from "@/org/org_model/orgRole"
 import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
 import { handleSchema } from "@/utils/valibot/handleSchema"
-import { stringSchema1to50 } from "@/utils/valibot/stringSchema"
+import { stringSchema0to100, stringSchema1to50 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 import type { DocOrgInvitation } from "../invitation_convex/IdOrgInvitation"
 
 export const orgInvitationDataSchemaFields = {
   // ids
-  orgId: handleSchema,
+  orgHandle: handleSchema,
+  invitationCode: stringSchema1to50,
+  // invited
+  invitedName: stringSchema0to100,
   invitedEmail: emailSchema,
   // data
-  invitationCode: stringSchema1to50,
   role: orgRoleSchema,
-  invitedBy: handleSchema,
+  invitedBy: stringSchema1to50,
+  // invitedByName: stringSchema1to50,
+  // invitedByEmail: emailSchema,
   // server processing
   emailSendAt: v.optional(dateTimeSchema),
   emailSendAmount: v.number(),

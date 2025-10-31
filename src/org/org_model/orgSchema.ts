@@ -27,7 +27,3 @@ function types1(m: DocOrg): OrgModel {
 function types2(m: OrgModel): DocOrg {
   return m
 }
-
-function types3(m: Omit<OrgModel, "_id">): Omit<DocOrg, "_id"> {
-  return m
-}

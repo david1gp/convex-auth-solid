@@ -38,12 +38,14 @@ export const orgMemberFields = {
 
 export const orgInvitationDataFields = {
   // ids
-  orgId: vIdOrg,
+  orgHandle: v.string(),
+  invitationCode: v.string(),
+  // invited
+  invitedName: v.string(),
   invitedEmail: v.string(),
   // data
-  invitationCode: v.string(),
   role: orgRoleValidator,
-  invitedBy: vIdUser,
+  invitedBy: v.string(),
   // server processing
   emailSendAt: v.optional(v.string()),
   emailSendAmount: v.number(),

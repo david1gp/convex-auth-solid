@@ -9,7 +9,7 @@ import { urlOrgInvitationList } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { HasOrgInvitationCode } from "@/org/org_model/HasOrgInvitationCode"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
-import { createMutation } from "@/utils/convex/createMutation"
+import { createAction } from "@/utils/convex/createAction"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
@@ -36,7 +36,7 @@ export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
     invitationCode: p.invitationCode,
   }) as () => DocOrgInvitation | undefined
 
-  const resendMutation = createMutation(api.org.orgInvitationResendMutation)
+  const resendMutation = createAction(api.org.orgInvitationResendAction)
 
   async function resendAction() {
     const invitation = getInvitation()
@@ -46,8 +46,7 @@ export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
     }
     const result = await resendMutation({
       token: userTokenGet(),
-      orgHandle: p.orgHandle,
-      invitedEmail: invitation.invitedEmail,
+      invitationCode: p.invitationCode,
     })
     if (!result.success) {
       console.error(result)

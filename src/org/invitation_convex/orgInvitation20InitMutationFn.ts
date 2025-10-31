@@ -1,32 +1,32 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitation21CreateMutationFn"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { api } from "@convex/_generated/api"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { nowIso } from "~utils/date/nowIso"
 import { generateId12 } from "~utils/ran/generateId12"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { sendEmailOrgInvitation } from "../../auth/convex/email/sendEmailOrgInvitation"
-import type { IdOrgInvitation } from "./IdOrgInvitation"
 
-export type OrgInvitationCreateValidatorType = typeof orgInvitationCreateValidator.type
+export type OrgInvitationCreateValidatorType = typeof orgInvitationCreateActionValidator.type
 
-export const orgInvitationCreateFields = {
+export const orgInvitationInitMutationFields = {
   token: v.string(),
   // id
   orgHandle: v.string(),
+  invitedName: v.string(),
   invitedEmail: v.string(),
   // data
   role: orgRoleValidator,
 }
 
-export const orgInvitationCreateValidator = v.object(orgInvitationCreateFields)
+export const orgInvitationCreateActionValidator = v.object(orgInvitationInitMutationFields)
 
-export async function orgInvitationCreateFn(
+export async function orgInvitation20InitMutationFn(
   ctx: MutationCtx,
   args: OrgInvitationCreateValidatorType,
-): PromiseResult<IdOrgInvitation> {
-  const op = "orgInvitationCreate"
+): PromiseResult<string> {
+  const op = "orgInvitation20InitMutationFn"
 
   const verifiedResult = await verifyTokenResult(args.token)
   if (!verifiedResult.success) {
@@ -52,27 +52,20 @@ export async function orgInvitationCreateFn(
     return createResultError(op, "Invitation already sent", args.invitedEmail)
   }
 
-  const now = nowIso()
   const invitationCode = generateId12()
-  const orgInvitationId = await ctx.db.insert("orgInvitations", {
-    orgId: org._id,
+
+  // init/create invitation
+  await orgInvitation21CreateMutationFn(ctx, {
+    invitationCode: invitationCode,
+    invitedBy: invitedBy,
+    invitedName: args.invitedName,
     invitedEmail: args.invitedEmail,
-    invitationCode,
+    orgHandle: args.orgHandle,
     role: args.role,
-    invitedBy,
-    emailSendAt: now,
-    emailSendAmount: 1,
-    acceptedAt: undefined,
-    createdAt: now,
-    updatedAt: now,
   })
 
-  // Send email
-  const emailResult = await sendEmailOrgInvitation(args.invitedEmail, invitationCode, "")
-  if (!emailResult.success) {
-    console.error("Failed to send invitation email", emailResult)
-    // Note: Continue even if email fails, as the invitation is created
-  }
+  // shedule email sending
+  ctx.scheduler.runAfter(0, api.org.orgInvitationResendAction, { token: args.token, invitationCode })
 
-  return createResult(orgInvitationId)
+  return createResult(invitationCode)
 }

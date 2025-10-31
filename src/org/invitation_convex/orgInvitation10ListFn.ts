@@ -11,7 +11,7 @@ export const orgInvitationsListFields = {
 export type OrgInvitationsListValidatorType = typeof orgInvitationsListValidator.type
 export const orgInvitationsListValidator = v.object(orgInvitationsListFields)
 
-export async function orgInvitationsListFn(
+export async function orgInvitation10ListFn(
   ctx: QueryCtx,
   args: OrgInvitationsListValidatorType,
 ): PromiseResult<DocOrgInvitation[]> {
@@ -27,7 +27,7 @@ export async function orgInvitationsListFn(
 
   const invitations = await ctx.db
     .query("orgInvitations")
-    .filter((q) => q.eq(q.field("orgId"), org._id))
+    .filter((q) => q.eq(q.field("orgHandle"), org.orgHandle))
     .collect()
 
   return createResult(invitations)

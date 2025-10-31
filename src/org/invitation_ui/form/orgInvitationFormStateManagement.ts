@@ -1,5 +1,5 @@
 import { emailSchema } from "@/auth/model/emailSchema"
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import type { DocOrgInvitation, IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { orgInvitationFormField, type OrgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { debounceMs } from "@/utils/ui/debounceMs"
@@ -10,23 +10,27 @@ import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type OrgInvitationFormData = {
+  invitedName: string
   invitedEmail: string
   role: OrgRole
   invitationCode: string
 }
 
 export type OrgInvitationFormState = {
+  invitedName: SignalObject<string>
   invitedEmail: SignalObject<string>
   role: SignalObject<string>
 }
 
 export type OrgInvitationFormErrorState = {
+  invitedName: SignalObject<string>
   invitedEmail: SignalObject<string>
   role: SignalObject<string>
 }
 
 function createOrgInvitationFormState(): OrgInvitationFormState {
   return {
+    invitedName: createSignalObject(""),
     invitedEmail: createSignalObject(""),
     role: createSignalObject(""),
   }
@@ -34,6 +38,7 @@ function createOrgInvitationFormState(): OrgInvitationFormState {
 
 function createOrgInvitationErrorState(): OrgInvitationFormErrorState {
   return {
+    invitedName: createSignalObject(""),
     invitedEmail: createSignalObject(""),
     role: createSignalObject(""),
   }
@@ -55,12 +60,13 @@ function createEmptyDocOrgInvitation(): DocOrgInvitation {
   const now = new Date()
   const iso = now.toISOString()
   return {
-    _id: "" as any,
-    orgId: "" as any,
+    _id: "" as IdOrgInvitation,
+    orgHandle: "",
+    invitedName: "",
     invitedEmail: "",
     invitationCode: "",
     role: "member",
-    invitedBy: "" as any,
+    invitedBy: "",
     emailSendAt: iso,
     emailSendAmount: 0,
     acceptedAt: undefined,
@@ -113,6 +119,7 @@ function hasErrors(errors: OrgInvitationFormErrorState) {
 }
 
 function fillTestData(state: OrgInvitationFormState, errors: OrgInvitationFormErrorState) {
+  state.invitedName.set("Alice")
   state.invitedEmail.set("test@example.com")
   state.role.set("member")
 
@@ -131,7 +138,12 @@ function validateOnChange(
   }, debounceMs)
 }
 
-function updateFieldError(field: OrgInvitationFormField, value: string, state: OrgInvitationFormState, errors: OrgInvitationFormErrorState) {
+function updateFieldError(
+  field: OrgInvitationFormField,
+  value: string,
+  state: OrgInvitationFormState,
+  errors: OrgInvitationFormErrorState,
+) {
   const result = validateFieldResult(field, value)
   const errorSig = errors[field as keyof typeof errors]
   if (result.success) {
@@ -161,17 +173,20 @@ async function handleSubmit(
 ): Promise<void> {
   e.preventDefault()
 
+  const invitedName = state.invitedName.get()
   const invitedEmail = state.invitedEmail.get()
   const role = state.role.get()
   const invitationCode = serverState.get().invitationCode || "temp-code"
 
+  const invitedNameResult = validateFieldResult(orgInvitationFormField.invitedName, invitedName)
   const invitedEmailResult = validateFieldResult(orgInvitationFormField.invitedEmail, invitedEmail)
   const roleResult = validateFieldResult(orgInvitationFormField.role, role)
 
+  errors.invitedName.set(invitedNameResult.success ? "" : invitedNameResult.issues[0].message)
   errors.invitedEmail.set(invitedEmailResult.success ? "" : invitedEmailResult.issues[0].message)
   errors.role.set(roleResult.success ? "" : roleResult.issues[0].message)
 
-  const isSuccess = invitedEmailResult.success && roleResult.success
+  const isSuccess = invitedNameResult.success && invitedEmailResult.success && roleResult.success
 
   if (!isSuccess) {
     if (!invitedEmailResult.success) {
@@ -190,12 +205,12 @@ async function handleSubmit(
   isSaving.set(true)
 
   if (actions.add) {
-    const data: OrgInvitationFormData = { invitedEmail, role: role as OrgRole, invitationCode }
+    const data: OrgInvitationFormData = { invitedName, invitedEmail, role: role as OrgRole, invitationCode }
     await actions.add(data)
   }
 
   if (actions.edit) {
-    const data: OrgInvitationFormData = { invitedEmail, role: role as OrgRole, invitationCode }
+    const data: OrgInvitationFormData = { invitedName, invitedEmail, role: role as OrgRole, invitationCode }
     await actions.edit(data)
   }
 

@@ -47,7 +47,7 @@ export interface OrgInvitationAddProps extends HasOrgHandle, MayHaveReturnPath, 
 
 export function OrgInvitationAdd(p: OrgInvitationAddProps) {
   const navigator = useNavigate()
-  const addMutation = createMutation(api.org.orgInvitationCreateMutation)
+  const addMutation = createMutation(api.org.orgInvitationInitMutation)
 
   async function addAction(data: OrgInvitationFormData): Promise<void> {
     const invitationIdResult = await addMutation({
@@ -55,6 +55,7 @@ export function OrgInvitationAdd(p: OrgInvitationAddProps) {
       token: userTokenGet(),
       // ids
       orgHandle: p.orgHandle,
+      invitedName: data.invitedName,
       invitedEmail: data.invitedEmail,
       // data
       role: data.role,

@@ -1,17 +1,17 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import type { IdOrg } from "@/org/org_convex/IdOrg"
 import type { OrgRole } from "@/org/org_model/orgRole"
 import type { HasConvexSystemFields } from "@/utils/convex/HasConvexSystemFields"
 import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt"
 import type { IdOrgInvitation } from "../invitation_convex/IdOrgInvitation"
 
 export type OrgInvitationDataModel = {
-  orgId: IdOrg
+  orgHandle: string
+  invitationCode: string
+  // invited
+  invitedName: string
   invitedEmail: string
   // data
-  invitationCode: string
   role: OrgRole
-  invitedBy: IdUser
+  invitedBy: string
   // server processing
   emailSendAt?: string
   emailSendAmount: number

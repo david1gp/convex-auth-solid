@@ -1,9 +1,11 @@
+import type { IdUser } from "@/auth/convex/IdUser"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
 import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { userRole } from "@/auth/model/userRole"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
+import { orgGetFn } from "@/org/org_convex/orgGetFn"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -21,7 +23,7 @@ export const orgInvitationAcceptFields = {
 
 export const orgInvitationAcceptValidator = v.object(orgInvitationAcceptFields)
 
-export async function orgInvitationAcceptFn(
+export async function orgInvitation50AcceptFn(
   ctx: MutationCtx,
   args: OrgInvitationAcceptValidatorType,
 ): PromiseResult<UserSession> {
@@ -42,7 +44,11 @@ export async function orgInvitationAcceptFn(
   }
 
   // Get org details for token
-  const org = await ctx.db.get(invitation.orgId)
+  const orgResult = await orgGetFn(ctx, { orgHandle: invitation.orgHandle })
+  if (!orgResult.success) {
+    return orgResult
+  }
+  const org = orgResult.data
   if (!org) {
     return createResultError(op, "Organization not found")
   }
@@ -86,7 +92,7 @@ export async function orgInvitationAcceptFn(
   // Update user if necessary
   if (userDoc.emailVerifiedAt !== now) {
     await ctx.db.patch(userDoc._id, {
-      emailVerifiedAt: nowIso(),
+      emailVerifiedAt: now,
     })
   }
   if (!userDoc.username) {
@@ -105,18 +111,18 @@ export async function orgInvitationAcceptFn(
 
   // Mark invitation as accepted
   await ctx.db.patch(invitation._id, {
-    acceptedAt: nowIso(),
-    updatedAt: nowIso(),
+    acceptedAt: now,
+    updatedAt: now,
   })
 
   // Create org member
   const orgMemberId = await ctx.db.insert("orgMembers", {
-    orgId: invitation.orgId,
+    orgId: org._id,
     userId: userDoc._id,
     role: invitation.role,
-    invitedBy: invitation.invitedBy,
-    createdAt: nowIso(),
-    updatedAt: nowIso(),
+    invitedBy: invitation.invitedBy as IdUser,
+    createdAt: now,
+    updatedAt: now,
   })
 
   // Create user profile
@@ -127,7 +133,7 @@ export async function orgInvitationAcceptFn(
     token,
     user: userProfile,
     signedInMethod: loginMethod.email,
-    signedInAt: nowIso(),
+    signedInAt: now,
     expiresAt,
   }
 
