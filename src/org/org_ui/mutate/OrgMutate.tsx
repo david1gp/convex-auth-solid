@@ -14,30 +14,36 @@ import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
-import { Show, createEffect } from "solid-js"
+import { Show, createEffect, type Accessor } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, type HasFormModeMutate } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { Result } from "~utils/result/Result"
 
 interface OrgMutateProps extends HasOrgHandle, HasFormModeMutate, MayHaveReturnPath, MayHaveClass {}
 
 export function OrgMutate(p: OrgMutateProps) {
   const op = "OrgMutate"
   const navigator = useNavigate()
-  const getOrg = createQuery(api.org.orgGetQuery, {
+  const getOrg: Accessor<Result<DocOrg | null> | undefined> = createQuery(api.org.orgGetQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
-  }) as () => DocOrg | undefined
+  })
 
   const editMutation = createMutation(api.org.orgEditMutation)
   const deleteMutation = createMutation(api.org.orgDeleteMutation)
 
   async function editAction(data: Partial<OrgFormData>) {
-    const org = getOrg()
+    const orgResult = getOrg()
+    if (!orgResult || !orgResult.success) {
+      console.warn(orgResult)
+      return
+    }
+    const org = orgResult.data
     if (!org) {
-      console.warn("no org")
+      console.warn("!org")
       return
     }
     const orgIdResult = await editMutation({
@@ -57,9 +63,14 @@ export function OrgMutate(p: OrgMutateProps) {
   }
 
   async function deleteAction() {
-    const org = getOrg()
+    const orgResult = getOrg()
+    if (!orgResult || !orgResult.success) {
+      console.warn(orgResult)
+      return
+    }
+    const org = orgResult.data
     if (!org) {
-      console.warn("no org")
+      console.warn("!org")
       return
     }
     const orgIdResult = await deleteMutation({
@@ -92,11 +103,21 @@ export function OrgMutate(p: OrgMutateProps) {
   const sm = orgCreateFormStateManagement(actions)
 
   createEffect(() => {
-    const o = getOrg()
-    if (!o) {
+    const orgResult = getOrg()
+    if (!orgResult) {
+      // console.warn("!orgResult")
       return
     }
-    sm.loadData(o)
+    if (!orgResult.success) {
+      console.warn(orgResult)
+      return
+    }
+    const org = orgResult.data
+    if (!org) {
+      console.warn("!org")
+      return
+    }
+    sm.loadData(org)
   })
 
   return (
