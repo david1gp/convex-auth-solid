@@ -64,7 +64,6 @@ function NameField(p: HasOrgFormStateManagement) {
         autocomplete="organization-title"
         valueSignal={p.sm.state.name}
         onInput={(e) => {
-          p.sm.state.name.set(e.currentTarget.value)
           p.sm.validateOnChange(orgFormField.name)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(orgFormField.name)(e.currentTarget.value)}
@@ -91,7 +90,6 @@ function HandleField(p: HasOrgFormStateManagement) {
         autocomplete="organization"
         valueSignal={p.sm.state.orgHandle}
         onInput={(e) => {
-          p.sm.state.orgHandle.set(e.currentTarget.value)
           p.sm.validateOnChange(orgFormField.orgHandle)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(orgFormField.orgHandle)(e.currentTarget.value)}
@@ -114,7 +112,6 @@ function DescriptionField(p: HasOrgFormStateManagement) {
         placeholder={ttt("Enter organization description")}
         valueSignal={p.sm.state.description}
         onInput={(e) => {
-          p.sm.state.description.set(e.currentTarget.value)
           p.sm.validateOnChange(orgFormField.description)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(orgFormField.description)(e.currentTarget.value)}
@@ -142,7 +139,6 @@ function UrlField(p: HasOrgFormStateManagement) {
         autocomplete="url"
         valueSignal={p.sm.state.url}
         onInput={(e) => {
-          p.sm.state.url.set(e.currentTarget.value)
           p.sm.validateOnChange(orgFormField.url)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(orgFormField.url)(e.currentTarget.value)}
