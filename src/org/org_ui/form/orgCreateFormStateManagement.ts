@@ -110,6 +110,7 @@ function loadData(data: DocOrg, serverState: SignalObject<DocOrg>, state: OrgFor
   state.description.set(data.description ?? "")
   state.url.set(data.url ?? "")
   state.image.set(data.image ?? "")
+  console.log("loaded data", data)
 }
 
 function hasErrors(errors: OrgFormErrorState) {
@@ -122,11 +123,13 @@ function hasErrors(errors: OrgFormErrorState) {
   )
 }
 function fillTestData(state: OrgFormState, errors: OrgFormErrorState) {
-  state.name.set("Test Organization")
-  state.orgHandle.set("test-organization")
+  const name = "Test Organization"
+  state.name.set(name)
+  const handle = handleGenerate(name)
+  state.orgHandle.set(handle)
   state.description.set("Test description")
   state.url.set("https://example.com")
-  state.image.set("/logo.svg")
+  state.image.set("https://adaptive-solid-ui.pages.dev/logo.svg")
 
   for (const field of Object.values(orgFormField)) {
     updateFieldError(field, state[field].get(), state, errors)
@@ -147,6 +150,7 @@ function updateFieldError(field: OrgFormField, value: string, state: OrgFormStat
     errorSig.set("")
   } else {
     errorSig.set(result.issues[0].message)
+    console.log({ field, value, message: result.issues[0].message })
   }
 }
 
@@ -154,23 +158,12 @@ function autoFillHandle(field: OrgFormField, value: string, state: OrgFormState,
   if (field !== orgFormField.name) return
   const handle = handleGenerate(value)
   state.orgHandle.set(handle)
-  updateFieldError(orgFormField.orgHandle, value, state, errors)
+  updateFieldError(orgFormField.orgHandle, handle, state, errors)
 }
 
 function validateFieldResult(field: OrgFormField, value: string) {
-  let schema
-  if (field === orgFormField.name) {
-    schema = orgDataSchemaFields.name
-  } else if (field === orgFormField.orgHandle) {
-    schema = orgDataSchemaFields.orgHandle
-  } else if (field === orgFormField.description) {
-    schema = orgDataSchemaFields.description
-  } else if (field === orgFormField.url) {
-    schema = orgDataSchemaFields.url
-  } else if (field === orgFormField.image) {
-    schema = orgDataSchemaFields.image
-  }
-  return v.safeParse(schema!, value)
+  const schema = orgDataSchemaFields[field]
+  return v.safeParse(schema, value)
 }
 
 async function handleSubmit(

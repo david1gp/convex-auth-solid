@@ -64,7 +64,6 @@ function NameField(p: HasOrgFormStateManagement) {
         autocomplete="organization"
         valueSignal={p.sm.state.name}
         onInput={(e) => {
-          p.sm.state.name.set(e.currentTarget.value)
           p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)}
@@ -90,11 +89,13 @@ function HandleField(p: HasOrgFormStateManagement) {
         autocomplete="organization-title"
         valueSignal={p.sm.state.workspaceHandle}
         onInput={(e) => {
-          p.sm.state.workspaceHandle.set(e.currentTarget.value)
           p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)}
-        class={classMerge("w-full", p.sm.errors.workspaceHandle.get() && "border-destructive focus-visible:ring-destructive")}
+        class={classMerge(
+          "w-full",
+          p.sm.errors.workspaceHandle.get() && "border-destructive focus-visible:ring-destructive",
+        )}
         maxLength={inputMaxLength25}
       />
       <Show when={p.sm.errors.workspaceHandle.get()}>
@@ -113,7 +114,6 @@ function DescriptionField(p: HasOrgFormStateManagement) {
         placeholder={ttt("Enter workspace description")}
         valueSignal={p.sm.state.description}
         onInput={(e) => {
-          p.sm.state.description.set(e.currentTarget.value)
           p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)}
@@ -141,7 +141,6 @@ function ImageField(p: HasOrgFormStateManagement) {
         autocomplete="url"
         valueSignal={p.sm.state.image}
         onInput={(e) => {
-          p.sm.state.image.set(e.currentTarget.value)
           p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)}
