@@ -2,12 +2,13 @@ import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageTechnical } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
-import { apiGenerateEmailLoginCodeV1 } from "@adaptive-sm/email-generator/apiGenerateEmail.js"
-import { type GeneratedEmailType } from "@adaptive-sm/email-generator/GeneratedEmailType.js"
-import { type LoginCodeV1Type } from "@adaptive-sm/email-generator/LoginCodeV1Type.js"
-import type { RegisterEmailV1Type } from "@adaptive-sm/email-generator/RegisterEmailV1Type.js"
+import {
+  apiGenerateEmailSignInV1,
+  type GeneratedEmailType,
+  type SignInV1Type,
+} from "@adaptive-sm/email-generator/index.js"
 import { readEnvVariableResult } from "~utils/env/readEnvVariable"
-import { createError, type PromiseResult } from "~utils/result/Result"
+import { type PromiseResult } from "~utils/result/Result"
 
 export async function sendEmailSignIn(email: string, code: string, url: string): PromiseResult<null> {
   const envModeResult = readEnvVariableResult(publicEnvVariableName.PUBLIC_ENV_MODE)
@@ -20,24 +21,13 @@ export async function sendEmailSignIn(email: string, code: string, url: string):
 
 export async function generateEmailSignIn(code: string, url: string): PromiseResult<GeneratedEmailType> {
   const op = "generateEmailSignIn"
-
-  const props = generateProps(code, url)
-  const generatedResult = await apiGenerateEmailLoginCode(props) // TODO: Use sign in specific generator
-
-  return createError(op, "not implemented yet")
-}
-
-export async function apiGenerateEmailLoginCode(props: LoginCodeV1Type): PromiseResult<GeneratedEmailType> {
-  const op = "apiGenerateEmailLoginCodeV1"
+  const props: SignInV1Type = {
+    // l: "en",
+    ...generateSharedEmailProps(),
+    code,
+    url,
+  }
   const baseUrlResult = readEnvVariableResult(privateEnvVariableName.BASE_URL_EMAIL_GENERATOR)
   if (!baseUrlResult.success) return baseUrlResult
-  return apiGenerateEmailLoginCodeV1(props, baseUrlResult.data)
-}
-
-function generateProps(code: string, url: string): RegisterEmailV1Type {
-  const preset = {
-    ...generateSharedEmailProps(),
-    l: "en",
-  } as const satisfies Partial<RegisterEmailV1Type>
-  return { ...preset, code, url }
+  return apiGenerateEmailSignInV1(props, baseUrlResult.data)
 }
