@@ -8,6 +8,7 @@ const regexMessage4 = "no trailing hyphens"
 
 export const handleSchema = v.pipe(
   v.string(),
+  v.trim(),
   v.nonEmpty(),
   v.minLength(3),
   v.regex(/^[a-z0-9-]+$/, regexMessage1),

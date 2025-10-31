@@ -1,7 +1,8 @@
 import { emailSchema } from "@/auth/model/emailSchema"
 import { userRoleSchema, type UserRole } from "@/auth/model/userRole"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
-import { stringSchema0to500, stringSchema1to50, stringSchema5to25 } from "@/utils/valibot/stringSchema"
+import { handleSchema } from "@/utils/valibot/handleSchema"
+import { stringSchema0to500, stringSchema1to50 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
@@ -23,7 +24,7 @@ export type UserProfile = {
 export const userProfileSchema = v.object({
   userId: stringSchema1to50,
   name: stringSchema1to50,
-  username: v.optional(stringSchema5to25),
+  username: v.optional(handleSchema),
   image: v.optional(stringSchema0to500),
   email: v.optional(emailSchema),
   emailVerifiedAt: v.optional(dateTimeSchema),
