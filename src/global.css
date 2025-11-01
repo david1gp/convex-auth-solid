@@ -43,7 +43,7 @@
     --foreground: hsl(222.2 47.4% 11.2%);
 
     --muted: hsl(210 40% 96.1%);
-    --muted-foreground: hsl(215 13.8% 34.1%); /* gray-600 */
+    --muted-foreground: hsl(216, 13%, 40%); /* gray-600 */
 
     --border: hsl(214.3 31.8% 91.4%); /* slate-200 */
     --input: hsl(214.3 31.8% 91.4%);
@@ -60,7 +60,7 @@
     --foreground: hsl(213 31% 91%);
 
     --muted: hsl(223 47% 11%);
-    --muted-foreground: hsl(217.9 10.6% 64.9%); /* gray-400 */
+    --muted-foreground: hsl(218, 17%, 72%); /* gray-400 */
 
     --border: hsl(214.3 31.8% 91.4%); /* slate-200 */
     --input: hsl(216 34% 17%);
@@ -69,7 +69,7 @@
     --primary: hsl(217.2, 91.2%, 59.8%);
     --primary-foreground: hsl(222.2 47.4% 1.2%);
 
-    --destructive: hsl(0, 100%, 45%);
+    --destructive: hsl(0, 100%, 48%);
     --destructive-foreground: hsl(0 0% 100%);
   }
 }
