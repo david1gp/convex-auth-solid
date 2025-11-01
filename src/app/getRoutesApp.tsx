@@ -19,7 +19,7 @@ export function getRoutesApp(): RouteObject[] {
       component: OverviewPage,
     },
     {
-      path: "/demos",
+      path: "/demo/auth",
       component: () => <DemoAuthLinks />,
     },
     {

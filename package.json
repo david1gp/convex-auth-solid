@@ -29,7 +29,7 @@
     "compile:w": "clear && tsc -w",
     "convex:dev": "convex dev --local --local-cloud-port=3017 --local-site-port=3018",
     "convex:deploy": "bun run convex deploy --env-file=.env.prod",
-    "generateDemoList": "bun run ./src/demos/generateDemoList.cli.ts",
+    "generateDemoList": "bun run ./src/ui/demos/generateDemoList.cli.ts",
     "updateAiRules": "bash ./node_modules/@adaptive-sm/solid-ui/lib/generate_ai_rules/generate_agent_rules.bash",
     "release": "bash ./ops/release.sh",
     "update": "bun x npm-check-updates -u && bun i",
