@@ -1,4 +1,5 @@
 import { debounceMs } from "@/utils/ui/debounceMs"
+import { handleGenerate } from "@/utils/valibot/handleSchema"
 import type { DocWorkspace, IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import { workspaceDataSchemaFields } from "@/workspace/model/workspaceSchema"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
@@ -129,8 +130,20 @@ function fillTestData(state: WorkspaceFormState, errors: WorkspaceFormErrorState
 
 function validateOnChange(field: WorkspaceFormField, state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
   return debounce((value: string) => {
+    autoFillHandle(field, value, state, errors)
     updateFieldError(field, value, state, errors)
   }, debounceMs)
+}
+
+function autoFillHandle(
+  field: WorkspaceFormField,
+  value: string,
+  state: WorkspaceFormState,
+  errors: WorkspaceFormErrorState,
+) {
+  if (field !== workspaceFormField.name) return
+  const handle = handleGenerate(value)
+  state.workspaceHandle.set(handle)
 }
 
 function updateFieldError(
