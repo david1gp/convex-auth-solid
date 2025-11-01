@@ -1,7 +1,7 @@
 import { emailSchema } from "@/auth/model/emailSchema"
 import type { DocOrgInvitation, IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { orgInvitationFormField, type OrgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
-import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
+import { orgRole, orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
@@ -32,7 +32,7 @@ function createOrgInvitationFormState(): OrgInvitationFormState {
   return {
     invitedName: createSignalObject(""),
     invitedEmail: createSignalObject(""),
-    role: createSignalObject(""),
+    role: createSignalObject<string>(orgRole.member),
   }
 }
 

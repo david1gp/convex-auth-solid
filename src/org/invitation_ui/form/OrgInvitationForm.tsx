@@ -7,7 +7,7 @@ import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
-import { InputS } from "~ui/input/input/InputS"
+import { Input } from "~ui/input/input/Input"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -31,7 +31,7 @@ export function OrgInvitationForm(p: OrgInvitationContentProps) {
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <InvitedNameField sm={p.sm} />
         <InvitedEmailField sm={p.sm} />
-        <RoleField sm={p.sm} />
+        {/* <RoleField sm={p.sm} /> */}
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
@@ -49,14 +49,16 @@ export function OrgInvitationForm(p: OrgInvitationContentProps) {
 function InvitedNameField(p: HasOrgInvitationFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <label for={orgInvitationFormField.invitedName} class="text-sm font-medium">
-        {ttt("Email")}
+      <label for={orgInvitationFormField.invitedName} class="font-medium">
+        {ttt("Name")}
       </label>
-      <InputS
+      <Input
         id={orgInvitationFormField.invitedName}
-        valueSignal={p.sm.state.invitedName}
+        value={p.sm.state.invitedName.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(orgInvitationFormField.invitedName)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.invitedName.set(value)
+          p.sm.validateOnChange(orgInvitationFormField.invitedName)(value)
         }}
         class={classMerge(
           "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
@@ -74,15 +76,17 @@ function InvitedNameField(p: HasOrgInvitationFormStateManagement) {
 function InvitedEmailField(p: HasOrgInvitationFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <label for={orgInvitationFormField.invitedEmail} class="text-sm font-medium">
+      <label for={orgInvitationFormField.invitedEmail} class="font-medium">
         {ttt("Email")}
       </label>
-      <InputS
+      <Input
         id={orgInvitationFormField.invitedEmail}
-        valueSignal={p.sm.state.invitedEmail}
+        value={p.sm.state.invitedEmail.get()}
         type="email"
         onInput={(e) => {
-          p.sm.validateOnChange(orgInvitationFormField.invitedEmail)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.invitedEmail.set(value)
+          p.sm.validateOnChange(orgInvitationFormField.invitedEmail)(value)
         }}
         class={classMerge(
           "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",

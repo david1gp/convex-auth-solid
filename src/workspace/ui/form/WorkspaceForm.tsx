@@ -8,11 +8,11 @@ import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
-import { InputS } from "~ui/input/input/InputS"
+import { Input } from "~ui/input/input/Input"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
-import { TextareaS } from "~ui/input/textarea/TextareaS"
+import { Textarea } from "~ui/input/textarea/Textarea"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -58,13 +58,15 @@ function NameField(p: HasOrgFormStateManagement) {
       <Label for={workspaceFormField.name}>
         Name <LabelAsterix />
       </Label>
-      <InputS
+      <Input
         id={workspaceFormField.name}
         placeholder={ttt("Enter workspace name")}
         autocomplete="organization"
-        valueSignal={p.sm.state.name}
+        value={p.sm.state.name.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.name.set(value)
+          p.sm.validateOnChange(workspaceFormField.name)(value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
@@ -83,13 +85,15 @@ function HandleField(p: HasOrgFormStateManagement) {
       <Label for={workspaceFormField.workspaceHandle}>
         Handle <LabelAsterix />
       </Label>
-      <InputS
+      <Input
         id={workspaceFormField.workspaceHandle}
         placeholder={ttt("Enter workspace handle")}
         autocomplete="organization-title"
-        valueSignal={p.sm.state.workspaceHandle}
+        value={p.sm.state.workspaceHandle.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.workspaceHandle.set(value)
+          p.sm.validateOnChange(workspaceFormField.workspaceHandle)(value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.workspaceHandle)(e.currentTarget.value)}
         class={classMerge(
@@ -109,12 +113,14 @@ function DescriptionField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={workspaceFormField.description}>Description</Label>
-      <TextareaS
+      <Textarea
         id={workspaceFormField.description}
         placeholder={ttt("Enter workspace description")}
-        valueSignal={p.sm.state.description}
+        value={p.sm.state.description.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.description.set(value)
+          p.sm.validateOnChange(workspaceFormField.description)(value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)}
         class={classMerge(
@@ -134,14 +140,16 @@ function ImageField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={workspaceFormField.image}>Image URL</Label>
-      <InputS
+      <Input
         id={workspaceFormField.image}
         type="url"
         placeholder={ttt("Enter image URL")}
         autocomplete="url"
-        valueSignal={p.sm.state.image}
+        value={p.sm.state.image.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.image.set(value)
+          p.sm.validateOnChange(workspaceFormField.image)(value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}

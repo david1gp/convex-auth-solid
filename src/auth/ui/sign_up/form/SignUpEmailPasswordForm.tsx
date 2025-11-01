@@ -8,7 +8,7 @@ import { useNavigate } from "@solidjs/router"
 import { For, Show } from "solid-js"
 import type { JSX } from "solid-js/jsx-runtime"
 import { ttt } from "~ui/i18n/ttt"
-import { InputS } from "~ui/input/input/InputS"
+import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
 import { Button } from "~ui/interactive/button/Button"
@@ -105,13 +105,13 @@ function FieldSwitch(
         {labelText}
         {isRequired && <LabelAsterix />}
       </Label>
-      <InputS
+      <Input
         id={field}
         name={field}
         type={inputType}
         autocomplete={autoComplete}
         placeholder={placeholder}
-        valueSignal={valueSignal}
+        value={valueSignal.get()}
         class={classMerge(
           "",
           errors[field as keyof typeof errors].get() && "border-destructive focus-visible:ring-destructive",

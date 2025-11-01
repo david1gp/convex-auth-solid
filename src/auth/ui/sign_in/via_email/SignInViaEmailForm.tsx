@@ -5,7 +5,7 @@ import { mdiLogin } from "@mdi/js"
 import { useLocation, useNavigate } from "@solidjs/router"
 import { Show, type Component } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { InputS } from "~ui/input/input/InputS"
+import { Input } from "~ui/input/input/Input"
 import { inputMaxLength50 } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
@@ -30,12 +30,12 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
         <Label for={emailInputId}>
           Email <LabelAsterix />
         </Label>
-        <InputS
+        <Input
           id={emailInputId}
           type="email"
           placeholder={ttt("Enter your email")}
           autocomplete={"email"}
-          valueSignal={sm.state.email}
+          value={sm.state.email.get()}
           onInput={(e) => {
             const newValue = e.currentTarget.value
             sm.state.email.set(newValue)

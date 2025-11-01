@@ -46,6 +46,7 @@ export function OrgMutate(p: OrgMutateProps) {
       console.warn("!org")
       return
     }
+    console.log("editAction", data)
     const orgIdResult = await editMutation({
       // auth
       token: userTokenGet(),
@@ -59,7 +60,7 @@ export function OrgMutate(p: OrgMutateProps) {
       toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    navigator(getReturnPath())
+    // navigator(getReturnPath())
   }
 
   async function deleteAction() {
@@ -73,6 +74,7 @@ export function OrgMutate(p: OrgMutateProps) {
       console.warn("!org")
       return
     }
+    console.log("deleteAction")
     const orgIdResult = await deleteMutation({
       // auth
       token: userTokenGet(),

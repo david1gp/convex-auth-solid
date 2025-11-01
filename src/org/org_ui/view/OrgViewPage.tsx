@@ -2,7 +2,7 @@ import { NavAppDir } from "@/app/nav/NavAppDir"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
-import { OrgView1 } from "@/org/org_ui/view/OrgView1"
+import { OrgView1Information } from "@/org/org_ui/view/OrgView1Information"
 import { OrgView2MemberList } from "@/org/org_ui/view/OrgView2MemberList"
 import { OrgView3InvitationList } from "@/org/org_ui/view/OrgView3InvitationList"
 import { createQuery } from "@/utils/convex/createQuery"
@@ -67,9 +67,9 @@ interface OrgViewAllProps extends MayHaveClass {
 function OrgViewAll(p: OrgViewAllProps) {
   return (
     <>
-      <OrgView1 org={p.data.org} />
-      <OrgView2MemberList members={p.data.members} />
-      <OrgView3InvitationList invitations={p.data.invitations} />
+      <OrgView1Information org={p.data.org} />
+      <OrgView2MemberList org={p.data.org} members={p.data.members} />
+      <OrgView3InvitationList org={p.data.org} invitations={p.data.invitations} />
     </>
   )
 }

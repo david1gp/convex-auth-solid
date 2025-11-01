@@ -4,7 +4,7 @@ import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { mdiLogin } from "@mdi/js"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { InputS } from "~ui/input/input/InputS"
+import { Input } from "~ui/input/input/Input"
 import { inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
@@ -28,12 +28,12 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
         <Label for={emailInputId}>
           Email <LabelAsterix />
         </Label>
-        <InputS
+        <Input
           id={emailInputId}
           type="email"
           placeholder="Enter your email"
           autocomplete={"email"}
-          valueSignal={sm.state.email}
+          value={sm.state.email.get()}
           onInput={(e) => {
             const newValue = e.currentTarget.value
             sm.state.email.set(newValue)
@@ -53,12 +53,12 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
           {ttt("Password")}
           <LabelAsterix />
         </Label>
-        <InputS
+        <Input
           id={pwInputId}
           type="password"
           placeholder="Enter your password"
           autocomplete="current-password"
-          valueSignal={sm.state.password}
+          value={sm.state.password.get()}
           onInput={(e) => {
             sm.state.password.set(e.currentTarget.value)
             sm.validateOnChange("password")(e.currentTarget.value)

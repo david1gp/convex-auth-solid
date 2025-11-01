@@ -2,6 +2,7 @@ import { urlAuthDev } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { useNavigate } from "@solidjs/router"
+import { ttt } from "~ui/i18n/ttt"
 import { inputMaxLength50 } from "~ui/input/input/inputMaxLength"
 import { InputS } from "~ui/input/input/InputS"
 import { Label } from "~ui/input/label/Label"
@@ -31,7 +32,8 @@ export function DevLoginSection(p: MayHaveClass) {
       >
         <div class="flex flex-col gap-2">
           <Label for={userIdField}>
-            User id <LabelAsterix />
+            {ttt("User id")}
+            <LabelAsterix />
           </Label>
           <InputS
             id={userIdField}

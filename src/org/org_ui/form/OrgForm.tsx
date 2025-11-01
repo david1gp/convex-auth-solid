@@ -6,11 +6,11 @@ import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
 import { getFormIcon } from "~ui/input/form/getFormIcon"
-import { InputS } from "~ui/input/input/InputS"
+import { Input } from "~ui/input/input/Input"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
-import { TextareaS } from "~ui/input/textarea/TextareaS"
+import { Textarea } from "~ui/input/textarea/Textarea"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -58,15 +58,16 @@ function NameField(p: HasOrgFormStateManagement) {
         {ttt("Name")}
         <LabelAsterix />
       </Label>
-      <InputS
+      <Input
         id={orgFormField.name}
         placeholder={ttt("Enter organization name")}
         autocomplete="organization-title"
-        valueSignal={p.sm.state.name}
+        value={p.sm.state.name.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(orgFormField.name)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.name.set(value)
+          p.sm.validateOnChange(orgFormField.name)(value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.name)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength50}
       />
@@ -84,15 +85,16 @@ function HandleField(p: HasOrgFormStateManagement) {
         {ttt("Organization Handle")}
         <LabelAsterix />
       </Label>
-      <InputS
+      <Input
         id={orgFormField.orgHandle}
         placeholder={ttt("your-company-name")}
         autocomplete="organization"
-        valueSignal={p.sm.state.orgHandle}
+        value={p.sm.state.orgHandle.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(orgFormField.orgHandle)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.orgHandle.set(value)
+          p.sm.validateOnChange(orgFormField.orgHandle)(value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.orgHandle)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.orgHandle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
       />
@@ -107,14 +109,15 @@ function DescriptionField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.description}>Description</Label>
-      <TextareaS
+      <Textarea
         id={orgFormField.description}
         placeholder={ttt("Enter organization description")}
-        valueSignal={p.sm.state.description}
+        value={p.sm.state.description.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(orgFormField.description)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.description.set(value)
+          p.sm.validateOnChange(orgFormField.description)(value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.description)(e.currentTarget.value)}
         class={classMerge(
           "w-full",
           p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
@@ -132,16 +135,17 @@ function UrlField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.url}>URL</Label>
-      <InputS
+      <Input
         id={orgFormField.url}
         type="url"
         placeholder={ttt("Enter organization URL")}
         autocomplete="url"
-        valueSignal={p.sm.state.url}
+        value={p.sm.state.url.get()}
         onInput={(e) => {
-          p.sm.validateOnChange(orgFormField.url)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.url.set(value)
+          p.sm.validateOnChange(orgFormField.url)(value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.url)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.url.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
       />
@@ -156,17 +160,17 @@ function ImageField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.image}>{ttt("Image URL")}</Label>
-      <InputS
+      <Input
         id={orgFormField.image}
         type="url"
         placeholder={ttt("Enter image URL")}
         autocomplete="url"
-        valueSignal={p.sm.state.image}
+        value={p.sm.state.image.get()}
         onInput={(e) => {
-          p.sm.state.image.set(e.currentTarget.value)
-          p.sm.validateOnChange(orgFormField.image)(e.currentTarget.value)
+          const value = e.currentTarget.value
+          p.sm.state.image.set(value)
+          p.sm.validateOnChange(orgFormField.image)(value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(orgFormField.image)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
       />

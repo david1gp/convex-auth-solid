@@ -1,9 +1,10 @@
 import { debounceMs } from "@/utils/ui/debounceMs"
 import type { DocWorkspace, IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import { workspaceDataSchemaFields } from "@/workspace/model/workspaceSchema"
-import { mdiAlertCircle } from "@mdi/js"
+import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
+import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
@@ -223,6 +224,16 @@ async function handleSubmit(
     if (image !== ss.image) {
       data.image = image
     }
+
+    if (Object.keys(data).length === 0) {
+      const icon = mdiPenOff
+      const title = ttt("No changes")
+      const id = "form"
+      toastAdd({ icon, title, id })
+      isSaving.set(false)
+      return
+    }
+
     await actions.edit(data)
   }
 
