@@ -46,7 +46,7 @@ export async function orgInvitation31SendEmailActionFn(
     // invite
     invitedName: args.invitedName,
     // by
-    invitedByPersonName: args.invitedByName,
+    invitedByName: args.invitedByName,
     invitedByEmail: args.invitedByEmail,
     // data
     orgName: args.orgName,

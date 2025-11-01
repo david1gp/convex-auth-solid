@@ -1,9 +1,8 @@
+import { dbUsersToUserProfile } from "@/auth/convex/crud/dbUsersToUserProfile"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { dbUsersToUserProfile } from "@/auth/convex/crud/dbUsersToUserProfile"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
 import type { OrgMemberProfile } from "../member_model/OrgMemberProfile"
 
 export const orgGetPageFields = {
@@ -13,10 +12,7 @@ export const orgGetPageFields = {
 export type OrgGetPageValidatorType = typeof orgGetPageValidator.type
 export const orgGetPageValidator = v.object(orgGetPageFields)
 
-export async function orgGetPageFn(
-  ctx: QueryCtx,
-  args: OrgGetPageValidatorType,
-): PromiseResult<OrgViewPageType> {
+export async function orgGetPageFn(ctx: QueryCtx, args: OrgGetPageValidatorType): PromiseResult<OrgViewPageType> {
   const op = "orgGetPageFn"
 
   const org = await ctx.db
@@ -40,12 +36,12 @@ export async function orgGetPageFn(
       }
       const profile = dbUsersToUserProfile(user, org.orgHandle, member.role)
       return { ...member, profile }
-    })
+    }),
   )
 
   const invitations = await ctx.db
     .query("orgInvitations")
-    .filter((q) => q.eq(q.field("orgId"), org._id))
+    .filter((q) => q.eq(q.field("orgHandle"), org.orgHandle))
     .collect()
 
   return createResult({

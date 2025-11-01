@@ -12,7 +12,7 @@ import { createError, type PromiseResult } from "~utils/result/Result"
 
 export type GenerateEmailOrgInvitationProps = {
   invitedName: string
-  invitedByPersonName: string
+  invitedByName: string
   invitedByEmail: string
   orgName: string
   url: string
