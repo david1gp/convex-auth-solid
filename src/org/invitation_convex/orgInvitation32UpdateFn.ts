@@ -1,4 +1,4 @@
-import { orgInvitationDataSchemaFields } from "@/org/invitation_model/OrgInvitationSchema"
+import { orgInvitationDataSchemaFields } from "@/org/invitation_model/orgInvitationSchema"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"

@@ -139,8 +139,8 @@ function fillTestData(state: OrgFormState, errors: OrgFormErrorState) {
 
 function validateOnChange(field: OrgFormField, state: OrgFormState, errors: OrgFormErrorState) {
   return debounce((value: string) => {
-    updateFieldError(field, value, state, errors)
     autoFillHandle(field, value, state, errors)
+    updateFieldError(field, value, state, errors)
   }, debounceMs)
 }
 
@@ -159,7 +159,6 @@ function autoFillHandle(field: OrgFormField, value: string, state: OrgFormState,
   if (field !== orgFormField.name) return
   const handle = handleGenerate(value)
   state.orgHandle.set(handle)
-  updateFieldError(orgFormField.orgHandle, handle, state, errors)
 }
 
 function validateFieldResult(field: OrgFormField, value: string) {

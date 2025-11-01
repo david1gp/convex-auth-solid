@@ -60,7 +60,7 @@ function NameField(p: HasOrgFormStateManagement) {
       </Label>
       <Input
         id={orgFormField.name}
-        placeholder={ttt("Enter organization name")}
+        placeholder={ttt("Enter organization name, ex. ACME")}
         autocomplete="organization-title"
         value={p.sm.state.name.get()}
         onInput={(e) => {

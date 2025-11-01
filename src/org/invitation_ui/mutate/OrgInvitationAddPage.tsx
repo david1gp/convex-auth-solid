@@ -39,8 +39,10 @@ export function OrgInvitationAddPage() {
   )
 }
 
+const orgInviteHeaderText = ttt("Invite to Organization")
+
 function getPageTitle(orgName?: string, workspaceName?: string) {
-  return ttt("Add new Organization Invitation")
+  return orgInviteHeaderText
 }
 
 export interface OrgInvitationAddProps extends HasOrgHandle, MayHaveReturnPath, MayHaveClass {}
@@ -69,5 +71,5 @@ export function OrgInvitationAdd(p: OrgInvitationAddProps) {
     navigator(url)
   }
   const sm = orgInvitationFormStateManagement({ add: addAction })
-  return <OrgInvitationForm mode={formMode.add} sm={sm} class={p.class} />
+  return <OrgInvitationForm title={orgInviteHeaderText} mode={formMode.add} sm={sm} class={p.class} />
 }

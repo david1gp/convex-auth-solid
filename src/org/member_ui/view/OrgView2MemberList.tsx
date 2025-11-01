@@ -4,7 +4,7 @@ import { For, Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import { orgPageSection } from "./orgPageSection"
+import { orgPageSection } from "../../org_ui/view/orgPageSection"
 
 export interface OrgMemberListProps extends Omit<OrgViewPageType, "invitations">, MayHaveClass {}
 

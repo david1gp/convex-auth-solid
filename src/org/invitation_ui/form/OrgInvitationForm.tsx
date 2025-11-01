@@ -1,7 +1,9 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
 import { orgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
 import type { OrgInvitationFormStateManagement } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
-import { orgRole, orgRoleText } from "@/org/org_model/orgRole"
+import { orgRole } from "@/org/org_model/orgRole"
+import { orgRoleText } from "@/org/org_model/orgRoleText"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -11,13 +13,14 @@ import { Input } from "~ui/input/input/Input"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { MayHaveTitle } from "~ui/utils/MayHaveTitle"
 import { classMerge } from "~ui/utils/classMerge"
 
 interface HasOrgInvitationFormStateManagement {
   sm: OrgInvitationFormStateManagement
 }
 
-export interface OrgInvitationContentProps extends MayHaveClass, HasOrgInvitationFormStateManagement {
+export interface OrgInvitationContentProps extends MayHaveTitle, MayHaveClass, HasOrgInvitationFormStateManagement {
   mode: FormMode
 }
 
@@ -27,11 +30,11 @@ export function OrgInvitationForm(p: OrgInvitationContentProps) {
   }
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
-      <h1 class="text-2xl font-bold mt-6 mb-2">{getOrgInvitationTitle(p.mode)}</h1>
+      <h1 class="text-2xl font-bold mt-6 mb-2">{p.title ?? getOrgInvitationTitle(p.mode)}</h1>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <InvitedNameField sm={p.sm} />
         <InvitedEmailField sm={p.sm} />
-        {/* <RoleField sm={p.sm} /> */}
+        {orgInvitationShowRole && <RoleField sm={p.sm} />}
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
@@ -60,11 +63,8 @@ function InvitedNameField(p: HasOrgInvitationFormStateManagement) {
           p.sm.state.invitedName.set(value)
           p.sm.validateOnChange(orgInvitationFormField.invitedName)(value)
         }}
-        class={classMerge(
-          "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-          p.sm.errors.invitedName.get() && "border-destructive focus-visible:ring-destructive",
-        )}
-        placeholder="user@example.com"
+        class={classMerge("", p.sm.errors.invitedName.get() && "border-destructive focus-visible:ring-destructive")}
+        placeholder={ttt("Recipient's Full Name")}
       />
       <Show when={p.sm.errors.invitedName.get()}>
         <p class="text-destructive">{p.sm.errors.invitedName.get()}</p>
@@ -89,10 +89,10 @@ function InvitedEmailField(p: HasOrgInvitationFormStateManagement) {
           p.sm.validateOnChange(orgInvitationFormField.invitedEmail)(value)
         }}
         class={classMerge(
-          "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
+          "focus-visible:ring-2",
           p.sm.errors.invitedEmail.get() && "border-destructive focus-visible:ring-destructive",
         )}
-        placeholder="user@example.com"
+        placeholder={ttt("Recipient's Email Address, ex. recipient@gmail.com")}
       />
       <Show when={p.sm.errors.invitedEmail.get()}>
         <p class="text-destructive">{p.sm.errors.invitedEmail.get()}</p>
