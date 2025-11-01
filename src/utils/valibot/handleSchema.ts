@@ -1,15 +1,16 @@
+import { cantBeEmpty } from "@/utils/valibot/cantBeEmpty"
 import * as v from "valibot"
 import { inputMaxLength25 } from "~ui/input/input/inputMaxLength"
 
-const regexMessage1 = "must only consist of lowercase letters, digits and hyphens"
-const regexMessage2 = "no consecutive hyphens"
-const regexMessage3 = "no leading hyphens"
-const regexMessage4 = "no trailing hyphens"
+const regexMessage1 = "Must only consist of lowercase letters, digits and hyphens"
+const regexMessage2 = "No consecutive hyphens"
+const regexMessage3 = "No leading hyphens"
+const regexMessage4 = "No trailing hyphens"
 
 export const handleSchema = v.pipe(
   v.string(),
   v.trim(),
-  v.nonEmpty(),
+  v.nonEmpty(cantBeEmpty),
   v.minLength(3),
   v.regex(/^[a-z0-9-]+$/, regexMessage1),
   v.regex(/^(?!.*--)/, regexMessage2),

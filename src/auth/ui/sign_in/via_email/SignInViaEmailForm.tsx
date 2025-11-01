@@ -28,7 +28,8 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("space-y-4", p.class)}>
       <div class="flex flex-col gap-2">
         <Label for={emailInputId}>
-          Email <LabelAsterix />
+          {ttt("Email")}
+          <LabelAsterix />
         </Label>
         <Input
           id={emailInputId}

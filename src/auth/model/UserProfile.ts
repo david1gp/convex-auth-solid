@@ -1,6 +1,6 @@
-import { emailSchema } from "@/auth/model/emailSchema"
 import { userRoleSchema, type UserRole } from "@/auth/model/userRole"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
+import { emailSchema } from "@/utils/valibot/emailSchema"
 import { handleSchema } from "@/utils/valibot/handleSchema"
 import { stringSchema0to500, stringSchema1to50 } from "@/utils/valibot/stringSchema"
 import * as v from "valibot"

@@ -1,6 +1,7 @@
+import { passwordSchema } from "@/auth/model/passwordSchema"
+import { emailSchema } from "@/utils/valibot/emailSchema"
 import * as v from "valibot"
 import { inputMaxLength50 } from "~ui/input/input/inputMaxLength"
-import { emailSchema, passwordSchema } from "./emailSchema"
 
 export type SignInViaPwType = v.InferOutput<typeof signInViaPwSchema>
 export const signInViaPwSchema = v.object({

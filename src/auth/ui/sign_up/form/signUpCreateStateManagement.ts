@@ -1,10 +1,13 @@
 import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
-import { emailSchema, passwordSchema, signUpNameSchema, signUpTermsSchema } from "@/auth/model/emailSchema"
+import { passwordSchema } from "@/auth/model/passwordSchema"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
 import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
+import { emailSchema } from "@/utils/valibot/emailSchema"
+import { signUpTermsSchema } from "@/auth/model/signUpTermsSchema"
+import { stringSchemaName } from "@/utils/valibot/stringSchema"
 import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
@@ -239,7 +242,7 @@ export type HandleSignUpData = {
 function validateFieldResult(field: SignUpFormField, value: string | boolean) {
   let schema
   if (field === signUpFormField.name) {
-    schema = signUpNameSchema
+    schema = stringSchemaName
   } else if (field === signUpFormField.email) {
     schema = emailSchema
   } else if (field === signUpFormField.pw) {

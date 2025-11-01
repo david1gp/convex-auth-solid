@@ -1,4 +1,4 @@
-import { otpSchema } from "@/auth/model/emailSchema"
+import { otpSchema } from "@/auth/model/otpSchema"
 import { mdiEmailCheck } from "@mdi/js"
 import { Show, createEffect } from "solid-js"
 import * as v from "valibot"

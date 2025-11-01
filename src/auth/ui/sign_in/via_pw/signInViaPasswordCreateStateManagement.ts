@@ -1,14 +1,15 @@
 import { apiAuthSignInViaPw } from "@/auth/api/apiAuthSignInViaPw"
+import { passwordSchema } from "@/auth/model/passwordSchema"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
+import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import { emailSchema, passwordSchema } from "../../../model/emailSchema"
 
 export type SignInUiState = {
   email: SignalObject<string>

@@ -1,4 +1,5 @@
-import { emailSchema, otpSchema } from "@/auth/model/emailSchema"
+import { otpSchema } from "@/auth/model/otpSchema"
+import { emailSchema } from "@/utils/valibot/emailSchema"
 import * as v from "valibot"
 
 export type SignUpConfirmEmailType = v.InferOutput<typeof signUpConfirmEmailSchema>
