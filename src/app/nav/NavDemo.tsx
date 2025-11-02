@@ -40,7 +40,7 @@ function ChildrenLeftCategory(s: DemoNavDataProps) {
   return (
     <>
       <NavSeparatingSlash />
-      <LinkButton variant={buttonVariant.ghost} href={`${s.demoPrefix}/${s.category}/`}>
+      <LinkButton variant={buttonVariant.ghost} href={`${s.demoPrefix}/${s.category}/`} class="text-lg font-medium">
         {s.category}
       </LinkButton>
     </>
@@ -65,12 +65,12 @@ function ComponentPopover(
     .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${s.demoPrefix}/${category}/${compName}`))
   if (!links || links.length <= 0) return null
   return (
-    <CorvuPopover variant={buttonVariant.ghost} buttonChildren={s.compName}>
+    <CorvuPopover variant={buttonVariant.ghost} buttonChildren={s.compName} class="text-lg font-medium">
       <LinkBlock header={s.category} removeUrlPrefix={`${s.demoPrefix}/${s.category}/`} links={links} />
     </CorvuPopover>
   )
 }
 
 function NavSeparatingSlash() {
-  return <span class={"py-1.5 text-gray-500 text-xl"}>/</span>
+  return <span class={"py-1.5 text-gray-500 text-lg font-medium select-none"}>/</span>
 }
