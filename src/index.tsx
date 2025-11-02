@@ -2,6 +2,7 @@
 
 import { getRoutesApp } from "@/app/getRoutesApp"
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
+import { NavDemo } from "@/app/nav/NavDemo"
 import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
 import { getRoutesOrgInvitation } from "@/org/invitation_url/getRoutesOrgInvitation"
 import { getRoutesOrgMember } from "@/org/member_url/getRoutesOrgMember"
@@ -30,7 +31,7 @@ const routesApp = [
 const routesDemo = [
   {
     component: LayoutWrapperDemo,
-    children: generateDemoRoutes(demoList, "/demos"),
+    children: generateDemoRoutes(demoList, "/demos", NavDemo),
   },
 ]
 
