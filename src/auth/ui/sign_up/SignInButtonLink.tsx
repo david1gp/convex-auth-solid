@@ -19,7 +19,7 @@ export function SignInButtonLink(p: SignInButtonLinkProps) {
 
   function getUrl() {
     const email = getSearchParamAsString(searchParams, "email")
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
     return urlPageSignIn(email, returnPath)
   }
   return (

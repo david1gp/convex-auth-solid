@@ -43,7 +43,7 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
   const searchParams = useSearchParamsObject()
   const email = getSearchParamAsString(searchParams, "email")
   async function handleSubmit(otp: string, emailParam: string) {
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
     return handleConfirm(otp, emailParam, returnPath, navigate)
   }
   return (

@@ -22,8 +22,8 @@ import {
   signUpFormField,
   type SignUpErrorState,
   type SignUpFormField,
-  type SignUpUiState,
-} from "./signUpCreateStateManagement"
+  type SignUpFormState,
+} from "./signUpCreateFormState"
 
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}
 
@@ -59,7 +59,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
 
 function FieldSwitch(
   field: SignUpFormField,
-  state: SignUpUiState,
+  state: SignUpFormState,
   errors: SignUpErrorState,
   validateOnChange: (field: SignUpFormField) => (value: string | boolean) => void,
   searchParams: SearchParamsObject,
@@ -136,7 +136,7 @@ function FieldSwitch(
 }
 
 function FieldSwitchTerms(
-  state: SignUpUiState,
+  state: SignUpFormState,
   errors: SignUpErrorState,
   validateOnChange: (field: SignUpFormField) => (value: string | boolean) => void,
 ) {

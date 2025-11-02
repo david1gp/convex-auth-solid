@@ -18,7 +18,7 @@ export function SignUpButtonLink(p: SignUpButtonLinkProps) {
   const searchParams = useSearchParamsObject()
   function getUrl() {
     const email = getSearchParamAsString(searchParams, "email")
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
     return urlPageSignUp(email, returnPath)
   }
   return (

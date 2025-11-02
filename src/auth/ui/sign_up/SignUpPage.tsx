@@ -107,7 +107,7 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
   const text = "Sign up with " + capitalizeFirstLetter(p.provider)
 
   function getReturnPath() {
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    const returnPath = getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
     return urlAuthProvider(p.provider, returnPath)
   }
 

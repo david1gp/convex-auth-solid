@@ -1,12 +1,13 @@
 import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
 import { passwordSchema } from "@/auth/model/passwordSchema"
+import { signUpTermsSchema } from "@/auth/model/signUpTermsSchema"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
+import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
 import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { emailSchema } from "@/utils/valibot/emailSchema"
-import { signUpTermsSchema } from "@/auth/model/signUpTermsSchema"
 import { stringSchemaName } from "@/utils/valibot/stringSchema"
 import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
@@ -39,7 +40,7 @@ export type SignUpUiState = {
   alreadyRegisteredEmails: SignalObject<Set<string>>
 }
 
-export function createSignUpUiState(searchParams: SearchParamsObject): SignUpUiState {
+export function signUpCreateFormState(searchParams: SearchParamsObject): SignUpUiState {
   return {
     name: createSignalObject(""),
     email: createSearchParamSignalObject(signUpFormField.email, searchParams),
@@ -71,10 +72,14 @@ export type SignUpFormData = {
   pw: string
 }
 
-export type SignUpUiStateManagement = {
+export type SignUpFormState = {
+  searchParams: SearchParamsObject
   isSubmitting: SignalObject<boolean>
   state: SignUpUiState
   errors: SignUpErrorState
+}
+
+export interface SignUpUiStateManagement extends SignUpFormState {
   hasErrors: () => boolean
   fillTestData: () => void
   validateOnChange: (field: SignUpFormField) => Scheduled<[value: string | boolean]>
@@ -88,17 +93,19 @@ export function signUpCreateStateManagement(
   searchParams: SearchParamsObject,
 ): SignUpUiStateManagement {
   const isSubmitting = createSignalObject(false)
-  const state = createSignUpUiState(searchParams)
+  const state = signUpCreateFormState(searchParams)
   const errors = createSignUpErrorState()
+  const s: SignUpFormState = { searchParams, isSubmitting, state, errors }
 
   return {
+    searchParams,
     isSubmitting,
     state,
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: SignUpFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, isSubmitting, state, errors),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, s, navigate),
   }
 }
 
@@ -144,19 +151,13 @@ function validateOnChange(field: SignUpFormField, state: SignUpUiState, errors: 
   }, debounceMs)
 }
 
-function handleSubmit(
-  e: SubmitEvent,
-  navigate: NavigateType,
-  isSubmitting: SignalObject<boolean>,
-  state: SignUpUiState,
-  errors: SignUpErrorState,
-) {
+function handleSubmit(e: SubmitEvent, s: SignUpFormState, navigate: NavigateType) {
   e.preventDefault()
 
-  const name = state.name.get()
-  const email = state.email.get()
-  const pw = state.pw.get()
-  const terms = state.terms.get()
+  const name = s.state.name.get()
+  const email = s.state.email.get()
+  const pw = s.state.pw.get()
+  const terms = s.state.terms.get()
 
   const nameResult = validateFieldResult(signUpFormField.name, name)
   const emailResult = validateFieldResult(signUpFormField.email, email)
@@ -164,17 +165,17 @@ function handleSubmit(
   const termsResult = validateFieldResult(signUpFormField.terms, terms)
 
   if (!nameResult.success) {
-    errors.name.set(nameResult.issues[0].message)
-  } else errors.name.set("")
+    s.errors.name.set(nameResult.issues[0].message)
+  } else s.errors.name.set("")
   if (!emailResult.success) {
-    errors.email.set(emailResult.issues[0].message)
-  } else errors.email.set("")
+    s.errors.email.set(emailResult.issues[0].message)
+  } else s.errors.email.set("")
   if (!pwResult.success) {
-    errors.pw.set(pwResult.issues[0].message)
-  } else errors.pw.set("")
+    s.errors.pw.set(pwResult.issues[0].message)
+  } else s.errors.pw.set("")
   if (!termsResult.success) {
-    errors.terms.set(termsResult.issues[0].message)
-  } else errors.terms.set("")
+    s.errors.terms.set(termsResult.issues[0].message)
+  } else s.errors.terms.set("")
 
   const isSuccess = nameResult.success && emailResult.success && pwResult.success && termsResult.success
 
@@ -194,24 +195,20 @@ function handleSubmit(
     return
   }
 
-  isSubmitting.set(true)
+  s.isSubmitting.set(true)
 
   const formData: SignUpFormData = {
     name: name,
     email: email,
     pw: pw,
   }
-  handleSignUp(formData, navigate, state, errors)
+  handleSignUp(formData, s, navigate)
 
-  isSubmitting.set(false)
+  s.isSubmitting.set(false)
 }
 
-async function handleSignUp(
-  values: HandleSignUpData,
-  nav: NavigateType,
-  state: SignUpUiState,
-  errors: SignUpErrorState,
-) {
+async function handleSignUp(values: HandleSignUpData, s: SignUpFormState, navigate: NavigateType) {
+  const op = "handleSignUp"
   // console.log("Sign up with email/password:", values)
   const result = await apiAuthSignUp(values)
   if (!result.success) {
@@ -219,18 +216,18 @@ async function handleSignUp(
     const title = result.errorMessage
     toastAdd({ id: "signup-api-error", title, icon: mdiAccountCancel })
     if (result.statusCode === 409) {
-      const currentSet = state.alreadyRegisteredEmails.get()
+      const currentSet = s.state.alreadyRegisteredEmails.get()
       const newSet = new Set([...currentSet, values.email])
-      state.alreadyRegisteredEmails.set(newSet)
+      s.state.alreadyRegisteredEmails.set(newSet)
       const errorMessage = ttt("Email already registered, please sign in instead")
-      errors.email.set(errorMessage)
+      s.errors.email.set(errorMessage)
       return
     }
     return
   }
-  const returnPath = urlSignInRedirectUrl(location.pathname)
-  console.log(returnPath)
-  nav(urlSignUpConfirmEmail(values.email, "", returnPath))
+  const returnPath = getSearchParamAsString(s.searchParams, "returnPath") || urlSignInRedirectUrl(location.pathname)
+  console.log(op, "returnPath:", returnPath)
+  navigate(urlSignUpConfirmEmail(values.email, "", returnPath))
 }
 
 export type HandleSignUpData = {

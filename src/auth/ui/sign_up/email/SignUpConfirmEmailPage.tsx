@@ -45,7 +45,7 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
     return getSearchParamAsString(searchParams, "email")
   }
   function getReturnPath() {
-    return getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
+    return getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
   }
   async function handleSubmit(otp: string, emailParam: string) {
     return handleConfirm(otp, emailParam, getReturnPath(), navigate)
