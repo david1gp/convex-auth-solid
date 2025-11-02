@@ -1,5 +1,5 @@
-import { lazy } from "solid-js";
-import type { DemoListType } from "~ui/generate_demo_list/DemoListType";
+import { lazy } from "solid-js"
+import type { DemoListType } from "~ui/generate_demo_list/DemoListType"
 
 const DemoOrgInvitationList = lazy(async () => {
 	const c = await import("@/org/invitation_ui/view/DemoOrgInvitationList");
@@ -16,11 +16,6 @@ const DemoLoaders = lazy(async () => {
 	return { default: c.DemoLoaders };
 });
 
-const DemoNativeSingleSelect = lazy(async () => {
-	const c = await import("@/ui/select/DemoNativeSingleSelect");
-	return { default: c.DemoNativeSingleSelect };
-});
-
 export const demoList = {
 	auth: {
 		DemoAuthLinks: DemoAuthLinks,
@@ -30,6 +25,5 @@ export const demoList = {
 	},
 	ui: {
 		DemoLoaders: DemoLoaders,
-		DemoNativeSingleSelect: DemoNativeSingleSelect,
 	},
 } as const satisfies DemoListType;
