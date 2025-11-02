@@ -1,17 +1,26 @@
 import { orgInvitation10ListFn, orgInvitationsListValidator } from "@/org/invitation_convex/orgInvitation10ListFn"
 import {
   orgInvitation20InitMutationFn,
-  orgInvitationInitMutationFields,
+  orgInvitationCreateActionValidator,
 } from "@/org/invitation_convex/orgInvitation20InitMutationFn"
 import {
   orgInvitation21CreateMutationFn,
   orgInvitationCreateMutationValidator,
 } from "@/org/invitation_convex/orgInvitation21CreateMutationFn"
-import { orgInvitation30ResendFn, orgInvitationResendFields } from "@/org/invitation_convex/orgInvitation30ResendFn"
-import { orgInvitation32UpdateFn, orgInvitationUpdateValidator } from "@/org/invitation_convex/orgInvitation32UpdateFn"
-import { orgInvitation40GetFn, orgInvitationGetFields } from "@/org/invitation_convex/orgInvitation40GetFn"
-import { orgInvitation50AcceptFn, orgInvitationAcceptFields } from "@/org/invitation_convex/orgInvitation50AcceptFn"
-import { orgMemberCreateFields, orgMemberCreateFn } from "@/org/member_convex/orgMemberCreateFn"
+import { orgInvitation30ResendFn, orgInvitationResendValidator } from "@/org/invitation_convex/orgInvitation30ResendFn"
+import { orgInvitation31SendFn, orgInvitationSendValidator } from "@/org/invitation_convex/orgInvitation31SendFn"
+import { orgInvitation33UpdateFn, orgInvitationUpdateValidator } from "@/org/invitation_convex/orgInvitation33UpdateFn"
+import { orgInvitation40GetFn, orgInvitationGetValidator } from "@/org/invitation_convex/orgInvitation40GetFn"
+import { orgInvitation50AcceptFn, orgInvitationAcceptValidator } from "@/org/invitation_convex/orgInvitation50AcceptFn"
+import {
+  orgInvitation60DismissMutationFn,
+  orgInvitationDismissFields,
+} from "@/org/invitation_convex/orgInvitation60DismissMutationFn"
+import {
+  orgInvitation70CleanupMutationFn,
+  orgInvitationCleanupValidator,
+} from "@/org/invitation_convex/orgInvitation70CleanupMutationFn"
+import { orgMemberCreateFn, orgMemberCreateValidator } from "@/org/member_convex/orgMemberCreateFn"
 import { orgMemberDeleteFields, orgMemberDeleteFn } from "@/org/member_convex/orgMemberDeleteFn"
 import { orgMemberEditFields, orgMemberEditFn } from "@/org/member_convex/orgMemberEditFn"
 import { orgMemberGetFields, orgMemberGetFn } from "@/org/member_convex/orgMemberGetFn"
@@ -27,7 +36,7 @@ import { orgGetFields, orgGetFn } from "@/org/org_convex/orgGetFn"
 import { orgGetPageFields, orgGetPageFn } from "@/org/org_convex/orgGetPageFn"
 import { orgHandleAvailableFields, orgHandleAvailableFn } from "@/org/org_convex/orgHandleAvailableFn"
 import { orgListFn, orgsListFields } from "@/org/org_convex/orgListFn"
-import { action, internalMutation, internalQuery, mutation, query } from "@convex/_generated/server"
+import { action, internalAction, internalMutation, internalQuery, mutation, query } from "@convex/_generated/server"
 import { authMutation } from "@convex/utils/authMutation"
 import { authMutationR } from "@convex/utils/authMutationR"
 import { authQuery } from "@convex/utils/authQuery"
@@ -69,8 +78,11 @@ export const orgDeleteMutation = mutation({
   handler: async (ctx, args) => authMutation(ctx, args, orgDeleteFn),
 })
 
+//
+// Members
+//
 export const orgMemberCreateMutation = mutation({
-  args: orgMemberCreateFields,
+  args: orgMemberCreateValidator,
   handler: orgMemberCreateFn,
 })
 
@@ -96,32 +108,37 @@ export const orgMemberDeleteMutation = mutation({
   handler: async (ctx, args) => authMutationR(ctx, args, orgMemberDeleteFn),
 })
 
+//
+// Invitations
+//
+
 export const orgInvitationCreateMutation = internalMutation({
   args: orgInvitationCreateMutationValidator,
-  handler: async (ctx, args) => {
-    return orgInvitation21CreateMutationFn(ctx, args)
-  },
+  handler: orgInvitation21CreateMutationFn,
 })
 
 export const orgInvitationInitMutation = mutation({
-  args: orgInvitationInitMutationFields,
-  handler: async (ctx, args) => {
-    return orgInvitation20InitMutationFn(ctx, args)
-  },
+  args: orgInvitationCreateActionValidator,
+  handler: orgInvitation20InitMutationFn,
 })
 
 export const orgInvitationResendAction = action({
-  args: orgInvitationResendFields,
+  args: orgInvitationResendValidator,
   handler: orgInvitation30ResendFn,
 })
 
+export const orgInvitationSendAction = internalAction({
+  args: orgInvitationSendValidator,
+  handler: orgInvitation31SendFn,
+})
+
 export const orgInvitationAcceptMutation = mutation({
-  args: orgInvitationAcceptFields,
+  args: orgInvitationAcceptValidator,
   handler: orgInvitation50AcceptFn,
 })
 
 export const orgInvitationGetQuery = query({
-  args: orgInvitationGetFields,
+  args: orgInvitationGetValidator,
   handler: orgInvitation40GetFn,
 })
 
@@ -132,12 +149,20 @@ export const orgInvitationsListQuery = query({
 
 export const getOrgMemberHandleAndRoleQuery = internalQuery({
   args: getOrgMemberHandleAndRoleValidator,
-  handler: async (ctx, args) => {
-    return await getOrgMemberHandleAndRoleQueryFn(ctx, args)
-  },
+  handler: getOrgMemberHandleAndRoleQueryFn,
 })
 
 export const orgInvitationUpdateMutation = internalMutation({
   args: orgInvitationUpdateValidator,
-  handler: orgInvitation32UpdateFn,
+  handler: orgInvitation33UpdateFn,
+})
+
+export const orgInvitationDismissMutation = mutation({
+  args: createTokenValidator(orgInvitationDismissFields),
+  handler: async (ctx, args) => authMutationR(ctx, args, orgInvitation60DismissMutationFn),
+})
+
+export const orgInvitationCleanupMutation = internalMutation({
+  args: orgInvitationCleanupValidator,
+  handler: orgInvitation70CleanupMutationFn,
 })

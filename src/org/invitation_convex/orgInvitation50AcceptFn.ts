@@ -6,6 +6,7 @@ import { loginMethod } from "@/auth/model/loginMethod"
 import { userRole } from "@/auth/model/userRole"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgGetFn } from "@/org/org_convex/orgGetFn"
+import { internal } from "@convex/_generated/api"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -114,9 +115,15 @@ export async function orgInvitation50AcceptFn(
     acceptedAt: now,
     updatedAt: now,
   })
+  // Delete invitation
+  // await ctx.db.delete(invitation._id)
+
+  // Shedule cleanup
+  const sheduleAt = 24 * 3600 * 1000 + 1
+  ctx.scheduler.runAfter(sheduleAt, internal.org.orgInvitationCleanupMutation, {})
 
   // Create org member
-  const orgMemberId = await ctx.db.insert("orgMembers", {
+  await ctx.db.insert("orgMembers", {
     orgId: org._id,
     userId: userDoc._id,
     role: invitation.role,

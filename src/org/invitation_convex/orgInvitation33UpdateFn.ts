@@ -30,7 +30,7 @@ export const orgInvitationUpdateFields = {
 
 export const orgInvitationUpdateValidator = v.object(orgInvitationUpdateFields)
 
-export async function orgInvitation32UpdateFn(
+export async function orgInvitation33UpdateFn(
   ctx: MutationCtx,
   args: OrgInvitationUpdateValidatorType,
 ): PromiseResult<null> {

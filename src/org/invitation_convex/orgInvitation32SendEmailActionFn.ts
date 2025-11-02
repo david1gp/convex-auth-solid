@@ -33,7 +33,7 @@ export const orgInvitationSendEmailFields = {
 
 export const orgInvitationSendEmailValidator = v.object(orgInvitationSendEmailFields)
 
-export async function orgInvitation31SendEmailActionFn(
+export async function orgInvitation32SendEmailActionFn(
   ctx: ActionCtx,
   args: OrgInvitationSendEmailValidatorType,
 ): PromiseResult<null> {

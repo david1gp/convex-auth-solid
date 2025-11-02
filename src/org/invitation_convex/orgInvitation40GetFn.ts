@@ -6,6 +6,7 @@ import { createResult, createResultError, type PromiseResult } from "~utils/resu
 export const orgInvitationGetFields = {
   orgHandle: v.optional(v.string()),
   invitationCode: v.string(),
+  updatedAt: v.optional(v.string()),
 } as const
 
 export type OrgInvitationGetValidatorType = typeof orgInvitationGetValidator.type
@@ -21,7 +22,6 @@ export async function orgInvitation40GetFn(
     return createResultError(op, "Missing invitation code", args.invitationCode)
   }
 
-  // Find invitation by code
   const invitation = await ctx.db
     .query("orgInvitations")
     .withIndex("invitationCode", (q) => q.eq("invitationCode", args.invitationCode))
@@ -30,11 +30,8 @@ export async function orgInvitation40GetFn(
   if (!invitation) {
     return createResultError(op, "Invalid invitation code", args.invitationCode)
   }
-
-  // Verify orgHandle matches
-  if (invitation.acceptedAt) {
-    return createResultError(op, "Invitation already accepted", args.invitationCode)
+  if (args.updatedAt === invitation.updatedAt) {
+    return createResult(null)
   }
-
   return createResult(invitation)
 }
