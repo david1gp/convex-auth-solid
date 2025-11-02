@@ -16,6 +16,11 @@ const SignInViaEmailEnterOtpPage = lazy(() =>
     default: c.SignInViaEmailEnterOtpPage,
   })),
 )
+const ViewUserProfilePage = lazy(() =>
+  import("@/auth/ui/profile/UserProfilePage").then((c) => ({
+    default: c.UserProfilePage,
+  })),
+)
 
 export function getRoutesAuth(): RouteObject[] {
   const routeMapping = {
@@ -24,6 +29,7 @@ export function getRoutesAuth(): RouteObject[] {
     signIn: SignInPage,
     signInEnterOtp: SignInViaEmailEnterOtpPage,
     signInError: SignInErrorPage,
+    userProfileView: ViewUserProfilePage,
   } as const satisfies Record<PageNameAuth, RouteComponent>
   return Object.entries(routeMapping).map(([routeKey, component]) => ({
     path: pageRouteAuth[routeKey as PageNameAuth],

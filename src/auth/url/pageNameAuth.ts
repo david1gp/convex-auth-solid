@@ -1,4 +1,3 @@
-
 export type PageNameAuth = keyof typeof pageNameAuth
 
 export const pageNameAuth = {
@@ -7,4 +6,5 @@ export const pageNameAuth = {
   signIn: "signIn",
   signInEnterOtp: "signInEnterOtp",
   signInError: "signInError",
+  userProfileView: "userProfileView",
 } as const
