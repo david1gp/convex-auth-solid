@@ -3,17 +3,12 @@ import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWi
 import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
 import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
 import { AuthMiniHero } from "@/auth/ui/sign_in/page/AuthMiniHero"
+import { SignUpButtonLink } from "@/auth/ui/sign_in/page/SignUpButtonLink"
 import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { SignInViaEmailForm } from "@/auth/ui/sign_in/via_email/SignInViaEmailForm"
 import { SignInViaPasswordForm } from "@/auth/ui/sign_in/via_pw/SignInViaPasswordForm"
-import { urlPageSignUp } from "@/auth/url/pageRouteAuth"
-import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
-import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
-import { mdiArrowRight } from "@mdi/js"
 import { ttt } from "~ui/i18n/ttt"
-import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
+import { buttonSize } from "~ui/interactive/button/buttonCva"
 import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
 import { classesGridCols3xl } from "~ui/static/container/classesGridCols"
 import { classArr } from "~ui/utils/classArr"
@@ -65,24 +60,10 @@ export function SignInPageContent(p: MayHaveClass) {
 }
 
 function NoAccountSection() {
-  const searchParams = useSearchParamsObject()
-  function getUrl() {
-    const email = getSearchParamAsString(searchParams, "email")
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
-    return urlPageSignUp(email, returnPath)
-  }
   return (
     <section class="flex flex-col gap-4">
       <h2 class="text-xl font-semibold">{ttt("Don't have an account?")}</h2>
-      <LinkButton
-        href={getUrl()}
-        iconRight={mdiArrowRight}
-        size={buttonSize.default}
-        variant={buttonVariant.default}
-        class="w-full"
-      >
-        {ttt("Sign Up instead")}
-      </LinkButton>
+      <SignUpButtonLink text={ttt("Sign Up instead")} class="w-full" />
     </section>
   )
 }

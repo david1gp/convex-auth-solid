@@ -1,4 +1,4 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import type { IdUser } from "@/auth/convex/IdUser"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import {
@@ -8,6 +8,7 @@ import {
 import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
 import { urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
@@ -32,7 +33,9 @@ export function OrgMemberAddPage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("Add Member")}</LinkLikeText>
+          </NavOrg>
           <OrgMemberAdd orgHandle={getOrgHandle()!} returnPath={getReturnPath()} />
         </PageWrapper>
       </Match>
@@ -40,7 +43,7 @@ export function OrgMemberAddPage() {
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(orgName?: string) {
   return ttt("Add new Organization Member")
 }
 

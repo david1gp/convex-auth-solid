@@ -1,5 +1,5 @@
 // import { AuthMiniHero } from "@/auth/AuthMiniHero"
-import { NavAuth } from "@/auth/ui/nav/NavAuth"
+import { NavAuth } from "@/app/nav/NavAuth"
 import { DevLoginSection } from "@/auth/ui/sign_in/dev/DevLoginSection"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
@@ -13,10 +13,11 @@ import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
 export interface SignInPageSocialOnlyProps extends MayHaveClass, MayHaveInnerClass {}
 
 export function SignInPageSocialOnly(p: SignInPageSocialOnlyProps) {
+  const title = "Sign in via Social Account"
   return (
     <div class={classArr("min-h-dvh w-full", classesBgGray, p.class)}>
       <div class={classArr("container max-w-7xl mx-auto", "space-y-8", "dark:text-white", "py-4 px-4", p.innerClass)}>
-        <NavAuth />
+        <NavAuth title={title} />
         {/* <AuthMiniHero /> */}
         <SignInWithAnExistingSession class="" />
         <SocialLoginButtonsSection class="" />

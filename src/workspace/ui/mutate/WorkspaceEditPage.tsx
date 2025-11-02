@@ -1,4 +1,5 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavWorkspace } from "@/app/nav/NavWorkspace"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { WorkspaceMutate } from "@/workspace/ui/mutate/WorkspaceMutate"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
@@ -20,7 +21,9 @@ export function WorkspaceEditPage() {
       </Match>
       <Match when={getWorkspaceHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()} />
+          <NavWorkspace getWorkspacePageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()}>
+            <LinkLikeText>{ttt("Edit")}</LinkLikeText>
+          </NavWorkspace>
           <WorkspaceMutate mode={mode} workspaceHandle={getWorkspaceHandle()!} returnPath={getReturnPath()} />
         </PageWrapper>
       </Match>

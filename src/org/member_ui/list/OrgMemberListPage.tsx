@@ -1,10 +1,11 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgMember } from "@/org/member_convex/IdOrgMember"
 import { NoOrgMembers } from "@/org/member_ui/list/NoOrgMembers"
 import { urlOrgMemberAdd, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
@@ -28,7 +29,9 @@ export function OrgMemberListPage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} orgHandle={getOrgHandle()} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("Members")}</LinkLikeText>
+          </NavOrg>
           <OrgMemberListLoader orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
@@ -38,7 +41,7 @@ export function OrgMemberListPage() {
 
 function getPageTitle(orgName?: string, workspaceName?: string) {
   const name = orgName ?? ttt("Organization")
-  return name + ttt(" Members")
+  return name + " " + ttt("Members")
 }
 
 type OrgMember = DocOrgMember

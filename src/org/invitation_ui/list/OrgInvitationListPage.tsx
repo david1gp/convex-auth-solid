@@ -1,4 +1,4 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { NoOrgInvitations } from "@/org/invitation_ui/list/NoOrgInvitations"
@@ -28,7 +28,9 @@ export function OrgInvitationListPage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} orgHandle={getOrgHandle()} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            {ttt("Invitations")}
+          </NavOrg>
           <OrgInvitationListLoader orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
@@ -36,7 +38,7 @@ export function OrgInvitationListPage() {
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(orgName?: string) {
   const name = orgName ?? ttt("Organization")
   return name + ttt(" Invitations")
 }
@@ -93,7 +95,9 @@ interface OrgInvitationListProps extends HasOrgHandle {
 function OrgInvitationList(p: OrgInvitationListProps) {
   return (
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getOrgInvitations()}>{(invitation) => <OrgInvitationLink orgHandle={p.orgHandle} invitation={invitation} />}</For>
+      <For each={p.getOrgInvitations()}>
+        {(invitation) => <OrgInvitationLink orgHandle={p.orgHandle} invitation={invitation} />}
+      </For>
     </div>
   )
 }
@@ -115,7 +119,11 @@ interface OrgInvitationLinkProps extends HasOrgHandle {
 }
 
 function OrgInvitationLink(p: OrgInvitationLinkProps) {
-  return <LinkButton href={urlOrgInvitationView(p.orgHandle, p.invitation.invitationCode)}>{p.invitation.invitedEmail}</LinkButton>
+  return (
+    <LinkButton href={urlOrgInvitationView(p.orgHandle, p.invitation.invitationCode)}>
+      {p.invitation.invitedEmail}
+    </LinkButton>
+  )
 }
 
 function OrgInvitationCreateLink(p: HasOrgHandle) {

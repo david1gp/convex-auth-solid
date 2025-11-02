@@ -1,8 +1,9 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { orgCreateFormStateManagement, type OrgFormData } from "@/org/org_ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { urlOrgView } from "@/org/org_url/urlOrg"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
@@ -17,7 +18,9 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 export function OrgAddPage() {
   return (
     <PageWrapper>
-      <NavAppDir getPageTitle={getPageTitle} />
+      <NavOrg getOrgPageTitle={getPageTitle}>
+        <LinkLikeText>{ttt("Add")}</LinkLikeText>
+      </NavOrg>
       <OrgAdd />
     </PageWrapper>
   )

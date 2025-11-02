@@ -1,21 +1,21 @@
+import { NavAuth } from "@/app/nav/NavAuth"
 import { appName } from "@/app/text/appName"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
-import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
 import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPasswordForm"
-import { urlPageSignIn } from "@/auth/url/pageRouteAuth"
+import { SignInButtonLink } from "@/auth/ui/sign_up/SignInButtonLink"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
 import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
-import { mdiArrowRight } from "@mdi/js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
+import { linkIcons } from "~ui/static/icon/linkIcons"
 import { Img } from "~ui/static/img/Img"
 import { Separator } from "~ui/static/separator/Separator"
 import { classMerge } from "~ui/utils/classMerge"
@@ -26,10 +26,19 @@ import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClass {}
 
 export const SignUpPage: Component<SignUpPageProps> = (p) => {
+  const pageTitle = ttt("Sign up") + " - " + appName
+  const title = ttt("Sign up")
   return (
-    <LayoutWrapperDemo title={"Sign up - " + appName}>
+    <LayoutWrapperDemo title={pageTitle}>
       <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavAuth />
+        <NavAuth title={title}>
+          <SignInButtonLink
+            size={buttonSize.default}
+            variant={buttonVariant.link}
+            icon={linkIcons.enter}
+            iconRight=""
+          />
+        </NavAuth>
         <div class={classMerge("container max-w-7xl mx-auto py-8 px-4", p.innerClass)}>
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <LeftSide />
@@ -118,18 +127,10 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
 }
 
 function HaveAnAccountSection() {
-  const searchParams = useSearchParamsObject()
-  function getUrl() {
-    const email = getSearchParamAsString(searchParams, "email")
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") ?? urlSignInRedirectUrl()
-    return urlPageSignIn(email, returnPath)
-  }
   return (
     <section class="space-y-2">
       <h2 class="text-xl font-semibold">{ttt("Have an account?")}</h2>
-      <LinkButton href={getUrl()} iconRight={mdiArrowRight} size={buttonSize.lg} variant={buttonVariant.default}>
-        {ttt("Sign In instead")}
-      </LinkButton>
+      <SignInButtonLink text={ttt("Sign In instead")} class="w-full" />
     </section>
   )
 }

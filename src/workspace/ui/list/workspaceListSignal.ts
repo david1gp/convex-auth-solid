@@ -95,9 +95,10 @@ export function workspaceListFindByHandle(workspaceHandle: string): WorkspaceMod
   return workspaceList.find((w) => w.workspaceHandle === workspaceHandle)
 }
 export function workspaceListFindNameByHandle(handle: string): string | undefined {
-  const org = workspaceListFindByHandle(handle)
-  if (!org) return undefined
-  return org.name
+  if (!handle) return undefined
+  const ws = workspaceListFindByHandle(handle)
+  if (!ws) return undefined
+  return ws.name
 }
 
 export function workspaceListFindById(id: IdWorkspace): WorkspaceModel | undefined {

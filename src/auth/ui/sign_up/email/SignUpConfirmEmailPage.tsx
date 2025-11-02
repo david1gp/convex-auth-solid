@@ -1,5 +1,5 @@
+import { NavAuth } from "@/app/nav/NavAuth"
 import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
-import { NavAuth } from "@/auth/ui/nav/NavAuth"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
@@ -19,10 +19,11 @@ import type { NavigateTo } from "~ui/utils/NavigateTo"
 import { EnterOtpForm } from "../../email/EnterOtpForm"
 
 export const SignUpConfirmEmailPage: Component<{}> = () => {
+  const title = ttt("Sign Up / Confirm Email")
   return (
-    <LayoutWrapperDemo title={ttt("Sign Up / Confirm Email")}>
+    <LayoutWrapperDemo title={title}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
-        <NavAuth />
+        <NavAuth title={title} />
         <div
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >

@@ -1,5 +1,6 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavWorkspace } from "@/app/nav/NavWorkspace"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import {
@@ -20,7 +21,9 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 export function WorkspaceAddPage() {
   return (
     <PageWrapper>
-      <NavAppDir getPageTitle={getPageTitle} />
+      <NavWorkspace getWorkspacePageTitle={getPageTitle}>
+        <LinkLikeText>{ttt("Add")}</LinkLikeText>
+      </NavWorkspace>
       <WorkspaceAdd />
     </PageWrapper>
   )

@@ -1,5 +1,6 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgMutate } from "@/org/org_ui/mutate/OrgMutate"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -19,7 +20,9 @@ export function OrgDeletePage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} orgHandle={getOrgHandle()} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("Delete")}</LinkLikeText>
+          </NavOrg>
           <OrgMutate mode={mode} orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>

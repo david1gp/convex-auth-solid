@@ -1,7 +1,8 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavWorkspace } from "@/app/nav/NavWorkspace"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { NoData } from "@/ui/illustrations/NoData"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
@@ -20,7 +21,9 @@ import type { Result, ResultOk } from "~utils/result/Result"
 export function WorkspaceListPage() {
   return (
     <PageWrapper>
-      <NavAppDir getPageTitle={getPageTitle} />
+      <NavWorkspace getWorkspacePageTitle={getPageTitle}>
+        <LinkLikeText>{ttt("List")}</LinkLikeText>
+      </NavWorkspace>
       <WorkspaceListLoader />
     </PageWrapper>
   )

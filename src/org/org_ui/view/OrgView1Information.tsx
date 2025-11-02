@@ -49,7 +49,7 @@ function LeftSide(p: OrgViewProps) {
 function RightSide(p: OrgViewProps) {
   return (
     <Show when={p.org.image}>
-      {(getSrc) => <Img src={getSrc()} alt={`${p.org.name} logo`} class="max-w-[400px]" />}
+      {(getSrc) => <Img src={getSrc()} alt={`${p.org.name} logo`} class="max-w-[300px]" />}
     </Show>
   )
 }

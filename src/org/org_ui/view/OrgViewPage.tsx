@@ -1,10 +1,11 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { OrgView3InvitationList } from "@/org/invitation_ui/view/OrgView3InvitationList"
 import { OrgView2MemberList } from "@/org/member_ui/view/OrgView2MemberList"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
 import { OrgView1Information } from "@/org/org_ui/view/OrgView1Information"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
@@ -25,7 +26,9 @@ export function OrgViewPage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getOrgHandle()} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("View")}</LinkLikeText>
+          </NavOrg>
           <OrgViewLoader orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
@@ -34,8 +37,7 @@ export function OrgViewPage() {
 }
 
 function getPageTitle(orgName?: string, workspaceName?: string) {
-  let title = "Organization"
-  return title
+  return orgName ?? ttt("Organization")
 }
 
 interface OrgViewLoaderProps extends HasOrgHandle, MayHaveClass {}

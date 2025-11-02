@@ -1,23 +1,14 @@
-import { pageNameAuth, type PageNameAuth } from "@/auth/url/pageNameAuth"
-import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
-import { BulletLinksO } from "~ui/interactive/list/BulletLinksO"
+import { AuthLinks } from "@/auth/ui/AuthLinks"
+import { ttt } from "~ui/i18n/ttt"
+import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function DemoAuthLinks() {
-  const authLinks = [
-    { key: "signUp", label: "Sign Up" },
-    { key: "signUpConfirmEmail", label: "Sign Up Confirm Email" },
-    { key: "signIn", label: "Sign In" },
-    { key: "signInEnterOtp", label: "Sign In Enter OTP" },
-    { key: "signInError", label: "Sign In Error" },
-  ] as const satisfies { key: PageNameAuth; label: string }[]
-
-  const urlObjects = authLinks.reduce(
-    (acc, { key, label }) => {
-      acc[label] = pageRouteAuth[pageNameAuth[key]]
-      return acc
-    },
-    {} as Record<string, string>,
+  return (
+    <PageWrapper>
+      <section>
+        <h2 class="text-lg font-semibold mb-2">{ttt("Demo Auth Links")}</h2>
+        <AuthLinks />
+      </section>
+    </PageWrapper>
   )
-
-  return <BulletLinksO urlObject={urlObjects} />
 }

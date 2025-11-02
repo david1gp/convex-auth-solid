@@ -94,6 +94,7 @@ export function orgListFindByHandle(orgHandle: string): OrgModel | undefined {
 }
 
 export function orgListFindNameByHandle(handle: string): string | undefined {
+  if (!handle) return undefined
   const org = orgListFindByHandle(handle)
   if (!org) return undefined
   return org.name

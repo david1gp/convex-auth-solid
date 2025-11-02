@@ -1,4 +1,4 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { OrgInvitationForm } from "@/org/invitation_ui/form/OrgInvitationForm"
 import {
@@ -7,6 +7,8 @@ import {
 } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 import { urlOrgInvitationView } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
@@ -31,7 +33,9 @@ export function OrgInvitationAddPage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} />
+          <NavOrg getOrgPageTitle={inviteToText} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("Invite")}</LinkLikeText>
+          </NavOrg>
           <OrgInvitationAdd orgHandle={getOrgHandle()!} returnPath={getReturnPath()} />
         </PageWrapper>
       </Match>
@@ -39,10 +43,9 @@ export function OrgInvitationAddPage() {
   )
 }
 
-const orgInviteHeaderText = ttt("Invite to Organization")
-
-function getPageTitle(orgName?: string, workspaceName?: string) {
-  return orgInviteHeaderText
+function inviteToText(orgName?: string) {
+  const subject = orgName ?? ttt("Organization")
+  return ttt("Invite to") + " " + subject
 }
 
 export interface OrgInvitationAddProps extends HasOrgHandle, MayHaveReturnPath, MayHaveClass {}
@@ -71,5 +74,9 @@ export function OrgInvitationAdd(p: OrgInvitationAddProps) {
     navigator(url)
   }
   const sm = orgInvitationFormStateManagement({ add: addAction })
-  return <OrgInvitationForm title={orgInviteHeaderText} mode={formMode.add} sm={sm} class={p.class} />
+  return <OrgInvitationForm title={inviteToText(getOrgName(p.orgHandle))} mode={formMode.add} sm={sm} class={p.class} />
+}
+
+function getOrgName(orgHandle: string) {
+  return orgListFindNameByHandle(orgHandle)
 }

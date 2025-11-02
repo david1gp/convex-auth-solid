@@ -1,4 +1,5 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavWorkspace } from "@/app/nav/NavWorkspace"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
 import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
 import { urlWorkspaceEdit } from "@/workspace/url/urlWorkspace"
@@ -22,7 +23,9 @@ export function WorkspaceViewPage() {
       </Match>
       <Match when={getWorkspaceHandle()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()} />
+          <NavWorkspace getWorkspacePageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()}>
+            <LinkLikeText>{ttt("View")}</LinkLikeText>
+          </NavWorkspace>
           <WorkspaceView workspaceHandle={getWorkspaceHandle()!} />
         </PageWrapper>
       </Match>

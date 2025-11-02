@@ -1,10 +1,11 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgListSignal } from "@/org/org_ui/list/orgListSignal"
 import { urlOrgAdd, urlOrgView } from "@/org/org_url/urlOrg"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { NoData } from "@/ui/illustrations/NoData"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
@@ -20,13 +21,15 @@ import type { Result, ResultOk } from "~utils/result/Result"
 export function OrgListPage() {
   return (
     <PageWrapper>
-      <NavAppDir getPageTitle={getPageTitle} />
+      <NavOrg getOrgPageTitle={getPageTitle}>
+        <LinkLikeText>{ttt("List")}</LinkLikeText>
+      </NavOrg>
       <OrgListLoader />
     </PageWrapper>
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(orgName?: string) {
   return ttt("Organizations")
 }
 

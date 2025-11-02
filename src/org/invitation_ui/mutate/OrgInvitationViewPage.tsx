@@ -1,5 +1,6 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgInvitationMutate } from "@/org/invitation_ui/mutate/OrgInvitationMutate"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -23,7 +24,9 @@ export function OrgInvitationViewPage() {
       </Match>
       <Match when={getInvitationCode()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("Invitation")}</LinkLikeText>
+          </NavOrg>
           <OrgInvitationMutate mode={mode} orgHandle={getOrgHandle()!} invitationCode={getInvitationCode()!} />
         </PageWrapper>
       </Match>

@@ -1,5 +1,6 @@
-import { NavAppDir } from "@/app/nav/NavAppDir"
+import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgMemberMutate } from "@/org/member_ui/mutate/OrgMemberMutate"
+import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -23,7 +24,9 @@ export function OrgMemberEditPage() {
       </Match>
       <Match when={getMemberId()}>
         <PageWrapper>
-          <NavAppDir getPageTitle={getPageTitle} />
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+            <LinkLikeText>{ttt("Edit Member")}</LinkLikeText>
+          </NavOrg>
           <OrgMemberMutate mode={mode} orgHandle={getOrgHandle()!} memberId={getMemberId()!} />
         </PageWrapper>
       </Match>
