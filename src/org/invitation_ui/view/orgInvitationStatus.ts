@@ -11,9 +11,9 @@ export const orgInvitationStatus = {
 } as const
 
 export const orgInvitationStatusText = {
-  sendingEmail: ttt("Sending Email..."),
-  waitingForConfirmation: ttt("Email send, waiting for manual confirmation"),
-  accepted: ttt("Accepted"),
+  sendingEmail: ttt("Sending Invitation Email..."),
+  waitingForConfirmation: ttt("Waiting for manual confirmation"),
+  accepted: ttt("Invitation accepted"),
 } as const
 
 export const orgInvitationStatusIcon = {
@@ -28,13 +28,8 @@ export const orgInvitationStatusClasses = {
   accepted: "text-green-600",
 } as const
 
-export type OrgInvitationStatusAndTime = {
-  status: OrgInvitationStatus
-  date?: string
-}
-
-export function invitationDocToStatus(i: DocOrgInvitation): OrgInvitationStatusAndTime {
-  if (i.acceptedAt) return { status: orgInvitationStatus.accepted, date: i.acceptedAt }
-  if (i.emailSendAt) return { status: orgInvitationStatus.waitingForConfirmation, date: i.emailSendAt }
-  return { status: orgInvitationStatus.sendingEmail }
+export function invitationDocToStatus(i: DocOrgInvitation): OrgInvitationStatus {
+  if (i.acceptedAt) return orgInvitationStatus.accepted
+  if (i.emailSendAt) return orgInvitationStatus.waitingForConfirmation
+  return orgInvitationStatus.sendingEmail
 }

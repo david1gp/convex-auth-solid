@@ -11,3 +11,7 @@ export type OrgDataModel = {
 }
 
 export interface OrgModel extends HasConvexSystemFields<IdOrg>, OrgDataModel, HasCreatedAtUpdatedAt {}
+
+export function orgDataModelCreateEmpty(): OrgDataModel {
+  return { name: "", orgHandle: "test-org-empty", description: "", url: "", image: "" }
+}
