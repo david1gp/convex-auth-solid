@@ -1,28 +1,24 @@
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import { OrgView3InvitationList, type OrgInvitationsProps } from "@/org/invitation_ui/view/OrgView3InvitationList"
-import type { DocOrg } from "@/org/org_convex/IdOrg"
-import { orgDataModelCreateEmpty } from "@/org/org_model/OrgModel"
+import { OrgInvitationListSection, type OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
 import { convexSystemFieldsCreateEmpty } from "@/utils/convex/HasConvexSystemFields"
 import { createdAtUpdatedAtCreate } from "@/utils/convex/HasCreatedAtUpdatedAt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function DemoOrgInvitationList() {
   const props: OrgInvitationsProps = {
-    org,
+    orgHandle: "demo-org",
     invitations,
   }
 
   return (
     <LayoutWrapperApp>
       <PageWrapper>
-        <OrgView3InvitationList {...props} />
+        <OrgInvitationListSection {...props} />
       </PageWrapper>
     </LayoutWrapperApp>
   )
 }
-
-const org: DocOrg = { ...orgDataModelCreateEmpty(), ...createdAtUpdatedAtCreate(), ...convexSystemFieldsCreateEmpty() }
 
 // Example invitations showing all 3 orgInvitationStatus with different times
 const invitations: DocOrgInvitation[] = [

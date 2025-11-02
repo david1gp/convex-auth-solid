@@ -1,7 +1,7 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import { OrgView3InvitationList } from "@/org/invitation_ui/view/OrgView3InvitationList"
-import { OrgView2MemberList } from "@/org/member_ui/view/OrgView2MemberList"
+import { OrgInvitationListSection } from "@/org/invitation_ui/list/OrgInvitationListSection"
+import { OrgMemberListSection } from "@/org/member_ui/list/OrgMemberListSection"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
 import { OrgView1Information } from "@/org/org_ui/view/OrgView1Information"
@@ -70,8 +70,8 @@ function OrgViewAll(p: OrgViewAllProps) {
   return (
     <>
       <OrgView1Information org={p.data.org} />
-      <OrgView2MemberList org={p.data.org} members={p.data.members} />
-      <OrgView3InvitationList org={p.data.org} invitations={p.data.invitations} />
+      <OrgMemberListSection orgHandle={p.data.org.orgHandle} members={p.data.members} />
+      <OrgInvitationListSection orgHandle={p.data.org.orgHandle} invitations={p.data.invitations} />
     </>
   )
 }

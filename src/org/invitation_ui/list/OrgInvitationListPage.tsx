@@ -1,21 +1,24 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import { NoOrgInvitations } from "@/org/invitation_ui/list/NoOrgInvitations"
-import { urlOrgInvitationAdd, urlOrgInvitationView } from "@/org/invitation_url/urlOrgInvitation"
+import type { OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
+import { OrgInvitationCard } from "@/org/invitation_ui/view/OrgInvitationCard"
+import { urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
+import { NoData } from "@/ui/illustrations/NoData"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
 import { useParams } from "@solidjs/router"
-import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
+import { createEffect, For, Match, Show, splitProps, Switch, type Accessor } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { ErrorPage } from "~ui/static/pages/ErrorPage"
+import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 import type { Result, ResultOk } from "~utils/result/Result"
 
 export function OrgInvitationListPage() {
@@ -64,42 +67,27 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
   return (
     <>
       <PageHeader title={ttt("Organization Invitations")} subtitle={ttt("Manage invitations of this organization")}>
-        <OrgInvitationCreateLink orgHandle={p.orgHandle} />
+        <LinkButton icon={mdiPlus} href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.success}>
+          {ttt("Add Invitation")}
+        </LinkButton>
       </PageHeader>
-
       <Switch fallback={<p>Fallback content</p>}>
         <Match when={getOrgInvitationsResult() === undefined}>
           <OrgInvitationLoading />
         </Match>
         <Match when={!hasOrgInvitations(getOrgInvitationsResult())}>
-          <NoOrgInvitations />
+          <NoOrgInvitationsSection />
         </Match>
         <Match when={true}>
-          <OrgInvitationList orgHandle={p.orgHandle} getOrgInvitations={getOrgInvitations(getOrgInvitationsResult())} />
+          <OrgInvitationList orgHandle={p.orgHandle} invitations={getOrgInvitations(getOrgInvitationsResult())} />
         </Match>
       </Switch>
     </>
   )
 }
 
-function getOrgInvitations(orgInvitationsResult: Result<OrgInvitation[]> | undefined): Accessor<OrgInvitation[]> {
-  return () => {
-    return (orgInvitationsResult as ResultOk<OrgInvitation[]>).data
-  }
-}
-
-interface OrgInvitationListProps extends HasOrgHandle {
-  getOrgInvitations: Accessor<OrgInvitation[]>
-}
-
-function OrgInvitationList(p: OrgInvitationListProps) {
-  return (
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getOrgInvitations()}>
-        {(invitation) => <OrgInvitationLink orgHandle={p.orgHandle} invitation={invitation} />}
-      </For>
-    </div>
-  )
+function getOrgInvitations(orgInvitationsResult: Result<OrgInvitation[]> | undefined): OrgInvitation[] {
+  return (orgInvitationsResult as ResultOk<OrgInvitation[]>).data
 }
 
 function hasOrgInvitations(orgInvitationsResult: Result<OrgInvitation[]> | undefined): OrgInvitation[] | null {
@@ -114,22 +102,21 @@ function OrgInvitationLoading() {
   return <LoadingSection loadingSubject={ttt("Organization Invitations")} />
 }
 
-interface OrgInvitationLinkProps extends HasOrgHandle {
-  invitation: OrgInvitation
-}
-
-function OrgInvitationLink(p: OrgInvitationLinkProps) {
+function OrgInvitationList(p: OrgInvitationsProps) {
+  const [s, rest] = splitProps(p, ["class"])
   return (
-    <LinkButton href={urlOrgInvitationView(p.orgHandle, p.invitation.invitationCode)}>
-      {p.invitation.invitedEmail}
-    </LinkButton>
+    <Show when={p.invitations.length > 0} fallback={<NoOrgInvitationsSection />}>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <For each={p.invitations}>{(invitation) => <OrgInvitationCard {...rest} invitation={invitation} />}</For>
+      </div>
+    </Show>
   )
 }
 
-function OrgInvitationCreateLink(p: HasOrgHandle) {
+export function NoOrgInvitationsSection(p: MayHaveClassAndChildren) {
   return (
-    <LinkButton icon={mdiPlus} href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.success}>
-      {ttt("Add Invitation")}
-    </LinkButton>
+    <NoData noDataText={ttt("No Organization Invitations")} class={p.class}>
+      {p.children}
+    </NoData>
   )
 }

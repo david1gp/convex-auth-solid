@@ -1,9 +1,9 @@
 import { classMerge } from "~ui/utils/classMerge"
-import type { HasSubtitle } from "~ui/utils/HasSubtitle"
 import type { HasTitle } from "~ui/utils/HasTitle"
 import type { MayHaveChildrenAndClass } from "~ui/utils/MayHaveChildrenAndClass"
+import type { MayHaveSubtitle } from "~ui/utils/MayHaveSubtitle"
 
-export interface PageHeaderProps extends HasTitle, HasSubtitle, MayHaveChildrenAndClass {}
+export interface PageHeaderProps extends HasTitle, MayHaveSubtitle, MayHaveChildrenAndClass {}
 
 export function PageHeader(p: PageHeaderProps) {
   return (
@@ -12,7 +12,7 @@ export function PageHeader(p: PageHeaderProps) {
         <h1 class={classMerge("text-2xl font-semibold", p.titleClass)}>{p.title}</h1>
         {p.children}
       </div>
-      <p class={classMerge("text-lg mb-4", p.subtitleClass)}>{p.subtitle}</p>
+      {p.subtitle && <p class={classMerge("text-lg mb-4", p.subtitleClass)}>{p.subtitle}</p>}
     </header>
   )
 }

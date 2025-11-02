@@ -1,10 +1,10 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgMember } from "@/org/member_convex/IdOrgMember"
-import { NoOrgMembers } from "@/org/member_ui/list/NoOrgMembers"
 import { urlOrgMemberAdd, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
+import { NoData } from "@/ui/illustrations/NoData"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
@@ -17,6 +17,7 @@ import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { ErrorPage } from "~ui/static/pages/ErrorPage"
+import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 import type { Result, ResultOk } from "~utils/result/Result"
 
 export function OrgMemberListPage() {
@@ -80,6 +81,14 @@ function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
         </Match>
       </Switch>
     </>
+  )
+}
+
+export function NoOrgMembers(p: MayHaveClassAndChildren) {
+  return (
+    <NoData noDataText={ttt("No Members")} class={p.class}>
+      {p.children}
+    </NoData>
   )
 }
 
