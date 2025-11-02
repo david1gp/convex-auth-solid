@@ -1,7 +1,7 @@
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgPageSection } from "@/org/org_ui/view/orgPageSection"
 import { urlOrgEdit } from "@/org/org_url/urlOrg"
-import { Show } from "solid-js"
+import { For, Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formIcon } from "~ui/input/form/getFormIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -40,10 +40,21 @@ function Header(p: OrgViewProps) {
 function LeftSide(p: OrgViewProps) {
   return (
     <div class="flex flex-col flex-1">
-      <Show when={p.org.description}>{(getDescription) => <p class="text-lg mb-4">{getDescription()}</p>}</Show>
+      <Show when={p.org.description}>
+        {(getDescription) => (
+          <div class="text-lg mb-4">
+            <Description description={getDescription()} />
+          </div>
+        )}
+      </Show>
       <Show when={p.org.url}>{(getUrl) => <LinkText href={getUrl()}>{getUrl()}</LinkText>}</Show>
     </div>
   )
+}
+
+function Description(p: { description: string }) {
+  const lines = p.description.split("\n")
+  return <For each={lines}>{(line) => <p>{line}</p>}</For>
 }
 
 function RightSide(p: OrgViewProps) {

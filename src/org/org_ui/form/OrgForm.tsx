@@ -120,6 +120,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
         }}
         class={classMerge(
           "w-full",
+          "min-h-[3lh] h-[7lh]",
           p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
         )}
         maxLength={urlMaxLength}
