@@ -1,13 +1,11 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import {
-  workspaceFormField,
-  type WorkspaceFormStateManagement,
-} from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceCreateFormState"
+import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
-import { getFormIcon } from "~ui/input/form/getFormIcon"
+import { formIcon, getFormIcon } from "~ui/input/form/getFormIcon"
 import { Input } from "~ui/input/input/Input"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
@@ -15,6 +13,7 @@ import { LabelAsterix } from "~ui/input/label/LabelAsterix"
 import { Textarea } from "~ui/input/textarea/Textarea"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
+import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
 
@@ -23,6 +22,7 @@ interface HasOrgFormStateManagement {
 }
 
 export interface WorkspaceContentProps extends MayHaveClass, HasOrgFormStateManagement {
+  workspaceHandle?: string
   mode: FormMode
 }
 
@@ -32,17 +32,29 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
   }
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
-      <h1 class="text-2xl font-bold mt-6 mb-2">{getWorkspaceTitle(p.mode)}</h1>
+      <div class="flex flex-wrap justify-between mt-6 mb-2">
+        <h1 class="text-2xl font-bold">{getWorkspaceTitle(p.mode)}</h1>
+        {p.mode === formMode.edit && (
+          <LinkButton
+            icon={formIcon.remove}
+            href={urlWorkspaceRemove(p.workspaceHandle ?? "missing")}
+            variant={buttonVariant.link}
+          >
+            {ttt("Remove")}
+          </LinkButton>
+        )}
+      </div>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <NameField sm={p.sm} />
         {p.mode === formMode.add && <HandleField sm={p.sm} />}
         <DescriptionField sm={p.sm} />
         <ImageField sm={p.sm} />
+        <UrlField sm={p.sm} />
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
           icon={getFormIcon(p.mode)}
-          variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
           {p.sm.isSaving.get() ? "Saving..." : getWorkspaceTitle(p.mode)}
@@ -71,6 +83,7 @@ function NameField(p: HasOrgFormStateManagement) {
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength50}
+        disabled={p.sm.mode === formMode.remove}
       />
       <Show when={p.sm.errors.name.get()}>
         <p class="text-destructive">{p.sm.errors.name.get()}</p>
@@ -101,6 +114,7 @@ function HandleField(p: HasOrgFormStateManagement) {
           p.sm.errors.workspaceHandle.get() && "border-destructive focus-visible:ring-destructive",
         )}
         maxLength={inputMaxLength25}
+        disabled={p.sm.mode === formMode.remove}
       />
       <Show when={p.sm.errors.workspaceHandle.get()}>
         <p class="text-destructive">{p.sm.errors.workspaceHandle.get()}</p>
@@ -128,6 +142,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
           p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
         )}
         maxLength={urlMaxLength}
+        disabled={p.sm.mode === formMode.remove}
       />
       <Show when={p.sm.errors.description.get()}>
         <p class="text-destructive">{p.sm.errors.description.get()}</p>
@@ -154,9 +169,37 @@ function ImageField(p: HasOrgFormStateManagement) {
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
+        disabled={p.sm.mode === formMode.remove}
       />
       <Show when={p.sm.errors.image.get()}>
         <p class="text-destructive">{p.sm.errors.image.get()}</p>
+      </Show>
+    </div>
+  )
+}
+
+function UrlField(p: HasOrgFormStateManagement) {
+  return (
+    <div class="flex flex-col gap-2">
+      <Label for={workspaceFormField.url}>Website URL</Label>
+      <Input
+        id={workspaceFormField.url}
+        type="url"
+        placeholder={ttt("Enter website URL")}
+        autocomplete="url"
+        value={p.sm.state.url.get()}
+        onInput={(e) => {
+          const value = e.currentTarget.value
+          p.sm.state.url.set(value)
+          p.sm.validateOnChange(workspaceFormField.url)(value)
+        }}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.url)(e.currentTarget.value)}
+        class={classMerge("w-full", p.sm.errors.url.get() && "border-destructive focus-visible:ring-destructive")}
+        maxLength={urlMaxLength}
+        disabled={p.sm.mode === formMode.remove}
+      />
+      <Show when={p.sm.errors.url.get()}>
+        <p class="text-destructive">{p.sm.errors.url.get()}</p>
       </Show>
     </div>
   )
