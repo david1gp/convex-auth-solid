@@ -1,36 +1,41 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createMutation } from "@/utils/convex/createMutation"
-import { createQuery } from "@/utils/convex/createQuery"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
-import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
 import {
-  workspaceCreateFormStateManagement,
+  workspaceCreateFormState,
   type WorkspaceFormActions,
   type WorkspaceFormData,
-} from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+} from "@/workspace/ui/form/workspaceCreateFormState"
 import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
+import { WorkspaceLoader, type WorkspaceComponentProps } from "@/workspace/ui/view/WorkspaceLoader"
 import { urlWorkspaceList, urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
-import { Show, createEffect } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
+import { createEffect } from "solid-js"
 import { formMode, type HasFormModeMutate } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
-interface WorkspaceMutateProps extends HasWorkspaceHandle, HasFormModeMutate, MayHaveReturnPath, MayHaveClass {}
+interface WorkspaceMutateProps extends HasWorkspaceHandle, HasFormModeMutate, MayHaveClass {}
 
 export function WorkspaceMutate(p: WorkspaceMutateProps) {
-  const op = "WorkspaceMutate"
-  const navigator = useNavigate()
-  const getWorkspace = createQuery(api.workspace.workspaceGetQuery, {
-    token: userTokenGet(),
-    workspaceHandle: p.workspaceHandle,
-  }) as () => DocWorkspace | undefined
+  function WorkspaceComponent(wp: WorkspaceComponentProps) {
+    return <WorkspaceMutateForm mode={p.mode} {...wp} />
+  }
+  return <WorkspaceLoader workspaceHandle={p.workspaceHandle} WorkspaceComponent={WorkspaceComponent} />
+}
 
+interface WorkspaceMutateFormProps
+  extends WorkspaceComponentProps,
+    HasFormModeMutate,
+    MayHaveReturnPath,
+    MayHaveClass {}
+
+function WorkspaceMutateForm(p: WorkspaceMutateFormProps) {
+  const op = "WorkspaceMutateForm"
+  const navigator = useNavigate()
   const editMutation = createMutation(api.workspace.workspaceEditMutation)
   const deleteMutation = createMutation(api.workspace.workspaceDeleteMutation)
 
@@ -41,7 +46,7 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
       // data
       ...data,
       // id
-      workspaceHandle: p.workspaceHandle,
+      workspaceHandle: p.workspace.workspaceHandle,
     })
     if (!editResult.success) {
       console.error(editResult)
@@ -55,7 +60,7 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
       // auth
       token: userTokenGet(),
       // id
-      workspaceHandle: p.workspaceHandle,
+      workspaceHandle: p.workspace.workspaceHandle,
     })
     if (!deleteResult.success) {
       console.error(deleteResult)
@@ -65,8 +70,7 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
     navigator(getReturnPath())
   }
   function getReturnPath() {
-    if (p.returnPath) return p.returnPath
-    if (p.mode === formMode.edit) return urlWorkspaceView(p.workspaceHandle)
+    if (p.mode === formMode.edit) return urlWorkspaceView(p.workspace.workspaceHandle)
     return urlWorkspaceList()
   }
 
@@ -78,23 +82,14 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
     actions.delete = removeAction
   }
 
-  const sm = workspaceCreateFormStateManagement(actions)
+  const sm = workspaceCreateFormState(p.mode, actions)
 
   createEffect(() => {
-    const ws = getWorkspace()
+    const ws = p.workspace
     if (!ws) {
       return
     }
     sm.loadData(ws)
   })
-
-  return (
-    <Show when={getWorkspace()} fallback={<WorkspaceLoading />}>
-      <WorkspaceForm mode={p.mode} sm={sm} />
-    </Show>
-  )
-}
-
-function WorkspaceLoading() {
-  return <LoadingSection loadingSubject={ttt("Workspace")} />
+  return <WorkspaceForm workspaceHandle={p.workspace.workspaceHandle} mode={p.mode} sm={sm} />
 }

@@ -13,7 +13,6 @@ const mode = formMode.edit
 export function WorkspaceEditPage() {
   const params = useParams()
   const getWorkspaceHandle = () => params.workspaceHandle
-  const getReturnPath = () => params.returnPath
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>
@@ -24,7 +23,7 @@ export function WorkspaceEditPage() {
           <NavWorkspace getWorkspacePageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()}>
             <LinkLikeText>{ttt("Edit")}</LinkLikeText>
           </NavWorkspace>
-          <WorkspaceMutate mode={mode} workspaceHandle={getWorkspaceHandle()!} returnPath={getReturnPath()} />
+          <WorkspaceMutate mode={mode} workspaceHandle={getWorkspaceHandle()!} />
         </PageWrapper>
       </Match>
     </Switch>

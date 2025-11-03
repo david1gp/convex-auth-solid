@@ -43,7 +43,7 @@ function ShowImg(p: OrgViewProps) {
     <Show when={p.org.image}>
       {(getImageUrl) => (
         <Img
-          src={getImageUrl() || "/placeholder.svg"}
+          src={getImageUrl()}
           alt={ttt("Logo of ") + " " + p.org.name}
           class={classArr("h-40 rounded-xl mx-auto mb-6")}
         />

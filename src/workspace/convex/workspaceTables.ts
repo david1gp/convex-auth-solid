@@ -12,6 +12,7 @@ export const workspaceDataFields = {
   name: v.string(),
   description: v.optional(v.string()),
   image: v.optional(v.string()),
+  url: v.optional(v.string()),
 } as const
 
 export const workspaceFields = {

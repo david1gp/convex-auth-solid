@@ -109,7 +109,7 @@ function hasWorkspaces(workspacesResult: Result<Workspace[]> | undefined): Works
 }
 
 function WorkspaceLink(p: { workspace: Workspace }) {
-  return <LinkButton href={urlWorkspaceView(p.workspace._id)}>{p.workspace.name}</LinkButton>
+  return <LinkButton href={urlWorkspaceView(p.workspace.workspaceHandle)}>{p.workspace.name}</LinkButton>
 }
 
 function WorkspaceCreateLink() {

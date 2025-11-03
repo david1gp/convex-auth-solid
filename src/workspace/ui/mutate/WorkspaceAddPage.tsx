@@ -3,10 +3,7 @@ import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createMutation } from "@/utils/convex/createMutation"
 import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
-import {
-  workspaceCreateFormStateManagement,
-  type WorkspaceFormData,
-} from "@/workspace/ui/form/workspaceCreateFormStateManagement"
+import { workspaceCreateFormState, type WorkspaceFormData } from "@/workspace/ui/form/workspaceCreateFormState"
 import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
 import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { api } from "@convex/_generated/api"
@@ -55,6 +52,6 @@ export function WorkspaceAdd(p: WorkspaceAddProps) {
     navigator(url)
   }
 
-  const sm = workspaceCreateFormStateManagement({ create: createAction })
+  const sm = workspaceCreateFormState(formMode.add, { create: createAction })
   return <WorkspaceForm mode={formMode.add} sm={sm} class={p.class} />
 }

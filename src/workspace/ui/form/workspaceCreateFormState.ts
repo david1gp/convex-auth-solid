@@ -6,6 +6,7 @@ import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as v from "valibot"
 import { ttt } from "~ui/i18n/ttt"
+import type { FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
@@ -18,6 +19,7 @@ export const workspaceFormField = {
   name: "name",
   description: "description",
   image: "image",
+  url: "url",
 } as const
 
 export type WorkspaceFormData = {
@@ -26,6 +28,7 @@ export type WorkspaceFormData = {
   name: string
   description: string
   image: string
+  url: string
 }
 
 export type WorkspaceFormState = {
@@ -33,6 +36,7 @@ export type WorkspaceFormState = {
   workspaceHandle: SignalObject<string>
   description: SignalObject<string>
   image: SignalObject<string>
+  url: SignalObject<string>
 }
 
 export type WorkspaceFormErrorState = {
@@ -40,6 +44,7 @@ export type WorkspaceFormErrorState = {
   workspaceHandle: SignalObject<string>
   description: SignalObject<string>
   image: SignalObject<string>
+  url: SignalObject<string>
 }
 
 function workspaceCreateState(): WorkspaceFormState {
@@ -48,10 +53,12 @@ function workspaceCreateState(): WorkspaceFormState {
     workspaceHandle: createSignalObject(""),
     description: createSignalObject(""),
     image: createSignalObject(""),
+    url: createSignalObject(""),
   }
 }
 
 export type WorkspaceFormStateManagement = {
+  mode: FormMode
   isSaving: SignalObject<boolean>
   serverState: SignalObject<DocWorkspace>
   state: WorkspaceFormState
@@ -64,7 +71,7 @@ export type WorkspaceFormStateManagement = {
 }
 
 function createWorkspaceFormData(): WorkspaceFormData {
-  return { name: "", workspaceHandle: "", description: "", image: "" }
+  return { name: "", workspaceHandle: "", description: "", image: "", url: "" }
 }
 
 function createEmptyDocWorkspace(): DocWorkspace {
@@ -89,12 +96,13 @@ export type WorkspaceFormActions = {
   delete?: WorkspaceFormDelteFn
 }
 
-export function workspaceCreateFormStateManagement(actions: WorkspaceFormActions): WorkspaceFormStateManagement {
+export function workspaceCreateFormState(mode: FormMode, actions: WorkspaceFormActions): WorkspaceFormStateManagement {
   const serverState = createSignalObject(createEmptyDocWorkspace())
   const isSaving = createSignalObject(false)
   const state = workspaceCreateState()
   const errors = workspaceCreateState()
   return {
+    mode,
     isSaving,
     serverState,
     state,
@@ -113,16 +121,24 @@ function loadData(data: DocWorkspace, serverState: SignalObject<DocWorkspace>, s
   state.workspaceHandle.set(data.workspaceHandle)
   state.description.set(data.description ?? "")
   state.image.set(data.image ?? "")
+  state.url.set(data.url ?? "")
 }
 
 function hasErrors(errors: WorkspaceFormErrorState) {
-  return !!errors.name.get() || !!errors.workspaceHandle.get() || !!errors.description.get() || !!errors.image.get()
+  return (
+    !!errors.name.get() ||
+    !!errors.workspaceHandle.get() ||
+    !!errors.description.get() ||
+    !!errors.image.get() ||
+    !!errors.url.get()
+  )
 }
 function fillTestData(state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
   state.name.set("Test Workspace")
   state.workspaceHandle.set("test-workspace")
   state.description.set("Test description")
   state.image.set("")
+  state.url.set("")
   for (const field of Object.values(workspaceFormField)) {
     updateFieldError(field, state[field].get(), state, errors)
   }
@@ -171,6 +187,8 @@ function validateFieldResult(field: WorkspaceFormField, value: string) {
     schema = workspaceDataSchemaFields.description
   } else if (field === workspaceFormField.image) {
     schema = workspaceDataSchemaFields.image
+  } else if (field === workspaceFormField.url) {
+    schema = workspaceDataSchemaFields.url
   }
   return v.safeParse(schema!, value)
 }
@@ -189,18 +207,22 @@ async function handleSubmit(
   const workspaceHandle = state.workspaceHandle.get()
   const description = state.description.get()
   const image = state.image.get()
+  const url = state.url.get()
 
   const nameResult = validateFieldResult(workspaceFormField.name, name)
   const handleResult = validateFieldResult(workspaceFormField.workspaceHandle, workspaceHandle)
   const descriptionResult = validateFieldResult(workspaceFormField.description, description)
   const imageResult = validateFieldResult(workspaceFormField.image, image)
+  const urlResult = validateFieldResult(workspaceFormField.url, url)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
   errors.workspaceHandle.set(handleResult.success ? "" : handleResult.issues[0].message)
   errors.description.set(descriptionResult.success ? "" : descriptionResult.issues[0].message)
   errors.image.set(imageResult.success ? "" : imageResult.issues[0].message)
+  errors.url.set(urlResult.success ? "" : urlResult.issues[0].message)
 
-  const isSuccess = nameResult.success && handleResult.success && descriptionResult.success && imageResult.success
+  const isSuccess =
+    nameResult.success && handleResult.success && descriptionResult.success && imageResult.success && urlResult.success
 
   if (!isSuccess) {
     if (!nameResult.success) {
@@ -215,13 +237,16 @@ async function handleSubmit(
     if (!imageResult.success) {
       toastAdd({ title: imageResult.issues[0].message, icon: mdiAlertCircle, id: "image" })
     }
+    if (!urlResult.success) {
+      toastAdd({ title: urlResult.issues[0].message, icon: mdiAlertCircle, id: "url" })
+    }
     return
   }
 
   isSaving.set(true)
 
   if (actions.create) {
-    const data: WorkspaceFormData = { name, workspaceHandle, description, image }
+    const data: WorkspaceFormData = { name, workspaceHandle, description, image, url }
     await actions.create(data)
   }
 
@@ -236,6 +261,9 @@ async function handleSubmit(
     }
     if (image !== ss.image) {
       data.image = image
+    }
+    if (url !== ss.url) {
+      data.url = url
     }
 
     if (Object.keys(data).length === 0) {

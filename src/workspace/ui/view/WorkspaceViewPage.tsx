@@ -1,17 +1,17 @@
 import { NavWorkspace } from "@/app/nav/NavWorkspace"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
-import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
-import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
+import { WorkspaceLoader, type WorkspaceComponentProps } from "@/workspace/ui/view/WorkspaceLoader"
 import { urlWorkspaceEdit } from "@/workspace/url/urlWorkspace"
 import { useParams } from "@solidjs/router"
-import { Match, Show, Switch } from "solid-js"
+import { For, Match, Show, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formIcon } from "~ui/input/form/getFormIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
+import { Img } from "~ui/static/img/Img"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { classArr } from "~ui/utils/classArr"
 
 export function WorkspaceViewPage() {
   const params = useParams()
@@ -26,7 +26,7 @@ export function WorkspaceViewPage() {
           <NavWorkspace getWorkspacePageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()}>
             <LinkLikeText>{ttt("View")}</LinkLikeText>
           </NavWorkspace>
-          <WorkspaceView workspaceHandle={getWorkspaceHandle()!} />
+          <WorkspaceLoader workspaceHandle={getWorkspaceHandle()!} WorkspaceComponent={WorkspaceView} />
         </PageWrapper>
       </Match>
     </Switch>
@@ -41,17 +41,72 @@ function getPageTitle(orgName?: string, workspaceName?: string) {
   return title
 }
 
-interface WorkspaceViewProps extends HasWorkspaceHandle, MayHaveClass {}
-
-function WorkspaceView(p: WorkspaceViewProps) {
+function WorkspaceView(p: WorkspaceComponentProps) {
   return (
-    <div class="flex flex-wrap items-center justify-between gap-4">
-      <Show when={p.workspaceHandle && workspaceListFindNameByHandle(p.workspaceHandle)}>
-        <h1 class="text-2xl font-bold">{workspaceListFindNameByHandle(p.workspaceHandle)}</h1>
-      </Show>
-      <LinkButton href={urlWorkspaceEdit(p.workspaceHandle)} variant={buttonVariant.default} icon={formIcon.edit}>
-        {ttt("Edit")}
-      </LinkButton>
+    <div class="flex flex-col gap-4">
+      <ShowImg {...p} />
+      <div class="flex flex-wrap justify-between">
+        <h1 class="text-2xl font-bold">{p.workspace.name}</h1>
+        <LinkButton
+          href={urlWorkspaceEdit(p.workspace.workspaceHandle)}
+          variant={buttonVariant.default}
+          icon={formIcon.edit}
+        >
+          {ttt("Edit")}
+        </LinkButton>
+      </div>
+      <ShowDescription {...p} />
+      <ShowUrl {...p} />
     </div>
+  )
+}
+
+function ShowImg(p: WorkspaceComponentProps) {
+  return (
+    <Show when={p.workspace.image}>
+      {(getImageUrl) => (
+        <Img
+          src={getImageUrl()}
+          alt={ttt("Logo of ") + " " + p.workspace.name}
+          class={classArr("h-40 rounded-xl mx-auto mb-6")}
+        />
+      )}
+    </Show>
+  )
+}
+
+function ShowDescription(p: WorkspaceComponentProps) {
+  return (
+    <Show when={p.workspace.description}>
+      {(getDescription) => (
+        <div class="text-lg mx-auto text-pretty mb-4">
+          <Description description={getDescription()} />
+        </div>
+      )}
+    </Show>
+  )
+}
+
+function Description(p: { description: string }) {
+  const lines = p.description.split("\n")
+  return <For each={lines}>{(line) => <p>{line}</p>}</For>
+}
+
+function ShowUrl(p: WorkspaceComponentProps) {
+  return (
+    <Show when={p.workspace.url}>
+      {(getUrl) => (
+        <a
+          href={getUrl()}
+          class={classArr(
+            "text-lg font-semibold",
+            "text-black dark:text-white", // text color
+            "underline decoration-2 underline-offset-4",
+          )}
+        >
+          {getUrl()}
+        </a>
+      )}
+    </Show>
   )
 }
