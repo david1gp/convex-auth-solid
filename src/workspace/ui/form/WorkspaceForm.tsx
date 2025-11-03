@@ -1,6 +1,6 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceCreateFormState"
+import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceFormStateManagement"
 import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"

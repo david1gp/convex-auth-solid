@@ -11,8 +11,8 @@ import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
 import * as v from "valibot"
 
 export const workspaceDataSchemaFields = {
-  userId: v.optional(stringSchema1to50),
-  orgId: v.optional(handleSchema),
+  username: v.optional(stringSchema1to50),
+  orgHandle: v.optional(handleSchema),
   workspaceHandle: v.pipe(handleSchema),
   // data
   name: v.pipe(stringSchemaName),

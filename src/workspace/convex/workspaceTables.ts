@@ -1,12 +1,10 @@
-import { vIdUser } from "@/auth/convex/vIdUser"
-import { vIdOrg } from "@/org/org_convex/vIdOrg"
 import { fieldsCreatedAtUpdatedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
 
 export const workspaceDataFields = {
-  userId: v.optional(vIdUser),
-  orgId: v.optional(vIdOrg),
+  username: v.optional(v.string()),
+  orgHandle: v.optional(v.string()),
   workspaceHandle: v.string(),
   // data
   name: v.string(),

@@ -1,14 +1,24 @@
+import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import { createMutation } from "@/utils/convex/createMutation"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { handleGenerate } from "@/utils/valibot/handleSchema"
 import type { DocWorkspace, IdWorkspace } from "@/workspace/convex/IdWorkspace"
+import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
+import type { WorkspaceDataModel } from "@/workspace/model/WorkspaceModel"
 import { workspaceDataSchemaFields } from "@/workspace/model/workspaceSchema"
+import { urlWorkspaceList, urlWorkspaceView } from "@/workspace/url/urlWorkspace"
+import { api } from "@convex/_generated/api"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import { useNavigate } from "@solidjs/router"
 import * as v from "valibot"
 import { ttt } from "~ui/i18n/ttt"
-import type { FormMode } from "~ui/input/form/formMode"
+import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import type { NavigateTo } from "~ui/utils/NavigateTo"
+import type { Result } from "~utils/result/Result"
 
 export type WorkspaceFormField = keyof typeof workspaceFormField
 
@@ -86,20 +96,19 @@ function createEmptyDocWorkspace(): DocWorkspace {
   }
 }
 
-export type WorkspaceFormCreateFn = (state: WorkspaceFormData) => Promise<void>
-export type WorkspaceFormEditFn = (state: Partial<WorkspaceFormData>) => Promise<void>
-export type WorkspaceFormDelteFn = () => Promise<void>
-
-export type WorkspaceFormActions = {
-  create?: WorkspaceFormCreateFn
-  edit?: WorkspaceFormEditFn
-  delete?: WorkspaceFormDelteFn
-}
-
-export function workspaceCreateFormState(mode: FormMode, actions: WorkspaceFormActions): WorkspaceFormStateManagement {
+export function workspaceFormStateManagement(
+  mode: FormMode,
+  workspaceHandle?: string,
+  workspace?: DocWorkspace,
+): WorkspaceFormStateManagement {
+  const navigator = useNavigate()
+  const actions: WorkspaceFormActions = createActions(mode, workspaceHandle, navigator)
   const serverState = createSignalObject(createEmptyDocWorkspace())
   const isSaving = createSignalObject(false)
   const state = workspaceCreateState()
+  if (workspace) {
+    loadData(workspace, serverState, state)
+  }
   const errors = workspaceCreateState()
   return {
     mode,
@@ -140,34 +149,24 @@ function fillTestData(state: WorkspaceFormState, errors: WorkspaceFormErrorState
   state.image.set("")
   state.url.set("")
   for (const field of Object.values(workspaceFormField)) {
-    updateFieldError(field, state[field].get(), state, errors)
+    updateFieldError(field, state[field].get(), errors)
   }
 }
 
 function validateOnChange(field: WorkspaceFormField, state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
   return debounce((value: string) => {
-    autoFillHandle(field, value, state, errors)
-    updateFieldError(field, value, state, errors)
+    autoFillHandle(field, value, state)
+    updateFieldError(field, value, errors)
   }, debounceMs)
 }
 
-function autoFillHandle(
-  field: WorkspaceFormField,
-  value: string,
-  state: WorkspaceFormState,
-  errors: WorkspaceFormErrorState,
-) {
+function autoFillHandle(field: WorkspaceFormField, value: string, state: WorkspaceFormState) {
   if (field !== workspaceFormField.name) return
   const handle = handleGenerate(value)
   state.workspaceHandle.set(handle)
 }
 
-function updateFieldError(
-  field: WorkspaceFormField,
-  value: string,
-  state: WorkspaceFormState,
-  errors: WorkspaceFormErrorState,
-) {
+function updateFieldError(field: WorkspaceFormField, value: string, errors: WorkspaceFormErrorState) {
   const result = validateFieldResult(field, value)
   const errorSig = errors[field as keyof typeof errors]
   if (result.success) {
@@ -193,6 +192,15 @@ function validateFieldResult(field: WorkspaceFormField, value: string) {
   return v.safeParse(schema!, value)
 }
 
+//
+// Actions
+//
+
+export type WorkspaceFormActions = {
+  create?: WorkspaceFormCreateFn
+  edit?: WorkspaceFormEditFn
+  delete?: WorkspaceFormDelteFn
+}
 async function handleSubmit(
   e: SubmitEvent,
   isSaving: SignalObject<boolean>,
@@ -283,4 +291,119 @@ async function handleSubmit(
   }
 
   isSaving.set(false)
+}
+
+export type WorkspaceFormCreateFn = (state: WorkspaceFormData) => Promise<void>
+export type WorkspaceFormEditFn = (state: Partial<WorkspaceFormData>) => Promise<void>
+export type WorkspaceFormDelteFn = () => Promise<void>
+
+function createActions(
+  mode: FormMode,
+  workspaceHandle: string | undefined,
+  navigate: NavigateTo,
+): WorkspaceFormActions {
+  const actions: WorkspaceFormActions = {}
+  if (mode === formMode.add) {
+    const addMutation = createMutation(api.workspace.workspaceCreateMutation)
+    actions.create = async (data) => createAction(data, addMutation, navigate)
+  }
+  if (mode === formMode.edit) {
+    const editMutation = createMutation(api.workspace.workspaceEditMutation)
+    actions.edit = async (data) => editAction(data, workspaceHandle, mode, editMutation, navigate)
+  }
+  if (mode === formMode.remove) {
+    const deleteMutation = createMutation(api.workspace.workspaceDeleteMutation)
+    actions.delete = async () => removeAction(workspaceHandle, mode, deleteMutation, navigate)
+  }
+  return actions
+}
+
+interface HasToken {
+  token: string
+}
+
+interface WorkspaceCreateMutationProps extends WorkspaceDataModel, HasToken {}
+
+interface WorkspaceEditMutationProps
+  extends Partial<Omit<WorkspaceDataModel, "workspaceHandle">>,
+    HasWorkspaceHandle,
+    HasToken {}
+
+interface WorkspaceRemoveMutationProps extends HasWorkspaceHandle, HasToken {}
+
+async function createAction(
+  data: WorkspaceFormData,
+  addMutation: (data: WorkspaceCreateMutationProps) => Promise<Result<IdWorkspace>>,
+  navigate: NavigateTo,
+): Promise<void> {
+  const workspaceIdResult = await addMutation({
+    token: userTokenGet(),
+    // data
+    ...data,
+  })
+  if (!workspaceIdResult.success) {
+    console.error(workspaceIdResult)
+    toastAdd({ title: workspaceIdResult.errorMessage, variant: toastVariant.error })
+    return
+  }
+  // const workspaceId = await getMutationAdd(p.session, state)
+  const url = urlWorkspaceView(data.workspaceHandle)
+  navigate(url)
+}
+
+async function editAction(
+  data: Partial<WorkspaceFormData>,
+  workspaceHandle: string | undefined,
+  mode: FormMode,
+  editMutation: (data: WorkspaceEditMutationProps) => Promise<Result<null>>,
+  navigate: NavigateTo,
+) {
+  if (!workspaceHandle) {
+    toastAdd({ title: "!workspaceHandle", variant: toastVariant.error })
+    return
+  }
+  const editResult = await editMutation({
+    // auth
+    token: userTokenGet(),
+    // data
+    ...data,
+    // id
+    workspaceHandle,
+  })
+  if (!editResult.success) {
+    console.error(editResult)
+    toastAdd({ title: editResult.errorMessage, variant: toastVariant.error })
+    return
+  }
+  navigate(getReturnPath(mode, workspaceHandle))
+}
+async function removeAction(
+  workspaceHandle: string | undefined,
+  mode: FormMode,
+  deleteMutation: (data: WorkspaceRemoveMutationProps) => Promise<Result<null>>,
+  navigate: NavigateTo,
+) {
+  if (!workspaceHandle) {
+    toastAdd({ title: "!workspaceHandle", variant: toastVariant.error })
+    return
+  }
+  const deleteResult = await deleteMutation({
+    // auth
+    token: userTokenGet(),
+    // id
+    workspaceHandle: workspaceHandle!,
+  })
+  if (!deleteResult.success) {
+    console.error(deleteResult)
+    toastAdd({ title: deleteResult.errorMessage, variant: toastVariant.error })
+    return
+  }
+  navigate(getReturnPath(mode, workspaceHandle))
+}
+
+function getReturnPath(mode: FormMode, workspaceHandle?: string) {
+  if (mode === formMode.edit && workspaceHandle) {
+    return urlWorkspaceView(workspaceHandle)
+  }
+  return urlWorkspaceList()
 }
