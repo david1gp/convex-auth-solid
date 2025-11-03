@@ -1,3 +1,3 @@
-import { ttt } from "~ui/i18n/ttt"
+import { stt } from "@/utils/i18n/stt"
 
-export const cantBeEmpty = ttt("Cannot be empty")
+export const cantBeEmpty = stt("Cannot be empty")

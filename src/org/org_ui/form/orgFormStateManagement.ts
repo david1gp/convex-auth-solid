@@ -1,14 +1,24 @@
+import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg, IdOrg } from "@/org/org_convex/IdOrg"
+import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
+import { urlOrgList, urlOrgView } from "@/org/org_url/urlOrg"
+import { createMutation } from "@/utils/convex/createMutation"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { handleGenerate } from "@/utils/valibot/handleSchema"
+import { api } from "@convex/_generated/api"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import { useNavigate } from "@solidjs/router"
 import * as v from "valibot"
 import { ttt } from "~ui/i18n/ttt"
+import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import type { NavigateTo } from "~ui/utils/NavigateTo"
+import type { Result } from "~utils/result/Result"
 
 export type OrgFormData = {
   orgHandle: string
@@ -49,6 +59,7 @@ function orgCreateState(): OrgFormState {
 }
 
 export type OrgFormStateManagement = {
+  mode: FormMode
   isSaving: SignalObject<boolean>
   serverState: SignalObject<DocOrg>
   state: OrgFormState
@@ -80,18 +91,24 @@ export type OrgFormCreateFn = (state: OrgFormData) => Promise<void>
 export type OrgFormEditFn = (state: Partial<OrgFormData>) => Promise<void>
 export type OrgFormDeleteFn = () => Promise<void>
 
-export type OrgFormActions = {
+type OrgFormActions = {
   create?: OrgFormCreateFn
   edit?: OrgFormEditFn
   delete?: OrgFormDeleteFn
 }
 
-export function orgFormStateManagement(actions: OrgFormActions): OrgFormStateManagement {
+export function orgFormStateManagement(mode: FormMode, orgHandle?: string, org?: DocOrg): OrgFormStateManagement {
+  const navigator = useNavigate()
+  const actions: OrgFormActions = createActions(mode, orgHandle, navigator)
   const serverState = createSignalObject(createEmptyDocOrg())
   const isSaving = createSignalObject(false)
   const state = orgCreateState()
+  if (org) {
+    loadData(org, serverState, state)
+  }
   const errors = orgCreateState()
   return {
+    mode,
     isSaving,
     serverState,
     state,
@@ -111,7 +128,6 @@ function loadData(data: DocOrg, serverState: SignalObject<DocOrg>, state: OrgFor
   state.description.set(data.description ?? "")
   state.url.set(data.url ?? "")
   state.image.set(data.image ?? "")
-  console.log("loaded data", data)
 }
 
 function hasErrors(errors: OrgFormErrorState) {
@@ -133,18 +149,24 @@ function fillTestData(state: OrgFormState, errors: OrgFormErrorState) {
   state.image.set("https://adaptive-solid-ui.pages.dev/logo.svg")
 
   for (const field of Object.values(orgFormField)) {
-    updateFieldError(field, state[field].get(), state, errors)
+    updateFieldError(field, state[field].get(), errors)
   }
 }
 
 function validateOnChange(field: OrgFormField, state: OrgFormState, errors: OrgFormErrorState) {
   return debounce((value: string) => {
-    autoFillHandle(field, value, state, errors)
-    updateFieldError(field, value, state, errors)
+    autoFillHandle(field, value, state)
+    updateFieldError(field, value, errors)
   }, debounceMs)
 }
 
-function updateFieldError(field: OrgFormField, value: string, state: OrgFormState, errors: OrgFormErrorState) {
+function autoFillHandle(field: OrgFormField, value: string, state: OrgFormState) {
+  if (field !== orgFormField.name) return
+  const handle = handleGenerate(value)
+  state.orgHandle.set(handle)
+}
+
+function updateFieldError(field: OrgFormField, value: string, errors: OrgFormErrorState) {
   const result = validateFieldResult(field, value)
   const errorSig = errors[field as keyof typeof errors]
   if (result.success) {
@@ -155,16 +177,14 @@ function updateFieldError(field: OrgFormField, value: string, state: OrgFormStat
   }
 }
 
-function autoFillHandle(field: OrgFormField, value: string, state: OrgFormState, errors: OrgFormErrorState) {
-  if (field !== orgFormField.name) return
-  const handle = handleGenerate(value)
-  state.orgHandle.set(handle)
-}
-
 function validateFieldResult(field: OrgFormField, value: string) {
   const schema = orgDataSchemaFields[field]
   return v.safeParse(schema, value)
 }
+
+//
+// Actions
+//
 
 async function handleSubmit(
   e: SubmitEvent,
@@ -256,4 +276,107 @@ async function handleSubmit(
   }
 
   isSaving.set(false)
+}
+
+function createActions(mode: FormMode, orgHandle: string | undefined, navigate: NavigateTo): OrgFormActions {
+  const actions: OrgFormActions = {}
+  if (mode === formMode.add) {
+    const addMutation = createMutation(api.org.orgCreateMutation)
+    actions.create = async (data) => createAction(data, addMutation, navigate)
+  }
+  if (mode === formMode.edit) {
+    const editMutation = createMutation(api.org.orgEditMutation)
+    actions.edit = async (data) => editAction(data, orgHandle, mode, editMutation, navigate)
+  }
+  if (mode === formMode.remove) {
+    const deleteMutation = createMutation(api.org.orgDeleteMutation)
+    actions.delete = async () => removeAction(orgHandle, mode, deleteMutation, navigate)
+  }
+  return actions
+}
+
+interface HasToken {
+  token: string
+}
+
+interface OrgCreateMutationProps extends OrgFormData, HasToken {}
+interface OrgEditMutationProps extends Partial<Omit<OrgFormData, "orgHandle">>, HasOrgHandle, HasToken {}
+interface OrgRemoveMutationProps extends HasOrgHandle, HasToken {}
+
+async function createAction(
+  data: OrgFormData,
+  addMutation: (data: OrgCreateMutationProps) => Promise<Result<IdOrg>>,
+  navigate: NavigateTo,
+): Promise<void> {
+  const orgIdResult = await addMutation({
+    token: userTokenGet(),
+    // data
+    ...data,
+  })
+  if (!orgIdResult.success) {
+    console.error(orgIdResult)
+    toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
+    return
+  }
+  // const orgId = await getMutationAdd(p.session, state)
+  const url = urlOrgView(data.orgHandle)
+  navigate(url)
+}
+
+async function editAction(
+  data: Partial<OrgFormData>,
+  orgHandle: string | undefined,
+  mode: FormMode,
+  editMutation: (data: OrgEditMutationProps) => Promise<Result<null>>,
+  navigate: NavigateTo,
+) {
+  if (!orgHandle) {
+    toastAdd({ title: "!orgHandle", variant: toastVariant.error })
+    return
+  }
+  const editResult = await editMutation({
+    // auth
+    token: userTokenGet(),
+    // data
+    ...data,
+    // id
+    orgHandle,
+  })
+  if (!editResult.success) {
+    console.error(editResult)
+    toastAdd({ title: editResult.errorMessage, variant: toastVariant.error })
+    return
+  }
+  navigate(getReturnPath(mode, orgHandle))
+}
+
+async function removeAction(
+  orgHandle: string | undefined,
+  mode: FormMode,
+  deleteMutation: (data: OrgRemoveMutationProps) => Promise<Result<null>>,
+  navigate: NavigateTo,
+) {
+  if (!orgHandle) {
+    toastAdd({ title: "!orgHandle", variant: toastVariant.error })
+    return
+  }
+  const deleteResult = await deleteMutation({
+    // auth
+    token: userTokenGet(),
+    // id
+    orgHandle,
+  })
+  if (!deleteResult.success) {
+    console.error(deleteResult)
+    toastAdd({ title: deleteResult.errorMessage, variant: toastVariant.error })
+    return
+  }
+  navigate(getReturnPath(mode, orgHandle))
+}
+
+function getReturnPath(mode: FormMode, orgHandle?: string) {
+  if (mode === formMode.edit && orgHandle) {
+    return urlOrgView(orgHandle)
+  }
+  return urlOrgList()
 }
