@@ -13,16 +13,16 @@ import type { MayHaveSubtitle } from "~ui/utils/MayHaveSubtitle"
 
 export interface ErrorPageProps extends HasTitle, MayHaveSubtitle, MayHaveIcon, MayHaveClass, MayHaveChildren {}
 
-export function ErrorSection(p: ErrorPageProps) {
+export function ErrorPage(p: ErrorPageProps) {
   return (
     <>
-      <Error1Section {...p} />
+      <ErrorSection {...p} />
       <OptionsSection />
     </>
   )
 }
 
-function Error1Section(p: ErrorPageProps) {
+function ErrorSection(p: ErrorPageProps) {
   return (
     <section id={"error"} class="flex flex-col gap-2 my-20">
       <Icon1

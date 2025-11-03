@@ -1,12 +1,12 @@
 import { NavWorkspace } from "@/app/nav/NavWorkspace"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { WorkspaceMutate } from "@/workspace/ui/mutate/WorkspaceMutate"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, getFormTitle } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import { ErrorPage } from "~ui/static/pages/ErrorPage"
 
 const mode = formMode.remove
 

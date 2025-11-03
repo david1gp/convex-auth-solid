@@ -2,12 +2,12 @@ import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgMemberListPage } from "@/org/member_ui/list/OrgMemberListPage"
 import { OrgMutate } from "@/org/org_ui/mutate/OrgMutate"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, getFormTitle } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import { ErrorPage } from "~ui/static/pages/ErrorPage"
 
 const mode = formMode.edit
 

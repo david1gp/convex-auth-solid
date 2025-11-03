@@ -1,5 +1,6 @@
 import { NavWorkspace } from "@/app/nav/NavWorkspace"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { ErrorPage } from "@/ui/pages/ErrorPage"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
 import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
 import { urlWorkspaceEdit } from "@/workspace/url/urlWorkspace"
@@ -10,7 +11,6 @@ import { formIcon } from "~ui/input/form/getFormIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import { ErrorPage } from "~ui/static/pages/ErrorPage"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function WorkspaceViewPage() {

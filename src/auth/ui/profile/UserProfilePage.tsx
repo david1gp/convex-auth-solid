@@ -6,6 +6,7 @@ import {
   type UserProfileFormStateManagement,
 } from "@/auth/ui/profile/userProfileFormState"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
@@ -13,7 +14,6 @@ import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formModeView } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
-import { ErrorPage } from "~ui/static/pages/ErrorPage"
 
 export function UserProfilePage() {
   const params = useParams()
