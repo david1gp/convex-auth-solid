@@ -92,7 +92,7 @@ function OrgInvitationActions(p: OrgInvitationCardProps) {
   return (
     <div class="flex flex-wrap gap-2">
       {!p.invitation.acceptedAt && (
-        <ButtonIcon variant={buttonVariant.outline} icon={mdiEmailFast} onClick={resendClick}>
+        <ButtonIcon variant={buttonVariant.outline} icon={mdiEmailFast} onClick={resendClick} class="flex-1">
           {ttt("Resend")}
         </ButtonIcon>
       )}
@@ -101,6 +101,7 @@ function OrgInvitationActions(p: OrgInvitationCardProps) {
         icon={mdiClose}
         iconClass="fill-red-800 text-red-800 dark:fill-red-800 dark:text-red-800"
         onClick={dismissClick}
+        class="flex-1"
       >
         {ttt("Remove")}
       </ButtonIcon>

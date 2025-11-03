@@ -4,7 +4,7 @@ import { OrgInvitationListSection } from "@/org/invitation_ui/list/OrgInvitation
 import { OrgMemberListSection } from "@/org/member_ui/list/OrgMemberListSection"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
-import { OrgView1Information } from "@/org/org_ui/view/OrgView1Information"
+import { OrgViewInformation } from "@/org/org_ui/view/OrgViewInformation"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
@@ -69,7 +69,7 @@ interface OrgViewAllProps extends MayHaveClass {
 function OrgViewAll(p: OrgViewAllProps) {
   return (
     <>
-      <OrgView1Information org={p.data.org} />
+      <OrgViewInformation showEditButton={true} org={p.data.org} />
       <OrgMemberListSection orgHandle={p.data.org.orgHandle} members={p.data.members} />
       <OrgInvitationListSection orgHandle={p.data.org.orgHandle} invitations={p.data.invitations} />
     </>
