@@ -17,14 +17,14 @@ export function ErrorPage(p: ErrorPageProps) {
   return (
     <>
       <ErrorSection {...p} />
-      <OptionsSection />
+      <OptionsSection {...p} />
     </>
   )
 }
 
 function ErrorSection(p: ErrorPageProps) {
   return (
-    <section id={"error"} class="flex flex-col gap-2 my-20">
+    <section id={"error"} class={classMerge("flex flex-col gap-2 my-20", p.class)}>
       <Icon1
         path={p.icon ?? mdiAlertBoxOutline}
         class={classMerge(
@@ -40,9 +40,9 @@ function ErrorSection(p: ErrorPageProps) {
   )
 }
 
-function OptionsSection() {
+function OptionsSection(p: ErrorPageProps) {
   return (
-    <section id={"options"} class="container max-w-7xl mx-auto text-center space-y-8">
+    <section id={"options"} class={classMerge("container max-w-7xl mx-auto text-center space-y-8", p.class)}>
       {/* <h2>{ttt("If the problem persists contact support")}</h2> */}
       <GoBackLinkButton size={buttonSize.lg} variant={buttonVariant.link} class="text-xl" iconClass="size-8" />
       <GoHomeLinkButton size={buttonSize.lg} variant={buttonVariant.link} class="text-xl" iconClass="size-8" />
