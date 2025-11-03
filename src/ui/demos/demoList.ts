@@ -16,6 +16,11 @@ const DemoAuthLinks = lazy(async () => {
   return { default: c.DemoAuthLinks }
 })
 
+const DemoSignInErrorPage = lazy(async () => {
+  const c = await import("@/auth/ui/sign_in/error/DemoSignInErrorPage")
+  return { default: c.DemoSignInErrorPage }
+})
+
 const DemoLoaders = lazy(async () => {
   const c = await import("@/ui/loaders/DemoLoaders")
   return { default: c.DemoLoaders }
@@ -29,6 +34,7 @@ const DemosLinkButton = lazy(async () => {
 export const demoList = {
   auth: {
     DemoAuthLinks: DemoAuthLinks,
+    DemoSignInErrorPage: DemoSignInErrorPage,
   },
   org: {
     DemoOrgMemberList: DemoOrgMemberList,

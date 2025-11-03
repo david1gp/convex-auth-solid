@@ -1,18 +1,19 @@
 import { mdiArrowLeft } from "@mdi/js"
+import { splitProps } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import type { MayHaveButtonVariantAndClass } from "~ui/utils/MayHaveButtonVariantAndClass"
+import { ButtonIcon, type ButtonIconProps } from "~ui/interactive/button/ButtonIcon"
 
-export function GoBackLinkButton(p: MayHaveButtonVariantAndClass) {
+export function GoBackLinkButton(p: Omit<ButtonIconProps, "href" | "onClick">) {
+  const [s, rest] = splitProps(p, ["icon", "children", "variant"])
   return (
     <ButtonIcon
-      icon={mdiArrowLeft}
+      icon={s.icon ?? mdiArrowLeft}
       onClick={() => {
         history.back()
       }}
-      variant={p.variant ?? buttonVariant.outline}
-      class={p.class}
+      variant={s.variant ?? buttonVariant.outline}
+      {...rest}
     >
       {ttt("Go back")}
     </ButtonIcon>

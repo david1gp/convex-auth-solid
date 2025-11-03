@@ -6,9 +6,9 @@ import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { LinkButtonProps } from "~ui/interactive/link/LinkButtonProps"
 
 export function ContactSupportLinkButton(p: Omit<LinkButtonProps, "href">) {
-  const [, rest] = splitProps(p, ["icon", "children"])
+  const [s, rest] = splitProps(p, ["icon", "children"])
   return (
-    <LinkButton icon={p.icon ?? mdiEmail} href={urlContactMailTo} {...rest}>
+    <LinkButton icon={s.icon ?? mdiEmail} href={urlContactMailTo} {...rest}>
       {ttt("Contact support")}
     </LinkButton>
   )

@@ -25,7 +25,7 @@ export function SignInErrorPage() {
         <Icon1
           path={mdiAlertBoxOutline}
           class={classArr(
-            "w-16 h-16 mx-auto", // sizing + layout
+            "size-16 mx-auto", // sizing + layout
             "fill-red-500", // color
           )}
         />
@@ -37,7 +37,7 @@ export function SignInErrorPage() {
       </section>
       <section id={"tryAgain"} class="container max-w-7xl mx-auto text-center space-y-8">
         <h2>{tryAgainText}</h2>
-        <GoSignInLinkButton />
+        <GoSignInLinkButton size={buttonSize.lg} variant={buttonVariant.link} class="text-xl" iconClass="size-8" />
         <ContactSupportLinkButton
           size={buttonSize.lg}
           variant={buttonVariant.link}
