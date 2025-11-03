@@ -4,7 +4,7 @@ import {
   type GenerateEmailOrgInvitationProps,
 } from "@/auth/convex/email/sendEmailOrgInvitation"
 import type { OrgInvitationDataModel } from "@/org/invitation_model/OrgInvitationModel"
-import { urlOrgInvitationView } from "@/org/invitation_url/urlOrgInvitation"
+import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
 import { api, internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
@@ -38,8 +38,8 @@ export async function orgInvitation32SendEmailActionFn(
   args: OrgInvitationSendEmailValidatorType,
 ): PromiseResult<null> {
   const op = "orgInvitationSendEmailFn"
-  const baseUrl = getBaseUrlApp()
-  if (!baseUrl) {
+  const baseUrlApp = getBaseUrlApp()
+  if (!baseUrlApp) {
     return createResultError(op, "!getBaseUrlApp")
   }
   const emailProps: GenerateEmailOrgInvitationProps = {
@@ -50,7 +50,7 @@ export async function orgInvitation32SendEmailActionFn(
     invitedByEmail: args.invitedByEmail,
     // data
     orgName: args.orgName,
-    url: baseUrl + urlOrgInvitationView(args.orgHandle, args.invitationCode),
+    url: baseUrlApp + urlOrgInvitationAccept(args.orgHandle, args.invitationCode),
   }
   const emailResult = await sendEmailOrgInvitation(args.invitedEmail, emailProps)
   if (!emailResult.success) {

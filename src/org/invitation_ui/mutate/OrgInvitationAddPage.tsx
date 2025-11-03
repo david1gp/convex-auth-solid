@@ -5,7 +5,7 @@ import {
   orgInvitationFormStateManagement,
   type OrgInvitationFormData,
 } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
-import { urlOrgInvitationView } from "@/org/invitation_url/urlOrgInvitation"
+import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
@@ -70,7 +70,7 @@ export function OrgInvitationAdd(p: OrgInvitationAddProps) {
       toastAdd({ title: invitationIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = p.returnPath ?? urlOrgInvitationView(p.orgHandle, data.invitationCode)
+    const url = p.returnPath ?? urlOrgInvitationAccept(p.orgHandle, data.invitationCode)
     navigator(url)
   }
   const sm = orgInvitationFormStateManagement({ add: addAction })

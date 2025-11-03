@@ -132,6 +132,11 @@ export const orgInvitationSendAction = internalAction({
   handler: orgInvitation31SendFn,
 })
 
+export const orgInvitationUpdateMutation = internalMutation({
+  args: orgInvitationUpdateValidator,
+  handler: orgInvitation33UpdateFn,
+})
+
 export const orgInvitationAcceptMutation = mutation({
   args: orgInvitationAcceptValidator,
   handler: orgInvitation50AcceptFn,
@@ -150,11 +155,6 @@ export const orgInvitationsListQuery = query({
 export const getOrgMemberHandleAndRoleQuery = internalQuery({
   args: getOrgMemberHandleAndRoleValidator,
   handler: getOrgMemberHandleAndRoleQueryFn,
-})
-
-export const orgInvitationUpdateMutation = internalMutation({
-  args: orgInvitationUpdateValidator,
-  handler: orgInvitation33UpdateFn,
 })
 
 export const orgInvitationDismissMutation = mutation({

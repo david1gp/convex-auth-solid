@@ -8,8 +8,8 @@ export function urlOrgInvitationAdd(orgHandle: string): string {
   return pageRouteOrgInvitation.orgInvitationAdd.replace(":orgHandle", orgHandle)
 }
 
-export function urlOrgInvitationView(orgHandle: string, invitationCode: string): string {
-  return pageRouteOrgInvitation.orgInvitationView
+export function urlOrgInvitationAccept(orgHandle: string, invitationCode: string): string {
+  return pageRouteOrgInvitation.orgInvitationAccept
     .replace(":orgHandle", orgHandle)
     .replace(":invitationCode", invitationCode)
 }

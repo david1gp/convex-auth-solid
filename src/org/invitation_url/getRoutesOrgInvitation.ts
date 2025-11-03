@@ -11,14 +11,14 @@ const OrgInvitationAddPage = lazy(() =>
   import("@/org/invitation_ui/mutate/OrgInvitationAddPage").then((c) => ({ default: c.OrgInvitationAddPage })),
 )
 const OrgInvitationViewPage = lazy(() =>
-  import("@/org/invitation_ui/mutate/OrgInvitationViewPage").then((c) => ({ default: c.OrgInvitationViewPage })),
+  import("@/org/invitation_ui/accept/OrgInvitationAcceptPage").then((c) => ({ default: c.OrgInvitationAcceptPage })),
 )
 
 export function getRoutesOrgInvitation(): RouteObject[] {
   const routeMapping = {
     orgInvitationList: OrgInvitationListPage,
     orgInvitationAdd: OrgInvitationAddPage,
-    orgInvitationView: OrgInvitationViewPage,
+    orgInvitationAccept: OrgInvitationViewPage,
   } as const satisfies Record<PageNameOrgInvitation, RouteComponent>
   return objectEntries(routeMapping).map(([routeKey, component]) => ({
     path: pageRouteOrgInvitation[routeKey as PageNameOrgInvitation],

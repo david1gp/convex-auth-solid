@@ -1,11 +1,11 @@
-import type { IdUser } from "@/auth/convex/IdUser"
+import type { DocUser, IdUser } from "@/auth/convex/IdUser"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
-import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
-import { userRole } from "@/auth/model/userRole"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
+import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgGetFn } from "@/org/org_convex/orgGetFn"
+import { stt } from "@/utils/i18n/stt"
 import { internal } from "@convex/_generated/api"
 import type { MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -16,10 +16,9 @@ import { dbUsersToUserProfile } from "../../auth/convex/crud/dbUsersToUserProfil
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 
 export const orgInvitationAcceptFields = {
+  token: v.string(),
+  orgHandle: v.optional(v.string()),
   invitationCode: v.string(),
-  name: v.string(),
-  username: v.string(),
-  password: v.string(),
 }
 
 export const orgInvitationAcceptValidator = v.object(orgInvitationAcceptFields)
@@ -29,6 +28,13 @@ export async function orgInvitation50AcceptFn(
   args: OrgInvitationAcceptValidatorType,
 ): PromiseResult<UserSession> {
   const op = "orgInvitationAccept"
+
+  const verifiedResult = await verifyTokenResult(args.token)
+  if (!verifiedResult.success) {
+    console.info(verifiedResult)
+    return verifiedResult
+  }
+  const userId = verifiedResult.data.sub as IdUser
 
   // Find invitation
   const invitation = await ctx.db
@@ -55,60 +61,37 @@ export async function orgInvitation50AcceptFn(
   }
 
   // Find or create user
-  const existingUser = await ctx.db
-    .query("users")
-    .withIndex("email", (q) => q.eq("email", invitation.invitedEmail))
-    .unique()
+  const user = await ctx.db.get(userId)
+  if (!user) {
+    return createResultError(op, "User not found", userId)
+  }
+
+  // Check for email mismatch
+  if (user.email && user.email !== invitation.invitedEmail) {
+    const errorMessage = stt(
+      "Email mismatch, please use the same email as in the invitation. Sign up the with invited email or resend a new invitation to the desired email address",
+    )
+    return createResultError(op, errorMessage, userId)
+  }
 
   const now = nowIso()
-  let userDoc
-  if (existingUser) {
-    userDoc = existingUser
-  } else {
-    // Hash password
-    const hashedPasswordResult = await hashPassword2(args.password)
-    if (!hashedPasswordResult.success) {
-      console.warn(hashedPasswordResult)
-      return createResultError(op, "Failed to hash password")
-    }
-    const hashedPassword = hashedPasswordResult.data
-
-    // Create new user
-    const userId = await ctx.db.insert("users", {
-      name: args.name,
-      username: args.username,
-      email: invitation.invitedEmail,
-      emailVerifiedAt: now,
-      hashedPassword,
-      role: userRole.user,
-      createdAt: now,
-      deletedAt: undefined,
-    })
-    userDoc = await ctx.db.get(userId)
-    if (!userDoc) {
-      return createResultError(op, "Failed to create user")
-    }
-  }
 
   // Update user if necessary
-  if (userDoc.emailVerifiedAt !== now) {
-    await ctx.db.patch(userDoc._id, {
-      emailVerifiedAt: now,
-    })
+  const data: Partial<DocUser> = {
+    emailVerifiedAt: now,
   }
-  if (!userDoc.username) {
-    await ctx.db.patch(userDoc._id, {
-      username: args.username,
-    })
+  if (!user.email) {
+    data.email = invitation.invitedEmail
   }
+  await ctx.db.patch(userId, data)
 
   // Create session
-  const tokenResult = await createTokenResult(userDoc._id, org.orgHandle, invitation.role)
+  const tokenResult = await createTokenResult(userId, org.orgHandle, invitation.role)
   if (!tokenResult.success) {
     return tokenResult
   }
   const token = tokenResult.data
-  const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userDoc._id, token)
+  const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 
   // Mark invitation as accepted
   await ctx.db.patch(invitation._id, {
@@ -125,7 +108,7 @@ export async function orgInvitation50AcceptFn(
   // Create org member
   await ctx.db.insert("orgMembers", {
     orgId: org._id,
-    userId: userDoc._id,
+    userId: userId,
     role: invitation.role,
     invitedBy: invitation.invitedBy as IdUser,
     createdAt: now,
@@ -133,7 +116,7 @@ export async function orgInvitation50AcceptFn(
   })
 
   // Create user profile
-  const userProfile = dbUsersToUserProfile(userDoc, org.orgHandle, invitation.role)
+  const userProfile = dbUsersToUserProfile(user, org.orgHandle, invitation.role)
 
   // Create and return user session
   const userSession: UserSession = {
