@@ -4,8 +4,8 @@ import type { OrgFormStateManagement } from "@/org/org_ui/form/orgFormStateManag
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
-import { getFormIcon } from "~ui/input/form/getFormIcon"
+import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
@@ -40,7 +40,7 @@ export function OrgForm(p: OrgContentProps) {
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
-          icon={getFormIcon(p.mode)}
+          icon={formModeIcon[p.mode]}
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
@@ -58,6 +58,7 @@ function NameField(p: HasOrgFormStateManagement) {
         {ttt("Name")}
         <LabelAsterix />
       </Label>
+      <p class="text-muted-foreground">{ttt("The display name of your organization")}</p>
       <Input
         id={orgFormField.name}
         placeholder={ttt("Enter organization name, ex. ACME")}
@@ -70,6 +71,7 @@ function NameField(p: HasOrgFormStateManagement) {
         }}
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength50}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.name.get()}>
         <p class="text-destructive">{p.sm.errors.name.get()}</p>
@@ -85,6 +87,7 @@ function HandleField(p: HasOrgFormStateManagement) {
         {ttt("Organization Handle")}
         <LabelAsterix />
       </Label>
+      <p class="text-muted-foreground">{ttt("A unique identifier, shown in url")}</p>
       <Input
         id={orgFormField.orgHandle}
         placeholder={ttt("your-company-name")}
@@ -97,6 +100,7 @@ function HandleField(p: HasOrgFormStateManagement) {
         }}
         class={classMerge("w-full", p.sm.errors.orgHandle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength25}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.orgHandle.get()}>
         <p class="text-destructive">{p.sm.errors.orgHandle.get()}</p>
@@ -109,6 +113,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.description}>Description</Label>
+      <p class="text-muted-foreground">{ttt("A brief description of your organization")}</p>
       <Textarea
         id={orgFormField.description}
         placeholder={ttt("Enter organization description")}
@@ -124,6 +129,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
           p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
         )}
         maxLength={urlMaxLength}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.description.get()}>
         <p class="text-destructive">{p.sm.errors.description.get()}</p>
@@ -136,6 +142,7 @@ function UrlField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.url}>URL</Label>
+      <p class="text-muted-foreground">{ttt("External url")}</p>
       <Input
         id={orgFormField.url}
         type="url"
@@ -149,6 +156,7 @@ function UrlField(p: HasOrgFormStateManagement) {
         }}
         class={classMerge("w-full", p.sm.errors.url.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.url.get()}>
         <p class="text-destructive">{p.sm.errors.url.get()}</p>
@@ -161,6 +169,7 @@ function ImageField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.image}>{ttt("Image URL")}</Label>
+      <p class="text-muted-foreground">{ttt("URL to your organization's logo or image")}</p>
       <Input
         id={orgFormField.image}
         type="url"
@@ -174,6 +183,7 @@ function ImageField(p: HasOrgFormStateManagement) {
         }}
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.image.get()}>
         <p class="text-destructive">{p.sm.errors.image.get()}</p>
@@ -183,5 +193,5 @@ function ImageField(p: HasOrgFormStateManagement) {
 }
 
 function getOrgTitle(mode: FormMode): string {
-  return getFormTitle(mode, ttt("Organization"))
+  return getFormModeTitle(mode, ttt("Organization"))
 }

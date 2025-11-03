@@ -4,8 +4,8 @@ import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspa
 import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, getFormTitle, type FormMode } from "~ui/input/form/formMode"
-import { formIcon, getFormIcon } from "~ui/input/form/getFormIcon"
+import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
 import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
@@ -36,7 +36,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
         <h1 class="text-2xl font-bold">{getWorkspaceTitle(p.mode)}</h1>
         {p.mode === formMode.edit && (
           <LinkButton
-            icon={formIcon.remove}
+            icon={formModeIcon.remove}
             href={urlWorkspaceRemove(p.workspaceHandle ?? "missing")}
             variant={buttonVariant.link}
           >
@@ -53,7 +53,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
-          icon={getFormIcon(p.mode)}
+          icon={formModeIcon[p.mode]}
           variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
@@ -84,6 +84,7 @@ function NameField(p: HasOrgFormStateManagement) {
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLength50}
         disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.name.get()}>
         <p class="text-destructive">{p.sm.errors.name.get()}</p>
@@ -115,6 +116,7 @@ function HandleField(p: HasOrgFormStateManagement) {
         )}
         maxLength={inputMaxLength25}
         disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.workspaceHandle.get()}>
         <p class="text-destructive">{p.sm.errors.workspaceHandle.get()}</p>
@@ -143,6 +145,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
         )}
         maxLength={urlMaxLength}
         disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.description.get()}>
         <p class="text-destructive">{p.sm.errors.description.get()}</p>
@@ -170,6 +173,7 @@ function ImageField(p: HasOrgFormStateManagement) {
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
         disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.image.get()}>
         <p class="text-destructive">{p.sm.errors.image.get()}</p>
@@ -197,6 +201,7 @@ function UrlField(p: HasOrgFormStateManagement) {
         class={classMerge("w-full", p.sm.errors.url.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={urlMaxLength}
         disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.url.get()}>
         <p class="text-destructive">{p.sm.errors.url.get()}</p>
@@ -206,5 +211,5 @@ function UrlField(p: HasOrgFormStateManagement) {
 }
 
 function getWorkspaceTitle(mode: FormMode): string {
-  return getFormTitle(mode, ttt("Workspace"))
+  return getFormModeTitle(mode, ttt("Workspace"))
 }

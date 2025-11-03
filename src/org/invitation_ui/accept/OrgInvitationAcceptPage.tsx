@@ -17,7 +17,7 @@ import { mdiAccountAlert } from "@mdi/js"
 import { useNavigate, useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt, ttt1 } from "~ui/i18n/ttt"
-import { formMode, getFormTitle } from "~ui/input/form/formMode"
+import { formMode, getFormModeTitle } from "~ui/input/form/formMode"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
@@ -56,7 +56,7 @@ export function OrgInvitationAcceptPage() {
 
 function getPageTitle(orgName?: string) {
   const subject = orgName ?? ttt("Organization")
-  return getFormTitle(mode, ttt1("Accept [X] Invitation?", subject))
+  return getFormModeTitle(mode, ttt1("Accept [X] Invitation?", subject))
 }
 
 interface OrgInvitationAcceptProps extends HasOrgHandle, HasOrgInvitationCode {}

@@ -7,8 +7,8 @@ import { orgRoleText } from "@/org/org_model/orgRoleText"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
-import { getFormIcon } from "~ui/input/form/getFormIcon"
+import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -38,7 +38,7 @@ export function OrgInvitationForm(p: OrgInvitationContentProps) {
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
-          icon={getFormIcon(p.mode)}
+          icon={formModeIcon[p.mode]}
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
@@ -130,5 +130,5 @@ function RoleField(p: HasOrgInvitationFormStateManagement) {
 }
 
 function getOrgInvitationTitle(mode: FormMode): string {
-  return getFormTitle(mode, ttt("Organization Invitation"))
+  return getFormModeTitle(mode, ttt("Organization Invitation"))
 }

@@ -5,8 +5,8 @@ import { orgRole } from "@/org/org_model/orgRole"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { getFormTitle, type FormMode } from "~ui/input/form/formMode"
-import { getFormIcon } from "~ui/input/form/getFormIcon"
+import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -32,7 +32,7 @@ export function OrgMemberForm(p: OrgMemberContentProps) {
         <ButtonIcon
           type="submit"
           disabled={p.sm.isSaving.get()}
-          icon={getFormIcon(p.mode)}
+          icon={formModeIcon[p.mode]}
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
@@ -72,5 +72,5 @@ function RoleField(p: HasOrgMemberFormStateManagement) {
 }
 
 function getOrgMemberTitle(mode: FormMode): string {
-  return getFormTitle(mode, ttt("Organization Member"))
+  return getFormModeTitle(mode, ttt("Organization Member"))
 }

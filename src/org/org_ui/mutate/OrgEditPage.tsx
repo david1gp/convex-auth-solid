@@ -6,7 +6,7 @@ import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, getFormTitle } from "~ui/input/form/formMode"
+import { formMode, getFormModeTitle } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 const mode = formMode.edit
@@ -14,7 +14,6 @@ const mode = formMode.edit
 export function OrgEditPage() {
   const params = useParams()
   const getOrgHandle = () => params.orgHandle
-  const getReturnPath = () => params.returnPath
   return (
     <Switch>
       <Match when={!getOrgHandle()}>
@@ -25,7 +24,7 @@ export function OrgEditPage() {
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
             <LinkLikeText>{ttt("Edit")}</LinkLikeText>
           </NavOrg>
-          <OrgMutate mode={mode} orgHandle={getOrgHandle()!} returnPath={getReturnPath()} />
+          <OrgMutate mode={mode} orgHandle={getOrgHandle()!} />
         </PageWrapper>
         <OrgMemberListPage />
       </Match>
@@ -34,5 +33,5 @@ export function OrgEditPage() {
 }
 
 function getPageTitle(orgName?: string, workspaceName?: string) {
-  return getFormTitle(mode, workspaceName ?? ttt("Organization"))
+  return getFormModeTitle(mode, workspaceName ?? ttt("Organization"))
 }

@@ -12,7 +12,7 @@ import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formModeView } from "~ui/input/form/formMode"
+import { formMode } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function UserProfilePage() {
@@ -61,7 +61,7 @@ interface UserProfileDisplayProps {
 }
 
 function UserProfileDisplay(p: UserProfileDisplayProps) {
-  const mode = formModeView.view
+  const mode = formMode.view
   const sm: UserProfileFormStateManagement = userProfileFormStateManagement(mode, {})
   sm.loadData(dbUsersToUserProfile(p.data))
   return <UserProfileForm sm={sm} mode={mode} class="max-w-4xl mx-auto" />

@@ -6,7 +6,7 @@ import { urlWorkspaceEdit } from "@/workspace/url/urlWorkspace"
 import { useParams } from "@solidjs/router"
 import { For, Match, Show, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formIcon } from "~ui/input/form/getFormIcon"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { Img } from "~ui/static/img/Img"
@@ -50,7 +50,7 @@ function WorkspaceView(p: WorkspaceComponentProps) {
         <LinkButton
           href={urlWorkspaceEdit(p.workspace.workspaceHandle)}
           variant={buttonVariant.default}
-          icon={formIcon.edit}
+          icon={formModeIcon.edit}
         >
           {ttt("Edit")}
         </LinkButton>

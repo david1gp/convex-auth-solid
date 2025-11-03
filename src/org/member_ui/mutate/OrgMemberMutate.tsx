@@ -9,7 +9,7 @@ import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { type HasFormModeMutate } from "~ui/input/form/formMode"
+import type { HasFormModeMutate } from "~ui/input/form/formModeMutate"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 interface OrgMemberMutateProps extends HasOrgHandle, HasOrgMemberId, HasFormModeMutate, MayHaveClass {}

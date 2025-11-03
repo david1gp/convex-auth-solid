@@ -1,7 +1,7 @@
 import type { UserProfile } from "@/auth/model/UserProfile"
 import type { UserRole } from "@/auth/model/userRole"
 import type { OrgRole } from "@/org/org_model/orgRole"
-import type { FormModeView } from "~ui/input/form/formMode"
+import type { FormMode } from "~ui/input/form/formMode"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type UserProfileFormData = {
@@ -69,7 +69,7 @@ function userProfileCreateErrorState(): UserProfileFormErrorState {
 }
 
 export type UserProfileFormStateManagement = {
-  mode: FormModeView
+  mode: FormMode
   isSaving: SignalObject<boolean>
   serverState: SignalObject<UserProfile>
   state: UserProfileFormState
@@ -81,7 +81,7 @@ export type UserProfileFormStateManagement = {
 export type UserProfileFormActions = {}
 
 export function userProfileFormStateManagement(
-  mode: FormModeView,
+  mode: FormMode,
   actions: UserProfileFormActions,
 ): UserProfileFormStateManagement {
   const serverState = createSignalObject({} as UserProfile)

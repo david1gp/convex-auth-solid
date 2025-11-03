@@ -5,7 +5,7 @@ import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { For, Show, splitProps } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formIcon } from "~ui/input/form/getFormIcon"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -37,7 +37,7 @@ function NoOrgInvitationsText() {
 function Header(p: OrgInvitationsProps) {
   return (
     <PageHeader title={ttt("Member Invitations")}>
-      <LinkButton href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.default} icon={formIcon.add}>
+      <LinkButton href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.default} icon={formModeIcon.add}>
         {ttt("Invite Member")}
       </LinkButton>
     </PageHeader>

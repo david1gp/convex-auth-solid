@@ -4,7 +4,7 @@ import { urlOrgEdit } from "@/org/org_url/urlOrg"
 import { mdiHandWave } from "@mdi/js"
 import { For, Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formIcon } from "~ui/input/form/getFormIcon"
+import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { Icon1 } from "~ui/static/icon/Icon1"
@@ -28,7 +28,7 @@ export function OrgViewInformation(p: OrgViewProps) {
         <LinkButton
           href={urlOrgEdit(p.org.orgHandle)}
           variant={buttonVariant.ghost}
-          icon={formIcon.edit}
+          icon={formModeIcon.edit}
           class="flex mt-4"
         >
           {ttt("Edit")}

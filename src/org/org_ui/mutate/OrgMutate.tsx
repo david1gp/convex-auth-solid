@@ -2,7 +2,7 @@ import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { orgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { OrgLoader, type OrgComponentProps } from "@/org/org_ui/mutate/OrgLoader"
-import { type HasFormModeMutate } from "~ui/input/form/formMode"
+import type { HasFormModeMutate } from "~ui/input/form/formModeMutate"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 interface OrgMutateProps extends HasOrgHandle, HasFormModeMutate, MayHaveClass {}

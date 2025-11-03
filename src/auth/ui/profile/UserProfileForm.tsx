@@ -2,7 +2,7 @@ import { userProfileFormField } from "@/auth/ui/profile/userProfileFormField"
 import { DateView } from "@/ui/date/DateView"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formModeViewIsReadOnly, type FormModeView } from "~ui/input/form/formMode"
+import { formMode, formModeIsReadOnly, type FormMode } from "~ui/input/form/formMode"
 import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -14,7 +14,7 @@ interface HasUserProfileFormStateManagement {
 }
 
 export interface UserProfileFormProps extends MayHaveClass, HasUserProfileFormStateManagement {
-  mode: FormModeView
+  mode: FormMode
 }
 
 export function UserProfileForm(p: UserProfileFormProps) {
@@ -43,9 +43,10 @@ function UserIdField(p: HasUserProfileFormStateManagement) {
       <Input
         id={userProfileFormField.userId}
         value={p.sm.state.userId.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         autocomplete="off"
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -58,9 +59,10 @@ function NameField(p: HasUserProfileFormStateManagement) {
       <Input
         id={userProfileFormField.name}
         value={p.sm.state.name.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         autocomplete="name"
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -73,9 +75,10 @@ function UsernameField(p: HasUserProfileFormStateManagement) {
       <Input
         id={userProfileFormField.username}
         value={p.sm.state.username.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         autocomplete="username"
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -89,9 +92,10 @@ function ImageField(p: HasUserProfileFormStateManagement) {
         id={userProfileFormField.image}
         type="url"
         value={p.sm.state.image.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         autocomplete="url"
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.state.image.get()}>
         <img src={p.sm.state.image.get()} alt="Profile" class="w-16 h-16 rounded-full mt-2" />
@@ -108,9 +112,10 @@ function EmailField(p: HasUserProfileFormStateManagement) {
         id={userProfileFormField.email}
         type="email"
         value={p.sm.state.email.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         autocomplete="email"
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -123,8 +128,9 @@ function RoleField(p: HasUserProfileFormStateManagement) {
       <Input
         id={userProfileFormField.role}
         value={p.sm.state.role.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -137,9 +143,10 @@ function OrgHandleField(p: HasUserProfileFormStateManagement) {
       <Input
         id={userProfileFormField.orgHandle}
         value={p.sm.state.orgHandle.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         autocomplete="organization-name"
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -152,8 +159,9 @@ function OrgRoleField(p: HasUserProfileFormStateManagement) {
       <Input
         id={userProfileFormField.orgRole}
         value={p.sm.state.orgRole.get()}
-        readOnly={formModeViewIsReadOnly(p.sm.mode)}
         class="w-full bg-gray-50 dark:bg-gray-800"
+        disabled={p.sm.mode === formMode.remove}
+        readOnly={formModeIsReadOnly(p.sm.mode)}
       />
     </div>
   )
@@ -168,7 +176,7 @@ function CreatedAtField(p: HasUserProfileFormStateManagement) {
   )
 }
 
-function getUserProfileTitle(mode: FormModeView): string {
-  // return getFormTitle(mode, ttt("User Profile"))
+function getUserProfileTitle(mode: FormMode): string {
+  // return getFormModeTitle(mode, ttt("User Profile"))
   return ttt("User Profile")
 }
