@@ -1,4 +1,5 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import styles from "@/ui/loaders/AnimateFadeIn.module.css"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQuery } from "@/utils/convex/createQuery"
@@ -39,5 +40,5 @@ export function WorkspaceLoader(p: WorkspaceLoaderProps) {
 }
 
 function WorkspaceLoading() {
-  return <LoadingSection loadingSubject={ttt("Workspace")} />
+  return <LoadingSection loadingSubject={ttt("Workspace")} class={styles.animateFadeIn2s} />
 }
