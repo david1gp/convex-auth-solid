@@ -57,7 +57,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
           variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
-          {p.sm.isSaving.get() ? "Saving..." : getWorkspaceTitle(p.mode)}
+          {p.sm.isSaving.get() ? ttt("Saving...") : getWorkspaceTitle(p.mode)}
         </ButtonIcon>
       </form>
     </section>
@@ -68,7 +68,7 @@ function NameField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={workspaceFormField.name}>
-        Name <LabelAsterix />
+        {ttt("Name")} <LabelAsterix />
       </Label>
       <Input
         id={workspaceFormField.name}
@@ -96,7 +96,7 @@ function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={workspaceFormField.workspaceHandle}>
-        Handle <LabelAsterix />
+        {ttt("Handle")} <LabelAsterix />
       </Label>
       <Input
         id={workspaceFormField.workspaceHandle}
@@ -126,7 +126,7 @@ function HandleField(p: HasOrgFormStateManagement) {
 function DescriptionField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={workspaceFormField.description}>Description</Label>
+      <Label for={workspaceFormField.description}>{ttt("Description")}</Label>
       <Textarea
         id={workspaceFormField.description}
         placeholder={ttt("Enter workspace description")}
@@ -154,7 +154,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
 function ImageField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={workspaceFormField.image}>Image URL</Label>
+      <Label for={workspaceFormField.image}>{ttt("Image URL")}</Label>
       <Input
         id={workspaceFormField.image}
         type="url"
@@ -181,7 +181,7 @@ function ImageField(p: HasOrgFormStateManagement) {
 function UrlField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={workspaceFormField.url}>Website URL</Label>
+      <Label for={workspaceFormField.url}>{ttt("Website URL")}</Label>
       <Input
         id={workspaceFormField.url}
         type="url"
