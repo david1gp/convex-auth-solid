@@ -1,4 +1,5 @@
 import { dbUsersToUserProfile } from "@/auth/convex/crud/dbUsersToUserProfile"
+import { orgGetByHandle } from "@/org/org_convex/orgGetByHandle"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -15,10 +16,7 @@ export const orgGetPageValidator = v.object(orgGetPageFields)
 export async function orgGetPageFn(ctx: QueryCtx, args: OrgGetPageValidatorType): PromiseResult<OrgViewPageType> {
   const op = "orgGetPageFn"
 
-  const org = await ctx.db
-    .query("orgs")
-    .withIndex("orgHandle", (q) => q.eq("orgHandle", args.orgHandle))
-    .unique()
+  const org = await orgGetByHandle(ctx, args.orgHandle)
   if (!org) {
     return createResultError(op, "Organization not found", args.orgHandle)
   }

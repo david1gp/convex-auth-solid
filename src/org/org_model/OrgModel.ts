@@ -3,8 +3,10 @@ import type { HasConvexSystemFields } from "@/utils/convex/HasConvexSystemFields
 import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt"
 
 export type OrgDataModel = {
-  name: string
+  // id
   orgHandle: string
+  // data
+  name: string
   description?: string
   url?: string
   image?: string

@@ -1,3 +1,4 @@
+import { orgGetByHandle } from "@/org/org_convex/orgGetByHandle"
 import { type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
@@ -13,10 +14,7 @@ export const orgGetValidator = v.object(orgGetFields)
 
 export async function orgGetFn(ctx: QueryCtx, args: OrgGetValidatorType): PromiseResult<DocOrg | null> {
   const op = "orgGetFn"
-  const org = await ctx.db
-    .query("orgs")
-    .withIndex("orgHandle", (q) => q.eq("orgHandle", args.orgHandle))
-    .unique()
+  const org = await orgGetByHandle(ctx, args.orgHandle)
   if (!org) {
     return createResultError(op, "Organization not found", args.orgHandle)
   }
