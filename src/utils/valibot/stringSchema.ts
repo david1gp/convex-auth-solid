@@ -12,7 +12,7 @@ export const stringSchema1to50 = v.pipe(
 export const stringSchemaId = stringSchema1to50
 export const stringSchemaName = stringSchema1to50
 
-export const stringSchema0to5000 = v.pipe(v.string(), v.trim(), v.nonEmpty(cantBeEmpty), v.maxLength(5_000))
+export const stringSchema0to5000 = v.pipe(v.string(), v.trim(), v.maxLength(5_000))
 export const stringSchemaDescription = stringSchema0to5000
 
 export const stringSchema0to100 = v.pipe(
@@ -27,7 +27,6 @@ export const stringSchema = stringSchema0to100
 export const stringSchema0to500 = v.pipe(
   v.string(),
   v.trim(),
-  v.nonEmpty(cantBeEmpty),
   v.maxLength(inputMaxLength100, "Only a max length of 500 is allowed"),
 )
 export const stringSchemaUrl = stringSchema0to500
