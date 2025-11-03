@@ -21,6 +21,11 @@ const DemoSignInErrorPage = lazy(async () => {
   return { default: c.DemoSignInErrorPage }
 })
 
+const DemoAnimateFadeIn = lazy(async () => {
+  const c = await import("@/ui/loaders/DemoAnimateFadeIn")
+  return { default: c.DemoAnimateFadeIn }
+})
+
 const DemoLoaders = lazy(async () => {
   const c = await import("@/ui/loaders/DemoLoaders")
   return { default: c.DemoLoaders }
@@ -41,6 +46,7 @@ export const demoList = {
     DemoOrgInvitationList: DemoOrgInvitationList,
   },
   ui: {
+    DemoAnimateFadeIn: DemoAnimateFadeIn,
     DemoLoaders: DemoLoaders,
     DemosLinkButton: DemosLinkButton,
   },
