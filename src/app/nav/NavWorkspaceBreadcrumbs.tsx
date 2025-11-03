@@ -1,6 +1,6 @@
-import { urlOrgView } from "@/org/org_url/urlOrg"
 import { WorkspacesLinkButton } from "@/ui/links/WorkspacesLinkButton"
 import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
+import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { Show, type Accessor } from "solid-js"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -38,7 +38,10 @@ export function NavWorkspaceBreadcrumbs(p: NavWorkspaceBreadcrumbsProps) {
         {(workspaceName) => (
           <>
             <NavBreadcrumbSeparator />
-            <LinkButton variant={buttonVariant.link} href={p.workspaceHandle ? urlOrgView(p.workspaceHandle) : ""}>
+            <LinkButton
+              variant={buttonVariant.link}
+              href={p.workspaceHandle ? urlWorkspaceView(p.workspaceHandle) : ""}
+            >
               {workspaceName()}
             </LinkButton>
           </>
