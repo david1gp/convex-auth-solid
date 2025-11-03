@@ -1,7 +1,7 @@
 import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
 import { urlOrgView } from "@/org/org_url/urlOrg"
 import { OrganizationsLinkButton } from "@/ui/links/OrganizationsLinkButton"
-import { Show, type Accessor } from "solid-js"
+import { Show } from "solid-js"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { SetPageTitle } from "~ui/static/meta/SetPageTitle"
@@ -10,25 +10,23 @@ import { NavBreadcrumbSeparator } from "./NavBreadcrumbSeparator"
 
 export interface NavOrgBreadcrumbsProps extends MayHaveChildren {
   orgHandle?: string
-  getOrgName?: Accessor<string>
+  getOrgName?: (orgHandle: string) => string
   getOrgPageTitle?: (orgName?: string) => string
 }
 
 export function NavOrgBreadcrumbs(p: NavOrgBreadcrumbsProps) {
+  function getOrgName(orgHandle: string) {
+    if (p.getOrgName) return p.getOrgName(orgHandle)
+    return orgListFindNameByHandle(orgHandle)
+  }
   return (
     <>
       <NavBreadcrumbSeparator />
       <OrganizationsLinkButton />
       <Show when={p.getOrgPageTitle}>
-        {(getPageTitle) => (
-          <SetPageTitle
-            title={getPageTitle()(
-              p.orgHandle && (p.getOrgName ? p.getOrgName() : orgListFindNameByHandle(p.orgHandle)),
-            )}
-          />
-        )}
+        {(getPageTitle) => <SetPageTitle title={getPageTitle()(p.orgHandle && getOrgName(p.orgHandle))} />}
       </Show>
-      <Show when={p.orgHandle && (p.getOrgName ? p.getOrgName() : orgListFindNameByHandle(p.orgHandle))}>
+      <Show when={p.orgHandle && getOrgName(p.orgHandle)}>
         {(orgName) => (
           <>
             <NavBreadcrumbSeparator />
