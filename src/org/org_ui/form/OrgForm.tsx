@@ -1,6 +1,6 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
-import type { OrgFormStateManagement } from "@/org/org_ui/form/orgCreateFormStateManagement"
 import { orgFormField } from "@/org/org_ui/form/orgFormField"
+import type { OrgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"

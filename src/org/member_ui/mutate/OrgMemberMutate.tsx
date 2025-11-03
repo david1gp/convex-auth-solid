@@ -1,11 +1,11 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgMember, IdOrgMember } from "@/org/member_convex/IdOrgMember"
+import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
 import {
-  orgMemberEditFormStateManagement,
+  orgMemberFormStateManagement,
   type OrgMemberFormActions,
   type OrgMemberFormData,
-} from "@/org/member_ui/form/orgMemberEditFormStateManagement"
-import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
+} from "@/org/member_ui/form/orgMemberFormStateManagement"
 import { urlOrgMemberList, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { HasOrgMemberId } from "@/org/org_model/HasOrgMemberId"
@@ -93,7 +93,7 @@ export function OrgMemberMutate(p: OrgMemberMutateProps) {
     actions.remove = deleteAction
   }
 
-  const sm = orgMemberEditFormStateManagement(actions)
+  const sm = orgMemberFormStateManagement(actions)
 
   createEffect(() => {
     const m = getMember()

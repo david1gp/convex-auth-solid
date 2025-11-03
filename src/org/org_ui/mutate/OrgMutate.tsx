@@ -1,12 +1,12 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import {
-  orgCreateFormStateManagement,
+  orgFormStateManagement,
   type OrgFormActions,
   type OrgFormData,
-} from "@/org/org_ui/form/orgCreateFormStateManagement"
-import { OrgForm } from "@/org/org_ui/form/OrgForm"
+} from "@/org/org_ui/form/orgFormStateManagement"
 import { urlOrgList, urlOrgView } from "@/org/org_url/urlOrg"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createMutation } from "@/utils/convex/createMutation"
@@ -102,7 +102,7 @@ export function OrgMutate(p: OrgMutateProps) {
     actions.delete = deleteAction
   }
 
-  const sm = orgCreateFormStateManagement(actions)
+  const sm = orgFormStateManagement(actions)
 
   createEffect(() => {
     const orgResult = getOrg()

@@ -1,7 +1,7 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import { orgCreateFormStateManagement, type OrgFormData } from "@/org/org_ui/form/orgCreateFormStateManagement"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
+import { orgFormStateManagement, type OrgFormData } from "@/org/org_ui/form/orgFormStateManagement"
 import { urlOrgView } from "@/org/org_url/urlOrg"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { createMutation } from "@/utils/convex/createMutation"
@@ -50,6 +50,6 @@ export function OrgAdd(p: OrgAddProps) {
     const url = p.returnPath ?? urlOrgView(sm.state.orgHandle.get())
     navigator(url)
   }
-  const sm = orgCreateFormStateManagement({ create: addAction })
+  const sm = orgFormStateManagement({ create: addAction })
   return <OrgForm mode={formMode.add} sm={sm} class={p.class} />
 }

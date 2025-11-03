@@ -1,11 +1,11 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import type { IdUser } from "@/auth/convex/IdUser"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import {
-  orgMemberEditFormStateManagement,
-  type OrgMemberFormData,
-} from "@/org/member_ui/form/orgMemberEditFormStateManagement"
 import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
+import {
+  orgMemberFormStateManagement,
+  type OrgMemberFormData,
+} from "@/org/member_ui/form/orgMemberFormStateManagement"
 import { urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
@@ -71,6 +71,6 @@ export function OrgMemberAdd(p: OrgMemberAddProps) {
     const url = p.returnPath ?? urlOrgMemberView(p.orgHandle, memberIdResult.data)
     navigator(url)
   }
-  const sm = orgMemberEditFormStateManagement({ add: addAction })
+  const sm = orgMemberFormStateManagement({ add: addAction })
   return <OrgMemberForm mode={formMode.add} sm={sm} class={p.class} />
 }

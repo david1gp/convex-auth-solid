@@ -74,7 +74,7 @@ export type OrgMemberFormActions = {
   remove?: OrgMemberFormRemoveFn
 }
 
-export function orgMemberEditFormStateManagement(actions: OrgMemberFormActions): OrgMemberFormStateManagement {
+export function orgMemberFormStateManagement(actions: OrgMemberFormActions): OrgMemberFormStateManagement {
   const serverState = createSignalObject(createEmptyDocOrgMember())
   const isSaving = createSignalObject(false)
   const state = createOrgMemberFormState()

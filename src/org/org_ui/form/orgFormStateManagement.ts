@@ -86,7 +86,7 @@ export type OrgFormActions = {
   delete?: OrgFormDeleteFn
 }
 
-export function orgCreateFormStateManagement(actions: OrgFormActions): OrgFormStateManagement {
+export function orgFormStateManagement(actions: OrgFormActions): OrgFormStateManagement {
   const serverState = createSignalObject(createEmptyDocOrg())
   const isSaving = createSignalObject(false)
   const state = orgCreateState()
