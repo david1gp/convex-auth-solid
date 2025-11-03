@@ -28,34 +28,48 @@ export function OrgInvitationCard(p: OrgInvitationCardProps) {
         "p-4", // padding
         "border border-gray-200 dark:border-gray-500 rounded-lg ", // border
         "bg-gray-50 dark:bg-stone-800", // bg
-        "flex justify-start gap-2", // layout children
+        "flex flex-col justify-start gap-2", // layout children
         p.class,
       )}
     >
-      <div class="flex-1 flex flex-col justify-start gap-2">
-        <h3 class="text-xl font-medium">{p.invitation.invitedEmail}</h3>
-
-        {orgInvitationShowRole && (
-          <div class="text-muted-foreground capitalize">
-            <span>{ttt("Role:")}</span>
-            {p.invitation.role}
-          </div>
-        )}
-
-        <OrgInvitationStatusText invitation={p.invitation} />
-        <OrgInvitationActions {...p} />
+      <div class="flex justify-start gap-2">
+        <Left {...p} />
+        <Right {...p} />
       </div>
-      <div
-        class={classArr(
-          "size-14",
-          "bg-gray-200 dark:bg-gray-600",
-          "rounded-full",
-          "flex flex-col justify-center items-center", // layout children
-        )}
-      >
-        <OrgInvitationStatusIcon invitation={p.invitation} />
-      </div>
+      <OrgInvitationActions {...p} />
     </section>
+  )
+}
+
+function Left(p: OrgInvitationCardProps) {
+  return (
+    <div class="flex-1 flex flex-col justify-start gap-2">
+      <h3 class="text-xl font-medium">{p.invitation.invitedEmail}</h3>
+
+      {orgInvitationShowRole && (
+        <div class="text-muted-foreground capitalize">
+          <span>{ttt("Role:")}</span>
+          {p.invitation.role}
+        </div>
+      )}
+
+      <OrgInvitationStatusText invitation={p.invitation} />
+    </div>
+  )
+}
+
+function Right(p: OrgInvitationCardProps) {
+  return (
+    <div
+      class={classArr(
+        "size-14",
+        "bg-gray-200 dark:bg-gray-600",
+        "rounded-full",
+        "flex flex-col justify-center items-center", // layout children
+      )}
+    >
+      <OrgInvitationStatusIcon invitation={p.invitation} />
+    </div>
   )
 }
 
