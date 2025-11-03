@@ -2,7 +2,6 @@ import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { orgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
@@ -23,7 +22,7 @@ function getPageTitle(orgName?: string, workspaceName?: string) {
   return ttt("Create new Organization")
 }
 
-export interface OrgAddProps extends MayHaveReturnPath, MayHaveClass {}
+export interface OrgAddProps extends MayHaveClass {}
 
 export function OrgAdd(p: OrgAddProps) {
   const sm = orgFormStateManagement(formMode.add)

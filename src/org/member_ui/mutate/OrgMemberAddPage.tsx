@@ -1,30 +1,18 @@
 import { NavOrg } from "@/app/nav/NavOrg"
-import type { IdUser } from "@/auth/convex/IdUser"
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
-import {
-  orgMemberFormStateManagement,
-  type OrgMemberFormData,
-} from "@/org/member_ui/form/orgMemberFormStateManagement"
-import { urlOrgMemberView } from "@/org/member_url/urlOrgMember"
+import { orgMemberFormStateManagement } from "@/org/member_ui/form/orgMemberFormStateManagement"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { createMutation } from "@/utils/convex/createMutation"
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
-import { api } from "@convex/_generated/api"
-import { useNavigate, useParams } from "@solidjs/router"
+import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function OrgMemberAddPage() {
   const params = useParams()
-  const getReturnPath = () => params.returnPath
   const getOrgHandle = () => params.orgHandle
   return (
     <Switch>
@@ -36,7 +24,7 @@ export function OrgMemberAddPage() {
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
             <LinkLikeText>{ttt("Add Member")}</LinkLikeText>
           </NavOrg>
-          <OrgMemberAdd orgHandle={getOrgHandle()!} returnPath={getReturnPath()} />
+          <OrgMemberAdd orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
     </Switch>
@@ -47,30 +35,9 @@ function getPageTitle(orgName?: string) {
   return ttt("Add new Organization Member")
 }
 
-export interface OrgMemberAddProps extends HasOrgHandle, MayHaveReturnPath, MayHaveClass {}
+export interface OrgMemberAddProps extends HasOrgHandle, MayHaveClass {}
 
 export function OrgMemberAdd(p: OrgMemberAddProps) {
-  const navigator = useNavigate()
-  const addMutation = createMutation(api.org.orgMemberCreateMutation)
-
-  async function addAction(data: OrgMemberFormData): Promise<void> {
-    const memberIdResult = await addMutation({
-      // auth
-      token: userTokenGet(),
-      // ids
-      orgHandle: p.orgHandle,
-      userId: data.userId as IdUser,
-      // data
-      role: data.role,
-    })
-    if (!memberIdResult.success) {
-      console.error(memberIdResult)
-      toastAdd({ title: memberIdResult.errorMessage, variant: toastVariant.error })
-      return
-    }
-    const url = p.returnPath ?? urlOrgMemberView(p.orgHandle, memberIdResult.data)
-    navigator(url)
-  }
-  const sm = orgMemberFormStateManagement({ add: addAction })
+  const sm = orgMemberFormStateManagement(formMode.add, p.orgHandle)
   return <OrgMemberForm mode={formMode.add} sm={sm} class={p.class} />
 }

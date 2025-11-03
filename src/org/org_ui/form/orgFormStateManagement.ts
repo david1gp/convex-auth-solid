@@ -6,6 +6,7 @@ import { orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
 import { urlOrgList, urlOrgView } from "@/org/org_url/urlOrg"
 import { createMutation } from "@/utils/convex/createMutation"
 import { debounceMs } from "@/utils/ui/debounceMs"
+import type { HasToken } from "@/utils/ui/HasToken"
 import { handleGenerate } from "@/utils/valibot/handleSchema"
 import { api } from "@convex/_generated/api"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
@@ -293,10 +294,6 @@ function createActions(mode: FormMode, orgHandle: string | undefined, navigate: 
     actions.delete = async () => removeAction(orgHandle, mode, deleteMutation, navigate)
   }
   return actions
-}
-
-interface HasToken {
-  token: string
 }
 
 interface OrgCreateMutationProps extends OrgFormData, HasToken {}

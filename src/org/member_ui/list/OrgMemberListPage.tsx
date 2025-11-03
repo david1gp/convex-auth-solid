@@ -40,7 +40,7 @@ export function OrgMemberListPage() {
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(orgName?: string) {
   const name = orgName ?? ttt("Organization")
   return name + " " + ttt("Members")
 }

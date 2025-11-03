@@ -1,115 +1,41 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgMember, IdOrgMember } from "@/org/member_convex/IdOrgMember"
 import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
-import {
-  orgMemberFormStateManagement,
-  type OrgMemberFormActions,
-  type OrgMemberFormData,
-} from "@/org/member_ui/form/orgMemberFormStateManagement"
-import { urlOrgMemberList, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
+import { orgMemberFormStateManagement } from "@/org/member_ui/form/orgMemberFormStateManagement"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { HasOrgMemberId } from "@/org/org_model/HasOrgMemberId"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
-import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
-import { useNavigate } from "@solidjs/router"
-import { Show, createEffect } from "solid-js"
+import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, type HasFormModeMutate } from "~ui/input/form/formMode"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
+import { type HasFormModeMutate } from "~ui/input/form/formMode"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
-interface OrgMemberMutateProps
-  extends HasOrgHandle,
-    HasOrgMemberId,
-    HasFormModeMutate,
-    MayHaveReturnPath,
-    MayHaveClass {}
+interface OrgMemberMutateProps extends HasOrgHandle, HasOrgMemberId, HasFormModeMutate, MayHaveClass {}
 
 export function OrgMemberMutate(p: OrgMemberMutateProps) {
-  const op = "OrgMemberMutate"
-  const navigator = useNavigate()
   const getMember = createQuery(api.org.orgMemberGetQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
     memberId: p.memberId as IdOrgMember,
   }) as () => DocOrgMember | undefined
-
-  const editMutation = createMutation(api.org.orgMemberEditMutation)
-  const deleteMutation = createMutation(api.org.orgMemberDeleteMutation)
-
-  async function editAction(data: OrgMemberFormData) {
-    const member = getMember()
-    if (!member) {
-      console.warn("no member")
-      return
-    }
-    const result = await editMutation({
-      token: userTokenGet(),
-      orgHandle: p.orgHandle,
-      memberId: member._id,
-      role: data.role,
-    })
-    if (!result.success) {
-      console.error(result)
-      toastAdd({ title: result.errorMessage, variant: toastVariant.error })
-      return
-    }
-    navigator(getReturnPath())
-  }
-
-  async function deleteAction() {
-    const member = getMember()
-    if (!member) {
-      console.warn("no member")
-      return
-    }
-    const result = await deleteMutation({
-      token: userTokenGet(),
-      orgHandle: p.orgHandle,
-      memberId: member._id,
-    })
-    if (!result.success) {
-      console.error(result)
-      toastAdd({ title: result.errorMessage, variant: toastVariant.error })
-      return
-    }
-    navigator(getReturnPath())
-  }
-  function getReturnPath() {
-    if (p.returnPath) return p.returnPath
-    if (p.mode === formMode.edit) return urlOrgMemberView(p.orgHandle, p.memberId)
-    return urlOrgMemberList(p.orgHandle)
-  }
-
-  const actions: OrgMemberFormActions = {}
-  if (p.mode === formMode.edit) {
-    actions.edit = editAction
-  }
-  if (p.mode === formMode.remove) {
-    actions.remove = deleteAction
-  }
-
-  const sm = orgMemberFormStateManagement(actions)
-
-  createEffect(() => {
-    const m = getMember()
-    if (!m) {
-      return
-    }
-    sm.loadData(m)
-  })
-
   return (
     <Show when={getMember()} fallback={<OrgMemberLoading />}>
-      <OrgMemberForm mode={p.mode} sm={sm} />
+      <OrgMemberMutateForm mode={p.mode} orgHandle={p.orgHandle} memberId={p.memberId} member={getMember()!} />
     </Show>
   )
 }
 
+interface OrgMemberMutateFormProps extends OrgMemberMutateProps {
+  member: DocOrgMember
+}
+
 function OrgMemberLoading() {
   return <LoadingSection loadingSubject={ttt("Organization Member")} />
+}
+
+function OrgMemberMutateForm(p: OrgMemberMutateFormProps) {
+  const sm = orgMemberFormStateManagement(p.mode, p.orgHandle, p.memberId as IdOrgMember, p.member)
+  return <OrgMemberForm mode={p.mode} sm={sm} />
 }

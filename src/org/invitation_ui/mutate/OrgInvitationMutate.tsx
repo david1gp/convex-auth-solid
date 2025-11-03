@@ -11,7 +11,6 @@ import type { HasOrgInvitationCode } from "@/org/org_model/HasOrgInvitationCode"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createAction } from "@/utils/convex/createAction"
 import { createQuery } from "@/utils/convex/createQuery"
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
 import { useNavigate } from "@solidjs/router"
 import { Show, createEffect } from "solid-js"
@@ -21,12 +20,7 @@ import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
-interface OrgInvitationMutateProps
-  extends HasOrgHandle,
-    HasOrgInvitationCode,
-    HasFormModeMutate,
-    MayHaveReturnPath,
-    MayHaveClass {}
+interface OrgInvitationMutateProps extends HasOrgHandle, HasOrgInvitationCode, HasFormModeMutate, MayHaveClass {}
 
 export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
   const op = "OrgInvitationMutate"
@@ -53,7 +47,7 @@ export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
       toastAdd({ title: result.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = p.returnPath ?? urlOrgInvitationList(p.orgHandle)
+    const url = urlOrgInvitationList(p.orgHandle)
     navigator(url)
   }
 

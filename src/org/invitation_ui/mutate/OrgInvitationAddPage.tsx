@@ -11,7 +11,6 @@ import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { createMutation } from "@/utils/convex/createMutation"
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import { api } from "@convex/_generated/api"
 import { useNavigate, useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
@@ -24,7 +23,6 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function OrgInvitationAddPage() {
   const params = useParams()
-  const getReturnPath = () => params.returnPath
   const getOrgHandle = () => params.orgHandle
   return (
     <Switch>
@@ -36,7 +34,7 @@ export function OrgInvitationAddPage() {
           <NavOrg getOrgPageTitle={inviteToText} orgHandle={getOrgHandle()}>
             <LinkLikeText>{ttt("Invite")}</LinkLikeText>
           </NavOrg>
-          <OrgInvitationAdd orgHandle={getOrgHandle()!} returnPath={getReturnPath()} />
+          <OrgInvitationAdd orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
     </Switch>
@@ -48,7 +46,7 @@ function inviteToText(orgName?: string) {
   return ttt("Invite to") + " " + subject
 }
 
-export interface OrgInvitationAddProps extends HasOrgHandle, MayHaveReturnPath, MayHaveClass {}
+export interface OrgInvitationAddProps extends HasOrgHandle, MayHaveClass {}
 
 export function OrgInvitationAdd(p: OrgInvitationAddProps) {
   const navigator = useNavigate()
@@ -70,7 +68,7 @@ export function OrgInvitationAdd(p: OrgInvitationAddProps) {
       toastAdd({ title: invitationIdResult.errorMessage, variant: toastVariant.error })
       return
     }
-    const url = p.returnPath ?? urlOrgInvitationAccept(p.orgHandle, data.invitationCode)
+    const url = urlOrgInvitationAccept(p.orgHandle, data.invitationCode)
     navigator(url)
   }
   const sm = orgInvitationFormStateManagement({ add: addAction })

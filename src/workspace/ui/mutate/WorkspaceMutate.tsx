@@ -1,4 +1,3 @@
-import type { MayHaveReturnPath } from "@/utils/ui/MayHaveReturnPath"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
 import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
 import { workspaceFormStateManagement } from "@/workspace/ui/form/workspaceFormStateManagement"
@@ -15,11 +14,7 @@ export function WorkspaceMutate(p: WorkspaceMutateProps) {
   return <WorkspaceLoader workspaceHandle={p.workspaceHandle} WorkspaceComponent={WorkspaceComponent} />
 }
 
-interface WorkspaceMutateFormProps
-  extends WorkspaceComponentProps,
-    HasFormModeMutate,
-    MayHaveReturnPath,
-    MayHaveClass {}
+interface WorkspaceMutateFormProps extends WorkspaceComponentProps, HasFormModeMutate, MayHaveClass {}
 
 function WorkspaceMutateForm(p: WorkspaceMutateFormProps) {
   const sm = workspaceFormStateManagement(p.mode, p.workspace.workspaceHandle, p.workspace)

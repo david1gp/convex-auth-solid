@@ -1,6 +1,7 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { createMutation } from "@/utils/convex/createMutation"
 import { debounceMs } from "@/utils/ui/debounceMs"
+import type { HasToken } from "@/utils/ui/HasToken"
 import { handleGenerate } from "@/utils/valibot/handleSchema"
 import type { DocWorkspace, IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
@@ -316,10 +317,6 @@ function createActions(
     actions.delete = async () => removeAction(workspaceHandle, mode, deleteMutation, navigate)
   }
   return actions
-}
-
-interface HasToken {
-  token: string
 }
 
 interface WorkspaceCreateMutationProps extends WorkspaceDataModel, HasToken {}
