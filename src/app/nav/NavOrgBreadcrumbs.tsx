@@ -1,6 +1,6 @@
+import { OrganizationListLinkButton } from "@/app/nav/links/OrganizationListLinkButton"
 import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
 import { urlOrgView } from "@/org/org_url/urlOrg"
-import { OrganizationsLinkButton } from "@/ui/links/OrganizationsLinkButton"
 import { Show } from "solid-js"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -22,7 +22,7 @@ export function NavOrgBreadcrumbs(p: NavOrgBreadcrumbsProps) {
   return (
     <>
       <NavBreadcrumbSeparator />
-      <OrganizationsLinkButton />
+      <OrganizationListLinkButton />
       <Show when={p.getOrgPageTitle}>
         {(getPageTitle) => <SetPageTitle title={getPageTitle()(p.orgHandle && getOrgName(p.orgHandle))} />}
       </Show>

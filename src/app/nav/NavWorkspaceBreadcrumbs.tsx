@@ -1,4 +1,4 @@
-import { WorkspacesLinkButton } from "@/ui/links/WorkspacesLinkButton"
+import { WorkspaceListLinkButton } from "@/app/nav/links/WorkspaceListLinkButton"
 import { workspaceListFindNameByHandle } from "@/workspace/ui/list/workspaceListSignal"
 import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
@@ -22,7 +22,7 @@ export function NavWorkspaceBreadcrumbs(p: NavWorkspaceBreadcrumbsProps) {
   return (
     <>
       <NavBreadcrumbSeparator />
-      <WorkspacesLinkButton />
+      <WorkspaceListLinkButton />
       <Show when={p.getWorkspacePageTitle}>
         {(getPageTitle) => (
           <SetPageTitle title={getPageTitle()(p.workspaceHandle && getWorkspaceName(p.workspaceHandle))} />

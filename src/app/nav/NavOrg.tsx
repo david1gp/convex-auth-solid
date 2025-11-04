@@ -1,6 +1,6 @@
 import { NavOrgBreadcrumbs, type NavOrgBreadcrumbsProps } from "@/app/nav/NavOrgBreadcrumbs"
 import { NavStatic } from "@/app/nav/NavStatic"
-import { WorkspacesLinkButton } from "@/ui/links/WorkspacesLinkButton"
+import { WorkspaceListLinkButton } from "@/app/nav/links/WorkspaceListLinkButton"
 import { splitProps } from "solid-js"
 import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -16,7 +16,7 @@ export function NavOrg(p: NavAppDirProps) {
       dense={true}
       class={p.class}
       childrenLeft={<NavOrgBreadcrumbs {...rest}>{s.children}</NavOrgBreadcrumbs>}
-      childrenCenter={<WorkspacesLinkButton />}
+      childrenCenter={<WorkspaceListLinkButton />}
     />
   )
 }
