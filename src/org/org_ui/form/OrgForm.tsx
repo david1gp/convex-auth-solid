@@ -2,12 +2,12 @@ import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListen
 import { orgFormField } from "@/org/org_ui/form/orgFormField"
 import type { OrgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { inputMaxLength50, urlMaxLength } from "@/utils/valibot/inputMaxLength"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
-import { inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
 import { Textarea } from "~ui/input/textarea/Textarea"
@@ -58,7 +58,6 @@ function NameField(p: HasOrgFormStateManagement) {
         {ttt("Name")}
         <LabelAsterix />
       </Label>
-      <p class="text-muted-foreground">{ttt("The display name of your organization")}</p>
       <Input
         id={orgFormField.name}
         placeholder={ttt("Enter organization name, ex. ACME")}
@@ -84,12 +83,12 @@ function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.orgHandle}>
-        {ttt("Organization Handle")}
+        {ttt("Stakeholder Handle")}
         <LabelAsterix />
       </Label>
       <Input
         id={orgFormField.orgHandle}
-        placeholder={ttt("A unique identifier, shown in url, ex. your-company-name")}
+        placeholder={ttt("A unique identifier, visible in the url, ex. your-company-name")}
         autocomplete="organization"
         value={p.sm.state.orgHandle.get()}
         onInput={(e) => {
@@ -140,11 +139,10 @@ function UrlField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.url}>URL</Label>
-      <p class="text-muted-foreground">{ttt("External url")}</p>
       <Input
         id={orgFormField.url}
         type="url"
-        placeholder={ttt("An optional external URL shown on in the Organization")}
+        placeholder={ttt("An optional external URL shown on the Stakeholder page")}
         autocomplete="url"
         value={p.sm.state.url.get()}
         onInput={(e) => {
