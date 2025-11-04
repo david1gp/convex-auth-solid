@@ -7,7 +7,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
-import { inputMaxLength25, inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
+import { inputMaxLength50, urlMaxLength } from "~ui/input/input/inputMaxLength"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
 import { Textarea } from "~ui/input/textarea/Textarea"
@@ -99,7 +99,7 @@ function HandleField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(orgFormField.orgHandle)(value)
         }}
         class={classMerge("w-full", p.sm.errors.orgHandle.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={inputMaxLength25}
+        maxLength={inputMaxLength50}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.orgHandle.get()}>
