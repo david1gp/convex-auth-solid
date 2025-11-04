@@ -87,10 +87,9 @@ function HandleField(p: HasOrgFormStateManagement) {
         {ttt("Organization Handle")}
         <LabelAsterix />
       </Label>
-      <p class="text-muted-foreground">{ttt("A unique identifier, shown in url")}</p>
       <Input
         id={orgFormField.orgHandle}
-        placeholder={ttt("your-company-name")}
+        placeholder={ttt("A unique identifier, shown in url, ex. your-company-name")}
         autocomplete="organization"
         value={p.sm.state.orgHandle.get()}
         onInput={(e) => {
@@ -113,10 +112,9 @@ function DescriptionField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.description}>Description</Label>
-      <p class="text-muted-foreground">{ttt("A brief description of your organization")}</p>
       <Textarea
         id={orgFormField.description}
-        placeholder={ttt("Enter organization description")}
+        placeholder={ttt("A brief description of your organization")}
         value={p.sm.state.description.get()}
         onInput={(e) => {
           const value = e.currentTarget.value
@@ -146,7 +144,7 @@ function UrlField(p: HasOrgFormStateManagement) {
       <Input
         id={orgFormField.url}
         type="url"
-        placeholder={ttt("Enter organization URL")}
+        placeholder={ttt("An optional external URL shown on in the Organization")}
         autocomplete="url"
         value={p.sm.state.url.get()}
         onInput={(e) => {
@@ -169,11 +167,10 @@ function ImageField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.image}>{ttt("Image URL")}</Label>
-      <p class="text-muted-foreground">{ttt("URL to your organization's logo or image")}</p>
       <Input
         id={orgFormField.image}
         type="url"
-        placeholder={ttt("Enter image URL")}
+        placeholder={ttt("An optional URL to your organization's logo or image")}
         autocomplete="url"
         value={p.sm.state.image.get()}
         onInput={(e) => {
@@ -193,5 +190,5 @@ function ImageField(p: HasOrgFormStateManagement) {
 }
 
 function getOrgTitle(mode: FormMode): string {
-  return getFormModeTitle(mode, ttt("Organization"))
+  return getFormModeTitle(mode, ttt("Stakeholder"))
 }
