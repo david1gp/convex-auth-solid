@@ -1,6 +1,6 @@
 import { cantBeEmpty } from "@/utils/valibot/cantBeEmpty"
+import { inputMaxLength100 } from "@/utils/valibot/inputMaxLength"
 import * as v from "valibot"
-import { inputMaxLength100 } from "~ui/input/input/inputMaxLength"
 
 export const emailSchema = v.pipe(
   v.string(),

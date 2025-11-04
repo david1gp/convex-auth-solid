@@ -1,6 +1,6 @@
 import { cantBeEmpty } from "@/utils/valibot/cantBeEmpty"
+import { inputMaxLength50 } from "@/utils/valibot/inputMaxLength"
 import * as v from "valibot"
-import { inputMaxLength50 } from "~ui/input/input/inputMaxLength"
 
 const regexMessage1 = "Must only consist of lowercase letters, digits and hyphens"
 const regexMessage2 = "No consecutive hyphens"

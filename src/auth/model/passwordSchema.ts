@@ -1,7 +1,7 @@
 import { requiredPasswordLength } from "@/auth/model/requiredPasswordLength"
 import { cantBeEmpty } from "@/utils/valibot/cantBeEmpty"
+import { urlMaxLength } from "@/utils/valibot/inputMaxLength"
 import * as v from "valibot"
-import { urlMaxLength } from "~ui/input/input/inputMaxLength"
 
 export const passwordSchema = v.pipe(
   v.string(),

@@ -83,7 +83,7 @@ function HandleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <Label for={orgFormField.orgHandle}>
-        {ttt("Stakeholder Handle")}
+        {ttt("Organization Handle")}
         <LabelAsterix />
       </Label>
       <Input
@@ -142,7 +142,7 @@ function UrlField(p: HasOrgFormStateManagement) {
       <Input
         id={orgFormField.url}
         type="url"
-        placeholder={ttt("An optional external URL shown on the Stakeholder page")}
+        placeholder={ttt("An optional external URL shown on the Organization page")}
         autocomplete="url"
         value={p.sm.state.url.get()}
         onInput={(e) => {
@@ -188,5 +188,5 @@ function ImageField(p: HasOrgFormStateManagement) {
 }
 
 function getOrgTitle(mode: FormMode): string {
-  return getFormModeTitle(mode, ttt("Stakeholder"))
+  return getFormModeTitle(mode, ttt("Organization"))
 }
