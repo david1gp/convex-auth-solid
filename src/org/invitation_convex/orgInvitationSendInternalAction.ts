@@ -7,7 +7,7 @@ import {
 import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
 import { stt1 } from "@/utils/i18n/stt"
 import { api, internal } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
+import { internalAction, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResultError, type PromiseResult } from "~utils/result/Result"
 
@@ -20,6 +20,11 @@ export const orgInvitationSendFields = {
 
 export const orgInvitationSendValidator = v.object(orgInvitationSendFields)
 
+export const orgInvitationSendInternalAction = internalAction({
+  args: orgInvitationSendValidator,
+  handler: orgInvitation31SendFn,
+})
+
 export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationSendValidatorType): PromiseResult<null> {
   const op = "orgInvitationResend"
   const verifiedResult = await verifyTokenResult(args.token)
@@ -28,7 +33,9 @@ export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationS
     return verifiedResult
   }
 
-  const invitedBy = await ctx.runQuery(internal.auth.userGetQuery, { userId: verifiedResult.data.sub as IdUser })
+  const invitedBy = await ctx.runQuery(internal.auth.userGetInternalQuery, {
+    userId: verifiedResult.data.sub as IdUser,
+  })
   if (!invitedBy) {
     return createResultError(op, "!user")
   }

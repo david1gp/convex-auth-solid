@@ -1,5 +1,7 @@
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
-import { type MutationCtx } from "@convex/_generated/server"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
+import { authMutationR } from "@convex/utils/authMutationR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
@@ -16,6 +18,11 @@ export const orgMemberEditFields = {
 } as const
 
 export const orgMemberEditValidator = v.object(orgMemberEditFields)
+
+export const orgMemberEditMutation = mutation({
+  args: createTokenValidator(orgMemberEditFields),
+  handler: async (ctx, args) => authMutationR(ctx, args, orgMemberEditFn),
+})
 
 export async function orgMemberEditFn(ctx: MutationCtx, args: OrgMemberEditValidatorType): PromiseResult<null> {
   const op = "orgMemberEditFn"

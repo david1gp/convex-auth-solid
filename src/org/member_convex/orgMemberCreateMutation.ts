@@ -1,7 +1,7 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
-import type { MutationCtx } from "@convex/_generated/server"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
@@ -22,6 +22,11 @@ export const orgMemberCreateFields = {
 } as const
 
 export const orgMemberCreateValidator = v.object(orgMemberCreateFields)
+
+export const orgMemberCreateMutation = mutation({
+  args: orgMemberCreateValidator,
+  handler: orgMemberCreateFn,
+})
 
 export async function orgMemberCreateFn(
   ctx: MutationCtx,

@@ -2,7 +2,7 @@ import type { IdUser } from "@/auth/convex/IdUser"
 import { vIdUser } from "@/auth/convex/vIdUser"
 import { orgMemberGetByUserIdFn } from "@/org/member_convex/orgMemberGetByUserIdFn"
 import type { OrgRole } from "@/org/org_model/orgRole"
-import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
+import { internalQuery, type MutationCtx, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 
 export type OrgHandleAndRole = {
@@ -17,6 +17,11 @@ function createEmptyOrgHandleAndRole(): OrgHandleAndRole {
 export type SignUpCodeValidatorType = typeof getOrgMemberHandleAndRoleValidator.type
 export const getOrgMemberHandleAndRoleValidator = v.object({
   userId: vIdUser,
+})
+
+export const getOrgMemberHandleAndRoleInternalQuery = internalQuery({
+  args: getOrgMemberHandleAndRoleValidator,
+  handler: getOrgMemberHandleAndRoleQueryFn,
 })
 
 export async function getOrgMemberHandleAndRoleQueryFn(ctx: QueryCtx, args: SignUpCodeValidatorType) {

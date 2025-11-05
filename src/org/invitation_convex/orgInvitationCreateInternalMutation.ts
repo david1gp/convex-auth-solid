@@ -1,5 +1,5 @@
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
-import { type MutationCtx } from "@convex/_generated/server"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { generateId12 } from "~utils/ran/generateId12"
@@ -21,6 +21,11 @@ export const orgInvitationCreateDataFields = {
 export const orgInvitationCreateMutationValidator = v.object(orgInvitationCreateDataFields)
 
 export type OrgInvitationCreateMutationValidatorType = typeof orgInvitationCreateMutationValidator.type
+
+export const orgInvitationCreateInternalMutation = internalMutation({
+  args: orgInvitationCreateMutationValidator,
+  handler: orgInvitation21CreateMutationFn,
+})
 
 export async function orgInvitation21CreateMutationFn(
   ctx: MutationCtx,

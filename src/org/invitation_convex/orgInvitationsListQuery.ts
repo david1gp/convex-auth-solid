@@ -1,4 +1,4 @@
-import type { QueryCtx } from "@convex/_generated/server"
+import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocOrgInvitation } from "./IdOrgInvitation"
@@ -10,6 +10,11 @@ export const orgInvitationsListFields = {
 
 export type OrgInvitationsListValidatorType = typeof orgInvitationsListValidator.type
 export const orgInvitationsListValidator = v.object(orgInvitationsListFields)
+
+export const orgInvitationsListQuery = query({
+  args: orgInvitationsListValidator,
+  handler: orgInvitation10ListFn,
+})
 
 export async function orgInvitation10ListFn(
   ctx: QueryCtx,

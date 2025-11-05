@@ -1,9 +1,9 @@
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { orgInvitation31SendFn } from "@/org/invitation_convex/orgInvitation31SendFn"
+import { orgInvitation31SendFn } from "@/org/invitation_convex/orgInvitationSendInternalAction"
 import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
 import { stt1 } from "@/utils/i18n/stt"
 import { api } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
+import { action, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResultError, type PromiseResult } from "~utils/result/Result"
 
@@ -15,6 +15,11 @@ export const orgInvitationResendFields = {
 } as const
 
 export const orgInvitationResendValidator = v.object(orgInvitationResendFields)
+
+export const orgInvitationResendAction = action({
+  args: orgInvitationResendValidator,
+  handler: orgInvitation30ResendFn,
+})
 
 export async function orgInvitation30ResendFn(
   ctx: ActionCtx,

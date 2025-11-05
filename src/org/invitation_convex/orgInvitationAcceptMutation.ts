@@ -1,5 +1,5 @@
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
-import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
@@ -7,7 +7,7 @@ import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgGetQueryFn } from "@/org/org_convex/orgGetQuery"
 import { stt } from "@/utils/i18n/stt"
 import { internal } from "@convex/_generated/api"
-import type { MutationCtx } from "@convex/_generated/server"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
@@ -22,6 +22,11 @@ export const orgInvitationAcceptFields = {
 }
 
 export const orgInvitationAcceptValidator = v.object(orgInvitationAcceptFields)
+
+export const orgInvitationAcceptMutation = mutation({
+  args: orgInvitationAcceptValidator,
+  handler: orgInvitation50AcceptFn,
+})
 
 export async function orgInvitation50AcceptFn(
   ctx: MutationCtx,
@@ -103,7 +108,7 @@ export async function orgInvitation50AcceptFn(
 
   // Shedule cleanup
   const sheduleAt = 24 * 3600 * 1000 + 1
-  ctx.scheduler.runAfter(sheduleAt, internal.org.orgInvitationCleanupMutation, {})
+  ctx.scheduler.runAfter(sheduleAt, internal.org.orgInvitationCleanupInternalMutation, {})
 
   // Create org member
   await ctx.db.insert("orgMembers", {

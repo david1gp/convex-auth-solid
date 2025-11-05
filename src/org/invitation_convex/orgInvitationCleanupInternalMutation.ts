@@ -1,4 +1,4 @@
-import type { MutationCtx } from "@convex/_generated/server"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 
@@ -7,6 +7,11 @@ export type OrgInvitationCleanupValidatorType = typeof orgInvitationCleanupValid
 export const orgInvitationCleanupFields = {} as const
 
 export const orgInvitationCleanupValidator = v.object(orgInvitationCleanupFields)
+
+export const orgInvitationCleanupInternalMutation = internalMutation({
+  args: orgInvitationCleanupValidator,
+  handler: orgInvitation70CleanupMutationFn,
+})
 
 export async function orgInvitation70CleanupMutationFn(
   ctx: MutationCtx,

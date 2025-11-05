@@ -77,7 +77,7 @@ export async function orgInvitation32SendEmailActionFn(
     ...update,
   } as const
 
-  const updateResult = await ctx.runMutation(internal.org.orgInvitationUpdateMutation, update2)
+  const updateResult = await ctx.runMutation(internal.org.orgInvitationUpdateInternalMutation, update2)
 
   return createResult(null)
 }

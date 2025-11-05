@@ -1,34 +1,46 @@
-import { orgInvitation10ListFn, orgInvitationsListValidator } from "@/org/invitation_convex/orgInvitation10ListFn"
+import { orgInvitationsListQuery, orgInvitationsListValidator } from "@/org/invitation_convex/orgInvitationsListQuery"
 import {
-  orgInvitation20InitMutationFn,
+  orgInvitationInitMutation,
   orgInvitationCreateActionValidator,
-} from "@/org/invitation_convex/orgInvitation20InitMutationFn"
+} from "@/org/invitation_convex/orgInvitationInitMutation"
 import {
-  orgInvitation21CreateMutationFn,
+  orgInvitationCreateInternalMutation,
   orgInvitationCreateMutationValidator,
-} from "@/org/invitation_convex/orgInvitation21CreateMutationFn"
-import { orgInvitation30ResendFn, orgInvitationResendValidator } from "@/org/invitation_convex/orgInvitation30ResendFn"
-import { orgInvitation31SendFn, orgInvitationSendValidator } from "@/org/invitation_convex/orgInvitation31SendFn"
-import { orgInvitation33UpdateFn, orgInvitationUpdateValidator } from "@/org/invitation_convex/orgInvitation33UpdateFn"
-import { orgInvitation40GetFn, orgInvitationGetValidator } from "@/org/invitation_convex/orgInvitation40GetFn"
-import { orgInvitation50AcceptFn, orgInvitationAcceptValidator } from "@/org/invitation_convex/orgInvitation50AcceptFn"
+} from "@/org/invitation_convex/orgInvitationCreateInternalMutation"
 import {
-  orgInvitation60DismissMutationFn,
+  orgInvitationResendAction,
+  orgInvitationResendValidator,
+} from "@/org/invitation_convex/orgInvitationResendAction"
+import {
+  orgInvitationSendInternalAction,
+  orgInvitationSendValidator,
+} from "@/org/invitation_convex/orgInvitationSendInternalAction"
+import {
+  orgInvitationUpdateInternalMutation,
+  orgInvitationUpdateValidator,
+} from "@/org/invitation_convex/orgInvitationUpdateInternalMutation"
+import { orgInvitationGetQuery, orgInvitationGetValidator } from "@/org/invitation_convex/orgInvitationGetQuery"
+import {
+  orgInvitationAcceptMutation,
+  orgInvitationAcceptValidator,
+} from "@/org/invitation_convex/orgInvitationAcceptMutation"
+import {
+  orgInvitationDismissMutation,
   orgInvitationDismissFields,
-} from "@/org/invitation_convex/orgInvitation60DismissMutationFn"
+} from "@/org/invitation_convex/orgInvitationDismissMutation"
 import {
-  orgInvitation70CleanupMutationFn,
+  orgInvitationCleanupInternalMutation,
   orgInvitationCleanupValidator,
-} from "@/org/invitation_convex/orgInvitation70CleanupMutationFn"
-import { orgMemberCreateFn, orgMemberCreateValidator } from "@/org/member_convex/orgMemberCreateFn"
-import { orgMemberDeleteFields, orgMemberDeleteFn } from "@/org/member_convex/orgMemberDeleteFn"
-import { orgMemberEditFields, orgMemberEditFn } from "@/org/member_convex/orgMemberEditFn"
-import { orgMemberGetFields, orgMemberGetFn } from "@/org/member_convex/orgMemberGetFn"
+} from "@/org/invitation_convex/orgInvitationCleanupInternalMutation"
+import { orgMemberCreateMutation, orgMemberCreateValidator } from "@/org/member_convex/orgMemberCreateMutation"
+import { orgMemberDeleteMutation, orgMemberDeleteFields } from "@/org/member_convex/orgMemberDeleteMutation"
+import { orgMemberEditFields, orgMemberEditMutation } from "@/org/member_convex/orgMemberEditMutation"
+import { orgMemberGetFields, orgMemberGetQuery } from "@/org/member_convex/orgMemberGetQuery"
 import {
-  getOrgMemberHandleAndRoleQueryFn,
+  getOrgMemberHandleAndRoleInternalQuery,
   getOrgMemberHandleAndRoleValidator,
-} from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
-import { orgMemberListFn, orgMembersListFields } from "@/org/member_convex/orgMemberListFn"
+} from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
+import { orgMembersListQuery, orgMembersListFields } from "@/org/member_convex/orgMemberListQuery"
 import { orgCreateMutation } from "@/org/org_convex/orgCreateMutation"
 import { orgDeleteMutation } from "@/org/org_convex/orgDeleteMutation"
 import { orgEditMutation } from "@/org/org_convex/orgEditMutation"
@@ -48,94 +60,23 @@ export {
   orgGetPageQuery,
   orgGetQuery,
   orgHandleAvailableQuery,
-  orgsListQuery
+  orgsListQuery,
+  // Members
+  orgMemberCreateMutation,
+  orgMemberEditMutation,
+  orgMemberGetQuery,
+  orgMembersListQuery,
+  orgMemberDeleteMutation,
+  // Invitations
+  orgInvitationsListQuery,
+  orgInvitationInitMutation,
+  orgInvitationCreateInternalMutation,
+  orgInvitationResendAction,
+  orgInvitationSendInternalAction,
+  orgInvitationUpdateInternalMutation,
+  orgInvitationAcceptMutation,
+  orgInvitationGetQuery,
+  getOrgMemberHandleAndRoleInternalQuery,
+  orgInvitationDismissMutation,
+  orgInvitationCleanupInternalMutation,
 }
-
-//
-// Members
-//
-export const orgMemberCreateMutation = mutation({
-  args: orgMemberCreateValidator,
-  handler: orgMemberCreateFn,
-})
-
-export const orgMemberEditMutation = mutation({
-  args: createTokenValidator(orgMemberEditFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgMemberEditFn),
-})
-
-export const orgMemberGetQuery = query({
-  args: createTokenValidator(orgMemberGetFields),
-  handler: async (ctx, args) => {
-    return await authQueryR(ctx, args, orgMemberGetFn)
-  },
-})
-
-export const orgMembersListQuery = query({
-  args: createTokenValidator(orgMembersListFields),
-  handler: async (ctx, args) => await authQueryR(ctx, args, orgMemberListFn),
-})
-
-export const orgMemberDeleteMutation = mutation({
-  args: createTokenValidator(orgMemberDeleteFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgMemberDeleteFn),
-})
-
-//
-// Invitations
-//
-
-export const orgInvitationCreateMutation = internalMutation({
-  args: orgInvitationCreateMutationValidator,
-  handler: orgInvitation21CreateMutationFn,
-})
-
-export const orgInvitationInitMutation = mutation({
-  args: orgInvitationCreateActionValidator,
-  handler: orgInvitation20InitMutationFn,
-})
-
-export const orgInvitationResendAction = action({
-  args: orgInvitationResendValidator,
-  handler: orgInvitation30ResendFn,
-})
-
-export const orgInvitationSendAction = internalAction({
-  args: orgInvitationSendValidator,
-  handler: orgInvitation31SendFn,
-})
-
-export const orgInvitationUpdateMutation = internalMutation({
-  args: orgInvitationUpdateValidator,
-  handler: orgInvitation33UpdateFn,
-})
-
-export const orgInvitationAcceptMutation = mutation({
-  args: orgInvitationAcceptValidator,
-  handler: orgInvitation50AcceptFn,
-})
-
-export const orgInvitationGetQuery = query({
-  args: orgInvitationGetValidator,
-  handler: orgInvitation40GetFn,
-})
-
-export const orgInvitationsListQuery = query({
-  args: orgInvitationsListValidator,
-  handler: orgInvitation10ListFn,
-})
-
-export const getOrgMemberHandleAndRoleQuery = internalQuery({
-  args: getOrgMemberHandleAndRoleValidator,
-  handler: getOrgMemberHandleAndRoleQueryFn,
-})
-
-export const orgInvitationDismissMutation = mutation({
-  args: createTokenValidator(orgInvitationDismissFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgInvitation60DismissMutationFn),
-})
-
-export const orgInvitationCleanupMutation = internalMutation({
-  args: orgInvitationCleanupValidator,
-  handler: orgInvitation70CleanupMutationFn,
-})

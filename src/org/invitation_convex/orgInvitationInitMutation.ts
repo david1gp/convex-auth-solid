@@ -1,9 +1,9 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitation21CreateMutationFn"
+import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitationCreateInternalMutation"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
 import { internal } from "@convex/_generated/api"
-import type { MutationCtx } from "@convex/_generated/server"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { generateId12 } from "~utils/ran/generateId12"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
@@ -21,6 +21,11 @@ export const orgInvitationInitMutationFields = {
 }
 
 export const orgInvitationCreateActionValidator = v.object(orgInvitationInitMutationFields)
+
+export const orgInvitationInitMutation = mutation({
+  args: orgInvitationCreateActionValidator,
+  handler: orgInvitation20InitMutationFn,
+})
 
 export async function orgInvitation20InitMutationFn(
   ctx: MutationCtx,
@@ -65,7 +70,7 @@ export async function orgInvitation20InitMutationFn(
   })
 
   // shedule email sending
-  ctx.scheduler.runAfter(0, internal.org.orgInvitationSendAction, { token: args.token, invitationCode })
+  ctx.scheduler.runAfter(0, internal.org.orgInvitationSendInternalAction, { token: args.token, invitationCode })
 
   return createResult(invitationCode)
 }

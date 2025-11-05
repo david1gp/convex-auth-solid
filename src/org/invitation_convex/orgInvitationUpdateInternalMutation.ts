@@ -1,6 +1,6 @@
 import { orgInvitationDataSchemaFields } from "@/org/invitation_model/orgInvitationSchema"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
-import type { MutationCtx } from "@convex/_generated/server"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as va from "valibot"
 import { nowIso } from "~utils/date/nowIso"
@@ -29,6 +29,11 @@ export const orgInvitationUpdateFields = {
 // } as const
 
 export const orgInvitationUpdateValidator = v.object(orgInvitationUpdateFields)
+
+export const orgInvitationUpdateInternalMutation = internalMutation({
+  args: orgInvitationUpdateValidator,
+  handler: orgInvitation33UpdateFn,
+})
 
 export async function orgInvitation33UpdateFn(
   ctx: MutationCtx,
