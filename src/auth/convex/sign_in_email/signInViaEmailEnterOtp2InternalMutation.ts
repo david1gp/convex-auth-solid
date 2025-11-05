@@ -1,9 +1,9 @@
-import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtFn"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
-import { type MutationCtx } from "@convex/_generated/server"
+import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
+import { type MutationCtx, internalMutation } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
@@ -14,6 +14,11 @@ export type signInViaEmailEnterOtp2ValidatorType = typeof signInViaEmailEnterOtp
 export const signInViaEmailEnterOtp2Validator = v.object({
   email: v.string(),
   code: v.string(),
+})
+
+export const signInViaEmailEnterOtp2InternalMutation = internalMutation({
+  args: signInViaEmailEnterOtp2Validator,
+  handler: signInViaEmailEnterOtp2InternalMutationFn,
 })
 
 export async function signInViaEmailEnterOtp2InternalMutationFn(

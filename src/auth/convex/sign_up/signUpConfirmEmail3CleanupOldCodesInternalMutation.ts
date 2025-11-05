@@ -1,4 +1,9 @@
-import { type MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx, internalMutation } from "@convex/_generated/server"
+
+export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutation({
+  args: {},
+  handler: signUpConfirmEmail3CleanupOldCodesInternalMutationFn,
+})
 
 export async function signUpConfirmEmail3CleanupOldCodesInternalMutationFn(
   ctx: MutationCtx,

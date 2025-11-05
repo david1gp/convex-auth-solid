@@ -1,13 +1,21 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import type { UserSession } from "@/auth/model/UserSession"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
-import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
+import {
+  type CommonAuthProvider,
+  commonAuthProviderValidator,
+} from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
+import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import type { Id } from "@convex/_generated/dataModel"
-import { type MutationCtx } from "@convex/_generated/server.js"
+import { type MutationCtx, internalMutation } from "@convex/_generated/server.js"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 import { findOrCreateUserFn } from "../crud/findOrCreateUserFn"
-import { saveTokenIntoSessionReturnExpiresAtFn } from "../crud/saveTokenIntoSessionReturnExpiresAtFn"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "../crud/saveTokenIntoSessionReturnExpiresAtMutation"
+
+export const signInUsingSocialAuth3InternalMutation = internalMutation({
+  args: commonAuthProviderValidator,
+  handler: signInUsingSocialAuth3MutationFn,
+})
 
 export async function signInUsingSocialAuth3MutationFn(
   ctx: MutationCtx,

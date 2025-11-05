@@ -23,5 +23,5 @@ export async function signInUsingSocialAuth2ActionFn(
   const providerInfo: CommonAuthProvider = providerInfoOrError.data
 
   // Find or create user, create token
-  return ctx.runMutation(internal.auth.signInUsingSocialAuth3Mutation, providerInfo)
+  return ctx.runMutation(internal.auth.signInUsingSocialAuth3InternalMutation, providerInfo)
 }

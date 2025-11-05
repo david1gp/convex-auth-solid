@@ -1,5 +1,5 @@
 import type { IdAuthUserEmailRegistration } from "@/auth/convex/IdUser"
-import type { MutationCtx } from "@convex/_generated/server"
+import { type MutationCtx, internalMutation } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 
@@ -12,6 +12,11 @@ export const signUpCodeFields = {
 
 export type SignUpCodeValidatorType = typeof signUpCodeValidator.type
 export const signUpCodeValidator = v.object(signUpCodeFields)
+
+export const signUp2InternalMutation = internalMutation({
+  args: signUpCodeValidator,
+  handler: signUp2InternalMutationFn,
+})
 
 export async function signUp2InternalMutationFn(
   ctx: MutationCtx,

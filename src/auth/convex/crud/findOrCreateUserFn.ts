@@ -1,12 +1,12 @@
 import { createUserSessionTimes, type UserSession } from "@/auth/model/UserSession"
 import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
+import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { type MutationCtx } from "@convex/_generated/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocAuthAccount } from "../IdUser"
-import { createUserFromAuthProviderFn } from "./createUserFromAuthProviderFn"
+import { createUserFromAuthProviderFn } from "./createUserFromAuthProviderMutation"
 import { dbUsersToUserProfile } from "./dbUsersToUserProfile"
-import { findUserByEmailFn } from "./findUserByEmailFn"
+import { findUserByEmailFn } from "./findUserByEmailQuery"
 import { linkAuthToExistingUserFn } from "./linkAuthToExistingUserFn"
 
 export type SignInUsingSocialAuthResultInternal = Omit<UserSession, "token">

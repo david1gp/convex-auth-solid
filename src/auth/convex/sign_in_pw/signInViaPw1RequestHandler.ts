@@ -38,7 +38,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   const { email, pw } = validation.output
 
   // Find user by email
-  const user = await ctx.runQuery(internal.auth.findUserByEmailQuery, { email })
+  const user = await ctx.runQuery(internal.auth.findUserByEmailInternalQuery, { email })
   if (!user) {
     const errorMessage = "User not found"
     const errorResult = createError(op, errorMessage, email)
@@ -63,7 +63,7 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   }
 
   // Check for org membership
-  const { orgHandle, orgRole } = await ctx.runQuery(internal.org.getOrgMemberHandleAndRoleQuery, {
+  const { orgHandle, orgRole } = await ctx.runQuery(internal.org.getOrgMemberHandleAndRoleInternalQuery, {
     userId: user._id as IdUser,
   })
 

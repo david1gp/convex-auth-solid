@@ -36,7 +36,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   }
   const { name, email, pw } = validation.output
 
-  const existingUser = await ctx.runQuery(internal.auth.findUserByEmailQuery, { email })
+  const existingUser = await ctx.runQuery(internal.auth.findUserByEmailInternalQuery, { email })
   if (existingUser) {
     const errorMessage = signUpErrorMessages.userAlreadyExists
     const errorResult = createError(op, errorMessage, email)
