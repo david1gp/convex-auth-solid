@@ -1,5 +1,7 @@
 import { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
-import { type MutationCtx } from "@convex/_generated/server"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { authMutationR } from "@convex/utils/authMutationR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import * as va from "valibot"
 import { nowIso } from "~utils/date/nowIso"
@@ -18,6 +20,16 @@ export const workspaceEditFields = {
 } as const
 
 export const workspaceEditValidator = v.object(workspaceEditFields)
+
+export const workspaceEditMutation = mutation({
+  args: createTokenValidator(workspaceEditFields),
+  handler: async (ctx, args) => authMutationR(ctx, args, workspaceEditFn),
+})
+
+export const workspaceEditInternal = internalMutation({
+  args: workspaceEditValidator,
+  handler: workspaceEditFn,
+})
 
 export async function workspaceEditFn(ctx: MutationCtx, args: WorkspaceEditValidatorType): PromiseResult<null> {
   const op = "workspaceEditFn"

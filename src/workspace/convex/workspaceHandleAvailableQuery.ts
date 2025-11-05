@@ -1,4 +1,6 @@
-import { type QueryCtx } from "@convex/_generated/server"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
+import { authQueryR } from "@convex/utils/authQueryR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 
@@ -8,6 +10,16 @@ export const workspaceHandleAvailableFields = {
 
 export type WorkspaceHandleAvailableValidatorType = typeof workspaceHandleAvailableValidator.type
 export const workspaceHandleAvailableValidator = v.object(workspaceHandleAvailableFields)
+
+export const workspaceHandleAvailable = query({
+  args: createTokenValidator(workspaceHandleAvailableFields),
+  handler: async (ctx, args) => authQueryR(ctx, args, workspaceHandleAvailableFn),
+})
+
+export const workspaceHandleAvailableInternal = internalQuery({
+  args: workspaceHandleAvailableValidator,
+  handler: workspaceHandleAvailableFn,
+})
 
 export async function workspaceHandleAvailableFn(
   ctx: QueryCtx,

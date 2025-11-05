@@ -1,11 +1,13 @@
 import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import { workspaceDataFields } from "@/workspace/convex/workspaceTables"
-import { type MutationCtx } from "@convex/_generated/server"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 // import { nowIso } from "../../utils/nowIso"
-import { workspaceHandleAvailableFn } from "@/workspace/convex/workspaceHandleAvailableFn"
+import { workspaceHandleAvailableFn } from "@/workspace/convex/workspaceHandleAvailableQuery"
 import { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
+import { authMutationR } from "@convex/utils/authMutationR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import * as va from "valibot"
 import { createError, createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
@@ -14,6 +16,16 @@ export type WorkspaceCreateValidatorType = typeof workspaceCreateValidator.type
 export const workspaceCreateFields = workspaceDataFields
 
 export const workspaceCreateValidator = v.object(workspaceCreateFields)
+
+export const workspaceCreateMutation = mutation({
+  args: createTokenValidator(workspaceCreateFields),
+  handler: async (ctx, args) => authMutationR(ctx, args, workspaceCreateFn),
+})
+
+export const workspaceCreateInternal = internalMutation({
+  args: workspaceCreateValidator,
+  handler: workspaceCreateFn,
+})
 
 export async function workspaceCreateFn(
   ctx: MutationCtx,
