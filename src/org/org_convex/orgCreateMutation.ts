@@ -1,8 +1,10 @@
 import type { IdOrg } from "@/org/org_convex/IdOrg"
-import { orgHandleAvailableFn } from "@/org/org_convex/orgHandleAvailableFn"
+import { orgHandleAvailableQueryFn } from "@/org/org_convex/orgHandleAvailableQuery"
 import { orgDataFields } from "@/org/org_convex/orgTables"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
-import { type MutationCtx } from "@convex/_generated/server"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
+import { authMutationR } from "@convex/utils/authMutationR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import * as va from "valibot"
 import { nowIso } from "~utils/date/nowIso"
@@ -14,7 +16,12 @@ export const orgCreateFields = orgDataFields
 
 export const orgCreateValidator = v.object(orgCreateFields)
 
-export async function orgCreateFn(ctx: MutationCtx, args: OrgCreateValidatorType): PromiseResult<IdOrg> {
+export const orgCreateMutation = mutation({
+  args: createTokenValidator(orgCreateFields),
+  handler: async (ctx, args) => authMutationR(ctx, args, orgCreateMutationFn),
+})
+
+export async function orgCreateMutationFn(ctx: MutationCtx, args: OrgCreateValidatorType): PromiseResult<IdOrg> {
   const op = "orgCreateFn"
   const now = nowIso()
 
@@ -24,7 +31,7 @@ export async function orgCreateFn(ctx: MutationCtx, args: OrgCreateValidatorType
     return createError(op, va.summarize(parse.issues))
   }
 
-  const handleAvailableResult = await orgHandleAvailableFn(ctx, { orgHandle: args.orgHandle })
+  const handleAvailableResult = await orgHandleAvailableQueryFn(ctx, { orgHandle: args.orgHandle })
   if (!handleAvailableResult.success) return handleAvailableResult
   if (!handleAvailableResult.data) {
     const errorMessage = "Handle not available, please try a different one"

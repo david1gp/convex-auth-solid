@@ -1,6 +1,8 @@
-import { orgGetByHandle } from "@/org/org_convex/orgGetByHandle"
+import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
-import { type MutationCtx } from "@convex/_generated/server"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
+import { authMutationR } from "@convex/utils/authMutationR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import * as va from "valibot"
 import { nowIso } from "~utils/date/nowIso"
@@ -20,7 +22,12 @@ export const orgEditFields = {
 
 export const orgEditValidator = v.object(orgEditFields)
 
-export async function orgEditFn(ctx: MutationCtx, args: OrgEditValidatorType): PromiseResult<null> {
+export const orgEditMutation = mutation({
+  args: createTokenValidator(orgEditFields),
+  handler: async (ctx, args) => authMutationR(ctx, args, orgEditMutationFn),
+})
+
+export async function orgEditMutationFn(ctx: MutationCtx, args: OrgEditValidatorType): PromiseResult<null> {
   const op = "orgEditFn"
 
   const schema = va.partial(va.object(orgDataSchemaFields))
@@ -29,7 +36,7 @@ export async function orgEditFn(ctx: MutationCtx, args: OrgEditValidatorType): P
     return createError(op, va.summarize(parse.issues))
   }
 
-  const org = await orgGetByHandle(ctx, args.orgHandle)
+  const org = await orgGetByHandleFn(ctx, args.orgHandle)
   if (!org) {
     return createResultError(op, "Org not found", args.orgHandle)
   }

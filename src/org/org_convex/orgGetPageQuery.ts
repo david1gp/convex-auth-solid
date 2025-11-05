@@ -1,7 +1,9 @@
 import { dbUsersToUserProfile } from "@/auth/convex/crud/dbUsersToUserProfile"
-import { orgGetByHandle } from "@/org/org_convex/orgGetByHandle"
+import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
-import { type QueryCtx } from "@convex/_generated/server"
+import { query, type QueryCtx } from "@convex/_generated/server"
+import { authQueryR } from "@convex/utils/authQueryR"
+import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { OrgMemberProfile } from "../member_model/OrgMemberProfile"
@@ -13,10 +15,15 @@ export const orgGetPageFields = {
 export type OrgGetPageValidatorType = typeof orgGetPageValidator.type
 export const orgGetPageValidator = v.object(orgGetPageFields)
 
-export async function orgGetPageFn(ctx: QueryCtx, args: OrgGetPageValidatorType): PromiseResult<OrgViewPageType> {
+export const orgGetPageQuery = query({
+  args: createTokenValidator(orgGetPageFields),
+  handler: async (ctx, args) => authQueryR(ctx, args, orgGetPageQueryFn),
+})
+
+export async function orgGetPageQueryFn(ctx: QueryCtx, args: OrgGetPageValidatorType): PromiseResult<OrgViewPageType> {
   const op = "orgGetPageFn"
 
-  const org = await orgGetByHandle(ctx, args.orgHandle)
+  const org = await orgGetByHandleFn(ctx, args.orgHandle)
   if (!org) {
     return createResultError(op, "Organization not found", args.orgHandle)
   }

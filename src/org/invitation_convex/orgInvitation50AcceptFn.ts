@@ -4,7 +4,7 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { orgGetFn } from "@/org/org_convex/orgGetFn"
+import { orgGetQueryFn } from "@/org/org_convex/orgGetQuery"
 import { stt } from "@/utils/i18n/stt"
 import { internal } from "@convex/_generated/api"
 import type { MutationCtx } from "@convex/_generated/server"
@@ -51,7 +51,7 @@ export async function orgInvitation50AcceptFn(
   }
 
   // Get org details for token
-  const orgResult = await orgGetFn(ctx, { orgHandle: invitation.orgHandle })
+  const orgResult = await orgGetQueryFn(ctx, { orgHandle: invitation.orgHandle })
   if (!orgResult.success) {
     return orgResult
   }

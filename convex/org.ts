@@ -29,54 +29,27 @@ import {
   getOrgMemberHandleAndRoleValidator,
 } from "@/org/member_convex/orgMemberGetHandleAndRoleFn"
 import { orgMemberListFn, orgMembersListFields } from "@/org/member_convex/orgMemberListFn"
-import { orgCreateFields, orgCreateFn } from "@/org/org_convex/orgCreateFn"
-import { orgDeleteFields, orgDeleteFn } from "@/org/org_convex/orgDeleteFn"
-import { orgEditFields, orgEditFn } from "@/org/org_convex/orgEditFn"
-import { orgGetFields, orgGetFn } from "@/org/org_convex/orgGetFn"
-import { orgGetPageFields, orgGetPageFn } from "@/org/org_convex/orgGetPageFn"
-import { orgHandleAvailableFields, orgHandleAvailableFn } from "@/org/org_convex/orgHandleAvailableFn"
-import { orgListFn, orgsListFields } from "@/org/org_convex/orgListFn"
+import { orgCreateMutation } from "@/org/org_convex/orgCreateMutation"
+import { orgDeleteMutation } from "@/org/org_convex/orgDeleteMutation"
+import { orgEditMutation } from "@/org/org_convex/orgEditMutation"
+import { orgGetPageQuery } from "@/org/org_convex/orgGetPageQuery"
+import { orgGetQuery } from "@/org/org_convex/orgGetQuery"
+import { orgHandleAvailableQuery } from "@/org/org_convex/orgHandleAvailableQuery"
+import { orgsListQuery } from "@/org/org_convex/orgsListQuery"
 import { action, internalAction, internalMutation, internalQuery, mutation, query } from "@convex/_generated/server"
-import { authMutation } from "@convex/utils/authMutation"
 import { authMutationR } from "@convex/utils/authMutationR"
-import { authQuery } from "@convex/utils/authQuery"
 import { authQueryR } from "@convex/utils/authQueryR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"
 
-export const orgCreateMutation = mutation({
-  args: createTokenValidator(orgCreateFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgCreateFn),
-})
-
-export const orgEditMutation = mutation({
-  args: createTokenValidator(orgEditFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgEditFn),
-})
-
-export const orgGetPageQuery = query({
-  args: createTokenValidator(orgGetPageFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgGetPageFn),
-})
-
-export const orgGetQuery = query({
-  args: createTokenValidator(orgGetFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgGetFn),
-})
-
-export const orgHandleAvailable = query({
-  args: createTokenValidator(orgHandleAvailableFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgHandleAvailableFn),
-})
-
-export const orgsListQuery = query({
-  args: createTokenValidator(orgsListFields),
-  handler: async (ctx, args) => authQuery(ctx, args, orgListFn),
-})
-
-export const orgDeleteMutation = mutation({
-  args: createTokenValidator(orgDeleteFields),
-  handler: async (ctx, args) => authMutation(ctx, args, orgDeleteFn),
-})
+export {
+  orgCreateMutation,
+  orgDeleteMutation,
+  orgEditMutation,
+  orgGetPageQuery,
+  orgGetQuery,
+  orgHandleAvailableQuery,
+  orgsListQuery
+}
 
 //
 // Members
