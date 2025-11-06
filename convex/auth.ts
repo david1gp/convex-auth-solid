@@ -11,5 +11,5 @@ export { signUp2InternalMutation } from "@/auth/convex/sign_up/signUp2InternalMu
 export { signUpConfirmEmail2InternalMutation } from "@/auth/convex/sign_up/signUpConfirmEmail2InternalMutation"
 export { signUpConfirmEmail3CleanupOldCodesInternalMutation } from "@/auth/convex/sign_up/signUpConfirmEmail3CleanupOldCodesInternalMutation"
 export { userGetByUsernameQuery } from "@/auth/convex/user/userGetByNicknameQuery"
-export { userGetInternalQuery } from "@/auth/convex/user/userGetQuery"
+export { userGetInternalQuery } from "@/auth/convex/user/userGetInternalQuery"
 export { usernameAvailableQuery } from "@/auth/convex/user/usernameAvailableQuery"
