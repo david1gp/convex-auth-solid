@@ -1,9 +1,6 @@
 export type PrivateEnvVariableName = keyof typeof privateEnvVariableName
 
 export const privateEnvVariableName = {
-  // mode
-  ENV_MODE: "ENV_MODE",
-  NODE_ENV: "NODE_ENV",
   // base urls
   BASE_URL_EMAIL_GENERATOR: "BASE_URL_EMAIL_GENERATOR",
   // auth
