@@ -120,7 +120,7 @@ export function workspaceFormStateManagement(
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
-    validateOnChange: (field: WorkspaceFormField) => validateOnChange(field, state, errors),
+    validateOnChange: (field: WorkspaceFormField) => validateOnChange(field, state, serverState, errors),
     handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
   }
 }
@@ -154,15 +154,27 @@ function fillTestData(state: WorkspaceFormState, errors: WorkspaceFormErrorState
   }
 }
 
-function validateOnChange(field: WorkspaceFormField, state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
+function validateOnChange(
+  field: WorkspaceFormField,
+  state: WorkspaceFormState,
+  serverState: SignalObject<DocWorkspace>,
+  errors: WorkspaceFormErrorState,
+) {
   return debounce((value: string) => {
-    autoFillHandle(field, value, state)
+    autoFillHandle(field, value, state, serverState)
     updateFieldError(field, value, errors)
   }, debounceMs)
 }
 
-function autoFillHandle(field: WorkspaceFormField, value: string, state: WorkspaceFormState) {
+function autoFillHandle(
+  field: WorkspaceFormField,
+  value: string,
+  state: WorkspaceFormState,
+  serverState: SignalObject<DocWorkspace>,
+) {
   if (field !== workspaceFormField.name) return
+  const ss = serverState.get()
+  if (ss.workspaceHandle) return
   const handle = handleGenerate(value)
   state.workspaceHandle.set(handle)
 }
