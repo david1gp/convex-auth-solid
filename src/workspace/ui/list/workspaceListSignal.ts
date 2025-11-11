@@ -2,7 +2,7 @@ import { cachePrefix } from "@/utils/ui/cachePrefix"
 import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
 import { workspaceSchema } from "@/workspace/model/workspaceSchema"
-import * as v from "valibot"
+import * as a from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
@@ -75,11 +75,11 @@ export function workspaceListLoadFromLocalStorage(
   const op = "workspaceListLoadFromLocalStorage"
   // const read = localStorage.getItem(workspaceListLocalStorageKey)
   if (!read) return createResultError(op, "no workspaceList saved in localStorage")
-  const workspaceListSchema = v.array(workspaceSchema)
-  const schema = v.pipe(v.string(), v.parseJson(), workspaceListSchema)
-  const parsing = v.safeParse(schema, read)
+  const workspaceListSchema = a.array(workspaceSchema)
+  const schema = a.pipe(a.string(), a.parseJson(), workspaceListSchema)
+  const parsing = a.safeParse(schema, read)
   if (!parsing.success) {
-    return createResultError(op, v.summarize(parsing.issues), read)
+    return createResultError(op, a.summarize(parsing.issues), read)
   }
   return createResult(parsing.output as WorkspaceModel[])
 }

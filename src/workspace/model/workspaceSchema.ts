@@ -8,22 +8,22 @@ import {
 } from "@/utils/valibot/stringSchema"
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
-import * as v from "valibot"
+import * as a from "valibot"
 
 export const workspaceDataSchemaFields = {
-  username: v.optional(stringSchema1to50),
-  orgHandle: v.optional(handleSchema),
-  workspaceHandle: v.pipe(handleSchema),
+  username: a.optional(stringSchema1to50),
+  orgHandle: a.optional(handleSchema),
+  workspaceHandle: a.pipe(handleSchema),
   // data
-  name: v.pipe(stringSchemaName),
-  description: v.optional(stringSchemaDescription),
-  image: v.optional(stringSchemaUrl),
-  url: v.optional(stringSchemaUrl),
+  name: a.pipe(stringSchemaName),
+  description: a.optional(stringSchemaDescription),
+  image: a.optional(stringSchemaUrl),
+  url: a.optional(stringSchemaUrl),
 } as const
 
-export const workspaceDataSchema = v.object(workspaceDataSchemaFields)
+export const workspaceDataSchema = a.object(workspaceDataSchemaFields)
 
-export const workspaceSchema = v.object({
+export const workspaceSchema = a.object({
   ...convexSystemFields,
   ...workspaceDataSchemaFields,
   ...fieldsCreatedAtUpdatedAt,

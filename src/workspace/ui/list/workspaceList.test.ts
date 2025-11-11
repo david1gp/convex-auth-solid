@@ -1,12 +1,12 @@
 import { expect, test } from "bun:test"
-import * as v from "valibot"
+import * as a from "valibot"
 
-const workspaceSchema = v.object({
-  orgId: v.string(),
-  name: v.string(),
-  handle: v.string(),
-  description: v.optional(v.string()),
-  image: v.optional(v.string()),
+const workspaceSchema = a.object({
+  orgId: a.string(),
+  name: a.string(),
+  handle: a.string(),
+  description: a.optional(a.string()),
+  image: a.optional(a.string()),
 })
 
 const exampleWorkspaceData = {
@@ -18,7 +18,7 @@ const exampleWorkspaceData = {
 }
 
 test("workspaceList - parse example workspace data", async () => {
-  const parsed = v.safeParse(workspaceSchema, exampleWorkspaceData)
+  const parsed = a.safeParse(workspaceSchema, exampleWorkspaceData)
   expect(parsed.success).toBe(true)
   if (parsed.success) {
     expect(parsed.output.orgId).toEqual(exampleWorkspaceData.orgId)
@@ -35,7 +35,7 @@ test("workspaceList - parse minimal workspace data", async () => {
     name: "Minimal Workspace",
     handle: "minimal-workspace",
   }
-  const parsed = v.safeParse(workspaceSchema, minimalData)
+  const parsed = a.safeParse(workspaceSchema, minimalData)
   expect(parsed.success).toBe(true)
   if (parsed.success) {
     expect(parsed.output.orgId).toEqual(minimalData.orgId)

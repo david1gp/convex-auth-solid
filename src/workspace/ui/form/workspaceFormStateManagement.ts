@@ -12,7 +12,7 @@ import { api } from "@convex/_generated/api"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import { useNavigate } from "@solidjs/router"
-import * as v from "valibot"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
@@ -190,7 +190,7 @@ function validateFieldResult(field: WorkspaceFormField, value: string) {
   } else if (field === workspaceFormField.url) {
     schema = workspaceDataSchemaFields.url
   }
-  return v.safeParse(schema!, value)
+  return a.safeParse(schema!, value)
 }
 
 //
