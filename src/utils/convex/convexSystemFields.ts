@@ -1,9 +1,9 @@
-import * as v from "valibot"
+import * as a from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export const convexSystemFields = {
-  _id: v.string(),
-  _creationTime: v.number(),
+  _id: a.string(),
+  _creationTime: a.number(),
 } as const
 
 export const fieldsCreatedAtUpdatedAt = {
