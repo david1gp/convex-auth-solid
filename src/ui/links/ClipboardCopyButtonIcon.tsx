@@ -1,6 +1,6 @@
 import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
 import { ttt } from "~ui/i18n/ttt"
-import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
+import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
@@ -9,13 +9,13 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveDisabled } from "~ui/utils/MayHaveDisabled"
 import { createSignalObject } from "~ui/utils/createSignalObject"
 
-export interface ClipboardCopyButtonIconOnlyProps extends MayHaveButtonVariant, MayHaveClass, MayHaveDisabled {
+export interface ClipboardCopyButtonIconProps extends MayHaveButtonVariant, MayHaveClass, MayHaveDisabled {
   data: string
   copyText?: string
   toastText?: string
 }
 
-export function ClipboardCopyButtonIconOnly(p: ClipboardCopyButtonIconOnlyProps) {
+export function ClipboardCopyButtonIcon(p: ClipboardCopyButtonIconProps) {
   const copied = createSignalObject(false)
   const copyText = p.copyText ?? ttt("Copy to clipboard")
   const toastText = p.toastText ?? ttt("Copied to clipboard")
@@ -46,9 +46,8 @@ export function ClipboardCopyButtonIconOnly(p: ClipboardCopyButtonIconOnlyProps)
   }
 
   return (
-    <ButtonIconOnly
+    <ButtonIcon
       icon={copied.get() ? mdiCheckboxMarkedOutline : mdiContentCopy}
-      iconClass="size-5"
       onClick={copyData}
       title={copied.get() ? ttt("Copied") : copyText}
       disabled={p.disabled || copied.get()}
@@ -56,6 +55,6 @@ export function ClipboardCopyButtonIconOnly(p: ClipboardCopyButtonIconOnlyProps)
       class={p.class}
     >
       {/* {copied.get() ? ttt("Copied") : ttt("Copy")} */}
-    </ButtonIconOnly>
+    </ButtonIcon>
   )
 }

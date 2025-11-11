@@ -1,5 +1,5 @@
-import { OrganizationListLinkButton } from "@/app/nav/links/OrganizationListLinkButton"
-import { WorkspaceListLinkButton } from "@/app/nav/links/WorkspaceListLinkButton"
+import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
+import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { LinkLikeText } from "@/ui/links/LinkLikeText"
@@ -21,8 +21,8 @@ export function TodoPage(p: TodoSectionProps) {
         }
         childrenCenter={
           <>
-            <OrganizationListLinkButton />
-            <WorkspaceListLinkButton />
+            <OrganizationListNavButton />
+            <WorkspaceListLinkNavButton />
           </>
         }
       />
