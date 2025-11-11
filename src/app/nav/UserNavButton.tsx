@@ -30,8 +30,8 @@ function UserSessionInfo(p: { userSession: UserSession }) {
   return (
     <div class="ml-3">
       <p class="text-muted-foreground">{ttt("Signed in as")}</p>
-      <p>{p.userSession.user.name}</p>
-      <p class="">{p.userSession.user.email}</p>
+      <p>{p.userSession.profile.name}</p>
+      <p class="">{p.userSession.profile.email}</p>
     </div>
   )
 }

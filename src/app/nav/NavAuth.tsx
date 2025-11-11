@@ -1,7 +1,10 @@
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
-import { splitProps } from "solid-js"
+import { LinkLikeNavText } from "@/app/nav/links/LinkLikeNavText"
+import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
+import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
+import { userSessionGet } from "@/auth/ui/signals/userSessionSignal"
+import { Show, splitProps } from "solid-js"
 import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
@@ -17,8 +20,14 @@ export function NavAuth(p: NavAuthProps) {
       childrenLeft={
         <>
           <NavBreadcrumbSeparator />
-          <LinkLikeText>{s.title}</LinkLikeText>
+          <LinkLikeNavText>{s.title}</LinkLikeNavText>
         </>
+      }
+      childrenCenter={
+        <Show when={userSessionGet()}>
+          <OrganizationListNavButton />
+          <WorkspaceListLinkNavButton />
+        </Show>
       }
       childrenRight={s.children}
       {...rest}

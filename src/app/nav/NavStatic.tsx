@@ -1,5 +1,6 @@
 import { UserNavButton } from "@/app/nav/UserNavButton"
-import { appName } from "@/app/text/appName"
+import { urlOverview } from "@/app/pages/urlOverview"
+import { appNameClient } from "@/app/text/appName"
 import { DemosLinkButton } from "@/ui/links/DemosLinkButton"
 import type { JSXElement } from "solid-js"
 import { ThemeButton } from "~ui/interactive/theme/ThemeButton"
@@ -17,12 +18,16 @@ export interface NavStaticProps extends MayHaveClass {
 
 export function NavStatic(p: NavStaticProps) {
   return (
-    <nav class={classMerge("flex flex-wrap justify-between gap-4 mx-auto", "w-full max-w-7xl", p.class)}>
+    <nav class={classMerge("flex flex-wrap justify-between gap-4 mx-auto", "w-full max-w-7xl", "mb-4", p.class)}>
       <div class="flex flex-wrap gap-2">
         {p.dense ? (
-          <LogoImageOnly />
+          <LogoImageOnly href={urlOverview()} />
         ) : (
-          <LogoImageText logoText={appName()} logoTextClass="text-md font-medium flex items-center" />
+          <LogoImageText
+            href={urlOverview()}
+            logoText={appNameClient()}
+            logoTextClass="text-md font-medium flex items-center"
+          />
         )}
         {p.childrenLeft}
       </div>
