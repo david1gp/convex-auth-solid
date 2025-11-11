@@ -1,5 +1,5 @@
 import { NavAuth } from "@/app/nav/NavAuth"
-import { appName } from "@/app/text/appName"
+import { appNameClient } from "@/app/text/appName"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
@@ -7,8 +7,7 @@ import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPassw
 import { SignInButtonLink } from "@/auth/ui/sign_up/SignInButtonLink"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
-import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
+import { searchParamGet } from "@/utils/router/searchParamGet"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
@@ -26,7 +25,7 @@ import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClass {}
 
 export const SignUpPage: Component<SignUpPageProps> = (p) => {
-  const pageTitle = ttt("Sign up") + " - " + appName
+  const pageTitle = ttt("Sign up") + " " + appNameClient()
   const title = ttt("Sign up")
   return (
     <LayoutWrapperDemo title={pageTitle}>
@@ -101,16 +100,12 @@ interface SocialSignUpButtonProps {
 }
 
 function SocialSignUpButton(p: SocialSignUpButtonProps) {
-  const searchParams = useSearchParamsObject()
   const props = socialProviderButtonProps[p.provider]
-
   const text = "Sign up with " + capitalizeFirstLetter(p.provider)
-
   function getReturnPath() {
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
+    const returnPath = searchParamGet("returnPath") || urlSignInRedirectUrl()
     return urlAuthProvider(p.provider, returnPath)
   }
-
   return (
     <LinkButton
       href={getReturnPath()}

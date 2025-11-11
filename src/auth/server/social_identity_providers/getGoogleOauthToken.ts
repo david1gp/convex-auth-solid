@@ -1,10 +1,9 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
+import { envGoogleClientSecretResult } from "@/app/env/private/envGoogleClientSecretResult"
+import { envGoogleClientIdResult } from "@/app/env/public/envGoogleClientIdResult"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
-import * as v from "valibot"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import { queryString } from "~utils/url/queryString"
 import { intMin1OrStringSchema } from "~utils/valibot/intOrStringSchema"
@@ -29,11 +28,11 @@ export async function getGoogleOauthToken(code: string): PromiseResult<GoogleOau
   const op = "getGoogleOauthToken"
   const provider = socialLoginProvider.google
 
-  const clientSecretResult = readEnvVariableResult(privateEnvVariableName.GOOGLE_CLIENT_SECRET)
+  const clientSecretResult = envGoogleClientSecretResult()
   if (!clientSecretResult.success) return clientSecretResult
   const clientSecret = clientSecretResult.data
 
-  const clientIdResult = readEnvVariableResult(publicEnvVariableName.PUBLIC_GOOGLE_CLIENT_ID)
+  const clientIdResult = envGoogleClientIdResult()
   if (!clientIdResult.success) return clientIdResult
   const clientId = clientIdResult.data
 
@@ -57,7 +56,7 @@ export async function getGoogleOauthToken(code: string): PromiseResult<GoogleOau
     const errorMessage = authErrorMessages.tokenFailedToFetchStatus(provider, r.status, text)
     return createResultError(op, errorMessage)
   }
-  const result = v.safeParse(v.pipe(v.string(), v.parseJson(), googleOauthTokenSchema), text)
+  const result = a.safeParse(a.pipe(a.string(), a.parseJson(), googleOauthTokenSchema), text)
   if (!result.success) {
     const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues as any, text)
     return createResultError(op, errorMessage, text)
@@ -65,15 +64,15 @@ export async function getGoogleOauthToken(code: string): PromiseResult<GoogleOau
   return createResult(result.output)
 }
 
-export const googleOauthTokenSchema = v.object({
-  access_token: v.string(),
-  id_token: v.string(),
+export const googleOauthTokenSchema = a.object({
+  access_token: a.string(),
+  id_token: a.string(),
   expires_in: intMin1OrStringSchema,
-  refresh_token: v.string(),
-  token_type: v.string(),
-  scope: v.string(),
+  refresh_token: a.string(),
+  token_type: a.string(),
+  scope: a.string(),
 })
 
-function types1(d: v.InferOutput<typeof googleOauthTokenSchema>): GoogleOauthToken {
+function types1(d: a.InferOutput<typeof googleOauthTokenSchema>): GoogleOauthToken {
   return { ...d }
 }

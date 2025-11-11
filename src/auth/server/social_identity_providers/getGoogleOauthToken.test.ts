@@ -1,6 +1,6 @@
 import { googleOauthTokenSchema } from "@/auth/server/social_identity_providers/getGoogleOauthToken"
 import { expect, test } from "bun:test"
-import * as v from "valibot"
+import * as a from "valibot"
 
 test("getGoogleOauthToken", () => {
   const example = `
@@ -15,10 +15,10 @@ test("getGoogleOauthToken", () => {
 }
 
 `
-  const schema = v.pipe(v.string(), v.parseJson(), googleOauthTokenSchema)
-  const p = v.safeParse(schema, example)
+  const schema = a.pipe(a.string(), a.parseJson(), googleOauthTokenSchema)
+  const p = a.safeParse(schema, example)
   if (!p.success) {
-    console.log(v.summarize(p.issues))
+    console.log(a.summarize(p.issues))
     console.log(p.issues)
   }
   expect(p.success).toBe(true)

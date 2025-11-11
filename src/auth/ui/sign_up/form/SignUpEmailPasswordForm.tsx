@@ -2,17 +2,15 @@ import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
 import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
-import { useNavigate } from "@solidjs/router"
 import { For, Show } from "solid-js"
 import type { JSX } from "solid-js/jsx-runtime"
 import { ttt } from "~ui/i18n/ttt"
+import { Checkbox } from "~ui/input/check/Checkbox"
 import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
 import { LabelAsterix } from "~ui/input/label/LabelAsterix"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
-import { Checkbox } from "~ui/interactive/check/Checkbox"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
 import type { SignalObject } from "~ui/utils/createSignalObject"
@@ -26,9 +24,7 @@ import {
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}
 
 export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
-  const navigate = useNavigate()
-  const searchParams = useSearchParamsObject()
-  const sm = signUpCreateStateManagement(navigate, searchParams)
+  const sm = signUpCreateStateManagement()
 
   if (isDevEnvVite()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
@@ -109,9 +105,6 @@ function FieldSwitch(field: SignUpFormField, sm: SignUpUiStateManagement) {
         onInput={(e) => {
           const newValue = e.currentTarget.value
           valueSignal.set(newValue)
-          if (field === "email") {
-            sm.searchParams.set({ email: newValue })
-          }
           debouncedValidate(newValue)
         }}
         onBlur={(e) => {

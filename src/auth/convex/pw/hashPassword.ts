@@ -1,10 +1,10 @@
 import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
+import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 
 export async function hashPassword2(password: string): PromiseResult<string> {
   const op = "hashPassword2"
-  const saltResult = readEnvVariableResult(privateEnvVariableName.AUTH_SECRET)
+  const saltResult = envAuthSecretResult()
   if (!saltResult.success) return saltResult
   const salt = saltResult.data
   if (!salt) return createError(op, "env.AUTH_SECRET not defined")

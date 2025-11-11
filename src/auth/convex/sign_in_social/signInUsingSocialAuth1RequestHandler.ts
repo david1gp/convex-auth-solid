@@ -1,4 +1,4 @@
-import { getBaseUrlApp } from "@/app/url/getBaseUrl"
+import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
 import { signInUsingSocialAuth2ActionFn } from "@/auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn"
 import type { LoginProvider } from "@/auth/model/socialLoginProvider"
 import type { UserSession } from "@/auth/model/UserSession"
@@ -48,13 +48,12 @@ export async function signInUsingSocialAuth1RequestHandler(
   }
   const userSessionSerialized = userSessionSerializedResult.data
 
-  const hostnameApp = getBaseUrlApp()
-  if (!hostnameApp) {
-    const errorMessage = "!env.HOSTNAME_APP"
-    const err = createResultError(op, errorMessage)
-    console.error(op, err)
-    return new Response(jsonStringifyPretty(err), { status: 500 })
+  const hostnameAppResult = envBaseUrlAppResult()
+  if (!hostnameAppResult.success) {
+    console.error(hostnameAppResult)
+    return new Response(jsonStringifyPretty(hostnameAppResult), { status: 500 })
   }
+  const hostnameApp = hostnameAppResult.data
   const redirectUrl = new URL(state, hostnameApp)
   redirectUrl.searchParams.set("userSession", userSessionSerialized)
   // redirectUrl.searchParams.set("redirectUrl", state)

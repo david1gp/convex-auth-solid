@@ -1,6 +1,6 @@
-import * as v from "valibot"
+import * as a from "valibot"
 
-export const signUpTermsSchema = v.pipe(
-  v.boolean(),
-  v.check((input) => input === true, "You must agree to the Terms of Service and Privacy Policy"),
+export const signUpTermsSchema = a.pipe(
+  a.boolean(),
+  a.check((input) => input === true, "You must agree to the Terms of Service and Privacy Policy"),
 )

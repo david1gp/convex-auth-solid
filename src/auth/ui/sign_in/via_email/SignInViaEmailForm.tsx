@@ -1,10 +1,10 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { createUrl } from "@/utils/router/createUrl"
+import { searchParamSet } from "@/utils/router/searchParamSet"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { inputMaxLength50 } from "@/utils/valibot/inputMaxLength"
 import { mdiLogin } from "@mdi/js"
-import { useLocation, useNavigate } from "@solidjs/router"
-import { Show, type Component } from "solid-js"
+import { onMount, Show, type Component } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
@@ -16,10 +16,11 @@ import { classMerge } from "~ui/utils/classMerge"
 import { createSignInViaEmailStateManagement } from "./createSignInViaEmailStateManagement"
 
 export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const searchParams = useSearchParamsObject()
-  const sm = createSignInViaEmailStateManagement(navigate, location, searchParams)
+  let url: URL | null = null
+  onMount(() => {
+    url = createUrl()
+  })
+  const sm = createSignInViaEmailStateManagement()
   if (isDevEnvVite()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
@@ -40,8 +41,10 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
           onInput={(e) => {
             const newValue = e.currentTarget.value
             sm.state.email.set(newValue)
-            searchParams.set({ email: newValue })
             sm.validateOnChange("email")(newValue)
+            if (url) {
+              searchParamSet("email", newValue)
+            }
           }}
           onBlur={(e) => sm.validateOnChange("email")(e.currentTarget.value)}
           class={classMerge("w-full", sm.errors.email.get() && "border-destructive focus-visible:ring-destructive")}

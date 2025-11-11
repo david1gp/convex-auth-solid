@@ -1,5 +1,5 @@
 import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
+import { envTelegramChatIdResult } from "@/app/env/private/envTelegramChatIdResult"
 import type { PromiseResult } from "~utils/result/Result"
 import { sendTelegramMessageHtml, type TelegramEnvVariableNames } from "~utils/telegram/sendTelegramMessageHtml"
 
@@ -8,7 +8,7 @@ export async function sendTelegramMessageTechnical(
   data: any,
   disableNotification: boolean = true,
 ): PromiseResult<null> {
-  const chatIdResult = readEnvVariableResult(privateEnvVariableName.TELEGRAM_CHAT_ID)
+  const chatIdResult = envTelegramChatIdResult()
   if (!chatIdResult.success) return chatIdResult
   const chatId = chatIdResult.data
 

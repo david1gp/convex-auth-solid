@@ -1,10 +1,10 @@
 import { otpSchema } from "@/auth/model/otpSchema"
 import { emailSchema } from "@/utils/valibot/emailSchema"
-import * as v from "valibot"
+import * as a from "valibot"
 
-export type SignUpConfirmEmailType = v.InferOutput<typeof signUpConfirmEmailSchema>
+export type SignUpConfirmEmailType = a.InferOutput<typeof signUpConfirmEmailSchema>
 
-export const signUpConfirmEmailSchema = v.object({
+export const signUpConfirmEmailSchema = a.object({
   email: emailSchema,
   code: otpSchema,
 })

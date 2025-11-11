@@ -1,4 +1,5 @@
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
+import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
+import { envGoogleClientIdResult } from "@/app/env/public/envGoogleClientIdResult"
 import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model/socialLoginProvider"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 
@@ -18,11 +19,12 @@ function urlOAuthSwitcher(provider: SocialLoginProvider, redirectUrl: string = "
 }
 
 function urlAuthGithub(redirectUrl: string = ""): string {
-  const name = publicEnvVariableName.PUBLIC_GITHUB_CLIENT_ID
-  const clientId = import.meta.env.PUBLIC_GITHUB_CLIENT_ID
-  if (!clientId) {
-    throw new Error("!env." + name)
+  const clientIdResult = envGithubClientIdResult()
+  if (!clientIdResult.success) {
+    console.error(clientIdResult.errorMessage)
+    return ""
   }
+  const clientId = clientIdResult.data
   const rootUrl = "https://github.com/login/oauth/authorize"
   const options = {
     client_id: clientId,
@@ -38,16 +40,12 @@ function urlAuthGithub(redirectUrl: string = ""): string {
  * https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow#redirecting
  */
 function urlAuthGoogle(redirectUrl: string = ""): string {
-  // @ts-ignore
-  // const clientId = window.GOOGLE_CLIENT_ID as any
-  // const clientId = readEnvVariable(envVariableName.GOOGLE_CLIENT_ID)
-  // const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
-  const name = publicEnvVariableName.PUBLIC_GOOGLE_CLIENT_ID
-  const clientId = import.meta.env[name]
-  // const clientId = readEnvVariable(name)
-  if (!clientId) {
-    throw new Error("!env." + name)
+  const clientIdResult = envGoogleClientIdResult()
+  if (!clientIdResult.success) {
+    console.error(clientIdResult.errorMessage)
+    return ""
   }
+  const clientId = clientIdResult.data
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth"
   const options = {
     client_id: clientId,

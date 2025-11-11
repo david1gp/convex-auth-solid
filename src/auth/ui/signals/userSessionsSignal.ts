@@ -1,10 +1,10 @@
 import { userSessionIsStillValid, userSessionSchema, type UserSession } from "@/auth/model/UserSession"
-import * as v from "valibot"
+import * as a from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError } from "~utils/result/Result"
 
 const userSessionsLocalStorageKey = "userSessions"
-const userSessionsSchema = v.array(userSessionSchema)
+const userSessionsSchema = a.array(userSessionSchema)
 let hasLoaded = false
 
 export const userSessionsSignal: SignalObject<UserSession[]> = createUserSessionsSignal()
@@ -17,7 +17,7 @@ export function userSessionsSignalAdd(newSession: UserSession): UserSession[] {
 }
 
 function addUserSesssionOrReplace(userSessions: UserSession[], userProfile: UserSession) {
-  const existingUserIndex = userSessions.findIndex((session) => session.user.userId === userProfile.user.userId)
+  const existingUserIndex = userSessions.findIndex((session) => session.profile.userId === userProfile.profile.userId)
   const newSessions = [...userSessions]
 
   if (existingUserIndex !== -1) {
@@ -53,8 +53,8 @@ function createUserSessionsSignal(): SignalObject<UserSession[]> {
   // Listen to localStorage events to update session list
   function handleStorageEvent(event: StorageEvent) {
     if (event.key === userSessionsLocalStorageKey && event.newValue !== null) {
-      const schema = v.pipe(v.string(), v.parseJson(), userSessionsSchema)
-      const parsing = v.safeParse(schema, event.newValue)
+      const schema = a.pipe(a.string(), a.parseJson(), userSessionsSchema)
+      const parsing = a.safeParse(schema, event.newValue)
       if (parsing.success) {
         signal.set(parsing.output)
       }
@@ -73,10 +73,10 @@ export function userSessionsLoadFromLocalStorage() {
   const op = "userSessionsLoadFromLocalStorage"
   const read = localStorage.getItem(userSessionsLocalStorageKey)
   if (!read) return createResultError(op, "no userSessions saved in localStorage")
-  const schema = v.pipe(v.string(), v.parseJson(), userSessionsSchema)
-  const parsing = v.safeParse(schema, read)
+  const schema = a.pipe(a.string(), a.parseJson(), userSessionsSchema)
+  const parsing = a.safeParse(schema, read)
   if (!parsing.success) {
-    return createResultError(op, v.summarize(parsing.issues), read)
+    return createResultError(op, a.summarize(parsing.issues), read)
   }
   // filter by expiredAt
   const filtered = parsing.output.filter(userSessionIsStillValid)

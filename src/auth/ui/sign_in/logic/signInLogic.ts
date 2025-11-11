@@ -2,54 +2,57 @@ import { userSessionSchema, type UserSession } from "@/auth/model/UserSession"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
-import type { Navigator } from "@solidjs/router"
-import type { SearchParams } from "node_modules/@solidjs/router/dist/types"
-import * as v from "valibot"
+import { createUrl } from "@/utils/router/createUrl"
+import { navigateTo } from "@/utils/router/navigateTo"
+import { searchParamGet } from "@/utils/router/searchParamGet"
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 import { base64urlDecodeObject } from "~utils/url/base64url"
 
-export function signInLogic(searchParams: Partial<SearchParams>, navigate: Navigator): void {
+export function signInLogic(): void {
   const op = "signInLogic"
 
-  const userSessionString = searchParams.userSession as string | undefined
+  const url = createUrl()
+
+  const userSessionString = searchParamGet("userSession", url)
   if (!userSessionString) {
     // do nothing, user should choose sign up/in method
     return
   }
 
   try {
-    const signedIn = signedInLogicResult(searchParams, navigate)
+    const signedIn = signedInLogicResult(url)
     if (!signedIn.success) {
       const errorMessage = signedIn.errorMessage || "Unknown error"
-      navigateToErrorPage(op, navigate, errorMessage)
+      navigateToErrorPage(op, errorMessage)
     } else {
       // success, userSession is set -> LayoutWrapper should router switch to a different route
     }
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
-    navigateToErrorPage(op, navigate, errorMessage)
+    navigateToErrorPage(op, errorMessage)
   }
 }
 
-export function navigateToErrorPage(op: string, navigate: Navigator, errorMessage: string, error?: unknown): void {
+export function navigateToErrorPage(op: string, errorMessage: string, error?: unknown): void {
   console.error(op, "errorMessage:", errorMessage, "error:", error)
-  navigate(`${pageRouteAuth.signInError}?errorMessage=${encodeURIComponent(errorMessage)}`, { replace: true })
+  navigateTo(`${pageRouteAuth.signInError}?errorMessage=${encodeURIComponent(errorMessage)}`)
 }
 
-function signedInLogicResult(searchParams: Partial<SearchParams>, navigate: Navigator): Result<UserSession> {
+function signedInLogicResult(url: URL): Result<UserSession> {
   const op = "signedInLogic"
   // check args
-  const userSessionString = searchParams.userSession as string | undefined
+  const userSessionString = searchParamGet("userSession", url)
   if (!userSessionString) return createResultError(op, "!userSession")
   // decode session
   const decodedUserSessionObjectResult = base64urlDecodeObject(userSessionString)
   if (!decodedUserSessionObjectResult.success) return decodedUserSessionObjectResult
   // parse session
-  const parsingResult = v.safeParse(userSessionSchema, decodedUserSessionObjectResult.data)
+  const parsingResult = a.safeParse(userSessionSchema, decodedUserSessionObjectResult.data)
   if (!parsingResult.success)
     return createResultError(
       op,
-      v.summarize(parsingResult.issues),
+      a.summarize(parsingResult.issues),
       JSON.stringify(decodedUserSessionObjectResult.data, null, 2),
     )
   const newSession: UserSession = parsingResult.output
@@ -57,18 +60,4 @@ function signedInLogicResult(searchParams: Partial<SearchParams>, navigate: Navi
   userSessionsSignalAdd(newSession)
   userSessionSignal.set(newSession)
   return createResult(newSession)
-}
-
-function addUserSesssionOrReplace(userSessions: UserSession[], userProfile: UserSession) {
-  const existingUserIndex = userSessions.findIndex((session) => session.user.userId === userProfile.user.userId)
-  const newSessions = [...userSessions]
-
-  if (existingUserIndex !== -1) {
-    // Update existing user session
-    newSessions[existingUserIndex] = userProfile
-  } else {
-    // Add new user session
-    newSessions.push(userProfile)
-  }
-  return newSessions
 }

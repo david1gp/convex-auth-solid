@@ -1,6 +1,6 @@
 import { loginProvider } from "@/auth/model/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
-import * as v from "valibot"
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import { intOrStringSchema } from "~utils/valibot/intOrStringSchema"
 
@@ -58,7 +58,7 @@ export async function getGithubUserProfile(access_token: string): PromiseResult<
     const errorMessage = authErrorMessages.profileFailedToFetchStatus(provider, r.status, text)
     return createResultError(op, errorMessage)
   }
-  const result = v.safeParse(v.pipe(v.string(), v.parseJson(), githubProfileSchema), text)
+  const result = a.safeParse(a.pipe(a.string(), a.parseJson(), githubProfileSchema), text)
   if (!result.success) {
     const errorMessage = authErrorMessages.profileFailedToParse(provider, result.issues as any, text)
     return createResultError(op, errorMessage, text)
@@ -71,23 +71,23 @@ export async function getGithubUserProfile(access_token: string): PromiseResult<
   return createResult(profile)
 }
 
-const githubProfileSchema = v.object({
-  login: v.string(),
+const githubProfileSchema = a.object({
+  login: a.string(),
   id: intOrStringSchema,
-  avatar_url: v.string(),
-  name: v.string(),
-  email: v.nullable(v.string()),
-  created_at: v.pipe(
-    v.string(),
-    v.transform((str) => new Date(str)),
+  avatar_url: a.string(),
+  name: a.string(),
+  email: a.nullable(a.string()),
+  created_at: a.pipe(
+    a.string(),
+    a.transform((str) => new Date(str)),
   ),
-  updated_at: v.pipe(
-    v.string(),
-    v.transform((str) => new Date(str)),
+  updated_at: a.pipe(
+    a.string(),
+    a.transform((str) => new Date(str)),
   ),
 })
 
-function types1(d: v.InferOutput<typeof githubProfileSchema>): GitHubUserProfile {
+function types1(d: a.InferOutput<typeof githubProfileSchema>): GitHubUserProfile {
   return {
     ...d,
     created_at: d.created_at.toISOString(),

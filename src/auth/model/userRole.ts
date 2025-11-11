@@ -1,4 +1,4 @@
-import * as v from "valibot"
+import * as a from "valibot"
 
 export type UserRole = keyof typeof userRole
 
@@ -8,8 +8,8 @@ export const userRole = {
   dev: "dev",
 } as const
 
-export const userRoleSchema = v.enum(userRole)
+export const userRoleSchema = a.enum(userRole)
 
-function types1(a: v.InferOutput<typeof userRoleSchema>): UserRole {
+function types1(a: a.InferOutput<typeof userRoleSchema>): UserRole {
   return a
 }

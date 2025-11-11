@@ -2,7 +2,7 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { useNavigate } from "@solidjs/router"
+import { navigateTo } from "@/utils/router/navigateTo"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import { For, Show, type JSX } from "solid-js"
@@ -13,7 +13,6 @@ import { classesCardWrapper } from "~ui/static/container/classesCardWrapper"
 import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { NavigateTo } from "~ui/utils/NavigateTo"
 
 dayjs.extend(relativeTime)
 
@@ -52,7 +51,6 @@ export interface SessionButtonProps extends MayHaveClass {
 }
 
 function SessionButton(p: SessionButtonProps) {
-  const navigate: NavigateTo = useNavigate()
   return (
     <Button
       variant={buttonVariant.outline}
@@ -61,13 +59,13 @@ function SessionButton(p: SessionButtonProps) {
         "flex items-center p-4",
         classesCardWrapper,
       )}
-      onClick={() => sessionOnClick(navigate, p.session)}
+      onClick={() => sessionOnClick(p.session)}
     >
       <div class="flex items-center gap-3 w-full">
-        <SessionImage user={p.session.user} />
+        <SessionImage user={p.session.profile} />
         <div class="text-left">
-          <div class="text-lg">{p.session.user.name}</div>
-          {p.session.user.email && <div class="text-muted-foreground">{p.session.user.email}</div>}
+          <div class="text-lg">{p.session.profile.name}</div>
+          {p.session.profile.email && <div class="text-muted-foreground">{p.session.profile.email}</div>}
           <div class="text-muted-foreground">signed in: {dayjs(p.session.signedInAt).fromNow()}</div>
         </div>
       </div>
@@ -75,13 +73,13 @@ function SessionButton(p: SessionButtonProps) {
   )
 }
 
-function sessionOnClick(navigate: NavigateTo, session: UserSession) {
+function sessionOnClick(session: UserSession) {
   userSessionSignal.set(session)
   const url = urlSignInRedirectUrl()
-  navigate(url)
+  navigateTo(url)
 }
 
-function SessionImage(p: { user: UserSession["user"] }) {
+function SessionImage(p: { user: UserSession["profile"] }) {
   return (
     <Show when={p.user.image} fallback={<SessionImageFallback name={p.user.name} />}>
       <img src={p.user.image!} alt={p.user.name} class="w-10 h-10 rounded-full object-cover" />

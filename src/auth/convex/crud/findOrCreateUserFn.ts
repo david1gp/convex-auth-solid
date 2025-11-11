@@ -4,8 +4,8 @@ import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHan
 import { type MutationCtx } from "@convex/_generated/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocAuthAccount } from "../IdUser"
+import { docUserToUserProfile } from "../user/docUserToUserProfile"
 import { createUserFromAuthProviderFn } from "./createUserFromAuthProviderMutation"
-import { dbUsersToUserProfile } from "./dbUsersToUserProfile"
 import { findUserByEmailFn } from "./findUserByEmailQuery"
 import { linkAuthToExistingUserFn } from "./linkAuthToExistingUserFn"
 
@@ -28,8 +28,13 @@ export async function findOrCreateUserFn(
     const user = await ctx.db.get(existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
     const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, user._id)
-    const userProfile = dbUsersToUserProfile(user, orgHandle, orgRole)
-    return createResult({ user: userProfile, signedInMethod: authData.provider, ...createUserSessionTimes() })
+    const userProfile = docUserToUserProfile(user, orgHandle, orgRole)
+    return createResult({
+      profile: userProfile,
+      hasPw: !!user.hashedPassword,
+      signedInMethod: authData.provider,
+      ...createUserSessionTimes(),
+    })
   }
 
   // Check for existing user by email
@@ -38,9 +43,10 @@ export async function findOrCreateUserFn(
     if (existingUser) {
       await linkAuthToExistingUserFn(ctx, existingUser._id, authData.provider, authData.providerId)
       const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, existingUser._id)
-      const userProfile = dbUsersToUserProfile(existingUser, orgHandle, orgRole)
+      const userProfile = docUserToUserProfile(existingUser, orgHandle, orgRole)
       return createResult({
-        user: userProfile,
+        profile: userProfile,
+        hasPw: !!existingUser.hashedPassword,
         signedInMethod: authData.provider,
         ...createUserSessionTimes(),
       })
@@ -53,7 +59,8 @@ export async function findOrCreateUserFn(
     return createResultError(op, "Failed to create user: " + createdResult.errorMessage)
   }
   const userSession: SignInUsingSocialAuthResultInternal = {
-    user: createdResult.data,
+    profile: createdResult.data,
+    hasPw: false,
     signedInMethod: authData.provider,
     ...createUserSessionTimes(),
   }

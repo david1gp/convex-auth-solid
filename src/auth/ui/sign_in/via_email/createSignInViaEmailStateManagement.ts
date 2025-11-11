@@ -1,12 +1,11 @@
 import { apiAuthSignInViaEmail } from "@/auth/api/apiAuthSignInViaEmail"
 import { urlSignInEnterOtp } from "@/auth/url/urlSignInEnterOtp"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { navigateTo } from "@/utils/router/navigateTo"
 import { debounceMs } from "@/utils/ui/debounceMs"
-import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
-import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as v from "valibot"
+import * as a from "valibot"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
@@ -15,9 +14,9 @@ export type SignInViaEmailUiState = {
   isSubmitting: SignalObject<boolean>
 }
 
-function signInViaEmailCreateUiState(searchParams: SearchParamsObject): SignInViaEmailUiState {
+function signInViaEmailCreateUiState(): SignInViaEmailUiState {
   return {
-    email: createSearchParamSignalObject("email", searchParams),
+    email: createSignalObject(""),
     isSubmitting: createSignalObject(false),
   }
 }
@@ -74,12 +73,8 @@ export type SignInViaEmailStateManagement = {
 type NavigateType = (to: string) => void
 type LocationType = { pathname: string }
 
-export function createSignInViaEmailStateManagement(
-  navigate: NavigateType,
-  location: LocationType,
-  searchParams: SearchParamsObject,
-): SignInViaEmailStateManagement {
-  const state = signInViaEmailCreateUiState(searchParams)
+export function createSignInViaEmailStateManagement(): SignInViaEmailStateManagement {
+  const state = signInViaEmailCreateUiState()
   const errors = createSignInViaEmailErrorState()
 
   return {
@@ -88,7 +83,7 @@ export function createSignInViaEmailStateManagement(
     errors,
     hasErrors: () => hasErrors(errors),
     validateOnChange: (field: SignInViaEmailFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, navigate, location, state, errors),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, state, errors),
   }
 }
 
@@ -106,13 +101,7 @@ function validateOnChange(
   }, debounceMs)
 }
 
-function handleSubmit(
-  e: SubmitEvent,
-  navigate: NavigateType,
-  location: LocationType,
-  state: SignInViaEmailUiState,
-  errors: SignInViaEmailErrorState,
-) {
+function handleSubmit(e: SubmitEvent, state: SignInViaEmailUiState, errors: SignInViaEmailErrorState) {
   e.preventDefault()
   const emailResult = validateFieldResult("email", state.email.get())
 
@@ -122,16 +111,10 @@ function handleSubmit(
     errors.email.set("")
   }
 
-  handleSignInViaEmail(state.email.get(), navigate, location, state, errors)
+  handleSignInViaEmail(state.email.get(), state, errors)
 }
 
-async function handleSignInViaEmail(
-  email: string,
-  navigate: NavigateType,
-  location: LocationType,
-  state: SignInViaEmailUiState,
-  errors: SignInViaEmailErrorState,
-) {
+async function handleSignInViaEmail(email: string, state: SignInViaEmailUiState, errors: SignInViaEmailErrorState) {
   console.log("Sign in via email submitted", {
     email: state.email.get(),
   })
@@ -144,12 +127,12 @@ async function handleSignInViaEmail(
     return
   }
 
-  const returnPath = urlSignInRedirectUrl(location.pathname)
+  const returnPath = urlSignInRedirectUrl(document.location.pathname)
   const url = urlSignInEnterOtp(email, "", returnPath)
-  navigate(url)
+  navigateTo(url)
 }
 
 function validateFieldResult(field: keyof SignInViaEmailFormData, value: string) {
   const schema = emailSchema
-  return v.safeParse(schema, value)
+  return a.safeParse(schema, value)
 }

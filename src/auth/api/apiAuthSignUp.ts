@@ -1,4 +1,4 @@
-import { getBaseUrlApi } from "@/app/url/getBaseUrl"
+import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
 import { tryParsingFetchErr } from "@/auth/api/tryParsingFetchErr"
 import type { SignUpType } from "@/auth/model/signUpSchema"
@@ -7,7 +7,12 @@ import { type Result, createResult } from "~utils/result/Result"
 
 export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> {
   const op = "apiClientSignUp"
-  const response = await fetch(getBaseUrlApi() + apiAuthBasePath + apiPathAuth.signUp, {
+
+  const baseUrlResult = envBaseUrlApiResult()
+  if (!baseUrlResult.success) return baseUrlResult
+  const baseUrl = baseUrlResult.data
+
+  const response = await fetch(baseUrl + apiAuthBasePath + apiPathAuth.signUp, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(props),

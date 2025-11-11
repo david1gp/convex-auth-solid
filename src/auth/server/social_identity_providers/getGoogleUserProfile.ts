@@ -1,6 +1,6 @@
 import { loginProvider } from "@/auth/model/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
-import * as v from "valibot"
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 /**
@@ -41,7 +41,7 @@ export async function getGoogleUserProfile({
     const errorMessage = authErrorMessages.profileFailedToFetchStatus(provider, r.status, text)
     return createResultError(op, errorMessage)
   }
-  const result = v.safeParse(v.pipe(v.string(), v.parseJson(), googleUserProfileSchema), text)
+  const result = a.safeParse(a.pipe(a.string(), a.parseJson(), googleUserProfileSchema), text)
   if (!result.success) {
     const errorMessage = authErrorMessages.profileFailedToParse(provider, result.issues as any, text)
     return createResultError(op, errorMessage, text)
@@ -49,17 +49,17 @@ export async function getGoogleUserProfile({
   return createResult(result.output)
 }
 
-const googleUserProfileSchema = v.object({
-  id: v.string(),
-  email: v.string(),
-  verified_email: v.boolean(),
-  name: v.string(),
-  given_name: v.string(),
-  family_name: v.optional(v.string()),
-  picture: v.string(),
+const googleUserProfileSchema = a.object({
+  id: a.string(),
+  email: a.string(),
+  verified_email: a.boolean(),
+  name: a.string(),
+  given_name: a.string(),
+  family_name: a.optional(a.string()),
+  picture: a.string(),
   // locale: v.optional(v.string()),
 })
 
-function types1(d: v.InferOutput<typeof googleUserProfileSchema>): GoogleUserProfile {
+function types1(d: a.InferOutput<typeof googleUserProfileSchema>): GoogleUserProfile {
   return { ...d }
 }

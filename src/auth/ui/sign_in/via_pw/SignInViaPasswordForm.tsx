@@ -1,6 +1,5 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
 import { inputMaxLength50, urlMaxLength } from "@/utils/valibot/inputMaxLength"
 import { mdiLogin } from "@mdi/js"
 import { Show } from "solid-js"
@@ -15,8 +14,7 @@ import { classMerge } from "~ui/utils/classMerge"
 import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreateStateManagement"
 
 export function SignInViaPasswordForm(p: MayHaveClass) {
-  const searchParams = useSearchParamsObject()
-  const sm = signInViaPasswordCreateStateManagement(searchParams)
+  const sm = signInViaPasswordCreateStateManagement()
   const emailInputId = "sign-in-via-password-email-input"
   const pwInputId = "sign-in-via-password-pw-input"
   if (isDevEnvVite()) {
@@ -37,7 +35,6 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
           onInput={(e) => {
             const newValue = e.currentTarget.value
             sm.state.email.set(newValue)
-            searchParams.set({ email: newValue })
             sm.validateOnChange("email")(newValue)
           }}
           onBlur={(e) => sm.validateOnChange("email")(e.currentTarget.value)}

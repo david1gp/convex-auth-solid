@@ -1,4 +1,4 @@
-import * as v from "valibot"
+import * as a from "valibot"
 
 export type SocialLoginProvider = keyof typeof socialLoginProvider
 
@@ -8,7 +8,7 @@ export const socialLoginProvider = {
   // auth0: "auth0",
 } as const
 
-export const socialLoginProviderSchema = v.enum(socialLoginProvider)
+export const socialLoginProviderSchema = a.enum(socialLoginProvider)
 
 export const socialLoginProviders: Readonly<SocialLoginProvider[]> = Object.values(socialLoginProvider)
 
@@ -19,6 +19,6 @@ export const loginProvider = {
   dev: "dev",
 } as const
 
-export const loginProviderSchema = v.enum(loginProvider)
+export const loginProviderSchema = a.enum(loginProvider)
 
 export const loginProviders: Readonly<LoginProvider[]> = Object.values(loginProvider)

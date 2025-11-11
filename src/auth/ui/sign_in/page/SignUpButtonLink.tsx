@@ -1,7 +1,7 @@
 import { urlPageSignUp } from "@/auth/url/pageRouteAuth"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
-import { useSearchParamsObject } from "@/utils/ui/router/useSearchParamsObject"
+import { createUrl } from "@/utils/router/createUrl"
+import { searchParamGet } from "@/utils/router/searchParamGet"
 import { mdiArrowRight } from "@mdi/js"
 import { splitProps } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -15,10 +15,10 @@ export interface SignUpButtonLinkProps extends Omit<LinkButtonProps, "href"> {
 
 export function SignUpButtonLink(p: SignUpButtonLinkProps) {
   const [s, rest] = splitProps(p, ["text", "children", "iconRight", "size", "variant"])
-  const searchParams = useSearchParamsObject()
   function getUrl() {
-    const email = getSearchParamAsString(searchParams, "email")
-    const returnPath = getSearchParamAsString(searchParams, "returnPath") || urlSignInRedirectUrl()
+    const url = createUrl()
+    const email = searchParamGet("email", url) ?? ""
+    const returnPath = searchParamGet("returnPath") || urlSignInRedirectUrl()
     return urlPageSignUp(email, returnPath)
   }
   return (

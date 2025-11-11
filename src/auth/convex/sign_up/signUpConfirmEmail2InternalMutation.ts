@@ -4,11 +4,11 @@ import { loginMethod } from "@/auth/model/loginMethod"
 import { userRole } from "@/auth/model/userRole"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
-import { dbUsersToUserProfile } from "../crud/dbUsersToUserProfile"
+import { docUserToUserProfile } from "../user/docUserToUserProfile"
 
 export type SignUpConfirmValidatorType = typeof signUpConfirmEmailValidator.type
 export const signUpConfirmEmailValidator = v.object({
@@ -90,14 +90,15 @@ export async function signUpConfirmEmail2InternalMutationFn(
   if (!createdUser) {
     return createError(op, "Error finding created user", userId)
   }
-  const userProfile = dbUsersToUserProfile(createdUser, orgHandle, orgRole)
+  const userProfile = docUserToUserProfile(createdUser, orgHandle, orgRole)
 
   //
   // 7. Create and return user session
   //
   const userSession: UserSession = {
     token,
-    user: userProfile,
+    profile: userProfile,
+    hasPw: !!hashedPassword,
     signedInMethod: loginMethod.email,
     signedInAt: nowIso(),
     expiresAt,

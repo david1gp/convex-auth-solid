@@ -3,12 +3,12 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 import type { DocUser } from "../IdUser"
-import { dbUsersToUserProfile } from "../crud/dbUsersToUserProfile"
+import { docUserToUserProfile } from "../user/docUserToUserProfile"
 
 export type signInViaEmailEnterOtp2ValidatorType = typeof signInViaEmailEnterOtp2Validator.type
 export const signInViaEmailEnterOtp2Validator = v.object({
@@ -59,7 +59,7 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   //
   const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
 
-  const userProfile = dbUsersToUserProfile(user as DocUser, orgHandle, orgRole)
+  const userProfile = docUserToUserProfile(user as DocUser, orgHandle, orgRole)
 
   //
   // 4. Create session
@@ -80,7 +80,8 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   //
   const userSession: UserSession = {
     token,
-    user: userProfile,
+    profile: userProfile,
+    hasPw: !!user.hashedPassword,
     signedInMethod: loginMethod.email,
     signedInAt: nowIso(),
     expiresAt,

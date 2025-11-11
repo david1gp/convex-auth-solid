@@ -1,8 +1,7 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
+import { envGithubClientSecretResult } from "@/app/env/private/envGithubClientSecretResult"
+import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
-import * as v from "valibot"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import { queryString } from "~utils/url/queryString"
 import { searchParamsToObject } from "~utils/url/searchParamsToObject"
@@ -23,11 +22,11 @@ export async function getGithubOathToken(code: string): PromiseResult<GitHubOaut
   const op = "getGithubOathToken"
   const provider = socialLoginProvider.github
 
-  const clientSecretResult = readEnvVariableResult(privateEnvVariableName.GITHUB_CLIENT_SECRET)
+  const clientSecretResult = envGithubClientSecretResult()
   if (!clientSecretResult.success) return clientSecretResult
   const clientSecret = clientSecretResult.data
 
-  const clientIdResult = readEnvVariableResult(publicEnvVariableName.PUBLIC_GITHUB_CLIENT_ID)
+  const clientIdResult = envGithubClientIdResult()
   if (!clientIdResult.success) return clientIdResult
   const clientId = clientIdResult.data
 
@@ -48,7 +47,7 @@ export async function getGithubOathToken(code: string): PromiseResult<GitHubOaut
     return createResultError(op, errorMessage)
   }
   const json = searchParamsToObject(text)
-  const result = v.safeParse(githubSchema, json)
+  const result = a.safeParse(githubSchema, json)
   if (!result.success) {
     const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues as any, text)
     return createResultError(op, errorMessage, text)
@@ -56,10 +55,10 @@ export async function getGithubOathToken(code: string): PromiseResult<GitHubOaut
   return createResult({ access_token: result.output.access_token })
 }
 
-const githubSchema = v.object({
-  access_token: v.string(),
+const githubSchema = a.object({
+  access_token: a.string(),
 })
 
-function types1(d: v.InferOutput<typeof githubSchema>): GitHubOauthToken {
+function types1(d: a.InferOutput<typeof githubSchema>): GitHubOauthToken {
   return { ...d }
 }

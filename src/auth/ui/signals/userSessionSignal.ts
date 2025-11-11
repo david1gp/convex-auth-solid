@@ -1,5 +1,5 @@
 import { userSessionSchema, type UserSession } from "@/auth/model/UserSession"
-import * as v from "valibot"
+import * as a from "valibot"
 import { createSignalObject, type SetterSimplified, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
@@ -45,10 +45,10 @@ function userSessionLoadFromSessionStorage(): Result<UserSession> {
   const op = "userSessionsLoadFromLocalStorage"
   const read = sessionStorage.getItem(userSessionsSessionStorageKey)
   if (!read) return createResultError(op, "no userSession saved in sessionStorage")
-  const schema = v.pipe(v.string(), v.parseJson(), userSessionSchema)
-  const parsing = v.safeParse(schema, read)
+  const schema = a.pipe(a.string(), a.parseJson(), userSessionSchema)
+  const parsing = a.safeParse(schema, read)
   if (!parsing.success) {
-    return createResultError(op, v.summarize(parsing.issues), read)
+    return createResultError(op, a.summarize(parsing.issues), read)
   }
   return createResult(parsing.output)
 }

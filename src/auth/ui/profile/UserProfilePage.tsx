@@ -1,11 +1,16 @@
-import { dbUsersToUserProfile } from "@/auth/convex/crud/dbUsersToUserProfile"
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
+import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
+import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
+import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavStatic } from "@/app/nav/NavStatic"
 import type { DocUser } from "@/auth/convex/IdUser"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import { UserProfileForm } from "@/auth/ui/profile/UserProfileForm"
 import {
   userProfileFormStateManagement,
   type UserProfileFormStateManagement,
 } from "@/auth/ui/profile/userProfileFormState"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { urlUserProfileView } from "@/auth/url/pageRouteAuth"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
@@ -25,7 +30,23 @@ export function UserProfilePage() {
       </Match>
       <Match when={getUsername()}>
         <PageWrapper>
-          <LinkLikeText>{ttt("User Profile")}</LinkLikeText>
+          <NavStatic
+            dense={true}
+            childrenLeft={
+              <>
+                <NavBreadcrumbSeparator />
+                <NavLinkButton href={urlUserProfileView(getUsername()!)} isActive={true}>
+                  {ttt("User Profile")}
+                </NavLinkButton>
+              </>
+            }
+            childrenCenter={
+              <>
+                <OrganizationListNavButton />
+                <WorkspaceListLinkNavButton />
+              </>
+            }
+          />
           <UserProfileLoader username={getUsername()!} />
         </PageWrapper>
       </Match>
@@ -63,6 +84,6 @@ interface UserProfileDisplayProps {
 function UserProfileDisplay(p: UserProfileDisplayProps) {
   const mode = formMode.view
   const sm: UserProfileFormStateManagement = userProfileFormStateManagement(mode, {})
-  sm.loadData(dbUsersToUserProfile(p.data))
+  sm.loadData(docUserToUserProfile(p.data))
   return <UserProfileForm sm={sm} mode={mode} class="max-w-4xl mx-auto" />
 }

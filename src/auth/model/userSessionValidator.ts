@@ -1,11 +1,11 @@
 import { loginMethodValidator } from "@/auth/model/loginMethodValidator"
-import { userProfileValidator } from "@/auth/model/userProfileValidator"
 import { v } from "convex/values"
+import { userProfileValidator } from "./UserProfile"
 
-// UserSession validator
 export const userSessionValidator = v.object({
   token: v.string(),
-  user: userProfileValidator,
+  profile: userProfileValidator,
+  hasPw: v.boolean(),
   signedInMethod: loginMethodValidator,
   signedInAt: v.string(),
   expiresAt: v.string(),

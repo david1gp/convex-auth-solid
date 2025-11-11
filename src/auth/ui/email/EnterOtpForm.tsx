@@ -1,7 +1,10 @@
 import { otpSchema } from "@/auth/model/otpSchema"
+import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { createUrl } from "@/utils/router/createUrl"
+import { searchParamGet } from "@/utils/router/searchParamGet"
 import { mdiEmailCheck } from "@mdi/js"
-import { Show, createEffect } from "solid-js"
-import * as v from "valibot"
+import { Show, createEffect, onMount } from "solid-js"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { Label } from "~ui/input/label/Label"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
@@ -17,17 +20,35 @@ interface EnterOtpFormProps extends MayHaveClass {
   sentMessage: string
   instruction: string
   buttonText: string
-  email: string
-  actionFn: (otp: string, email: string) => Promise<void>
+  actionFn: (otp: string, email: string, returnPath: string) => Promise<void>
 }
 
 export function EnterOtpForm(p: EnterOtpFormProps) {
-  const otp = createSignalObject("")
   const otpError = createSignalObject("")
   const isSubmitting = createSignalObject(false)
 
+  let url: URL | null = null
+  const otp = createSignalObject("")
+  const email = createSignalObject("")
+
+  onMount(() => {
+    url = createUrl()
+    const emailParam = searchParamGet("email", url)
+    if (emailParam) {
+      email.set(emailParam)
+    }
+    const codeParam = searchParamGet("code", url) ?? ""
+    if (codeParam) {
+      otp.set(codeParam)
+    }
+  })
+  function getReturnPath() {
+    if (!url) return ""
+    return searchParamGet("returnPath", url) || urlSignInRedirectUrl()
+  }
+
   const validateOtp = (value: string) => {
-    const result = v.safeParse(otpSchema, value)
+    const result = a.safeParse(otpSchema, value)
     if (result.success) {
       otpError.set("")
       return true
@@ -54,7 +75,7 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
     if (!valid) return
     isSubmitting.set(true)
     try {
-      await p.actionFn(otpValue, p.email)
+      await p.actionFn(otpValue, email.get(), getReturnPath())
     } catch (error) {
       console.error("Email confirmation failed:", error)
       otpError.set("Verification failed. Please try again.")
@@ -71,7 +92,7 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
         <h1 class="text-2xl font-bold text-foreground">{p.title}</h1>
         <p class="text-muted-foreground">{p.subtitle}</p>
         <p class="text-muted-foreground">
-          {p.sentMessage} <span class="font-medium">{p.email}</span>.
+          {p.sentMessage} <span class="font-medium">{email.get()}</span>.
         </p>
         <p class="text-muted-foreground">{p.instruction}</p>
       </div>

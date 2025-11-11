@@ -3,7 +3,7 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { signInViaEmailEnterOtpSchema } from "@/auth/model/signInSchema"
 import { internal } from "@convex/_generated/api"
 import { type ActionCtx } from "@convex/_generated/server"
-import * as v from "valibot"
+import * as a from "valibot"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
 import { base64urlEncodeObject } from "~utils/url/base64url"
@@ -25,10 +25,10 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
   }
-  const schema = v.pipe(v.string(), v.parseJson(), signInViaEmailEnterOtpSchema)
-  const validation = v.safeParse(schema, textBody)
+  const schema = a.pipe(a.string(), a.parseJson(), signInViaEmailEnterOtpSchema)
+  const validation = a.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + a.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })

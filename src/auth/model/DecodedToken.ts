@@ -1,4 +1,4 @@
-import * as v from "valibot"
+import * as a from "valibot"
 
 export type DecodedToken = {
   // subject, whom the token refers to
@@ -11,19 +11,19 @@ export type DecodedToken = {
   exp: number
 }
 
-const integerMin1Schema = v.pipe(v.number(), v.integer(), v.minValue(1))
+const integerMin1Schema = a.pipe(a.number(), a.integer(), a.minValue(1))
 
-export const decodedTokenSchema = v.object({
-  sub: v.string(),
-  org: v.nullish(v.string()),
+export const decodedTokenSchema = a.object({
+  sub: a.string(),
+  org: a.nullish(a.string()),
   iat: integerMin1Schema,
   exp: integerMin1Schema,
 })
 
-function types1(d: v.InferOutput<typeof decodedTokenSchema>): DecodedToken {
+function types1(d: a.InferOutput<typeof decodedTokenSchema>): DecodedToken {
   return { ...d }
 }
 
-function types2(d: DecodedToken): v.InferOutput<typeof decodedTokenSchema> {
+function types2(d: DecodedToken): a.InferOutput<typeof decodedTokenSchema> {
   return { ...d }
 }

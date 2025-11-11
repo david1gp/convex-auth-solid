@@ -16,7 +16,6 @@ const classesPageWrapperInner = classArr(
 export function SignInErrorPage() {
   const title = "Authentication Error"
   const tryAgainText = "Try again, if the problem persists contact support"
-  // const [searchParams] = useSearchParams()
   const searchParams = new URLSearchParams(document.location.search)
   const errorMessage = searchParams.get("errorMessage")
   return (

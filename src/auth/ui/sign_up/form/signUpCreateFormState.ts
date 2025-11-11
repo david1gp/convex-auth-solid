@@ -3,15 +3,14 @@ import { passwordSchema } from "@/auth/model/passwordSchema"
 import { signUpTermsSchema } from "@/auth/model/signUpTermsSchema"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
+import { navigateTo } from "@/utils/router/navigateTo"
+import { searchParamGet } from "@/utils/router/searchParamGet"
 import { debounceMs } from "@/utils/ui/debounceMs"
-import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
-import { getSearchParamAsString } from "@/utils/ui/router/getSearchParam"
-import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { stringSchemaName } from "@/utils/valibot/stringSchema"
 import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as v from "valibot"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
@@ -40,10 +39,10 @@ export type SignUpUiState = {
   alreadyRegisteredEmails: SignalObject<Set<string>>
 }
 
-export function signUpCreateFormState(searchParams: SearchParamsObject): SignUpUiState {
+export function signUpCreateFormState(): SignUpUiState {
   return {
     name: createSignalObject(""),
-    email: createSearchParamSignalObject(signUpFormField.email, searchParams),
+    email: createSignalObject(""),
     pw: createSignalObject(""),
     terms: createSignalObject(false),
     alreadyRegisteredEmails: createSignalObject(new Set<string>()),
@@ -73,7 +72,6 @@ export type SignUpFormData = {
 }
 
 export type SignUpFormState = {
-  searchParams: SearchParamsObject
   isSubmitting: SignalObject<boolean>
   state: SignUpUiState
   errors: SignUpErrorState
@@ -88,24 +86,20 @@ export interface SignUpUiStateManagement extends SignUpFormState {
 
 type NavigateType = (to: string) => void
 
-export function signUpCreateStateManagement(
-  navigate: NavigateType,
-  searchParams: SearchParamsObject,
-): SignUpUiStateManagement {
+export function signUpCreateStateManagement(): SignUpUiStateManagement {
   const isSubmitting = createSignalObject(false)
-  const state = signUpCreateFormState(searchParams)
+  const state = signUpCreateFormState()
   const errors = createSignUpErrorState()
-  const s: SignUpFormState = { searchParams, isSubmitting, state, errors }
+  const s: SignUpFormState = { isSubmitting, state, errors }
 
   return {
-    searchParams,
     isSubmitting,
     state,
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: SignUpFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, s, navigate),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, s),
   }
 }
 
@@ -151,7 +145,7 @@ function validateOnChange(field: SignUpFormField, state: SignUpUiState, errors: 
   }, debounceMs)
 }
 
-function handleSubmit(e: SubmitEvent, s: SignUpFormState, navigate: NavigateType) {
+function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
   e.preventDefault()
 
   const name = s.state.name.get()
@@ -202,12 +196,12 @@ function handleSubmit(e: SubmitEvent, s: SignUpFormState, navigate: NavigateType
     email: email,
     pw: pw,
   }
-  handleSignUp(formData, s, navigate)
+  handleSignUp(formData, s)
 
   s.isSubmitting.set(false)
 }
 
-async function handleSignUp(values: HandleSignUpData, s: SignUpFormState, navigate: NavigateType) {
+async function handleSignUp(values: HandleSignUpData, s: SignUpFormState) {
   const op = "handleSignUp"
   // console.log("Sign up with email/password:", values)
   const result = await apiAuthSignUp(values)
@@ -225,9 +219,10 @@ async function handleSignUp(values: HandleSignUpData, s: SignUpFormState, naviga
     }
     return
   }
-  const returnPath = getSearchParamAsString(s.searchParams, "returnPath") || urlSignInRedirectUrl(location.pathname)
+  const returnPathSearch = searchParamGet("returnPath")
+  const returnPath = returnPathSearch || urlSignInRedirectUrl(location.pathname)
   console.log(op, "returnPath:", returnPath)
-  navigate(urlSignUpConfirmEmail(values.email, "", returnPath))
+  navigateTo(urlSignUpConfirmEmail(values.email, "", returnPath))
 }
 
 export type HandleSignUpData = {
@@ -246,7 +241,7 @@ function validateFieldResult(field: SignUpFormField, value: string | boolean) {
     schema = passwordSchema
   } else if (field === signUpFormField.terms) {
     schema = signUpTermsSchema
-    return v.safeParse(schema, value as boolean)
+    return a.safeParse(schema, value as boolean)
   }
-  return v.safeParse(schema!, value as string)
+  return a.safeParse(schema!, value as string)
 }

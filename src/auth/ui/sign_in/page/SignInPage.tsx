@@ -1,5 +1,5 @@
 import { NavAuth } from "@/app/nav/NavAuth"
-import { appName } from "@/app/text/appName"
+import { appNameClient } from "@/app/text/appName"
 import { SignInPageContent } from "@/auth/ui/sign_in/page/SignInPageContent"
 import { SignUpButtonLink } from "@/auth/ui/sign_in/page/SignUpButtonLink"
 import { mdiAccountPlus } from "@mdi/js"
@@ -14,7 +14,7 @@ import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
 interface SignInPageContent2Props extends MayHaveClass, MayHaveInnerClass {}
 
 export function SignInPage(p: SignInPageContent2Props) {
-  const pageTitle = ttt("Sign In - " + appName)
+  const pageTitle = ttt("Sign In " + appNameClient())
   const title = ttt("Sign In")
   return (
     <LayoutWrapperDemo title={pageTitle}>

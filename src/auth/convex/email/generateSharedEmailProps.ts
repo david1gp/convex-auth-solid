@@ -1,12 +1,14 @@
-import { appMotto } from "@/app/text/appMotto"
-import { appName } from "@/app/text/appName"
-import { getBaseUrlSite } from "@/app/url/getBaseUrl"
+import { envBaseUrlSiteResult } from "@/app/env/public/envBaseUrlSiteResult"
+import { appNameServer } from "@/app/text/appName"
+import { appSubtitle } from "@/app/text/appSubtitle"
 import type { FooterV1Type } from "@adaptive-sm/email-generator/index.js"
 
 export function generateSharedEmailProps() {
+  const siteBaseUrlResult = envBaseUrlSiteResult()
+  const siteBaseUrl = siteBaseUrlResult.success ? siteBaseUrlResult.data : ""
   return {
-    homepageText: appName(),
-    homepageUrl: getBaseUrlSite() ?? "",
-    hompageSubtitle: appMotto(),
+    homepageText: appNameServer(),
+    homepageUrl: siteBaseUrl,
+    hompageSubtitle: appSubtitle(),
   } as const satisfies FooterV1Type
 }

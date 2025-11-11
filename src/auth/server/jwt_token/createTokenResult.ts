@@ -2,7 +2,7 @@ import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { createToken } from "@/auth/server/jwt_token/createToken"
 import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
 import type { OrgRole } from "@/org/org_model/orgRole"
-import { readEnvVariableResult } from "~utils/env/readEnvVariable"
+import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 
 export async function createTokenResult(userId: string, orgHandle?: string, orgRole?: OrgRole): PromiseResult<string> {
@@ -10,7 +10,7 @@ export async function createTokenResult(userId: string, orgHandle?: string, orgR
   const op = "createTokenResult"
   console.log(op, userId)
   // env variable
-  const saltResult = readEnvVariableResult(privateEnvVariableName.AUTH_SECRET)
+  const saltResult = envAuthSecretResult()
   if (!saltResult.success) return saltResult
   const salt = saltResult.data
   // token

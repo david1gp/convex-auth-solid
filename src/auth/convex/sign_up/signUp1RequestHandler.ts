@@ -1,4 +1,4 @@
-import { getBaseUrlApp } from "@/app/url/getBaseUrl"
+import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
 import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
 import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
 import { signUpErrorMessages } from "@/auth/convex/sign_up/signUpErrorMessages"
@@ -6,7 +6,7 @@ import { signUpSchema } from "@/auth/model/signUpSchema"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
-import * as v from "valibot"
+import * as a from "valibot"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
 import { sendEmailSignUp } from "../email/sendEmailSignUp"
@@ -26,10 +26,10 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
   }
-  const schema = v.pipe(v.string(), v.parseJson(), signUpSchema)
-  const validation = v.safeParse(schema, textBody)
+  const schema = a.pipe(a.string(), a.parseJson(), signUpSchema)
+  const validation = a.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + a.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, textBody)
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -62,12 +62,12 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   })
 
   // Send email
-  const hostnameApp = getBaseUrlApp()
-  if (!hostnameApp) {
-    const errorMessage = "!env.HOSTNAME_APP"
-    console.error(op, errorMessage)
-    return new Response(errorMessage, { status: 500 })
+  const hostnameAppResult = envBaseUrlAppResult()
+  if (!hostnameAppResult.success) {
+    console.error(hostnameAppResult)
+    return new Response(jsonStringifyPretty(hostnameAppResult), { status: 500 })
   }
+  const hostnameApp = hostnameAppResult.data
   const confirmUrl = new URL(pageRouteAuth.signUpConfirmEmail, hostnameApp)
   confirmUrl.searchParams.set("email", email)
   confirmUrl.searchParams.set("code", code)

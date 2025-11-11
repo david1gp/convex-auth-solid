@@ -1,8 +1,8 @@
 import { urlAuthDev } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { navigateTo } from "@/utils/router/navigateTo"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { inputMaxLength50 } from "@/utils/valibot/inputMaxLength"
-import { useNavigate } from "@solidjs/router"
 import { ttt } from "~ui/i18n/ttt"
 import { InputS } from "~ui/input/input/InputS"
 import { Label } from "~ui/input/label/Label"
@@ -50,11 +50,10 @@ export function DevLoginSection(p: MayHaveClass) {
 
 function onSubmitFn(e: SubmitEvent) {
   e.preventDefault()
-  const nav = useNavigate()
   const url = getDevUrl()
   console.log("userId", userIdInputSignal.get())
   console.log("url", url)
-  nav(url)
+  navigateTo(url)
 }
 
 const userIdInputSignal = createSignalObject("adaptive-sm")

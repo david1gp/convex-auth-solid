@@ -3,11 +3,9 @@ import { passwordSchema } from "@/auth/model/passwordSchema"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { debounceMs } from "@/utils/ui/debounceMs"
-import type { SearchParamsObject } from "@/utils/ui/router/SearchParamsObject"
-import { createSearchParamSignalObject } from "@/utils/ui/router/createSearchParamSignalObject"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as v from "valibot"
+import * as a from "valibot"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
@@ -18,9 +16,9 @@ export type SignInUiState = {
   isSubmitting: SignalObject<boolean>
 }
 
-export function createSignInUiState(searchParams: SearchParamsObject): SignInUiState {
+export function createSignInUiState(): SignInUiState {
   return {
-    email: createSearchParamSignalObject("email", searchParams),
+    email: createSignalObject(""),
     password: createSignalObject(""),
     //
     isSubmitting: createSignalObject(false),
@@ -78,10 +76,8 @@ export type SignInViaPasswordStateManagement = {
   handleSubmit: (e: SubmitEvent) => void
 }
 
-export function signInViaPasswordCreateStateManagement(
-  searchParams: SearchParamsObject,
-): SignInViaPasswordStateManagement {
-  const state = createSignInUiState(searchParams)
+export function signInViaPasswordCreateStateManagement(): SignInViaPasswordStateManagement {
+  const state = createSignInUiState()
   const errors = createSignInErrorState()
   return {
     state,
@@ -146,5 +142,5 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
 
 function validateFieldResult(field: keyof SignInFormData, value: string) {
   const schema = field === "email" ? emailSchema : passwordSchema
-  return v.safeParse(schema, value)
+  return a.safeParse(schema, value)
 }

@@ -1,21 +1,21 @@
 import { passwordSchema } from "@/auth/model/passwordSchema"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { inputMaxLength100 } from "@/utils/valibot/inputMaxLength"
-import * as v from "valibot"
+import * as a from "valibot"
 
-export type SignInViaPwType = v.InferOutput<typeof signInViaPwSchema>
-export const signInViaPwSchema = v.object({
+export type SignInViaPwType = a.InferOutput<typeof signInViaPwSchema>
+export const signInViaPwSchema = a.object({
   email: emailSchema,
   pw: passwordSchema,
 })
 
-export type SignInViaEmailType = v.InferOutput<typeof signInViaEmailSchema>
-export const signInViaEmailSchema = v.object({
+export type SignInViaEmailType = a.InferOutput<typeof signInViaEmailSchema>
+export const signInViaEmailSchema = a.object({
   email: emailSchema,
 })
 
-export type SignInViaEmailEnterOtpType = v.InferOutput<typeof signInViaEmailEnterOtpSchema>
-export const signInViaEmailEnterOtpSchema = v.object({
-  email: v.pipe(v.string(), v.email(), v.maxLength(inputMaxLength100)),
-  code: v.pipe(v.string(), v.length(6)),
+export type SignInViaEmailEnterOtpType = a.InferOutput<typeof signInViaEmailEnterOtpSchema>
+export const signInViaEmailEnterOtpSchema = a.object({
+  email: a.pipe(a.string(), a.email(), a.maxLength(inputMaxLength100)),
+  code: a.pipe(a.string(), a.length(6)),
 })

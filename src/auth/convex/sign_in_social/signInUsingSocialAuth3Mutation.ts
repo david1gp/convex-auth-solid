@@ -6,8 +6,7 @@ import {
   commonAuthProviderValidator,
 } from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import type { Id } from "@convex/_generated/dataModel"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server.js"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 import { findOrCreateUserFn } from "../crud/findOrCreateUserFn"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "../crud/saveTokenIntoSessionReturnExpiresAtMutation"
@@ -28,8 +27,8 @@ export async function signInUsingSocialAuth3MutationFn(
     console.log("failed to find user", foundOrCreatedResult.errorMessage)
     return foundOrCreatedResult
   }
-  const data = foundOrCreatedResult.data
-  const userId = data.user.userId as IdUser
+  const userWithoutToken = foundOrCreatedResult.data
+  const userId = userWithoutToken.profile.userId as IdUser
 
   // Check for org membership
   const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
@@ -38,11 +37,11 @@ export async function signInUsingSocialAuth3MutationFn(
   const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) return tokenResult
   const token = tokenResult.data
-  await saveTokenIntoSessionReturnExpiresAtFn(ctx, providerInfo.provider, userId as Id<"users">, token)
+  await saveTokenIntoSessionReturnExpiresAtFn(ctx, providerInfo.provider, userId as IdUser, token)
   // event
   const r: UserSession = {
     token,
-    ...data,
+    ...userWithoutToken,
   }
   return createResult(r)
 }

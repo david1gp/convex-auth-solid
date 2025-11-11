@@ -1,5 +1,5 @@
 import { loginProvider } from "@/auth/model/socialLoginProvider"
-import * as v from "valibot"
+import * as a from "valibot"
 
 export type LoginMethod = keyof typeof loginMethod
 
@@ -9,4 +9,4 @@ export const loginMethod = {
   ...loginProvider,
 } as const
 
-export const loginMethodSchema = v.enum(loginMethod)
+export const loginMethodSchema = a.enum(loginMethod)

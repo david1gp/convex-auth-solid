@@ -1,4 +1,4 @@
-import { getBaseUrlApi } from "@/app/url/getBaseUrl"
+import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
 import { tryParsingFetchErr } from "@/auth/api/tryParsingFetchErr"
 import type { SignInViaEmailType } from "@/auth/model/signInSchema"
@@ -7,7 +7,12 @@ import { type Result, createResult } from "~utils/result/Result"
 
 export async function apiAuthSignInViaEmail(props: SignInViaEmailType): Promise<Result<string>> {
   const op = "apiClientSignInViaEmail"
-  const response = await fetch(getBaseUrlApi() + apiAuthBasePath + apiPathAuth.signInViaEmail, {
+
+  const baseUrlResult = envBaseUrlApiResult()
+  if (!baseUrlResult.success) return baseUrlResult
+  const baseUrl = baseUrlResult.data
+
+  const response = await fetch(baseUrl + apiAuthBasePath + apiPathAuth.signInViaEmail, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(props),

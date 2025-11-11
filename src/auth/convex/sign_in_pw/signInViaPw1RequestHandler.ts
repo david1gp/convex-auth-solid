@@ -5,12 +5,12 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
-import * as v from "valibot"
+import * as a from "valibot"
 import { nowIso } from "~utils/date/nowIso"
 import { createError } from "~utils/result/Result"
-import { dbUsersToUserProfile } from "../crud/dbUsersToUserProfile"
 import type { IdUser } from "../IdUser"
 import { verifyHashedPassword2 } from "../pw/verifyHashedPassword"
+import { docUserToUserProfile } from "../user/docUserToUserProfile"
 
 export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInPw1HttpHandler"
@@ -26,10 +26,10 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
     console.warn(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
   }
-  const schema = v.pipe(v.string(), v.parseJson(), signInViaPwSchema)
-  const validation = v.safeParse(schema, body)
+  const schema = a.pipe(a.string(), a.parseJson(), signInViaPwSchema)
+  const validation = a.safeParse(schema, body)
   if (!validation.success) {
-    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + a.summarize(validation.issues)
     const errorResult = createError(op, errorMessage, body)
     console.warn(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
@@ -84,12 +84,13 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   })
 
   // Create user profile
-  const userProfile = dbUsersToUserProfile(user, orgHandle, orgRole)
+  const userProfile = docUserToUserProfile(user, orgHandle, orgRole)
 
   // Create user session
   const userSession: UserSession = {
     token,
-    user: userProfile,
+    profile: userProfile,
+    hasPw: !!user.hashedPassword,
     signedInMethod: loginMethod.password,
     signedInAt: nowIso(),
     expiresAt,

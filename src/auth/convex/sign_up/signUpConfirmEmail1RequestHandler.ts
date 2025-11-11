@@ -3,7 +3,7 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { signUpConfirmEmailSchema } from "@/auth/model/signUpConfirmEmailSchema"
 import { internal } from "@convex/_generated/api"
 import { type ActionCtx } from "@convex/_generated/server"
-import * as v from "valibot"
+import * as a from "valibot"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
@@ -22,10 +22,10 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
     console.warn(op, errorMessage, textBody)
     return new Response(JSON.stringify({ errorMessage }), { status: 400 })
   }
-  const schema = v.pipe(v.string(), v.parseJson(), signUpConfirmEmailSchema)
-  const validation = v.safeParse(schema, textBody)
+  const schema = a.pipe(a.string(), a.parseJson(), signUpConfirmEmailSchema)
+  const validation = a.safeParse(schema, textBody)
   if (!validation.success) {
-    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + v.summarize(validation.issues)
+    const errorMessage = commonApiErrorMessages.schemaValidationFailed + ": " + a.summarize(validation.issues)
     console.warn(op, errorMessage)
     return new Response(JSON.stringify({ errorMessage }), { status: 400 })
   }

@@ -1,9 +1,12 @@
 import { userRoleSchema, type UserRole } from "@/auth/model/userRole"
+import { userRoleValidator } from "@/auth/model/userRoleValidator"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
+import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { handleSchema } from "@/utils/valibot/handleSchema"
 import { stringSchema0to500, stringSchema1to50 } from "@/utils/valibot/stringSchema"
-import * as v from "valibot"
+import { v } from "convex/values"
+import * as a from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export type UserProfile = {
@@ -13,7 +16,6 @@ export type UserProfile = {
   image?: string
   email?: string
   emailVerifiedAt?: string
-  hasPw: boolean
   role: UserRole
   orgHandle?: string
   orgRole?: OrgRole
@@ -21,21 +23,33 @@ export type UserProfile = {
   deletedAt?: string
 }
 
-export const userProfileSchema = v.object({
+export const userProfileSchema = a.object({
   userId: stringSchema1to50,
   name: stringSchema1to50,
-  username: v.optional(handleSchema),
-  image: v.optional(stringSchema0to500),
-  email: v.optional(emailSchema),
-  emailVerifiedAt: v.optional(dateTimeSchema),
-  hasPw: v.boolean(),
+  username: a.optional(handleSchema),
+  image: a.optional(stringSchema0to500),
+  email: a.optional(emailSchema),
+  emailVerifiedAt: a.optional(dateTimeSchema),
   role: userRoleSchema,
-  orgHandle: v.optional(v.string()),
-  orgRole: v.optional(orgRoleSchema),
+  orgHandle: a.optional(a.string()),
+  orgRole: a.optional(orgRoleSchema),
   createdAt: dateTimeSchema,
-  deletedAt: v.optional(dateTimeSchema),
+  deletedAt: a.optional(dateTimeSchema),
 })
 
-function types1(a: v.InferOutput<typeof userProfileSchema>): UserProfile {
+function types1(a: a.InferOutput<typeof userProfileSchema>): UserProfile {
   return a
 }
+
+export const userProfileValidator = v.object({
+  userId: v.string(),
+  name: v.string(),
+  image: v.optional(v.string()),
+  email: v.optional(v.string()),
+  emailVerifiedAt: v.optional(v.string()),
+  role: userRoleValidator,
+  orgHandle: v.optional(v.string()),
+  orgRole: v.optional(orgRoleValidator),
+  createdAt: v.string(),
+  deletedAt: v.optional(v.string()),
+})
