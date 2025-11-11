@@ -1,10 +1,11 @@
-import { OrganizationListLinkButton } from "@/app/nav/links/OrganizationListLinkButton"
-import { WorkspaceListLinkButton } from "@/app/nav/links/WorkspaceListLinkButton"
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
+import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
+import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
+import { urlOverview } from "@/app/pages/urlOverview"
 import { AuthLinks } from "@/auth/ui/AuthLinks"
 import { PageHeader } from "@/ui/header/PageHeader"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ttt } from "~ui/i18n/ttt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
@@ -13,17 +14,19 @@ export function OverviewPage() {
   return (
     <PageWrapper>
       <NavStatic
-        dense={false}
+        dense={true}
         childrenLeft={
           <>
             <NavBreadcrumbSeparator />
-            <LinkLikeText>{title}</LinkLikeText>
+            <NavLinkButton href={urlOverview()} isActive={true}>
+              {title}
+            </NavLinkButton>
           </>
         }
         childrenCenter={
           <>
-            <OrganizationListLinkButton />
-            <WorkspaceListLinkButton />
+            <OrganizationListNavButton />
+            <WorkspaceListLinkNavButton />
           </>
         }
       />

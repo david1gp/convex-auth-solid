@@ -1,3 +1,5 @@
+import { urlOverview } from "@/app/pages/urlOverview"
+import { urlTodo } from "@/app/pages/urlTodo"
 import { lazy } from "solid-js"
 import type { RouteObject } from "~ui/utils/RouteConfig"
 
@@ -15,7 +17,7 @@ export function getRoutesApp(): RouteObject[] {
       component: OverviewPage,
     },
     {
-      path: "/overview",
+      path: urlOverview(),
       component: OverviewPage,
     },
     {
@@ -23,7 +25,7 @@ export function getRoutesApp(): RouteObject[] {
       component: () => <DemoAuthLinks />,
     },
     {
-      path: "/demo/todo",
+      path: urlTodo(),
       component: () => <TodoPage />,
     },
     {

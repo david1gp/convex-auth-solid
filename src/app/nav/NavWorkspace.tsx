@@ -1,7 +1,13 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
+import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavStatic } from "@/app/nav/NavStatic"
-import { splitProps } from "solid-js"
+import { workspaceNameGet } from "@/workspace/ui/workspaceNameRecordSignal"
+import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
+import { Show, splitProps } from "solid-js"
+import { SetPageTitle } from "~ui/static/meta/SetPageTitle"
 import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { NavBreadcrumbSeparator } from "./NavBreadcrumbSeparator"
 
 export interface NavWorkspaceProps extends NavWorkspaceBreadcrumbsProps, MayHaveChildren, MayHaveClass {}
 
@@ -23,14 +29,6 @@ export function NavWorkspace(p: NavWorkspaceProps) {
     />
   )
 }
-
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
-import { workspaceNameGet } from "@/workspace/ui/workspaceNameRecordSignal"
-import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
-import { Show } from "solid-js"
-import { SetPageTitle } from "~ui/static/meta/SetPageTitle"
-import { NavBreadcrumbSeparator } from "./NavBreadcrumbSeparator"
 
 export interface NavWorkspaceBreadcrumbsProps extends MayHaveChildren {
   workspaceHandle?: string
