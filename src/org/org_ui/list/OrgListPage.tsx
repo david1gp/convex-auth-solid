@@ -1,16 +1,22 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrg } from "@/org/org_convex/IdOrg"
+import type { OrgModel } from "@/org/org_model/OrgModel"
+import { orgSchema } from "@/org/org_model/orgSchema"
 import { orgListSignal } from "@/org/org_ui/list/orgListSignal"
+import { orgNameAddList } from "@/org/org_ui/orgNameRecordSignal"
 import { urlOrgAdd, urlOrgView } from "@/org/org_url/urlOrg"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { NoData } from "@/ui/illustrations/NoData"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
+import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex/createQuery"
+import { resultHasErrorMessage } from "@/utils/result/resultHasErrorMessage"
+import { resultHasList } from "@/utils/result/resultHasList"
 import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
 import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -21,9 +27,7 @@ import type { Result, ResultOk } from "~utils/result/Result"
 export function OrgListPage() {
   return (
     <PageWrapper>
-      <NavOrg getOrgPageTitle={getPageTitle}>
-        <LinkLikeText>{ttt("List")}</LinkLikeText>
-      </NavOrg>
+      <NavOrg getOrgPageTitle={getPageTitle}></NavOrg>
       <OrgListLoader />
     </PageWrapper>
   )
@@ -33,20 +37,22 @@ function getPageTitle(orgName?: string) {
   return ttt("Organizations")
 }
 
-type Org = DocOrg
+type Org = OrgModel
 
 type FetchOrgs = Accessor<Result<Org[]> | undefined>
 
 function OrgListLoader() {
   // console.log("OrgList.getSession", p.getSession())
-  const getOrgsResult: FetchOrgs = createQuery(api.org.orgsListQuery, {
+  const getOrgsQuery: FetchOrgs = createQuery(api.org.orgListQuery, {
     token: userTokenGet(),
   })
+  const getOrgsResult = createQueryCached<Org[]>(getOrgsQuery, "orgListQuery", a.array(orgSchema))
   createEffect(() => {
-    const orgsResult = getOrgsResult()
-    if (!orgsResult) return
-    if (!orgsResult.success) return
-    orgListSignal.set(orgsResult.data)
+    const r = getOrgsResult()
+    if (!r) return
+    if (!r.success) return
+    orgNameAddList(r.data)
+    orgListSignal.set(r.data)
   })
 
   return (
@@ -59,12 +65,13 @@ function OrgListLoader() {
         <Match when={getOrgsResult() === undefined}>
           <OrgsLoading />
         </Match>
-        <Match when={!hasOrgs(getOrgsResult())}>
+        <Match when={resultHasErrorMessage(getOrgsResult())}>
+          {(errorMessage) => <ErrorPage title={errorMessage()} />}
+        </Match>
+        <Match when={!resultHasList(getOrgsResult())}>
           <NoOrgs />
         </Match>
-        <Match when={true}>
-          <OrgList getOrgs={getOrgs(getOrgsResult())} />
-        </Match>
+        <Match when={resultHasList(getOrgsResult())}>{(getList) => <OrgList orgs={getList()} />}</Match>
       </Switch>
     </>
   )
@@ -89,13 +96,13 @@ function getOrgs(orgsResult: Result<Org[]> | undefined): Accessor<Org[]> {
 }
 
 interface OrgListProps {
-  getOrgs: Accessor<Org[]>
+  orgs: Org[]
 }
 
 function OrgList(p: OrgListProps) {
   return (
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getOrgs()}>{(o) => <OrgLink org={o} />}</For>
+      <For each={p.orgs}>{(o) => <OrgLink org={o} />}</For>
     </div>
   )
 }

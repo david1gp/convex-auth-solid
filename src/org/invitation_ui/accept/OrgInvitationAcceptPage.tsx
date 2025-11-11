@@ -1,23 +1,27 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userSessionSignal, userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import { orgInvitationSchema } from "@/org/invitation_model/orgInvitationSchema"
+import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { HasOrgInvitationCode } from "@/org/org_model/HasOrgInvitationCode"
 import { orgRoleText } from "@/org/org_model/orgRoleText"
 import { OrgViewInformation } from "@/org/org_ui/view/OrgViewInformation"
 import { urlOrgView } from "@/org/org_url/urlOrg"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
+import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createMutation } from "@/utils/convex/createMutation"
 import { createQuery } from "@/utils/convex/createQuery"
+import { navigateTo } from "@/utils/router/navigateTo"
 import { api } from "@convex/_generated/api"
 import { mdiAccountAlert } from "@mdi/js"
-import { useNavigate, useParams } from "@solidjs/router"
+import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { ttt, ttt1 } from "~ui/i18n/ttt"
-import { formMode, getFormModeTitle } from "~ui/input/form/formMode"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
@@ -27,8 +31,6 @@ import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { ResultErr, ResultOk } from "~utils/result/Result"
-
-const mode = formMode.remove
 
 export function OrgInvitationAcceptPage() {
   const params = useParams()
@@ -45,7 +47,9 @@ export function OrgInvitationAcceptPage() {
       <Match when={getInvitationCode()}>
         <PageWrapper>
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            <LinkLikeText>{ttt("Invitation")}</LinkLikeText>
+            <NavLinkButton href={urlOrgInvitationAccept(getOrgHandle()!, getInvitationCode()!)} isActive={true}>
+              {ttt("Invitation")}
+            </NavLinkButton>
           </NavOrg>
           <OrgInvitationAccept orgHandle={getOrgHandle()!} invitationCode={getInvitationCode()!} />
         </PageWrapper>
@@ -56,20 +60,28 @@ export function OrgInvitationAcceptPage() {
 
 function getPageTitle(orgName?: string) {
   const subject = orgName ?? ttt("Organization")
-  return getFormModeTitle(mode, ttt1("Accept [X] Invitation?", subject))
+  return ttt1("Accept [X] Invitation?", subject)
 }
 
 interface OrgInvitationAcceptProps extends HasOrgHandle, HasOrgInvitationCode {}
 
 function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
-  const invitationQuery = createQuery(api.org.orgInvitationGetQuery, {
-    invitationCode: p.invitationCode,
-  })
+  const invitationQuery = createQueryCached(
+    createQuery(api.org.orgInvitationGetQuery, {
+      invitationCode: p.invitationCode,
+    }),
+    "orgInvitationGetQuery" + "/" + p.invitationCode,
+    a.nullable(orgInvitationSchema),
+  )
 
-  const getOrg = createQuery(api.org.orgGetPageQuery, {
-    token: userTokenGet(),
-    orgHandle: p.orgHandle,
-  })
+  const getOrg = createQueryCached(
+    createQuery(api.org.orgGetPageQuery, {
+      token: userTokenGet(),
+      orgHandle: p.orgHandle,
+    }),
+    "orgGetPageQuery" + "/" + p.orgHandle,
+    a.any(),
+  )
 
   return (
     <Switch>
@@ -122,7 +134,6 @@ function AcceptSection(p: InvitationDetailsProps) {
 }
 
 function AcceptButton(p: InvitationDetailsProps) {
-  const navigate = useNavigate()
   const acceptMutation = createMutation(api.org.orgInvitationAcceptMutation)
 
   async function handleAccept() {
@@ -141,7 +152,7 @@ function AcceptButton(p: InvitationDetailsProps) {
     userSessionSignal.set(session)
 
     const url = urlOrgView(p.org.orgHandle)
-    navigate(url)
+    navigateTo(url)
   }
   return (
     <Button variant={buttonVariant.primary} onClick={handleAccept}>

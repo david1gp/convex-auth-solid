@@ -1,7 +1,8 @@
+import { docOrgInvitationToModel } from "@/org/invitation_convex/docOrgInvitationToModel"
+import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgInvitation } from "./IdOrgInvitation"
 
 export const orgInvitationsListFields = {
   orgHandle: v.string(),
@@ -19,7 +20,7 @@ export const orgInvitationsListQuery = query({
 export async function orgInvitation10ListFn(
   ctx: QueryCtx,
   args: OrgInvitationsListValidatorType,
-): PromiseResult<DocOrgInvitation[]> {
+): PromiseResult<OrgInvitationModel[]> {
   const op = "orgInvitationsListFn"
 
   const org = await ctx.db
@@ -35,5 +36,5 @@ export async function orgInvitation10ListFn(
     .filter((q) => q.eq(q.field("orgHandle"), org.orgHandle))
     .collect()
 
-  return createResult(invitations)
+  return createResult(invitations.map(docOrgInvitationToModel))
 }

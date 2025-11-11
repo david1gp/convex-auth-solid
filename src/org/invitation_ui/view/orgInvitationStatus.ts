@@ -1,4 +1,4 @@
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { mdiAccountQuestion, mdiCheck, mdiEmailSync } from "@mdi/js"
 import { ttt } from "~ui/i18n/ttt"
 
@@ -28,7 +28,7 @@ export const orgInvitationStatusClasses = {
   accepted: "text-green-600",
 } as const
 
-export function invitationDocToStatus(i: DocOrgInvitation): OrgInvitationStatus {
+export function invitationModelToStatus(i: OrgInvitationModel): OrgInvitationStatus {
   if (i.acceptedAt) return orgInvitationStatus.accepted
   if (i.emailSendAt) return orgInvitationStatus.waitingForConfirmation
   return orgInvitationStatus.sendingEmail

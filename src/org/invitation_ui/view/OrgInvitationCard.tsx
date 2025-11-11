@@ -1,6 +1,6 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
+import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
 import { OrgInvitationStatusIcon } from "@/org/invitation_ui/view/OrgInvitationStatusIcon"
 import { OrgInvitationStatusText } from "@/org/invitation_ui/view/OrgInvitationStatusText"
@@ -16,9 +16,8 @@ import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-
 export interface OrgInvitationCardProps extends MayHaveClass {
-  invitation: DocOrgInvitation
+  invitation: OrgInvitationModel
 }
 
 export function OrgInvitationCard(p: OrgInvitationCardProps) {

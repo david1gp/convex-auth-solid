@@ -2,7 +2,7 @@ import { orgInvitationAcceptMutation } from "@/org/invitation_convex/orgInvitati
 import { orgInvitationCleanupInternalMutation } from "@/org/invitation_convex/orgInvitationCleanupInternalMutation"
 import { orgInvitationCreateInternalMutation } from "@/org/invitation_convex/orgInvitationCreateInternalMutation"
 import { orgInvitationDismissMutation } from "@/org/invitation_convex/orgInvitationDismissMutation"
-import { orgInvitationGetQuery } from "@/org/invitation_convex/orgInvitationGetQuery"
+import { orgInvitationGetInternalQuery, orgInvitationGetQuery } from "@/org/invitation_convex/orgInvitationGetQuery"
 import { orgInvitationInitMutation } from "@/org/invitation_convex/orgInvitationInitMutation"
 import { orgInvitationResendAction } from "@/org/invitation_convex/orgInvitationResendAction"
 import { orgInvitationSendInternalAction } from "@/org/invitation_convex/orgInvitationSendInternalAction"
@@ -18,34 +18,37 @@ import { orgCreateMutation } from "@/org/org_convex/orgCreateMutation"
 import { orgDeleteMutation } from "@/org/org_convex/orgDeleteMutation"
 import { orgEditMutation } from "@/org/org_convex/orgEditMutation"
 import { orgGetPageQuery } from "@/org/org_convex/orgGetPageQuery"
-import { orgGetQuery } from "@/org/org_convex/orgGetQuery"
+import { orgGetInternalQuery, orgGetQuery } from "@/org/org_convex/orgGetQuery"
 import { orgHandleAvailableQuery } from "@/org/org_convex/orgHandleAvailableQuery"
-import { orgsListQuery } from "@/org/org_convex/orgsListQuery"
+import { orgListQuery } from "@/org/org_convex/orgListQuery"
 
 export {
   getOrgMemberHandleAndRoleInternalQuery,
   orgCreateMutation,
   orgDeleteMutation,
   orgEditMutation,
+  orgGetInternalQuery,
   orgGetPageQuery,
   orgGetQuery,
   orgHandleAvailableQuery,
+  // Invitations
   orgInvitationAcceptMutation,
   orgInvitationCleanupInternalMutation,
   orgInvitationCreateInternalMutation,
   orgInvitationDismissMutation,
+  orgInvitationGetInternalQuery,
   orgInvitationGetQuery,
   orgInvitationInitMutation,
   orgInvitationResendAction,
   orgInvitationSendInternalAction,
-  // Invitations
   orgInvitationsListQuery,
   orgInvitationUpdateInternalMutation,
+  // list
+  orgListQuery,
   // Members
   orgMemberCreateMutation,
   orgMemberDeleteMutation,
   orgMemberEditMutation,
   orgMemberGetQuery,
-  orgMembersListQuery,
-  orgsListQuery
+  orgMembersListQuery
 }

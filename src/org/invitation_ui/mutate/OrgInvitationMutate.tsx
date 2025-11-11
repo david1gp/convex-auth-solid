@@ -11,8 +11,8 @@ import type { HasOrgInvitationCode } from "@/org/org_model/HasOrgInvitationCode"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createAction } from "@/utils/convex/createAction"
 import { createQuery } from "@/utils/convex/createQuery"
+import { navigateTo } from "@/utils/router/navigateTo"
 import { api } from "@convex/_generated/api"
-import { useNavigate } from "@solidjs/router"
 import { Show, createEffect } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
@@ -25,7 +25,6 @@ interface OrgInvitationMutateProps extends HasOrgHandle, HasOrgInvitationCode, H
 
 export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
   const op = "OrgInvitationMutate"
-  const navigator = useNavigate()
   const getInvitation = createQuery(api.org.orgInvitationGetQuery, {
     orgHandle: p.orgHandle,
     invitationCode: p.invitationCode,
@@ -49,7 +48,7 @@ export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
       return
     }
     const url = urlOrgInvitationList(p.orgHandle)
-    navigator(url)
+    navigateTo(url)
   }
 
   const actions: OrgInvitationFormActions = {}

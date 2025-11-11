@@ -5,7 +5,7 @@ import { debounceMs } from "@/utils/ui/debounceMs"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as v from "valibot"
+import * as a from "valibot"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
@@ -155,12 +155,12 @@ function updateFieldError(
 
 function validateFieldResult(field: OrgInvitationFormField, value: string) {
   if (field === orgInvitationFormField.invitedEmail) {
-    return v.safeParse(emailSchema, value)
+    return a.safeParse(emailSchema, value)
   }
   if (field === orgInvitationFormField.role) {
-    return v.safeParse(orgRoleSchema, value)
+    return a.safeParse(orgRoleSchema, value)
   }
-  return v.safeParse(v.string(), value)
+  return a.safeParse(a.string(), value)
 }
 
 async function handleSubmit(

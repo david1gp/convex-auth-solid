@@ -20,7 +20,7 @@ export function OrganizationListNavButton(p: OrganizationListLinkButtonProps) {
       aria-selected={p.isActive ? "true" : undefined}
       role="tab"
     >
-      {ttt("Stakeholders")}
+      {ttt("Organizations")}
     </LinkButton>
   )
 }

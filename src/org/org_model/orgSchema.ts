@@ -1,29 +1,24 @@
 import type { DocOrg } from "@/org/org_convex/IdOrg"
+import { orgHandleSchema } from "@/org/org_model/orgHandleSchema"
 import type { OrgModel } from "@/org/org_model/OrgModel"
-import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
-import { handleSchema } from "@/utils/valibot/handleSchema"
+import { fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
 import { stringSchema0to500, stringSchema0to5000, stringSchema1to50 } from "@/utils/valibot/stringSchema"
-import * as v from "valibot"
+import * as a from "valibot"
 
 export const orgDataSchemaFields = {
-  orgHandle: handleSchema,
+  orgHandle: orgHandleSchema,
   // data
   name: stringSchema1to50,
-  description: v.optional(stringSchema0to5000),
-  url: v.optional(stringSchema0to500),
-  image: v.optional(stringSchema0to500),
+  description: a.optional(stringSchema0to5000),
+  url: a.optional(stringSchema0to500),
+  image: a.optional(stringSchema0to500),
 } as const
 
-export const orgSchema = v.object({
-  ...convexSystemFields,
+export const orgSchema = a.object({
   ...orgDataSchemaFields,
   ...fieldsCreatedAtUpdatedAt,
 })
 
 function types1(m: DocOrg): OrgModel {
-  return m
-}
-
-function types2(m: OrgModel): DocOrg {
   return m
 }

@@ -1,8 +1,9 @@
-import type { DocOrg } from "@/org/org_convex/IdOrg"
+import type { OrgModel } from "@/org/org_model/OrgModel"
 import { orgPageSection } from "@/org/org_ui/view/orgPageSection"
 import { urlOrgEdit } from "@/org/org_url/urlOrg"
+import { Ps } from "@/ui/text/Ps"
 import { mdiHandWave } from "@mdi/js"
-import { For, Show } from "solid-js"
+import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -13,7 +14,7 @@ import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface OrgViewProps extends MayHaveClass {
-  org: DocOrg
+  org: OrgModel
   showEditButton: boolean
 }
 
@@ -74,16 +75,11 @@ function ShowDescription(p: OrgViewProps) {
     <Show when={p.org.description}>
       {(getDescription) => (
         <div class="text-lg mx-auto text-pretty mb-4">
-          <Description description={getDescription()} />
+          <Ps text={getDescription()} />
         </div>
       )}
     </Show>
   )
-}
-
-function Description(p: { description: string }) {
-  const lines = p.description.split("\n")
-  return <For each={lines}>{(line) => <p>{line}</p>}</For>
 }
 
 function ShowUrl(p: OrgViewProps) {

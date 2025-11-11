@@ -1,6 +1,6 @@
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import type { OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
 import { OrgInvitationCard } from "@/org/invitation_ui/view/OrgInvitationCard"
 import { urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
@@ -9,11 +9,13 @@ import { PageHeader } from "@/ui/header/PageHeader"
 import { NoData } from "@/ui/illustrations/NoData"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
+import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
 import { useParams } from "@solidjs/router"
 import { createEffect, For, Match, Show, splitProps, Switch, type Accessor } from "solid-js"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -46,17 +48,20 @@ function getPageTitle(orgName?: string) {
   return name + ttt(" Invitations")
 }
 
-type OrgInvitation = DocOrgInvitation
-
-type FetchOrgInvitations = Accessor<Result<OrgInvitation[]> | undefined>
+type FetchOrgInvitations = Accessor<Result<OrgInvitationModel[]> | undefined>
 
 interface OrgInvitationListLoaderProps extends HasOrgHandle {}
 
 function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
-  const getOrgInvitationsResult: FetchOrgInvitations = createQuery(api.org.orgInvitationsListQuery, {
+  const getOrgInvitationsQuery: FetchOrgInvitations = createQuery(api.org.orgInvitationsListQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
+  const getOrgInvitationsResult = createQueryCached<OrgInvitationModel[]>(
+    getOrgInvitationsQuery,
+    "orgInvitationsListQuery" + "/" + p.orgHandle,
+    a.any(),
+  )
   createEffect(() => {
     const orgInvitationsResult = getOrgInvitationsResult()
     if (!orgInvitationsResult) return
@@ -86,11 +91,13 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
   )
 }
 
-function getOrgInvitations(orgInvitationsResult: Result<OrgInvitation[]> | undefined): OrgInvitation[] {
-  return (orgInvitationsResult as ResultOk<OrgInvitation[]>).data
+function getOrgInvitations(orgInvitationsResult: Result<OrgInvitationModel[]> | undefined): OrgInvitationModel[] {
+  return (orgInvitationsResult as ResultOk<OrgInvitationModel[]>).data
 }
 
-function hasOrgInvitations(orgInvitationsResult: Result<OrgInvitation[]> | undefined): OrgInvitation[] | null {
+function hasOrgInvitations(
+  orgInvitationsResult: Result<OrgInvitationModel[]> | undefined,
+): OrgInvitationModel[] | null {
   if (!orgInvitationsResult) return null
   if (!orgInvitationsResult.success) return null
   const orgInvitations = orgInvitationsResult.data

@@ -1,14 +1,15 @@
+import { docOrgMemberToModel } from "@/org/member_convex/docOrgMemberToModel"
+import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
+import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { authQueryR } from "@convex/utils/authQueryR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgMember } from "./IdOrgMember"
-import { vIdOrgMembers } from "./vIdOrgMembers"
 
 export const orgMemberGetFields = {
   orgHandle: v.string(),
-  memberId: vIdOrgMembers,
+  memberId: v.string(),
   updatedAt: v.optional(v.string()),
 } as const
 
@@ -25,7 +26,7 @@ export const orgMemberGetQuery = query({
 export async function orgMemberGetFn(
   ctx: QueryCtx,
   args: OrgMemberGetValidatorType,
-): PromiseResult<DocOrgMember | null> {
+): PromiseResult<OrgMemberModel | null> {
   const op = "orgMemberGetFn"
 
   const org = await ctx.db
@@ -36,12 +37,12 @@ export async function orgMemberGetFn(
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  let member = await ctx.db.get(args.memberId)
+  let member = await ctx.db.get(args.memberId as IdOrgMember)
   if (!member || member.orgId !== org._id) {
     return createResultError(op, "Org member not found", args.memberId)
   }
   if (args.updatedAt && args.updatedAt === member.updatedAt) {
     return createResult(null)
   }
-  return createResult(member)
+  return createResult(docOrgMemberToModel(member))
 }

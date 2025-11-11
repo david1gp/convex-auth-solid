@@ -1,5 +1,5 @@
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import { invitationDocToStatus, orgInvitationStatusText } from "@/org/invitation_ui/view/orgInvitationStatus"
+import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
+import { invitationModelToStatus, orgInvitationStatusText } from "@/org/invitation_ui/view/orgInvitationStatus"
 import { DateView } from "@/ui/date/DateView"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -7,11 +7,11 @@ import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 
 export interface OrgInvitationStatusProps extends MayHaveClassAndChildren {
-  invitation: DocOrgInvitation
+  invitation: OrgInvitationModel
 }
 
 export function OrgInvitationStatusText(p: OrgInvitationStatusProps) {
-  const status = invitationDocToStatus(p.invitation)
+  const status = invitationModelToStatus(p.invitation)
   return (
     <div class={classMerge("flex flex-col gap-1", p.class)}>
       <span>{orgInvitationStatusText[status]}</span>

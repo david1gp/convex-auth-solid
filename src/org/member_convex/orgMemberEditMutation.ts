@@ -5,14 +5,13 @@ import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgMember } from "./IdOrgMember"
-import { vIdOrgMembers } from "./vIdOrgMembers"
+import type { DocOrgMember, IdOrgMember } from "./IdOrgMember"
 
 export type OrgMemberEditValidatorType = typeof orgMemberEditValidator.type
 
 export const orgMemberEditFields = {
+  memberId: v.string(),
   orgHandle: v.string(),
-  memberId: vIdOrgMembers,
   // data
   role: v.optional(orgRoleValidator),
 } as const
@@ -35,7 +34,7 @@ export async function orgMemberEditFn(ctx: MutationCtx, args: OrgMemberEditValid
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  const member = await ctx.db.get(args.memberId)
+  const member = await ctx.db.get(args.memberId as IdOrgMember)
   if (!member || member.orgId !== org._id) {
     return createResultError(op, "Org member not found", args.memberId)
   }
@@ -43,6 +42,6 @@ export async function orgMemberEditFn(ctx: MutationCtx, args: OrgMemberEditValid
   const patch: Partial<DocOrgMember> = partial
   patch.updatedAt = nowIso()
 
-  await ctx.db.patch(args.memberId, patch)
+  await ctx.db.patch(args.memberId as IdOrgMember, patch)
   return createResult(null)
 }

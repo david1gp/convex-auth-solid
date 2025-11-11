@@ -2,7 +2,6 @@ import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 import type { OrgMemberListProps } from "@/org/member_ui/list/OrgMemberListSection"
 import { OrgMemberListSection } from "@/org/member_ui/list/OrgMemberListSection"
-import { convexSystemFieldsCreateEmpty } from "@/utils/convex/HasConvexSystemFields"
 import { createdAtUpdatedAtCreate } from "@/utils/convex/HasCreatedAtUpdatedAt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
@@ -24,59 +23,56 @@ export function DemoOrgMemberList() {
 const members: OrgMemberProfile[] = [
   // Regular member - created recently
   {
-    ...convexSystemFieldsCreateEmpty(),
-    ...createdAtUpdatedAtCreate(),
-    orgId: "org-demo-123" as any,
-    userId: "user-alice-456" as any,
+    memberId: "id",
+    orgHandle: "org-demo-123",
+    userId: "user-alice-456",
     role: "member",
-    invitedBy: "user-admin-789" as any,
-    createdAt: "2025-11-01T10:00:00Z",
+    invitedBy: "user-admin-789",
     profile: {
-      userId: "user-alice-456" as any,
+      userId: "user-alice-456",
       name: "Alice Johnson",
       email: "alice@example.com",
       username: "alice",
-      hasPw: true,
-      role: "user" as any,
+      role: "user",
       createdAt: "2025-11-01T10:00:00Z",
     },
+    ...createdAtUpdatedAtCreate(),
+    createdAt: "2025-11-01T10:00:00Z",
   },
   // Another member - created earlier
   {
-    ...convexSystemFieldsCreateEmpty(),
-    ...createdAtUpdatedAtCreate(),
-    orgId: "org-demo-123" as any,
-    userId: "user-bob-789" as any,
+    memberId: "a",
+    orgHandle: "org-demo-123",
+    userId: "user-bob-789",
     role: "member",
-    invitedBy: "user-alice-456" as any,
-    createdAt: "2025-11-01T10:00:00Z",
+    invitedBy: "user-alice-456",
     profile: {
-      userId: "user-bob-789" as any,
+      userId: "user-bob-789",
       name: "Bob Smith",
       email: "bob@example.com",
       username: "bobsmith",
-      hasPw: true,
-      role: "user" as any,
+      role: "user",
       createdAt: "2025-10-30T15:30:00Z",
     },
+    ...createdAtUpdatedAtCreate(),
+    createdAt: "2025-11-01T10:00:00Z",
   },
   // Guest member - created 2 days ago
   {
-    ...convexSystemFieldsCreateEmpty(),
-    ...createdAtUpdatedAtCreate(),
-    orgId: "org-demo-123" as any,
-    userId: "user-carol-101" as any,
+    memberId: "aa",
+    orgHandle: "org-demo-22",
+    userId: "user-carol-101",
     role: "guest",
-    invitedBy: "user-alice-456" as any,
-    createdAt: "2025-11-01T10:00:00Z",
+    invitedBy: "user-alice-456",
     profile: {
-      userId: "user-carol-101" as any,
+      userId: "user-carol-101",
       name: "Carol Williams",
       email: "super_carol_long_name@gmail.com",
       username: "carolw",
-      hasPw: false,
-      role: "user" as any,
+      role: "user",
       createdAt: "2025-10-31T09:15:00Z",
     },
+    ...createdAtUpdatedAtCreate(),
+    createdAt: "2025-11-01T10:00:00Z",
   },
 ]

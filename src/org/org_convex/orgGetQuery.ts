@@ -1,5 +1,7 @@
+import { docOrgToModel } from "@/org/org_convex/docOrgInvitationToModel"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
-import { query, type QueryCtx } from "@convex/_generated/server"
+import type { OrgModel } from "@/org/org_model/OrgModel"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { authQueryR } from "@convex/utils/authQueryR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
@@ -18,8 +20,20 @@ export const orgGetQuery = query({
   args: createTokenValidator(orgGetFields),
   handler: async (ctx, args) => authQueryR(ctx, args, orgGetQueryFn),
 })
+export const orgGetInternalQuery = internalQuery({
+  args: orgGetValidator,
+  handler: orgGetQueryInternalFn,
+})
 
-export async function orgGetQueryFn(ctx: QueryCtx, args: OrgGetValidatorType): PromiseResult<DocOrg | null> {
+export async function orgGetQueryFn(ctx: QueryCtx, args: OrgGetValidatorType): PromiseResult<OrgModel | null> {
+  const op = "orgGetFn"
+  const got = await orgGetQueryInternalFn(ctx, args)
+  if (!got.success) return got
+  if (!got.data) return got
+  return createResult(docOrgToModel(got.data))
+}
+
+export async function orgGetQueryInternalFn(ctx: QueryCtx, args: OrgGetValidatorType): PromiseResult<DocOrg | null> {
   const op = "orgGetFn"
   const org = await orgGetByHandleFn(ctx, args.orgHandle)
   if (!org) {

@@ -23,6 +23,7 @@ export const orgFields = {
 export const orgMemberDataFields = {
   // ids
   orgId: vIdOrg,
+  orgHandle: v.string(),
   userId: vIdUser,
   // data
   role: orgRoleValidator,

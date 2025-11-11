@@ -1,7 +1,8 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { orgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { urlOrgAdd } from "@/org/org_url/urlOrg"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
@@ -11,14 +12,16 @@ export function OrgAddPage() {
   return (
     <PageWrapper>
       <NavOrg getOrgPageTitle={getPageTitle}>
-        <LinkLikeText>{ttt("Add")}</LinkLikeText>
+        <NavLinkButton href={urlOrgAdd()} isActive={true}>
+          {ttt("Create")}
+        </NavLinkButton>
       </NavOrg>
       <OrgAdd />
     </PageWrapper>
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(orgName?: string) {
   return ttt("Create new Organization")
 }
 

@@ -1,22 +1,22 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgMember, IdOrgMember } from "@/org/member_convex/IdOrgMember"
+import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
+import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
 import { orgMemberFormField, type OrgMemberFormField } from "@/org/member_ui/form/orgMemberFormField"
 import { urlOrgMemberList, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
-import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
+import { orgRole, orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { createMutation } from "@/utils/convex/createMutation"
+import { navigateTo } from "@/utils/router/navigateTo"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import type { HasToken } from "@/utils/ui/HasToken"
 import { api } from "@convex/_generated/api"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import { useNavigate } from "@solidjs/router"
-import * as v from "valibot"
+import * as a from "valibot"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import type { NavigateTo } from "~ui/utils/NavigateTo"
 import type { Result } from "~utils/result/Result"
 
 export type OrgMemberFormData = {
@@ -51,28 +51,27 @@ function createOrgMemberErrorState(): OrgMemberFormErrorState {
 export type OrgMemberFormStateManagement = {
   mode: FormMode
   isSaving: SignalObject<boolean>
-  serverState: SignalObject<DocOrgMember>
+  serverState: SignalObject<OrgMemberModel>
   state: OrgMemberFormState
   errors: OrgMemberFormErrorState
   hasErrors: () => boolean
   fillTestData: () => void
-  loadData: (data: DocOrgMember) => void
+  loadData: (data: OrgMemberModel) => void
   validateOnChange: (field: OrgMemberFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => Promise<void>
 }
 
-function createEmptyDocOrgMember(): DocOrgMember {
+function createEmptyOrgMember(): OrgMemberModel {
   const now = new Date()
   const iso = now.toISOString()
   return {
-    _id: "" as IdOrgMember,
-    orgId: "" as any,
-    userId: "" as IdUser,
-    role: "member",
-    invitedBy: "" as any,
+    memberId: "",
+    orgHandle: "",
+    userId: "",
+    role: orgRole.member,
+    invitedBy: "",
     createdAt: iso,
     updatedAt: iso,
-    _creationTime: now.getMilliseconds(),
   }
 }
 
@@ -90,11 +89,10 @@ export function orgMemberFormStateManagement(
   mode: FormMode,
   orgHandle: string,
   memberId?: IdOrgMember,
-  orgMember?: DocOrgMember,
+  orgMember?: OrgMemberModel,
 ): OrgMemberFormStateManagement {
-  const navigator = useNavigate()
-  const actions: OrgMemberFormActions = createActions(mode, orgHandle, memberId, navigator)
-  const serverState = createSignalObject(createEmptyDocOrgMember())
+  const actions: OrgMemberFormActions = createActions(mode, orgHandle, memberId)
+  const serverState = createSignalObject(createEmptyOrgMember())
   const isSaving = createSignalObject(false)
   const state = createOrgMemberFormState()
   if (orgMember) {
@@ -106,7 +104,7 @@ export function orgMemberFormStateManagement(
     isSaving,
     serverState,
     state,
-    loadData: (data: DocOrgMember) => loadData(data, serverState, state),
+    loadData: (data: OrgMemberModel) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
@@ -115,7 +113,7 @@ export function orgMemberFormStateManagement(
   }
 }
 
-function loadData(data: DocOrgMember, serverState: SignalObject<DocOrgMember>, state: OrgMemberFormState): void {
+function loadData(data: OrgMemberModel, serverState: SignalObject<OrgMemberModel>, state: OrgMemberFormState): void {
   serverState.set(data)
   state.role.set(data.role)
 }
@@ -155,9 +153,9 @@ function updateFieldError(
 
 function validateFieldResult(field: OrgMemberFormField, value: string) {
   if (field === orgMemberFormField.role) {
-    return v.safeParse(orgRoleSchema, value)
+    return a.safeParse(orgRoleSchema, value)
   }
-  return v.safeParse(v.string(), value)
+  return a.safeParse(a.string(), value)
 }
 
 //
@@ -167,7 +165,7 @@ function validateFieldResult(field: OrgMemberFormField, value: string) {
 async function handleSubmit(
   e: SubmitEvent,
   isSaving: SignalObject<boolean>,
-  serverState: SignalObject<DocOrgMember>,
+  serverState: SignalObject<OrgMemberModel>,
   state: OrgMemberFormState,
   errors: OrgMemberFormErrorState,
   actions: OrgMemberFormActions,
@@ -209,24 +207,19 @@ async function handleSubmit(
   isSaving.set(false)
 }
 
-function createActions(
-  mode: FormMode,
-  orgHandle: string,
-  memberId: IdOrgMember | undefined,
-  navigate: NavigateTo,
-): OrgMemberFormActions {
+function createActions(mode: FormMode, orgHandle: string, memberId: IdOrgMember | undefined): OrgMemberFormActions {
   const actions: OrgMemberFormActions = {}
   if (mode === formMode.add) {
     const addMutation = createMutation(api.org.orgMemberCreateMutation)
-    actions.add = async (data) => addAction(data, orgHandle, addMutation, navigate)
+    actions.add = async (data) => addAction(data, orgHandle, addMutation)
   }
   if (mode === formMode.edit) {
     const editMutation = createMutation(api.org.orgMemberEditMutation)
-    actions.edit = async (data) => editAction(data, orgHandle, memberId, editMutation, navigate)
+    actions.edit = async (data) => editAction(data, orgHandle, memberId, editMutation)
   }
   if (mode === formMode.remove) {
     const deleteMutation = createMutation(api.org.orgMemberDeleteMutation)
-    actions.remove = async () => removeAction(orgHandle, memberId, deleteMutation, navigate)
+    actions.remove = async () => removeAction(orgHandle, memberId, deleteMutation)
   }
   return actions
 }
@@ -252,7 +245,6 @@ async function addAction(
   data: OrgMemberFormData,
   orgHandle: string,
   addMutation: (data: OrgMemberCreateMutationProps) => Promise<Result<IdOrgMember>>,
-  navigate: NavigateTo,
 ): Promise<void> {
   const memberIdResult = await addMutation({
     token: userTokenGet(),
@@ -266,7 +258,7 @@ async function addAction(
     return
   }
   const url = urlOrgMemberView(orgHandle, memberIdResult.data)
-  navigate(url)
+  navigateTo(url)
 }
 
 async function editAction(
@@ -274,7 +266,6 @@ async function editAction(
   orgHandle: string,
   memberId: IdOrgMember | undefined,
   editMutation: (data: OrgMemberEditMutationProps) => Promise<Result<null>>,
-  navigate: NavigateTo,
 ) {
   if (!memberId) {
     toastAdd({ title: "!memberId", variant: toastVariant.error })
@@ -291,14 +282,13 @@ async function editAction(
     toastAdd({ title: result.errorMessage, variant: toastVariant.error })
     return
   }
-  navigate(getReturnPath(formMode.edit, orgHandle, memberId))
+  navigateTo(getReturnPath(formMode.edit, orgHandle, memberId))
 }
 
 async function removeAction(
   orgHandle: string,
   memberId: IdOrgMember | undefined,
   deleteMutation: (data: OrgMemberRemoveMutationProps) => Promise<Result<null>>,
-  navigate: NavigateTo,
 ) {
   if (!memberId) {
     toastAdd({ title: "!memberId", variant: toastVariant.error })
@@ -314,7 +304,7 @@ async function removeAction(
     toastAdd({ title: result.errorMessage, variant: toastVariant.error })
     return
   }
-  navigate(getReturnPath(formMode.remove, orgHandle, memberId))
+  navigateTo(getReturnPath(formMode.remove, orgHandle, memberId))
 }
 
 function getReturnPath(mode: FormMode, orgHandle: string, memberId?: IdOrgMember) {

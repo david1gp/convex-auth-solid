@@ -1,10 +1,10 @@
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { orgRoleSchema } from "@/org/org_model/orgRole"
-import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
+import { fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { handleSchema } from "@/utils/valibot/handleSchema"
 import { stringSchema0to100, stringSchema1to50 } from "@/utils/valibot/stringSchema"
-import * as v from "valibot"
+import * as a from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 import type { DocOrgInvitation } from "../invitation_convex/IdOrgInvitation"
 
@@ -21,26 +21,17 @@ export const orgInvitationDataSchemaFields = {
   // invitedByName: stringSchema1to50,
   // invitedByEmail: emailSchema,
   // server processing
-  emailSendAt: v.optional(dateTimeSchema),
-  emailSendAmount: v.number(),
+  emailSendAt: a.optional(dateTimeSchema),
+  emailSendAmount: a.number(),
   // acceptance
-  acceptedAt: v.optional(dateTimeSchema),
+  acceptedAt: a.optional(dateTimeSchema),
 } as const
 
-export const orgInvitationSchema = v.object({
-  ...convexSystemFields,
+export const orgInvitationSchema = a.object({
   ...orgInvitationDataSchemaFields,
   ...fieldsCreatedAtUpdatedAt,
 })
 
 function types1(o: DocOrgInvitation): OrgInvitationModel {
-  return o
-}
-
-function types2(o: OrgInvitationModel): DocOrgInvitation {
-  return o
-}
-
-function types3(o: Omit<OrgInvitationModel, "_id">): Omit<DocOrgInvitation, "_id"> {
   return o
 }

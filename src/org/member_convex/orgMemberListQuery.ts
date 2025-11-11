@@ -1,9 +1,10 @@
+import { docOrgMemberToModel } from "@/org/member_convex/docOrgMemberToModel"
+import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { authQueryR } from "@convex/utils/authQueryR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgMember } from "./IdOrgMember"
 
 export type OrgMembersListValidatorType = typeof orgMembersListValidator.type
 
@@ -18,7 +19,10 @@ export const orgMembersListQuery = query({
   handler: async (ctx, args) => await authQueryR(ctx, args, orgMemberListFn),
 })
 
-export async function orgMemberListFn(ctx: QueryCtx, args: OrgMembersListValidatorType): PromiseResult<DocOrgMember[]> {
+export async function orgMemberListFn(
+  ctx: QueryCtx,
+  args: OrgMembersListValidatorType,
+): PromiseResult<OrgMemberModel[]> {
   const op = "orgMemberListFn"
 
   const org = await ctx.db
@@ -34,5 +38,5 @@ export async function orgMemberListFn(ctx: QueryCtx, args: OrgMembersListValidat
     .withIndex("orgId", (q) => q.eq("orgId", org._id))
     .collect()
 
-  return createResult(members)
+  return createResult(members.map(docOrgMemberToModel))
 }

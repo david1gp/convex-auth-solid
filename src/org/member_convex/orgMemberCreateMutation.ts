@@ -59,6 +59,7 @@ export async function orgMemberCreateFn(
   const now = nowIso()
   const orgMemberId = await ctx.db.insert("orgMembers", {
     orgId: org._id,
+    orgHandle: org.orgHandle,
     userId: args.userId,
     role: args.role,
     invitedBy: invitedBy,

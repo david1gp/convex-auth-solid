@@ -1,8 +1,7 @@
-import type { IdOrg } from "@/org/org_convex/IdOrg"
 import type { OrgModel } from "@/org/org_model/OrgModel"
 import { orgSchema } from "@/org/org_model/orgSchema"
 import { cachePrefix } from "@/utils/ui/cachePrefix"
-import * as v from "valibot"
+import * as a from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
@@ -18,7 +17,7 @@ export function orgListSignalAdd(newOrg: OrgModel): OrgModel[] {
 }
 
 function orgListAddOrReplace(orgs: OrgModel[], newOrg: OrgModel): OrgModel[] {
-  const existingOrgIndex = orgs.findIndex((org) => org._id === newOrg._id)
+  const existingOrgIndex = orgs.findIndex((org) => org.orgHandle === newOrg.orgHandle)
   const newOrgs = [...orgs]
 
   if (existingOrgIndex !== -1) {
@@ -73,11 +72,11 @@ export function orgListLoadFromLocalStorage(read = localStorage.getItem(orgListL
   const op = "orgListLoadFromLocalStorage"
   // const read = localStorage.getItem(orgListLocalStorageKey)
   if (!read) return createResultError(op, "no orgList saved in localStorage")
-  const orgListSchema = v.array(orgSchema)
-  const schema = v.pipe(v.string(), v.parseJson(), orgListSchema)
-  const parsing = v.safeParse(schema, read)
+  const orgListSchema = a.array(orgSchema)
+  const schema = a.pipe(a.string(), a.parseJson(), orgListSchema)
+  const parsing = a.safeParse(schema, read)
   if (!parsing.success) {
-    return createResultError(op, v.summarize(parsing.issues), read)
+    return createResultError(op, a.summarize(parsing.issues), read)
   }
   return createResult(parsing.output as OrgModel[])
 }
@@ -98,9 +97,4 @@ export function orgListFindNameByHandle(handle: string): string | undefined {
   const org = orgListFindByHandle(handle)
   if (!org) return undefined
   return org.name
-}
-
-export function orgListFindById(id: IdOrg): OrgModel | undefined {
-  const orgList = orgListSignal.get()
-  return orgList.find((o) => o._id === id)
 }

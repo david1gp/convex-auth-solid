@@ -1,3 +1,4 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { OrgInvitationForm } from "@/org/invitation_ui/form/OrgInvitationForm"
@@ -5,14 +6,14 @@ import {
   orgInvitationFormStateManagement,
   type OrgInvitationFormData,
 } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
-import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
+import { urlOrgInvitationAccept, urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { createMutation } from "@/utils/convex/createMutation"
+import { navigateTo } from "@/utils/router/navigateTo"
 import { api } from "@convex/_generated/api"
-import { useNavigate, useParams } from "@solidjs/router"
+import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
@@ -32,7 +33,9 @@ export function OrgInvitationAddPage() {
       <Match when={getOrgHandle()}>
         <PageWrapper>
           <NavOrg getOrgPageTitle={inviteToText} orgHandle={getOrgHandle()}>
-            <LinkLikeText>{ttt("Invite")}</LinkLikeText>
+            <NavLinkButton href={urlOrgInvitationAdd(getOrgHandle()!)} isActive={true}>
+              {ttt("Invite Member")}
+            </NavLinkButton>
           </NavOrg>
           <OrgInvitationAdd orgHandle={getOrgHandle()!} />
         </PageWrapper>
@@ -49,7 +52,6 @@ function inviteToText(orgName?: string) {
 export interface OrgInvitationAddProps extends HasOrgHandle, MayHaveClass {}
 
 export function OrgInvitationAdd(p: OrgInvitationAddProps) {
-  const navigator = useNavigate()
   const addMutation = createMutation(api.org.orgInvitationInitMutation)
 
   async function addAction(data: OrgInvitationFormData): Promise<void> {
@@ -69,7 +71,7 @@ export function OrgInvitationAdd(p: OrgInvitationAddProps) {
       return
     }
     const url = urlOrgInvitationAccept(p.orgHandle, data.invitationCode)
-    navigator(url)
+    navigateTo(url)
   }
   const sm = orgInvitationFormStateManagement({ add: addAction })
   return <OrgInvitationForm title={inviteToText(getOrgName(p.orgHandle))} mode={formMode.add} sm={sm} class={p.class} />

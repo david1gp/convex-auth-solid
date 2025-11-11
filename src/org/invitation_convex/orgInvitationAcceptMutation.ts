@@ -4,14 +4,14 @@ import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { orgGetQueryFn } from "@/org/org_convex/orgGetQuery"
+import { orgGetQueryInternalFn } from "@/org/org_convex/orgGetQuery"
 import { stt } from "@/utils/i18n/stt"
 import { internal } from "@convex/_generated/api"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { dbUsersToUserProfile } from "../../auth/convex/crud/dbUsersToUserProfile"
+import { docUserToUserProfile } from "../../auth/convex/user/docUserToUserProfile"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 
@@ -56,7 +56,7 @@ export async function orgInvitation50AcceptFn(
   }
 
   // Get org details for token
-  const orgResult = await orgGetQueryFn(ctx, { orgHandle: invitation.orgHandle })
+  const orgResult = await orgGetQueryInternalFn(ctx, { orgHandle: invitation.orgHandle })
   if (!orgResult.success) {
     return orgResult
   }
@@ -113,6 +113,7 @@ export async function orgInvitation50AcceptFn(
   // Create org member
   await ctx.db.insert("orgMembers", {
     orgId: org._id,
+    orgHandle: org.orgHandle,
     userId: userId,
     role: invitation.role,
     invitedBy: invitation.invitedBy as IdUser,
@@ -121,12 +122,13 @@ export async function orgInvitation50AcceptFn(
   })
 
   // Create user profile
-  const userProfile = dbUsersToUserProfile(user, org.orgHandle, invitation.role)
+  const userProfile = docUserToUserProfile(user, org.orgHandle, invitation.role)
 
   // Create and return user session
   const userSession: UserSession = {
     token,
-    user: userProfile,
+    profile: userProfile,
+    hasPw: !!user.hashedPassword,
     signedInMethod: loginMethod.email,
     signedInAt: now,
     expiresAt,

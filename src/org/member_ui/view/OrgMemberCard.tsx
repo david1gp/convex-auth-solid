@@ -3,7 +3,7 @@ import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowR
 import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { DateView } from "@/ui/date/DateView"
-import { ClipboardCopyButtonIconOnly } from "@/ui/links/ClipboardCopyButtonIconOnly"
+import { ClipboardCopyButtonIcon } from "@/ui/links/ClipboardCopyButtonIcon"
 import { createMutation } from "@/utils/convex/createMutation"
 import { api } from "@convex/_generated/api"
 import { mdiClose, mdiEmailOutline, mdiPencil } from "@mdi/js"
@@ -44,7 +44,7 @@ export function OrgMemberCard(p: OrgMemberCardProps) {
           >
             {p.member.profile.email}
           </LinkButton>
-          <ClipboardCopyButtonIconOnly
+          <ClipboardCopyButtonIcon
             data={p.member.profile.email}
             copyText={ttt("Copy E-Mail to clipboard")}
             toastText={ttt("E-Mail copied")}
@@ -89,7 +89,7 @@ function OrgMemberActions(p: OrgMemberCardProps) {
     const gotResult = await editMutation({
       token: userTokenGet(),
       orgHandle: p.orgHandle,
-      memberId: p.member._id,
+      memberId: p.member.memberId,
       role: newRole,
     })
     if (!gotResult.success) {
@@ -103,7 +103,7 @@ function OrgMemberActions(p: OrgMemberCardProps) {
     const gotResult = await deleteMutation({
       token: userTokenGet(),
       orgHandle: p.orgHandle,
-      memberId: p.member._id,
+      memberId: p.member.memberId,
     })
     if (!gotResult.success) {
       const icon = mdiClose

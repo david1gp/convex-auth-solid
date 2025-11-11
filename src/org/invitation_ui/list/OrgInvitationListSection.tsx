@@ -1,4 +1,4 @@
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { OrgInvitationCard } from "@/org/invitation_ui/view/OrgInvitationCard"
 import { urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
@@ -13,7 +13,7 @@ import { classMerge } from "~ui/utils/classMerge"
 import { orgPageSection } from "../../org_ui/view/orgPageSection"
 
 export interface OrgInvitationsProps extends HasOrgHandle, MayHaveClass {
-  invitations: DocOrgInvitation[]
+  invitations: OrgInvitationModel[]
 }
 
 export function OrgInvitationListSection(p: OrgInvitationsProps) {

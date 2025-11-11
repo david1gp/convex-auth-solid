@@ -1,29 +1,30 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrg } from "@/org/org_convex/IdOrg"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
-import styles from "@/ui/loaders/AnimateFadeIn.module.css"
+import type { HasOrgModel } from "@/org/org_model/HasOrgModel"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
+import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex/createQuery"
+import { resultHasData } from "@/utils/result/resultHasData"
+import { resultHasErrorMessage } from "@/utils/result/resultHasErrorMessage"
 import { api } from "@convex/_generated/api"
 import { createEffect, Match, Switch, type JSXElement } from "solid-js"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { ResultErr, ResultOk } from "~utils/result/Result"
 
 export interface OrgLoaderProps extends HasOrgHandle, MayHaveClass {
   OrgComponent: (p: OrgComponentProps) => JSXElement
 }
 
-export interface OrgComponentProps extends MayHaveClass {
-  org: DocOrg
-}
+export interface OrgComponentProps extends HasOrgModel, MayHaveClass {}
 
 export function OrgLoader(p: OrgLoaderProps) {
-  const getData = createQuery(api.org.orgGetQuery, {
+  const getDataQuery = createQuery(api.org.orgGetQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
+  const getData = createQueryCached(getDataQuery, "orgGetQuery" + "/" + p.orgHandle, a.any())
   createEffect(() => {
     console.log("OrgLoader", getData())
   })
@@ -32,17 +33,14 @@ export function OrgLoader(p: OrgLoaderProps) {
       <Match when={!getData()}>
         <OrgLoading />
       </Match>
-      <Match when={!getData()!.success}>
-        <ErrorPage
-          title={(getData()! as ResultErr).errorMessage || "Error loading organization"}
-          class={styles.animateFadeIn2s}
-        />
+      <Match when={resultHasErrorMessage(getData())}>
+        {(getErrorMessage) => <ErrorPage title={getErrorMessage()} />}
       </Match>
-      <Match when={true}>{p.OrgComponent({ org: (getData() as ResultOk<DocOrg>).data, class: p.class })}</Match>
+      <Match when={resultHasData(getData())}>{(gotData) => p.OrgComponent({ org: gotData(), class: p.class })}</Match>
     </Switch>
   )
 }
 
 function OrgLoading() {
-  return <LoadingSection loadingSubject={ttt("Organization")} class={styles.animateFadeIn2s} />
+  return <LoadingSection loadingSubject={ttt("Organization")} />
 }

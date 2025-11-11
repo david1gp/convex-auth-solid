@@ -1,6 +1,7 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgMemberMutate } from "@/org/member_ui/mutate/OrgMemberMutate"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { urlOrgMemberRemove } from "@/org/member_url/urlOrgMember"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
@@ -25,7 +26,9 @@ export function OrgMemberDeletePage() {
       <Match when={getMemberId()}>
         <PageWrapper>
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            <LinkLikeText>{ttt("Remove Member")}</LinkLikeText>
+            <NavLinkButton href={urlOrgMemberRemove(getOrgHandle()!, getMemberId()!)} isActive={true}>
+              {ttt("Remove Member")}
+            </NavLinkButton>
           </NavOrg>
           <OrgMemberMutate mode={mode} orgHandle={getOrgHandle()!} memberId={getMemberId()!} />
         </PageWrapper>

@@ -142,7 +142,7 @@ function UrlField(p: HasOrgFormStateManagement) {
       <Input
         id={orgFormField.url}
         type="url"
-        placeholder={ttt("An optional external URL shown on the Organization page")}
+        placeholder={ttt("An optional external URL shown on Organization page")}
         autocomplete="url"
         value={p.sm.state.url.get()}
         onInput={(e) => {

@@ -1,8 +1,9 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgMemberForm } from "@/org/member_ui/form/OrgMemberForm"
 import { orgMemberFormStateManagement } from "@/org/member_ui/form/orgMemberFormStateManagement"
+import { urlOrgMemberAdd } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
@@ -22,7 +23,9 @@ export function OrgMemberAddPage() {
       <Match when={getOrgHandle()}>
         <PageWrapper>
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            <LinkLikeText>{ttt("Add Member")}</LinkLikeText>
+            <NavLinkButton href={urlOrgMemberAdd(getOrgHandle()!)} isActive={true}>
+              {ttt("Add Member")}
+            </NavLinkButton>
           </NavOrg>
           <OrgMemberAdd orgHandle={getOrgHandle()!} />
         </PageWrapper>

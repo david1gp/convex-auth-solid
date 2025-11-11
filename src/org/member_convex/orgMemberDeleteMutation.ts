@@ -1,15 +1,15 @@
+import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { authMutationR } from "@convex/utils/authMutationR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { vIdOrgMembers } from "./vIdOrgMembers"
 
 export type OrgMemberDeleteValidatorType = typeof orgMemberDeleteValidator.type
 
 export const orgMemberDeleteFields = {
+  memberId: v.string(),
   orgHandle: v.string(),
-  memberId: vIdOrgMembers,
 } as const
 
 export const orgMemberDeleteValidator = v.object(orgMemberDeleteFields)
@@ -30,11 +30,11 @@ export async function orgMemberDeleteFn(ctx: MutationCtx, args: OrgMemberDeleteV
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  const member = await ctx.db.get(args.memberId)
+  const member = await ctx.db.get(args.memberId as IdOrgMember)
   if (!member || member.orgId !== org._id) {
     return createResult(null) // idempotent
   }
 
-  await ctx.db.delete(args.memberId)
+  await ctx.db.delete(args.memberId as IdOrgMember)
   return createResult(null)
 }

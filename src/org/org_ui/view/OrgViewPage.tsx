@@ -3,14 +3,15 @@ import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { OrgInvitationListSection } from "@/org/invitation_ui/list/OrgInvitationListSection"
 import { OrgMemberListSection } from "@/org/member_ui/list/OrgMemberListSection"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
-import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
+import { orgViewPageSchema, type OrgViewPageType } from "@/org/org_model/OrgViewPageType"
+import { orgNameSet } from "@/org/org_ui/orgNameRecordSignal"
 import { OrgViewInformation } from "@/org/org_ui/view/OrgViewInformation"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
+import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
-import { Match, Switch } from "solid-js"
+import { createEffect, Match, Switch } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -26,9 +27,7 @@ export function OrgViewPage() {
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
-          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            <LinkLikeText>{ttt("View")}</LinkLikeText>
-          </NavOrg>
+          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}></NavOrg>
           <OrgViewLoader orgHandle={getOrgHandle()!} />
         </PageWrapper>
       </Match>
@@ -43,10 +42,15 @@ function getPageTitle(orgName?: string, workspaceName?: string) {
 interface OrgViewLoaderProps extends HasOrgHandle, MayHaveClass {}
 
 function OrgViewLoader(p: OrgViewLoaderProps) {
-  const getData = createQuery(api.org.orgGetPageQuery, {
+  const getDataQuery = createQuery(api.org.orgGetPageQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
+  const getData = createQueryCached<OrgViewPageType>(
+    getDataQuery,
+    "orgGetPageQuery" + "/" + p.orgHandle,
+    orgViewPageSchema,
+  )
   return (
     <Switch>
       <Match when={!getData()}>
@@ -67,6 +71,10 @@ interface OrgViewAllProps extends MayHaveClass {
 }
 
 function OrgViewAll(p: OrgViewAllProps) {
+  createEffect(() => {
+    const orgInfo = p.data.org
+    orgNameSet(orgInfo.orgHandle, orgInfo.name)
+  })
   return (
     <>
       <OrgViewInformation showEditButton={true} org={p.data.org} />

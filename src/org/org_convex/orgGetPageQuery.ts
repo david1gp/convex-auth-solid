@@ -1,4 +1,8 @@
-import { dbUsersToUserProfile } from "@/auth/convex/crud/dbUsersToUserProfile"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
+import { type DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import { docOrgMemberToModel } from "@/org/member_convex/docOrgMemberToModel"
+import { docOrgToModel } from "@/org/org_convex/docOrgInvitationToModel"
+import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
 import { query, type QueryCtx } from "@convex/_generated/server"
@@ -6,6 +10,7 @@ import { authQueryR } from "@convex/utils/authQueryR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { docOrgInvitationToModel } from "../invitation_convex/docOrgInvitationToModel"
 import type { OrgMemberProfile } from "../member_model/OrgMemberProfile"
 
 export const orgGetPageFields = {
@@ -23,7 +28,7 @@ export const orgGetPageQuery = query({
 export async function orgGetPageQueryFn(ctx: QueryCtx, args: OrgGetPageValidatorType): PromiseResult<OrgViewPageType> {
   const op = "orgGetPageFn"
 
-  const org = await orgGetByHandleFn(ctx, args.orgHandle)
+  const org: DocOrg | null = await orgGetByHandleFn(ctx, args.orgHandle)
   if (!org) {
     return createResultError(op, "Organization not found", args.orgHandle)
   }
@@ -39,18 +44,20 @@ export async function orgGetPageQueryFn(ctx: QueryCtx, args: OrgGetPageValidator
       if (!user) {
         throw new Error(`User not found for member ${member._id}`)
       }
-      const profile = dbUsersToUserProfile(user, org.orgHandle, member.role)
-      return { ...member, profile }
+      const m = docOrgMemberToModel(member)
+      const profile = docUserToUserProfile(user, org.orgHandle, member.role)
+      return { ...m, profile }
     }),
   )
 
-  const invitations = await ctx.db
+  const orgInvitations: DocOrgInvitation[] = await ctx.db
     .query("orgInvitations")
     .filter((q) => q.eq(q.field("orgHandle"), org.orgHandle))
     .collect()
+  const invitations = orgInvitations.map(docOrgInvitationToModel)
 
   return createResult({
-    org,
+    org: docOrgToModel(org),
     members,
     invitations,
   })

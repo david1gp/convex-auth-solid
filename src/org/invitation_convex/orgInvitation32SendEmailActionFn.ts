@@ -1,4 +1,4 @@
-import { getBaseUrlApp } from "@/app/url/getBaseUrl"
+import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
 import {
   sendEmailOrgInvitation,
   type GenerateEmailOrgInvitationProps,
@@ -6,7 +6,7 @@ import {
 import type { OrgInvitationDataModel } from "@/org/invitation_model/OrgInvitationModel"
 import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
-import { api, internal } from "@convex/_generated/api"
+import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -37,11 +37,13 @@ export async function orgInvitation32SendEmailActionFn(
   ctx: ActionCtx,
   args: OrgInvitationSendEmailValidatorType,
 ): PromiseResult<null> {
-  const op = "orgInvitationSendEmailFn"
-  const baseUrlApp = getBaseUrlApp()
-  if (!baseUrlApp) {
-    return createResultError(op, "!getBaseUrlApp")
+  const op = "orgInvitation32SendEmailActionFn"
+  const baseUrlAppResult = envBaseUrlAppResult()
+  if (!baseUrlAppResult.success) {
+    return baseUrlAppResult
   }
+  const baseUrlApp = baseUrlAppResult.data
+
   const emailProps: GenerateEmailOrgInvitationProps = {
     // invite
     invitedName: args.invitedName,
@@ -58,7 +60,9 @@ export async function orgInvitation32SendEmailActionFn(
     return emailResult
   }
 
-  const invitationResult = await ctx.runQuery(api.org.orgInvitationGetQuery, { invitationCode: args.invitationCode })
+  const invitationResult = await ctx.runQuery(internal.org.orgInvitationGetInternalQuery, {
+    invitationCode: args.invitationCode,
+  })
   if (!invitationResult.success) {
     return invitationResult
   }

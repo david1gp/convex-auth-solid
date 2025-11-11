@@ -1,18 +1,20 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgMember } from "@/org/member_convex/IdOrgMember"
-import { urlOrgMemberAdd, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
+import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
+import { urlOrgMemberAdd, urlOrgMemberList, urlOrgMemberView } from "@/org/member_url/urlOrgMember"
 import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { NoData } from "@/ui/illustrations/NoData"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
+import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex/createQuery"
 import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
 import { useParams } from "@solidjs/router"
 import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
+import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -31,7 +33,9 @@ export function OrgMemberListPage() {
       <Match when={getOrgHandle()}>
         <PageWrapper>
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            <LinkLikeText>{ttt("Members")}</LinkLikeText>
+            <NavLinkButton href={urlOrgMemberList(getOrgHandle()!)} isActive={true}>
+              {ttt("Members")}
+            </NavLinkButton>
           </NavOrg>
           <OrgMemberListLoader orgHandle={getOrgHandle()!} />
         </PageWrapper>
@@ -45,17 +49,22 @@ function getPageTitle(orgName?: string) {
   return name + " " + ttt("Members")
 }
 
-type OrgMember = DocOrgMember
+type OrgMember = OrgMemberModel
 
 type FetchOrgMembers = Accessor<Result<OrgMember[]> | undefined>
 
 interface OrgMemberListLoaderProps extends HasOrgHandle {}
 
 function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
-  const getOrgMembersResult: FetchOrgMembers = createQuery(api.org.orgMembersListQuery, {
+  const getOrgMembersQuery: FetchOrgMembers = createQuery(api.org.orgMembersListQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
+  const getOrgMembersResult = createQueryCached<OrgMember[]>(
+    getOrgMembersQuery,
+    "orgMembersListQuery" + "/" + p.orgHandle,
+    a.any(),
+  )
   createEffect(() => {
     const orgMembersResult = getOrgMembersResult()
     if (!orgMembersResult) return
@@ -127,7 +136,7 @@ interface OrgMemberLinkProps extends HasOrgHandle {
 }
 
 function OrgMemberLink(p: OrgMemberLinkProps) {
-  return <LinkButton href={urlOrgMemberView(p.orgHandle, p.member._id)}>{p.member.userId}</LinkButton>
+  return <LinkButton href={urlOrgMemberView(p.orgHandle, p.member.memberId)}>{p.member.userId}</LinkButton>
 }
 
 function OrgMemberCreateLink(p: HasOrgHandle) {
