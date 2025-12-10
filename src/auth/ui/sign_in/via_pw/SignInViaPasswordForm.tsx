@@ -1,12 +1,9 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { FormFieldInput } from "@/ui/form/FormFieldInput"
+import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { inputMaxLength50, urlMaxLength } from "@/utils/valibot/inputMaxLength"
-import { mdiLogin } from "@mdi/js"
-import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { Input } from "~ui/input/input/Input"
-import { Label } from "~ui/input/label/Label"
-import { LabelAsterix } from "~ui/input/label/LabelAsterix"
+import { formMode } from "~ui/input/form/formMode"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -15,68 +12,56 @@ import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreat
 
 export function SignInViaPasswordForm(p: MayHaveClass) {
   const sm = signInViaPasswordCreateStateManagement()
-  const emailInputId = "sign-in-via-password-email-input"
-  const pwInputId = "sign-in-via-password-pw-input"
   if (isDevEnvVite()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
+
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-4", p.class)}>
-      <div class="flex flex-col gap-2">
-        <Label for={emailInputId}>
-          Email <LabelAsterix />
-        </Label>
-        <Input
-          id={emailInputId}
-          type="email"
-          placeholder="Enter your email"
-          autocomplete={"email"}
-          value={sm.state.email.get()}
-          onInput={(e) => {
-            const newValue = e.currentTarget.value
-            sm.state.email.set(newValue)
-            sm.validateOnChange("email")(newValue)
-          }}
-          onBlur={(e) => sm.validateOnChange("email")(e.currentTarget.value)}
-          class={classMerge("w-full", sm.errors.email.get() && "border-destructive focus-visible:ring-destructive")}
-          maxLength={inputMaxLength50}
-        />
-        <Show when={sm.errors.email.get()}>
-          <p class="text-destructive">{sm.errors.email.get()}</p>
-        </Show>
-      </div>
-      <div class="flex flex-col gap-2">
-        <Label for={pwInputId}>
-          {ttt("Password")}
-          <LabelAsterix />
-        </Label>
-        <Input
-          id={pwInputId}
-          type="password"
-          placeholder="Enter your password"
-          autocomplete="current-password"
-          value={sm.state.password.get()}
-          onInput={(e) => {
-            sm.state.password.set(e.currentTarget.value)
-            sm.validateOnChange("password")(e.currentTarget.value)
-          }}
-          onBlur={(e) => sm.validateOnChange("password")(e.currentTarget.value)}
-          class={classMerge("w-full", sm.errors.password.get() && "border-destructive focus-visible:ring-destructive")}
-          maxLength={urlMaxLength}
-        />
-        <Show when={sm.errors.password.get()}>
-          <p class="text-destructive">{sm.errors.password.get()}</p>
-        </Show>
-      </div>
+      <FormFieldInput
+        config={{
+          ...formFieldConfigs.email,
+          name: "Sign-in-via-password-email",
+          label: "Email",
+          placeholder: "Email",
+          labelClass: "sr-only",
+          required: true,
+        }}
+        value={sm.state.email.get()}
+        error={sm.errors.email.get()}
+        mode={formMode.add}
+        onInput={(value) => {
+          sm.state.email.set(value)
+          sm.validateOnChange("email")(value)
+        }}
+        onBlur={(value) => sm.validateOnChange("email")(value)}
+      />
+      <FormFieldInput
+        config={{
+          name: "password",
+          label: ttt("Password"),
+          labelClass: "sr-only",
+          placeholder: ttt("Password"),
+          type: "password",
+          autocomplete: "current-password",
+          required: true,
+        }}
+        value={sm.state.password.get()}
+        error={sm.errors.password.get()}
+        mode={formMode.add}
+        onInput={(value) => {
+          sm.state.password.set(value)
+          sm.validateOnChange("password")(value)
+        }}
+        onBlur={(value) => sm.validateOnChange("password")(value)}
+      />
       <ButtonIcon
         type="submit"
         disabled={sm.state.isSubmitting.get()}
-        icon={mdiLogin}
-        // size={buttonSize.lg}
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="w-full"
       >
-        {sm.state.isSubmitting.get() ? ttt("Signing in...") : ttt("Sign in via Password")}
+        {sm.state.isSubmitting.get() ? ttt("Signing in...") : ttt("Sign in")}
       </ButtonIcon>
     </form>
   )
