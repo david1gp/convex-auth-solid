@@ -1,5 +1,5 @@
-import type { HasCreatedAt } from "@/utils/convex/HasCreatedAt"
-import type { HasUpdatedAt } from "@/utils/convex/HasUpdatedAt"
+import type { HasCreatedAt } from "@/utils/data/HasCreatedAt"
+import type { HasUpdatedAt } from "@/utils/data/HasUpdatedAt"
 
 export interface HasCreatedAtUpdatedAt extends HasCreatedAt, HasUpdatedAt {}
 
