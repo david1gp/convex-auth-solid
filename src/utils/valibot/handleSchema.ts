@@ -1,5 +1,5 @@
 import { cantBeEmpty } from "@/utils/valibot/cantBeEmpty"
-import { inputMaxLength50 } from "@/utils/valibot/inputMaxLength"
+import { inputMaxLengthDefault } from "@/utils/valibot/inputMaxLength"
 import * as a from "valibot"
 
 const regexMessage1 = "Must only consist of latin lowercase letters, digits and hyphens"
@@ -16,7 +16,7 @@ export const handleSchema = a.pipe(
   a.regex(/^(?!.*--)/, regexMessage2),
   a.regex(/^[^-]/, regexMessage3),
   a.regex(/[^-]$/, regexMessage4),
-  a.maxLength(inputMaxLength50),
+  a.maxLength(inputMaxLengthDefault),
 )
 
 export function handleGenerate(name: string) {
