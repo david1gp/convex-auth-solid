@@ -1,50 +1,48 @@
+import { enableSignInDev } from "@/app/config/enableSignInDev"
+import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { urlAuthDev } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
+import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { navigateTo } from "@/utils/router/navigateTo"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { inputMaxLength50 } from "@/utils/valibot/inputMaxLength"
+import { mdiAccountHardHat } from "@mdi/js"
 import { ttt } from "~ui/i18n/ttt"
-import { InputS } from "~ui/input/input/InputS"
-import { Label } from "~ui/input/label/Label"
-import { LabelAsterix } from "~ui/input/label/LabelAsterix"
+import { formMode } from "~ui/input/form/formMode"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
-import { linkIcons } from "~ui/static/icon/linkIcons"
-import { classMerge } from "~ui/utils/classMerge"
+import { classArr } from "~ui/utils/classArr"
 import { createSignalObject } from "~ui/utils/createSignalObject"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export function DevLoginSection(p: MayHaveClass) {
-  if (!isDevEnvVite()) return null
-
-  const userIdField = "user-id"
+  if (!enableSignInDev()) return null
 
   return (
-    <section class={classMerge("flex flex-col gap-4", p.class)}>
-      <h2 class="text-xl font-semibold">Developer login</h2>
+    <AuthSectionCard icon={mdiAccountHardHat} title={ttt("Admin")} subtitle={ttt("In dev mode only")}>
       <form
+        //
         id="devSignInForm"
-        // class={classMerge("grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto", p.class)}
-        class={classMerge(classesCardWrapperP4, "flex flex-col gap-4")}
         onSubmit={onSubmitFn}
         autocomplete="on"
+        class={classArr("flex flex-col gap-4 w-full")}
       >
-        <div class="flex flex-col gap-2">
-          <Label for={userIdField}>
-            {ttt("User id")}
-            <LabelAsterix />
-          </Label>
-          <InputS
-            id={userIdField}
-            valueSignal={userIdInputSignal}
-            class="border-gray-300 dark:border-gray-500"
-            maxLength={inputMaxLength50}
-          />
-        </div>
+        <FormFieldInput
+          config={{
+            name: "user-id",
+            label: ttt("User id"),
+            labelClass: "sr-only",
+            placeholder: ttt("User id / Username"),
+            required: true,
+            autocomplete: "username",
+          }}
+          value={userIdInputSignal.get()}
+          error=""
+          mode={formMode.edit}
+          onInput={(value) => userIdInputSignal.set(value)}
+          onBlur={() => {}}
+        />
         <DevLoginButton />
       </form>
-    </section>
+    </AuthSectionCard>
   )
 }
 
@@ -59,9 +57,9 @@ function onSubmitFn(e: SubmitEvent) {
 const userIdInputSignal = createSignalObject("adaptive-sm")
 
 function DevLoginButton(p: MayHaveClass) {
-  const text = "Sign in with user id"
+  const text = ttt("Sign in")
   return (
-    <LinkButton href={getDevUrl()} icon={linkIcons.login} variant={buttonVariant.destructive} class={p.class}>
+    <LinkButton href={getDevUrl()} variant={buttonVariant.primary} class={p.class}>
       {text}
     </LinkButton>
   )

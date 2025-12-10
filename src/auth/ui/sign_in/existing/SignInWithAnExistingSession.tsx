@@ -13,10 +13,11 @@ import { classesCardWrapper } from "~ui/static/container/classesCardWrapper"
 import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
 
 dayjs.extend(relativeTime)
 
-export interface SignInWithAnExistingSessionProps extends MayHaveClass {
+export interface SignInWithAnExistingSessionProps extends MayHaveInnerClass, MayHaveClass {
   h2Class?: string
   fallback?: JSX.Element
 }
@@ -27,18 +28,16 @@ export function SignInWithAnExistingSession(p: SignInWithAnExistingSessionProps)
     <Show when={sessions().length > 0} fallback={p.fallback}>
       <section
         class={classMerge(
-          "space-y-4 max-w-2xl",
-          sessions().length > 4 ? "row-span-3" : sessions().length > 2 ? "row-span-2" : "",
+          // "space-y-4 max-w-2xl",
+          // sessions().length > 4 ? "row-span-3" : sessions().length > 2 ? "row-span-2" : "",
           p.class,
         )}
       >
-        <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>Continue with an existing session</h2>
-        <div class="flex flex-col gap-4">
+        <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>{ttt("Continue with an earlier session")}</h2>
+        <div class={p.innerClass ?? "contents"}>
           <For each={sessions()}>{(session: UserSession) => <SessionButton session={session} />}</For>
-        </div>
-        <div class="flex justify-end">
           <Button variant={buttonVariant.subtle} onClick={deleteAllSessions}>
-            {ttt("Delete all earlier sessions")}
+            {ttt("Delete earlier sessions")}
           </Button>
         </div>
       </section>

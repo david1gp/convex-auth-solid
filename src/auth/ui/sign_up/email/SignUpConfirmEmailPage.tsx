@@ -9,7 +9,7 @@ import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
-import { Icon0 } from "~ui/static/icon/Icon0"
+import { Icon } from "~ui/static/icon/Icon"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { EnterOtpForm } from "../../email/EnterOtpForm"
@@ -24,9 +24,9 @@ export const SignUpConfirmEmailPage: Component<{}> = () => {
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >
           <div class="bg-indigo-400 rounded-full p-4 flex items-center justify-center size-70">
-            <Icon0 path={mdiEmailSearchOutline} class="size-52 fill-white text-white" />
+            <Icon path={mdiEmailSearchOutline} class="size-52 fill-white text-white" />
           </div>
-          {/* <Icon0 path={iconEmailOutlineThin} class="size-30 fill-blue-400 text-blue-400" /> */}
+          {/* <Icon path={iconEmailOutlineThin} class="size-30 fill-blue-400 text-blue-400" /> */}
           <SignUpConfirmEmail class={classArr("max-w-xl", "p-4 mb-4")} />
         </div>
       </div>

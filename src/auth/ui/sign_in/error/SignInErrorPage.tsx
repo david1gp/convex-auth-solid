@@ -2,7 +2,7 @@ import { ContactSupportLinkButton } from "@/ui/links/ContactSupportLinkButton"
 import { GoSignInLinkButton } from "@/ui/links/GoSignInLinkButton"
 import { mdiAlertBoxOutline } from "@mdi/js"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
-import { Icon1 } from "~ui/static/icon/Icon1"
+import { Icon } from "~ui/static/icon/Icon"
 import { classesPageWrapper } from "~ui/static/page/classesPageWrapper"
 import { classArr } from "~ui/utils/classArr"
 
@@ -21,7 +21,7 @@ export function SignInErrorPage() {
   return (
     <div class={classArr(classesPageWrapper)}>
       <section id={"authenticationError"} class="flex flex-col gap-2">
-        <Icon1
+        <Icon
           path={mdiAlertBoxOutline}
           class={classArr(
             "size-16 mx-auto", // sizing + layout

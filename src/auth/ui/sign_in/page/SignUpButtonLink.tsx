@@ -10,6 +10,7 @@ import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { LinkButtonProps } from "~ui/interactive/link/LinkButtonProps"
 
 export interface SignUpButtonLinkProps extends Omit<LinkButtonProps, "href"> {
+
   text?: string
 }
 

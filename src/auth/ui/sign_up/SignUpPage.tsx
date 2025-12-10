@@ -1,13 +1,17 @@
+import { enableGithub } from "@/app/config/enableGithub"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { appNameClient } from "@/app/text/appName"
 import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
 import { SignUpEmailPasswordForm } from "@/auth/ui/sign_up/form/SignUpEmailPasswordForm"
 import { SignInButtonLink } from "@/auth/ui/sign_up/SignInButtonLink"
+import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { searchParamGet } from "@/utils/router/searchParamGet"
+import { mdiAccountPlus } from "@mdi/js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
@@ -16,7 +20,9 @@ import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { linkIcons } from "~ui/static/icon/linkIcons"
 import { Img } from "~ui/static/img/Img"
+import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { Separator } from "~ui/static/separator/Separator"
+import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
@@ -38,19 +44,48 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
             iconRight=""
           />
         </NavAuth>
-        <div class={classMerge("container max-w-7xl mx-auto py-8 px-4", p.innerClass)}>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <LeftSide />
-            <RightSide />
-          </div>
-        </div>
+        <SignUpPageContent />
       </div>
     </LayoutWrapperDemo>
   )
 }
 
+function SignUpPageContent() {
+  return (
+    <PageWrapper
+      innerClass={classArr(
+        // "max-w-7xl",
+        // "max-w-4xl",
+        userSessionsSignal.get().length === 0 && "max-w-4xl",
+        // "flex flex-col gap-8",
+        "grid grid-cols-1",
+        userSessionsSignal.get().length > 0 ? "lg:grid-cols-3" : "lg:grid-cols-2",
+        "gap-8",
+      )}
+    >
+      <SignInWithAnExistingSession h2Class="mb-2" innerClass="grid gap-4" />
+      <SignUpEmailPasswordSection />
+      <div class="flex flex-col gap-8">
+        <SignUpSocialSection />
+        <HaveAnAccountSection />
+      </div>
+    </PageWrapper>
+  )
+}
+
+function SignUpPageContent2() {
+  return (
+    <div class={classMerge("container max-w-7xl mx-auto py-8 px-4")}>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <LeftSide />
+        <RightSide />
+      </div>
+    </div>
+  )
+}
+
 function LeftSide() {
-  return <SignInWithAnExistingSession class="" fallback={<AuthCoverIllustration />} />
+  return <SignInWithAnExistingSession class="flex flex-col gap-2" />
 }
 
 export function AuthCoverIllustration(p: MayHaveClass) {
@@ -72,23 +107,27 @@ function RightSide() {
 
 function SignUpEmailPasswordSection() {
   return (
-    <section class="space-y-4 max-w-2xl">
-      <h2 class="text-xl font-semibold">{ttt("Create new account")}</h2>
+    <AuthSectionCard
+      icon={mdiAccountPlus}
+      title={ttt("Create new account")}
+      subtitle={ttt("Join us and start your journey")}
+      class="space-y-4 max-w-2xl"
+    >
       <SignUpEmailPasswordForm />
-    </section>
+    </AuthSectionCard>
   )
 }
 
 function SignUpSocialSection() {
-  const buttonClasses = ""
-  const btnSize = buttonSize.lg
+  const buttonClasses = "w-full"
+  const btnSize = buttonSize.default
   return (
-    <section class="flex flex-col gap-4 max-w-2xl">
-      <h2 class="text-xl font-semibold">Sign up via social account</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <SocialSignUpButton provider={socialLoginProvider.google} size={btnSize} class={buttonClasses} />
+    <section class="flex flex-col gap-2">
+      <h2 class="text-xl font-semibold">{ttt("Sign Up With")}</h2>
+      <SocialSignUpButton provider={socialLoginProvider.google} size={btnSize} class={buttonClasses} />
+      {enableGithub() && (
         <SocialSignUpButton provider={socialLoginProvider.github} size={btnSize} class={buttonClasses} />
-      </div>
+      )}
     </section>
   )
 }
