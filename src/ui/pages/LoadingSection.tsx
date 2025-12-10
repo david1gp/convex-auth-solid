@@ -1,6 +1,6 @@
 import { RandomLoader } from "@/ui/loaders/RandomLoader"
 import { ttt, ttt1 } from "~ui/i18n/ttt"
-import { classesCardWrapperBoderDark } from "~ui/static/container/classesCardWrapper"
+import { classesCardWrapperBorderDark } from "~ui/static/container/classesCardWrapper"
 import { SeparatorWithText } from "~ui/static/separator/SeparatorWithText"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveChildrenAndClass } from "~ui/utils/MayHaveChildrenAndClass"
@@ -18,7 +18,7 @@ export function LoadingSection(p: LoadingSectionProps) {
     <section
       id={p.id}
       class={classMerge(
-        classesCardWrapperBoderDark,
+        classesCardWrapperBorderDark,
         "min-h-60", // h
         "flex flex-col items-center gap-4",
         p.class,

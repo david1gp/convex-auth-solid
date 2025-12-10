@@ -3,7 +3,7 @@ import { GoBackLinkButton } from "@/ui/links/GoBackLinkButton"
 import { GoHomeLinkButton } from "@/ui/links/GoHomeLinkButton"
 import { mdiAlertBoxOutline } from "@mdi/js"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
-import { Icon1 } from "~ui/static/icon/Icon1"
+import { Icon } from "~ui/static/icon/Icon"
 import { classMerge } from "~ui/utils/classMerge"
 import type { HasTitle } from "~ui/utils/HasTitle"
 import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
@@ -25,7 +25,7 @@ export function ErrorPage(p: ErrorPageProps) {
 function ErrorSection(p: ErrorPageProps) {
   return (
     <section id={"error"} class={classMerge("flex flex-col gap-2 my-20", p.class)}>
-      <Icon1
+      <Icon
         path={p.icon ?? mdiAlertBoxOutline}
         class={classMerge(
           "size-16 mx-auto", // sizing + layout
