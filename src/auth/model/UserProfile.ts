@@ -2,14 +2,17 @@ import { userRoleSchema, type UserRole } from "@/auth/model/userRole"
 import { userRoleValidator } from "@/auth/model/userRoleValidator"
 import { orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
 import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt"
+import type { HasCreatedAtUpdatedDeletedAt } from "@/utils/data/HasCreatedAtUpdatedDeletedAt"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { handleSchema } from "@/utils/valibot/handleSchema"
-import { stringSchema0to500, stringSchema1to50 } from "@/utils/valibot/stringSchema"
+import { stringSchema0to500, stringSchemaId, stringSchemaName } from "@/utils/valibot/stringSchema"
 import { v } from "convex/values"
 import * as a from "valibot"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
-export type UserProfile = {
+export interface UserProfile extends HasCreatedAtUpdatedDeletedAt {
   userId: string
   name: string
   username?: string
@@ -19,13 +22,11 @@ export type UserProfile = {
   role: UserRole
   orgHandle?: string
   orgRole?: OrgRole
-  createdAt: string
-  deletedAt?: string
 }
 
 export const userProfileSchema = a.object({
-  userId: stringSchema1to50,
-  name: stringSchema1to50,
+  userId: stringSchemaId,
+  name: stringSchemaName,
   username: a.optional(handleSchema),
   image: a.optional(stringSchema0to500),
   email: a.optional(emailSchema),
@@ -33,8 +34,7 @@ export const userProfileSchema = a.object({
   role: userRoleSchema,
   orgHandle: a.optional(a.string()),
   orgRole: a.optional(orgRoleSchema),
-  createdAt: dateTimeSchema,
-  deletedAt: a.optional(dateTimeSchema),
+  ...fieldsSchemaCreatedAtUpdatedAtDeletedAt,
 })
 
 function types1(a: a.InferOutput<typeof userProfileSchema>): UserProfile {
@@ -50,6 +50,5 @@ export const userProfileValidator = v.object({
   role: userRoleValidator,
   orgHandle: v.optional(v.string()),
   orgRole: v.optional(orgRoleValidator),
-  createdAt: v.string(),
-  deletedAt: v.optional(v.string()),
+  ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
 })
