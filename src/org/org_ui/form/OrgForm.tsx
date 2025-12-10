@@ -2,7 +2,7 @@ import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListen
 import { orgFormField } from "@/org/org_ui/form/orgFormField"
 import type { OrgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { inputMaxLength50, urlMaxLength } from "@/utils/valibot/inputMaxLength"
+import { inputMaxLength100, inputMaxLengthDescription, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
@@ -69,7 +69,7 @@ function NameField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(orgFormField.name)(value)
         }}
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={inputMaxLength50}
+        maxLength={inputMaxLength100}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.name.get()}>
@@ -97,7 +97,7 @@ function HandleField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(orgFormField.orgHandle)(value)
         }}
         class={classMerge("w-full", p.sm.errors.orgHandle.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={inputMaxLength50}
+        maxLength={inputMaxLength100}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.orgHandle.get()}>
@@ -125,7 +125,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
           "min-h-[3lh] h-[7lh]",
           p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
         )}
-        maxLength={urlMaxLength}
+        maxLength={inputMaxLengthDescription}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.description.get()}>
@@ -151,7 +151,7 @@ function UrlField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(orgFormField.url)(value)
         }}
         class={classMerge("w-full", p.sm.errors.url.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={urlMaxLength}
+        maxLength={inputMaxLengthUrl}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.url.get()}>
@@ -177,7 +177,7 @@ function ImageField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(orgFormField.image)(value)
         }}
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={urlMaxLength}
+        maxLength={inputMaxLengthUrl}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
       <Show when={p.sm.errors.image.get()}>

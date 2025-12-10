@@ -8,7 +8,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { Icon1 } from "~ui/static/icon/Icon1"
+import { Icon } from "~ui/static/icon/Icon"
 import { Img } from "~ui/static/img/Img"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -55,7 +55,7 @@ function ShowImg(p: OrgViewProps) {
 
 function ImageFallBack() {
   return (
-    <Icon1
+    <Icon
       path={mdiHandWave}
       class={classArr(
         " mx-auto",
