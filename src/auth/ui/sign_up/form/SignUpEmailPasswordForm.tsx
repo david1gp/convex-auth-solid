@@ -1,25 +1,18 @@
 import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
 import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
+import { FormFieldInput } from "@/ui/form/FormFieldInput"
+import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { For, Show } from "solid-js"
-import type { JSX } from "solid-js/jsx-runtime"
+import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { Checkbox } from "~ui/input/check/Checkbox"
-import { Input } from "~ui/input/input/Input"
-import { Label } from "~ui/input/label/Label"
-import { LabelAsterix } from "~ui/input/label/LabelAsterix"
+import { formMode } from "~ui/input/form/formMode"
 import { Button } from "~ui/interactive/button/Button"
-import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
+import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import type { SignalObject } from "~ui/utils/createSignalObject"
-import {
-  signUpCreateStateManagement,
-  signUpFormField,
-  type SignUpFormField,
-  type SignUpUiStateManagement,
-} from "./signUpCreateFormState"
+import { signUpCreateStateManagement, signUpFormField } from "./signUpCreateFormState"
 
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}
 
@@ -30,15 +23,79 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
 
-  const fieldNames: SignUpFormField[] = Object.values(signUpFormField)
+  const showRequired = false
 
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-6", p.class)}>
-      <For each={fieldNames}>{(field) => FieldSwitch(field, sm)}</For>
+      <FormFieldInput
+        config={{
+          ...formFieldConfigs.name,
+          placeholder: "My Name",
+          required: showRequired,
+        }}
+        value={sm.state.name.get()}
+        error={sm.errors.name.get()}
+        mode={formMode.add}
+        onInput={(value) => {
+          sm.state.name.set(value)
+          sm.validateOnChange("name")(value)
+        }}
+        onBlur={(value) => sm.validateOnChange("name")(value)}
+      />
+
+      <FormFieldInput
+        config={{
+          ...formFieldConfigs.email,
+          placeholder: "my.email@gmail.com",
+          required: showRequired,
+        }}
+        value={sm.state.email.get()}
+        error={sm.errors.email.get()}
+        mode={formMode.add}
+        onInput={(value) => {
+          sm.state.email.set(value)
+          sm.validateOnChange("email")(value)
+        }}
+        onBlur={(value) => sm.validateOnChange("email")(value)}
+      />
+
+      <FormFieldInput
+        config={{
+          name: "password",
+          label: ttt("Password"),
+          placeholder: ttt("******"),
+          type: "password",
+          autocomplete: "new-password",
+          required: showRequired,
+        }}
+        value={sm.state.pw.get()}
+        error={sm.errors.pw.get()}
+        mode={formMode.add}
+        onInput={(value) => {
+          sm.state.pw.set(value)
+          sm.validateOnChange("pw")(value)
+        }}
+        onBlur={(value) => sm.validateOnChange("pw")(value)}
+      />
+
+      <Checkbox
+        id={signUpFormField.terms}
+        checked={sm.state.terms.get()}
+        onChange={(checked) => {
+          sm.state.terms.set(checked)
+          sm.validateOnChange(signUpFormField.terms)(checked)
+        }}
+      >
+        <AuthLegalAgree variant={authLegalAgreeVariant.explicit} class="ml-1" />
+        <Show when={sm.errors.terms.get()}>
+          <span id="terms-error" class="text-red-500 block">
+            {sm.errors.terms.get()}
+          </span>
+        </Show>
+      </Checkbox>
 
       <Button
         type="submit"
-        size={buttonSize.lg}
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="text-lg"
         disabled={sm.isSubmitting.get()}
@@ -46,94 +103,5 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         {sm.isSubmitting.get() ? "Signing up..." : "Sign up"}
       </Button>
     </form>
-  )
-}
-
-function FieldSwitch(field: SignUpFormField, sm: SignUpUiStateManagement) {
-  if (field === signUpFormField.terms) {
-    return FieldSwitchTerms(sm)
-  }
-  type FormInputField = Exclude<SignUpFormField, "terms">
-
-  const isRequired = true
-
-  const labelTexts = {
-    name: ttt("Name"),
-    email: ttt("Email"),
-    pw: ttt("Password"),
-  } as const satisfies Record<FormInputField, string>
-  const labelText = labelTexts[field]
-  const placeholder = labelText
-
-  const inputType = field === signUpFormField.pw ? "password" : "text"
-
-  const valueSignals = {
-    name: sm.state.name,
-    email: sm.state.email,
-    pw: sm.state.pw,
-  } as const satisfies Record<FormInputField, SignalObject<string>>
-
-  const valueSignal = valueSignals[field]
-
-  const autoCompleteValues = {
-    name: "name",
-    email: "email",
-    pw: "new-password",
-  } as const satisfies Record<FormInputField, JSX.HTMLAutocomplete>
-
-  const autoComplete = autoCompleteValues[field]
-
-  const debouncedValidate = sm.validateOnChange(field)
-
-  return (
-    <div class="flex flex-col gap-2">
-      <Label for={field} class={isRequired ? "flex items-center gap-1" : ""}>
-        {labelText}
-        {isRequired && <LabelAsterix />}
-      </Label>
-      <Input
-        id={field}
-        name={field}
-        type={inputType}
-        autocomplete={autoComplete}
-        placeholder={placeholder}
-        value={valueSignal.get()}
-        class={classMerge(
-          "",
-          sm.errors[field as keyof typeof sm.errors].get() && "border-destructive focus-visible:ring-destructive",
-        )}
-        onInput={(e) => {
-          const newValue = e.currentTarget.value
-          valueSignal.set(newValue)
-          debouncedValidate(newValue)
-        }}
-        onBlur={(e) => {
-          debouncedValidate(e.currentTarget.value)
-        }}
-      />
-      <Show when={sm.errors[field as keyof typeof sm.errors].get()}>
-        <p class="text-destructive">{sm.errors[field as keyof typeof sm.errors].get()}</p>
-      </Show>
-    </div>
-  )
-}
-
-function FieldSwitchTerms(sm: SignUpUiStateManagement) {
-  return (
-    <Checkbox
-      id={signUpFormField.terms}
-      checked={sm.state.terms.get()}
-      onChange={(checked) => {
-        sm.state.terms.set(checked)
-        sm.validateOnChange(signUpFormField.terms)(checked)
-      }}
-    >
-      <AuthLegalAgree variant={authLegalAgreeVariant.signUp} />
-      <Show when={sm.errors.terms.get()}>
-        <span id="terms-error" class="text-red-500 block">
-          {sm.errors.terms.get()}
-        </span>
-      </Show>
-    </Checkbox>
   )
 }
