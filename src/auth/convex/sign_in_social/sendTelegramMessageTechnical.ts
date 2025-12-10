@@ -1,32 +1,47 @@
 import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { envTelegramChatIdResult } from "@/app/env/private/envTelegramChatIdResult"
 import type { PromiseResult } from "~utils/result/Result"
 import { sendTelegramMessageHtml, type TelegramEnvVariableNames } from "~utils/telegram/sendTelegramMessageHtml"
 
-export async function sendTelegramMessageTechnical(
+export async function sendTelegramMessageAuth(
   name: string,
   data: any,
   disableNotification: boolean = true,
 ): PromiseResult<null> {
-  const chatIdResult = envTelegramChatIdResult()
-  if (!chatIdResult.success) return chatIdResult
-  const chatId = chatIdResult.data
+  return sendTelegramMessageTechnical(name, data, privateEnvVariableName.TELEGRAM_CHAT_ID_AUTH, disableNotification)
+}
 
-  const serialized = typeof data === "string" ? data : JSON.stringify(data, null, 2)
-  const text = `
-<b>${name}</b>
-<pre><code class="json">${serialized}</code></pre>
-`.trim()
+export async function sendTelegramMessageError(
+  name: string,
+  data: any,
+  disableNotification: boolean = true,
+): PromiseResult<null> {
+  return sendTelegramMessageTechnical(name, data, privateEnvVariableName.TELEGRAM_CHAT_ID_ERRORS, disableNotification)
+}
+
+export async function sendTelegramMessageTechnical(
+  name: string,
+  data: any,
+  chatIdVariableName: string,
+  disableNotification: boolean = true,
+): PromiseResult<null> {
   const startedAt = Date.now()
   const telegramEnvVariables = {
     apiToken: privateEnvVariableName.TELEGRAM_TOKEN,
-    chatId: privateEnvVariableName.TELEGRAM_CHAT_ID,
+    chatId: chatIdVariableName,
   } as const satisfies TelegramEnvVariableNames
-  const got = await sendTelegramMessageHtml(text, telegramEnvVariables, disableNotification)
+  const content = telegramCreateJsonHtmlMessage(name, data)
+  const got = await sendTelegramMessageHtml(content, telegramEnvVariables, disableNotification)
   const endedAt = Date.now()
   const durationMs = endedAt - startedAt
   const op = "sendTelegramMessageTechnical"
-  // console.log(op, userSession.user.name, userSession.user, got)
   console.log(op, "telegram api call:", got, durationMs, "ms")
   return got
+}
+
+function telegramCreateJsonHtmlMessage(title: string, data: any): string {
+  let text = `<b>${title}</b>`.trim()
+  if (!data) return text
+  const serialized = typeof data === "string" ? data : JSON.stringify(data, null, 2)
+  text += "\n" + `<pre><code class="json">${serialized}</code></pre>`
+  return text
 }

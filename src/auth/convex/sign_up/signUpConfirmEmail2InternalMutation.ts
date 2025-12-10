@@ -60,6 +60,7 @@ export async function signUpConfirmEmail2InternalMutationFn(
     hashedPassword,
     role: userRole.user,
     createdAt: now,
+    updatedAt: now,
     deletedAt: undefined,
   })
 

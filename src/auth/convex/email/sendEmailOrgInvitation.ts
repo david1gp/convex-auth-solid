@@ -1,8 +1,8 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
+import { envBaseUrlEmailGeneratorResult } from "@/app/env/private/envBaseUrlEmailGeneratorResult"
 import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
 import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuthResendEnvVariableNames"
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
-import { sendTelegramMessageTechnical } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
+import { sendTelegramMessageAuth } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
 import {
   apiGenerateEmailOrgInvitationV1,
   type GeneratedEmailType,
@@ -11,7 +11,6 @@ import {
 import { isDevEnv } from "~ui/env/isDevEnv"
 import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"
 import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
-import { envBaseUrlEmailGeneratorResult } from "@/app/env/private/envBaseUrlEmailGeneratorResult"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 
 export type GenerateEmailOrgInvitationProps = {
@@ -42,7 +41,7 @@ export async function sendEmailOrgInvitation(
 
   const envMode = envModeResult.data
   const name = envMode + " / org invitation"
-  const telegramResult = await sendTelegramMessageTechnical(name, p)
+  const telegramResult = await sendTelegramMessageAuth(name, p)
   if (!telegramResult.success) return telegramResult
 
   return createResult(null)

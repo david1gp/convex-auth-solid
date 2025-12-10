@@ -71,7 +71,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const confirmUrl = new URL(pageRouteAuth.signUpConfirmEmail, hostnameApp)
   confirmUrl.searchParams.set("email", email)
   confirmUrl.searchParams.set("code", code)
-  await sendEmailSignUp(email, code, confirmUrl.toString())
+  await sendEmailSignUp(name, email, code, confirmUrl.toString())
 
   return new Response("Sign up code sent", { status: 200 })
 }

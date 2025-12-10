@@ -36,6 +36,7 @@ export async function createUserFromAuthProviderFn(
   }
 
   const now = new Date()
+  const iso = now.toISOString()
 
   // Create user
   const userName = getUserNameFromCommonAuthProvider(authProvider, "New User")
@@ -44,7 +45,8 @@ export async function createUserFromAuthProviderFn(
     image: authProvider.image,
     email: authProvider.email,
     role: userRole.user,
-    createdAt: now.toISOString(),
+    createdAt: iso,
+    updatedAt: iso,
   } as const satisfies WithoutSystemFields<DocUser>
   const userId = await ctx.db.insert("users", toCreate)
   const userProfile: UserProfile = docUserToUserProfile({ _id: userId, _creationTime: now.getTime(), ...toCreate })
@@ -54,8 +56,8 @@ export async function createUserFromAuthProviderFn(
     userId,
     provider: authProvider.provider,
     providerAccountId: authProvider.providerId,
-    createdAt: now.toISOString(),
-    updatedAt: now.toISOString(),
+    createdAt: iso,
+    updatedAt: iso,
   })
 
   return createResult(userProfile)

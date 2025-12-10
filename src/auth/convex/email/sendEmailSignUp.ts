@@ -1,8 +1,8 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
+import { envBaseUrlEmailGeneratorResult } from "@/app/env/private/envBaseUrlEmailGeneratorResult"
+import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
 import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuthResendEnvVariableNames"
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
-import { sendTelegramMessageTechnical } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
+import { sendTelegramMessageAuth } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
 import {
   apiGenerateEmailSignUpV1,
   type GeneratedEmailType,
@@ -11,30 +11,27 @@ import {
 import { isDevEnv } from "~ui/env/isDevEnv"
 import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
 import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"
-import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
-import { envBaseUrlEmailGeneratorResult } from "@/app/env/private/envBaseUrlEmailGeneratorResult"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 
-export async function sendEmailSignUp(email: string, code: string, url: string): PromiseResult<null> {
+export async function sendEmailSignUp(name: string, email: string, code: string, url: string): PromiseResult<null> {
   // will be done later
-  const envModeResult = envEnvModeResult()
-  if (!envModeResult.success) return envModeResult
-  const envMode = envModeResult.data
-  const name = envMode + " / user sign up"
   const data = { code, url, email }
 
   const generatedResult = await generateEmailSignUp(code, url)
   if (!generatedResult.success) return generatedResult
   const { subject, html, text } = generatedResult.data
 
-  const to: ResendAddressInfo = { email }
+  const to: ResendAddressInfo = { name, email }
 
   if (!isDevEnv()) {
     const emailResult = await sendSingleEmailViaResend(subject, html, text, to, createAuthResendEnvVariableNames())
     if (!emailResult.success) return emailResult
   }
 
-  const telegramResult = await sendTelegramMessageTechnical(name, data)
+  const envModeResult = envEnvModeResult()
+  if (!envModeResult.success) return envModeResult
+  const envMode = envModeResult.data
+  const telegramResult = await sendTelegramMessageAuth(envMode + " / user sign-up / " + name, data)
   if (!telegramResult.success) return telegramResult
 
   return createResult(null)
