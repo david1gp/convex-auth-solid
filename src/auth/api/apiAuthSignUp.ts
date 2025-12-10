@@ -1,8 +1,8 @@
 import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
-import { tryParsingFetchErr } from "@/auth/api/tryParsingFetchErr"
 import type { SignUpType } from "@/auth/model/signUpSchema"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
+import { resultTryParsingFetchErr } from "@/utils/result/resultTryParsingFetchErr"
 import { type Result, createResult } from "~utils/result/Result"
 
 export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> {
@@ -19,7 +19,8 @@ export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> 
   })
   const text = await response.text()
   if (!response.ok) {
-    return tryParsingFetchErr(op, text, response.status, response.statusText)
+    console.error(op, response.status, response.statusText, text)
+    return resultTryParsingFetchErr(op, text, response.status, response.statusText)
   }
   return createResult(text)
 }
