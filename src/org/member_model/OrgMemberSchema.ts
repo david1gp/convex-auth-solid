@@ -1,19 +1,19 @@
 import { orgRoleSchema } from "@/org/org_model/orgRole"
-import { fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
-import { stringSchema1to50, stringSchemaId } from "@/utils/valibot/stringSchema"
+import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
+import { stringSchemaId } from "@/utils/valibot/stringSchema"
 import * as a from "valibot"
 
 export const orgMemberDataSchemaFields = {
   memberId: stringSchemaId,
-  orgHandle: stringSchema1to50,
-  userId: stringSchema1to50,
+  orgHandle: stringSchemaId,
+  userId: stringSchemaId,
   role: orgRoleSchema,
   invitedBy: stringSchemaId,
 } as const
 
 export const orgMemberSchemaFields = {
   ...orgMemberDataSchemaFields,
-  ...fieldsCreatedAtUpdatedAt,
+  ...fieldsSchemaCreatedAtUpdatedAt,
 } as const
 
 export const orgMemberSchema = a.object(orgMemberSchemaFields)

@@ -2,7 +2,7 @@ import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 import type { OrgMemberListProps } from "@/org/member_ui/list/OrgMemberListSection"
 import { OrgMemberListSection } from "@/org/member_ui/list/OrgMemberListSection"
-import { createdAtUpdatedAtCreate } from "@/utils/convex/HasCreatedAtUpdatedAt"
+import { createdAtUpdatedAtCreate } from "@/utils/data/HasCreatedAtUpdatedAt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function DemoOrgMemberList() {
@@ -35,6 +35,7 @@ const members: OrgMemberProfile[] = [
       username: "alice",
       role: "user",
       createdAt: "2025-11-01T10:00:00Z",
+      updatedAt: "2025-11-01T10:00:00Z",
     },
     ...createdAtUpdatedAtCreate(),
     createdAt: "2025-11-01T10:00:00Z",
@@ -53,6 +54,7 @@ const members: OrgMemberProfile[] = [
       username: "bobsmith",
       role: "user",
       createdAt: "2025-10-30T15:30:00Z",
+      updatedAt: "2025-10-30T15:30:00Z",
     },
     ...createdAtUpdatedAtCreate(),
     createdAt: "2025-11-01T10:00:00Z",
@@ -71,6 +73,7 @@ const members: OrgMemberProfile[] = [
       username: "carolw",
       role: "user",
       createdAt: "2025-10-31T09:15:00Z",
+      updatedAt: "2025-10-31T09:15:00Z",
     },
     ...createdAtUpdatedAtCreate(),
     createdAt: "2025-11-01T10:00:00Z",

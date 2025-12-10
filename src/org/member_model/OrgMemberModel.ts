@@ -1,5 +1,5 @@
 import type { OrgRole } from "@/org/org_model/orgRole"
-import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt"
+import type { HasCreatedAtUpdatedAt } from "@/utils/data/HasCreatedAtUpdatedAt"
 
 export type OrgMemberDataModel = {
   memberId: string
