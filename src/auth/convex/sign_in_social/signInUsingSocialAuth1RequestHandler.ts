@@ -1,6 +1,8 @@
+import { enableGithub } from "@/app/config/enableGithub"
+import { enableSignInDev } from "@/app/config/enableSignInDev"
 import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
 import { signInUsingSocialAuth2ActionFn } from "@/auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn"
-import type { LoginProvider } from "@/auth/model/socialLoginProvider"
+import { loginProvider, type LoginProvider } from "@/auth/model/socialLoginProvider"
 import type { UserSession } from "@/auth/model/UserSession"
 import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
 import { internal } from "@convex/_generated/api"
@@ -23,6 +25,21 @@ export async function signInUsingSocialAuth1RequestHandler(
     console.warn(err)
     return new Response(jsonStringifyPretty(err), { status: 400 })
   }
+
+  if (provider === loginProvider.github && !enableGithub()) {
+    const errorMessage = "Github provider disabled"
+    const err = createResultError(op, errorMessage)
+    console.warn(err)
+    return new Response(jsonStringifyPretty(err), { status: 400 })
+  }
+
+  if (provider === loginProvider.dev && !enableSignInDev()) {
+    const errorMessage = "Dev provider disabled"
+    const err = createResultError(op, errorMessage)
+    console.warn(err)
+    return new Response(jsonStringifyPretty(err), { status: 400 })
+  }
+
   const code = url.searchParams.get("code")
   if (!code || code?.length <= 1) {
     const errorMessage = "missing code"
