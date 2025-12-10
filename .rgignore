@@ -87,12 +87,12 @@ convex/_generated
 astro
 
 # ai, ethereal and auto generated
-.roo
+/.roo
 AGENTS.md
 
-# project specific: docs
+# project
 /discarded
 /unused
 /docs
-/ui
+#/ui
 /commits.md
