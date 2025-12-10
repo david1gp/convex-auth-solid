@@ -1,13 +1,16 @@
-import { userProfileFormField } from "@/auth/ui/profile/userProfileFormField"
 import { DateView } from "@/ui/date/DateView"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, formModeIsReadOnly, type FormMode } from "~ui/input/form/formMode"
-import { Input } from "~ui/input/input/Input"
+import { FormFieldInput } from "@/ui/form/FormFieldInput"
+import { userProfileFormConfig, userProfileFormField } from "@/auth/ui/profile/userProfileFormField"
+import type { UserProfileFormStateManagement } from "./userProfileFormState"
+import type { UserRole } from "@/auth/model/userRole"
+import type { OrgRole } from "@/org/org_model/orgRole"
 import { Label } from "~ui/input/label/Label"
+import { Input } from "~ui/input/input/Input"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import type { UserProfileFormStateManagement } from "./userProfileFormState"
 
 interface HasUserProfileFormStateManagement {
   sm: UserProfileFormStateManagement
@@ -38,64 +41,69 @@ export function UserProfileForm(p: UserProfileFormProps) {
 
 function UserIdField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.userId}>{ttt("User ID")}</Label>
-      <Input
-        id={userProfileFormField.userId}
-        value={p.sm.state.userId.get()}
-        autocomplete="off"
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.userId}
+      value={p.sm.state.userId.get()}
+      error={p.sm.errors.userId.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.userId.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.userId.set(value)
+      }}
+    />
   )
 }
 
 function NameField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.name}>{ttt("Name")}</Label>
-      <Input
-        id={userProfileFormField.name}
-        value={p.sm.state.name.get()}
-        autocomplete="name"
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.name}
+      value={p.sm.state.name.get()}
+      error={p.sm.errors.name.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.name.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.name.set(value)
+      }}
+    />
   )
 }
 
 function UsernameField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.username}>{ttt("Username")}</Label>
-      <Input
-        id={userProfileFormField.username}
-        value={p.sm.state.username.get()}
-        autocomplete="username"
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.username}
+      value={p.sm.state.username.get()}
+      error={p.sm.errors.username.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.username.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.username.set(value)
+      }}
+    />
   )
 }
 
 function ImageField(p: HasUserProfileFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.image}>{ttt("Image URL")}</Label>
-      <Input
-        id={userProfileFormField.image}
-        type="url"
+      <FormFieldInput
+        config={userProfileFormConfig.image}
         value={p.sm.state.image.get()}
-        autocomplete="url"
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
+        error={p.sm.errors.image.get()}
+        mode={p.sm.mode}
+        onInput={(value) => {
+          p.sm.state.image.set(value)
+        }}
+        onBlur={(value) => {
+          p.sm.state.image.set(value)
+        }}
       />
       <Show when={p.sm.state.image.get()}>
         <img src={p.sm.state.image.get()} alt="Profile" class="w-16 h-16 rounded-full mt-2" />
@@ -106,64 +114,69 @@ function ImageField(p: HasUserProfileFormStateManagement) {
 
 function EmailField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.email}>{ttt("Email")}</Label>
-      <Input
-        id={userProfileFormField.email}
-        type="email"
-        value={p.sm.state.email.get()}
-        autocomplete="email"
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.email}
+      value={p.sm.state.email.get()}
+      error={p.sm.errors.email.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.email.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.email.set(value)
+      }}
+    />
   )
 }
 
 function RoleField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.role}>{ttt("Role")}</Label>
-      <Input
-        id={userProfileFormField.role}
-        value={p.sm.state.role.get()}
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.role}
+      value={p.sm.state.role.get()}
+      error={p.sm.errors.role.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.role.set(value as UserRole)
+      }}
+      onBlur={(value) => {
+        p.sm.state.role.set(value as UserRole)
+      }}
+    />
   )
 }
 
 function OrgHandleField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.orgHandle}>{ttt("Organization Handle")}</Label>
-      <Input
-        id={userProfileFormField.orgHandle}
-        value={p.sm.state.orgHandle.get()}
-        autocomplete="organization-name"
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.orgHandle}
+      value={p.sm.state.orgHandle.get()}
+      error={p.sm.errors.orgHandle.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.orgHandle.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.orgHandle.set(value)
+      }}
+    />
   )
 }
 
 function OrgRoleField(p: HasUserProfileFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.orgRole}>{ttt("Organization Role")}</Label>
-      <Input
-        id={userProfileFormField.orgRole}
-        value={p.sm.state.orgRole.get()}
-        class="w-full bg-gray-50 dark:bg-gray-800"
-        disabled={p.sm.mode === formMode.remove}
-        readOnly={formModeIsReadOnly(p.sm.mode)}
-      />
-    </div>
+    <FormFieldInput
+      config={userProfileFormConfig.orgRole}
+      value={p.sm.state.orgRole.get()}
+      error={p.sm.errors.orgRole.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.orgRole.set(value as OrgRole)
+      }}
+      onBlur={(value) => {
+        p.sm.state.orgRole.set(value as OrgRole)
+      }}
+    />
   )
 }
 
