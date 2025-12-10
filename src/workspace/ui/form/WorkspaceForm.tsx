@@ -1,6 +1,6 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
-import { inputMaxLength50, urlMaxLength } from "@/utils/valibot/inputMaxLength"
+import { inputMaxLength100, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceFormStateManagement"
 import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
@@ -82,7 +82,7 @@ function NameField(p: HasOrgFormStateManagement) {
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.name)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.name.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={inputMaxLength50}
+        maxLength={inputMaxLength100}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
@@ -114,7 +114,7 @@ function HandleField(p: HasOrgFormStateManagement) {
           "w-full",
           p.sm.errors.workspaceHandle.get() && "border-destructive focus-visible:ring-destructive",
         )}
-        maxLength={inputMaxLength50}
+        maxLength={inputMaxLength100}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
@@ -143,7 +143,7 @@ function DescriptionField(p: HasOrgFormStateManagement) {
           "w-full",
           p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
         )}
-        maxLength={urlMaxLength}
+        maxLength={inputMaxLengthUrl}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
@@ -171,7 +171,7 @@ function ImageField(p: HasOrgFormStateManagement) {
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.image)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.image.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={urlMaxLength}
+        maxLength={inputMaxLengthUrl}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
@@ -199,7 +199,7 @@ function UrlField(p: HasOrgFormStateManagement) {
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.url)(e.currentTarget.value)}
         class={classMerge("w-full", p.sm.errors.url.get() && "border-destructive focus-visible:ring-destructive")}
-        maxLength={urlMaxLength}
+        maxLength={inputMaxLengthUrl}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />

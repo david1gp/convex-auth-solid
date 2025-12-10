@@ -1,8 +1,9 @@
-import { convexSystemFields, fieldsCreatedAtUpdatedAt } from "@/utils/convex/convexSystemFields"
+import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
+import { convexSchemaSystemFields } from "@/utils/valibot/convexSchemaSystemFields"
 import { handleSchema } from "@/utils/valibot/handleSchema"
 import {
-  stringSchema1to50,
   stringSchemaDescription,
+  stringSchemaId,
   stringSchemaName,
   stringSchemaUrl,
 } from "@/utils/valibot/stringSchema"
@@ -11,7 +12,7 @@ import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
 import * as a from "valibot"
 
 export const workspaceDataSchemaFields = {
-  username: a.optional(stringSchema1to50),
+  username: a.optional(stringSchemaId),
   orgHandle: a.optional(handleSchema),
   workspaceHandle: a.pipe(handleSchema),
   // data
@@ -24,9 +25,9 @@ export const workspaceDataSchemaFields = {
 export const workspaceDataSchema = a.object(workspaceDataSchemaFields)
 
 export const workspaceSchema = a.object({
-  ...convexSystemFields,
+  ...convexSchemaSystemFields,
   ...workspaceDataSchemaFields,
-  ...fieldsCreatedAtUpdatedAt,
+  ...fieldsSchemaCreatedAtUpdatedAt,
 })
 
 export function workspaceDocToModel(w: DocWorkspace): WorkspaceModel {

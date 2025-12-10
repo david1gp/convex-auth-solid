@@ -1,5 +1,5 @@
 import type { HasConvexSystemFields } from "@/utils/convex/HasConvexSystemFields"
-import type { HasCreatedAtUpdatedAt } from "@/utils/convex/HasCreatedAtUpdatedAt"
+import type { HasCreatedAtUpdatedAt } from "@/utils/data/HasCreatedAtUpdatedAt"
 import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
 import * as a from "valibot"
