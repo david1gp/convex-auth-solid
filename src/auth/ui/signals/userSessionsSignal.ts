@@ -5,7 +5,6 @@ import { createResult, createResultError } from "~utils/result/Result"
 
 const userSessionsLocalStorageKey = "userSessions"
 const userSessionsSchema = a.array(userSessionSchema)
-let hasLoaded = false
 
 export const userSessionsSignal: SignalObject<UserSession[]> = createUserSessionsSignal()
 
@@ -31,15 +30,20 @@ function addUserSesssionOrReplace(userSessions: UserSession[], userProfile: User
 }
 
 function createUserSessionsSignal(): SignalObject<UserSession[]> {
+  let hasLoaded = false
   const signal = createSignalObject<UserSession[]>([])
 
-  // Load from localStorage if not already loaded
-  if (!hasLoaded) {
-    const result = userSessionsLoadFromLocalStorage()
-    if (result.success) {
-      signal.set(result.data)
+  // Override get to from localStorage if not already loaded
+  const originalGet = signal.get
+  signal.get = () => {
+    if (!hasLoaded) {
+      const result = userSessionsLoadFromLocalStorage()
+      if (result.success) {
+        signal.set(result.data)
+      }
+      hasLoaded = true
     }
-    hasLoaded = true
+    return originalGet()
   }
 
   // Override the set method to also save to localStorage
@@ -48,22 +52,6 @@ function createUserSessionsSignal(): SignalObject<UserSession[]> {
     const result = originalSet(value)
     userSessionsSaveToLocalStorage(value)
     return result
-  }
-
-  // Listen to localStorage events to update session list
-  function handleStorageEvent(event: StorageEvent) {
-    if (event.key === userSessionsLocalStorageKey && event.newValue !== null) {
-      const schema = a.pipe(a.string(), a.parseJson(), userSessionsSchema)
-      const parsing = a.safeParse(schema, event.newValue)
-      if (parsing.success) {
-        signal.set(parsing.output)
-      }
-    }
-  }
-
-  // Add event listener
-  if (typeof window !== "undefined") {
-    window.addEventListener("storage", handleStorageEvent)
   }
 
   return signal
@@ -87,4 +75,26 @@ export function userSessionsSaveToLocalStorage(sessions: UserSession[]) {
   const op = "userSessionsSaveToLocalStorage"
   const serialized = JSON.stringify(sessions, null, 2)
   localStorage.setItem(userSessionsLocalStorageKey, serialized)
+}
+
+import { onCleanup, onMount } from "solid-js"
+
+export function userSessionsSignalRegisterHandler(signal = userSessionsSignal) {
+  function handleStorageEvent(event: StorageEvent) {
+    if (event.key != userSessionsLocalStorageKey) return
+    if (event.newValue == null) return
+    const schema = a.pipe(a.string(), a.parseJson(), userSessionsSchema)
+    const parsing = a.safeParse(schema, event.newValue)
+    if (parsing.success) {
+      signal.set(parsing.output)
+    }
+  }
+  onMount(() => {
+    if (typeof window == "undefined") return
+    window.addEventListener("storage", handleStorageEvent)
+  })
+  onCleanup(() => {
+    if (typeof window == "undefined") return
+    window.removeEventListener("storage", handleStorageEvent)
+  })
 }
