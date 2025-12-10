@@ -43,7 +43,7 @@ export async function getGoogleUserProfile({
   }
   const result = a.safeParse(a.pipe(a.string(), a.parseJson(), googleUserProfileSchema), text)
   if (!result.success) {
-    const errorMessage = authErrorMessages.profileFailedToParse(provider, result.issues as any, text)
+    const errorMessage = authErrorMessages.profileFailedToParse(provider, result.issues, text)
     return createResultError(op, errorMessage, text)
   }
   return createResult(result.output)

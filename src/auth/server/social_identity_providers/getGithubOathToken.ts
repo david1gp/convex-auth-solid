@@ -49,7 +49,7 @@ export async function getGithubOathToken(code: string): PromiseResult<GitHubOaut
   const json = searchParamsToObject(text)
   const result = a.safeParse(githubSchema, json)
   if (!result.success) {
-    const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues as any, text)
+    const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues, text)
     return createResultError(op, errorMessage, text)
   }
   return createResult({ access_token: result.output.access_token })

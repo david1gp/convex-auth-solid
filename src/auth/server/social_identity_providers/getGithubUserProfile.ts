@@ -60,7 +60,7 @@ export async function getGithubUserProfile(access_token: string): PromiseResult<
   }
   const result = a.safeParse(a.pipe(a.string(), a.parseJson(), githubProfileSchema), text)
   if (!result.success) {
-    const errorMessage = authErrorMessages.profileFailedToParse(provider, result.issues as any, text)
+    const errorMessage = authErrorMessages.profileFailedToParse(provider, result.issues, text)
     return createResultError(op, errorMessage, text)
   }
   const profile: GitHubUserProfile = {

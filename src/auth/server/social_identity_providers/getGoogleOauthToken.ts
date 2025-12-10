@@ -58,7 +58,7 @@ export async function getGoogleOauthToken(code: string): PromiseResult<GoogleOau
   }
   const result = a.safeParse(a.pipe(a.string(), a.parseJson(), googleOauthTokenSchema), text)
   if (!result.success) {
-    const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues as any, text)
+    const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues, text)
     return createResultError(op, errorMessage, text)
   }
   return createResult(result.output)
