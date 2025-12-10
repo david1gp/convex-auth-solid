@@ -2,7 +2,7 @@ import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { OrgInvitationListSection, type OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
 import { convexSystemFieldsCreateEmpty } from "@/utils/convex/HasConvexSystemFields"
-import { createdAtUpdatedAtCreate } from "@/utils/convex/HasCreatedAtUpdatedAt"
+import { createdAtUpdatedAtCreate } from "@/utils/data/HasCreatedAtUpdatedAt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function DemoOrgInvitationList() {
