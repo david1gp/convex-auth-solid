@@ -1,10 +1,11 @@
+import { userRole } from "@/auth/model/userRole"
 import { userSessionSchema, type UserSession } from "@/auth/model/UserSession"
+import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
 import * as a from "valibot"
 import { createSignalObject, type SetterSimplified, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
 const userSessionsSessionStorageKey = "userSession"
-let hasLoaded = false
 
 export const userSessionSignal: SignalObject<UserSession | null> = createUserSessionsSignal()
 
@@ -22,12 +23,14 @@ function createUserSessionsSignal(): SignalObject<UserSession | null> {
   const signal = createSignalObject<UserSession | null>(null)
 
   // Load from localStorage if not already loaded
-  if (!hasLoaded) {
-    const result = userSessionLoadFromSessionStorage()
-    if (result.success) {
-      signal.set(result.data)
+  const result = userSessionLoadFromSessionStorage()
+  if (result.success) {
+    signal.set(result.data)
+  } else {
+    const autoLoginSession = autoLoginIfUser()
+    if (autoLoginSession) {
+      signal.set(autoLoginSession)
     }
-    hasLoaded = true
   }
 
   // Override the set method to also save to localStorage
@@ -39,6 +42,22 @@ function createUserSessionsSignal(): SignalObject<UserSession | null> {
   }
 
   return signal
+}
+
+function autoLoginIfUser(): UserSession | null {
+  const sessions = userSessionsSignal.get()
+  return shouldAutologin(sessions)
+}
+
+function shouldAutologin(sessions: UserSession[]): UserSession | null {
+  if (sessions.length <= 0) return null
+  if (sessions.length >= 2) return null
+  // const isSingle = sessions.length === 1
+  const single = sessions[0]
+  if (!single) return null
+  const hasUserRole = single.profile.role == userRole.user
+  if (!hasUserRole) return null
+  return single
 }
 
 function userSessionLoadFromSessionStorage(): Result<UserSession> {
