@@ -13,7 +13,7 @@ import { Router } from "@solidjs/router"
 import { render } from "solid-js/web"
 import { generateDemoRoutes } from "~ui/demo_pages/generateDemoRoutes"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
-import "./global.css"
+import "./tailwind.css"
 
 const routesApp = [
   {
