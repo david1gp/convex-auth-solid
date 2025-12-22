@@ -3,6 +3,7 @@
 import { getRoutesApp } from "@/app/getRoutesApp"
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import { NavDemo } from "@/app/nav/NavDemo"
+import { posthogInit } from "@/app/posthog/posthog"
 import { getRoutesAuth } from "@/auth/ui/getRoutesAuth"
 import { getRoutesOrgInvitation } from "@/org/invitation_url/getRoutesOrgInvitation"
 import { getRoutesOrgMember } from "@/org/member_url/getRoutesOrgMember"
@@ -14,6 +15,8 @@ import { render } from "solid-js/web"
 import { generateDemoRoutes } from "~ui/demo_pages/generateDemoRoutes"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import "./tailwind.css"
+
+posthogInit()
 
 const routesApp = [
   {
