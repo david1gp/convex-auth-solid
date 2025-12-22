@@ -1,6 +1,6 @@
 import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 import { OrgMemberCard } from "@/org/member_ui/view/OrgMemberCard"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { orgPageSection } from "@/org/org_ui/view/orgPageSection"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { For, Show } from "solid-js"

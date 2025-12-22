@@ -1,5 +1,5 @@
 import { orgInvitationDataSchemaFields } from "@/org/invitation_model/orgInvitationSchema"
-import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as va from "valibot"

@@ -1,7 +1,7 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
 import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { DateView } from "@/ui/date/DateView"
 import { ClipboardCopyButtonIcon } from "@/ui/links/ClipboardCopyButtonIcon"
 import { createMutation } from "@/utils/convex/createMutation"

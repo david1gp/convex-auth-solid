@@ -1,7 +1,7 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { orgFormField } from "@/org/org_ui/form/orgFormField"
 import type { OrgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { inputMaxLength100, inputMaxLengthDescription, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
@@ -25,7 +25,7 @@ export interface OrgContentProps extends MayHaveClass, HasOrgFormStateManagement
 }
 
 export function OrgForm(p: OrgContentProps) {
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (

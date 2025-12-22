@@ -1,4 +1,4 @@
-import { orgRoleSchema } from "@/org/org_model/orgRole"
+import { orgRoleSchema } from "@/org/org_model_field/orgRole"
 import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
 import { stringSchemaId } from "@/utils/valibot/stringSchema"
 import * as a from "valibot"

@@ -1,7 +1,7 @@
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { OrgInvitationCard } from "@/org/invitation_ui/view/OrgInvitationCard"
 import { urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { For, Show, splitProps } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"

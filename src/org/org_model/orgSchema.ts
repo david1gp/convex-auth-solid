@@ -1,6 +1,6 @@
 import type { DocOrg } from "@/org/org_convex/IdOrg"
-import { orgHandleSchema } from "@/org/org_model/orgHandleSchema"
 import type { OrgModel } from "@/org/org_model/OrgModel"
+import { orgHandleSchema } from "@/org/org_model_field/orgHandleSchema"
 import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
 import { stringSchema0to500, stringSchema0to5000, stringSchemaName } from "@/utils/valibot/stringSchema"
 import * as a from "valibot"

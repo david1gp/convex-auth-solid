@@ -5,7 +5,7 @@ import {
 } from "@/auth/convex/email/sendEmailOrgInvitation"
 import type { OrgInvitationDataModel } from "@/org/invitation_model/OrgInvitationModel"
 import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
-import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"

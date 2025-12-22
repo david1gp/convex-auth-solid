@@ -2,9 +2,9 @@ import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListen
 import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
 import { orgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
 import type { OrgInvitationFormStateManagement } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
-import { orgRole } from "@/org/org_model/orgRole"
-import { orgRoleText } from "@/org/org_model/orgRoleText"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { orgRole } from "@/org/org_model_field/orgRole"
+import { orgRoleText } from "@/org/org_model_field/orgRoleText"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
@@ -25,7 +25,7 @@ export interface OrgInvitationContentProps extends MayHaveTitle, MayHaveClass, H
 }
 
 export function OrgInvitationForm(p: OrgInvitationContentProps) {
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (

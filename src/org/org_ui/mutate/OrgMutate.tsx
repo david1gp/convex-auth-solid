@@ -1,4 +1,4 @@
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { orgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { OrgLoader, type OrgComponentProps } from "@/org/org_ui/mutate/OrgLoader"

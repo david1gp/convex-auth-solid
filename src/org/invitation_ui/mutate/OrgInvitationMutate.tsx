@@ -6,8 +6,8 @@ import {
   type OrgInvitationFormActions,
 } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 import { urlOrgInvitationList } from "@/org/invitation_url/urlOrgInvitation"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
-import type { HasOrgInvitationCode } from "@/org/org_model/HasOrgInvitationCode"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
+import type { HasOrgInvitationCode } from "@/org/org_model_field/HasOrgInvitationCode"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createAction } from "@/utils/convex/createAction"
 import { createQuery } from "@/utils/convex/createQuery"

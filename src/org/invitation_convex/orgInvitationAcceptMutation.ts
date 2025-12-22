@@ -1,7 +1,7 @@
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 import type { UserSession } from "@/auth/model/UserSession"
-import { loginMethod } from "@/auth/model/loginMethod"
+import { loginMethod } from "@/auth/model_field/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgGetQueryInternalFn } from "@/org/org_convex/orgGetQuery"

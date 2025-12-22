@@ -1,8 +1,8 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { orgMemberFormField } from "@/org/member_ui/form/orgMemberFormField"
 import type { OrgMemberFormStateManagement } from "@/org/member_ui/form/orgMemberFormStateManagement"
-import { orgRole } from "@/org/org_model/orgRole"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { orgRole } from "@/org/org_model_field/orgRole"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
@@ -21,7 +21,7 @@ export interface OrgMemberContentProps extends MayHaveClass, HasOrgMemberFormSta
 }
 
 export function OrgMemberForm(p: OrgMemberContentProps) {
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (

@@ -1,5 +1,5 @@
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
-import { orgRoleSchema } from "@/org/org_model/orgRole"
+import { orgRoleSchema } from "@/org/org_model_field/orgRole"
 import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { handleSchema } from "@/utils/valibot/handleSchema"

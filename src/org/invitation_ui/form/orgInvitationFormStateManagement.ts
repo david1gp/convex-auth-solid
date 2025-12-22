@@ -1,6 +1,6 @@
 import type { DocOrgInvitation, IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { orgInvitationFormField, type OrgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
-import { orgRole, orgRoleSchema, type OrgRole } from "@/org/org_model/orgRole"
+import { orgRole, orgRoleSchema, type OrgRole } from "@/org/org_model_field/orgRole"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { mdiAlertCircle } from "@mdi/js"

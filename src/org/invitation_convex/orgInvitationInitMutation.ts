@@ -1,7 +1,7 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitationCreateInternalMutation"
-import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internal } from "@convex/_generated/api"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"

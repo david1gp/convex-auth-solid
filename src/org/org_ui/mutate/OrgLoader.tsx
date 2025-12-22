@@ -1,6 +1,6 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
 import type { HasOrgModel } from "@/org/org_model/HasOrgModel"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQueryCached } from "@/utils/cache/createQueryCached"

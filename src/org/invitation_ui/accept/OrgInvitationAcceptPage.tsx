@@ -6,9 +6,10 @@ import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { orgInvitationSchema } from "@/org/invitation_model/orgInvitationSchema"
 import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
-import type { HasOrgInvitationCode } from "@/org/org_model/HasOrgInvitationCode"
-import { orgRoleText } from "@/org/org_model/orgRoleText"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
+import type { HasOrgInvitationCode } from "@/org/org_model_field/HasOrgInvitationCode"
+import type { OrgRole } from "@/org/org_model_field/orgRole"
+import { orgRoleText } from "@/org/org_model_field/orgRoleText"
 import { OrgViewInformation } from "@/org/org_ui/view/OrgViewInformation"
 import { urlOrgView } from "@/org/org_url/urlOrg"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
@@ -126,7 +127,7 @@ function AcceptSection(p: InvitationDetailsProps) {
     <section class={classArr(classesCardWrapperP8, "max-w-md mx-auto", "mt-10 mb-15")}>
       <h2 class="text-xl font-semibold mb-4">{ttt("Accept Invitation")}</h2>
       <p class="text-muted-foreground mb-4">
-        {ttt("You have been invited to join as")} {orgRoleText[p.invitation.role]}.
+        {ttt("You have been invited to join as")} {orgRoleText[p.invitation.role as OrgRole]}.
       </p>
       <AcceptButton {...p} />
     </section>

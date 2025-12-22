@@ -1,4 +1,4 @@
-import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { fieldsCreatedAtUpdatedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"

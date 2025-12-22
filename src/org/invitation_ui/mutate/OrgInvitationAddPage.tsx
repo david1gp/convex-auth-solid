@@ -7,7 +7,7 @@ import {
   type OrgInvitationFormData,
 } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 import { urlOrgInvitationAccept, urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { createMutation } from "@/utils/convex/createMutation"

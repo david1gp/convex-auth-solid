@@ -1,4 +1,4 @@
-import type { OrgRole } from "@/org/org_model/orgRole"
+import type { OrgRole } from "@/org/org_model_field/orgRole"
 import type { HasCreatedAtUpdatedAt } from "@/utils/data/HasCreatedAtUpdatedAt"
 
 export type OrgMemberDataModel = {

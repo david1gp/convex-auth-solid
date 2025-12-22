@@ -1,4 +1,4 @@
-import { orgRoleValidator } from "@/org/org_model/orgRoleValidator"
+import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { authMutationR } from "@convex/utils/authMutationR"
 import { createTokenValidator } from "@convex/utils/createTokenValidator"

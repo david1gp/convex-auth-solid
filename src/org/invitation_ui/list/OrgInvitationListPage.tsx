@@ -4,7 +4,7 @@ import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationMod
 import type { OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
 import { OrgInvitationCard } from "@/org/invitation_ui/view/OrgInvitationCard"
 import { urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
-import type { HasOrgHandle } from "@/org/org_model/HasOrgHandle"
+import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { PageHeader } from "@/ui/header/PageHeader"
 import { NoData } from "@/ui/illustrations/NoData"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
