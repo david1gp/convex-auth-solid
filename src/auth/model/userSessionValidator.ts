@@ -1,4 +1,4 @@
-import { loginMethodValidator } from "@/auth/model/loginMethodValidator"
+import { loginMethodValidator } from "@/auth/model_field/loginMethodValidator"
 import { v } from "convex/values"
 import { userProfileValidator } from "./UserProfile"
 

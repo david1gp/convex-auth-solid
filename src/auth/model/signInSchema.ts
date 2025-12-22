@@ -1,4 +1,4 @@
-import { passwordSchema } from "@/auth/model/passwordSchema"
+import { passwordSchema } from "@/auth/model_field/passwordSchema"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { inputMaxLength100 } from "@/utils/valibot/inputMaxLength"
 import * as a from "valibot"

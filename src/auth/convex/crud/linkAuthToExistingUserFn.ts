@@ -1,5 +1,5 @@
-import { socialLoginProviderValidator } from "@/auth/model/loginMethodValidator"
-import type { LoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProviderValidator } from "@/auth/model_field/loginMethodValidator"
+import type { LoginProvider } from "@/auth/model_field/socialLoginProvider"
 import type { Id } from "@convex/_generated/dataModel"
 import { type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"

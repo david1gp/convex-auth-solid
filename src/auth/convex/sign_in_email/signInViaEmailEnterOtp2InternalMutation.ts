@@ -1,6 +1,6 @@
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 import type { UserSession } from "@/auth/model/UserSession"
-import { loginMethod } from "@/auth/model/loginMethod"
+import { loginMethod } from "@/auth/model_field/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"

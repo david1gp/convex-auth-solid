@@ -1,4 +1,4 @@
-import { loginProvider } from "@/auth/model/socialLoginProvider"
+import { loginProvider } from "@/auth/model_field/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"

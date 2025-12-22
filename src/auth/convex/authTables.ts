@@ -1,5 +1,5 @@
-import { loginMethodValidator } from "@/auth/model/loginMethodValidator"
-import { userRoleValidator } from "@/auth/model/userRoleValidator"
+import { loginMethodValidator } from "@/auth/model_field/loginMethodValidator"
+import { userRoleValidator } from "@/auth/model_field/userRoleValidator"
 import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
 import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt"
 import { defineTable } from "convex/server"

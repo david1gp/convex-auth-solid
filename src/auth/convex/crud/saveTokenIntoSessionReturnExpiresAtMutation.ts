@@ -1,5 +1,5 @@
-import type { LoginMethod } from "@/auth/model/loginMethod"
-import { loginMethodValidator } from "@/auth/model/loginMethodValidator"
+import type { LoginMethod } from "@/auth/model_field/loginMethod"
+import { loginMethodValidator } from "@/auth/model_field/loginMethodValidator"
 import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
 import type { Id } from "@convex/_generated/dataModel"
 import type { MutationCtx } from "@convex/_generated/server"

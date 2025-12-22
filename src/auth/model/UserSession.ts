@@ -1,5 +1,5 @@
-import { loginMethodSchema, type LoginMethod } from "@/auth/model/loginMethod"
 import { userProfileSchema, type UserProfile } from "@/auth/model/UserProfile"
+import { loginMethodSchema, type LoginMethod } from "@/auth/model_field/loginMethod"
 import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
 import dayjs from "dayjs"
 import * as a from "valibot"

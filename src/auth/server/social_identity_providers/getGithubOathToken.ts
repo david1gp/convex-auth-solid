@@ -1,6 +1,6 @@
 import { envGithubClientSecretResult } from "@/app/env/private/envGithubClientSecretResult"
 import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
-import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import { queryString } from "~utils/url/queryString"

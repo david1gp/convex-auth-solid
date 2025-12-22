@@ -1,4 +1,4 @@
-import { requiredPasswordLength } from "@/auth/model/requiredPasswordLength"
+import { requiredPasswordLength } from "@/auth/model_field/requiredPasswordLength"
 import { cantBeEmpty } from "@/utils/valibot/cantBeEmpty"
 import { inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 import * as a from "valibot"

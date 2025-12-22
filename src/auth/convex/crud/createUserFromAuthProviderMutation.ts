@@ -1,6 +1,6 @@
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserProfile } from "@/auth/model/UserProfile"
-import { userRole } from "@/auth/model/userRole"
+import { userRole } from "@/auth/model_field/userRole"
 import {
   commonAuthProviderValidator,
   getUserNameFromCommonAuthProvider,

@@ -1,4 +1,4 @@
-import { otpSchema } from "@/auth/model/otpSchema"
+import { otpSchema } from "@/auth/model_field/otpSchema"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import * as a from "valibot"
 

@@ -1,5 +1,5 @@
-import type { LoginProvider } from "@/auth/model/socialLoginProvider"
 import type { UserSession } from "@/auth/model/UserSession"
+import type { LoginProvider } from "@/auth/model_field/socialLoginProvider"
 import type { CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import { socialLoginGetUserProfile } from "@/auth/server/social_identity_providers/socialLoginGetUserProfile"
 import { internal } from "@convex/_generated/api"

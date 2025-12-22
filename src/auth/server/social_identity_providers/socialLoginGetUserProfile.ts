@@ -1,4 +1,4 @@
-import { socialLoginProvider, type LoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProvider, type LoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { authLog } from "@/auth/server/authLog"
 import type { CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import { getGithubOathToken } from "@/auth/server/social_identity_providers/getGithubOathToken"

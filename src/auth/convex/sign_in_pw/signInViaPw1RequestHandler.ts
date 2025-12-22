@@ -1,7 +1,7 @@
 import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
-import { loginMethod } from "@/auth/model/loginMethod"
 import { signInViaPwSchema } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"
+import { loginMethod } from "@/auth/model_field/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"

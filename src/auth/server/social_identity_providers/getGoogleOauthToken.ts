@@ -1,6 +1,6 @@
 import { envGoogleClientSecretResult } from "@/app/env/private/envGoogleClientSecretResult"
 import { envGoogleClientIdResult } from "@/app/env/public/envGoogleClientIdResult"
-import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 import * as a from "valibot"

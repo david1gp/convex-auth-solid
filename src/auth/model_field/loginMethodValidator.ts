@@ -1,5 +1,5 @@
-import { loginMethod, type LoginMethod } from "@/auth/model/loginMethod"
-import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { loginMethod, type LoginMethod } from "@/auth/model_field/loginMethod"
+import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { v } from "convex/values"
 
 export const loginMethodValidator = v.union(
