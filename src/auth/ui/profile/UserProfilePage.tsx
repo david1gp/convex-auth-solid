@@ -1,6 +1,5 @@
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
-import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
 import type { DocUser } from "@/auth/convex/IdUser"
@@ -43,7 +42,6 @@ export function UserProfilePage() {
             childrenCenter={
               <>
                 <OrganizationListNavButton />
-                <WorkspaceListLinkNavButton />
               </>
             }
           />

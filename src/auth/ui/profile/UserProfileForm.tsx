@@ -1,16 +1,15 @@
+import type { UserRole } from "@/auth/model_field/userRole"
+import { userProfileFormConfig, userProfileFormField } from "@/auth/ui/profile/userProfileFormField"
+import type { OrgRole } from "@/org/org_model_field/orgRole"
 import { DateView } from "@/ui/date/DateView"
+import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, formModeIsReadOnly, type FormMode } from "~ui/input/form/formMode"
-import { FormFieldInput } from "@/ui/form/FormFieldInput"
-import { userProfileFormConfig, userProfileFormField } from "@/auth/ui/profile/userProfileFormField"
-import type { UserProfileFormStateManagement } from "./userProfileFormState"
-import type { UserRole } from "@/auth/model/userRole"
-import type { OrgRole } from "@/org/org_model/orgRole"
+import { type FormMode } from "~ui/input/form/formMode"
 import { Label } from "~ui/input/label/Label"
-import { Input } from "~ui/input/input/Input"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
+import type { UserProfileFormStateManagement } from "./userProfileFormState"
 
 interface HasUserProfileFormStateManagement {
   sm: UserProfileFormStateManagement

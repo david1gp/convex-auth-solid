@@ -1,4 +1,4 @@
-import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { mdiGithub, mdiGoogle } from "@mdi/js"

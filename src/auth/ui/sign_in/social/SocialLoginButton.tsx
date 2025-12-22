@@ -1,4 +1,4 @@
-import type { SocialLoginProvider } from "@/auth/model/socialLoginProvider"
+import type { SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
 import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"

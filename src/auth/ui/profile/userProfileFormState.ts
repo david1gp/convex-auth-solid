@@ -1,6 +1,6 @@
 import type { UserProfile } from "@/auth/model/UserProfile"
-import type { UserRole } from "@/auth/model/userRole"
-import type { OrgRole } from "@/org/org_model/orgRole"
+import type { UserRole } from "@/auth/model_field/userRole"
+import type { OrgRole } from "@/org/org_model_field/orgRole"
 import type { FormMode } from "~ui/input/form/formMode"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 

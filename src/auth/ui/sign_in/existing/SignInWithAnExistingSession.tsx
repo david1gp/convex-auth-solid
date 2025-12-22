@@ -1,5 +1,5 @@
 import type { UserSession } from "@/auth/model/UserSession"
-import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
+import { DeleteEarlierSessions } from "@/auth/ui/sign_in/existing/DeleteEarlierSessions"
 import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { navigateTo } from "@/utils/router/navigateTo"
@@ -14,6 +14,7 @@ import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
+import { signInSessionExisting } from "../logic/signInSessionExisting"
 
 dayjs.extend(relativeTime)
 
@@ -36,9 +37,7 @@ export function SignInWithAnExistingSession(p: SignInWithAnExistingSessionProps)
         <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>{ttt("Continue with an earlier session")}</h2>
         <div class={p.innerClass ?? "contents"}>
           <For each={sessions()}>{(session: UserSession) => <SessionButton session={session} />}</For>
-          <Button variant={buttonVariant.subtle} onClick={deleteAllSessions}>
-            {ttt("Delete earlier sessions")}
-          </Button>
+          <DeleteEarlierSessions />
         </div>
       </section>
     </Show>
@@ -73,7 +72,7 @@ function SessionButton(p: SessionButtonProps) {
 }
 
 function sessionOnClick(session: UserSession) {
-  userSessionSignal.set(session)
+  signInSessionExisting(session)
   const url = urlSignInRedirectUrl()
   navigateTo(url)
 }
@@ -92,8 +91,4 @@ function SessionImageFallback(p: { name: string }) {
       <span class="">{p.name.charAt(0).toUpperCase()}</span>
     </div>
   )
-}
-
-function deleteAllSessions() {
-  userSessionsSignal.set([])
 }

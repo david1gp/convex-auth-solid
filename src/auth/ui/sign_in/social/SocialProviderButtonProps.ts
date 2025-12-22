@@ -1,4 +1,4 @@
-import type { SocialLoginProvider } from "@/auth/model/socialLoginProvider"
+import type { SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { iconGithub } from "~ui/static/icons/iconGithub"
 import { iconGoogle } from "~ui/static/icons/iconGoogle"
 

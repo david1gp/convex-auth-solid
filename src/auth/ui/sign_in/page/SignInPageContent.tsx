@@ -1,5 +1,5 @@
 import { enableGithub } from "@/app/config/enableGithub"
-import { loginProvider } from "@/auth/model/socialLoginProvider"
+import { loginProvider } from "@/auth/model_field/socialLoginProvider"
 import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { AuthSectionHeroIcon } from "@/auth/ui/shared/AuthSectionHeroIcon"
 import { DevLoginSection } from "@/auth/ui/sign_in/dev/DevLoginSection"

@@ -1,9 +1,9 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { createUrl } from "@/utils/router/createUrl"
 import { searchParamSet } from "@/utils/router/searchParamSet"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
 import { onMount, type Component } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
@@ -19,7 +19,7 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
     url = createUrl()
   })
   const sm = createSignInViaEmailStateManagement()
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
   return (
@@ -46,11 +46,11 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
       />
       <ButtonIcon
         type="submit"
-        disabled={sm.state.isSubmitting.get()}
+        isLoading={sm.isSubmitting.get()}
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="w-full"
       >
-        {sm.state.isSubmitting.get() ? ttt("Sending link...") : ttt("Send link")}
+        {sm.isSubmitting.get() ? ttt("Sending link...") : ttt("Send link")}
       </ButtonIcon>
     </form>
   )

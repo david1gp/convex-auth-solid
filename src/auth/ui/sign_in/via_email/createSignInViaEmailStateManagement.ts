@@ -5,19 +5,20 @@ import { navigateTo } from "@/utils/router/navigateTo"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import posthog from "posthog-js"
 import * as a from "valibot"
+import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type SignInViaEmailUiState = {
   email: SignalObject<string>
-  isSubmitting: SignalObject<boolean>
 }
 
 function signInViaEmailCreateUiState(): SignInViaEmailUiState {
   return {
     email: createSignalObject(""),
-    isSubmitting: createSignalObject(false),
   }
 }
 
@@ -63,6 +64,7 @@ export type SignInViaEmailFormData = {
 
 export type SignInViaEmailStateManagement = {
   state: SignInViaEmailUiState
+  isSubmitting: SignalObject<boolean>
   fillTestData: () => void
   errors: SignInViaEmailErrorState
   hasErrors: () => boolean
@@ -75,15 +77,17 @@ type LocationType = { pathname: string }
 
 export function createSignInViaEmailStateManagement(): SignInViaEmailStateManagement {
   const state = signInViaEmailCreateUiState()
+  const isSubmitting = createSignalObject(false)
   const errors = createSignInViaEmailErrorState()
 
   return {
     state,
+    isSubmitting,
     fillTestData: () => fillTestData(state, errors),
     errors,
     hasErrors: () => hasErrors(errors),
     validateOnChange: (field: SignInViaEmailFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, state, errors),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, state, isSubmitting, errors),
   }
 }
 
@@ -101,8 +105,20 @@ function validateOnChange(
   }, debounceMs)
 }
 
-function handleSubmit(e: SubmitEvent, state: SignInViaEmailUiState, errors: SignInViaEmailErrorState) {
+function handleSubmit(
+  e: SubmitEvent,
+  state: SignInViaEmailUiState,
+  isSubmitting: SignalObject<boolean>,
+  errors: SignInViaEmailErrorState,
+) {
   e.preventDefault()
+
+  if (isSubmitting.get()) {
+    const title = ttt("Submission in progress, please wait")
+    console.info(title)
+    return
+  }
+
   const emailResult = validateFieldResult("email", state.email.get())
 
   if (!emailResult.success) {
@@ -111,21 +127,30 @@ function handleSubmit(e: SubmitEvent, state: SignInViaEmailUiState, errors: Sign
     errors.email.set("")
   }
 
-  handleSignInViaEmail(state.email.get(), state, errors)
+  handleSignInViaEmail(state.email.get(), state, isSubmitting, errors)
 }
 
-async function handleSignInViaEmail(email: string, state: SignInViaEmailUiState, errors: SignInViaEmailErrorState) {
+async function handleSignInViaEmail(
+  email: string,
+  state: SignInViaEmailUiState,
+  isSubmitting: SignalObject<boolean>,
+  errors: SignInViaEmailErrorState,
+) {
+  const op = "handleSignInViaEmail"
   console.log("Sign in via email submitted", {
     email: state.email.get(),
   })
-  state.isSubmitting.set(true)
+  isSubmitting.set(true)
   const result = await apiAuthSignInViaEmail({ email })
-  state.isSubmitting.set(false)
+  isSubmitting.set(false)
+
+  posthog.capture(op, result)
 
   if (!result.success) {
-    toastAdd({ title: "Error signing in", description: result.errorMessage })
+    toastAdd({ title: ttt("Error signing in"), description: result.errorMessage })
     return
   }
+  toastAdd({ title: ttt("Successfully signed in"), variant: toastVariant.success })
 
   const returnPath = urlSignInRedirectUrl(document.location.pathname)
   const url = urlSignInEnterOtp(email, "", returnPath)

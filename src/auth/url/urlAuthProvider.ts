@@ -1,6 +1,6 @@
 import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
 import { envGoogleClientIdResult } from "@/app/env/public/envGoogleClientIdResult"
-import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 
 export function urlAuthProvider(provider: SocialLoginProvider, redirectUrl: string = "") {

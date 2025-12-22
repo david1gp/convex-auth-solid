@@ -1,12 +1,14 @@
 import { apiAuthSignInViaPw } from "@/auth/api/apiAuthSignInViaPw"
-import { passwordSchema } from "@/auth/model/passwordSchema"
-import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
-import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
+import { passwordSchema } from "@/auth/model_field/passwordSchema"
+import { signInSessionNew } from "@/auth/ui/sign_in/logic/signInSessionNew"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import posthog from "posthog-js"
 import * as a from "valibot"
+import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type SignInUiState = {
@@ -102,6 +104,12 @@ function validateOnChange(field: SignInViaPwFormField, state: SignInUiState, err
 async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignInErrorState) {
   e.preventDefault()
 
+  if (state.isSubmitting.get()) {
+    const title = ttt("Submission in progress, please wait")
+    console.info(title)
+    return
+  }
+
   const email = state.email.get()
   const password = state.password.get()
 
@@ -128,15 +136,19 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
   state.isSubmitting.set(true)
   const result = await apiAuthSignInViaPw({ email, pw: password })
   state.isSubmitting.set(false)
+  const op = "handleSubmit.apiAuthSignInViaPw"
+  posthog.capture(op, result)
 
   if (!result.success) {
-    toastAdd({ title: "Error signing in", description: result.errorMessage })
+    const errorMessage = ttt("Error signing in")
+    console.error(op, errorMessage, result)
+    toastAdd({ title: errorMessage, description: result.errorMessage })
     return
   }
+  toastAdd({ title: ttt("Successfully signed in"), variant: toastVariant.success })
 
   const userSession = result.data
-  userSessionsSignalAdd(userSession)
-  userSessionSignal.set(userSession)
+  signInSessionNew(userSession)
   console.log("Signed in via password successfully")
 }
 

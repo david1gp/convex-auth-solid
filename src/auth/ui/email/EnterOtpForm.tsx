@@ -1,4 +1,4 @@
-import { otpSchema } from "@/auth/model/otpSchema"
+import { otpSchema } from "@/auth/model_field/otpSchema"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { createUrl } from "@/utils/router/createUrl"
 import { searchParamGet } from "@/utils/router/searchParamGet"
@@ -70,6 +70,11 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault()
+    if (isSubmitting.get()) {
+      const title = ttt("Submission in progress, please wait")
+      console.info(title)
+      return
+    }
     const otpValue = otp.get()
     const valid = validateOtp(otpValue)
     if (!valid) return
@@ -105,9 +110,10 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
       </div>
       <ButtonIcon
         type="submit"
-        disabled={isSubmitting.get() || otp.get().length !== 6}
-        icon={mdiEmailCheck}
         variant={buttonVariant.primary}
+        icon={mdiEmailCheck}
+        disabled={otp.get().length !== 6}
+        isLoading={isSubmitting.get()}
         class="w-full"
       >
         {isSubmitting.get() ? "Verifying..." : p.buttonText}

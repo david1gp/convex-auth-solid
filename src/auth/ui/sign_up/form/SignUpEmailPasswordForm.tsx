@@ -3,12 +3,12 @@ import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVar
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { Checkbox } from "~ui/input/check/Checkbox"
 import { formMode } from "~ui/input/form/formMode"
-import { Button } from "~ui/interactive/button/Button"
+import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
@@ -19,7 +19,7 @@ interface SignUpEmailPasswordFormProps extends MayHaveClass {}
 export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
   const sm = signUpCreateStateManagement()
 
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
 
@@ -94,14 +94,14 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         </Show>
       </Checkbox>
 
-      <Button
+      <ButtonIcon
         type="submit"
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="text-lg"
-        disabled={sm.isSubmitting.get()}
+        isLoading={sm.isSubmitting.get()}
       >
         {sm.isSubmitting.get() ? "Signing up..." : "Sign up"}
-      </Button>
+      </ButtonIcon>
     </form>
   )
 }

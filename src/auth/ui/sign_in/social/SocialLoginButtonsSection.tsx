@@ -1,4 +1,4 @@
-import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { buttonSize } from "~ui/interactive/button/buttonCva"
 import { classArr } from "~ui/utils/classArr"

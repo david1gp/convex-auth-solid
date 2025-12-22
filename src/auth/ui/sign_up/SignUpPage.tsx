@@ -1,7 +1,7 @@
 import { enableGithub } from "@/app/config/enableGithub"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { appNameClient } from "@/app/text/appName"
-import { socialLoginProvider } from "@/auth/model/socialLoginProvider"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
 import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"

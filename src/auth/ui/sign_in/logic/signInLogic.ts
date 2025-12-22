@@ -1,6 +1,5 @@
 import { userSessionSchema, type UserSession } from "@/auth/model/UserSession"
-import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
-import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
+import { signInSessionNew } from "@/auth/ui/sign_in/logic/signInSessionNew"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { createUrl } from "@/utils/router/createUrl"
 import { navigateTo } from "@/utils/router/navigateTo"
@@ -56,8 +55,6 @@ function signedInLogicResult(url: URL): Result<UserSession> {
       JSON.stringify(decodedUserSessionObjectResult.data, null, 2),
     )
   const newSession: UserSession = parsingResult.output
-  // save auth
-  userSessionsSignalAdd(newSession)
-  userSessionSignal.set(newSession)
+  signInSessionNew(newSession)
   return createResult(newSession)
 }

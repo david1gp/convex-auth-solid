@@ -1,6 +1,7 @@
 import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
-import { passwordSchema } from "@/auth/model/passwordSchema"
+import type { SignUpType } from "@/auth/model/signUpSchema"
 import { signUpTermsSchema } from "@/auth/model/signUpTermsSchema"
+import { passwordSchema } from "@/auth/model_field/passwordSchema"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { urlSignUpConfirmEmail } from "@/auth/url/urlSignUpConfirmEmail"
 import { navigateTo } from "@/utils/router/navigateTo"
@@ -10,9 +11,11 @@ import { emailSchema } from "@/utils/valibot/emailSchema"
 import { stringSchemaName } from "@/utils/valibot/stringSchema"
 import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import posthog from "posthog-js"
 import * as a from "valibot"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type SignUpFormField = keyof typeof signUpFormField
@@ -65,15 +68,9 @@ export function createSignUpErrorState(): SignUpErrorState {
   }
 }
 
-export type SignUpFormData = {
-  name: string
-  email: string
-  pw: string
-}
-
 export type SignUpFormState = {
-  isSubmitting: SignalObject<boolean>
   state: SignUpUiState
+  isSubmitting: SignalObject<boolean>
   errors: SignUpErrorState
 }
 
@@ -145,8 +142,16 @@ function validateOnChange(field: SignUpFormField, state: SignUpUiState, errors: 
   }, debounceMs)
 }
 
-function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
+async function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
   e.preventDefault()
+
+  const isSubmitting = s.isSubmitting.get()
+  if (isSubmitting) {
+    const title = ttt("Submission in progress, please wait")
+    console.info(title)
+    toastAdd({ title, variant: toastVariant.default, id: "isSubmitting" })
+    return
+  }
 
   const name = s.state.name.get()
   const email = s.state.email.get()
@@ -191,12 +196,13 @@ function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
 
   s.isSubmitting.set(true)
 
-  const formData: SignUpFormData = {
+  const formData: SignUpType = {
     name: name,
     email: email,
     pw: pw,
+    l: "en",
   }
-  handleSignUp(formData, s)
+  await handleSignUp(formData, s)
 
   s.isSubmitting.set(false)
 }
@@ -205,6 +211,7 @@ async function handleSignUp(values: HandleSignUpData, s: SignUpFormState) {
   const op = "handleSignUp"
   // console.log("Sign up with email/password:", values)
   const result = await apiAuthSignUp(values)
+  posthog.capture(op, result)
   if (!result.success) {
     console.error(result)
     const title = result.errorMessage
@@ -219,6 +226,7 @@ async function handleSignUp(values: HandleSignUpData, s: SignUpFormState) {
     }
     return
   }
+  toastAdd({ title: ttt("Successfully signed up"), variant: toastVariant.success })
   const returnPathSearch = searchParamGet("returnPath")
   const returnPath = returnPathSearch || urlSignInRedirectUrl(location.pathname)
   console.log(op, "returnPath:", returnPath)
@@ -229,6 +237,7 @@ export type HandleSignUpData = {
   name: string
   email: string
   pw: string
+  l: string
 }
 
 function validateFieldResult(field: SignUpFormField, value: string | boolean) {

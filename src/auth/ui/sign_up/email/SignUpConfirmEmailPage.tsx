@@ -1,13 +1,14 @@
 import { NavAuth } from "@/app/nav/NavAuth"
 import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
-import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
-import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
+import { signInSessionNew } from "@/auth/ui/sign_in/logic/signInSessionNew"
 import { navigateTo } from "@/utils/router/navigateTo"
 import { mdiEmailSearchOutline } from "@mdi/js"
+import posthog from "posthog-js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
 import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
+import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon } from "~ui/static/icon/Icon"
 import { classArr } from "~ui/utils/classArr"
@@ -52,15 +53,19 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
 }
 
 async function handleConfirm(otp: string, email: string, returnPath: string) {
+  const op = "handleConfirm.apiAuthSignUpConfirmEmail"
   const result = await apiAuthSignUpConfirmEmail({ email, code: otp })
+  posthog.capture(op, result)
   if (!result.success) {
-    toastAdd({ title: "Error confirming email", description: result.errorMessage })
+    const errorMessage = ttt("Error confirming email")
+    console.error(op, errorMessage, result)
+    toastAdd({ title: errorMessage, description: result.errorMessage })
     return
   }
+  toastAdd({ title: ttt("Email Confirmed"), variant: toastVariant.success })
   const userSession = result.data
   // save user session
-  userSessionsSignalAdd(userSession)
-  userSessionSignal.set(userSession)
+  signInSessionNew(userSession)
   // navigate
   navigateTo(returnPath)
 }

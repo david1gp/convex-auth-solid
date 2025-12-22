@@ -1,7 +1,7 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
@@ -12,7 +12,7 @@ import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreat
 
 export function SignInViaPasswordForm(p: MayHaveClass) {
   const sm = signInViaPasswordCreateStateManagement()
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", sm.fillTestData)
   }
 
@@ -57,7 +57,7 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
       />
       <ButtonIcon
         type="submit"
-        disabled={sm.state.isSubmitting.get()}
+        isLoading={sm.state.isSubmitting.get()}
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="w-full"
       >
