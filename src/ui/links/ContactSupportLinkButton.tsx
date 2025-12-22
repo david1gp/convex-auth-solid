@@ -1,4 +1,4 @@
-import { urlContactMailTo } from "@/app/text/urlContactMailTo"
+import { urlContactMailTo } from "@/app/url/urlContactMailTo"
 import { mdiEmail } from "@mdi/js"
 import { splitProps } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"

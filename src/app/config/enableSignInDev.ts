@@ -1,7 +1,7 @@
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 
 export function enableSignInDev() {
   return false
-  return isDevEnvVite()
-  return false && isDevEnvVite()
+  return isDevEnv()
+  return false && isDevEnv()
 }

@@ -1,5 +1,5 @@
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { inputMaxLength100, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceFormStateManagement"
 import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
@@ -27,7 +27,7 @@ export interface WorkspaceContentProps extends MayHaveClass, HasOrgFormStateMana
 }
 
 export function WorkspaceForm(p: WorkspaceContentProps) {
-  if (isDevEnvVite()) {
+  if (isDevEnv()) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (

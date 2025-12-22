@@ -1,6 +1,6 @@
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 
 export function enableGithub() {
   // return false
-  return isDevEnvVite()
+  return isDevEnv()
 }

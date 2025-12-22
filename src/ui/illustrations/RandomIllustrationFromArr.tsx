@@ -1,4 +1,4 @@
-import { isDevEnvVite } from "@/utils/ui/isDevEnvVite"
+import { isDevEnv } from "@/utils/env/isDevEnv"
 import { classInvertBlack } from "~ui/static/img/classInvertBlack"
 import { Img } from "~ui/static/img/Img"
 import { classMerge } from "~ui/utils/classMerge"
@@ -30,6 +30,6 @@ export function RandomIllustrationFromArr(p: RandomIllustrationFromArrProps) {
 
 function getIndex(max: number, addIndex = 0) {
   const date = new Date()
-  const i = ((isDevEnvVite() ? date.getMilliseconds() : date.getHours()) + addIndex) % max
+  const i = ((isDevEnv() ? date.getMilliseconds() : date.getHours()) + addIndex) % max
   return i
 }
