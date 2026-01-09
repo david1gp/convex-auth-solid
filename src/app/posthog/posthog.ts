@@ -1,8 +1,6 @@
 import { enablePosthog } from "@/app/config/enablePosthog"
 import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
 import { envPosthogAppIdResult } from "@/app/env/public/envPosthogAppIdResult"
-import { envPosthogHostApiResult } from "@/app/env/public/envPosthogHostApiResult"
-import { envPosthogHostUiResult } from "@/app/env/public/envPosthogHostUiResult"
 import type { UserSession } from "@/auth/model/UserSession"
 import posthog, { type PostHog, type PostHogConfig } from "posthog-js"
 
@@ -23,16 +21,6 @@ export function posthogInit(session?: UserSession) {
     return
   }
 
-  const apiResult = envPosthogHostApiResult()
-  if (!apiResult.success) {
-    console.error(apiResult)
-    return
-  }
-  const uiResult = envPosthogHostUiResult()
-  if (!uiResult.success) {
-    console.error(uiResult)
-    return
-  }
   const idResult = envPosthogAppIdResult()
   if (!idResult.success) {
     console.error(idResult)
@@ -49,8 +37,8 @@ export function posthogInit(session?: UserSession) {
   // https://posthog.com/docs/libraries/js
   const config: Partial<PostHogConfig> = {
     persistence: "localStorage",
-    api_host: apiResult.data,
-    ui_host: uiResult.data,
+    api_host: "/ph-api",
+    ui_host: "/ph-ui",
     loaded: session ? loaded : undefined,
     advanced_disable_feature_flags_on_first_load: true,
     advanced_disable_feature_flags: true,
