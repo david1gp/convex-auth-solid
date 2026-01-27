@@ -1,4 +1,4 @@
-convex-auth.dev {
+app.convex-auth.com, app.convex-auth.dev {
 	import shared_config_web
 	header {
 		Routed "solid"
@@ -6,7 +6,7 @@ convex-auth.dev {
 	reverse_proxy localhost:3016
 }
 
-dist.convex-auth.dev {
+dist.convex-auth.com, dist.convex-auth.dev {
 	import shared_config_web
 	import shared_config_caching
 	header {
@@ -16,7 +16,7 @@ dist.convex-auth.dev {
 	file_server
 }
 
-convex.convex-auth.dev {
+convex.convex-auth.com, convex.convex-auth.dev {
 	import shared_config_simple
 	header {
 		Routed "convex"
@@ -24,7 +24,7 @@ convex.convex-auth.dev {
 	reverse_proxy localhost:3017
 }
 
-api.convex-auth.dev {
+api.convex-auth.com, api.convex-auth.dev {
 	import shared_config_simple
 	header {
 		Routed "api"
@@ -32,12 +32,19 @@ api.convex-auth.dev {
 	reverse_proxy localhost:3018
 }
 
-dash.convex-auth.dev {
+dash.convex-auth.com, dash.convex-auth.dev {
 	import shared_config_simple
 	header {
 		Routed "dash"
 	}
-	# reverse_proxy localhost:3019
 	reverse_proxy localhost:6790
-	# reverse_proxy localhost:6791
+}
+
+
+ddash.convex-auth.com, ddash.convex-auth.dev {
+	import shared_config_simple
+	header {
+		Routed "ddash"
+	}
+	reverse_proxy localhost:6790
 }
