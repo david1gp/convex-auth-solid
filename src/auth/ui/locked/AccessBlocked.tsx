@@ -1,9 +1,11 @@
+import { DevModeToggle } from "@/app/config/DevModeToggle"
+import { inDevModeSignal } from "@/app/config/inDevModeSignal"
 import { LogoutButton } from "@/app/nav/LogoutButton"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { urlSupportMailTo, urlSupportTelegram } from "@/app/url/urlSupport"
 import { DeleteEarlierSessions } from "@/auth/ui/sign_in/existing/DeleteEarlierSessions"
 import { mdiArrowULeftTop, mdiEmail } from "@mdi/js"
-import { For } from "solid-js"
+import { For, Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -30,10 +32,13 @@ export function AccessBlocked() {
         <LinkButton href={urlSupportTelegram} icon={iconTelegram} variant={buttonVariant.link} class="justify-start">
           {ttt("Telegram")}
         </LinkButton>
-        <LogoutButton />
-        <DeleteEarlierSessions icon={mdiArrowULeftTop} variant={buttonVariant.link}>
-          {ttt("Reset")}
-        </DeleteEarlierSessions>
+        <DevModeToggle class="mt-4" />
+        <Show when={inDevModeSignal.get()}>
+          <LogoutButton />
+          <DeleteEarlierSessions icon={mdiArrowULeftTop} variant={buttonVariant.link}>
+            {ttt("Reset Sessions")}
+          </DeleteEarlierSessions>
+        </Show>
       </SuccessPage>
     </LayoutWrapperDemo>
   )

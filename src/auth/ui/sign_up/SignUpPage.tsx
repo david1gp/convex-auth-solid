@@ -1,6 +1,6 @@
 import { enableGithub } from "@/app/config/enableGithub"
+import { ttt } from "~ui/i18n/ttt"
 import { NavAuth } from "@/app/nav/NavAuth"
-import { appNameClient } from "@/app/text/appName"
 import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
@@ -14,7 +14,6 @@ import { searchParamGet } from "@/utils/router/searchParamGet"
 import { mdiAccountPlus } from "@mdi/js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
@@ -31,12 +30,10 @@ import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClass {}
 
 export const SignUpPage: Component<SignUpPageProps> = (p) => {
-  const pageTitle = ttt("Sign up") + " " + appNameClient()
-  const title = ttt("Sign up")
   return (
-    <LayoutWrapperDemo title={pageTitle}>
+    <LayoutWrapperDemo title={ttt("Sign up")}>
       <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavAuth title={title}>
+        <NavAuth title={ttt("Sign up")}>
           <SignInButtonLink
             size={buttonSize.default}
             variant={buttonVariant.link}

@@ -59,9 +59,6 @@ export function SignInPageContent(p: MayHaveClass) {
 }
 
 function AuthSectionSocials() {
-  const title = ttt("Socials")
-  const subtitle = ttt("One-click sign in")
-
   if (!enableGithub()) {
     return (
       <AuthSectionCard icon={iconGoogle} title={ttt("Google")} subtitle={ttt("One-click sign in")}>
@@ -76,8 +73,8 @@ function AuthSectionSocials() {
         <AuthSectionHeroIcon icon={iconGoogle} class="" />
         <AuthSectionHeroIcon icon={iconGithub} class="" />
       </div>
-      <h2 class="text-xl font-semibold">{title}</h2>
-      <p class="text-muted-foreground mb-4">{subtitle}</p>
+      <h2 class="text-xl font-semibold">{ttt("Socials")}</h2>
+      <p class="text-muted-foreground mb-4">{ttt("One-click sign in")}</p>
       <div class="space-y-2">
         <SocialLoginButton provider={loginProvider.google} size={buttonSize.default} class="w-full" />
         <SocialLoginButton provider={loginProvider.github} size={buttonSize.default} class="w-full" />

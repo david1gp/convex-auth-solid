@@ -1,3 +1,4 @@
+import { ttt } from "~ui/i18n/ttt"
 import { ContactSupportLinkButton } from "@/ui/links/ContactSupportLinkButton"
 import { GoSignInLinkButton } from "@/ui/links/GoSignInLinkButton"
 import { mdiAlertBoxOutline } from "@mdi/js"
@@ -14,8 +15,6 @@ const classesPageWrapperInner = classArr(
 )
 
 export function SignInErrorPage() {
-  const title = "Authentication Error"
-  const tryAgainText = "Try again, if the problem persists contact support"
   const searchParams = new URLSearchParams(document.location.search)
   const errorMessage = searchParams.get("errorMessage")
   return (
@@ -28,14 +27,14 @@ export function SignInErrorPage() {
             "fill-red-500", // color
           )}
         />
-        <h1 class={"text-2xl font-bold"}>{title}</h1>
+        <h1 class={"text-2xl font-bold"}>{ttt("Authentication Error")}</h1>
       </section>
       <section id={"errorMessage"} class={classArr("flex flex-col gap-2 py-12")}>
         <h2 class={"text-lg text-foreground-muted"}>{"Error Message:"}</h2>
         <code class={classArr("text-xl", classesPageWrapperInner)}>{errorMessage}</code>
       </section>
       <section id={"tryAgain"} class="container max-w-7xl mx-auto text-center space-y-8">
-        <h2>{tryAgainText}</h2>
+        <h2>{ttt("Try again, if the problem persists contact support")}</h2>
         <GoSignInLinkButton size={buttonSize.lg} variant={buttonVariant.link} class="text-xl" iconClass="size-8" />
         <ContactSupportLinkButton
           size={buttonSize.lg}
