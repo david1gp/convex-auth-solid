@@ -13,3 +13,7 @@ export const userRoleSchema = a.enum(userRole)
 function types1(a: a.InferOutput<typeof userRoleSchema>): UserRole {
   return a
 }
+
+export function userRoleIsDev(role: UserRole): boolean {
+  return role === userRole.dev
+}

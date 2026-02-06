@@ -1,0 +1,64 @@
+import { envMicrosoftClientSecretResult } from "@/app/env/private/envMicrosoftClientSecretResult"
+import { envMicrosoftClientIdResult } from "@/app/env/public/envMicrosoftClientIdResult"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
+import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
+import * as a from "valibot"
+import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { queryString } from "~utils/url/queryString"
+import { searchParamsToObject } from "~utils/url/searchParamsToObject"
+import { authErrorMessages } from "./authErrorMessages"
+
+export type MicrosoftOauthToken = {
+  access_token: string
+}
+
+export const microsoftOauthTokenRootUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+
+export async function getMicrosoftOauthToken(code: string): PromiseResult<MicrosoftOauthToken> {
+  const op = "getMicrosoftOauthToken"
+  const provider = socialLoginProvider.microsoft
+
+  const clientSecretResult = envMicrosoftClientSecretResult()
+  if (!clientSecretResult.success) return clientSecretResult
+  const clientSecret = clientSecretResult.data
+
+  const clientIdResult = envMicrosoftClientIdResult()
+  if (!clientIdResult.success) return clientIdResult
+  const clientId = clientIdResult.data
+
+  const options = {
+    client_id: clientId,
+    client_secret: clientSecret,
+    grant_type: "authorization_code",
+    code,
+    redirect_uri: urlAuthSignInUsingOauth(provider),
+    scope: "openid profile email offline_access User.Read",
+  }
+
+  const r = await fetch(microsoftOauthTokenRootUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: queryString(options),
+  })
+
+  const text = await r.text()
+  if (!r.ok) {
+    const errorMessage = authErrorMessages.tokenFailedToFetchStatus(provider, r.status, text)
+    return createResultError(op, errorMessage)
+  }
+
+  const json = searchParamsToObject(text)
+  const result = a.safeParse(microsoftSchema, json)
+  if (!result.success) {
+    const errorMessage = authErrorMessages.tokenFailedToParse(provider, result.issues, text)
+    return createResultError(op, errorMessage, text)
+  }
+
+  return createResult({ access_token: result.output.access_token })
+}
+
+const microsoftSchema = a.object({
+  access_token: a.string(),
+})

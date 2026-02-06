@@ -1,6 +1,7 @@
 import type { SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { iconGithub } from "~ui/static/icons/iconGithub"
 import { iconGoogle } from "~ui/static/icons/iconGoogle"
+import { iconMicrosoft } from "~ui/static/icons/iconMicrosoft"
 
 export type SocialProviderButtonProps = {
   background: string
@@ -17,5 +18,9 @@ export const socialProviderButtonProps = {
   github: {
     background: "#333333",
     mdiIconPath: iconGithub,
+  },
+  microsoft: {
+    background: "",
+    mdiIconPath: iconMicrosoft,
   },
 } as const satisfies Record<SocialLoginProvider, SocialProviderButtonProps>

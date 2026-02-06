@@ -11,13 +11,19 @@ import {
   getGoogleUserProfile,
   type GoogleUserProfile,
 } from "@/auth/server/social_identity_providers/getGoogleUserProfile"
+import { getMicrosoftOauthToken } from "@/auth/server/social_identity_providers/getMicrosoftOauthToken"
+import {
+  getMicrosoftUserProfile,
+  type MicrosoftUserProfile,
+} from "@/auth/server/social_identity_providers/getMicrosoftUserProfile"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export const socialLoginGetUserProfile = {
   github: oauthGithub,
   google: oauthGoogle,
+  microsoft: oauthMicrosoft,
   dev: oauthDev,
-} satisfies Record<LoginProvider, (cid: string, code: string) => PromiseResult<CommonAuthProvider>>
+} satisfies Record<LoginProvider, (code: string) => PromiseResult<CommonAuthProvider>>
 
 async function getProfile<T, P>(props: T, fn: (code: T) => PromiseResult<P>): PromiseResult<P> {
   const op = "getProfile"
@@ -110,4 +116,40 @@ async function oauthDev(code: string): PromiseResult<CommonAuthProvider> {
   }
   // data
   return createResult(data)
+}
+
+async function oauthMicrosoft(code: string): PromiseResult<CommonAuthProvider> {
+  const op = "oauthMicrosoft"
+  const provider = socialLoginProvider.microsoft
+
+  // token
+  const tokenOrError = await getMicrosoftOauthToken(code)
+  if (!tokenOrError.success) return tokenOrError
+
+  // profile
+  const profileOrError = await getProfile(tokenOrError.data.access_token, getMicrosoftUserProfile)
+  if (!profileOrError.success) {
+    return profileOrError
+  }
+
+  // data
+  return createResult(convertMicrosoftProfile(profileOrError.data))
+}
+
+function convertMicrosoftProfile(p: MicrosoftUserProfile): CommonAuthProvider {
+  const providerId = p.id
+  const provider = socialLoginProvider.microsoft
+
+  return {
+    // provider
+    provider,
+    providerId,
+    // data
+    givenName: p.givenName ?? "",
+    familyName: p.surname ?? "",
+    image: "",
+    // email
+    email: p.mail ?? "",
+    username: p.displayName,
+  }
 }

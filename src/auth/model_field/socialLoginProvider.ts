@@ -5,6 +5,7 @@ export type SocialLoginProvider = keyof typeof socialLoginProvider
 export const socialLoginProvider = {
   google: "google",
   github: "github",
+  microsoft: "microsoft",
   // auth0: "auth0",
 } as const
 

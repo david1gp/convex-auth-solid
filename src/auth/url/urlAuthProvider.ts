@@ -1,5 +1,6 @@
 import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
 import { envGoogleClientIdResult } from "@/app/env/public/envGoogleClientIdResult"
+import { envMicrosoftClientIdResult } from "@/app/env/public/envMicrosoftClientIdResult"
 import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 
@@ -13,6 +14,8 @@ function urlOAuthSwitcher(provider: SocialLoginProvider, redirectUrl: string = "
       return urlAuthGithub(redirectUrl)
     case socialLoginProvider.google:
       return urlAuthGoogle(redirectUrl)
+    case socialLoginProvider.microsoft:
+      return urlAuthMicrosoft(redirectUrl)
     // case loginProvider.dev:
     //   return urlAuthDev(redirectUrl)
   }
@@ -68,6 +71,28 @@ export function urlAuthDev(userId: string, redirectUrl: string = ""): string {
     code: userId,
     state: redirectUrl,
   }
+  const qs = new URLSearchParams(options)
+  return `${rootUrl}?${qs.toString()}`
+}
+
+function urlAuthMicrosoft(redirectUrl: string = ""): string {
+  const clientIdResult = envMicrosoftClientIdResult()
+  if (!clientIdResult.success) {
+    console.error(clientIdResult.errorMessage)
+    return ""
+  }
+  const clientId = clientIdResult.data
+
+  const rootUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize"
+
+  const options = {
+    client_id: clientId,
+    response_type: "code",
+    redirect_uri: urlAuthSignInUsingOauth(socialLoginProvider.microsoft),
+    scope: "openid profile email offline_access User.Read",
+    state: redirectUrl,
+  }
+
   const qs = new URLSearchParams(options)
   return `${rootUrl}?${qs.toString()}`
 }
