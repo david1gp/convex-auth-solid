@@ -10,7 +10,7 @@ import { ttt } from "~ui/i18n/ttt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function OverviewPage() {
-  const title = ttt("Overview")
+  const getTitle = () => ttt("Overview")
   return (
     <PageWrapper>
       <NavStatic
@@ -19,7 +19,7 @@ export function OverviewPage() {
           <>
             <NavBreadcrumbSeparator />
             <NavLinkButton href={urlOverview()} isActive={true}>
-              {title}
+              {getTitle()}
             </NavLinkButton>
           </>
         }
@@ -30,7 +30,7 @@ export function OverviewPage() {
           </>
         }
       />
-      <PageHeader title={title} subtitle={ttt("This is a private page seen only to logged in users")} class="py-20" />
+      <PageHeader title={getTitle()} subtitle={ttt("This is a private page seen only to logged in users")} class="py-20" />
       <section>
         <h2 class="text-lg font-semibold mb-2">{ttt("Demo Auth Links")}</h2>
         <AuthLinks />
