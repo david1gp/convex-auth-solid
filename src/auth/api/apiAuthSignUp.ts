@@ -2,7 +2,7 @@ import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
 import type { SignUpType } from "@/auth/model/signUpSchema"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
-import { resultTryParsingFetchErr } from "@/utils/result/resultTryParsingFetchErr"
+import { resultTryParsingFetchErr } from "~utils/result/resultTryParsingFetchErr"
 import { type Result, createResult } from "~utils/result/Result"
 
 export async function apiAuthSignUp(props: SignUpType): Promise<Result<string>> {

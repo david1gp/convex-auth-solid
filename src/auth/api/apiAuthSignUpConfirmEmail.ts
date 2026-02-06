@@ -3,7 +3,7 @@ import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
 import type { SignInViaEmailEnterOtpType } from "@/auth/model/signInSchema"
 import type { UserSession } from "@/auth/model/UserSession"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
-import { resultTryParsingFetchErr } from "@/utils/result/resultTryParsingFetchErr"
+import { resultTryParsingFetchErr } from "~utils/result/resultTryParsingFetchErr"
 import { type Result } from "~utils/result/Result"
 import { parseUserSessionResponse } from "./parseUserSessionResponse"
 

@@ -2,7 +2,7 @@ import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
 import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
 import type { SignInViaEmailType } from "@/auth/model/signInSchema"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
-import { resultTryParsingFetchErr } from "@/utils/result/resultTryParsingFetchErr"
+import { resultTryParsingFetchErr } from "~utils/result/resultTryParsingFetchErr"
 import { type Result, createResult } from "~utils/result/Result"
 
 export async function apiAuthSignInViaEmail(props: SignInViaEmailType): Promise<Result<string>> {
