@@ -16,11 +16,10 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { EnterOtpForm } from "../../email/EnterOtpForm"
 
 export const SignUpConfirmEmailPage: Component<{}> = () => {
-  const getTitle = () => ttt("Sign Up / Confirm Email")
   return (
-    <LayoutWrapperDemo title={getTitle()}>
+    <LayoutWrapperDemo title={ttt("Sign Up / Confirm Email")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
-        <NavAuth title={getTitle()} />
+        <NavAuth title={ttt("Sign Up / Confirm Email")} />
         <div
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >
