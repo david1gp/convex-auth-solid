@@ -14,6 +14,21 @@ export default defineConfig({
     entry: {
       index: "./src/index.tsx",
     },
+    define: {
+      "import.meta.env.MODE": JSON.stringify(process.env.NODE_ENV),
+      "import.meta.env.PUBLIC_ENV_MODE": JSON.stringify(process.env.PUBLIC_ENV_MODE),
+      "import.meta.env.PUBLIC_BASE_URL_SITE": JSON.stringify(process.env.PUBLIC_BASE_URL_SITE),
+      "import.meta.env.PUBLIC_BASE_URL_APP": JSON.stringify(process.env.PUBLIC_BASE_URL_APP),
+      "import.meta.env.PUBLIC_BASE_URL_CONVEX": JSON.stringify(process.env.PUBLIC_BASE_URL_CONVEX),
+      "import.meta.env.PUBLIC_BASE_URL_API": JSON.stringify(process.env.PUBLIC_BASE_URL_API),
+      "import.meta.env.PUBLIC_GITHUB_CLIENT_ID": JSON.stringify(process.env.PUBLIC_GITHUB_CLIENT_ID),
+      "import.meta.env.PUBLIC_GOOGLE_CLIENT_ID": JSON.stringify(process.env.PUBLIC_GOOGLE_CLIENT_ID),
+      "import.meta.env.PUBLIC_MICROSOFT_CLIENT_ID": JSON.stringify(process.env.PUBLIC_MICROSOFT_CLIENT_ID),
+      "import.meta.env.PUBLIC_B2_OBJECT_STORAGE_DOWNLOAD_URL": JSON.stringify(
+        process.env.PUBLIC_B2_OBJECT_STORAGE_DOWNLOAD_URL,
+      ),
+      "import.meta.env.PUBLIC_POSTHOG_APP_ID": JSON.stringify(process.env.PUBLIC_POSTHOG_APP_ID),
+    },
   },
   resolve: {
     alias: {
