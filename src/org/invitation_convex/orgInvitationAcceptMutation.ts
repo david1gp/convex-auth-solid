@@ -6,12 +6,11 @@ import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import { orgGetQueryInternalFn } from "@/org/org_convex/orgGetQuery"
 import { stt } from "@/utils/i18n/stt"
-import { internal } from "@convex/_generated/api"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { docUserToUserProfile } from "../../auth/convex/user/docUserToUserProfile"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 
@@ -49,10 +48,6 @@ export async function orgInvitation50AcceptFn(
 
   if (!invitation) {
     return createResultError(op, "Invalid invitation code", args.invitationCode)
-  }
-
-  if (invitation.acceptedAt) {
-    return createResultError(op, "Invitation already accepted", args.invitationCode)
   }
 
   // Get org details for token
@@ -98,18 +93,6 @@ export async function orgInvitation50AcceptFn(
   const token = tokenResult.data
   const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 
-  // Mark invitation as accepted
-  await ctx.db.patch(invitation._id, {
-    acceptedAt: now,
-    updatedAt: now,
-  })
-  // Delete invitation
-  // await ctx.db.delete(invitation._id)
-
-  // Shedule cleanup
-  const sheduleAt = 24 * 3600 * 1000 + 1
-  ctx.scheduler.runAfter(sheduleAt, internal.org.orgInvitationCleanupInternalMutation, {})
-
   // Create org member
   await ctx.db.insert("orgMembers", {
     orgId: org._id,
@@ -120,6 +103,9 @@ export async function orgInvitation50AcceptFn(
     createdAt: now,
     updatedAt: now,
   })
+
+  // Delete org invitation
+  await ctx.db.delete(invitation._id)
 
   // Create user profile
   const userProfile = docUserToUserProfile(user, org.orgHandle, invitation.role)

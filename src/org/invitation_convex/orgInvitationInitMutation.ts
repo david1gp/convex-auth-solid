@@ -48,12 +48,12 @@ export async function orgInvitation20InitMutationFn(
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  // Check if invitation already exists and not accepted
+  // Check if invitation already exists
   const existingInvitation = await ctx.db
     .query("orgInvitations")
     .withIndex("invitedEmail", (q) => q.eq("invitedEmail", args.invitedEmail))
     .first()
-  if (existingInvitation && !existingInvitation.acceptedAt) {
+  if (existingInvitation) {
     return createResultError(op, "Invitation already sent", args.invitedEmail)
   }
 

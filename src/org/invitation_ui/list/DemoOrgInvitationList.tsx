@@ -1,8 +1,8 @@
 import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { OrgInvitationListSection, type OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
-import { convexSystemFieldsCreateEmpty } from "@/utils/convex/HasConvexSystemFields"
-import { createdAtUpdatedAtCreate } from "@/utils/data/HasCreatedAtUpdatedAt"
+import { convexSystemFieldsCreateEmpty } from "@/utils/convex_client/HasConvexSystemFields"
+import { createdAtCreate } from "@/utils/data/HasCreatedAt"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function DemoOrgInvitationList() {
@@ -25,7 +25,8 @@ const invitations: DocOrgInvitation[] = [
   // Sending email status - no email sent yet
   {
     ...convexSystemFieldsCreateEmpty(),
-    ...createdAtUpdatedAtCreate(),
+    ...createdAtCreate(),
+    updatedAt: new Date().toISOString(),
     orgHandle: "example-org",
     invitationCode: "inv-sending-003",
     invitedName: "Carol Williams",
@@ -37,7 +38,8 @@ const invitations: DocOrgInvitation[] = [
   // Waiting for confirmation status - email sent 1 day ago
   {
     ...convexSystemFieldsCreateEmpty(),
-    ...createdAtUpdatedAtCreate(),
+    ...createdAtCreate(),
+    updatedAt: new Date().toISOString(),
     orgHandle: "example-org",
     invitationCode: "inv-waiting-002",
     invitedName: "Bob Smith",
@@ -50,7 +52,8 @@ const invitations: DocOrgInvitation[] = [
   // Accepted status - accepted 1 hour ago
   {
     ...convexSystemFieldsCreateEmpty(),
-    ...createdAtUpdatedAtCreate(),
+    ...createdAtCreate(),
+    updatedAt: new Date().toISOString(),
     orgHandle: "example-org",
     invitationCode: "inv-accepted-001",
     invitedName: "Alice Johnson",
@@ -59,6 +62,5 @@ const invitations: DocOrgInvitation[] = [
     invitedBy: "admin@example.com",
     emailSendAmount: 1,
     emailSendAt: "2025-11-01T23:00:00Z",
-    acceptedAt: "2025-11-01T23:10:00Z",
   },
 ]

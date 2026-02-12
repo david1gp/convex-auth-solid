@@ -1,7 +1,7 @@
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import { query, type QueryCtx } from "@convex/_generated/server"
-import { authQueryR } from "@convex/utils/authQueryR"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 

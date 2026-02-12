@@ -1,6 +1,5 @@
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
-import { OrgMemberListPage } from "@/org/member_ui/list/OrgMemberListPage"
 import { OrgMutate } from "@/org/org_ui/mutate/OrgMutate"
 import { urlOrgEdit } from "@/org/org_url/urlOrg"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
@@ -29,7 +28,6 @@ export function OrgEditPage() {
           </NavOrg>
           <OrgMutate mode={mode} orgHandle={getOrgHandle()!} />
         </PageWrapper>
-        <OrgMemberListPage />
       </Match>
     </Switch>
   )

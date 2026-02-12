@@ -4,8 +4,8 @@ import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationMod
 import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
 import { OrgInvitationStatusIcon } from "@/org/invitation_ui/view/OrgInvitationStatusIcon"
 import { OrgInvitationStatusText } from "@/org/invitation_ui/view/OrgInvitationStatusText"
-import { createAction } from "@/utils/convex/createAction"
-import { createMutation } from "@/utils/convex/createMutation"
+import { createAction } from "@/utils/convex_client/createAction"
+import { createMutation } from "@/utils/convex_client/createMutation"
 import { api } from "@convex/_generated/api"
 import { mdiClose, mdiEmailAlert, mdiEmailFast } from "@mdi/js"
 import { ttt, ttt1 } from "~ui/i18n/ttt"
@@ -104,11 +104,9 @@ function OrgInvitationActions(p: OrgInvitationCardProps) {
   }
   return (
     <div class="flex flex-wrap gap-2">
-      {!p.invitation.acceptedAt && (
-        <ButtonIcon variant={buttonVariant.outline} icon={mdiEmailFast} onClick={resendClick} class="flex-1">
-          {ttt("Resend")}
-        </ButtonIcon>
-      )}
+      <ButtonIcon variant={buttonVariant.outline} icon={mdiEmailFast} onClick={resendClick} class="flex-1">
+        {ttt("Resend")}
+      </ButtonIcon>
       <ButtonIcon
         variant={buttonVariant.outline}
         icon={mdiClose}

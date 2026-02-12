@@ -6,12 +6,12 @@ import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
 import { query, type QueryCtx } from "@convex/_generated/server"
-import { authQueryR } from "@convex/utils/authQueryR"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { docOrgInvitationToModel } from "../invitation_convex/docOrgInvitationToModel"
-import type { OrgMemberProfile } from "../member_model/OrgMemberProfile"
+import { docOrgInvitationToModel } from "@/org/invitation_convex/docOrgInvitationToModel"
+import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 
 export const orgGetPageFields = {
   orgHandle: v.string(),

@@ -1,8 +1,8 @@
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
-import { fieldsCreatedAtUpdatedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
+import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
-import { vIdUser } from "../../auth/convex/vIdUser"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import { vIdOrg } from "./vIdOrg"
 
 export const orgDataFields = {
@@ -17,7 +17,7 @@ export const orgDataFields = {
 
 export const orgFields = {
   ...orgDataFields,
-  ...fieldsCreatedAtUpdatedAt,
+  ...fieldsConvexCreatedAtUpdatedAt,
 } as const
 
 export const orgMemberDataFields = {
@@ -34,7 +34,7 @@ export const orgMemberFields = {
   // data
   ...orgMemberDataFields,
   // meta
-  ...fieldsCreatedAtUpdatedAt,
+  ...fieldsConvexCreatedAtUpdatedAt,
 }
 
 export const orgInvitationDataFields = {
@@ -50,15 +50,13 @@ export const orgInvitationDataFields = {
   // server processing
   emailSendAt: v.optional(v.string()),
   emailSendAmount: v.number(),
-  // acceptance
-  acceptedAt: v.optional(v.string()),
 } as const
 
 export const orgInvitationFields = {
   // data
   ...orgInvitationDataFields,
   // meta
-  ...fieldsCreatedAtUpdatedAt,
+  ...fieldsConvexCreatedAtUpdatedAt,
 }
 
 export const orgTables = {

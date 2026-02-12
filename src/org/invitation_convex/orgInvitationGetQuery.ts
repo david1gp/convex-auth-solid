@@ -8,7 +8,6 @@ import { createResult, createResultError, type PromiseResult } from "~utils/resu
 export const orgInvitationGetFields = {
   orgHandle: v.optional(v.string()),
   invitationCode: v.string(),
-  updatedAt: v.optional(v.string()),
 } as const
 
 export type OrgInvitationGetValidatorType = typeof orgInvitationGetValidator.type
@@ -53,9 +52,6 @@ export async function orgInvitationGetInternalFn(
 
   if (!invitation) {
     return createResultError(op, "Invalid invitation code", args.invitationCode)
-  }
-  if (args.updatedAt === invitation.updatedAt) {
-    return createResult(null)
   }
   return createResult(invitation)
 }

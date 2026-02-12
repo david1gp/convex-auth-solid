@@ -1,6 +1,6 @@
 import { mutation, type MutationCtx } from "@convex/_generated/server"
-import { authMutationR } from "@convex/utils/authMutationR"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 

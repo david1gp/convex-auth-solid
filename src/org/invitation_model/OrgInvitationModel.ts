@@ -1,5 +1,5 @@
 import type { OrgRole } from "@/org/org_model_field/orgRole"
-import type { HasCreatedAtUpdatedAt } from "@/utils/data/HasCreatedAtUpdatedAt"
+import type { HasCreatedAt } from "@/utils/data/HasCreatedAt"
 
 export type OrgInvitationDataModel = {
   orgHandle: string
@@ -13,8 +13,6 @@ export type OrgInvitationDataModel = {
   // server processing
   emailSendAt?: string
   emailSendAmount: number
-  // acceptance
-  acceptedAt?: string
 }
 
-export interface OrgInvitationModel extends OrgInvitationDataModel, HasCreatedAtUpdatedAt {}
+export interface OrgInvitationModel extends OrgInvitationDataModel, HasCreatedAt {}

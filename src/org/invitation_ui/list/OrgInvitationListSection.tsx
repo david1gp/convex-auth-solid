@@ -10,7 +10,7 @@ import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import { orgPageSection } from "../../org_ui/view/orgPageSection"
+import { orgPageSection } from "@/org/org_ui/view/orgPageSection"
 
 export interface OrgInvitationsProps extends HasOrgHandle, MayHaveClass {
   invitations: OrgInvitationModel[]

@@ -69,7 +69,6 @@ function createEmptyDocOrgInvitation(): DocOrgInvitation {
     invitedBy: "",
     emailSendAt: iso,
     emailSendAmount: 0,
-    acceptedAt: undefined,
     createdAt: iso,
     updatedAt: iso,
     _creationTime: now.getMilliseconds(),

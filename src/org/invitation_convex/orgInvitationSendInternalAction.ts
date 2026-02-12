@@ -49,10 +49,6 @@ export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationS
     return createResultError(op, "!invitation")
   }
 
-  if (invitation.acceptedAt) {
-    return createResultError(op, "Invitation already accepted", args.invitationCode)
-  }
-
   const allowSendingInSeconds = allowEmailResendingInSeconds(
     invitation.emailSendAt ?? invitation.createdAt,
     invitation.emailSendAmount,

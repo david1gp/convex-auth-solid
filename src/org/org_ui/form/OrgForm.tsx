@@ -5,7 +5,7 @@ import { isDevEnv } from "@/utils/env/isDevEnv"
 import { inputMaxLength100, inputMaxLengthDescription, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { formMode, formModeIsReadOnly, getFormModeButtonTitle, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
@@ -44,7 +44,7 @@ export function OrgForm(p: OrgContentProps) {
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
-          {p.sm.isSaving.get() ? "Saving..." : getOrgTitle(p.mode)}
+          {p.sm.isSaving.get() ? "Saving..." : getFormModeButtonTitle(p.mode, ttt("Organization"))}
         </ButtonIcon>
       </form>
     </section>

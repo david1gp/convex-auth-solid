@@ -1,7 +1,7 @@
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
-import { authMutation } from "@convex/utils/authMutation"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authMutation } from "@/utils/convex_backend/authMutation"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 
 export type OrgDeleteValidatorType = typeof orgDeleteValidator.type

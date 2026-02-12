@@ -15,13 +15,8 @@ export function OrgInvitationStatusText(p: OrgInvitationStatusProps) {
   return (
     <div class={classMerge("flex flex-col gap-1", p.class)}>
       <span>{orgInvitationStatusText[status]}</span>
-      <Show when={p.invitation.acceptedAt ?? p.invitation.emailSendAt}>
-        {(getDate) => (
-          <DateView
-            date={getDate()}
-            start={p.invitation.emailSendAt && !p.invitation.acceptedAt ? ttt("Email send") + " " : ""}
-          />
-        )}
+      <Show when={p.invitation.emailSendAt}>
+        {(getDate) => <DateView date={getDate()} start={ttt("Email send") + " "} />}
       </Show>
       {p.children}
     </div>

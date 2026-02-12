@@ -5,7 +5,7 @@ import { orgRole } from "@/org/org_model_field/orgRole"
 import { isDevEnv } from "@/utils/env/isDevEnv"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { getFormModeButtonTitle, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -36,7 +36,7 @@ export function OrgMemberForm(p: OrgMemberContentProps) {
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
-          {p.sm.isSaving.get() ? "Saving..." : getOrgMemberTitle(p.mode)}
+          {p.sm.isSaving.get() ? "Saving..." : getFormModeButtonTitle(p.mode, ttt("Organization Member"))}
         </ButtonIcon>
       </form>
     </section>

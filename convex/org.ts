@@ -1,5 +1,4 @@
 import { orgInvitationAcceptMutation } from "@/org/invitation_convex/orgInvitationAcceptMutation"
-import { orgInvitationCleanupInternalMutation } from "@/org/invitation_convex/orgInvitationCleanupInternalMutation"
 import { orgInvitationCreateInternalMutation } from "@/org/invitation_convex/orgInvitationCreateInternalMutation"
 import { orgInvitationDismissMutation } from "@/org/invitation_convex/orgInvitationDismissMutation"
 import { orgInvitationGetInternalQuery, orgInvitationGetQuery } from "@/org/invitation_convex/orgInvitationGetQuery"
@@ -33,7 +32,6 @@ export {
   orgHandleAvailableQuery,
   // Invitations
   orgInvitationAcceptMutation,
-  orgInvitationCleanupInternalMutation,
   orgInvitationCreateInternalMutation,
   orgInvitationDismissMutation,
   orgInvitationGetInternalQuery,

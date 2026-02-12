@@ -38,7 +38,6 @@ export async function orgInvitation21CreateMutationFn(
     invitationCode,
     emailSendAt: undefined,
     emailSendAmount: 0,
-    acceptedAt: undefined,
     createdAt: now,
     updatedAt: now,
   })

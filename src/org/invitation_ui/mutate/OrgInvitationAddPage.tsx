@@ -10,7 +10,7 @@ import { urlOrgInvitationAccept, urlOrgInvitationAdd } from "@/org/invitation_ur
 import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { orgListFindNameByHandle } from "@/org/org_ui/list/orgListSignal"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { createMutation } from "@/utils/convex/createMutation"
+import { createMutation } from "@/utils/convex_client/createMutation"
 import { navigateTo } from "@/utils/router/navigateTo"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"

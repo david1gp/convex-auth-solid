@@ -3,7 +3,6 @@ import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as va from "valibot"
-import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 import type { DocOrgInvitation } from "./IdOrgInvitation"
 
@@ -20,7 +19,6 @@ export const orgInvitationUpdateFields = {
   invitedBy: v.optional(v.string()),
   emailSendAt: v.optional(v.string()),
   emailSendAmount: v.optional(v.number()),
-  acceptedAt: v.optional(v.string()),
 } as const
 
 // export const orgInvitationUpdateFields = {
@@ -48,10 +46,6 @@ export async function orgInvitation33UpdateFn(
   }
 
   const patch: Partial<DocOrgInvitation> = { ...parse.output }
-
-  if (!patch.updatedAt) {
-    patch.updatedAt = nowIso()
-  }
 
   await ctx.db.patch(args._id, patch)
   return createResult(null)
