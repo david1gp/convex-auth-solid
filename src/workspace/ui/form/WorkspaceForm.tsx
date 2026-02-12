@@ -5,7 +5,7 @@ import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspa
 import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, formModeIsReadOnly, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { formMode, formModeIsReadOnly, getFormModeButtonTitle, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
@@ -47,7 +47,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <NameField sm={p.sm} />
         {p.mode === formMode.add && <HandleField sm={p.sm} />}
-        <DescriptionField sm={p.sm} />
+        <SubtitleField sm={p.sm} />
         <ImageField sm={p.sm} />
         <UrlField sm={p.sm} />
         <ButtonIcon
@@ -57,7 +57,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
           variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
           class="w-full"
         >
-          {p.sm.isSaving.get() ? ttt("Saving...") : getWorkspaceTitle(p.mode)}
+          {p.sm.isSaving.get() ? ttt("Saving...") : getFormModeButtonTitle(p.mode, ttt("Workspace"))}
         </ButtonIcon>
       </form>
     </section>
@@ -125,30 +125,30 @@ function HandleField(p: HasOrgFormStateManagement) {
   )
 }
 
-function DescriptionField(p: HasOrgFormStateManagement) {
+function SubtitleField(p: HasOrgFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={workspaceFormField.description}>{ttt("Description")}</Label>
+      <Label for={workspaceFormField.subtitle}>{ttt("Subtitle")}</Label>
       <Textarea
-        id={workspaceFormField.description}
-        placeholder={ttt("Enter workspace description")}
-        value={p.sm.state.description.get()}
+        id={workspaceFormField.subtitle}
+        placeholder={ttt("Enter workspace subtitle")}
+        value={p.sm.state.subtitle.get()}
         onInput={(e) => {
           const value = e.currentTarget.value
-          p.sm.state.description.set(value)
-          p.sm.validateOnChange(workspaceFormField.description)(value)
+          p.sm.state.subtitle.set(value)
+          p.sm.validateOnChange(workspaceFormField.subtitle)(value)
         }}
-        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)}
+        onBlur={(e) => p.sm.validateOnChange(workspaceFormField.subtitle)(e.currentTarget.value)}
         class={classMerge(
           "w-full",
-          p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
+          p.sm.errors.subtitle.get() && "border-destructive focus-visible:ring-destructive",
         )}
         maxLength={inputMaxLengthUrl}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}
       />
-      <Show when={p.sm.errors.description.get()}>
-        <p class="text-destructive">{p.sm.errors.description.get()}</p>
+      <Show when={p.sm.errors.subtitle.get()}>
+        <p class="text-destructive">{p.sm.errors.subtitle.get()}</p>
       </Show>
     </div>
   )

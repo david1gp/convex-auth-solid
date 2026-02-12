@@ -1,4 +1,4 @@
-import { fieldsCreatedAtUpdatedAt } from "@convex/utils/fieldsCreatedAtUpdatedAt"
+import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
 
@@ -8,14 +8,14 @@ export const workspaceDataFields = {
   workspaceHandle: v.string(),
   // data
   name: v.string(),
-  description: v.optional(v.string()),
+  subtitle: v.optional(v.string()),
   image: v.optional(v.string()),
   url: v.optional(v.string()),
 } as const
 
 export const workspaceFields = {
   ...workspaceDataFields,
-  ...fieldsCreatedAtUpdatedAt,
+  ...fieldsConvexCreatedAtUpdatedAt,
 } as const
 
 export const workspaceTables = {

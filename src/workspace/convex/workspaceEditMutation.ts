@@ -1,7 +1,7 @@
 import { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
-import { authMutationR } from "@convex/utils/authMutationR"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 import * as va from "valibot"
 import { nowIso } from "~utils/date/nowIso"
@@ -10,19 +10,17 @@ import type { DocWorkspace } from "./IdWorkspace"
 
 export type WorkspaceEditValidatorType = typeof workspaceEditValidator.type
 
-export const workspaceEditFields = {
+export const workspaceEditValidator = v.object({
   workspaceHandle: v.string(),
   // data
   name: v.optional(v.string()),
   description: v.optional(v.string()),
   image: v.optional(v.string()),
   url: v.optional(v.string()),
-} as const
-
-export const workspaceEditValidator = v.object(workspaceEditFields)
+}).partial()
 
 export const workspaceEditMutation = mutation({
-  args: createTokenValidator(workspaceEditFields),
+  args: createTokenValidator(workspaceEditValidator.fields),
   handler: async (ctx, args) => authMutationR(ctx, args, workspaceEditFn),
 })
 
@@ -33,21 +31,25 @@ export const workspaceEditInternal = internalMutation({
 
 export async function workspaceEditFn(ctx: MutationCtx, args: WorkspaceEditValidatorType): PromiseResult<null> {
   const op = "workspaceEditFn"
+  const { workspaceHandle, ...partial } = args
+
+  if (!workspaceHandle) {
+    return createResultError(op, "Missing workspaceHandle")
+  }
 
   const schema = va.partial(workspaceDataSchema)
-  const parse = va.safeParse(schema, args)
+  const parse = va.safeParse(schema, partial)
   if (!parse.success) {
     return createResultError(op, va.summarize(parse.issues))
   }
 
   const workspace = await ctx.db
     .query("workspaces")
-    .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", args.workspaceHandle))
+    .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", workspaceHandle))
     .unique()
   if (!workspace) {
-    return createResultError(op, "Workspace not found", args.workspaceHandle)
+    return createResultError(op, "Workspace not found", workspaceHandle)
   }
-  const { workspaceHandle, ...partial } = args
   const patch: Partial<DocWorkspace> = partial
   patch.updatedAt = nowIso()
 

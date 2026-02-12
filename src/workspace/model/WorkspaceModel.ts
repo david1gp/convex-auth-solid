@@ -1,4 +1,4 @@
-import type { HasConvexSystemFields } from "@/utils/convex/HasConvexSystemFields"
+import type { HasConvexSystemFields } from "@/utils/convex_client/HasConvexSystemFields"
 import type { HasCreatedAtUpdatedAt } from "@/utils/data/HasCreatedAtUpdatedAt"
 import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { workspaceDataSchema } from "@/workspace/model/workspaceSchema"

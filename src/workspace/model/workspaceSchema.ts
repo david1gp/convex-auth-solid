@@ -17,7 +17,7 @@ export const workspaceDataSchemaFields = {
   workspaceHandle: a.pipe(handleSchema),
   // data
   name: a.pipe(stringSchemaName),
-  description: a.optional(stringSchemaDescription),
+  subtitle: a.optional(stringSchemaDescription),
   image: a.optional(stringSchemaUrl),
   url: a.optional(stringSchemaUrl),
 } as const

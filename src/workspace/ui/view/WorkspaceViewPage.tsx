@@ -55,7 +55,7 @@ function WorkspaceView(p: WorkspaceComponentProps) {
           {ttt("Edit")}
         </LinkButton>
       </div>
-      <ShowDescription {...p} />
+      <ShowSubtitle {...p} />
       <ShowUrl {...p} />
     </div>
   )
@@ -75,20 +75,20 @@ function ShowImg(p: WorkspaceComponentProps) {
   )
 }
 
-function ShowDescription(p: WorkspaceComponentProps) {
+function ShowSubtitle(p: WorkspaceComponentProps) {
   return (
-    <Show when={p.workspace.description}>
-      {(getDescription) => (
+    <Show when={p.workspace.subtitle}>
+      {(getSubtitle) => (
         <div class="text-lg mx-auto text-pretty mb-4">
-          <Description description={getDescription()} />
+          <Subtitle subtitle={getSubtitle()} />
         </div>
       )}
     </Show>
   )
 }
 
-function Description(p: { description: string }) {
-  const lines = p.description.split("\n")
+function Subtitle(p: { subtitle: string }) {
+  const lines = p.subtitle.split("\n")
   return <For each={lines}>{(line) => <p>{line}</p>}</For>
 }
 

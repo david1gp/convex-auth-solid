@@ -1,6 +1,6 @@
 import { type MutationCtx, internalMutation, mutation } from "@convex/_generated/server"
-import { authMutation } from "@convex/utils/authMutation"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authMutation } from "@/utils/convex_backend/authMutation"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 
 export type WorkspaceDeleteValidatorType = typeof workspaceDeleteValidator.type

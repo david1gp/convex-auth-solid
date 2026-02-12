@@ -1,5 +1,5 @@
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import { createMutation } from "@/utils/convex/createMutation"
+import { createMutation } from "@/utils/convex_client/createMutation"
 import { debounceMs } from "@/utils/ui/debounceMs"
 import type { HasToken } from "@/utils/ui/HasToken"
 import { handleGenerate } from "@/utils/valibot/handleSchema"
@@ -28,7 +28,7 @@ export const workspaceFormField = {
   workspaceHandle: "workspaceHandle",
   // data
   name: "name",
-  description: "description",
+  subtitle: "subtitle",
   image: "image",
   url: "url",
 } as const
@@ -37,7 +37,7 @@ export type WorkspaceFormData = {
   workspaceHandle: string
   // data
   name: string
-  description: string
+  subtitle: string
   image: string
   url: string
 }
@@ -45,7 +45,7 @@ export type WorkspaceFormData = {
 export type WorkspaceFormState = {
   name: SignalObject<string>
   workspaceHandle: SignalObject<string>
-  description: SignalObject<string>
+  subtitle: SignalObject<string>
   image: SignalObject<string>
   url: SignalObject<string>
 }
@@ -53,7 +53,7 @@ export type WorkspaceFormState = {
 export type WorkspaceFormErrorState = {
   name: SignalObject<string>
   workspaceHandle: SignalObject<string>
-  description: SignalObject<string>
+  subtitle: SignalObject<string>
   image: SignalObject<string>
   url: SignalObject<string>
 }
@@ -62,7 +62,7 @@ function workspaceCreateState(): WorkspaceFormState {
   return {
     name: createSignalObject(""),
     workspaceHandle: createSignalObject(""),
-    description: createSignalObject(""),
+    subtitle: createSignalObject(""),
     image: createSignalObject(""),
     url: createSignalObject(""),
   }
@@ -82,7 +82,7 @@ export type WorkspaceFormStateManagement = {
 }
 
 function createWorkspaceFormData(): WorkspaceFormData {
-  return { name: "", workspaceHandle: "", description: "", image: "", url: "" }
+  return { name: "", workspaceHandle: "", subtitle: "", image: "", url: "" }
 }
 
 function createEmptyDocWorkspace(): DocWorkspace {
@@ -129,7 +129,7 @@ function loadData(data: DocWorkspace, serverState: SignalObject<DocWorkspace>, s
   serverState.set(data)
   state.name.set(data.name)
   state.workspaceHandle.set(data.workspaceHandle)
-  state.description.set(data.description ?? "")
+  state.subtitle.set(data.subtitle ?? "")
   state.image.set(data.image ?? "")
   state.url.set(data.url ?? "")
 }
@@ -138,7 +138,7 @@ function hasErrors(errors: WorkspaceFormErrorState) {
   return (
     !!errors.name.get() ||
     !!errors.workspaceHandle.get() ||
-    !!errors.description.get() ||
+    !!errors.subtitle.get() ||
     !!errors.image.get() ||
     !!errors.url.get()
   )
@@ -146,7 +146,7 @@ function hasErrors(errors: WorkspaceFormErrorState) {
 function fillTestData(state: WorkspaceFormState, errors: WorkspaceFormErrorState) {
   state.name.set("Test Workspace")
   state.workspaceHandle.set("test-workspace")
-  state.description.set("Test description")
+  state.subtitle.set("Test subtitle")
   state.image.set("")
   state.url.set("")
   for (const field of Object.values(workspaceFormField)) {
@@ -195,8 +195,8 @@ function validateFieldResult(field: WorkspaceFormField, value: string) {
     schema = workspaceDataSchemaFields.name
   } else if (field === workspaceFormField.workspaceHandle) {
     schema = workspaceDataSchemaFields.workspaceHandle
-  } else if (field === workspaceFormField.description) {
-    schema = workspaceDataSchemaFields.description
+  } else if (field === workspaceFormField.subtitle) {
+    schema = workspaceDataSchemaFields.subtitle
   } else if (field === workspaceFormField.image) {
     schema = workspaceDataSchemaFields.image
   } else if (field === workspaceFormField.url) {
@@ -226,24 +226,24 @@ async function handleSubmit(
 
   const name = state.name.get()
   const workspaceHandle = state.workspaceHandle.get()
-  const description = state.description.get()
+  const subtitle = state.subtitle.get()
   const image = state.image.get()
   const url = state.url.get()
 
   const nameResult = validateFieldResult(workspaceFormField.name, name)
   const handleResult = validateFieldResult(workspaceFormField.workspaceHandle, workspaceHandle)
-  const descriptionResult = validateFieldResult(workspaceFormField.description, description)
+  const subtitleResult = validateFieldResult(workspaceFormField.subtitle, subtitle)
   const imageResult = validateFieldResult(workspaceFormField.image, image)
   const urlResult = validateFieldResult(workspaceFormField.url, url)
 
   errors.name.set(nameResult.success ? "" : nameResult.issues[0].message)
   errors.workspaceHandle.set(handleResult.success ? "" : handleResult.issues[0].message)
-  errors.description.set(descriptionResult.success ? "" : descriptionResult.issues[0].message)
+  errors.subtitle.set(subtitleResult.success ? "" : subtitleResult.issues[0].message)
   errors.image.set(imageResult.success ? "" : imageResult.issues[0].message)
   errors.url.set(urlResult.success ? "" : urlResult.issues[0].message)
 
   const isSuccess =
-    nameResult.success && handleResult.success && descriptionResult.success && imageResult.success && urlResult.success
+    nameResult.success && handleResult.success && subtitleResult.success && imageResult.success && urlResult.success
 
   if (!isSuccess) {
     if (!nameResult.success) {
@@ -252,8 +252,8 @@ async function handleSubmit(
     if (!handleResult.success) {
       toastAdd({ title: handleResult.issues[0].message, icon: mdiAlertCircle, id: "handle" })
     }
-    if (!descriptionResult.success) {
-      toastAdd({ title: descriptionResult.issues[0].message, icon: mdiAlertCircle, id: "description" })
+    if (!subtitleResult.success) {
+      toastAdd({ title: subtitleResult.issues[0].message, icon: mdiAlertCircle, id: "subtitle" })
     }
     if (!imageResult.success) {
       toastAdd({ title: imageResult.issues[0].message, icon: mdiAlertCircle, id: "image" })
@@ -267,7 +267,7 @@ async function handleSubmit(
   isSaving.set(true)
 
   if (actions.create) {
-    const data: WorkspaceFormData = { name, workspaceHandle, description, image, url }
+    const data: WorkspaceFormData = { name, workspaceHandle, subtitle, image, url }
     await actions.create(data)
   }
 
@@ -277,8 +277,8 @@ async function handleSubmit(
     if (name !== ss.name) {
       data.name = name
     }
-    if (description !== ss.description) {
-      data.description = description
+    if (subtitle !== ss.subtitle) {
+      data.subtitle = subtitle
     }
     if (image !== ss.image) {
       data.image = image
