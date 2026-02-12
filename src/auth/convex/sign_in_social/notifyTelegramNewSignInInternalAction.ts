@@ -22,8 +22,8 @@ export async function notifyTelegramNewSignInInternalActionFn(
 ): PromiseResult<null> {
   const envModeResult = envEnvModeResult()
   if (!envModeResult.success) return envModeResult
-  const name = envModeResult.data + " / user signed up"
-  const data = args.userSession
+  const name = envModeResult.data + " / user signed in"
+  const { token, ...data } = args.userSession
   await sendTelegramMessageAuth(name, data)
   return createResult(null)
 }

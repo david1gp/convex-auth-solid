@@ -9,6 +9,11 @@ export const pageRouteAuth = {
   signIn: "/sign-in",
   signInEnterOtp: "/sign-in-enter-otp",
   signInError: "/sign-in-error",
+  userProfileMe: "/profile",
+  userProfileMeEdit: "/profile/edit",
+  userProfileMeChangePassword: "/profile/change-password",
+  userProfileMeChangeEmail: "/profile/change-email",
+  userProfileMeImage: "/profile/update-image",
   userProfileView: "/u/:username",
 } as const satisfies Record<PageNameAuth, string>
 
@@ -22,6 +27,26 @@ export function urlPageSignIn(email?: string, returnPath?: string) {
 
 export function urlUserProfileView(username: string) {
   return pageRouteAuth.userProfileView.replace(":username", username)
+}
+
+export function urlUserProfileMe() {
+  return pageRouteAuth.userProfileMe
+}
+
+export function urlUserProfileMeEdit() {
+  return pageRouteAuth.userProfileMeEdit
+}
+
+export function urlUserProfileMeChangePassword() {
+  return pageRouteAuth.userProfileMeChangePassword
+}
+
+export function urlUserProfileMeChangeEmail() {
+  return pageRouteAuth.userProfileMeChangeEmail
+}
+
+export function urlUserProfileMeImage() {
+  return pageRouteAuth.userProfileMeImage
 }
 
 function serializeSearchParams(email?: string, returnPath?: string) {

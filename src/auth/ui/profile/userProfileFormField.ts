@@ -12,6 +12,8 @@ export const userProfileFormField = {
   username: "username",
   image: "image",
   email: "email",
+  bio: "bio",
+  url: "url",
   role: "role",
   orgHandle: "orgHandle",
   orgRole: "orgRole",
@@ -47,6 +49,18 @@ export const userProfileFormConfig = {
     label: ttt("Email"),
     placeholder: ttt("Enter email address"),
     autocomplete: "email",
+  } as const satisfies FormFieldConfig,
+
+  bio: {
+    name: "bio",
+    label: ttt("Bio"),
+    placeholder: ttt("Enter your bio"),
+  } as const satisfies FormFieldConfig,
+
+  url: {
+    name: "url",
+    label: ttt("Website"),
+    placeholder: ttt("Enter your website URL"),
   } as const satisfies FormFieldConfig,
 
   role: {

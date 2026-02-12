@@ -1,3 +1,4 @@
+import { otpTableFields } from "@/auth/convex/otp/otpTableFields"
 import { loginMethodValidator } from "@/auth/model_field/loginMethodValidator"
 import { userRoleValidator } from "@/auth/model_field/userRoleValidator"
 import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
@@ -14,6 +15,8 @@ export const userFields = {
   email: v.optional(v.string()),
   emailVerifiedAt: v.optional(v.string()),
   hashedPassword: v.optional(v.string()),
+  bio: v.optional(v.string()),
+  url: v.optional(v.string()),
   role: userRoleValidator,
   // meta times
   ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
@@ -92,6 +95,10 @@ export const authTables = {
     .index("emailCode", ["email", "code"]),
 
   authEmailLoginCodes: defineTable(authEmailLoginCodeFields)
+    //
+    .index("emailCode", ["email", "code"]),
+
+  authOtps: defineTable(otpTableFields)
     //
     .index("emailCode", ["email", "code"]),
 } as const

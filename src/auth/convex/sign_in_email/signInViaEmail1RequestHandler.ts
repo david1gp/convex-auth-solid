@@ -6,8 +6,8 @@ import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
-import { sendEmailSignIn } from "../email/sendEmailSignIn"
-import { commonApiErrorMessages } from "../sign_up/commonApiErrorMessages"
+import { sendEmailSignIn } from "@/auth/convex/email/sendEmailSignIn"
+import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 
 export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInEmail1HttpHandler"

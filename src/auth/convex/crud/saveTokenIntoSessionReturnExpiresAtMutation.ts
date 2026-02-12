@@ -6,7 +6,7 @@ import type { MutationCtx } from "@convex/_generated/server"
 import { internalMutation } from "@convex/_generated/server"
 import { v } from "convex/values"
 import dayjs from "dayjs"
-import { vIdUser } from "../vIdUser"
+import { vIdUser } from "@/auth/convex/vIdUser"
 
 export type AuthSessionInsertValidatorType = typeof authSessionInsertValidator.type
 export const authSessionInsertValidator = v.object({

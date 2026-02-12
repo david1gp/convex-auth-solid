@@ -1,3 +1,4 @@
+import { week1timeMs } from "@/auth/convex/otp/week1timeMs"
 import { type MutationCtx, internalMutation } from "@convex/_generated/server"
 
 export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutation({
@@ -8,7 +9,7 @@ export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutati
 export async function signUpConfirmEmail3CleanupOldCodesInternalMutationFn(
   ctx: MutationCtx,
 ): Promise<{ deleted: number }> {
-  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+  const oneDayAgo = new Date(Date.now() - week1timeMs).toISOString()
 
   const oldCodes = await ctx.db
     .query("authUserEmailRegistrations")

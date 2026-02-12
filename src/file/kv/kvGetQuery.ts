@@ -1,6 +1,6 @@
 import { internalQuery, query, type MutationCtx, type QueryCtx } from "@convex/_generated/server"
-import { authQuery } from "@convex/utils/authQuery"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authQuery } from "@/utils/convex_backend/authQuery"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 import type { DocKv } from "./IdKv"
 

@@ -13,7 +13,7 @@ import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
 import { Icon } from "~ui/static/icon/Icon"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { EnterOtpForm } from "../../email/EnterOtpForm"
+import { EnterOtpForm } from "@/auth/ui/email/EnterOtpForm"
 
 export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
   const getTitle = () => ttt("Enter Code to Sign In")

@@ -8,8 +8,8 @@ import {
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
 import { createResult, type PromiseResult } from "~utils/result/Result"
-import { findOrCreateUserFn } from "../crud/findOrCreateUserFn"
-import { saveTokenIntoSessionReturnExpiresAtFn } from "../crud/saveTokenIntoSessionReturnExpiresAtMutation"
+import { findOrCreateUserFn } from "@/auth/convex/crud/findOrCreateUserFn"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 
 export const signInUsingSocialAuth3InternalMutation = internalMutation({
   args: commonAuthProviderValidator,

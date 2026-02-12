@@ -6,5 +6,10 @@ export const pageNameAuth = {
   signIn: "signIn",
   signInEnterOtp: "signInEnterOtp",
   signInError: "signInError",
+  userProfileMe: "userProfileMe",
+  userProfileMeEdit: "userProfileMeEdit",
+  userProfileMeChangePassword: "userProfileMeChangePassword",
+  userProfileMeChangeEmail: "userProfileMeChangeEmail",
+  userProfileMeImage: "userProfileMeImage",
   userProfileView: "userProfileView",
 } as const

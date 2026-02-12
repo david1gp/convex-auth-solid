@@ -14,7 +14,7 @@ import { classArr } from "~ui/utils/classArr"
 import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
-import { signInSessionExisting } from "../logic/signInSessionExisting"
+import { signInSessionExisting } from "@/auth/ui/sign_in/logic/signInSessionExisting"
 
 dayjs.extend(relativeTime)
 

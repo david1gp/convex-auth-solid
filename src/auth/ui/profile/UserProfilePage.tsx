@@ -11,7 +11,7 @@ import {
 } from "@/auth/ui/profile/userProfileFormState"
 import { urlUserProfileView } from "@/auth/url/pageRouteAuth"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { createQuery } from "@/utils/convex/createQuery"
+import { createQuery } from "@/utils/convex_client/createQuery"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"

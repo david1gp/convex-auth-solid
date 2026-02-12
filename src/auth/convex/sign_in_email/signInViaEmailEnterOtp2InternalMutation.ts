@@ -1,14 +1,17 @@
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
+import type { DocUser } from "@/auth/convex/IdUser"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model_field/loginMethod"
+import { otpPurpose } from "@/auth/model_field/otpPurpose"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
-import { createError, createResult, type PromiseResult } from "~utils/result/Result"
-import type { DocUser } from "../IdUser"
-import { docUserToUserProfile } from "../user/docUserToUserProfile"
+import { createError, type PromiseResult } from "~utils/result/Result"
+import { otpConsumeFn } from "@/auth/convex/otp/otpConsumeFn"
+import { otpFindFn } from "@/auth/convex/otp/otpFindFn"
 
 export type signInViaEmailEnterOtp2ValidatorType = typeof signInViaEmailEnterOtp2Validator.type
 export const signInViaEmailEnterOtp2Validator = v.object({
@@ -28,56 +31,31 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   const op = "signInConfirm2MutationFn"
   const { email, code } = args
 
-  //
-  // 1. Find the login code
-  //
-  const loginCode = await ctx.db
-    .query("authEmailLoginCodes")
-    .withIndex("emailCode", (q) => q.eq("email", email).eq("code", code))
-    .first()
-
-  if (!loginCode) {
-    return createError(op, "Invalid or expired code", code)
+  const otpFindResult = await otpFindFn(ctx, { email, code, purpose: otpPurpose.signIn })
+  if (!otpFindResult.success) {
+    return createError(op, otpFindResult.errorMessage || "Invalid code")
   }
+  const otpRecord = otpFindResult.data
 
-  if (loginCode.consumedAt) {
-    return createError(op, "Code already used", code)
-  }
+  const { userId } = otpRecord
 
-  const { userId } = loginCode
-
-  //
-  // 2. Get user
-  //
   const user = await ctx.db.get(userId)
   if (!user) {
     return createError(op, "User not found", userId)
   }
 
-  //
-  // 3. Check for org membership
-  //
   const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
 
   const userProfile = docUserToUserProfile(user as DocUser, orgHandle, orgRole)
 
-  //
-  // 4. Create session
-  //
   const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) return tokenResult
   const token = tokenResult.data
 
   const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
 
-  //
-  // 5. Mark code as consumed
-  //
-  await ctx.db.patch(loginCode._id, { consumedAt: nowIso() })
+  await otpConsumeFn(ctx, { otpId: otpRecord._id })
 
-  //
-  // 6. Create and return user session
-  //
   const userSession: UserSession = {
     token,
     profile: userProfile,
@@ -87,5 +65,5 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
     expiresAt,
   }
 
-  return createResult(userSession)
+  return { success: true, data: userSession }
 }

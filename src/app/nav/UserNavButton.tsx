@@ -1,11 +1,13 @@
 import { LogoutButton } from "@/app/nav/LogoutButton"
 import type { UserSession } from "@/auth/model/UserSession"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
+import { urlUserProfileMe } from "@/auth/url/pageRouteAuth"
 import { mdiAccount } from "@mdi/js"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { CorvuPopover } from "~ui/interactive/popover/CorvuPopover"
+import { LinkButton } from "~ui/interactive/link/LinkButton"
+import { CorvuPopoverIcon } from "~ui/interactive/popover/CorvuPopoverIcon"
 
 export function UserNavButton() {
   return <Show when={userSessionSignal.get()}>{(userSession) => <UserPopover />}</Show>
@@ -13,10 +15,19 @@ export function UserNavButton() {
 
 function UserPopover() {
   return (
-    <CorvuPopover icon={mdiAccount} variant={buttonVariant.ghost} title={ttt("My Account")}>
+    <CorvuPopoverIcon
+      icon={mdiAccount}
+      variant={buttonVariant.ghost}
+      title={ttt("My Account")}
+      innerClass="flex flex-col gap-1"
+    >
       <UserSessionInfo userSession={userSessionSignal.get()!} />
-      <LogoutButton />
-    </CorvuPopover>
+      <LinkButton icon={mdiAccount} variant={buttonVariant.link} href={urlUserProfileMe()} class="justify-start">
+        {ttt("My Profile")}
+      </LinkButton>
+      )
+      <LogoutButton class="justify-start" />
+    </CorvuPopoverIcon>
   )
 }
 

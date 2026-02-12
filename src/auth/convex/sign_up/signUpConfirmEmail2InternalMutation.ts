@@ -8,7 +8,7 @@ import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
-import { docUserToUserProfile } from "../user/docUserToUserProfile"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 
 export type SignUpConfirmValidatorType = typeof signUpConfirmEmailValidator.type
 export const signUpConfirmEmailValidator = v.object({

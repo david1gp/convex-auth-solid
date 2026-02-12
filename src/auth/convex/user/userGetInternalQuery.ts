@@ -1,6 +1,6 @@
 import { type QueryCtx, internalQuery } from "@convex/_generated/server"
-import type { DocUser, IdUser } from "../IdUser"
-import { vIdUser } from "../vIdUser"
+import type { DocUser, IdUser } from "@/auth/convex/IdUser"
+import { vIdUser } from "@/auth/convex/vIdUser"
 
 export const userGetInternalQuery = internalQuery({
   args: { userId: vIdUser },

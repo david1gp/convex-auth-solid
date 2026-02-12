@@ -1,7 +1,7 @@
 import { kvGetQueryFn2 } from "@/file/kv/kvGetQuery"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
-import { authMutation } from "@convex/utils/authMutation"
-import { createTokenValidator } from "@convex/utils/createTokenValidator"
+import { authMutation } from "@/utils/convex_backend/authMutation"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 import type { DocKv } from "./IdKv"
 

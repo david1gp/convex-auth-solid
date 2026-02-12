@@ -27,7 +27,7 @@ function createUserSessionsSignal(): SignalObject<UserSession | null> {
   if (result.success) {
     signal.set(result.data)
   } else {
-    const autoLoginSession = autoLoginIfUser()
+    const autoLoginSession = autoLoginIfUserRoleOnly()
     if (autoLoginSession) {
       signal.set(autoLoginSession)
     }
@@ -44,7 +44,7 @@ function createUserSessionsSignal(): SignalObject<UserSession | null> {
   return signal
 }
 
-function autoLoginIfUser(): UserSession | null {
+export function autoLoginIfUserRoleOnly(): UserSession | null {
   const sessions = userSessionsSignal.get()
   return shouldAutologin(sessions)
 }
@@ -55,7 +55,7 @@ function shouldAutologin(sessions: UserSession[]): UserSession | null {
   // const isSingle = sessions.length === 1
   const single = sessions[0]
   if (!single) return null
-  const hasUserRole = single.profile.role == userRole.user
+  const hasUserRole = single.profile.role === userRole.user
   if (!hasUserRole) return null
   return single
 }

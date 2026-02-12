@@ -41,7 +41,7 @@ export async function sendEmailOrgInvitation(
 
   const envMode = envModeResult.data
   const name = envMode + " / org invitation"
-  const telegramResult = await sendTelegramMessageAuth(name, p)
+  const telegramResult = await sendTelegramMessageAuth(name, { invitedEmail, ...p })
   if (!telegramResult.success) return telegramResult
 
   return createResult(null)

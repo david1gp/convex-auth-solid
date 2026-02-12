@@ -8,9 +8,9 @@ import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
 import { nowIso } from "~utils/date/nowIso"
 import { createError } from "~utils/result/Result"
-import type { IdUser } from "../IdUser"
-import { verifyHashedPassword2 } from "../pw/verifyHashedPassword"
-import { docUserToUserProfile } from "../user/docUserToUserProfile"
+import type { IdUser } from "@/auth/convex/IdUser"
+import { verifyHashedPassword2 } from "@/auth/convex/pw/verifyHashedPassword"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 
 export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInPw1HttpHandler"

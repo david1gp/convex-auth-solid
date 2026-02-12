@@ -21,6 +21,26 @@ const ViewUserProfilePage = lazy(() =>
     default: c.UserProfilePage,
   })),
 )
+const UserProfileMePage = lazy(() =>
+  import("@/auth/ui/profile_me/UserProfileMePage").then((c) => ({
+    default: c.UserProfileMePage,
+  })),
+)
+const UserProfileMeEditPage = lazy(() =>
+  import("@/auth/ui/profile_me/UserProfileMeEditPage").then((c) => ({
+    default: c.UserProfileMeEditPage,
+  })),
+)
+const UserProfileMeChangePasswordPage = lazy(() =>
+  import("@/auth/ui/profile_me/UserProfileMeChangePasswordPage").then((c) => ({
+    default: c.UserProfileMeChangePasswordPage,
+  })),
+)
+const UserProfileMeChangeEmailPage = lazy(() =>
+  import("@/auth/ui/profile_me/UserProfileMeChangeEmailPage").then((c) => ({
+    default: c.UserProfileMeChangeEmailPage,
+  })),
+)
 
 export function getRoutesAuth(): RouteObject[] {
   const routeMapping = {
@@ -29,6 +49,11 @@ export function getRoutesAuth(): RouteObject[] {
     signIn: SignInPage,
     signInEnterOtp: SignInViaEmailEnterOtpPage,
     signInError: SignInErrorPage,
+    userProfileMe: UserProfileMePage,
+    userProfileMeEdit: UserProfileMeEditPage,
+    userProfileMeChangePassword: UserProfileMeChangePasswordPage,
+    userProfileMeChangeEmail: UserProfileMeChangeEmailPage,
+    userProfileMeImage: UserProfileMePage,
     userProfileView: ViewUserProfilePage,
   } as const satisfies Record<PageNameAuth, RouteComponent>
   return Object.entries(routeMapping).map(([routeKey, component]) => ({

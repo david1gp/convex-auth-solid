@@ -9,8 +9,8 @@ import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
-import { sendEmailSignUp } from "../email/sendEmailSignUp"
-import { commonApiErrorMessages } from "./commonApiErrorMessages"
+import { sendEmailSignUp } from "@/auth/convex/email/sendEmailSignUp"
+import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 
 export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signUp1RequestHandler"

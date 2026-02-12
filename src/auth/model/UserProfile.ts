@@ -19,6 +19,8 @@ export interface UserProfile extends HasCreatedAtUpdatedDeletedAt {
   image?: string
   email?: string
   emailVerifiedAt?: string
+  bio?: string
+  url?: string
   role: UserRole
   orgHandle?: string
   orgRole?: OrgRole
@@ -31,6 +33,8 @@ export const userProfileSchema = a.object({
   image: a.optional(stringSchema0to500),
   email: a.optional(emailSchema),
   emailVerifiedAt: a.optional(dateTimeSchema),
+  bio: a.optional(stringSchema0to500),
+  url: a.optional(stringSchema0to500),
   role: userRoleSchema,
   orgHandle: a.optional(a.string()),
   orgRole: a.optional(orgRoleSchema),
@@ -47,6 +51,8 @@ export const userProfileValidator = v.object({
   image: v.optional(v.string()),
   email: v.optional(v.string()),
   emailVerifiedAt: v.optional(v.string()),
+  bio: v.optional(v.string()),
+  url: v.optional(v.string()),
   role: userRoleValidator,
   orgHandle: v.optional(v.string()),
   orgRole: v.optional(orgRoleValidator),

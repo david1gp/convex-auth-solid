@@ -9,7 +9,7 @@ import {
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import type { WithoutSystemFields } from "convex/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocUser } from "../IdUser"
+import type { DocUser } from "@/auth/convex/IdUser"
 
 export type UserFields = WithoutSystemFields<DocUser>
 

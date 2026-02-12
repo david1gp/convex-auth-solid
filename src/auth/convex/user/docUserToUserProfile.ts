@@ -16,8 +16,8 @@ export function docUserToUserProfile(u: DocUser, orgHandle?: string, orgRole?: O
     ...rest
   } = u
   const profile: UserProfile = { userId: _id as string, ...rest }
-  if (image) profile.image
-  if (email) profile.email
+  if (image) profile.image = image
+  if (email) profile.email = email
   if (orgHandle) profile.orgHandle = orgHandle
   if (orgRole) profile.orgRole = orgRole
   return profile

@@ -28,10 +28,10 @@ export const formFieldConfigs = {
     placeholder: ttt("Enter name"),
   } as const satisfies FormFieldConfig,
 
-  description: {
-    name: "description",
-    label: ttt("Description"),
-    placeholder: ttt("Enter description"),
+  subtitle: {
+    name: "subtitle",
+    label: ttt("Subtitle"),
+    placeholder: ttt("Enter subtitle"),
     maxLength: inputMaxLengthSummary,
   } as const satisfies FormFieldConfig,
 

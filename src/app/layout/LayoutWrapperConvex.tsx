@@ -1,5 +1,5 @@
 import { envBaseUrlConvexResult } from "@/app/env/public/envBaseUrlConvexResult"
-import { ConvexContext } from "@/utils/convex/convexContext"
+import { ConvexContext } from "@/utils/convex_client/convexContext"
 import { ConvexClient } from "convex/browser"
 import { createEffect } from "solid-js"
 import { Toaster } from "~ui/interactive/toast/Toaster"

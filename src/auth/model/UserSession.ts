@@ -3,6 +3,7 @@ import { loginMethodSchema, type LoginMethod } from "@/auth/model_field/loginMet
 import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
 import dayjs from "dayjs"
 import * as a from "valibot"
+import { createError, createResult, type Result } from "~utils/result/Result"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export type UserSession = {
@@ -36,4 +37,12 @@ export function userSessionIsStillValid(userSession: UserSession): boolean {
   const now = dayjs()
   const isExpired = expiresAt < now
   return !isExpired
+}
+
+export function userSessionParse(op: string, text: string): Result<UserSession> {
+  const parsing = a.safeParse(userSessionSchemaFromString, text)
+  if (!parsing.success) {
+    return createError(op, a.summarize(parsing.issues), text)
+  }
+  return createResult(parsing.output)
 }

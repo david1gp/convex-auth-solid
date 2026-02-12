@@ -1,4 +1,6 @@
-import { type MutationCtx, internalMutation } from "@convex/_generated/server"
+import { otpCleanupOldFn } from "@/auth/convex/otp/otpsCleanupOldMutation"
+import { week1timeMs } from "@/auth/convex/otp/week1timeMs"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 
 export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMutation({
   args: {},
@@ -6,11 +8,11 @@ export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMu
 })
 
 export async function signInViaEmailEnterOtp3CleanupOldCodesFn(ctx: MutationCtx): Promise<{ deleted: number }> {
-  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+  const week1Ago = new Date(Date.now() - week1timeMs).toISOString()
 
   const oldCodes = await ctx.db
     .query("authEmailLoginCodes")
-    .filter((q) => q.lt(q.field("createdAt"), oneDayAgo))
+    .filter((q) => q.lt(q.field("createdAt"), week1Ago))
     .collect()
 
   let deletedCount = 0
@@ -18,6 +20,7 @@ export async function signInViaEmailEnterOtp3CleanupOldCodesFn(ctx: MutationCtx)
     await ctx.db.delete(code._id)
     deletedCount++
   }
+  const otpDeleted = await otpCleanupOldFn(ctx)
 
-  return { deleted: deletedCount }
+  return { deleted: deletedCount + otpDeleted.deleted }
 }
