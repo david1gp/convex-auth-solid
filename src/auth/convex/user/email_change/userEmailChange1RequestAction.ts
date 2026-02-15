@@ -3,30 +3,18 @@ import { sendEmailChangeEmail } from "@/auth/convex/email/sendEmailChangeEmail"
 import type { DocUser } from "@/auth/convex/IdUser"
 import { verifyHashedPassword2 } from "@/auth/convex/pw/verifyHashedPassword"
 import { vIdUser } from "@/auth/convex/vIdUser"
+import { userEmailChangeFieldsBase, userEmailChangeValidatorInternal, userEmailChangeValidatorPublic, type UserEmailChangeTypeInternal } from "@/auth/convex/user/update/userEmailChangeMutation"
 import { otpPurpose } from "@/auth/model_field/otpPurpose"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { otpSaveFn } from "@/auth/convex/otp/otpSaveFn"
 import { internal } from "@convex/_generated/api"
 import { action, internalAction, type ActionCtx } from "@convex/_generated/server"
-import { v } from "convex/values"
 import * as a from "valibot"
 import { type PromiseResult } from "~utils/result/Result"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { authActionTokenToUserId } from "../../../../../convex/utils/authActionTokenToUserId"
 import { createErrorAndLogError } from "../../../../../convex/utils/createErrorAndLogError"
 import { createErrorAndLogWarn } from "../../../../../convex/utils/createErrorAndLogWarn"
-import { createTokenValidator } from "../../../../../convex/utils/createTokenValidator"
-
-export const userEmailChangeFieldsBase = {
-  newEmail: v.string(),
-  currentPassword: v.optional(v.string()),
-} as const
-
-export const userEmailChangeValidatorPublic = createTokenValidator(userEmailChangeFieldsBase)
-export type UserEmailChangeTypePublic = typeof userEmailChangeValidatorPublic.type
-
-export const userEmailChangeValidatorInternal = v.object({ ...userEmailChangeFieldsBase, userId: vIdUser })
-export type UserEmailChangeTypeInternal = typeof userEmailChangeValidatorInternal.type
 
 export const userEmailChange1RequestAction = action({
   args: userEmailChangeValidatorPublic,

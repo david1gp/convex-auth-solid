@@ -6,8 +6,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@convex/*": ["./convex/*"],
-      "~ui/*": ["./node_modules/@adaptive-sm/solid-ui/dist/*"],
-      "~utils/*": ["./node_modules/@adaptive-sm/utils/dist/*"]
+      "~ui/*": ["./node_modules/@adaptive-ds/solid-ui/dist/*"],
+      "~utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"]
     }
   },
   "include": ["src", "lib", "convex", "postcss.config.cjs"]

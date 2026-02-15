@@ -7,7 +7,7 @@ import {
   apiGenerateEmailSignUpV1,
   type GeneratedEmailType,
   type SignUpV1Type,
-} from "@adaptive-sm/email-generator/index.js"
+} from "@adaptive-ds/email-generator/index.js"
 import { isDevEnv } from "~ui/env/isDevEnv"
 import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
 import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"

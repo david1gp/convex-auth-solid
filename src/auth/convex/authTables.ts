@@ -22,6 +22,8 @@ export const userFields = {
   ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
 }
 
+export const userFieldsValidator = v.object(userFields)
+
 export const authAccountFields = {
   // ids
   userId: vIdUser,

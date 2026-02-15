@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @source '../**/*.{astro,html,md,mdx,ts,tsx}';
-@source '../node_modules/@adaptive-sm/solid-ui/dist/**/*.{astro,html,md,mdx,ts,tsx,js}';
+@source '../node_modules/@adaptive-ds/solid-ui/dist/**/*.{astro,html,md,mdx,ts,tsx,js}';
 
 @custom-variant dark (&:where(.dark, .dark *));
 

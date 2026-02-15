@@ -7,9 +7,8 @@ Designed to make integrating authentication into Convex apps fast and flexible, 
 
 Quick link
 
-- code - https://github.com/adaptive-shield-matrix/convex-auth
-- npm - https://www.npmjs.com/package/@adaptive-sm/convex-auth
-- live demo - https://adaptive-convex-auth.pages.dev/
+- code - https://github.com/adaptive-shield-matrix/convex-auth-solid
+- npm - https://www.npmjs.com/package/@adaptive-ds/convex-auth-solid
 
 ### ✨ Features
 

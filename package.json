@@ -1,6 +1,6 @@
 {
-  "name": "@adaptive-sm/convex-auth",
-  "version": "0.0.0",
+  "name": "@adaptive-ds/convex-auth-solid",
+  "version": "0.1.0",
   "scripts": {
     "cc": "clear && bun run convex codegen",
     "t": "clear && bun run tsc",
@@ -33,7 +33,7 @@
     "caddy:logs": "journalctl --user --since today -r --unit=caddy",
     "ui": "rsync -avh  ../adaptive-solid-ui/lib/ ./ui --delete",
     "generateDemoList": "bun run ./src/ui/demos/generateDemoList.cli.ts",
-    "updateAiRules": "bash ./node_modules/@adaptive-sm/solid-ui/lib/generate_ai_rules/generate_agent_rules.bash",
+    "updateAiRules": "bash ./node_modules/@adaptive-ds/solid-ui/lib/generate_ai_rules/generate_agent_rules.bash",
     "release": "bash ./ops/release.sh",
     "update": "bun x npm-check-updates -u && bun i",
     "update:commit": "bun x npm-check-updates -u && bun i && git add package.json && bun run tsc && git commit -m \"chore(deps): update dependencies\" && git push",
@@ -41,9 +41,9 @@
     "reset": "rm -rf ./node_modules"
   },
   "dependencies": {
-    "@adaptive-sm/email-generator": "link:@adaptive-sm/email-generator",
-    "@adaptive-sm/solid-ui": "link:@adaptive-sm/solid-ui",
-    "@adaptive-sm/utils": "link:@adaptive-sm/utils",
+    "@adaptive-ds/email-generator": "link:@adaptive-ds/email-generator",
+    "@adaptive-ds/solid-ui": "link:@adaptive-ds/solid-ui",
+    "@adaptive-ds/utils": "link:@adaptive-ds/utils",
     "@floating-ui/dom": "^1.7.4",
     "@mdi/js": "^7.4.47",
     "@solid-primitives/keyed": "^1.5.2",

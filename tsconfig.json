@@ -44,10 +44,10 @@
         "./src/*"
       ],
       "~utils/*": [
-        "./node_modules/@adaptive-sm/utils/dist/*"
+        "./node_modules/@adaptive-ds/utils/dist/*"
       ],
       "~ui/*": [
-        "./node_modules/@adaptive-sm/solid-ui/dist/*"
+        "./node_modules/@adaptive-ds/solid-ui/dist/*"
       ]
     },
     //

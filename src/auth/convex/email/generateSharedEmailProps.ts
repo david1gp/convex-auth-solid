@@ -1,7 +1,7 @@
 import { envBaseUrlSiteResult } from "@/app/env/public/envBaseUrlSiteResult"
 import { appNameServer } from "@/app/text/appName"
 import { appSubtitle } from "@/app/text/appSubtitle"
-import type { FooterV1Type } from "@adaptive-sm/email-generator/index.js"
+import type { FooterV1Type } from "@adaptive-ds/email-generator/index.js"
 
 export function generateSharedEmailProps() {
   const siteBaseUrlResult = envBaseUrlSiteResult()
