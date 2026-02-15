@@ -32,12 +32,12 @@ export async function userDeleteSoftMutationFn(
   }
   if (!userId) return createResultError(op, "Either userId or email must be provided")
 
-  const user = await ctx.db.get(userId)
+  const user = await ctx.db.get("users", userId)
   if (!user) return createResultError(op, "User not found", userId)
   if (user.deletedAt) return createResultError(op, "User already deleted", userId)
 
   const now = new Date().toISOString()
-  await ctx.db.patch(userId, { deletedAt: now })
+  await ctx.db.patch("users", userId, { deletedAt: now })
 
   return createResult(null)
 }

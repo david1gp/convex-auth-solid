@@ -39,7 +39,7 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
 
   const { userId } = otpRecord
 
-  const user = await ctx.db.get(userId)
+  const user = await ctx.db.get("users", userId)
   if (!user) {
     return createError(op, "User not found", userId)
   }

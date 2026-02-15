@@ -18,7 +18,7 @@ export async function signUpConfirmEmail3CleanupOldCodesInternalMutationFn(
 
   let deletedCount = 0
   for (const code of oldCodes) {
-    await ctx.db.delete(code._id)
+    await ctx.db.delete("authUserEmailRegistrations", code._id)
     deletedCount++
   }
 

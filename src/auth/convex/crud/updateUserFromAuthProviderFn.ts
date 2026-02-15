@@ -13,7 +13,7 @@ export async function updateUserFromAuthProviderFn(
 ): PromiseResult<string> {
   const op = "updateUserFromAuthProviderFn"
 
-  const user = await ctx.db.get(userId)
+  const user = await ctx.db.get("users", userId)
   if (!user) {
     return createResultError(op, "User not found by userId: ", userId)
   }
@@ -35,7 +35,7 @@ export async function updateUserFromAuthProviderFn(
   if (imageChanged) console.log(userId, "image changed", user.image, "->", userImage)
   if (emailChanged) console.log(userId, "email changed", user.email, "->", userEmail)
 
-  await ctx.db.patch(userId, {
+  await ctx.db.patch("users", userId, {
     ...(nameChanged && { name: userName }),
     ...(imageChanged && { image: userImage }),
     ...(emailChanged && { email: userEmail }),
@@ -48,7 +48,7 @@ export async function updateUserFromAuthProviderFn(
     .unique()
 
   if (authAccount) {
-    await ctx.db.patch(authAccount._id, {
+    await ctx.db.patch("authAccounts", authAccount._id, {
       providerAccountId: authProvider.providerId,
       updatedAt: new Date().toISOString(),
     })

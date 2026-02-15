@@ -25,7 +25,7 @@ export async function findOrCreateUserFn(
     )
     .unique()
   if (existingAuthAccount) {
-    const user = await ctx.db.get(existingAuthAccount.userId)
+    const user = await ctx.db.get("users", existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
     const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, user._id)
     const userProfile = docUserToUserProfile(user, orgHandle, orgRole)

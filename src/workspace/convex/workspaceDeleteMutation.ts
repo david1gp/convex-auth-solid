@@ -27,6 +27,6 @@ export async function workspaceDeleteFn(ctx: MutationCtx, args: WorkspaceDeleteV
     .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", args.workspaceHandle))
     .unique()
   if (!ws) return null // idempotent
-  await ctx.db.delete(ws._id)
+  await ctx.db.delete("workspaces", ws._id)
   return null
 }

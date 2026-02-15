@@ -53,6 +53,6 @@ export async function workspaceEditFn(ctx: MutationCtx, args: WorkspaceEditValid
   const patch: Partial<DocWorkspace> = partial
   patch.updatedAt = nowIso()
 
-  await ctx.db.patch(workspace._id, patch)
+  await ctx.db.patch("workspaces", workspace._id, patch)
   return createResult(null)
 }

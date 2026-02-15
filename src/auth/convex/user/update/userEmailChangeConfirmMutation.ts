@@ -40,7 +40,7 @@ async function userEmailChangeConfirmFn(
   const op = "userEmailChangeConfirmFn"
 
   const userId = args.userId as IdUser
-  const user: DocUser | null = await ctx.db.get(userId)
+  const user: DocUser | null = await ctx.db.get("users", userId)
   if (!user) {
     return createErrorAndLogError(op, "User not found")
   }
@@ -57,7 +57,7 @@ async function userEmailChangeConfirmFn(
 
   await otpConsumeFn(ctx, { otpId: otpRecord._id })
 
-  await ctx.db.patch(userId, {
+  await ctx.db.patch("users", userId, {
     email: args.newEmail,
     emailVerifiedAt: nowIso(),
     updatedAt: nowIso(),

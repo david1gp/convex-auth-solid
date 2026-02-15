@@ -41,7 +41,7 @@ export async function kvSetMutationFn2(
 
   if (existingDoc) {
     // Update existing document
-    await ctx.db.patch(existingDoc._id, {
+    await ctx.db.patch("kv", existingDoc._id, {
       data: data,
       updatedAt: new Date().toISOString(),
     })

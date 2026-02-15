@@ -34,7 +34,7 @@ export async function orgMemberGetHandleAndRoleFn(
 ): Promise<OrgHandleAndRole> {
   const orgMember = await orgMemberGetByUserIdFn(ctx, userId)
   if (!orgMember) return createEmptyOrgHandleAndRole()
-  const org = await ctx.db.get(orgMember.orgId)
+  const org = await ctx.db.get("orgs", orgMember.orgId)
   if (!org) return createEmptyOrgHandleAndRole()
   return { orgHandle: org.orgHandle, orgRole: orgMember.role }
 }

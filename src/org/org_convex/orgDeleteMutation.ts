@@ -27,8 +27,8 @@ export async function orgDeleteMutationFn(ctx: MutationCtx, args: OrgDeleteValid
     .query("orgMembers")
     .withIndex("orgId", (q) => q.eq("orgId", orgId))
     .collect()
-  await Promise.all(members.map((member) => ctx.db.delete(member._id)))
+  await Promise.all(members.map((member) => ctx.db.delete("orgMembers", member._id)))
   // Delete org
-  await ctx.db.delete(orgId)
+  await ctx.db.delete("orgs", orgId)
   return null
 }

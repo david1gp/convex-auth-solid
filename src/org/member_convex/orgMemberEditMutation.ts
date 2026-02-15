@@ -37,13 +37,13 @@ export async function orgMemberEditFn(ctx: MutationCtx, args: OrgMemberEditValid
     return createResultError(op, "Organization not found", orgHandle)
   }
 
-  const member = await ctx.db.get(memberId as IdOrgMember)
+  const member = await ctx.db.get("orgMembers", memberId as IdOrgMember)
   if (!member || member.orgId !== org._id) {
     return createResultError(op, "Org member not found", memberId)
   }
   const patch: Partial<DocOrgMember> = partial
   patch.updatedAt = nowIso()
 
-  await ctx.db.patch(memberId as IdOrgMember, patch)
+  await ctx.db.patch("orgMembers", memberId as IdOrgMember, patch)
   return createResult(null)
 }

@@ -17,7 +17,7 @@ export async function signInViaEmailEnterOtp3CleanupOldCodesFn(ctx: MutationCtx)
 
   let deletedCount = 0
   for (const code of oldCodes) {
-    await ctx.db.delete(code._id)
+    await ctx.db.delete("authEmailLoginCodes", code._id)
     deletedCount++
   }
   const otpDeleted = await otpCleanupOldFn(ctx)

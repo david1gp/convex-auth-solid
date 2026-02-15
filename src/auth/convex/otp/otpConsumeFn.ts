@@ -7,7 +7,7 @@ export async function otpConsumeFn(ctx: MutationCtx, args: { otpId: IdAuthOtp })
   const op = "otpConsumeFn"
   const { otpId } = args
 
-  await ctx.db.patch(otpId, { consumedAt: nowIso() })
+  await ctx.db.patch("authOtps", otpId, { consumedAt: nowIso() })
 
   return { success: true, data: undefined }
 }

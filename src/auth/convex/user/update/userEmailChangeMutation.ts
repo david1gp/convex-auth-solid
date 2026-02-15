@@ -44,7 +44,7 @@ async function userEmailChangeFn(ctx: MutationCtx, args: UserEmailChangeTypeInte
   }
 
   const userId = args.userId as IdUser
-  const user: DocUser | null = await ctx.db.get(userId)
+  const user: DocUser | null = await ctx.db.get("users", userId)
   if (!user) {
     return createErrorAndLogError(op, "User not found")
   }

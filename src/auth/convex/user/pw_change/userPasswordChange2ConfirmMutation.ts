@@ -56,7 +56,7 @@ async function userPasswordChange2ConfirmFn(
   }
 
   const userId = args.userId as IdUser
-  const user: DocUser | null = await ctx.db.get(userId)
+  const user: DocUser | null = await ctx.db.get("users", userId)
   if (!user) {
     return createErrorAndLogError(op, "User not found")
   }
@@ -82,7 +82,7 @@ async function userPasswordChange2ConfirmFn(
     return createErrorAndLogError(op, newPasswordHash.errorMessage || "Password hashing failed")
   }
 
-  await ctx.db.patch(userId, {
+  await ctx.db.patch("users", userId, {
     hashedPassword: newPasswordHash.data,
     updatedAt: nowIso(),
   })

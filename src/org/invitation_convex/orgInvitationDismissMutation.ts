@@ -31,7 +31,7 @@ export async function orgInvitation60DismissMutationFn(
     return createResultError(op, "Invitation not found", args.invitationCode)
   }
 
-  await ctx.db.delete(invitation._id)
+  await ctx.db.delete("orgInvitations", invitation._id)
 
   return createResult(null)
 }

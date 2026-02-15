@@ -34,12 +34,12 @@ export async function userDeleteHardMutationFn(
 
   if (!userId) return createResultError(op, "Either userId or email must be provided")
 
-  const user = await ctx.db.get(userId)
+  const user = await ctx.db.get("users", userId)
   if (!user) return createResultError(op, "User not found")
 
   await userDeleteHardOtps(ctx, userId)
 
-  await ctx.db.delete(userId)
+  await ctx.db.delete("users", userId)
 
   return createResult(null)
 }

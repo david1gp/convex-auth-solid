@@ -7,5 +7,5 @@ export async function userDeleteHardOtps(ctx: MutationCtx, userId: IdUser): Prom
     .filter((q) => q.eq(q.field("userId"), userId))
     .collect()
 
-  await Promise.all(codes.map((code) => ctx.db.delete(code._id)))
+  await Promise.all(codes.map((code) => ctx.db.delete("authOtps", code._id)))
 }

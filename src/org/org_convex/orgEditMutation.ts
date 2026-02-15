@@ -46,6 +46,6 @@ export async function orgEditMutationFn(ctx: MutationCtx, args: OrgEditValidator
   const patch: Partial<DocOrg> = partial
   patch.updatedAt = nowIso()
 
-  await ctx.db.patch(org._id, patch)
+  await ctx.db.patch("orgs", org._id, patch)
   return createResult(null)
 }

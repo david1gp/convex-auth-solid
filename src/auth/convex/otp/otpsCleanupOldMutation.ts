@@ -16,7 +16,7 @@ export async function otpCleanupOldFn(ctx: MutationCtx): Promise<{ deleted: numb
 
   let deletedCount = 0
   for (const code of oldCodes) {
-    await ctx.db.delete(code._id)
+    await ctx.db.delete("authOtps", code._id)
     deletedCount++
   }
 

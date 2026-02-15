@@ -47,6 +47,6 @@ export async function orgInvitation33UpdateFn(
 
   const patch: Partial<DocOrgInvitation> = { ...parse.output }
 
-  await ctx.db.patch(args._id, patch)
+  await ctx.db.patch("orgInvitations", args._id, patch)
   return createResult(null)
 }

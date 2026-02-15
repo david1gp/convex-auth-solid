@@ -37,7 +37,7 @@ export async function orgMemberGetFn(
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  let member = await ctx.db.get(args.memberId as IdOrgMember)
+  let member = await ctx.db.get("orgMembers", args.memberId as IdOrgMember)
   if (!member || member.orgId !== org._id) {
     return createResultError(op, "Org member not found", args.memberId)
   }

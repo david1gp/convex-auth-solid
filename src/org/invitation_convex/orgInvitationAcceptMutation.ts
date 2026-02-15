@@ -61,7 +61,7 @@ export async function orgInvitation50AcceptFn(
   }
 
   // Find or create user
-  const user = await ctx.db.get(userId)
+  const user = await ctx.db.get("users", userId)
   if (!user) {
     return createResultError(op, "User not found", userId)
   }
@@ -83,7 +83,7 @@ export async function orgInvitation50AcceptFn(
   if (!user.email) {
     data.email = invitation.invitedEmail
   }
-  await ctx.db.patch(userId, data)
+  await ctx.db.patch("users", userId, data)
 
   // Create session
   const tokenResult = await createTokenResult(userId, org.orgHandle, invitation.role)
@@ -105,7 +105,7 @@ export async function orgInvitation50AcceptFn(
   })
 
   // Delete org invitation
-  await ctx.db.delete(invitation._id)
+  await ctx.db.delete("orgInvitations", invitation._id)
 
   // Create user profile
   const userProfile = docUserToUserProfile(user, org.orgHandle, invitation.role)

@@ -8,5 +8,5 @@ export const userGetInternalQuery = internalQuery({
 })
 
 export async function userGetQueryFn(ctx: QueryCtx, userId: IdUser): Promise<DocUser | null> {
-  return await ctx.db.get(userId)
+  return await ctx.db.get("users", userId)
 }

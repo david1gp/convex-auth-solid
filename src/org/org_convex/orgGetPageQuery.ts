@@ -40,7 +40,7 @@ export async function orgGetPageQueryFn(ctx: QueryCtx, args: OrgGetPageValidator
 
   const members: OrgMemberProfile[] = await Promise.all(
     orgMembers.map(async (member) => {
-      const user = await ctx.db.get(member.userId)
+      const user = await ctx.db.get("users", member.userId)
       if (!user) {
         throw new Error(`User not found for member ${member._id}`)
       }

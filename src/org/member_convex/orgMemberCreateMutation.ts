@@ -41,7 +41,7 @@ export async function orgMemberCreateFn(
   }
   const invitedBy = verifiedResult.data.sub as IdUser
 
-  const user = await ctx.db.get(args.userId)
+  const user = await ctx.db.get("users", args.userId)
   if (!user) {
     const errorMessage = "user not found"
     console.info(op, errorMessage, args.userId)

@@ -33,7 +33,7 @@ async function userProfileUpdatePublicFn(
   const op = "userProfileUpdatePublicFn"
   const userId = args.userId
 
-  const currentUser: DocUser | null = await ctx.db.get(userId)
+  const currentUser: DocUser | null = await ctx.db.get("users", userId)
   if (!currentUser) {
     return createErrorAndLogError(op, "User not found", userId)
   }
@@ -45,13 +45,13 @@ async function userProfileUpdatePublicFn(
     return createResult(null)
   }
 
-  await ctx.db.patch(userId, {
+  await ctx.db.patch("users", userId, {
     ...(nameChanged && { name: args.name }),
     ...(imageChanged && { image: args.image }),
     updatedAt: nowIso(),
   })
 
-  const updatedUser = await ctx.db.get(userId)
+  const updatedUser = await ctx.db.get("users", userId)
   if (!updatedUser) {
     return createErrorAndLogError(op, "User not found after update")
   }

@@ -82,12 +82,12 @@ export async function signUpConfirmEmail2InternalMutationFn(
   //
   // 5. Mark code as consumed
   //
-  await ctx.db.patch(registration._id, { consumedAt: nowIso() })
+  await ctx.db.patch("authUserEmailRegistrations", registration._id, { consumedAt: nowIso() })
 
   //
   // 6. Create user profile
   //
-  const createdUser = await ctx.db.get(userId)
+  const createdUser = await ctx.db.get("users", userId)
   if (!createdUser) {
     return createError(op, "Error finding created user", userId)
   }
