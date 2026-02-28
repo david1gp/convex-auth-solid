@@ -2,11 +2,11 @@ import type { IdOrg } from "@/org/org_convex/IdOrg"
 import { orgHandleAvailableQueryFn } from "@/org/org_convex/orgHandleAvailableQuery"
 import { orgDataFields } from "@/org/org_convex/orgTables"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
-import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { authMutationR } from "@/utils/convex_backend/authMutationR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import * as va from "valibot"
+import * as a from "valibot"
 import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
 
@@ -25,10 +25,10 @@ export async function orgCreateMutationFn(ctx: MutationCtx, args: OrgCreateValid
   const op = "orgCreateFn"
   const now = nowIso()
 
-  const schema = va.object(orgDataSchemaFields)
-  const parse = va.safeParse(schema, args)
+  const schema = a.object(orgDataSchemaFields)
+  const parse = a.safeParse(schema, args)
   if (!parse.success) {
-    return createError(op, va.summarize(parse.issues))
+    return createError(op, a.summarize(parse.issues))
   }
 
   const handleAvailableResult = await orgHandleAvailableQueryFn(ctx, { orgHandle: args.orgHandle })

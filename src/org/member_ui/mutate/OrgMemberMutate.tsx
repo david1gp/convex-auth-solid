@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
 import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
@@ -12,7 +13,6 @@ import { resultHasData } from "@/utils/result/resultHasData"
 import { resultHasErrorMessage } from "@/utils/result/resultHasErrorMessage"
 import { api } from "@convex/_generated/api"
 import { Match, Switch } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import type { HasFormModeMutate } from "~ui/input/form/formModeMutate"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
@@ -27,7 +27,7 @@ export function OrgMemberMutate(p: OrgMemberMutateProps) {
   return (
     <Switch>
       <Match when={!getMember()}>
-        <LoadingSection loadingSubject={ttt("Organization Member")} />
+        <LoadingSection loadingSubject={ttc("Organization Member")} />
       </Match>
       <Match when={resultHasErrorMessage(getMember())}>{(errorMessage) => <ErrorPage title={errorMessage()} />}</Match>
       <Match when={resultHasData(getMember())}>

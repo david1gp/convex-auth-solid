@@ -1,12 +1,12 @@
 import { docOrgToModel } from "@/org/org_convex/docOrgInvitationToModel"
+import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgModel } from "@/org/org_model/OrgModel"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { authQueryR } from "@/utils/convex_backend/authQueryR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocOrg } from "./IdOrg"
 
 export const orgGetFields = {
   orgHandle: v.string(),

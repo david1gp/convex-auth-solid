@@ -1,10 +1,10 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { OrgModel } from "@/org/org_model/OrgModel"
 import { orgPageSection } from "@/org/org_ui/view/orgPageSection"
 import { urlOrgEdit } from "@/org/org_url/urlOrg"
 import { Ps } from "@/ui/text/Ps"
 import { mdiHandWave } from "@mdi/js"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -32,7 +32,7 @@ export function OrgViewInformation(p: OrgViewProps) {
           icon={formModeIcon.edit}
           class="flex mt-4"
         >
-          {ttt("Edit")}
+          {ttc("Edit")}
         </LinkButton>
       )}
     </section>
@@ -45,7 +45,7 @@ function ShowImg(p: OrgViewProps) {
       {(getImageUrl) => (
         <Img
           src={getImageUrl()}
-          alt={ttt("Logo of ") + " " + p.org.name}
+          alt={ttc("Logo of ") + " " + p.org.name}
           class={classArr("h-40 rounded-xl mx-auto mb-6")}
         />
       )}

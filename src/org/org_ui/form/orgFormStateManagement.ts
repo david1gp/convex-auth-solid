@@ -1,10 +1,12 @@
+import { ttc } from "@/app/i18n/ttc"
+import { imageUrlExample } from "@/app/url/imageUrlExample"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { IdOrg } from "@/org/org_convex/IdOrg"
-import type { OrgModel } from "@/org/org_model/OrgModel"
-import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
+import { orgModelCreateEmpty, type OrgModel } from "@/org/org_model/OrgModel"
 import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import { orgHandleGenerate } from "@/org/org_model_field/orgHandleSchema"
-import { orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
+import { orgFormConfig, orgFormField, type OrgFormField } from "@/org/org_ui/form/orgFormField"
+import { orgFormLocalStorage } from "@/org/org_ui/form/orgFormLocalStorage"
 import { urlOrgList, urlOrgView } from "@/org/org_url/urlOrg"
 import { createMutation } from "@/utils/convex_client/createMutation"
 import { navigateTo } from "@/utils/router/navigateTo"
@@ -14,7 +16,6 @@ import { api } from "@convex/_generated/api"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
@@ -61,7 +62,7 @@ function orgCreateState(): OrgFormState {
 
 export type OrgFormStateManagement = {
   mode: FormMode
-  isSaving: SignalObject<boolean>
+  isSubmitting: SignalObject<boolean>
   serverState: SignalObject<OrgModel>
   state: OrgFormState
   errors: OrgFormErrorState
@@ -70,20 +71,7 @@ export type OrgFormStateManagement = {
   loadData: (data: OrgModel) => void
   validateOnChange: (field: OrgFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => Promise<void>
-}
-
-function createOrgFormData(): OrgFormData {
-  return { name: "", orgHandle: "", description: "", url: "", image: "" }
-}
-
-function createEmptyDocOrg(): OrgModel {
-  const now = new Date()
-  const iso = now.toISOString()
-  return {
-    ...createOrgFormData(),
-    createdAt: iso,
-    updatedAt: iso,
-  }
+  debouncedSave: () => void
 }
 
 export type OrgFormCreateFn = (state: OrgFormData) => Promise<void>
@@ -98,30 +86,41 @@ type OrgFormActions = {
 
 export function orgFormStateManagement(mode: FormMode, orgHandle?: string, org?: OrgModel): OrgFormStateManagement {
   const actions: OrgFormActions = createActions(mode, orgHandle)
-  const serverState = createSignalObject(createEmptyDocOrg())
-  const isSaving = createSignalObject(false)
+  const serverState = createSignalObject(orgModelCreateEmpty())
+  const isSubmitting = createSignalObject(false)
   const state = orgCreateState()
-  if (org) {
+
+  if (mode === formMode.add) {
+    orgFormLocalStorage.loadData((data) => loadData(data, serverState, state))
+  } else if (org) {
     loadData(org, serverState, state)
   }
+
   const errors = orgCreateState()
+
+  const debouncedSave = orgFormLocalStorage.createDebounceSave(mode, state)
+
   return {
     mode,
-    isSaving,
+    isSubmitting,
     serverState,
     state,
     loadData: (data: OrgModel) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
-    validateOnChange: (field: OrgFormField) => validateOnChange(field, state, serverState, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
+    validateOnChange: (field: OrgFormField) => {
+      debouncedSave()
+      return validateOnChange(field, state, serverState, errors)
+    },
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSubmitting, serverState, state, errors, actions),
+    debouncedSave,
   }
 }
 
 function loadData(data: OrgModel, serverState: SignalObject<OrgModel>, state: OrgFormState): void {
   serverState.set(data)
-  state.name.set(data.name)
+  state.name.set(data.name ?? "")
   state.orgHandle.set(data.orgHandle)
   state.description.set(data.description ?? "")
   state.url.set(data.url ?? "")
@@ -144,7 +143,7 @@ function fillTestData(state: OrgFormState, errors: OrgFormErrorState) {
   state.orgHandle.set(handle)
   state.description.set("Test description")
   state.url.set("https://example.com")
-  state.image.set("https://adaptive-solid-ui.pages.dev/logo.svg")
+  state.image.set(imageUrlExample)
 
   for (const field of Object.values(orgFormField)) {
     updateFieldError(field, state[field].get(), errors)
@@ -183,8 +182,8 @@ function updateFieldError(field: OrgFormField, value: string, errors: OrgFormErr
 }
 
 function validateFieldResult(field: OrgFormField, value: string) {
-  const schema = orgDataSchemaFields[field]
-  return a.safeParse(schema, value)
+  const schema = orgFormConfig[field].schema
+  return a.safeParse(schema!, value)
 }
 
 //
@@ -193,13 +192,19 @@ function validateFieldResult(field: OrgFormField, value: string) {
 
 async function handleSubmit(
   e: SubmitEvent,
-  isSaving: SignalObject<boolean>,
+  isSubmitting: SignalObject<boolean>,
   serverState: SignalObject<OrgModel>,
   state: OrgFormState,
   errors: OrgFormErrorState,
   actions: OrgFormActions,
 ): Promise<void> {
   e.preventDefault()
+
+  if (isSubmitting.get()) {
+    const title = ttc("Submission in progress, please wait")
+    console.info(title)
+    return
+  }
 
   const name = state.name.get()
   const orgHandle = state.orgHandle.get()
@@ -241,7 +246,7 @@ async function handleSubmit(
     return
   }
 
-  isSaving.set(true)
+  isSubmitting.set(true)
 
   if (actions.create) {
     const data: OrgFormData = { name, orgHandle, description, url, image }
@@ -266,10 +271,10 @@ async function handleSubmit(
 
     if (Object.keys(data).length === 0) {
       const icon = mdiPenOff
-      const title = ttt("No changes")
+      const title = ttc("No changes")
       const id = "form"
       toastAdd({ icon, title, id })
-      isSaving.set(false)
+      isSubmitting.set(false)
       return
     }
 
@@ -280,7 +285,7 @@ async function handleSubmit(
     await actions.delete()
   }
 
-  isSaving.set(false)
+  isSubmitting.set(false)
 }
 
 function createActions(mode: FormMode, orgHandle: string | undefined): OrgFormActions {
@@ -318,6 +323,7 @@ async function createAction(
     toastAdd({ title: orgIdResult.errorMessage, variant: toastVariant.error })
     return
   }
+  orgFormLocalStorage.clearLocalStorage()
   // const orgId = await getMutationAdd(p.session, state)
   const url = urlOrgView(data.orgHandle)
   navigateTo(url)

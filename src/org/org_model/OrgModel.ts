@@ -4,7 +4,7 @@ export type OrgDataModel = {
   // id
   orgHandle: string
   // data
-  name: string
+  name?: string
   description?: string
   url?: string
   image?: string
@@ -12,6 +12,16 @@ export type OrgDataModel = {
 
 export interface OrgModel extends OrgDataModel, HasCreatedAtUpdatedAt {}
 
+export function orgModelCreateEmpty(): OrgModel {
+  const now = new Date()
+  const iso = now.toISOString()
+  return {
+    ...orgDataModelCreateEmpty(),
+    createdAt: iso,
+    updatedAt: iso,
+  }
+}
+
 export function orgDataModelCreateEmpty(): OrgDataModel {
-  return { name: "", orgHandle: "test-org-empty", description: "", url: "", image: "" }
+  return { name: "", orgHandle: "", description: "", url: "", image: "" }
 }

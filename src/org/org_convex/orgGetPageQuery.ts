@@ -1,17 +1,17 @@
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
+import { docOrgInvitationToModel } from "@/org/invitation_convex/docOrgInvitationToModel"
 import { type DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { docOrgMemberToModel } from "@/org/member_convex/docOrgMemberToModel"
+import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 import { docOrgToModel } from "@/org/org_convex/docOrgInvitationToModel"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
-import { query, type QueryCtx } from "@convex/_generated/server"
 import { authQueryR } from "@/utils/convex_backend/authQueryR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { docOrgInvitationToModel } from "@/org/invitation_convex/docOrgInvitationToModel"
-import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
 
 export const orgGetPageFields = {
   orgHandle: v.string(),

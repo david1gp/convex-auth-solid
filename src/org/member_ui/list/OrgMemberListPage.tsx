@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
@@ -11,11 +12,10 @@ import { LoadingSection } from "@/ui/pages/LoadingSection"
 import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex_client/createQuery"
 import { api } from "@convex/_generated/api"
-import { mdiPlus } from "@mdi/js"
+import { mdiAccountMultiple, mdiPlus } from "@mdi/js"
 import { useParams } from "@solidjs/router"
 import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
@@ -28,13 +28,13 @@ export function OrgMemberListPage() {
   return (
     <Switch>
       <Match when={!getOrgHandle()}>
-        <ErrorPage title={ttt("Missing :orgHandle in path")} />
+        <ErrorPage title={ttc("Missing :orgHandle in path")} />
       </Match>
       <Match when={getOrgHandle()}>
         <PageWrapper>
           <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
             <NavLinkButton href={urlOrgMemberList(getOrgHandle()!)} isActive={true}>
-              {ttt("Members")}
+              {ttc("Members")}
             </NavLinkButton>
           </NavOrg>
           <OrgMemberListLoader orgHandle={getOrgHandle()!} />
@@ -45,8 +45,8 @@ export function OrgMemberListPage() {
 }
 
 function getPageTitle(orgName?: string) {
-  const name = orgName ?? ttt("Organization")
-  return name + " " + ttt("Members")
+  const name = orgName ?? ttc("Organization")
+  return name + " " + ttc("Members")
 }
 
 type OrgMember = OrgMemberModel
@@ -74,7 +74,12 @@ function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
 
   return (
     <>
-      <PageHeader title={ttt("Organization Members")} subtitle={ttt("Manage members of this organization")}>
+      <PageHeader
+        icon={mdiAccountMultiple}
+        title={ttc("Organization Members")}
+        subtitle={ttc("Manage members of this organization")}
+        class="mb-4"
+      >
         <OrgMemberCreateLink orgHandle={p.orgHandle} />
       </PageHeader>
 
@@ -95,7 +100,7 @@ function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
 
 export function NoOrgMembers(p: MayHaveClassAndChildren) {
   return (
-    <NoData noDataText={ttt("No Members")} class={p.class}>
+    <NoData noDataText={ttc("No Members")} class={p.class}>
       {p.children}
     </NoData>
   )
@@ -128,7 +133,7 @@ function hasOrgMembers(orgMembersResult: Result<OrgMember[]> | undefined): OrgMe
 }
 
 function OrgMemberLoading() {
-  return <LoadingSection loadingSubject={ttt("Organization Members")} />
+  return <LoadingSection loadingSubject={ttc("Organization Members")} />
 }
 
 interface OrgMemberLinkProps extends HasOrgHandle {
@@ -142,7 +147,7 @@ function OrgMemberLink(p: OrgMemberLinkProps) {
 function OrgMemberCreateLink(p: HasOrgHandle) {
   return (
     <LinkButton icon={mdiPlus} href={urlOrgMemberAdd(p.orgHandle)} variant={buttonVariant.success}>
-      {ttt("Add Member")}
+      {ttc("Add Member")}
     </LinkButton>
   )
 }

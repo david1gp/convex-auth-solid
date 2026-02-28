@@ -6,7 +6,7 @@ import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import { vIdUser } from "@/auth/convex/vIdUser"
-import type { IdOrgMember } from "./IdOrgMember"
+import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
 
 export type OrgMemberCreateValidatorType = typeof orgMemberCreateValidator.type
 

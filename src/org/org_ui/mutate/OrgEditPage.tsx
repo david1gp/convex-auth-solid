@@ -1,11 +1,12 @@
+import { ttc } from "@/app/i18n/ttc"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
+import { OrgMemberListPage } from "@/org/member_ui/list/OrgMemberListPage"
 import { OrgMutate } from "@/org/org_ui/mutate/OrgMutate"
 import { urlOrgEdit } from "@/org/org_url/urlOrg"
 import { ErrorPage } from "@/ui/pages/ErrorPage"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode, getFormModeTitle } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
@@ -13,26 +14,28 @@ const mode = formMode.edit
 
 export function OrgEditPage() {
   const params = useParams()
-  const getOrgHandle = () => params.orgHandle
+  const getOrgHandleParam = () => params.orgHandle
   return (
     <Switch>
-      <Match when={!getOrgHandle()}>
-        <ErrorPage title={ttt("Missing :orgHandle in path")} />
+      <Match when={!getOrgHandleParam()}>
+        <ErrorPage title={ttc("Missing :orgHandle in path")} />
       </Match>
-      <Match when={getOrgHandle()}>
-        <PageWrapper>
-          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            <NavLinkButton href={urlOrgEdit(getOrgHandle()!)} isActive={true}>
-              {ttt("Edit")}
-            </NavLinkButton>
-          </NavOrg>
-          <OrgMutate mode={mode} orgHandle={getOrgHandle()!} />
-        </PageWrapper>
+      <Match when={getOrgHandleParam()}>
+        {(getOrgHandle) => (
+          <PageWrapper>
+            <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
+              <NavLinkButton href={urlOrgEdit(getOrgHandle())} isActive={true}>
+                {ttc("Edit")}
+              </NavLinkButton>
+            </NavOrg>
+            <OrgMutate mode={mode} orgHandle={getOrgHandle()} />
+          </PageWrapper>
+        )}
       </Match>
     </Switch>
   )
 }
 
 function getPageTitle(orgName?: string, workspaceName?: string) {
-  return getFormModeTitle(mode, workspaceName ?? ttt("Organization"))
+  return getFormModeTitle(mode, workspaceName ?? ttc("Organization"))
 }

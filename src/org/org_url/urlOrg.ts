@@ -20,6 +20,10 @@ export function urlOrgRemove(handle: string) {
   return replaceOrgHandle(pageRouteOrg.orgRemove, handle)
 }
 
+export function urlOrgLeave(handle: string) {
+  return replaceOrgHandle(pageRouteOrg.orgLeave, handle)
+}
+
 function replaceOrgHandle(url: string, handle: string) {
   return url.replace(":orgHandle", handle)
 }

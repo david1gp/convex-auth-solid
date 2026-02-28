@@ -1,8 +1,8 @@
+import { ttc } from "@/app/i18n/ttc"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { OrgModel } from "@/org/org_model/OrgModel"
 import { orgSchema } from "@/org/org_model/orgSchema"
-import { orgListSignal } from "@/org/org_ui/list/orgListSignal"
 import { orgNameAddList } from "@/org/org_ui/orgNameRecordSignal"
 import { urlOrgAdd, urlOrgView } from "@/org/org_url/urlOrg"
 import { PageHeader } from "@/ui/header/PageHeader"
@@ -17,7 +17,6 @@ import { api } from "@convex/_generated/api"
 import { mdiPlus } from "@mdi/js"
 import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
@@ -34,7 +33,7 @@ export function OrgListPage() {
 }
 
 function getPageTitle(orgName?: string) {
-  return ttt("Organizations")
+  return ttc("Stakeholders")
 }
 
 type Org = OrgModel
@@ -52,12 +51,11 @@ function OrgListLoader() {
     if (!r) return
     if (!r.success) return
     orgNameAddList(r.data)
-    orgListSignal.set(r.data)
   })
 
   return (
     <>
-      <PageHeader title={ttt("Organizations")} subtitle={ttt("Manage all Organizations")}>
+      <PageHeader title={ttc("Stakeholders")} class="mb-4">
         <OrgCreateLink />
       </PageHeader>
 
@@ -78,12 +76,12 @@ function OrgListLoader() {
 }
 
 function OrgsLoading() {
-  return <LoadingSection loadingSubject={ttt("Organizations")} />
+  return <LoadingSection loadingSubject={ttc("Stakeholders")} />
 }
 
 function NoOrgs(p: MayHaveClassAndChildren) {
   return (
-    <NoData noDataText={ttt("No Organizations")} class={p.class}>
+    <NoData noDataText={ttc("No Stakeholders")} class={p.class}>
       {p.children}
     </NoData>
   )
@@ -122,7 +120,7 @@ function OrgLink(p: { org: Org }) {
 function OrgCreateLink() {
   return (
     <LinkButton icon={mdiPlus} href={urlOrgAdd()} variant={buttonVariant.success}>
-      {ttt("Create Organization")}
+      {ttc("Create Stakeholder")}
     </LinkButton>
   )
 }

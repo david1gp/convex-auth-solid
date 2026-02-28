@@ -4,12 +4,38 @@ import * as a from "valibot"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
-let hasLoaded = false
-
 const orgNameLocalStorageKey = cachePrefix + "orgNameRecord"
 const orgNameRecordSchema = a.record(a.string(), a.string())
 
 export const orgNameRecordSignal: SignalObject<Record<string, string>> = createOrgNameRecordSignal()
+
+function createOrgNameRecordSignal(): SignalObject<Record<string, string>> {
+  let hasLoaded = false
+  const signal = createSignalObject<Record<string, string>>({})
+
+  // Override get to from localStorage if not already loaded
+  const signalGet = signal.get
+  signal.get = () => {
+    if (!hasLoaded) {
+      const result = orgNameLoadFromLocalStorage()
+      if (result.success) {
+        signal.set(result.data)
+      }
+      hasLoaded = true
+    }
+    return signalGet()
+  }
+
+  // Override the set method to also save to localStorage
+  const signalSet = signal.set
+  signal.set = (value) => {
+    const result = signalSet(value)
+    orgNameSaveToLocalStorage(value)
+    return result
+  }
+
+  return signal
+}
 
 export function orgNameSet(orgHandle: string, orgName: string): Record<string, string> {
   const currentRecord = orgNameRecordSignal.get()
@@ -52,43 +78,6 @@ export function orgNameAddList(orgs: OrgModel[]): Record<string, string> {
   return updatedRecord
 }
 
-function createOrgNameRecordSignal(): SignalObject<Record<string, string>> {
-  const signal = createSignalObject<Record<string, string>>({})
-
-  // Load from localStorage if not already loaded
-  if (!hasLoaded) {
-    const result = orgNameLoadFromLocalStorage()
-    if (result.success) {
-      signal.set(result.data)
-    }
-    hasLoaded = true
-  }
-
-  // Override the set method to also save to localStorage
-  const originalSet = signal.set
-  signal.set = (value) => {
-    const result = originalSet(value)
-    orgNameSaveToLocalStorage(value)
-    return result
-  }
-
-  // Listen to localStorage events to update record
-  function handleStorageEvent(event: StorageEvent) {
-    if (event.key === orgNameLocalStorageKey && event.newValue !== null) {
-      const parsingResult = orgNameLoadFromLocalStorage(event.newValue)
-      if (!parsingResult.success) return
-      signal.set(parsingResult.data)
-    }
-  }
-
-  // Add event listener
-  if (typeof window !== "undefined") {
-    window.addEventListener("storage", handleStorageEvent)
-  }
-
-  return signal
-}
-
 export function orgNameLoadFromLocalStorage(
   read = localStorage.getItem(orgNameLocalStorageKey),
 ): Result<Record<string, string>> {
@@ -108,4 +97,24 @@ export function orgNameLoadFromLocalStorage(
 export function orgNameSaveToLocalStorage(record: Record<string, string>) {
   const serialized = JSON.stringify(record, null, 2)
   localStorage.setItem(orgNameLocalStorageKey, serialized)
+}
+
+import { onCleanup, onMount } from "solid-js"
+
+export function orgNameRecordSignalRegisterHandler(signal = orgNameRecordSignal) {
+  function handleStorageEvent(event: StorageEvent) {
+    if (event.key != orgNameLocalStorageKey) return
+    if (event.newValue == null) return
+    const parsingResult = orgNameLoadFromLocalStorage(event.newValue)
+    if (!parsingResult.success) return
+    signal.set(parsingResult.data)
+  }
+  onMount(() => {
+    if (typeof window == "undefined") return
+    window.addEventListener("storage", handleStorageEvent)
+  })
+  onCleanup(() => {
+    if (typeof window == "undefined") return
+    window.removeEventListener("storage", handleStorageEvent)
+  })
 }

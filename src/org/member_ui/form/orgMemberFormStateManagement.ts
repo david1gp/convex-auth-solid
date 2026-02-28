@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { IdUser } from "@/auth/convex/IdUser"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
@@ -50,7 +51,7 @@ function createOrgMemberErrorState(): OrgMemberFormErrorState {
 
 export type OrgMemberFormStateManagement = {
   mode: FormMode
-  isSaving: SignalObject<boolean>
+  isSubmitting: SignalObject<boolean>
   serverState: SignalObject<OrgMemberModel>
   state: OrgMemberFormState
   errors: OrgMemberFormErrorState
@@ -93,7 +94,7 @@ export function orgMemberFormStateManagement(
 ): OrgMemberFormStateManagement {
   const actions: OrgMemberFormActions = createActions(mode, orgHandle, memberId)
   const serverState = createSignalObject(createEmptyOrgMember())
-  const isSaving = createSignalObject(false)
+  const isSubmitting = createSignalObject(false)
   const state = createOrgMemberFormState()
   if (orgMember) {
     loadData(orgMember, serverState, state)
@@ -101,7 +102,7 @@ export function orgMemberFormStateManagement(
   const errors = createOrgMemberErrorState()
   return {
     mode,
-    isSaving,
+    isSubmitting,
     serverState,
     state,
     loadData: (data: OrgMemberModel) => loadData(data, serverState, state),
@@ -109,7 +110,7 @@ export function orgMemberFormStateManagement(
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: OrgMemberFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSaving, serverState, state, errors, actions),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSubmitting, serverState, state, errors, actions),
   }
 }
 
@@ -164,13 +165,19 @@ function validateFieldResult(field: OrgMemberFormField, value: string) {
 
 async function handleSubmit(
   e: SubmitEvent,
-  isSaving: SignalObject<boolean>,
+  isSubmitting: SignalObject<boolean>,
   serverState: SignalObject<OrgMemberModel>,
   state: OrgMemberFormState,
   errors: OrgMemberFormErrorState,
   actions: OrgMemberFormActions,
 ): Promise<void> {
   e.preventDefault()
+
+  if (isSubmitting.get()) {
+    const title = ttc("Submission in progress, please wait")
+    console.info(title)
+    return
+  }
 
   const userId = state.userId.get()
   const role = state.role.get()
@@ -188,7 +195,7 @@ async function handleSubmit(
     return
   }
 
-  isSaving.set(true)
+  isSubmitting.set(true)
 
   if (actions.add) {
     const data: OrgMemberFormData = { userId, role: role as OrgRole }
@@ -204,7 +211,7 @@ async function handleSubmit(
     await actions.remove()
   }
 
-  isSaving.set(false)
+  isSubmitting.set(false)
 }
 
 function createActions(mode: FormMode, orgHandle: string, memberId: IdOrgMember | undefined): OrgMemberFormActions {

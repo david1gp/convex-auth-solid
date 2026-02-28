@@ -1,11 +1,11 @@
+import { ttc } from "@/app/i18n/ttc"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { orgMemberFormField } from "@/org/member_ui/form/orgMemberFormField"
 import type { OrgMemberFormStateManagement } from "@/org/member_ui/form/orgMemberFormStateManagement"
 import { orgRole } from "@/org/org_model_field/orgRole"
 import { isDevEnv } from "@/utils/env/isDevEnv"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
-import { getFormModeButtonTitle, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -31,12 +31,12 @@ export function OrgMemberForm(p: OrgMemberContentProps) {
         <RoleField sm={p.sm} />
         <ButtonIcon
           type="submit"
-          disabled={p.sm.isSaving.get()}
           icon={formModeIcon[p.mode]}
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          isLoading={p.sm.isSubmitting.get()}
           class="w-full"
         >
-          {p.sm.isSaving.get() ? "Saving..." : getFormModeButtonTitle(p.mode, ttt("Organization Member"))}
+          {p.sm.isSubmitting.get() ? "Saving..." : getOrgMemberTitle(p.mode)}
         </ButtonIcon>
       </form>
     </section>
@@ -47,7 +47,7 @@ function RoleField(p: HasOrgMemberFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
       <label for={orgMemberFormField.role} class="text-sm font-medium">
-        {ttt("Role")}
+        {ttc("Role")}
       </label>
       <select
         id={orgMemberFormField.role}
@@ -61,8 +61,8 @@ function RoleField(p: HasOrgMemberFormStateManagement) {
           p.sm.errors.role.get() && "border-destructive focus-visible:ring-destructive",
         )}
       >
-        <option value={orgRole.member}>{ttt("Member")}</option>
-        <option value={orgRole.guest}>{ttt("Guest")}</option>
+        <option value={orgRole.member}>{ttc("Member")}</option>
+        <option value={orgRole.guest}>{ttc("Guest")}</option>
       </select>
       <Show when={p.sm.errors.role.get()}>
         <p class="text-destructive">{p.sm.errors.role.get()}</p>
@@ -72,5 +72,5 @@ function RoleField(p: HasOrgMemberFormStateManagement) {
 }
 
 function getOrgMemberTitle(mode: FormMode): string {
-  return getFormModeTitle(mode, ttt("Organization Member"))
+  return getFormModeTitle(mode, ttc("Organization Member"))
 }

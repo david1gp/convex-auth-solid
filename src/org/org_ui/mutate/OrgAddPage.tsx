@@ -1,9 +1,9 @@
+import { ttc } from "@/app/i18n/ttc"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { OrgForm } from "@/org/org_ui/form/OrgForm"
 import { orgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
 import { urlOrgAdd } from "@/org/org_url/urlOrg"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -13,7 +13,7 @@ export function OrgAddPage() {
     <PageWrapper>
       <NavOrg getOrgPageTitle={getPageTitle}>
         <NavLinkButton href={urlOrgAdd()} isActive={true}>
-          {ttt("Create")}
+          {ttc("Create")}
         </NavLinkButton>
       </NavOrg>
       <OrgAdd />
@@ -22,7 +22,7 @@ export function OrgAddPage() {
 }
 
 function getPageTitle(orgName?: string) {
-  return ttt("Create new Organization")
+  return ttc("Create new Stakeholder")
 }
 
 export interface OrgAddProps extends MayHaveClass {}

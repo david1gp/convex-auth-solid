@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { HasOrgModel } from "@/org/org_model/HasOrgModel"
 import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
@@ -10,7 +11,6 @@ import { resultHasErrorMessage } from "@/utils/result/resultHasErrorMessage"
 import { api } from "@convex/_generated/api"
 import { createEffect, Match, Switch, type JSXElement } from "solid-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface OrgLoaderProps extends HasOrgHandle, MayHaveClass {
@@ -42,5 +42,5 @@ export function OrgLoader(p: OrgLoaderProps) {
 }
 
 function OrgLoading() {
-  return <LoadingSection loadingSubject={ttt("Organization")} />
+  return <LoadingSection loadingSubject={ttc("Organization")} />
 }

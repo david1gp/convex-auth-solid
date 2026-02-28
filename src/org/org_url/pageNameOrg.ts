@@ -5,5 +5,6 @@ export const pageNameOrg = {
   orgAdd: "orgAdd",
   orgView: "orgView",
   orgEdit: "orgEdit",
+  orgLeave: "orgLeave",
   orgRemove: "orgRemove",
 } as const

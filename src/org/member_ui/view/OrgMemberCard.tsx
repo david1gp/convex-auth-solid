@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
 import type { OrgMemberProfile } from "@/org/member_model/OrgMemberProfile"
@@ -7,7 +8,6 @@ import { ClipboardCopyButtonIcon } from "@/ui/links/ClipboardCopyButtonIcon"
 import { createMutation } from "@/utils/convex_client/createMutation"
 import { api } from "@convex/_generated/api"
 import { mdiClose, mdiEmailOutline, mdiPencil } from "@mdi/js"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -46,15 +46,15 @@ export function OrgMemberCard(p: OrgMemberCardProps) {
           </LinkButton>
           <ClipboardCopyButtonIcon
             data={p.member.profile.email}
-            copyText={ttt("Copy E-Mail to clipboard")}
-            toastText={ttt("E-Mail copied")}
+            copyText={ttc("Copy E-Mail to clipboard")}
+            toastText={ttc("E-Mail copied")}
           />
         </div>
       )}
 
       {orgInvitationShowRole && (
         <div class="text-muted-foreground capitalize">
-          <span>{ttt("Role:")}</span>
+          <span>{ttc("Role:")}</span>
           {p.member.role}
         </div>
       )}
@@ -69,11 +69,11 @@ function ShowTimes(p: OrgMemberCardProps) {
   return (
     <div class="space-y-1">
       <div class="flex items-center gap-2">
-        <span class="font-medium text-muted-foreground">{ttt("Created at:")}</span>
+        <span class="font-medium text-muted-foreground">{ttc("Created at:")}</span>
         <DateView date={p.member.profile.createdAt} />
       </div>
       <div class="flex items-center gap-2">
-        <span class="font-medium text-muted-foreground">{ttt("Joined at:")}</span>
+        <span class="font-medium text-muted-foreground">{ttc("Joined at:")}</span>
         <DateView date={p.member.createdAt} />
       </div>
     </div>
@@ -115,7 +115,7 @@ function OrgMemberActions(p: OrgMemberCardProps) {
   return (
     <div class="flex flex-wrap gap-2">
       <ButtonIcon variant={buttonVariant.outline} icon={mdiPencil} onClick={editClick} class="flex-1">
-        {ttt("Edit")}
+        {ttc("Edit")}
       </ButtonIcon>
       <ButtonIcon
         variant={buttonVariant.outline}
@@ -124,7 +124,7 @@ function OrgMemberActions(p: OrgMemberCardProps) {
         onClick={deleteClick}
         class="flex-1"
       >
-        {ttt("Remove")}
+        {ttc("Remove")}
       </ButtonIcon>
     </div>
   )

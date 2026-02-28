@@ -1,15 +1,13 @@
-import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
-import { vIdUser } from "@/auth/convex/vIdUser"
-import { vIdOrg } from "./vIdOrg"
+import { vIdOrg } from "@/org/org_convex/vIdOrg"
 
 export const orgDataFields = {
   // id
   orgHandle: v.string(),
   // data
-  name: v.string(),
+  name: v.optional(v.string()),
   description: v.optional(v.string()),
   url: v.optional(v.string()),
   image: v.optional(v.string()),
@@ -20,57 +18,30 @@ export const orgFields = {
   ...fieldsConvexCreatedAtUpdatedAt,
 } as const
 
-export const orgMemberDataFields = {
-  // ids
+export const orgResourceFields = {
   orgId: vIdOrg,
   orgHandle: v.string(),
-  userId: vIdUser,
-  // data
-  role: orgRoleValidator,
-  invitedBy: vIdUser,
+  resourceId: v.string(),
+  createdAt: v.string(),
 } as const
 
-export const orgMemberFields = {
-  // data
-  ...orgMemberDataFields,
-  // meta
-  ...fieldsConvexCreatedAtUpdatedAt,
-}
-
-export const orgInvitationDataFields = {
-  // ids
+export const orgMeetingsFields = {
+  orgId: vIdOrg,
   orgHandle: v.string(),
-  invitationCode: v.string(),
-  // invited
-  invitedName: v.string(),
-  invitedEmail: v.string(),
-  // data
-  role: orgRoleValidator,
-  invitedBy: v.string(),
-  // server processing
-  emailSendAt: v.optional(v.string()),
-  emailSendAmount: v.number(),
+  meetingId: v.string(),
+  createdAt: v.string(),
 } as const
-
-export const orgInvitationFields = {
-  // data
-  ...orgInvitationDataFields,
-  // meta
-  ...fieldsConvexCreatedAtUpdatedAt,
-}
 
 export const orgTables = {
   orgs: defineTable(orgFields)
     //
     .index("orgHandle", ["orgHandle"]),
 
-  orgMembers: defineTable(orgMemberFields)
+  orgResources: defineTable(orgResourceFields)
     //
-    .index("orgId", ["orgId"])
-    .index("userId", ["userId"]),
+    .index("orgHandle", ["orgHandle"]),
 
-  orgInvitations: defineTable(orgInvitationFields)
+  orgMeetings: defineTable(orgMeetingsFields)
     //
-    .index("invitedEmail", ["invitedEmail"])
-    .index("invitationCode", ["invitationCode"]),
+    .index("orgHandle", ["orgHandle"]),
 } as const
