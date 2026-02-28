@@ -1,5 +1,5 @@
 import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
-import { sendTelegramMessageAuth } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
+import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMessageTechnical"
 import { userSessionValidator } from "@/auth/model/userSessionValidator"
 import { type ActionCtx, internalAction } from "@convex/_generated/server"
 import { v } from "convex/values"

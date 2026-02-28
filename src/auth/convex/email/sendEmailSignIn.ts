@@ -3,7 +3,7 @@ import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
 import type { Language } from "@/app/i18n/language"
 import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuthResendEnvVariableNames"
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
-import { sendTelegramMessageAuth } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
+import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMessageTechnical"
 import {
   apiGenerateEmailSignInV1,
   type GeneratedEmailType,

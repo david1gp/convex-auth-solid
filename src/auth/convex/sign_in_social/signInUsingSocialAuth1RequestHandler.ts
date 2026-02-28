@@ -76,7 +76,10 @@ export async function signInUsingSocialAuth1RequestHandler(
   // redirectUrl.searchParams.set("redirectUrl", state)
   console.log("user signed in", { state, redirectUrl })
 
-  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramNewSignUpInternalAction, { userSession })
+  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramAuthInternalAction, {
+    userSession,
+    operationName: "oauth",
+  })
 
   return Response.redirect(redirectUrl.toString(), 302)
 }

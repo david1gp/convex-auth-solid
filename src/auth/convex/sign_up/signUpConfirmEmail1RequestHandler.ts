@@ -52,7 +52,10 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   //
   // 4. Notify via Telegram
   //
-  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramNewSignUpInternalAction, { userSession })
+  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramAuthInternalAction, {
+    userSession,
+    operationName: "confirm email",
+  })
 
   //
   // 5. Return result
