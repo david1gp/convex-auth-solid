@@ -21,7 +21,11 @@ export type UserProfileMeEditFormStateManagement = {
   getChangedFields: () => { name?: string; bio?: string; url?: string }
 }
 
-function userProfileMeEditCreateState(initialData: { name: string; bio: string; url: string }): UserProfileMeEditFormState {
+function userProfileMeEditCreateState(initialData: {
+  name: string
+  bio: string
+  url: string
+}): UserProfileMeEditFormState {
   return {
     name: createSignalObject(initialData.name),
     bio: createSignalObject(initialData.bio),
@@ -37,9 +41,11 @@ function userProfileMeEditCreateErrorState(): UserProfileMeEditFormErrorState {
   }
 }
 
-export function userProfileMeEditFormStateManagement(
-  initialData: { name: string; bio: string; url: string },
-): UserProfileMeEditFormStateManagement {
+export function userProfileMeEditFormStateManagement(initialData: {
+  name: string
+  bio: string
+  url: string
+}): UserProfileMeEditFormStateManagement {
   const isLoading = createSignalObject(false)
   const state = userProfileMeEditCreateState(initialData)
   const errors = userProfileMeEditCreateErrorState()
@@ -58,7 +64,10 @@ function hasErrors(errors: UserProfileMeEditFormErrorState): boolean {
   return !!errors.name.get() || !!errors.bio.get() || !!errors.url.get()
 }
 
-function getChangedFields(state: UserProfileMeEditFormState, initialData: { name: string; bio: string; url: string }): { name?: string; bio?: string; url?: string } {
+function getChangedFields(
+  state: UserProfileMeEditFormState,
+  initialData: { name: string; bio: string; url: string },
+): { name?: string; bio?: string; url?: string } {
   const result: { name?: string; bio?: string; url?: string } = {}
 
   if (state.name.get() !== initialData.name) {

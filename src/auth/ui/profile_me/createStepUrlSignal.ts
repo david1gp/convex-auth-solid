@@ -1,13 +1,10 @@
 import { createSignal } from "solid-js"
-import { type SignalObject, createSignalObject } from "~ui/utils/createSignalObject"
+import { type SetterSimplified, type SignalObject, createSignalObject } from "~ui/utils/createSignalObject"
 import { onMount } from "solid-js"
 
 export { createSignalObject, type SignalObject }
 
-export function createStepUrlSignal(
-  stepParamName: string = "step",
-  initialStep: number = 1
-): SignalObject<number> {
+export function createStepUrlSignal(stepParamName: string = "step", initialStep: number = 1): SignalObject<number> {
   const [get, set] = createSignal(initialStep)
   let url: URL | null = null
 
@@ -22,7 +19,7 @@ export function createStepUrlSignal(
     }
   })
 
-  const wrappedSet: any = (step: number) => {
+  const wrappedSet: SetterSimplified<number> = (step: number) => {
     set(step)
     if (url) {
       url.searchParams.set(stepParamName, String(step))

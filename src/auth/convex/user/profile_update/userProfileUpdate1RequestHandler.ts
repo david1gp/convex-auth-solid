@@ -1,15 +1,10 @@
 import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
+import { userProfileUpdateSchema } from "@/auth/convex/user/profile_update/userProfileUpdate"
 import type { UserSession } from "@/auth/model/UserSession"
 import { api } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
 import { createError, createResult } from "~utils/result/Result"
-
-const userProfileUpdateSchema = a.object({
-  token: a.string(),
-  name: a.optional(a.string()),
-  image: a.optional(a.string()),
-})
 
 export async function userProfileUpdate1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "userProfileUpdate1RequestHandler"

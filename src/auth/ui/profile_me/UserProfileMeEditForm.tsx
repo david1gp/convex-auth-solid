@@ -1,8 +1,9 @@
-import { ttt } from "~ui/i18n/ttt"
+import { ttc } from "@/app/i18n/ttc"
 import { apiAuthProfileUpdate } from "@/auth/api/apiAuthProfileUpdate"
-import type { UserProfileFieldsTypePublic } from "@/auth/convex/user/update/userProfileUpdateMutation"
+import type { UserProfileFieldsTypePublic } from "@/auth/convex/user/profile_update/userProfileUpdateMutation"
 import { userProfileFormConfig } from "@/auth/ui/profile/userProfileFormField"
 import { userSessionGet, userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
+import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
 import { urlUserProfileMe } from "@/auth/url/pageRouteAuth"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formMode } from "~ui/input/form/formMode"
@@ -22,20 +23,23 @@ export interface UserProfileMeEditFormProps extends MayHaveClass {
 export function UserProfileMeEditForm(p: UserProfileMeEditFormProps) {
   return (
     <div class={classMerge("bg-white dark:bg-gray-800 rounded-lg shadow-md p-6", p.class)}>
-      <form class="space-y-6" onSubmit={(e) => {
-        e.preventDefault()
-        handleSave(p.sm)
-      }}>
+      <form
+        class="space-y-6"
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleSave(p.sm)
+        }}
+      >
         <NameField sm={p.sm} />
         <BioField sm={p.sm} />
         <UrlField sm={p.sm} />
 
         <div class="mt-6 flex justify-end space-x-4">
           <LinkButton href={urlUserProfileMe()} variant={buttonVariant.link}>
-            {ttt("Cancel")}
+            {ttc("Cancel")}
           </LinkButton>
           <Button type="submit" variant={buttonVariant.primary} disabled={p.sm.isLoading.get()}>
-            {p.sm.isLoading.get() ? ttt("Saving...") : ttt("Save Changes")}
+            {p.sm.isLoading.get() ? ttc("Saving...") : ttc("Save Changes")}
           </Button>
         </div>
       </form>
@@ -110,26 +114,27 @@ async function handleSave(sm: UserProfileMeEditFormStateManagement): Promise<voi
   const changedFields = sm.getChangedFields()
   const formData: UserProfileFieldsTypePublic = {
     token: userSessionGet().token,
-    ...changedFields,
+    name: changedFields.name,
+    bio: changedFields.bio,
+    url: changedFields.url,
   }
 
   const result = await apiAuthProfileUpdate(formData)
 
   if (!result.success) {
     toastAdd({
-      title: ttt("Update Failed"),
+      title: ttc("Update Failed"),
       description: result.errorMessage,
       variant: toastVariant.error,
     })
   } else if (result.success) {
     toastAdd({
-      title: ttt("Profile Updated"),
+      title: ttc("Profile Updated"),
       variant: toastVariant.success,
     })
     const newSession = result.data
-    if (newSession) {
-      userSessionSignal.set(newSession)
-    }
+    userSessionsSignalAdd(newSession)
+    userSessionSignal.set(newSession)
   }
   sm.isLoading.set(false)
 }

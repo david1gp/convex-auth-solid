@@ -1,7 +1,8 @@
-import { ttt } from "~ui/i18n/ttt"
-import { LayoutWrapperConvex } from "@/app/layout/LayoutWrapperConvex"
-import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { ttc } from "@/app/i18n/ttc"
+import { LayoutWrapperAuth } from "@/app/layout/LayoutWrapperAuth"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
+import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavUserProfile } from "@/app/nav/NavUserProfile"
 import { urlUserProfileMe, urlUserProfileMeEdit } from "@/auth/url/pageRouteAuth"
 import { userSessionGet } from "@/auth/ui/signals/userSessionSignal"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
@@ -11,19 +12,25 @@ import { userProfileMeEditFormStateManagement } from "./userProfileMeEditFormSta
 
 export function UserProfileMeEditPage() {
   return (
-    <LayoutWrapperConvex title={ttt("Edit Profile")}>
+    <LayoutWrapperAuth>
       <PageWrapper>
-        <NavBreadcrumbSeparator />
-        <NavLinkButton href={urlUserProfileMe()} isActive={false}>
-          {ttt("My Profile")}
-        </NavLinkButton>
-        <NavBreadcrumbSeparator />
-        <NavLinkButton href={urlUserProfileMeEdit()} isActive={true}>
-          {ttt("Edit")}
-        </NavLinkButton>
+        <NavUserProfile
+          childrenLeft={
+            <>
+              <NavBreadcrumbSeparator />
+              <NavLinkButton href={urlUserProfileMe()} isActive={false}>
+                {ttc("My Profile")}
+              </NavLinkButton>
+              <NavBreadcrumbSeparator />
+              <NavLinkButton href={urlUserProfileMeEdit()} isActive={true}>
+                {ttc("Edit")}
+              </NavLinkButton>
+            </>
+          }
+        />
         <PageContent />
       </PageWrapper>
-    </LayoutWrapperConvex>
+    </LayoutWrapperAuth>
   )
 }
 
@@ -38,7 +45,7 @@ function PageContent() {
 
   return (
     <div class={classMerge("max-w-4xl mx-auto px-4 py-8")}>
-      <h1 class="text-3xl font-bold mb-4">{ttt("Edit Profile")}</h1>
+      <h1 class="text-3xl font-bold mb-4">{ttc("Edit Profile")}</h1>
       <UserProfileMeEditForm sm={sm} />
     </div>
   )
