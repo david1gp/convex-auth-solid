@@ -87,7 +87,7 @@
   "type": "module",
   "private": false,
   "license": "MIT",
-  "homepage": "https://github.com/adaptive-shield-matrix/convex-auth",
+  "homepage": "https://github.com/david1gp/convex-auth-solid",
   "description": "Adaptive Convex Auth provides Solid.js UI components and utilities for easy authentication with the Convex backend. Includes ready-to-use auth flows and seamless integration.",
   "keywords": [
     "convex",
@@ -107,7 +107,7 @@
     "jwt"
   ],
   "repository": {
-    "url": "git+https://github.com/adaptive-shield-matrix/convex-auth.git"
+    "url": "git+https://github.com/david1gp/convex-auth-solid.git"
   },
   "exports": {
     "./*": {
