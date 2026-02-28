@@ -40,6 +40,9 @@ const UserProfileMeChangeEmailPage = lazy(() =>
 const UserProfileMeImagePage = lazy(() =>
   import("@/auth/ui/profile_me/UserProfileMeImagePage").then((c) => ({ default: c.UserProfileMeImagePage })),
 )
+const UserProfileMeDeletePage = lazy(() =>
+  import("@/auth/ui/profile_me/UserProfileMeDeletePage").then((c) => ({ default: c.UserProfileMeDeletePage })),
+)
 
 export function getRoutesAuth(): RouteObject[] {
   const routeMapping = {
@@ -53,6 +56,7 @@ export function getRoutesAuth(): RouteObject[] {
     userProfileMeChangePassword: UserProfileMeChangePasswordPage,
     userProfileMeChangeEmail: UserProfileMeChangeEmailPage,
     userProfileMeImage: UserProfileMeImagePage,
+    userProfileMeDelete: UserProfileMeDeletePage,
     userProfileView: ViewUserProfilePage,
   } as const satisfies Record<PageNameAuth, RouteComponent>
   return Object.entries(routeMapping).map(([routeKey, component]) => ({

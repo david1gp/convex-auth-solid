@@ -12,6 +12,7 @@ import { userEmailChange2ConfirmHandler } from "@/auth/convex/user/email_change/
 import { userProfileUpdate1RequestHandler } from "@/auth/convex/user/profile_update/userProfileUpdate1RequestHandler"
 import { userPasswordChange1RequestHandler } from "@/auth/convex/user/pw_change/userPasswordChange1RequestHandler"
 import { userPasswordChange2ConfirmHandler } from "@/auth/convex/user/pw_change/userPasswordChange2ConfirmHandler"
+import { userDelete1RequestHandler } from "@/auth/convex/user/delete/userDelete1RequestHandler"
 import { loginProvider, socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { apiPathAuth } from "@/auth/url/apiPathAuth"
 import type { HttpRouter } from "convex/server"
@@ -99,5 +100,12 @@ function addHttpRoutesAuthProfile(http: HttpRouter) {
     apiAuthBasePath + apiPathAuth.emailChangeConfirm,
     httpMethod.POST,
     userEmailChange2ConfirmHandler,
+  )
+  // Delete user routes
+  addRouteWithCors(
+    http,
+    apiAuthBasePath + apiPathAuth.userDelete,
+    httpMethod.POST,
+    userDelete1RequestHandler,
   )
 }

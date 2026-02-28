@@ -38,6 +38,12 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
 
   const existingUser = await ctx.runQuery(internal.auth.findUserByEmailInternalQuery, { email })
   if (existingUser) {
+    if (existingUser.deletedAt) {
+      const errorMessage = "An account with this email was deleted. Please contact support."
+      const errorResult = createError(op, errorMessage, email)
+      console.warn(errorResult)
+      return new Response(JSON.stringify(errorResult), { status: 409 })
+    }
     const errorMessage = signUpErrorMessages.userAlreadyExists
     const errorResult = createError(op, errorMessage, email)
     console.warn(errorResult)

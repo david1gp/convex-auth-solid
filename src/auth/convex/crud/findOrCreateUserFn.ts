@@ -27,6 +27,7 @@ export async function findOrCreateUserFn(
   if (existingAuthAccount) {
     const user = await ctx.db.get("users", existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
+    if (user.deletedAt) return createResultError(op, "User account has been deleted")
     const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, user._id)
     const userProfile = docUserToUserProfile(user, orgHandle, orgRole)
     return createResult({
@@ -41,6 +42,7 @@ export async function findOrCreateUserFn(
   if (authData.email) {
     const existingUser = await findUserByEmailFn(ctx, authData.email)
     if (existingUser) {
+      if (existingUser.deletedAt) return createResultError(op, "User account has been deleted")
       await linkAuthToExistingUserFn(ctx, existingUser._id, authData.provider, authData.providerId)
       const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, existingUser._id)
       const userProfile = docUserToUserProfile(existingUser, orgHandle, orgRole)

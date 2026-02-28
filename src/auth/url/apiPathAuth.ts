@@ -14,6 +14,7 @@ export const apiRouteAuth = {
   passwordChangeConfirm: "passwordChangeConfirm",
   emailChangeRequest: "emailChangeRequest",
   emailChangeConfirm: "emailChangeConfirm",
+  userDelete: "userDelete",
 } as const
 
 export const apiPathAuth = {
@@ -30,4 +31,5 @@ export const apiPathAuth = {
   passwordChangeConfirm: "/password-change-confirm",
   emailChangeRequest: "/email-change-request",
   emailChangeConfirm: "/email-change-confirm",
+  userDelete: "/user-delete",
 } as const satisfies Record<ApiRouteAuth, string>

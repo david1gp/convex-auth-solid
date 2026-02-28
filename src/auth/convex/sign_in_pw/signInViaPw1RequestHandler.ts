@@ -46,6 +46,13 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
     return new Response(JSON.stringify(errorResult), { status: 404 })
   }
 
+  if (user.deletedAt) {
+    const errorMessage = "User account has been deleted"
+    const errorResult = createError(op, errorMessage, email)
+    console.warn(errorResult)
+    return new Response(JSON.stringify(errorResult), { status: 403 })
+  }
+
   // Verify password
   if (!user.hashedPassword) {
     const errorMessage = "Password not set"

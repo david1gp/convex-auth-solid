@@ -14,6 +14,7 @@ export const pageRouteAuth = {
   userProfileMeChangePassword: "/profile/change-password",
   userProfileMeChangeEmail: "/profile/change-email",
   userProfileMeImage: "/profile/update-image",
+  userProfileMeDelete: "/profile/delete",
   userProfileView: "/u/:username",
 } as const satisfies Record<PageNameAuth, string>
 
@@ -47,6 +48,10 @@ export function urlUserProfileMeChangeEmail() {
 
 export function urlUserProfileMeImage() {
   return pageRouteAuth.userProfileMeImage
+}
+
+export function urlUserProfileMeDelete() {
+  return pageRouteAuth.userProfileMeDelete
 }
 
 function serializeSearchParams(email?: string, returnPath?: string) {

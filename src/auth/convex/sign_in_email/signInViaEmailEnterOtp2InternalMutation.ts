@@ -44,6 +44,10 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
     return createError(op, "User not found", userId)
   }
 
+  if (user.deletedAt) {
+    return createError(op, "User account has been deleted")
+  }
+
   const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, userId)
 
   const userProfile = docUserToUserProfile(user as DocUser, orgHandle, orgRole)

@@ -1,4 +1,5 @@
 import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
+import { userDeleteHardAuthSessions } from "@/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
@@ -40,6 +41,9 @@ export async function userDeleteSoftMutationFn(
   // Mark user as deleted
   const now = new Date().toISOString()
   await ctx.db.patch("users", userId, { deletedAt: now })
+
+  // Delete all sessions for this user
+  await userDeleteHardAuthSessions(ctx, userId)
 
   return createResult(null)
 }
