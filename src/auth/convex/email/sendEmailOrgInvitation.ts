@@ -1,5 +1,6 @@
 import { envBaseUrlEmailGeneratorResult } from "@/app/env/private/envBaseUrlEmailGeneratorResult"
 import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
+import { type Language } from "@/app/i18n/language"
 import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuthResendEnvVariableNames"
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageAuth } from "@/auth/convex/sign_in_social/sendTelegramMessageTechnical"
@@ -8,7 +9,7 @@ import {
   type GeneratedEmailType,
   type OrgInvitationV1Type,
 } from "@adaptive-ds/email-generator/index.js"
-import { isDevEnv } from "~ui/env/isDevEnv"
+import { envMode } from "~ui/env/envMode"
 import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"
 import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
@@ -19,28 +20,32 @@ export type GenerateEmailOrgInvitationProps = {
   invitedByEmail: string
   orgName: string
   url: string
+  l: Language
 }
 
 export async function sendEmailOrgInvitation(
   invitedEmail: string,
   p: GenerateEmailOrgInvitationProps,
 ): PromiseResult<null> {
-  const envModeResult = envEnvModeResult()
-  if (!envModeResult.success) return envModeResult
-
   const generatedResult = await generateEmailOrgInvitation(p)
   if (!generatedResult.success) return generatedResult
   const { subject, html, text } = generatedResult.data
 
   const to: ResendAddressInfo = { name: p.invitedName, email: invitedEmail }
 
-  if (!isDevEnv()) {
+  const envResult = envEnvModeResult()
+  if (!envResult.success) return envResult
+  const env = envResult.data
+  const isProd = env === envMode.production
+
+  if (isProd) {
     const emailResult = await sendSingleEmailViaResend(subject, html, text, to, createAuthResendEnvVariableNames())
     if (!emailResult.success) return emailResult
+  } else {
+    console.info(env, "-> skipping sending email")
   }
 
-  const envMode = envModeResult.data
-  const name = envMode + " / org invitation"
+  const name = env + " / org invitation"
   const telegramResult = await sendTelegramMessageAuth(name, { invitedEmail, ...p })
   if (!telegramResult.success) return telegramResult
 
@@ -52,7 +57,7 @@ export async function generateEmailOrgInvitation(
 ): PromiseResult<GeneratedEmailType> {
   const op = "generateEmailOrgInvitation"
   const props: OrgInvitationV1Type = {
-    ...generateSharedEmailProps(),
+    ...generateSharedEmailProps(p.l),
     ...p,
   }
   const baseUrlResult = envBaseUrlEmailGeneratorResult()

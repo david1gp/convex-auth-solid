@@ -1,5 +1,5 @@
-export const urlSupportMail = "support@leg.tj"
+export const urlSupportMail = "support@todo"
 
 export const urlSupportMailTo = "mailto:" + urlSupportMail
 
-export const urlSupportTelegram = "https://t.me/leg_tj_support"
+export const urlSupportTelegram = "https://t.me/todo"

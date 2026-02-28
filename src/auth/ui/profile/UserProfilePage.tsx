@@ -1,5 +1,8 @@
+import { ttc } from "@/app/i18n/ttc"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
+import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
+import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
 import type { DocUser } from "@/auth/convex/IdUser"
@@ -15,7 +18,6 @@ import { createQuery } from "@/utils/convex_client/createQuery"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
@@ -25,7 +27,7 @@ export function UserProfilePage() {
   return (
     <Switch>
       <Match when={!getUsername()}>
-        <ErrorPage title={ttt("Missing :username in path")} />
+        <ErrorPage title={ttc("Missing :username in path")} />
       </Match>
       <Match when={getUsername()}>
         <PageWrapper>
@@ -35,13 +37,15 @@ export function UserProfilePage() {
               <>
                 <NavBreadcrumbSeparator />
                 <NavLinkButton href={urlUserProfileView(getUsername()!)} isActive={true}>
-                  {ttt("User Profile")}
+                  {ttc("User Profile")}
                 </NavLinkButton>
               </>
             }
             childrenCenter={
               <>
                 <OrganizationListNavButton />
+                <WorkspaceListLinkNavButton />
+                <ResourceListNavButton />
               </>
             }
           />
@@ -63,10 +67,10 @@ function UserProfileLoader(p: UserProfileLoaderProps) {
   return (
     <Switch>
       <Match when={getData() === undefined}>
-        <ErrorPage title={ttt("Error loading user profile")} />
+        <ErrorPage title={ttc("Error loading user profile")} />
       </Match>
       <Match when={getData() === null}>
-        <ErrorPage title={ttt("User not found")} />
+        <ErrorPage title={ttc("User not found")} />
       </Match>
       <Match when={getData()}>
         <UserProfileDisplay data={getData()!} />

@@ -5,7 +5,13 @@ import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspa
 import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
 import { Show } from "solid-js"
 import { ttt } from "~ui/i18n/ttt"
-import { formMode, formModeIsReadOnly, getFormModeButtonTitle, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import {
+  formMode,
+  formModeIsReadOnly,
+  getFormModeButtonTitle,
+  getFormModeTitle,
+  type FormMode,
+} from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { Input } from "~ui/input/input/Input"
 import { Label } from "~ui/input/label/Label"
@@ -139,10 +145,7 @@ function SubtitleField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(workspaceFormField.subtitle)(value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.subtitle)(e.currentTarget.value)}
-        class={classMerge(
-          "w-full",
-          p.sm.errors.subtitle.get() && "border-destructive focus-visible:ring-destructive",
-        )}
+        class={classMerge("w-full", p.sm.errors.subtitle.get() && "border-destructive focus-visible:ring-destructive")}
         maxLength={inputMaxLengthUrl}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}

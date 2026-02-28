@@ -3,6 +3,8 @@ import type { BaseSchema } from "valibot"
 import * as a from "valibot"
 import { createResult, createResultError, type Result } from "~utils/result/Result"
 
+const enabled = true
+
 export function createQueryCached<T>(
   queryFn: () => Result<T> | undefined,
   key: string,
@@ -14,16 +16,16 @@ export function createQueryCached<T>(
   return function queryCached(): Result<T> | undefined {
     const result = queryFn()
     if (result) {
-      if (result.success) {
+      if (enabled && result.success) {
         saveToLocalStorage(localStorageKey, result.data)
       }
       return result
     }
     // If queryFn returns undefined, try to load from cache (only once)
-    if (!cachedResult) {
+    if (enabled && !cachedResult) {
       cachedResult = loadFromLocalStorage(localStorageKey, schema)
     }
-    return cachedResult.success ? cachedResult : undefined
+    return !enabled ? undefined : cachedResult && cachedResult.success ? cachedResult : undefined
   }
 }
 

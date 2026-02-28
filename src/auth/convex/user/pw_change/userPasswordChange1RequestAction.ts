@@ -1,4 +1,5 @@
 import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
+import { languageValidator } from "@/app/i18n/language"
 import { sendEmailChangePassword } from "@/auth/convex/email/sendEmailChangePassword"
 import type { DocUser } from "@/auth/convex/IdUser"
 import { vIdUser } from "@/auth/convex/vIdUser"
@@ -12,7 +13,9 @@ import { action, internalAction, type ActionCtx } from "@convex/_generated/serve
 import { v } from "convex/values"
 import type { PromiseResult } from "~utils/result/Result"
 
-export const userPasswordChange1RequestFieldsBase = {} as const
+export const userPasswordChange1RequestFieldsBase = {
+  l: languageValidator,
+} as const
 
 export const userPasswordChange1RequestValidatorPublic = createTokenValidator(userPasswordChange1RequestFieldsBase)
 export type UserPasswordChange1RequestTypePublic = typeof userPasswordChange1RequestValidatorPublic.type
@@ -51,7 +54,7 @@ async function userPasswordChange1RequestActionFn(
     return createErrorAndLogError(op, "User email not found")
   }
 
-  const otpResult = await ctx.runMutation(internal.auth.userPasswordChange1RequestInternalMutation, {
+  const otpResult = await ctx.runMutation(internal.auth.otpSaveInternalMutation, {
     userId: args.userId,
     email: user.email,
     purpose: otpPurpose.passwordChange,
@@ -70,7 +73,7 @@ async function userPasswordChange1RequestActionFn(
   confirmUrl.searchParams.set("step", "2")
   const url = confirmUrl.toString()
 
-  const sendResult = await sendEmailChangePassword(user.name, user.email, otp, url)
+  const sendResult = await sendEmailChangePassword(user.name, user.email, otp, url, args.l)
   if (!sendResult.success) {
     return sendResult
   }

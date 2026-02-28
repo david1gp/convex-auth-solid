@@ -1,3 +1,5 @@
+import { languageSignalGet } from "@/app/i18n/languageSignal"
+import { ttc } from "@/app/i18n/ttc"
 import { apiAuthSignInViaPw } from "@/auth/api/apiAuthSignInViaPw"
 import { passwordSchema } from "@/auth/model_field/passwordSchema"
 import { signInSessionNew } from "@/auth/ui/sign_in/logic/signInSessionNew"
@@ -6,7 +8,6 @@ import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import posthog from "posthog-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
@@ -105,7 +106,7 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
   e.preventDefault()
 
   if (state.isSubmitting.get()) {
-    const title = ttt("Submission in progress, please wait")
+    const title = ttc("Submission in progress, please wait")
     console.info(title)
     return
   }
@@ -134,18 +135,18 @@ async function handleSubmit(e: SubmitEvent, state: SignInUiState, errors: SignIn
   })
 
   state.isSubmitting.set(true)
-  const result = await apiAuthSignInViaPw({ email, pw: password })
+  const result = await apiAuthSignInViaPw({ email, pw: password, l: languageSignalGet() })
   state.isSubmitting.set(false)
   const op = "handleSubmit.apiAuthSignInViaPw"
   posthog.capture(op, result)
 
   if (!result.success) {
-    const errorMessage = ttt("Error signing in")
+    const errorMessage = ttc("Error signing in")
     console.error(op, errorMessage, result)
     toastAdd({ title: errorMessage, description: result.errorMessage })
     return
   }
-  toastAdd({ title: ttt("Successfully signed in"), variant: toastVariant.success })
+  toastAdd({ title: ttc("Successfully signed in"), variant: toastVariant.success })
 
   const userSession = result.data
   signInSessionNew(userSession)

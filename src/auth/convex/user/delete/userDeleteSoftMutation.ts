@@ -24,6 +24,7 @@ export async function userDeleteSoftMutationFn(
 ): PromiseResult<null> {
   const op = "userDeleteSoftMutationFn"
 
+  // Find user by ID or email
   let userId = args.userId
   if (!userId && args.email) {
     const user = await findUserByEmailFn(ctx, args.email)
@@ -36,6 +37,7 @@ export async function userDeleteSoftMutationFn(
   if (!user) return createResultError(op, "User not found", userId)
   if (user.deletedAt) return createResultError(op, "User already deleted", userId)
 
+  // Mark user as deleted
   const now = new Date().toISOString()
   await ctx.db.patch("users", userId, { deletedAt: now })
 

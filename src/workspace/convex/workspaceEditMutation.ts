@@ -10,14 +10,16 @@ import type { DocWorkspace } from "./IdWorkspace"
 
 export type WorkspaceEditValidatorType = typeof workspaceEditValidator.type
 
-export const workspaceEditValidator = v.object({
-  workspaceHandle: v.string(),
-  // data
-  name: v.optional(v.string()),
-  description: v.optional(v.string()),
-  image: v.optional(v.string()),
-  url: v.optional(v.string()),
-}).partial()
+export const workspaceEditValidator = v
+  .object({
+    workspaceHandle: v.string(),
+    // data
+    name: v.optional(v.string()),
+    description: v.optional(v.string()),
+    image: v.optional(v.string()),
+    url: v.optional(v.string()),
+  })
+  .partial()
 
 export const workspaceEditMutation = mutation({
   args: createTokenValidator(workspaceEditValidator.fields),

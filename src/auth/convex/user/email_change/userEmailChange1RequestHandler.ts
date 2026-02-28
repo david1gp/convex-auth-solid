@@ -1,3 +1,4 @@
+import { languageSchema } from "@/app/i18n/language"
 import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { api } from "@convex/_generated/api"
@@ -9,6 +10,7 @@ const userEmailChangeSchema = a.object({
   token: a.string(),
   currentPassword: a.optional(a.string()),
   newEmail: emailSchema,
+  l: languageSchema,
 })
 
 export async function userEmailChange1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

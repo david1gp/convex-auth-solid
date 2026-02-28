@@ -1,10 +1,11 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { UserRole } from "@/auth/model_field/userRole"
 import { userProfileFormConfig, userProfileFormField } from "@/auth/ui/profile/userProfileFormField"
+import { ProfileSectionImage } from "@/auth/ui/profile_me/ProfileSectionImage"
 import type { OrgRole } from "@/org/org_model_field/orgRole"
 import { DateView } from "@/ui/date/DateView"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { type FormMode } from "~ui/input/form/formMode"
 import { Label } from "~ui/input/label/Label"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -22,13 +23,16 @@ export interface UserProfileFormProps extends MayHaveClass, HasUserProfileFormSt
 export function UserProfileForm(p: UserProfileFormProps) {
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
-      <h1 class="text-2xl font-bold mt-6 mb-2">{getUserProfileTitle(p.mode)}</h1>
+      <ProfileSectionImage image={p.sm.state.image.get()} name={p.sm.state.name.get()} />
+      {/* <h1 class="text-2xl font-bold mt-6 mb-2">{getUserProfileTitle(p.mode)}</h1> */}
       <form class="space-y-4">
         <UserIdField sm={p.sm} />
         <NameField sm={p.sm} />
         <UsernameField sm={p.sm} />
         <ImageField sm={p.sm} />
         <EmailField sm={p.sm} />
+        <BioField sm={p.sm} />
+        <UrlField sm={p.sm} />
         <RoleField sm={p.sm} />
         <OrgHandleField sm={p.sm} />
         <OrgRoleField sm={p.sm} />
@@ -128,6 +132,40 @@ function EmailField(p: HasUserProfileFormStateManagement) {
   )
 }
 
+function BioField(p: HasUserProfileFormStateManagement) {
+  return (
+    <FormFieldInput
+      config={userProfileFormConfig.bio}
+      value={p.sm.state.bio.get()}
+      error={p.sm.errors.bio.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.bio.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.bio.set(value)
+      }}
+    />
+  )
+}
+
+function UrlField(p: HasUserProfileFormStateManagement) {
+  return (
+    <FormFieldInput
+      config={userProfileFormConfig.url}
+      value={p.sm.state.url.get()}
+      error={p.sm.errors.url.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.url.set(value)
+      }}
+      onBlur={(value) => {
+        p.sm.state.url.set(value)
+      }}
+    />
+  )
+}
+
 function RoleField(p: HasUserProfileFormStateManagement) {
   return (
     <FormFieldInput
@@ -182,7 +220,7 @@ function OrgRoleField(p: HasUserProfileFormStateManagement) {
 function CreatedAtField(p: HasUserProfileFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <Label for={userProfileFormField.createdAt}>{ttt("Created At")}</Label>
+      <Label for={userProfileFormField.createdAt}>{ttc("Created At")}</Label>
       <DateView date={p.sm.state.createdAt.get()} class="w-full bg-gray-50 dark:bg-gray-800 p-2 rounded" />
     </div>
   )
@@ -190,5 +228,5 @@ function CreatedAtField(p: HasUserProfileFormStateManagement) {
 
 function getUserProfileTitle(mode: FormMode): string {
   // return getFormModeTitle(mode, ttt("User Profile"))
-  return ttt("User Profile")
+  return ttc("User Profile")
 }

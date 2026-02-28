@@ -1,28 +1,18 @@
-import { vIdUser } from "@/auth/convex/vIdUser"
-import { otpPurposeValidator } from "@/auth/model_field/otpPurpose"
 import type { IdUser } from "@/auth/convex/IdUser"
-import type { OtpPurpose } from "@/auth/model_field/otpPurpose"
 import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
-import { v } from "convex/values"
+import type { OtpPurpose } from "@/auth/model_field/otpPurpose"
+import type { MutationCtx } from "@convex/_generated/server"
 import { nowIso } from "~utils/date/nowIso"
 import { type PromiseResult } from "~utils/result/Result"
-
-export const otpSaveInternalMutation = internalMutation({
-  args: {
-    userId: vIdUser,
-    email: v.string(),
-    purpose: otpPurposeValidator,
-  },
-  handler: otpSaveFn,
-})
 
 export async function otpSaveFn(
   ctx: MutationCtx,
   args: { userId: IdUser; email: string; purpose: OtpPurpose },
 ): PromiseResult<string> {
-  const op = "otpSaveFn"
+  const op = "otpCodeSaveFn"
   const { userId, email, purpose } = args
+
+  // await otpRemovePreviousFn(ctx, { userId, email, purpose })
 
   const code = generateOtpCode()
 

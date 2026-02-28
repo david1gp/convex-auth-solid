@@ -1,17 +1,34 @@
 import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
+import { languageValidator } from "@/app/i18n/language"
 import { sendEmailChangeEmail } from "@/auth/convex/email/sendEmailChangeEmail"
 import type { DocUser } from "@/auth/convex/IdUser"
 import { verifyHashedPassword2 } from "@/auth/convex/pw/verifyHashedPassword"
-import { userEmailChangeValidatorInternal, userEmailChangeValidatorPublic, type UserEmailChangeTypeInternal } from "@/auth/convex/user/update/userEmailChangeMutation"
+import { vIdUser } from "@/auth/convex/vIdUser"
+import { otpPurpose } from "@/auth/model_field/otpPurpose"
 import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { authActionTokenToUserId } from "@/utils/convex_backend/authActionTokenToUserId"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
+import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { emailSchema } from "@/utils/valibot/emailSchema"
 import { internal } from "@convex/_generated/api"
 import { action, internalAction, type ActionCtx } from "@convex/_generated/server"
+import { v } from "convex/values"
 import * as a from "valibot"
 import { type PromiseResult } from "~utils/result/Result"
+
+export const userEmailChangeFieldsBase = {
+  newEmail: v.string(),
+  currentPassword: v.optional(v.string()),
+  l: languageValidator,
+} as const
+
+export const userEmailChangeValidatorPublic = createTokenValidator(userEmailChangeFieldsBase)
+export type UserEmailChangeTypePublic = typeof userEmailChangeValidatorPublic.type
+
+export const userEmailChangeValidatorInternal = v.object({ ...userEmailChangeFieldsBase, userId: vIdUser })
+
+export type UserEmailChangeTypeInternal = typeof userEmailChangeValidatorInternal.type
 
 export const userEmailChange1RequestAction = action({
   args: userEmailChangeValidatorPublic,
@@ -23,10 +40,7 @@ export const userEmailChange1RequestInternalAction = internalAction({
   handler: userEmailChange1RequestActionFn,
 })
 
-async function userEmailChange1RequestActionFn(
-  ctx: ActionCtx,
-  args: UserEmailChangeTypeInternal,
-): PromiseResult<null> {
+async function userEmailChange1RequestActionFn(ctx: ActionCtx, args: UserEmailChangeTypeInternal): PromiseResult<null> {
   const op = "userEmailChangeFn"
 
   const emailValidation = a.safeParse(emailSchema, args.newEmail)
@@ -59,12 +73,13 @@ async function userEmailChange1RequestActionFn(
     return createErrorAndLogWarn(op, "Email already in use")
   }
 
-  const otpSaveResult = await ctx.runMutation(internal.auth.userEmailChange1RequestInternalMutation, {
+  const otpResult = await ctx.runMutation(internal.auth.otpSaveInternalMutation, {
     userId: args.userId,
-    newEmail: args.newEmail,
+    email: args.newEmail,
+    purpose: otpPurpose.emailChange,
   })
-  if (!otpSaveResult.success) return otpSaveResult
-  const otp = otpSaveResult.data
+  if (!otpResult.success) return otpResult
+  const otp = otpResult.data
 
   const baseUrlResult = envBaseUrlAppResult()
   if (!baseUrlResult.success) {
@@ -78,7 +93,7 @@ async function userEmailChange1RequestActionFn(
   confirmUrl.searchParams.set("step", "2")
   const url = confirmUrl.toString()
 
-  const sendResult = await sendEmailChangeEmail(user.name, args.newEmail, otp, url)
+  const sendResult = await sendEmailChangeEmail(user.name, args.newEmail, otp, url, args.l)
   if (!sendResult.success) {
     return sendResult
   }

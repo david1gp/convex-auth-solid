@@ -28,5 +28,4 @@ export const stringSchemaUrl = stringSchema0to500
 
 // Description
 export const stringSchema0to5000 = a.pipe(a.string(), a.trim(), a.maxLength(5_000))
-export const stringSchemaDescription = stringSchema0to500
-export const stringSchemaSummary = stringSchema0to5000
+export const stringSchemaDescription = stringSchema0to5000

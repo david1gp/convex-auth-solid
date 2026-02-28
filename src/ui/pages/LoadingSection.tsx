@@ -1,5 +1,6 @@
+import { ttc, ttc1 } from "@/app/i18n/ttc"
+import styles from "@/ui/loaders/AnimateFadeIn.module.css"
 import { RandomLoader } from "@/ui/loaders/RandomLoader"
-import { ttt, ttt1 } from "~ui/i18n/ttt"
 import { classesCardWrapperBorderDark } from "~ui/static/container/classesCardWrapper"
 import { SeparatorWithText } from "~ui/static/separator/SeparatorWithText"
 import { classMerge } from "~ui/utils/classMerge"
@@ -19,6 +20,7 @@ export function LoadingSection(p: LoadingSectionProps) {
       id={p.id}
       class={classMerge(
         classesCardWrapperBorderDark,
+        styles.animateFadeIn2s,
         "min-h-60", // h
         "flex flex-col items-center gap-4",
         p.class,
@@ -34,6 +36,6 @@ export function LoadingSection(p: LoadingSectionProps) {
 
 function getTitle(title?: string, titleSubject?: string): string {
   if (title) return title
-  if (titleSubject) return ttt1("Loading [X]", titleSubject)
-  return ttt("Loading...")
+  if (titleSubject) return ttc1("Loading [X]", titleSubject)
+  return ttc("Loading...")
 }

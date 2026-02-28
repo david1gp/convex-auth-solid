@@ -1,6 +1,7 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { FormFieldConfig } from "@/ui/form/formFieldConfigs"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
-import { ttt } from "~ui/i18n/ttt"
+import { inputMaxLength500, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
 
 export type UserProfileFormField = keyof typeof userProfileFormField
 
@@ -23,68 +24,71 @@ export const userProfileFormField = {
 export const userProfileFormConfig = {
   userId: {
     name: "userId",
-    label: ttt("User ID"),
-    placeholder: ttt("User ID"),
+    label: () => ttc("User ID"),
+    placeholder: () => ttc("User ID"),
   } as const satisfies FormFieldConfig,
 
   name: {
     ...formFieldConfigs.name,
-    placeholder: ttt("Enter your name"),
+    placeholder: () => ttc("Enter your name"),
   } as const satisfies FormFieldConfig,
 
   username: {
     name: "username",
-    label: ttt("Username"),
-    placeholder: ttt("Enter username"),
+    label: () => ttc("Username"),
+    placeholder: () => ttc("Enter username"),
     autocomplete: "username",
   } as const satisfies FormFieldConfig,
 
   image: {
     ...formFieldConfigs.image,
-    placeholder: ttt("Profile image URL"),
+    placeholder: () => ttc("Profile image URL"),
   } as const satisfies FormFieldConfig,
 
   email: {
     name: "email",
-    label: ttt("Email"),
-    placeholder: ttt("Enter email address"),
+    label: () => ttc("Email"),
+    placeholder: () => ttc("Enter email address"),
     autocomplete: "email",
   } as const satisfies FormFieldConfig,
 
   bio: {
     name: "bio",
-    label: ttt("Bio"),
-    placeholder: ttt("Enter your bio"),
+    label: () => ttc("Bio"),
+    placeholder: () => ttc("Tell us about yourself"),
+    maxLength: inputMaxLength500,
   } as const satisfies FormFieldConfig,
 
   url: {
     name: "url",
-    label: ttt("Website"),
-    placeholder: ttt("Enter your website URL"),
+    label: () => ttc("Website"),
+    placeholder: () => ttc("Enter your website URL"),
+    autocomplete: "url",
+    maxLength: inputMaxLengthUrl,
   } as const satisfies FormFieldConfig,
 
   role: {
     name: "role",
-    label: ttt("Role"),
-    placeholder: ttt("Enter role"),
+    label: () => ttc("Role"),
+    placeholder: () => ttc("Enter role"),
   } as const satisfies FormFieldConfig,
 
   orgHandle: {
     name: "orgHandle",
-    label: ttt("Organization Handle"),
-    placeholder: ttt("Enter organization handle"),
+    label: () => ttc("Organization Handle"),
+    placeholder: () => ttc("Enter organization handle"),
     autocomplete: "organization-name",
   } as const satisfies FormFieldConfig,
 
   orgRole: {
     name: "orgRole",
-    label: ttt("Organization Role"),
-    placeholder: ttt("Enter organization role"),
+    label: () => ttc("Organization Role"),
+    placeholder: () => ttc("Enter organization role"),
   } as const satisfies FormFieldConfig,
 
   createdAt: {
     name: "createdAt",
-    label: ttt("Created At"),
-    placeholder: ttt("Created At"),
+    label: () => ttc("Created At"),
+    placeholder: () => ttc("Created At"),
   } as const satisfies FormFieldConfig,
 } as const satisfies Record<UserProfileFormField, FormFieldConfig>

@@ -3,6 +3,7 @@ import { sendTelegramMessageAuth } from "@/auth/convex/sign_in_social/sendTelegr
 import { userSessionValidator } from "@/auth/model/userSessionValidator"
 import { type ActionCtx, internalAction } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { envMode } from "~ui/env/envMode"
 import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export const notifyTelegramNewSignUpArgsValidator = v.object({
@@ -22,6 +23,7 @@ export async function notifyTelegramNewSignUpInternalActionFn(
 ): PromiseResult<null> {
   const envModeResult = envEnvModeResult()
   if (!envModeResult.success) return envModeResult
+  if (envModeResult.data === envMode.development) return createResult(null)
   const name = envModeResult.data + " / user signed up"
   const { token, ...data } = args.userSession
   await sendTelegramMessageAuth(name, data)

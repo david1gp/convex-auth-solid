@@ -1,8 +1,9 @@
+import { ttc } from "@/app/i18n/ttc"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import utc from "dayjs/plugin/utc"
 import type { JSXElement } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
+import { classMerge } from "~ui/utils/classMerge"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 dayjs.extend(relativeTime)
@@ -11,7 +12,10 @@ dayjs.extend(utc)
 export interface DateViewProps extends MayHaveClass {
   start?: string | JSXElement
   date: string
+  showAt?: boolean
   end?: string | JSXElement
+  relativeClass?: string
+  absoluteClass?: string
 }
 
 export function DateView(p: DateViewProps) {
@@ -22,14 +26,14 @@ export function DateView(p: DateViewProps) {
   const absoluteTime = isSameDay ? dateObj.format("HH:mm") : dateObj.format("MMM D, YYYY")
   const utcTime = dateObj.utc().format("YYYY-MM-DD HH:mm:ss UTC")
 
-  const at = " " + ttt("at") + " "
+  const at = " " + ttc("at") + " "
 
   return (
-    <time class={p.class} datetime={p.date} title={utcTime}>
+    <time datetime={p.date} title={utcTime} class={p.class}>
       {p.start}
-      <span class="font-medium">{timeAgo}</span>
-      <span>{at}</span>
-      <span>{absoluteTime}</span>
+      <span class={classMerge("font-medium", p.relativeClass)}>{timeAgo}</span>
+      {p.showAt || (p.showAt === undefined && <span>{at}</span>)}
+      <span class={p.absoluteClass}>{absoluteTime}</span>
       {p.end}
     </time>
   )

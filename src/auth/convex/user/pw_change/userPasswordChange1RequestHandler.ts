@@ -1,3 +1,4 @@
+import { languageSchema } from "@/app/i18n/language"
 import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
 import { api } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
@@ -6,6 +7,7 @@ import { createError } from "~utils/result/Result"
 
 const userPasswordChange1RequestSchema = a.object({
   token: a.string(),
+  l: languageSchema,
 })
 
 export async function userPasswordChange1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

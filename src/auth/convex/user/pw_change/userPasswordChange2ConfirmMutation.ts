@@ -14,6 +14,7 @@ import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTo
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { createUserIdValidator } from "@/utils/convex_backend/createUserIdValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
@@ -25,10 +26,7 @@ const userPasswordChange2ConfirmFieldsBase = {
   confirmationCode: v.string(),
 } as const
 
-export const userPasswordChange2ConfirmValidatorInternal = v.object({
-  ...userPasswordChange2ConfirmFieldsBase,
-  userId: v.id("users"),
-})
+export const userPasswordChange2ConfirmValidatorInternal = createUserIdValidator(userPasswordChange2ConfirmFieldsBase)
 export type UserPasswordChangeConfirmTypeInternal = typeof userPasswordChange2ConfirmValidatorInternal.type
 
 export const userPasswordChange2ConfirmValidatorPublic = createTokenValidator(userPasswordChange2ConfirmFieldsBase)
@@ -92,7 +90,7 @@ async function userPasswordChange2ConfirmFn(
   const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) return createError(op, tokenResult.errorMessage)
   const token = tokenResult.data
-  const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token, nowIso())
+  const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
   const userSession: UserSession = {
     token,
     profile: userProfile,

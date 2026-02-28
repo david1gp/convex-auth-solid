@@ -10,7 +10,7 @@ import * as a from "valibot"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 import { createError } from "~utils/result/Result"
 import { sendEmailSignUp } from "@/auth/convex/email/sendEmailSignUp"
-import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
+import { commonApiErrorMessages } from "./commonApiErrorMessages"
 
 export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signUp1RequestHandler"
@@ -34,7 +34,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
     console.error(errorResult)
     return new Response(JSON.stringify(errorResult), { status: 400 })
   }
-  const { name, email, pw } = validation.output
+  const { name, email, pw, l } = validation.output
 
   const existingUser = await ctx.runQuery(internal.auth.findUserByEmailInternalQuery, { email })
   if (existingUser) {
@@ -71,7 +71,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const confirmUrl = new URL(pageRouteAuth.signUpConfirmEmail, hostnameApp)
   confirmUrl.searchParams.set("email", email)
   confirmUrl.searchParams.set("code", code)
-  await sendEmailSignUp(name, email, code, confirmUrl.toString())
+  await sendEmailSignUp(name, email, code, confirmUrl.toString(), l)
 
   return new Response("Sign up code sent", { status: 200 })
 }

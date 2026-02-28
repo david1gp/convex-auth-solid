@@ -1,6 +1,6 @@
+import { ttc } from "@/app/i18n/ttc"
 import { illustrationPopsyValues } from "@/ui/illustrations/illustrationsPopsy"
 import { RandomIllustrationFromArr } from "@/ui/illustrations/RandomIllustrationFromArr"
-import { ttt } from "~ui/i18n/ttt"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface RandomIllustrationPopsyProps extends MayHaveClass {
@@ -13,7 +13,7 @@ export function RandomIllustrationPopsy(p: RandomIllustrationPopsyProps) {
     <RandomIllustrationFromArr
       images={illustrationPopsyValues}
       addIndex={p.addIndex}
-      alt={p.alt ?? ttt("Illustration")}
+      alt={p.alt ?? ttc("Illustration")}
       class={p.class}
     />
   )

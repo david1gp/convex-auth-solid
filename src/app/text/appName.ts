@@ -1,4 +1,3 @@
-
 export function appNameClient(): string {
   return "Adaptive Convex Auth"
 }

@@ -13,7 +13,12 @@ export type MicrosoftOauthToken = {
 }
 
 export const microsoftOauthTokenRootUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
-
+/**
+ * Microsoft Identity Platform (Entra ID / Azure AD) OAuth2 Authorization Code Flow
+ * References:
+ * - https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow
+ * - Similar to NextAuth.js AzureAD / MicrosoftEntraID provider
+ */
 export async function getMicrosoftOauthToken(code: string): PromiseResult<MicrosoftOauthToken> {
   const op = "getMicrosoftOauthToken"
   const provider = socialLoginProvider.microsoft
@@ -32,7 +37,7 @@ export async function getMicrosoftOauthToken(code: string): PromiseResult<Micros
     grant_type: "authorization_code",
     code,
     redirect_uri: urlAuthSignInUsingOauth(provider),
-    scope: "openid profile email offline_access User.Read",
+    scope: "openid profile email offline_access User.Read", // Common scopes for basic profile + email
   }
 
   const r = await fetch(microsoftOauthTokenRootUrl, {
@@ -61,4 +66,5 @@ export async function getMicrosoftOauthToken(code: string): PromiseResult<Micros
 
 const microsoftSchema = a.object({
   access_token: a.string(),
+  // Optional: token_type, expires_in, refresh_token, id_token, etc.
 })

@@ -30,7 +30,11 @@ export function OverviewPage() {
           </>
         }
       />
-      <PageHeader title={getTitle()} subtitle={ttt("This is a private page seen only to logged in users")} class="py-20" />
+      <PageHeader
+        title={getTitle()}
+        subtitle={ttt("This is a private page seen only to logged in users")}
+        class="py-20"
+      />
       <section>
         <h2 class="text-lg font-semibold mb-2">{ttt("Demo Auth Links")}</h2>
         <AuthLinks />

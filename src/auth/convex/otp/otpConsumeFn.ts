@@ -4,7 +4,7 @@ import { nowIso } from "~utils/date/nowIso"
 import type { PromiseResult } from "~utils/result/Result"
 
 export async function otpConsumeFn(ctx: MutationCtx, args: { otpId: IdAuthOtp }): PromiseResult<void> {
-  const op = "otpConsumeFn"
+  const op = "otpCodeConsumeFn"
   const { otpId } = args
 
   await ctx.db.patch("authOtps", otpId, { consumedAt: nowIso() })

@@ -55,7 +55,7 @@ function shouldAutologin(sessions: UserSession[]): UserSession | null {
   // const isSingle = sessions.length === 1
   const single = sessions[0]
   if (!single) return null
-  const hasUserRole = single.profile.role === userRole.user
+  const hasUserRole = single.profile.role == userRole.user
   if (!hasUserRole) return null
   return single
 }

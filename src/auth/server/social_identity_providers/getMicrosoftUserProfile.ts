@@ -1,15 +1,22 @@
-import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
+import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider" // Adjust if needed
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
+/**
+ * Microsoft Graph /me endpoint for user profile
+ * References:
+ * - https://learn.microsoft.com/en-us/graph/api/user-get
+ * - https://graph.microsoft.com/oidc/userinfo (alternative, but /me provides more reliable fields)
+ */
 export interface MicrosoftUserProfile {
   id: string
   displayName: string
   givenName: string | null
   surname: string | null
   mail: string | null
-  userPrincipalName: string
+  userPrincipalName: string // Usually the email/login
+  // avatar_url not directly available; can fetch separately via /photo if needed
 }
 
 export const microsoftOauthUserProfileRootUrl = "https://graph.microsoft.com/v1.0/me"
@@ -55,4 +62,5 @@ const microsoftProfileSchema = a.object({
   surname: a.nullable(a.string()),
   mail: a.nullable(a.string()),
   userPrincipalName: a.string(),
+  // Add more fields if needed
 })

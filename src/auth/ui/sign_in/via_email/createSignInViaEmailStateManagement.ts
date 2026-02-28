@@ -1,3 +1,5 @@
+import { languageSignalGet } from "@/app/i18n/languageSignal"
+import { ttc } from "@/app/i18n/ttc"
 import { apiAuthSignInViaEmail } from "@/auth/api/apiAuthSignInViaEmail"
 import { urlSignInEnterOtp } from "@/auth/url/urlSignInEnterOtp"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
@@ -7,7 +9,6 @@ import { emailSchema } from "@/utils/valibot/emailSchema"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import posthog from "posthog-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
@@ -72,9 +73,6 @@ export type SignInViaEmailStateManagement = {
   handleSubmit: (e: SubmitEvent) => void
 }
 
-type NavigateType = (to: string) => void
-type LocationType = { pathname: string }
-
 export function createSignInViaEmailStateManagement(): SignInViaEmailStateManagement {
   const state = signInViaEmailCreateUiState()
   const isSubmitting = createSignalObject(false)
@@ -105,7 +103,7 @@ function validateOnChange(
   }, debounceMs)
 }
 
-function handleSubmit(
+async function handleSubmit(
   e: SubmitEvent,
   state: SignInViaEmailUiState,
   isSubmitting: SignalObject<boolean>,
@@ -114,7 +112,7 @@ function handleSubmit(
   e.preventDefault()
 
   if (isSubmitting.get()) {
-    const title = ttt("Submission in progress, please wait")
+    const title = ttc("Submission in progress, please wait")
     console.info(title)
     return
   }
@@ -127,7 +125,7 @@ function handleSubmit(
     errors.email.set("")
   }
 
-  handleSignInViaEmail(state.email.get(), state, isSubmitting, errors)
+  return handleSignInViaEmail(state.email.get(), state, isSubmitting, errors)
 }
 
 async function handleSignInViaEmail(
@@ -141,16 +139,16 @@ async function handleSignInViaEmail(
     email: state.email.get(),
   })
   isSubmitting.set(true)
-  const result = await apiAuthSignInViaEmail({ email })
+  const result = await apiAuthSignInViaEmail({ email, l: languageSignalGet() })
   isSubmitting.set(false)
 
   posthog.capture(op, result)
 
   if (!result.success) {
-    toastAdd({ title: ttt("Error signing in"), description: result.errorMessage })
+    toastAdd({ title: ttc("Error signing in"), description: result.errorMessage })
     return
   }
-  toastAdd({ title: ttt("Successfully signed in"), variant: toastVariant.success })
+  toastAdd({ title: ttc("Successfully signed in"), variant: toastVariant.success })
 
   const returnPath = urlSignInRedirectUrl(document.location.pathname)
   const url = urlSignInEnterOtp(email, "", returnPath)

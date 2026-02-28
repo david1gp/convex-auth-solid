@@ -89,8 +89,9 @@ function urlAuthMicrosoft(redirectUrl: string = ""): string {
     client_id: clientId,
     response_type: "code",
     redirect_uri: urlAuthSignInUsingOauth(socialLoginProvider.microsoft),
-    scope: "openid profile email offline_access User.Read",
+    scope: "openid profile email offline_access User.Read", // User.Read allows access to /me and profile photo
     state: redirectUrl,
+    // Optional: prompt: "select_account" // forces account picker if you want
   }
 
   const qs = new URLSearchParams(options)

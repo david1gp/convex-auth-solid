@@ -17,7 +17,10 @@ const userEmailChangeConfirmFieldsBase = {
   confirmationCode: v.string(),
 } as const
 
-export const userEmailChangeConfirmValidatorInternal = v.object({ ...userEmailChangeConfirmFieldsBase, userId: vIdUser })
+export const userEmailChangeConfirmValidatorInternal = v.object({
+  ...userEmailChangeConfirmFieldsBase,
+  userId: vIdUser,
+})
 export type UserEmailChangeConfirmTypeInternal = typeof userEmailChangeConfirmValidatorInternal.type
 
 export const userEmailChangeConfirmValidatorPublic = createTokenValidator(userEmailChangeConfirmFieldsBase)

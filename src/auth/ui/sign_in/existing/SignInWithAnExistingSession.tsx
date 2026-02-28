@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { UserSession } from "@/auth/model/UserSession"
 import { DeleteEarlierSessions } from "@/auth/ui/sign_in/existing/DeleteEarlierSessions"
 import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
@@ -6,7 +7,6 @@ import { navigateTo } from "@/utils/router/navigateTo"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import { For, Show, type JSX } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { classesCardWrapper } from "~ui/static/container/classesCardWrapper"
@@ -34,7 +34,7 @@ export function SignInWithAnExistingSession(p: SignInWithAnExistingSessionProps)
           p.class,
         )}
       >
-        <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>{ttt("Continue with an earlier session")}</h2>
+        <h2 class={classMerge("text-xl font-semibold", p.h2Class)}>{ttc("Continue with an earlier session")}</h2>
         <div class={p.innerClass ?? "contents"}>
           <For each={sessions()}>{(session: UserSession) => <SessionButton session={session} />}</For>
           <DeleteEarlierSessions />

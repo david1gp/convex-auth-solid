@@ -1,5 +1,5 @@
 // import { AuthMiniHero } from "@/auth/AuthMiniHero"
-import { ttt } from "~ui/i18n/ttt"
+import { ttc } from "@/app/i18n/ttc"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { DevLoginSection } from "@/auth/ui/sign_in/dev/DevLoginSection"
 import { SignInWithAnExistingSession } from "@/auth/ui/sign_in/existing/SignInWithAnExistingSession"
@@ -17,7 +17,7 @@ export function SignInPageSocialOnly(p: SignInPageSocialOnlyProps) {
   return (
     <div class={classArr("min-h-dvh w-full", classesBgGray, p.class)}>
       <div class={classArr("container max-w-7xl mx-auto", "space-y-8", "dark:text-white", "py-4 px-4", p.innerClass)}>
-        <NavAuth title={ttt("Sign in via Social Account")} />
+        <NavAuth title={ttc("Sign in via Social Account")} />
         {/* <AuthMiniHero /> */}
         <SignInWithAnExistingSession class="" />
         <SocialLoginButtonsSection class="" />

@@ -1,3 +1,6 @@
+import type { Language } from "@/app/i18n/language"
+import { languageSignalGet } from "@/app/i18n/languageSignal"
+import { ttc } from "@/app/i18n/ttc"
 import { apiAuthSignUp } from "@/auth/api/apiAuthSignUp"
 import type { SignUpType } from "@/auth/model/signUpSchema"
 import { signUpTermsSchema } from "@/auth/model/signUpTermsSchema"
@@ -13,7 +16,6 @@ import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import posthog from "posthog-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
@@ -84,10 +86,10 @@ export interface SignUpUiStateManagement extends SignUpFormState {
 type NavigateType = (to: string) => void
 
 export function signUpCreateStateManagement(): SignUpUiStateManagement {
-  const isSubmitting = createSignalObject(false)
   const state = signUpCreateFormState()
+  const isSubmitting = createSignalObject(false)
   const errors = createSignUpErrorState()
-  const s: SignUpFormState = { isSubmitting, state, errors }
+  const s: SignUpFormState = { state, isSubmitting, errors }
 
   return {
     isSubmitting,
@@ -147,9 +149,8 @@ async function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
 
   const isSubmitting = s.isSubmitting.get()
   if (isSubmitting) {
-    const title = ttt("Submission in progress, please wait")
+    const title = ttc("Submission in progress, please wait")
     console.info(title)
-    toastAdd({ title, variant: toastVariant.default, id: "isSubmitting" })
     return
   }
 
@@ -200,7 +201,7 @@ async function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
     name: name,
     email: email,
     pw: pw,
-    l: "en",
+    l: languageSignalGet(),
   }
   await handleSignUp(formData, s)
 
@@ -215,18 +216,18 @@ async function handleSignUp(values: HandleSignUpData, s: SignUpFormState) {
   if (!result.success) {
     console.error(result)
     const title = result.errorMessage
-    toastAdd({ id: "signup-api-error", title, icon: mdiAccountCancel })
+    toastAdd({ id: "sign-up", title, icon: mdiAccountCancel })
     if (result.statusCode === 409) {
       const currentSet = s.state.alreadyRegisteredEmails.get()
       const newSet = new Set([...currentSet, values.email])
       s.state.alreadyRegisteredEmails.set(newSet)
-      const errorMessage = ttt("Email already registered, please sign in instead")
+      const errorMessage = ttc("Email already registered, please sign in instead")
       s.errors.email.set(errorMessage)
       return
     }
     return
   }
-  toastAdd({ title: ttt("Successfully signed up"), variant: toastVariant.success })
+  toastAdd({ title: ttc("Successfully signed up"), variant: toastVariant.success })
   const returnPathSearch = searchParamGet("returnPath")
   const returnPath = returnPathSearch || urlSignInRedirectUrl(location.pathname)
   console.log(op, "returnPath:", returnPath)
@@ -237,7 +238,7 @@ export type HandleSignUpData = {
   name: string
   email: string
   pw: string
-  l: string
+  l: Language
 }
 
 function validateFieldResult(field: SignUpFormField, value: string | boolean) {

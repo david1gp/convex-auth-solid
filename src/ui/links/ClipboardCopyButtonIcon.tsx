@@ -1,15 +1,17 @@
+import { ttc } from "@/app/i18n/ttc"
 import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
-import { ttt } from "~ui/i18n/ttt"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveButtonVariant } from "~ui/utils/MayHaveButtonVariant"
+import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveDisabled } from "~ui/utils/MayHaveDisabled"
 import { createSignalObject } from "~ui/utils/createSignalObject"
 
-export interface ClipboardCopyButtonIconProps extends MayHaveButtonVariant, MayHaveClass, MayHaveDisabled {
+export interface ClipboardCopyButtonIconProps
+  extends MayHaveButtonVariant, MayHaveClass, MayHaveDisabled, MayHaveChildren {
   data: string
   copyText?: string
   toastText?: string
@@ -17,8 +19,8 @@ export interface ClipboardCopyButtonIconProps extends MayHaveButtonVariant, MayH
 
 export function ClipboardCopyButtonIcon(p: ClipboardCopyButtonIconProps) {
   const copied = createSignalObject(false)
-  const copyText = p.copyText ?? ttt("Copy to clipboard")
-  const toastText = p.toastText ?? ttt("Copied to clipboard")
+  const copyText = p.copyText ?? ttc("Copy to clipboard")
+  const toastText = p.toastText ?? ttc("Copied to clipboard")
 
   function copyData() {
     navigator.clipboard.writeText(p.data).then(
@@ -35,11 +37,11 @@ export function ClipboardCopyButtonIcon(p: ClipboardCopyButtonIconProps) {
       },
       (err) => {
         console.error("clipboard: could not copy text: ", err)
-        const errorTitle = ttt("Copy failed")
+        const errorTitle = ttc("Copy failed")
         toastAdd({
           title: errorTitle,
           variant: toastVariant.error,
-          description: err.message || ttt("Unable to copy to clipboard"),
+          description: err.message || ttc("Unable to copy to clipboard"),
         })
       },
     )
@@ -49,12 +51,13 @@ export function ClipboardCopyButtonIcon(p: ClipboardCopyButtonIconProps) {
     <ButtonIcon
       icon={copied.get() ? mdiCheckboxMarkedOutline : mdiContentCopy}
       onClick={copyData}
-      title={copied.get() ? ttt("Copied") : copyText}
+      title={copied.get() ? ttc("Copied") : copyText}
       disabled={p.disabled || copied.get()}
       variant={p.variant ?? buttonVariant.outline}
       class={p.class}
     >
       {/* {copied.get() ? ttt("Copied") : ttt("Copy")} */}
+      {p.children}
     </ButtonIcon>
   )
 }

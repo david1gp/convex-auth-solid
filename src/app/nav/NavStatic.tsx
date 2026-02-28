@@ -1,3 +1,6 @@
+import { LanguageSwitcher } from "@/app/i18n/ui/LanguageSwitcher"
+import { SiteNavLinkButton } from "@/app/nav/links/SiteNavLinkButton"
+import { SupportPopover } from "@/app/nav/links/SupportPopover"
 import { UserNavButton } from "@/app/nav/UserNavButton"
 import { urlOverview } from "@/app/pages/urlOverview"
 import { appNameClient } from "@/app/text/appName"
@@ -14,11 +17,12 @@ export interface NavStaticProps extends MayHaveClass {
   childrenLeft?: JSXElement
   childrenCenter?: JSXElement
   childrenRight?: JSXElement
+  sitePath?: string
 }
 
 export function NavStatic(p: NavStaticProps) {
   return (
-    <nav class={classMerge("flex flex-wrap justify-between gap-4 mx-auto", "w-full max-w-7xl", "mb-4", p.class)}>
+    <nav class={classMerge("flex flex-wrap justify-between mx-auto", "w-full max-w-7xl", "mb-4", p.class)}>
       <div class="flex flex-wrap gap-2">
         {p.dense ? (
           <LogoImageOnly href={urlOverview()} />
@@ -35,6 +39,9 @@ export function NavStatic(p: NavStaticProps) {
       <div class="flex flex-wrap">
         {p.childrenRight}
         <DemosLinkButton />
+        <SiteNavLinkButton sitePath={p.sitePath} />
+        <SupportPopover />
+        <LanguageSwitcher />
         <ThemeButton />
         <UserNavButton />
       </div>

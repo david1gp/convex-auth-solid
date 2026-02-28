@@ -3,7 +3,7 @@ import type { PageNameOrgInvitation } from "@/org/invitation_url/pageNameOrgInvi
 export type PageRouteOrgInvitation = keyof typeof pageRouteOrgInvitation
 
 export const pageRouteOrgInvitation = {
-  orgInvitationList: "/organizations/:orgHandle/invitations",
-  orgInvitationAdd: "/organizations/:orgHandle/invitations/add",
-  orgInvitationAccept: "/organizations/:orgHandle/invitations/:invitationCode/accept",
+  orgInvitationList: "/stakeholders/:orgHandle/invitations",
+  orgInvitationAdd: "/stakeholders/:orgHandle/invitations/add",
+  orgInvitationAccept: "/stakeholders/:orgHandle/invitations/:invitationCode/accept",
 } as const satisfies Record<PageNameOrgInvitation, string>

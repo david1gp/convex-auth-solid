@@ -1,5 +1,5 @@
+import { ttc } from "@/app/i18n/ttc"
 import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
-import { ttt } from "~ui/i18n/ttt"
 import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
@@ -17,8 +17,8 @@ export interface ClipboardCopyButtonIconOnlyProps extends MayHaveButtonVariant, 
 
 export function ClipboardCopyButtonIconOnly(p: ClipboardCopyButtonIconOnlyProps) {
   const copied = createSignalObject(false)
-  const copyText = p.copyText ?? ttt("Copy to clipboard")
-  const toastText = p.toastText ?? ttt("Copied to clipboard")
+  const copyText = p.copyText ?? ttc("Copy to clipboard")
+  const toastText = p.toastText ?? ttc("Copied to clipboard")
 
   function copyData() {
     navigator.clipboard.writeText(p.data).then(
@@ -35,11 +35,11 @@ export function ClipboardCopyButtonIconOnly(p: ClipboardCopyButtonIconOnlyProps)
       },
       (err) => {
         console.error("clipboard: could not copy text: ", err)
-        const errorTitle = ttt("Copy failed")
+        const errorTitle = ttc("Copy failed")
         toastAdd({
           title: errorTitle,
           variant: toastVariant.error,
-          description: err.message || ttt("Unable to copy to clipboard"),
+          description: err.message || ttc("Unable to copy to clipboard"),
         })
       },
     )
@@ -50,7 +50,7 @@ export function ClipboardCopyButtonIconOnly(p: ClipboardCopyButtonIconOnlyProps)
       icon={copied.get() ? mdiCheckboxMarkedOutline : mdiContentCopy}
       iconClass="size-5"
       onClick={copyData}
-      title={copied.get() ? ttt("Copied") : copyText}
+      title={copied.get() ? ttc("Copied") : copyText}
       disabled={p.disabled || copied.get()}
       variant={p.variant ?? buttonVariant.outline}
       class={p.class}

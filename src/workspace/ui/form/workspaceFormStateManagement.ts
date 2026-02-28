@@ -334,9 +334,7 @@ function createActions(
 interface WorkspaceCreateMutationProps extends WorkspaceDataModel, HasToken {}
 
 interface WorkspaceEditMutationProps
-  extends Partial<Omit<WorkspaceDataModel, "workspaceHandle">>,
-    HasWorkspaceHandle,
-    HasToken {}
+  extends Partial<Omit<WorkspaceDataModel, "workspaceHandle">>, HasWorkspaceHandle, HasToken {}
 
 interface WorkspaceRemoveMutationProps extends HasWorkspaceHandle, HasToken {}
 

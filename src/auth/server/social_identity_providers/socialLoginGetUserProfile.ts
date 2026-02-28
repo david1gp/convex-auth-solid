@@ -21,9 +21,9 @@ import { createResult, type PromiseResult } from "~utils/result/Result"
 export const socialLoginGetUserProfile = {
   github: oauthGithub,
   google: oauthGoogle,
-  microsoft: oauthMicrosoft,
   dev: oauthDev,
-} satisfies Record<LoginProvider, (code: string) => PromiseResult<CommonAuthProvider>>
+  microsoft: oauthMicrosoft,
+} satisfies Record<LoginProvider, (cid: string, code: string) => PromiseResult<CommonAuthProvider>>
 
 async function getProfile<T, P>(props: T, fn: (code: T) => PromiseResult<P>): PromiseResult<P> {
   const op = "getProfile"
@@ -132,13 +132,13 @@ async function oauthMicrosoft(code: string): PromiseResult<CommonAuthProvider> {
     return profileOrError
   }
 
-  // data
+  // data - adapt to your CommonAuthProvider shape
   return createResult(convertMicrosoftProfile(profileOrError.data))
 }
 
 function convertMicrosoftProfile(p: MicrosoftUserProfile): CommonAuthProvider {
   const providerId = p.id
-  const provider = socialLoginProvider.microsoft
+  const provider = socialLoginProvider.google
 
   return {
     // provider

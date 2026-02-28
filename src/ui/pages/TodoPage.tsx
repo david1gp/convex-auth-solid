@@ -1,8 +1,10 @@
+import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
+import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
 import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
+import { urlTodo } from "@/app/pages/urlTodo"
 import { TodoSection, type TodoSectionProps } from "@/ui/pages/TodoSection"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 
@@ -15,7 +17,9 @@ export function TodoPage(p: TodoSectionProps) {
           p.title && (
             <>
               <NavBreadcrumbSeparator />
-              <LinkLikeText>{p.title}</LinkLikeText>
+              <NavLinkButton href={urlTodo()} isActive={true}>
+                {p.title}
+              </NavLinkButton>
             </>
           )
         }
@@ -23,6 +27,7 @@ export function TodoPage(p: TodoSectionProps) {
           <>
             <OrganizationListNavButton />
             <WorkspaceListLinkNavButton />
+            <ResourceListNavButton />
           </>
         }
       />

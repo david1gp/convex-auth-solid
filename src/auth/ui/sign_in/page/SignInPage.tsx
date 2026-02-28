@@ -1,4 +1,4 @@
-import { ttt } from "~ui/i18n/ttt"
+import { ttc } from "@/app/i18n/ttc"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { SignInPageContent } from "@/auth/ui/sign_in/page/SignInPageContent"
 import { SignUpButtonLink } from "@/auth/ui/sign_in/page/SignUpButtonLink"
@@ -14,9 +14,9 @@ interface SignInPageContent2Props extends MayHaveClass, MayHaveInnerClass {}
 
 export function SignInPage(p: SignInPageContent2Props) {
   return (
-    <LayoutWrapperDemo title={ttt("Sign In")}>
+    <LayoutWrapperDemo title={ttc("Sign In")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavAuth title={ttt("Sign In")}>
+        <NavAuth title={ttc("Sign In")}>
           <SignUpButtonLink size={buttonSize.default} variant={buttonVariant.link} icon={mdiAccountPlus} iconRight="" />
         </NavAuth>
         <SignInPageContent class={p.innerClass} />

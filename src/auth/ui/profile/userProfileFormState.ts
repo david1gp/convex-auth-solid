@@ -13,6 +13,8 @@ export type UserProfileFormData = {
   role: UserRole
   orgHandle?: string
   orgRole?: OrgRole
+  bio?: string
+  url?: string
   createdAt: string
 }
 
@@ -25,6 +27,8 @@ export type UserProfileFormState = {
   role: SignalObject<UserRole>
   orgHandle: SignalObject<string>
   orgRole: SignalObject<OrgRole>
+  bio: SignalObject<string>
+  url: SignalObject<string>
   createdAt: SignalObject<string>
 }
 
@@ -37,6 +41,8 @@ export type UserProfileFormErrorState = {
   role: SignalObject<string>
   orgHandle: SignalObject<string>
   orgRole: SignalObject<string>
+  bio: SignalObject<string>
+  url: SignalObject<string>
   createdAt: SignalObject<string>
 }
 
@@ -50,6 +56,8 @@ function userProfileCreateState(): UserProfileFormState {
     role: createSignalObject("user" as UserRole),
     orgHandle: createSignalObject(""),
     orgRole: createSignalObject("member" as OrgRole),
+    bio: createSignalObject(""),
+    url: createSignalObject(""),
     createdAt: createSignalObject(""),
   }
 }
@@ -64,6 +72,8 @@ function userProfileCreateErrorState(): UserProfileFormErrorState {
     role: createSignalObject(""),
     orgHandle: createSignalObject(""),
     orgRole: createSignalObject(""),
+    bio: createSignalObject(""),
+    url: createSignalObject(""),
     createdAt: createSignalObject(""),
   }
 }
@@ -110,6 +120,8 @@ function loadData(data: UserProfile, serverState: SignalObject<UserProfile>, sta
   state.role.set(data.role)
   state.orgHandle.set(data.orgHandle ?? "")
   state.orgRole.set(data.orgRole ?? ("member" as OrgRole))
+  state.bio.set(data.bio ?? "")
+  state.url.set(data.url ?? "")
   state.createdAt.set(data.createdAt)
   console.log("loaded user profile data", data)
 }
@@ -124,6 +136,8 @@ function hasErrors(errors: UserProfileFormErrorState) {
     !!errors.role.get() ||
     !!errors.orgHandle.get() ||
     !!errors.orgRole.get() ||
+    !!errors.bio.get() ||
+    !!errors.url.get() ||
     !!errors.createdAt.get()
   )
 }

@@ -35,7 +35,7 @@ export function FormFieldInput(p: FormFieldInputProps) {
   return (
     <div class={classMerge("flex flex-col gap-2", p.class)}>
       <Label for={p.config.name} class={p.config.labelClass}>
-        {p.config.label}
+        {p.config.label()}
         {p.config.required && <LabelAsterix />}
       </Label>
       <Show when={p.config.subtitle}>
@@ -44,7 +44,7 @@ export function FormFieldInput(p: FormFieldInputProps) {
       <Component
         id={p.config.name}
         type={p.config.type}
-        placeholder={p.config.placeholder}
+        placeholder={p.config.placeholder()}
         autocomplete={p.config.autocomplete || "off"}
         value={p.value}
         onInput={(e: InputEvent | Event) => {

@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { AuthLegalAgree } from "@/auth/ui/sign_in/legal/AuthLegalAgree"
 import { authLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
@@ -5,7 +6,6 @@ import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
 import { isDevEnv } from "@/utils/env/isDevEnv"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { Checkbox } from "~ui/input/check/Checkbox"
 import { formMode } from "~ui/input/form/formMode"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
@@ -30,7 +30,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
       <FormFieldInput
         config={{
           ...formFieldConfigs.name,
-          placeholder: "My Name",
+          placeholder: () => "My Name",
           required: showRequired,
         }}
         value={sm.state.name.get()}
@@ -46,7 +46,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
       <FormFieldInput
         config={{
           ...formFieldConfigs.email,
-          placeholder: "my.email@gmail.com",
+          placeholder: () => "my.email@gmail.com",
           required: showRequired,
         }}
         value={sm.state.email.get()}
@@ -62,8 +62,8 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
       <FormFieldInput
         config={{
           name: "password",
-          label: ttt("Password"),
-          placeholder: ttt("******"),
+          label: () => ttc("Password"),
+          placeholder: () => ttc("******"),
           type: "password",
           autocomplete: "new-password",
           required: showRequired,
@@ -86,7 +86,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
           sm.validateOnChange(signUpFormField.terms)(checked)
         }}
       >
-        <AuthLegalAgree variant={authLegalAgreeVariant.explicit} class="ml-1" />
+        <AuthLegalAgree variant={authLegalAgreeVariant.signUp} class="ml-1" />
         <Show when={sm.errors.terms.get()}>
           <span id="terms-error" class="text-red-500 block">
             {sm.errors.terms.get()}

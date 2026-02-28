@@ -1,5 +1,5 @@
 import { enableGithub } from "@/app/config/enableGithub"
-import { ttt } from "~ui/i18n/ttt"
+import { ttc } from "@/app/i18n/ttc"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
@@ -31,9 +31,9 @@ interface SignUpPageProps extends MayHaveClass, MayHaveInnerClass {}
 
 export const SignUpPage: Component<SignUpPageProps> = (p) => {
   return (
-    <LayoutWrapperDemo title={ttt("Sign up")}>
+    <LayoutWrapperDemo title={ttc("Sign up")}>
       <div class={classMerge("min-h-dvh w-full", classesBgGray, p.class)}>
-        <NavAuth title={ttt("Sign up")}>
+        <NavAuth title={ttc("Sign up")}>
           <SignInButtonLink
             size={buttonSize.default}
             variant={buttonVariant.link}
@@ -106,8 +106,8 @@ function SignUpEmailPasswordSection() {
   return (
     <AuthSectionCard
       icon={mdiAccountPlus}
-      title={ttt("Create new account")}
-      subtitle={ttt("Join us and start your journey")}
+      title={ttc("Create new account")}
+      subtitle={ttc("Join us and start your journey")}
       class="space-y-4 max-w-2xl"
     >
       <SignUpEmailPasswordForm />
@@ -120,7 +120,7 @@ function SignUpSocialSection() {
   const btnSize = buttonSize.default
   return (
     <section class="flex flex-col gap-2">
-      <h2 class="text-xl font-semibold">{ttt("Sign Up With")}</h2>
+      <h2 class="text-xl font-semibold">{ttc("Sign Up With")}</h2>
       <SocialSignUpButton provider={socialLoginProvider.google} size={btnSize} class={buttonClasses} />
       {enableGithub() && (
         <SocialSignUpButton provider={socialLoginProvider.github} size={btnSize} class={buttonClasses} />
@@ -160,8 +160,8 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
 function HaveAnAccountSection() {
   return (
     <section class="space-y-2">
-      <h2 class="text-xl font-semibold">{ttt("Have an account?")}</h2>
-      <SignInButtonLink text={ttt("Sign In instead")} class="w-full" />
+      <h2 class="text-xl font-semibold">{ttc("Have an account?")}</h2>
+      <SignInButtonLink text={ttc("Sign In instead")} class="w-full" />
     </section>
   )
 }

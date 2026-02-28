@@ -1,8 +1,8 @@
+import { ttc } from "@/app/i18n/ttc"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
 import { isDevEnv } from "@/utils/env/isDevEnv"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -22,8 +22,8 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
         config={{
           ...formFieldConfigs.email,
           name: "Sign-in-via-password-email",
-          label: "Email",
-          placeholder: "Email",
+          label: () => "Email",
+          placeholder: () => "Email",
           labelClass: "sr-only",
           required: true,
         }}
@@ -39,9 +39,9 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
       <FormFieldInput
         config={{
           name: "password",
-          label: ttt("Password"),
+          label: () => ttc("Password"),
           labelClass: "sr-only",
-          placeholder: ttt("Password"),
+          placeholder: () => ttc("Password"),
           type: "password",
           autocomplete: "current-password",
           required: true,
@@ -61,7 +61,7 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="w-full"
       >
-        {sm.state.isSubmitting.get() ? ttt("Signing in...") : ttt("Sign in")}
+        {sm.state.isSubmitting.get() ? ttc("Signing in...") : ttc("Sign in")}
       </ButtonIcon>
     </form>
   )

@@ -3,7 +3,6 @@ export type ApiRouteAuth = keyof typeof apiRouteAuth
 export const apiRouteAuth = {
   signInViaGoogle: "signInViaGoogle",
   signInViaGithub: "signInViaGithub",
-  signInViaMicrosoft: "signInViaMicrosoft",
   signInViaDev: "signInViaDev",
   signUp: "signUp",
   signUpConfirmEmail: "signUpConfirmEmail",
@@ -11,16 +10,15 @@ export const apiRouteAuth = {
   signInViaEmail: "signInViaEmail",
   signInViaEmailEnterOtp: "signInViaEmailEnterOtp",
   profileUpdate: "profileUpdate",
-  passwordChange: "passwordChange",
+  passwordChangeRequest: "passwordChangeRequest",
   passwordChangeConfirm: "passwordChangeConfirm",
-  emailChange: "emailChange",
+  emailChangeRequest: "emailChangeRequest",
   emailChangeConfirm: "emailChangeConfirm",
 } as const
 
 export const apiPathAuth = {
   signInViaGoogle: "/google",
   signInViaGithub: "/github",
-  signInViaMicrosoft: "/microsoft",
   signInViaDev: "/dev",
   signUp: "/sign-up",
   signUpConfirmEmail: "/sign-up-confirm-email",
@@ -28,8 +26,8 @@ export const apiPathAuth = {
   signInViaEmail: "/sign-in-via-email",
   signInViaEmailEnterOtp: "/sign-in-via-email-enter-otp",
   profileUpdate: "/profile-update",
-  passwordChange: "/password-change",
+  passwordChangeRequest: "/password-change-request",
   passwordChangeConfirm: "/password-change-confirm",
-  emailChange: "/email-change",
+  emailChangeRequest: "/email-change-request",
   emailChangeConfirm: "/email-change-confirm",
 } as const satisfies Record<ApiRouteAuth, string>

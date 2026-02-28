@@ -10,9 +10,7 @@ const OrgMemberListPage = lazy(() =>
 const OrgMemberEditPage = lazy(() =>
   import("@/org/member_ui/mutate/OrgMemberEditPage").then((c) => ({ default: c.OrgMemberEditPage })),
 )
-const OrgMemberViewPage = lazy(() =>
-  import("@/ui/pages/TodoPage").then((c) => ({ default: c.TodoPage })),
-)
+const OrgMemberViewPage = lazy(() => import("@/ui/pages/TodoPage").then((c) => ({ default: c.TodoPage })))
 const OrgMemberAddPage = lazy(() =>
   import("@/org/member_ui/mutate/OrgMemberAddPage").then((c) => ({ default: c.OrgMemberAddPage })),
 )

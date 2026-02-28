@@ -1,3 +1,5 @@
+import { languageSignalGet } from "@/app/i18n/languageSignal"
+import { ttc } from "@/app/i18n/ttc"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { apiAuthSignInViaEmailEnterOtp } from "@/auth/api/apiAuthSignInViaEmailEnterOtp"
 import { signInSessionNew } from "@/auth/ui/sign_in/logic/signInSessionNew"
@@ -6,7 +8,6 @@ import { mdiEmailSearchOutline } from "@mdi/js"
 import posthog from "posthog-js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
-import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
@@ -16,7 +17,7 @@ import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { EnterOtpForm } from "@/auth/ui/email/EnterOtpForm"
 
 export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
-  const getTitle = () => ttt("Enter Code to Sign In")
+  const getTitle = () => ttc("Enter Code to Sign In")
   return (
     <LayoutWrapperDemo title={getTitle()}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
@@ -41,11 +42,11 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
   }
   return (
     <EnterOtpForm
-      title={ttt("Sign In to Your Account")}
-      subtitle={ttt("Almost there! Enter the code we just emailed you to sign In.")}
-      sentMessage={ttt("A one-time code was sent to")}
-      instruction={ttt("Enter it below to securely sign in.")}
-      buttonText={ttt("Sign In")}
+      title={ttc("Sign In to Your Account")}
+      subtitle={ttc("Almost there! Enter the code we just emailed you to sign In.")}
+      sentMessage={ttc("A one-time code was sent to")}
+      instruction={ttc("Enter it below to securely sign in.")}
+      buttonText={ttc("Sign In")}
       actionFn={handleSubmit}
       class={p.class}
     />
@@ -54,15 +55,15 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
 
 async function handleConfirm(otp: string, email: string, returnPath: string) {
   const op = "handleConfirm.apiAuthSignInViaEmailEnterOtp"
-  const result = await apiAuthSignInViaEmailEnterOtp({ email, code: otp })
+  const result = await apiAuthSignInViaEmailEnterOtp({ email, code: otp, l: languageSignalGet() })
   posthog.capture(op, result)
   if (!result.success) {
-    const errorMessage = ttt("Error entering otp")
+    const errorMessage = ttc("Error entering otp")
     console.error(op)
     toastAdd({ title: errorMessage, description: result.errorMessage })
     return
   }
-  toastAdd({ title: ttt("Successfully entered OTP"), variant: toastVariant.success })
+  toastAdd({ title: ttc("Successfully entered OTP"), variant: toastVariant.success })
   const userSession = result.data
   signInSessionNew(userSession)
   navigateTo(returnPath)

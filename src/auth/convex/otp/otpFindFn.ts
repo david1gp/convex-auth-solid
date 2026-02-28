@@ -7,7 +7,7 @@ export async function otpFindFn(
   ctx: QueryCtx | MutationCtx,
   args: { email: string; code: string; purpose: OtpPurpose },
 ): PromiseResult<DocAuthOtp> {
-  const op = "otpFindFn"
+  const op = "otpCodeFindFn"
   const { email, code, purpose } = args
 
   const otpRecord = await ctx.db

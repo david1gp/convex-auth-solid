@@ -10,6 +10,10 @@ export const userDeleteValidatorInternal = v.object({ ...userDeleteFields, userI
 
 export type UserDeleteValidatorInternalType = typeof userDeleteValidatorInternal.type
 
-export const userDeleteValidatorPublic = createTokenValidator(userDeleteFields)
+export const userDeleteFieldsPublic = {
+  email: v.optional(v.string()),
+} as const
+
+export const userDeleteValidatorPublic = createTokenValidator(userDeleteFieldsPublic)
 
 export type UserDeleteValidatorPublicType = typeof userDeleteValidatorPublic.type

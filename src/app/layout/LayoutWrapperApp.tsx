@@ -1,4 +1,6 @@
+import { accessBlocked } from "@/app/layout/accessUnlocked"
 import { LayoutWrapperConvex } from "@/app/layout/LayoutWrapperConvex"
+import { AccessBlocked } from "@/auth/ui/locked/AccessBlocked"
 import { SignInPageLoader } from "@/auth/ui/sign_in/page/SignInPageLoader"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignalRegisterHandler } from "@/auth/ui/signals/userSessionsSignal"
@@ -15,6 +17,9 @@ export function LayoutWrapperApp(p: LayoutWrapperAppProps) {
     <Switch>
       <Match when={!userSessionSignal.get()}>
         <SignInPageLoader />
+      </Match>
+      <Match when={accessBlocked(userSessionSignal.get())}>
+        <AccessBlocked />
       </Match>
       <Match when={true}>
         <LayoutWrapperConvex title={p.title}>{p.children}</LayoutWrapperConvex>

@@ -1,6 +1,6 @@
+import { ttc } from "@/app/i18n/ttc"
 import { mdiArrowLeft } from "@mdi/js"
 import { splitProps } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { ButtonIcon, type ButtonIconProps } from "~ui/interactive/button/ButtonIcon"
 
@@ -15,7 +15,7 @@ export function GoBackLinkButton(p: Omit<ButtonIconProps, "href" | "onClick">) {
       variant={s.variant ?? buttonVariant.outline}
       {...rest}
     >
-      {ttt("Go back")}
+      {ttc("Go back")}
     </ButtonIcon>
   )
 }

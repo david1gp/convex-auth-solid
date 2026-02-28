@@ -1,28 +1,26 @@
 import { otpTableFields } from "@/auth/convex/otp/otpTableFields"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import { loginMethodValidator } from "@/auth/model_field/loginMethodValidator"
 import { userRoleValidator } from "@/auth/model_field/userRoleValidator"
 import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
 import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
-import { vIdUser } from "./vIdUser"
 
 export const userFields = {
   // data
   name: v.string(),
   username: v.optional(v.string()),
   image: v.optional(v.string()),
+  bio: v.optional(v.string()),
+  url: v.optional(v.string()),
   email: v.optional(v.string()),
   emailVerifiedAt: v.optional(v.string()),
   hashedPassword: v.optional(v.string()),
-  bio: v.optional(v.string()),
-  url: v.optional(v.string()),
   role: userRoleValidator,
   // meta times
   ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
 }
-
-export const userFieldsValidator = v.object(userFields)
 
 export const authAccountFields = {
   // ids

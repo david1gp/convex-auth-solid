@@ -1,3 +1,5 @@
+import { languageSignalGet } from "@/app/i18n/languageSignal"
+import { ttc } from "@/app/i18n/ttc"
 import { NavAuth } from "@/app/nav/NavAuth"
 import { apiAuthSignUpConfirmEmail } from "@/auth/api/apiAuthSignUpConfirmEmail"
 import { signInSessionNew } from "@/auth/ui/sign_in/logic/signInSessionNew"
@@ -6,7 +8,6 @@ import { mdiEmailSearchOutline } from "@mdi/js"
 import posthog from "posthog-js"
 import { type Component } from "solid-js"
 import { classesBgGray } from "~ui/classes/classesBg"
-import { ttt } from "~ui/i18n/ttt"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { LayoutWrapperDemo } from "~ui/static/container/LayoutWrapperDemo"
@@ -17,9 +18,9 @@ import { EnterOtpForm } from "@/auth/ui/email/EnterOtpForm"
 
 export const SignUpConfirmEmailPage: Component<{}> = () => {
   return (
-    <LayoutWrapperDemo title={ttt("Sign Up / Confirm Email")}>
+    <LayoutWrapperDemo title={ttc("Sign Up / Confirm Email")}>
       <div class={classArr("min-h-dvh w-full", classesBgGray)}>
-        <NavAuth title={ttt("Sign Up / Confirm Email")} />
+        <NavAuth title={ttc("Sign Up / Confirm Email")} />
         <div
           class={classArr("max-w-7xl", "flex flex-col lg:flex-row items-center lg:justify-center gap-12", "p-4 mb-4")}
         >
@@ -40,11 +41,11 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
   }
   return (
     <EnterOtpForm
-      title={ttt("Verify Your Email")}
-      subtitle={ttt("Almost there! Confirm your email to activate your account.")}
-      sentMessage={ttt("We’ve sent a 6-digit code to")}
-      instruction={ttt("Enter it below to verify your email and complete your registration.")}
-      buttonText={ttt("Verify Email")}
+      title={ttc("Verify Your Email")}
+      subtitle={ttc("Almost there! Confirm your email to activate your account.")}
+      sentMessage={ttc("We’ve sent a 6-digit code to")}
+      instruction={ttc("Enter it below to verify your email and complete your registration.")}
+      buttonText={ttc("Verify Email")}
       actionFn={handleSubmit}
       class={p.class}
     />
@@ -53,15 +54,15 @@ const SignUpConfirmEmail: Component<MayHaveClass> = (p) => {
 
 async function handleConfirm(otp: string, email: string, returnPath: string) {
   const op = "handleConfirm.apiAuthSignUpConfirmEmail"
-  const result = await apiAuthSignUpConfirmEmail({ email, code: otp })
+  const result = await apiAuthSignUpConfirmEmail({ email, code: otp, l: languageSignalGet() })
   posthog.capture(op, result)
   if (!result.success) {
-    const errorMessage = ttt("Error confirming email")
+    const errorMessage = ttc("Error confirming email")
     console.error(op, errorMessage, result)
     toastAdd({ title: errorMessage, description: result.errorMessage })
     return
   }
-  toastAdd({ title: ttt("Email Confirmed"), variant: toastVariant.success })
+  toastAdd({ title: ttc("Email Confirmed"), variant: toastVariant.success })
   const userSession = result.data
   // save user session
   signInSessionNew(userSession)

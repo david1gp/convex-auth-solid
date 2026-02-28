@@ -1,6 +1,6 @@
 import { loginMethodValidator } from "@/auth/model_field/loginMethodValidator"
 import { v } from "convex/values"
-import { userProfileValidator } from "./UserProfile"
+import { userProfileValidator } from "@/auth/model/UserProfile"
 
 export const userSessionValidator = v.object({
   token: v.string(),

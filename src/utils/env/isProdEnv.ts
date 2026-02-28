@@ -1,7 +1,7 @@
 import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
 
 export function isProdEnv() {
-  const op = "isProdEnv"
+  const op = "isProdEnvVite"
   const modeResult = envEnvModeResult()
   if (!modeResult.success) {
     console.error(op, modeResult)

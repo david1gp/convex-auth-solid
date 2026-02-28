@@ -1,6 +1,7 @@
 import { ContactSupportLinkButton } from "@/ui/links/ContactSupportLinkButton"
 import { GoBackLinkButton } from "@/ui/links/GoBackLinkButton"
 import { GoHomeLinkButton } from "@/ui/links/GoHomeLinkButton"
+import styles from "@/ui/loaders/AnimateFadeIn.module.css"
 import { mdiAlertBoxOutline } from "@mdi/js"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { Icon } from "~ui/static/icon/Icon"
@@ -24,7 +25,7 @@ export function ErrorPage(p: ErrorPageProps) {
 
 function ErrorSection(p: ErrorPageProps) {
   return (
-    <section id={"error"} class={classMerge("flex flex-col gap-2 my-20", p.class)}>
+    <section id={"error"} class={classMerge("flex flex-col gap-2 my-20", styles.animateFadeIn2s, p.class)}>
       <Icon
         path={p.icon ?? mdiAlertBoxOutline}
         class={classMerge(
@@ -42,7 +43,10 @@ function ErrorSection(p: ErrorPageProps) {
 
 function OptionsSection(p: ErrorPageProps) {
   return (
-    <section id={"options"} class={classMerge("container max-w-7xl mx-auto text-center space-y-8", p.class)}>
+    <section
+      id={"options"}
+      class={classMerge("container max-w-7xl mx-auto text-center space-y-8", styles.animateFadeIn2s, p.class)}
+    >
       {/* <h2>{ttt("If the problem persists contact support")}</h2> */}
       <GoBackLinkButton size={buttonSize.lg} variant={buttonVariant.link} class="text-xl" iconClass="size-8" />
       <GoHomeLinkButton size={buttonSize.lg} variant={buttonVariant.link} class="text-xl" iconClass="size-8" />

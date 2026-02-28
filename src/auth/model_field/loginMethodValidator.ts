@@ -14,7 +14,6 @@ export const loginMethodValidator = v.union(
 function types1(a: typeof loginMethodValidator.type): LoginMethod {
   return a
 }
-
 function types1a(a: LoginMethod): typeof loginMethodValidator.type {
   return a
 }
@@ -33,5 +32,8 @@ export const loginProviderValidator = v.union(
 )
 
 function types2(a: typeof socialLoginProviderValidator.type): SocialLoginProvider {
+  return a
+}
+function types2a(a: SocialLoginProvider): typeof socialLoginProviderValidator.type {
   return a
 }

@@ -1,4 +1,5 @@
 import { enableGithub } from "@/app/config/enableGithub"
+import { ttc } from "@/app/i18n/ttc"
 import { loginProvider } from "@/auth/model_field/socialLoginProvider"
 import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { AuthSectionHeroIcon } from "@/auth/ui/shared/AuthSectionHeroIcon"
@@ -12,7 +13,6 @@ import { SocialLoginButton } from "@/auth/ui/sign_in/social/SocialLoginButton"
 import { SignInViaEmailForm } from "@/auth/ui/sign_in/via_email/SignInViaEmailForm"
 import { SignInViaPasswordForm } from "@/auth/ui/sign_in/via_pw/SignInViaPasswordForm"
 import { mdiLockOutline } from "@mdi/js"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
 import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
 import { classesGridCols3lg } from "~ui/static/container/classesGridCols"
@@ -40,13 +40,13 @@ export function SignInPageContent(p: MayHaveClass) {
         class="col-span-full mx-auto contents"
         h2Class="text-2xl col-span-full text-center"
       />
-      <h2 class="text-2xl font-semibold col-span-full text-center">{ttt("Sign in with")}</h2>
+      <h2 class="text-2xl font-semibold col-span-full text-center">{ttc("Sign in with")}</h2>
 
-      <AuthSectionCard icon={mdiLockOutline} title={ttt("Password")} subtitle={ttt("Traditional sign in")}>
+      <AuthSectionCard icon={mdiLockOutline} title={ttc("Password")} subtitle={ttc("Traditional sign in")}>
         <SignInViaPasswordForm class={"w-full"} />
       </AuthSectionCard>
 
-      <AuthSectionCard icon={mdiLockOutline} title={ttt("Magic Link")} subtitle={ttt("Passwordless email")}>
+      <AuthSectionCard icon={mdiLockOutline} title={ttc("Magic Link")} subtitle={ttc("Passwordless email")}>
         <SignInViaEmailForm class={"w-full"} />
       </AuthSectionCard>
 
@@ -61,20 +61,19 @@ export function SignInPageContent(p: MayHaveClass) {
 function AuthSectionSocials() {
   if (!enableGithub()) {
     return (
-      <AuthSectionCard icon={iconGoogle} title={ttt("Google")} subtitle={ttt("One-click sign in")}>
+      <AuthSectionCard icon={iconGoogle} title={ttc("Google")} subtitle={ttc("One-click sign in")}>
         <SocialLoginButton provider={loginProvider.google} size={buttonSize.default} class="w-full" />
       </AuthSectionCard>
     )
   }
-
   return (
     <section class={classArr(classesCardWrapperP4, "flex flex-col items-center")}>
       <div class="flex flex-wrap gap-2">
         <AuthSectionHeroIcon icon={iconGoogle} class="" />
         <AuthSectionHeroIcon icon={iconGithub} class="" />
       </div>
-      <h2 class="text-xl font-semibold">{ttt("Socials")}</h2>
-      <p class="text-muted-foreground mb-4">{ttt("One-click sign in")}</p>
+      <h2 class="text-xl font-semibold">{ttc("Socials")}</h2>
+      <p class="text-muted-foreground mb-4">{ttc("One-click sign in")}</p>
       <div class="space-y-2">
         <SocialLoginButton provider={loginProvider.google} size={buttonSize.default} class="w-full" />
         <SocialLoginButton provider={loginProvider.github} size={buttonSize.default} class="w-full" />
@@ -86,8 +85,8 @@ function AuthSectionSocials() {
 function NoAccountSection(p: MayHaveClass) {
   return (
     <section class={classArr("flex flex-wrap gap-4 items-center", p.class)}>
-      <h2 class="font-medium">{ttt("Don't have an account?")}</h2>
-      <SignUpButtonLink text={ttt("Sign Up instead")} variant={buttonVariant.default} class="pl-4" />
+      <h2 class="font-medium">{ttc("Don't have an account?")}</h2>
+      <SignUpButtonLink text={ttc("Sign Up instead")} variant={buttonVariant.default} class="pl-4" />
     </section>
   )
 }

@@ -5,9 +5,9 @@ import { type MutationCtx } from "@convex/_generated/server"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 import type { DocAuthAccount } from "@/auth/convex/IdUser"
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
-import { createUserFromAuthProviderFn } from "./createUserFromAuthProviderMutation"
-import { findUserByEmailFn } from "./findUserByEmailQuery"
-import { linkAuthToExistingUserFn } from "./linkAuthToExistingUserFn"
+import { createUserFromAuthProviderFn } from "@/auth/convex/crud/createUserFromAuthProviderMutation"
+import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
+import { linkAuthToExistingUserFn } from "@/auth/convex/crud/linkAuthToExistingUserFn"
 
 export type SignInUsingSocialAuthResultInternal = Omit<UserSession, "token">
 

@@ -1,11 +1,11 @@
 import { enableSignInDev } from "@/app/config/enableSignInDev"
+import { ttc } from "@/app/i18n/ttc"
 import { AuthSectionCard } from "@/auth/ui/shared/AuthSectionCard"
 import { urlAuthDev } from "@/auth/url/urlAuthProvider"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { navigateTo } from "@/utils/router/navigateTo"
 import { mdiAccountHardHat } from "@mdi/js"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -17,7 +17,7 @@ export function DevLoginSection(p: MayHaveClass) {
   if (!enableSignInDev()) return null
 
   return (
-    <AuthSectionCard icon={mdiAccountHardHat} title={ttt("Admin")} subtitle={ttt("In dev mode only")}>
+    <AuthSectionCard icon={mdiAccountHardHat} title={ttc("Admin")} subtitle={ttc("In dev mode only")}>
       <form
         //
         id="devSignInForm"
@@ -28,9 +28,9 @@ export function DevLoginSection(p: MayHaveClass) {
         <FormFieldInput
           config={{
             name: "user-id",
-            label: ttt("User id"),
+            label: () => ttc("User id"),
             labelClass: "sr-only",
-            placeholder: ttt("User id / Username"),
+            placeholder: () => ttc("User id / Username"),
             required: true,
             autocomplete: "username",
           }}
@@ -57,7 +57,7 @@ function onSubmitFn(e: SubmitEvent) {
 const userIdInputSignal = createSignalObject("adaptive-sm")
 
 function DevLoginButton(p: MayHaveClass) {
-  const text = ttt("Sign in")
+  const text = ttc("Sign in")
   return (
     <LinkButton href={getDevUrl()} variant={buttonVariant.primary} class={p.class}>
       {text}

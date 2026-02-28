@@ -22,14 +22,10 @@ const ViewUserProfilePage = lazy(() =>
   })),
 )
 const UserProfileMePage = lazy(() =>
-  import("@/auth/ui/profile_me/UserProfileMePage").then((c) => ({
-    default: c.UserProfileMePage,
-  })),
+  import("@/auth/ui/profile_me/UserProfileMePage").then((c) => ({ default: c.UserProfileMePage })),
 )
 const UserProfileMeEditPage = lazy(() =>
-  import("@/auth/ui/profile_me/UserProfileMeEditPage").then((c) => ({
-    default: c.UserProfileMeEditPage,
-  })),
+  import("@/auth/ui/profile_me/UserProfileMeEditPage").then((c) => ({ default: c.UserProfileMeEditPage })),
 )
 const UserProfileMeChangePasswordPage = lazy(() =>
   import("@/auth/ui/profile_me/UserProfileMeChangePasswordPage").then((c) => ({
@@ -40,6 +36,9 @@ const UserProfileMeChangeEmailPage = lazy(() =>
   import("@/auth/ui/profile_me/UserProfileMeChangeEmailPage").then((c) => ({
     default: c.UserProfileMeChangeEmailPage,
   })),
+)
+const UserProfileMeImagePage = lazy(() =>
+  import("@/auth/ui/profile_me/UserProfileMeImagePage").then((c) => ({ default: c.UserProfileMeImagePage })),
 )
 
 export function getRoutesAuth(): RouteObject[] {
@@ -53,7 +52,7 @@ export function getRoutesAuth(): RouteObject[] {
     userProfileMeEdit: UserProfileMeEditPage,
     userProfileMeChangePassword: UserProfileMeChangePasswordPage,
     userProfileMeChangeEmail: UserProfileMeChangeEmailPage,
-    userProfileMeImage: UserProfileMePage,
+    userProfileMeImage: UserProfileMeImagePage,
     userProfileView: ViewUserProfilePage,
   } as const satisfies Record<PageNameAuth, RouteComponent>
   return Object.entries(routeMapping).map(([routeKey, component]) => ({

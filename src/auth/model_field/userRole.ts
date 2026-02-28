@@ -14,6 +14,10 @@ function types1(a: a.InferOutput<typeof userRoleSchema>): UserRole {
   return a
 }
 
-export function userRoleIsDev(role: UserRole): boolean {
-  return role === userRole.dev
+export function userRoleIsDevOrAdmin(r: UserRole): boolean {
+  return r === userRole.admin || r === userRole.dev
+}
+
+export function userRoleIsDev(r: UserRole): boolean {
+  return r === userRole.dev
 }

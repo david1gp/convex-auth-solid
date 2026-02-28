@@ -31,7 +31,7 @@
         "../src/*"
       ],
       "~ui/*": [
-        "../node_modules/@adaptive-ds/solid-ui/dist/*"
+        "../ui/*"
       ],
       "~utils/*": [
         "../node_modules/@adaptive-ds/utils/dist/*"

@@ -6,7 +6,6 @@ export const socialLoginProvider = {
   google: "google",
   github: "github",
   microsoft: "microsoft",
-  // auth0: "auth0",
 } as const
 
 export const socialLoginProviderSchema = a.enum(socialLoginProvider)

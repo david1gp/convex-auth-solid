@@ -1,11 +1,11 @@
-import { isProdEnv } from "@/utils/env/isProdEnv"
+import { isProdEnvVite } from "@/utils/ui/isProdEnvVite"
 import { mdiAlphaDCircleOutline } from "@mdi/js"
 import { pathDemos } from "~ui/demo_pages/pathDemos"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButtonIconOnly } from "~ui/interactive/link/LinkButtonIconOnly"
 
 export function DemosLinkButton() {
-  if (isProdEnv()) return null
+  if (isProdEnvVite()) return null
   return (
     <LinkButtonIconOnly
       href={pathDemos}

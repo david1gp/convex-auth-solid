@@ -32,7 +32,7 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
     return new Response(JSON.stringify(errorResult), { status: 400 })
   }
 
-  const { email } = validation.output
+  const { email, l } = validation.output
 
   // Run mutation to save code
   const codeResult = await ctx.runMutation(internal.auth.signInViaEmail2InternalMutation, { email })
@@ -55,7 +55,7 @@ export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Req
   const confirmUrl = new URL(pageRouteAuth.signInEnterOtp, baseUrlApp)
   confirmUrl.searchParams.set("email", email)
   confirmUrl.searchParams.set("code", code)
-  await sendEmailSignIn(email, code, confirmUrl.toString())
+  await sendEmailSignIn(email, code, confirmUrl.toString(), l)
 
   return new Response("Sign in code sent", { status: 200 })
 }

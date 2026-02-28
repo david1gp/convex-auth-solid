@@ -1,6 +1,6 @@
+import { ttc } from "@/app/i18n/ttc"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import type { MayHaveButtonVariant } from "~ui/utils/MayHaveButtonVariant"
@@ -17,7 +17,7 @@ export function DeleteEarlierSessions(p: DeleteEarlierSessionsProps) {
       variant={p.variant ?? buttonVariant.subtle}
       onClick={deleteAllSessions}
     >
-      {p.children ?? ttt("Delete earlier sessions")}
+      {p.children ?? ttc("Delete earlier sessions")}
     </ButtonIcon>
   )
 }

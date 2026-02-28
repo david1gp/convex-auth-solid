@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
@@ -5,7 +6,6 @@ import { isDevEnv } from "@/utils/env/isDevEnv"
 import { createUrl } from "@/utils/router/createUrl"
 import { searchParamSet } from "@/utils/router/searchParamSet"
 import { onMount, type Component } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { formMode } from "~ui/input/form/formMode"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -29,7 +29,7 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
           ...formFieldConfigs.email,
           name: "Sign-in-via-email-email",
           labelClass: "sr-only",
-          placeholder: ttt("Email"),
+          placeholder: () => ttc("Email"),
           required: true,
         }}
         value={sm.state.email.get()}
@@ -50,7 +50,7 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
         variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
         class="w-full"
       >
-        {sm.isSubmitting.get() ? ttt("Sending link...") : ttt("Send link")}
+        {sm.isSubmitting.get() ? ttc("Sending link...") : ttc("Send link")}
       </ButtonIcon>
     </form>
   )

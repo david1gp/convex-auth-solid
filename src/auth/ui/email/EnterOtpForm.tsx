@@ -1,3 +1,4 @@
+import { ttc } from "@/app/i18n/ttc"
 import { otpSchema } from "@/auth/model_field/otpSchema"
 import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
 import { createUrl } from "@/utils/router/createUrl"
@@ -5,7 +6,6 @@ import { searchParamGet } from "@/utils/router/searchParamGet"
 import { mdiEmailCheck } from "@mdi/js"
 import { Show, createEffect, onMount } from "solid-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { Label } from "~ui/input/label/Label"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
@@ -71,7 +71,7 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault()
     if (isSubmitting.get()) {
-      const title = ttt("Submission in progress, please wait")
+      const title = ttc("Submission in progress, please wait")
       console.info(title)
       return
     }
@@ -102,7 +102,7 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
         <p class="text-muted-foreground">{p.instruction}</p>
       </div>
       <div class="flex flex-col gap-2">
-        <Label for={otpInputId}>{ttt("Verification Code")}</Label>
+        <Label for={otpInputId}>{ttc("Verification Code")}</Label>
         <OtpInput6Numbers id={otpInputId} valueSignal={otp} error={!!otpError.get()} />
         <Show when={otpError.get()}>
           <p class="text-sm text-red-500">{otpError.get()}</p>

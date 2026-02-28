@@ -4,6 +4,6 @@ export { workspaceEditInternal, workspaceEditMutation } from "@/workspace/convex
 export { workspaceGetInternal, workspaceGetQuery } from "@/workspace/convex/workspaceGetQuery"
 export {
   workspaceHandleAvailable,
-  workspaceHandleAvailableInternal
+  workspaceHandleAvailableInternal,
 } from "@/workspace/convex/workspaceHandleAvailableQuery"
 export { workspaceListInternal, workspacesListQuery } from "@/workspace/convex/workspaceListQuery"

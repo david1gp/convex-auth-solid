@@ -12,6 +12,7 @@ import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTo
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { createUserIdValidator } from "@/utils/convex_backend/createUserIdValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -22,10 +23,7 @@ const userEmailChange2ConfirmFieldsBase = {
   confirmationCode: v.string(),
 } as const
 
-export const userEmailChange2ConfirmValidatorInternal = v.object({
-  ...userEmailChange2ConfirmFieldsBase,
-  userId: v.id("users"),
-})
+export const userEmailChange2ConfirmValidatorInternal = createUserIdValidator(userEmailChange2ConfirmFieldsBase)
 export type UserEmailChangeConfirmTypeInternal = typeof userEmailChange2ConfirmValidatorInternal.type
 
 export const userEmailChange2ConfirmValidatorPublic = createTokenValidator(userEmailChange2ConfirmFieldsBase)
@@ -76,7 +74,7 @@ async function userEmailChange2ConfirmFn(
   const tokenResult = await createTokenResult(userId, orgHandle, orgRole)
   if (!tokenResult.success) return createError(op, tokenResult.errorMessage)
   const token = tokenResult.data
-  const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token, nowIso())
+  const expiresAt = await saveTokenIntoSessionReturnExpiresAtFn(ctx, loginMethod.email, userId, token)
   const userSession: UserSession = {
     token,
     profile: userProfile,
