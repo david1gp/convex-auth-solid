@@ -1,6 +1,6 @@
 # Convex Auth Solid
 
-Drop-in authentication for Solid.js apps powered by Convex.
+Build authenticated SolidJS apps lightning-fast with Convex.
 
 - **Drop-in template** - get auth running in minutes.
 - **Battle-tested flows** - login, signup, session management, and more.

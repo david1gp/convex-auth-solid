@@ -88,7 +88,7 @@
   "private": false,
   "license": "MIT",
   "homepage": "https://github.com/david1gp/convex-auth-solid",
-  "description": "Adaptive Convex Auth provides Solid.js UI components and utilities for easy authentication with the Convex backend. Includes ready-to-use auth flows and seamless integration.",
+  "description": "Build authenticated SolidJS apps lightning-fast with Convex",
   "keywords": [
     "convex",
     "authentication",
