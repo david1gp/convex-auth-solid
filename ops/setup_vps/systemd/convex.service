@@ -1,0 +1,14 @@
+[Unit]
+Description=Convex Service via Docker Compose
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/convex
+ExecStart=/usr/bin/docker compose -f /home/convex/convex.yml --env-file /home/convex/.env.prod up -d
+ExecStop=/usr/bin/docker compose -f /home/convex/convex.yml down
+TimeoutStartSec=0
+Environment=DOCKER_HOST=unix:///var/run/docker.sock
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,70 @@
+#
+# https://github.com/get-convex/convex-backend/pkgs/container/convex-backend
+# https://github.com/get-convex/convex-backend/blob/main/self-hosted/docker/docker-compose.yml
+#
+
+services:
+  backend:
+    container_name: convex-backend
+    image: ghcr.io/get-convex/convex-backend:latest
+    stop_grace_period: 10s
+    stop_signal: SIGINT
+    ports:
+      - "${PORT:-3210}:3210"
+      - "${SITE_PROXY_PORT:-3211}:3211"
+    volumes:
+      - convex-data-v3:/convex/data
+    environment:
+      - ACTIONS_USER_TIMEOUT_SECS
+      - AWS_ACCESS_KEY_ID
+      - AWS_REGION
+      - AWS_S3_DISABLE_CHECKSUMS
+      - AWS_S3_DISABLE_SSE
+      - AWS_S3_FORCE_PATH_STYLE
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN
+      - CONVEX_CLOUD_ORIGIN=${CONVEX_CLOUD_ORIGIN:-http://127.0.0.1:${PORT:-3210}}
+      - CONVEX_RELEASE_VERSION_DEV
+      - CONVEX_SITE_ORIGIN=${CONVEX_SITE_ORIGIN:-http://127.0.0.1:${SITE_PROXY_PORT:-3211}}
+      - DATABASE_URL
+      - DISABLE_BEACON
+      - DOCUMENT_RETENTION_DELAY=${DOCUMENT_RETENTION_DELAY:-172800} # Lower default document retention to 2 days
+      - DO_NOT_REQUIRE_SSL
+      - INSTANCE_NAME
+      - INSTANCE_SECRET
+      - MYSQL_URL
+      - POSTGRES_URL
+      - REDACT_LOGS_TO_CLIENT
+      - RUST_BACKTRACE
+      - RUST_LOG=${RUST_LOG:-info}
+      - S3_ENDPOINT_URL
+      - S3_STORAGE_EXPORTS_BUCKET
+      - S3_STORAGE_FILES_BUCKET
+      - S3_STORAGE_MODULES_BUCKET
+      - S3_STORAGE_SEARCH_BUCKET
+      - S3_STORAGE_SNAPSHOT_IMPORTS_BUCKET
+
+    healthcheck:
+      test: curl -f http://localhost:3210/version
+      interval: 5s
+      start_period: 10s
+
+  dashboard:
+    container_name: convex-dashboard
+    image: ghcr.io/get-convex/convex-dashboard:latest
+    stop_grace_period: 10s
+    stop_signal: SIGINT
+    # network_mode: host
+    ports:                            # ignored in host mode
+      - "${DASHBOARD_PORT:-6791}:6791"
+    environment:
+      - NEXT_PUBLIC_DEPLOYMENT_URL=${NEXT_PUBLIC_DEPLOYMENT_URL:-http://127.0.0.1:${PORT:-3210}}
+      - DISABLE_BEACON
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  convex-data:
+  convex-data-v2:
+  convex-data-v3:
