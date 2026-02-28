@@ -1,0 +1,137 @@
+import { ttc } from "@/app/i18n/ttc"
+import type { FilterFieldConfig } from "@/ui/input/search/FilterFieldConfig"
+import { mdiClose, mdiFilterVariant } from "@mdi/js"
+import { For, Show } from "solid-js"
+import { InputS } from "~ui/input/input/InputS"
+import { SelectSingleNative } from "~ui/input/select/SelectSingleNative"
+import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
+import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
+import { CorvuPopover } from "~ui/interactive/popover/CorvuPopover"
+import { classArr } from "~ui/utils/classArr"
+import { type SignalObject } from "~ui/utils/createSignalObject"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+
+export interface SearchFilterProps<T extends Record<string, string>> extends MayHaveClass {
+  filterSignal: {
+    get: () => T
+    update: (updates: Partial<T>) => void
+  }
+  filterFields: Record<string, FilterFieldConfig>
+  title?: string
+}
+
+export function SearchFilterPopover<T extends Record<string, string>>(p: SearchFilterProps<T>) {
+  const title = p.title || ttc("Add filter")
+
+  function handleFilterSelect(fieldKey: string, value: string) {
+    p.filterSignal.update({ [fieldKey]: value } as Partial<T>)
+  }
+
+  function handleFilterClear(fieldKey: string) {
+    const defaultValue = "" as T[string]
+    p.filterSignal.update({ [fieldKey]: defaultValue } as Partial<T>)
+  }
+
+  return (
+    <CorvuPopover
+      icon={mdiFilterVariant}
+      variant={buttonVariant.filled}
+      size={buttonSize.minimal}
+      class={classArr("bg-gray-50", "border border-input", "p-2", "rounded-lg", p.class)}
+      title={title}
+    >
+      <h3 class="text-xl font-semibold mb-3">{title}</h3>
+      <div class="space-y-2">
+        <For each={Object.entries(p.filterFields)}>
+          {([fieldKey, fieldConfig]) => {
+            const currentValue = () => p.filterSignal.get()[fieldKey as keyof T]
+
+            return FilterField(fieldKey, fieldConfig, currentValue, handleFilterSelect, handleFilterClear)
+          }}
+        </For>
+      </div>
+    </CorvuPopover>
+  )
+}
+
+function FilterField(
+  fieldKey: string,
+  fieldConfig: FilterFieldConfig,
+  currentValue: () => string,
+  onSelect: (fieldKey: string, value: string) => void,
+  onClear: (fieldKey: string) => void,
+) {
+  if (fieldConfig.isDateFilter) {
+    return DateFilterField(fieldKey, fieldConfig, currentValue, onSelect, onClear)
+  }
+
+  const valueSignal: SignalObject<string> = {
+    get: currentValue,
+    set: (value: string) => onSelect(fieldKey, value),
+  }
+  const getOptions = () => {
+    const options = Object.keys(fieldConfig.options)
+    return ["", ...options] as string[]
+  }
+  const valueText = (value: string) => {
+    if (!value) return ttc("All")
+    return fieldConfig.optionLabels(value) || value
+  }
+  return (
+    <>
+      <div class="flex items-center justify-between">
+        <label class="text-lg font-medium">{fieldConfig.label()}</label>
+        <Show when={currentValue()}>
+          <ButtonIconOnly
+            variant={buttonVariant.ghost}
+            icon={mdiClose}
+            iconClass="size-5"
+            onClick={() => onClear(fieldKey)}
+            title={ttc("Clear filter")}
+            size={buttonSize.sm}
+            class="p-1.5"
+          />
+        </Show>
+      </div>
+      <SelectSingleNative
+        valueSignal={valueSignal}
+        getOptions={getOptions}
+        valueText={valueText}
+        class="py-1 rounded-none"
+      />
+    </>
+  )
+}
+
+function DateFilterField(
+  fieldKey: string,
+  fieldConfig: FilterFieldConfig,
+  currentValue: () => string,
+  onSelect: (fieldKey: string, value: string) => void,
+  onClear: (fieldKey: string) => void,
+) {
+  const valueSignal: SignalObject<string> = {
+    get: currentValue,
+    set: (value: string) => onSelect(fieldKey, value),
+  }
+
+  return (
+    <>
+      <div class="flex items-center justify-between">
+        <label class="text-lg font-medium">{fieldConfig.label()}</label>
+        <Show when={currentValue()}>
+          <ButtonIconOnly
+            variant={buttonVariant.ghost}
+            icon={mdiClose}
+            iconClass="size-5"
+            onClick={() => onClear(fieldKey)}
+            title={ttc("Clear filter")}
+            size={buttonSize.sm}
+            class="p-1.5"
+          />
+        </Show>
+      </div>
+      <InputS valueSignal={valueSignal} type="date" />
+    </>
+  )
+}
