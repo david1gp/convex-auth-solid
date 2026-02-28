@@ -1,18 +1,6 @@
-import type { OrgRole } from "@/org/org_model_field/orgRole"
-import type { HasCreatedAt } from "@/utils/data/HasCreatedAt"
+import type { orgInvitationDataSchema, orgInvitationSchema } from "@/org/invitation_model/orgInvitationSchema"
+import * as a from "valibot"
 
-export type OrgInvitationDataModel = {
-  orgHandle: string
-  invitationCode: string
-  // invited
-  invitedName: string
-  invitedEmail: string
-  // data
-  role: OrgRole
-  invitedBy: string
-  // server processing
-  emailSendAt?: string
-  emailSendAmount: number
-}
+export type OrgInvitationDataModel = a.InferOutput<typeof orgInvitationDataSchema>
 
-export interface OrgInvitationModel extends OrgInvitationDataModel, HasCreatedAt {}
+export type OrgInvitationModel = a.InferOutput<typeof orgInvitationSchema>

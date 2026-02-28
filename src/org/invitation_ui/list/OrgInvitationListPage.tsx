@@ -1,3 +1,6 @@
+import { ttc } from "@/app/i18n/ttc"
+import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
+import { LinkLikeNavText } from "@/app/nav/links/LinkLikeNavText"
 import { NavOrg } from "@/app/nav/NavOrg"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
@@ -16,12 +19,12 @@ import { mdiPlus } from "@mdi/js"
 import { useParams } from "@solidjs/router"
 import { createEffect, For, Match, Show, splitProps, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
-import { ttt } from "~ui/i18n/ttt"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
+import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
-import type { Result, ResultOk } from "~utils/result/Result"
+import type { Result } from "~utils/result/Result"
 
 export function OrgInvitationListPage() {
   const params = useParams()
@@ -29,23 +32,31 @@ export function OrgInvitationListPage() {
   return (
     <Switch>
       <Match when={!getOrgHandle()}>
-        <ErrorPage title={ttt("Missing :orgHandle in path")} />
+        <ErrorPage title={ttc("Missing :orgHandle in path")} />
       </Match>
-      <Match when={getOrgHandle()}>
-        <PageWrapper>
-          <NavOrg getOrgPageTitle={getPageTitle} orgHandle={getOrgHandle()}>
-            {ttt("Invitations")}
-          </NavOrg>
-          <OrgInvitationListLoader orgHandle={getOrgHandle()!} />
-        </PageWrapper>
-      </Match>
+      <Match when={getOrgHandle()}>{(getHandle) => <ListPage orgHandle={getHandle()} />}</Match>
     </Switch>
   )
 }
 
+interface ListPageProps extends HasOrgHandle, MayHaveClass {}
+
+function ListPage(p: ListPageProps) {
+  return (
+    <LayoutWrapperApp>
+      <PageWrapper>
+        <NavOrg getOrgPageTitle={getPageTitle} orgHandle={p.orgHandle}>
+          <LinkLikeNavText>{ttc("Invitations")}</LinkLikeNavText>
+        </NavOrg>
+        <OrgInvitationListLoader orgHandle={p.orgHandle} />
+      </PageWrapper>
+    </LayoutWrapperApp>
+  )
+}
+
 function getPageTitle(orgName?: string) {
-  const name = orgName ?? ttt("Organization")
-  return name + ttt(" Invitations")
+  const name = orgName ?? ttc("Organization")
+  return name + " " + ttc("Invitations")
 }
 
 type FetchOrgInvitations = Accessor<Result<OrgInvitationModel[]> | undefined>
@@ -71,9 +82,13 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
 
   return (
     <>
-      <PageHeader title={ttt("Organization Invitations")} subtitle={ttt("Manage invitations of this organization")}>
+      <PageHeader
+        title={ttc("Organization Invitations")}
+        subtitle={ttc("Manage invitations of this organization")}
+        class="mb-4"
+      >
         <LinkButton icon={mdiPlus} href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.success}>
-          {ttt("Add Invitation")}
+          {ttc("Add Invitation")}
         </LinkButton>
       </PageHeader>
       <Switch fallback={<p>Fallback content</p>}>
@@ -83,16 +98,20 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
         <Match when={!hasOrgInvitations(getOrgInvitationsResult())}>
           <NoOrgInvitationsSection />
         </Match>
-        <Match when={true}>
-          <OrgInvitationList orgHandle={p.orgHandle} invitations={getOrgInvitations(getOrgInvitationsResult())} />
+        <Match when={getData(getOrgInvitationsResult)}>
+          {(gotData) => <OrgInvitationList orgHandle={p.orgHandle} {...gotData()} />}
         </Match>
       </Switch>
     </>
   )
 }
 
-function getOrgInvitations(orgInvitationsResult: Result<OrgInvitationModel[]> | undefined): OrgInvitationModel[] {
-  return (orgInvitationsResult as ResultOk<OrgInvitationModel[]>).data
+function getData(
+  orgInvitationsResult: () => Result<OrgInvitationModel[]> | undefined,
+): { invitations: OrgInvitationModel[] } | null {
+  const result = orgInvitationsResult()
+  if (!result || !result.success) return null
+  return { invitations: result.data }
 }
 
 function hasOrgInvitations(
@@ -106,7 +125,7 @@ function hasOrgInvitations(
 }
 
 function OrgInvitationLoading() {
-  return <LoadingSection loadingSubject={ttt("Organization Invitations")} />
+  return <LoadingSection loadingSubject={ttc("Organization Invitations")} />
 }
 
 function OrgInvitationList(p: OrgInvitationsProps) {
@@ -122,7 +141,7 @@ function OrgInvitationList(p: OrgInvitationsProps) {
 
 export function NoOrgInvitationsSection(p: MayHaveClassAndChildren) {
   return (
-    <NoData noDataText={ttt("No Organization Invitations")} class={p.class}>
+    <NoData noDataText={ttc("No Organization Invitations")} class={p.class}>
       {p.children}
     </NoData>
   )

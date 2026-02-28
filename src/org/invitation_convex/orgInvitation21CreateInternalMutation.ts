@@ -1,10 +1,10 @@
+import { languageValidator } from "@/app/i18n/language"
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
-import { generateId12 } from "~utils/ran/generateId12"
 import { createResult, type PromiseResult } from "~utils/result/Result"
-import type { IdOrgInvitation } from "./IdOrgInvitation"
+import type { IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 
 export const orgInvitationCreateDataFields = {
   // ids
@@ -13,6 +13,7 @@ export const orgInvitationCreateDataFields = {
   // invited
   invitedName: v.string(),
   invitedEmail: v.string(),
+  l: languageValidator,
   // data
   role: orgRoleValidator,
   invitedBy: v.string(),
@@ -22,7 +23,7 @@ export const orgInvitationCreateMutationValidator = v.object(orgInvitationCreate
 
 export type OrgInvitationCreateMutationValidatorType = typeof orgInvitationCreateMutationValidator.type
 
-export const orgInvitationCreateInternalMutation = internalMutation({
+export const orgInvitation21CreateInternalMutation = internalMutation({
   args: orgInvitationCreateMutationValidator,
   handler: orgInvitation21CreateMutationFn,
 })
@@ -31,11 +32,9 @@ export async function orgInvitation21CreateMutationFn(
   ctx: MutationCtx,
   args: OrgInvitationCreateMutationValidatorType,
 ): PromiseResult<IdOrgInvitation> {
-  const invitationCode = generateId12()
   const now = nowIso()
   const newId = await ctx.db.insert("orgInvitations", {
     ...args,
-    invitationCode,
     emailSendAt: undefined,
     emailSendAmount: 0,
     createdAt: now,

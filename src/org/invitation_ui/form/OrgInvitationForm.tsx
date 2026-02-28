@@ -1,15 +1,18 @@
+import { language } from "@/app/i18n/language"
+import { languageGetText } from "@/app/i18n/languageGetText"
+import { ttc } from "@/app/i18n/ttc"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
-import { orgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
+import { orgInvitationFormConfig, orgInvitationFormField } from "@/org/invitation_ui/form/orgInvitationFormField"
 import type { OrgInvitationFormStateManagement } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
-import { orgRole } from "@/org/org_model_field/orgRole"
-import { orgRoleText } from "@/org/org_model_field/orgRoleText"
+import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { isDevEnv } from "@/utils/env/isDevEnv"
+import { mdiEmailFast } from "@mdi/js"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
-import { getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
+import { CheckSingle } from "~ui/input/check/CheckSingle"
+import { formMode, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
-import { Input } from "~ui/input/input/Input"
+import { LabelPseudo } from "~ui/input/label/LabelPseudo"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -34,15 +37,16 @@ export function OrgInvitationForm(p: OrgInvitationContentProps) {
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
         <InvitedNameField sm={p.sm} />
         <InvitedEmailField sm={p.sm} />
+        <LanguageField sm={p.sm} />
         {orgInvitationShowRole && <RoleField sm={p.sm} />}
         <ButtonIcon
           type="submit"
-          disabled={p.sm.isSaving.get()}
-          icon={formModeIcon[p.mode]}
+          icon={getOrgInvitationIcon(p.mode)}
           variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          isLoading={p.sm.isSubmitting.get()}
           class="w-full"
         >
-          {p.sm.isSaving.get() ? "Saving..." : getOrgInvitationTitle(p.mode)}
+          {p.sm.isSubmitting.get() ? "Saving..." : getOrgInvitationTitle(p.mode)}
         </ButtonIcon>
       </form>
     </section>
@@ -51,84 +55,84 @@ export function OrgInvitationForm(p: OrgInvitationContentProps) {
 
 function InvitedNameField(p: HasOrgInvitationFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <label for={orgInvitationFormField.invitedName} class="font-medium">
-        {ttt("Name")}
-      </label>
-      <Input
-        id={orgInvitationFormField.invitedName}
-        value={p.sm.state.invitedName.get()}
-        onInput={(e) => {
-          const value = e.currentTarget.value
-          p.sm.state.invitedName.set(value)
-          p.sm.validateOnChange(orgInvitationFormField.invitedName)(value)
-        }}
-        class={classMerge("", p.sm.errors.invitedName.get() && "border-destructive focus-visible:ring-destructive")}
-        placeholder={ttt("Recipient's Full Name")}
-      />
-      <Show when={p.sm.errors.invitedName.get()}>
-        <p class="text-destructive">{p.sm.errors.invitedName.get()}</p>
-      </Show>
-    </div>
+    <FormFieldInput
+      config={orgInvitationFormConfig.invitedName}
+      value={p.sm.state.invitedName.get()}
+      error={p.sm.errors.invitedName.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.invitedName.set(value)
+        p.sm.validateOnChange(orgInvitationFormField.invitedName)(value)
+      }}
+      onBlur={(value) => p.sm.validateOnChange(orgInvitationFormField.invitedName)(value)}
+    />
   )
 }
 
 function InvitedEmailField(p: HasOrgInvitationFormStateManagement) {
   return (
-    <div class="flex flex-col gap-2">
-      <label for={orgInvitationFormField.invitedEmail} class="font-medium">
-        {ttt("Email")}
-      </label>
-      <Input
-        id={orgInvitationFormField.invitedEmail}
-        value={p.sm.state.invitedEmail.get()}
-        type="email"
-        onInput={(e) => {
-          const value = e.currentTarget.value
-          p.sm.state.invitedEmail.set(value)
-          p.sm.validateOnChange(orgInvitationFormField.invitedEmail)(value)
-        }}
-        class={classMerge(
-          "focus-visible:ring-2",
-          p.sm.errors.invitedEmail.get() && "border-destructive focus-visible:ring-destructive",
-        )}
-        placeholder={ttt("Recipient's Email Address, ex. recipient@gmail.com")}
-      />
-      <Show when={p.sm.errors.invitedEmail.get()}>
-        <p class="text-destructive">{p.sm.errors.invitedEmail.get()}</p>
-      </Show>
-    </div>
+    <FormFieldInput
+      config={orgInvitationFormConfig.invitedEmail}
+      value={p.sm.state.invitedEmail.get()}
+      error={p.sm.errors.invitedEmail.get()}
+      mode={p.sm.mode}
+      onInput={(value) => {
+        p.sm.state.invitedEmail.set(value)
+        p.sm.validateOnChange(orgInvitationFormField.invitedEmail)(value)
+      }}
+      onBlur={(value) => p.sm.validateOnChange(orgInvitationFormField.invitedEmail)(value)}
+    />
   )
 }
 
 function RoleField(p: HasOrgInvitationFormStateManagement) {
   return (
     <div class="flex flex-col gap-2">
-      <label for={orgInvitationFormField.role} class="text-sm font-medium">
-        {ttt("Role")}
-      </label>
-      <select
-        id={orgInvitationFormField.role}
+      <FormFieldInput
+        config={orgInvitationFormConfig.role}
         value={p.sm.state.role.get()}
-        onChange={(e) => {
-          p.sm.state.role.set(e.currentTarget.value)
-          p.sm.validateOnChange(orgInvitationFormField.role)(e.currentTarget.value)
+        error={p.sm.errors.role.get()}
+        mode={p.sm.mode}
+        onInput={(value) => {
+          p.sm.state.role.set(value)
+          p.sm.validateOnChange(orgInvitationFormField.role)(value)
         }}
-        class={classMerge(
-          "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
-          p.sm.errors.role.get() && "border-destructive focus-visible:ring-destructive",
-        )}
-      >
-        <option value={orgRole.member}>{orgRoleText.member}</option>
-        <option value={orgRole.guest}>{orgRoleText.guest}</option>
-      </select>
-      <Show when={p.sm.errors.role.get()}>
-        <p class="text-destructive">{p.sm.errors.role.get()}</p>
+        onBlur={(value) => p.sm.validateOnChange(orgInvitationFormField.role)(value)}
+      />
+    </div>
+  )
+}
+
+function LanguageField(p: HasOrgInvitationFormStateManagement) {
+  return (
+    <div class="flex flex-col gap-2">
+      <LabelPseudo>{orgInvitationFormConfig.l.label()}</LabelPseudo>
+      <CheckSingle
+        valueSignal={p.sm.state.l}
+        getOptions={() => Object.values(language)}
+        valueText={(value) => languageGetText(value)}
+        disabled={p.sm.mode === formMode.remove}
+        innerClass="flex flex-wrap gap-2"
+        optionClass="bg-gray-50"
+        disallowDeselection={true}
+      />
+      <Show when={p.sm.errors.l.get()}>
+        <p class="text-destructive">{p.sm.errors.l.get()}</p>
       </Show>
     </div>
   )
 }
 
 function getOrgInvitationTitle(mode: FormMode): string {
-  return getFormModeTitle(mode, ttt("Organization Invitation"))
+  if (mode === formMode.add) {
+    return ttc("Send E-Mail Invitation")
+  }
+  return getFormModeTitle(mode, ttc("Invitation"))
+}
+
+function getOrgInvitationIcon(mode: FormMode): string {
+  if (mode === formMode.add) {
+    return mdiEmailFast
+  }
+  return formModeIcon[mode]
 }

@@ -1,6 +1,6 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { mdiAccountQuestion, mdiEmailSync } from "@mdi/js"
-import { ttt } from "~ui/i18n/ttt"
 
 export type OrgInvitationStatus = keyof typeof orgInvitationStatus
 
@@ -10,8 +10,8 @@ export const orgInvitationStatus = {
 } as const
 
 export const orgInvitationStatusText = {
-  sendingEmail: ttt("Sending Invitation Email..."),
-  waitingForConfirmation: ttt("Waiting for manual confirmation"),
+  sendingEmail: ttc("Sending Invitation Email..."),
+  waitingForConfirmation: ttc("Waiting for manual confirmation"),
 } as const
 
 export const orgInvitationStatusIcon = {

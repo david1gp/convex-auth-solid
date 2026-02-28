@@ -2,9 +2,10 @@ import { orgInvitationDataSchemaFields } from "@/org/invitation_model/orgInvitat
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import * as va from "valibot"
+import * as a from "valibot"
+import { nowIso } from "~utils/date/nowIso"
 import { createError, createResult, type PromiseResult } from "~utils/result/Result"
-import type { DocOrgInvitation } from "./IdOrgInvitation"
+import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 
 export type OrgInvitationUpdateValidatorType = typeof orgInvitationUpdateValidator.type
 
@@ -28,7 +29,7 @@ export const orgInvitationUpdateFields = {
 
 export const orgInvitationUpdateValidator = v.object(orgInvitationUpdateFields)
 
-export const orgInvitationUpdateInternalMutation = internalMutation({
+export const orgInvitation33UpdateInternalMutation = internalMutation({
   args: orgInvitationUpdateValidator,
   handler: orgInvitation33UpdateFn,
 })
@@ -39,13 +40,17 @@ export async function orgInvitation33UpdateFn(
 ): PromiseResult<null> {
   const op = "orgInvitationUpdateFn"
 
-  const schema = va.partial(va.object(orgInvitationDataSchemaFields))
-  const parse = va.safeParse(schema, args)
+  const schema = a.partial(a.object(orgInvitationDataSchemaFields))
+  const parse = a.safeParse(schema, args)
   if (!parse.success) {
-    return createError(op, va.summarize(parse.issues))
+    return createError(op, a.summarize(parse.issues))
   }
 
   const patch: Partial<DocOrgInvitation> = { ...parse.output }
+
+  if (!patch.updatedAt) {
+    patch.updatedAt = nowIso()
+  }
 
   await ctx.db.patch("orgInvitations", args._id, patch)
   return createResult(null)

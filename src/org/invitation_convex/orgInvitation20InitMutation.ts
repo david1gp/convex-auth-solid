@@ -1,6 +1,9 @@
+import { languageValidator } from "@/app/i18n/language"
+import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitationCreateInternalMutation"
+import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitation21CreateInternalMutation"
+import { orgMemberGetByUserIdFn } from "@/org/member_convex/orgMemberGetByUserIdFn"
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internal } from "@convex/_generated/api"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
@@ -16,13 +19,14 @@ export const orgInvitationInitMutationFields = {
   orgHandle: v.string(),
   invitedName: v.string(),
   invitedEmail: v.string(),
+  l: languageValidator,
   // data
   role: orgRoleValidator,
 }
 
 export const orgInvitationCreateActionValidator = v.object(orgInvitationInitMutationFields)
 
-export const orgInvitationInitMutation = mutation({
+export const orgInvitation20InitMutation = mutation({
   args: orgInvitationCreateActionValidator,
   handler: orgInvitation20InitMutationFn,
 })
@@ -48,13 +52,19 @@ export async function orgInvitation20InitMutationFn(
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  // Check if invitation already exists
+  // Check if invitation already exists and not accepted
   const existingInvitation = await ctx.db
     .query("orgInvitations")
     .withIndex("invitedEmail", (q) => q.eq("invitedEmail", args.invitedEmail))
     .first()
-  if (existingInvitation) {
-    return createResultError(op, "Invitation already sent", args.invitedEmail)
+
+  // Check if already in org
+  const invitedUser = await findUserByEmailFn(ctx, args.invitedEmail)
+  if (invitedUser) {
+    const existingMember = await orgMemberGetByUserIdFn(ctx, invitedUser._id)
+    if (existingMember && existingMember.orgHandle === args.orgHandle) {
+      return createResultError(op, "User is already a member of this organization", args.invitedEmail)
+    }
   }
 
   const invitationCode = generateId12()
@@ -65,12 +75,13 @@ export async function orgInvitation20InitMutationFn(
     invitedBy: invitedBy,
     invitedName: args.invitedName,
     invitedEmail: args.invitedEmail,
+    l: args.l,
     orgHandle: args.orgHandle,
     role: args.role,
   })
 
   // shedule email sending
-  ctx.scheduler.runAfter(0, internal.org.orgInvitationSendInternalAction, { token: args.token, invitationCode })
+  await ctx.scheduler.runAfter(0, internal.org.orgInvitation31SendInternalAction, { token: args.token, invitationCode })
 
   return createResult(invitationCode)
 }

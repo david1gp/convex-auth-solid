@@ -1,5 +1,6 @@
+import { languageValidator } from "@/app/i18n/language"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { orgInvitation31SendFn } from "@/org/invitation_convex/orgInvitationSendInternalAction"
+import { orgInvitation31SendFn } from "@/org/invitation_convex/orgInvitation31SendInternalAction"
 import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
 import { stt1 } from "@/utils/i18n/stt"
 import { api } from "@convex/_generated/api"
@@ -7,17 +8,18 @@ import { action, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResultError, type PromiseResult } from "~utils/result/Result"
 
-export type OrgInvitationResendValidatorType = typeof orgInvitationResendValidator.type
+export type OrgInvitationResendValidatorType = typeof orgInvitation30ResendValidator.type
 
 export const orgInvitationResendFields = {
   token: v.string(),
   invitationCode: v.string(),
+  l: v.optional(languageValidator),
 } as const
 
-export const orgInvitationResendValidator = v.object(orgInvitationResendFields)
+export const orgInvitation30ResendValidator = v.object(orgInvitationResendFields)
 
-export const orgInvitationResendAction = action({
-  args: orgInvitationResendValidator,
+export const orgInvitation30ResendAction = action({
+  args: orgInvitation30ResendValidator,
   handler: orgInvitation30ResendFn,
 })
 

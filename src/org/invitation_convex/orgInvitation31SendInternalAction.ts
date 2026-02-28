@@ -1,3 +1,4 @@
+import { languageValidator } from "@/app/i18n/language"
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import {
@@ -11,17 +12,18 @@ import { internalAction, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { createResultError, type PromiseResult } from "~utils/result/Result"
 
-export type OrgInvitationSendValidatorType = typeof orgInvitationSendValidator.type
+export type OrgInvitationSendValidatorType = typeof orgInvitation31SendValidator.type
 
 export const orgInvitationSendFields = {
   token: v.string(),
   invitationCode: v.string(),
+  l: v.optional(languageValidator),
 } as const
 
-export const orgInvitationSendValidator = v.object(orgInvitationSendFields)
+export const orgInvitation31SendValidator = v.object(orgInvitationSendFields)
 
-export const orgInvitationSendInternalAction = internalAction({
-  args: orgInvitationSendValidator,
+export const orgInvitation31SendInternalAction = internalAction({
+  args: orgInvitation31SendValidator,
   handler: orgInvitation31SendFn,
 })
 
@@ -73,7 +75,8 @@ export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationS
     invitedByName: invitedBy.name,
     invitedEmail: invitation.invitedEmail,
     invitedName: invitation.invitedName,
-    orgName: org.name,
+    l: args.l ?? invitation.l,
+    orgName: org.name ?? "",
     orgHandle: org.orgHandle,
     role: invitation.role,
   }

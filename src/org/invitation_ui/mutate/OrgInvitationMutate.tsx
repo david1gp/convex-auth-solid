@@ -1,24 +1,14 @@
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import { ttc } from "@/app/i18n/ttc"
 import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import { OrgInvitationForm } from "@/org/invitation_ui/form/OrgInvitationForm"
-import {
-  orgInvitationFormStateManagement,
-  type OrgInvitationFormActions,
-} from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
-import { urlOrgInvitationList } from "@/org/invitation_url/urlOrgInvitation"
+import { orgInvitationFormStateManagement } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
 import type { HasOrgInvitationCode } from "@/org/org_model_field/HasOrgInvitationCode"
 import { LoadingSection } from "@/ui/pages/LoadingSection"
-import { createAction } from "@/utils/convex_client/createAction"
 import { createQuery } from "@/utils/convex_client/createQuery"
-import { navigateTo } from "@/utils/router/navigateTo"
 import { api } from "@convex/_generated/api"
 import { Show, createEffect } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
-import { formMode } from "~ui/input/form/formMode"
 import type { HasFormModeMutate } from "~ui/input/form/formModeMutate"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 interface OrgInvitationMutateProps extends HasOrgHandle, HasOrgInvitationCode, HasFormModeMutate, MayHaveClass {}
@@ -30,33 +20,7 @@ export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
     invitationCode: p.invitationCode,
   }) as () => DocOrgInvitation | undefined
 
-  const resendMutation = createAction(api.org.orgInvitationResendAction)
-
-  async function resendAction() {
-    const invitation = getInvitation()
-    if (!invitation) {
-      console.warn("no invitation")
-      return
-    }
-    const result = await resendMutation({
-      token: userTokenGet(),
-      invitationCode: p.invitationCode,
-    })
-    if (!result.success) {
-      console.error(result)
-      toastAdd({ title: result.errorMessage, variant: toastVariant.error })
-      return
-    }
-    const url = urlOrgInvitationList(p.orgHandle)
-    navigateTo(url)
-  }
-
-  const actions: OrgInvitationFormActions = {}
-  if (p.mode === formMode.remove) {
-    actions.remove = resendAction
-  }
-
-  const sm = orgInvitationFormStateManagement(actions)
+  const sm = orgInvitationFormStateManagement(p.mode, p.orgHandle, p.invitationCode)
 
   createEffect(() => {
     const invitation = getInvitation()
@@ -74,5 +38,5 @@ export function OrgInvitationMutate(p: OrgInvitationMutateProps) {
 }
 
 function OrgInvitationLoading() {
-  return <LoadingSection loadingSubject={ttt("Organization Invitation")} />
+  return <LoadingSection loadingSubject={ttc("Organization Invitation")} />
 }

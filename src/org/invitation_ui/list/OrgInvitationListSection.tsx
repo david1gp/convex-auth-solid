@@ -1,10 +1,11 @@
+import { ttc } from "@/app/i18n/ttc"
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { OrgInvitationCard } from "@/org/invitation_ui/view/OrgInvitationCard"
 import { urlOrgInvitationAdd } from "@/org/invitation_url/urlOrgInvitation"
 import type { HasOrgHandle } from "@/org/org_model_field/HasOrgHandle"
-import { PageHeader } from "@/ui/header/PageHeader"
+import { SectionHeader } from "@/ui/header/SectionHeader"
+import { mdiEmail } from "@mdi/js"
 import { For, Show, splitProps } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
@@ -19,7 +20,7 @@ export interface OrgInvitationsProps extends HasOrgHandle, MayHaveClass {
 export function OrgInvitationListSection(p: OrgInvitationsProps) {
   const [s, rest] = splitProps(p, ["class"])
   return (
-    <section id={orgPageSection.invitations} class={classMerge("space-y-4", s.class)}>
+    <section id={orgPageSection.invitations} class={classMerge("space-y-1", "my-2", s.class)}>
       <Header {...rest} />
       <Show when={p.invitations.length > 0} fallback={<NoOrgInvitationsText />}>
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -31,15 +32,20 @@ export function OrgInvitationListSection(p: OrgInvitationsProps) {
 }
 
 function NoOrgInvitationsText() {
-  return <p class="text-muted-foreground">{ttt("No invitations yet")}</p>
+  return <p class="text-muted-foreground">{ttc("No invitations yet")}</p>
 }
 
 function Header(p: OrgInvitationsProps) {
   return (
-    <PageHeader title={ttt("Member Invitations")}>
-      <LinkButton href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.default} icon={formModeIcon.add}>
-        {ttt("Invite Member")}
+    <SectionHeader icon={mdiEmail} href={urlOrgInvitationAdd(p.orgHandle)} title={ttc("Member Invitations")}>
+      <LinkButton
+        href={urlOrgInvitationAdd(p.orgHandle)}
+        variant={buttonVariant.subtle}
+        icon={formModeIcon.add}
+        class="hover:bg-gray-200"
+      >
+        {ttc("Invite Member")}
       </LinkButton>
-    </PageHeader>
+    </SectionHeader>
   )
 }

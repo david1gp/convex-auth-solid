@@ -1,4 +1,5 @@
 import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
+import { languageValidator } from "@/app/i18n/language"
 import {
   sendEmailOrgInvitation,
   type GenerateEmailOrgInvitationProps,
@@ -23,6 +24,7 @@ export const orgInvitationSendEmailFields = {
   // invite
   invitedName: v.string(),
   invitedEmail: v.string(),
+  l: languageValidator,
   // by
   invitedByName: v.string(),
   invitedByEmail: v.string(),
@@ -50,6 +52,7 @@ export async function orgInvitation32SendEmailActionFn(
     // by
     invitedByName: args.invitedByName,
     invitedByEmail: args.invitedByEmail,
+    l: args.l,
     // data
     orgName: args.orgName,
     url: baseUrlApp + urlOrgInvitationAccept(args.orgHandle, args.invitationCode),
@@ -81,7 +84,7 @@ export async function orgInvitation32SendEmailActionFn(
     ...update,
   } as const
 
-  const updateResult = await ctx.runMutation(internal.org.orgInvitationUpdateInternalMutation, update2)
+  const updateResult = await ctx.runMutation(internal.org.orgInvitation33UpdateInternalMutation, update2)
 
   return createResult(null)
 }

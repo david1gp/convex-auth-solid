@@ -1,5 +1,6 @@
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model_field/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
@@ -10,7 +11,6 @@ import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
 import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 
@@ -22,7 +22,7 @@ export const orgInvitationAcceptFields = {
 
 export const orgInvitationAcceptValidator = v.object(orgInvitationAcceptFields)
 
-export const orgInvitationAcceptMutation = mutation({
+export const orgInvitation50AcceptMutation = mutation({
   args: orgInvitationAcceptValidator,
   handler: orgInvitation50AcceptFn,
 })
@@ -66,10 +66,10 @@ export async function orgInvitation50AcceptFn(
     return createResultError(op, "User not found", userId)
   }
 
-  // Check for email mismatch
-  if (user.email && user.email !== invitation.invitedEmail) {
+  // Check for email mismatch (case-insensitive, trim whitespace)
+  if (user.email && user.email.toLowerCase().trim() !== invitation.invitedEmail.toLowerCase().trim()) {
     const errorMessage = stt(
-      "Email mismatch, please use the same email as in the invitation. Sign up the with invited email or resend a new invitation to the desired email address",
+      "Email mismatch, please use the same email as in the invitation (" + invitation.invitedEmail + ").",
     )
     return createResultError(op, errorMessage, userId)
   }
