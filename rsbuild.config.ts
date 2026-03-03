@@ -36,24 +36,9 @@ export default defineConfig({
     alias: {
       "@": new URL("./src", import.meta.url).pathname,
       "@convex": new URL("./convex", import.meta.url).pathname,
-      "~ui": new URL("./node_modules/@adaptive-ds/solid-ui/dist", import.meta.url).pathname,
+      "~ui": new URL("./ui", import.meta.url).pathname,
       "~utils": new URL("./node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
     },
-    dedupe: [
-      "solid-js",
-      "solid-js/web",
-      "solid-js/store",
-      "@adaptive-ds/utils",
-      "@floating-ui/dom",
-      "@mdi/js",
-      "@solid-primitives/keyed",
-      "@solid-primitives/scheduled",
-      "@solidjs/router",
-      "clsx",
-      "dayjs",
-      "tailwind-merge",
-      "valibot",
-    ],
   },
   plugins: [
     pluginBabel({

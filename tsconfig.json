@@ -44,11 +44,11 @@
       "@/*": [
         "./src/*"
       ],
+      "~ui/*": [
+        "./ui/*"
+      ],
       "~utils/*": [
         "./node_modules/@adaptive-ds/utils/dist/*"
-      ],
-      "~ui/*": [
-        "./node_modules/@adaptive-ds/solid-ui/dist/*"
       ]
     },
     //
