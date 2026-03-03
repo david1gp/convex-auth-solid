@@ -33,7 +33,7 @@
     "convex:docker:down": "bash ops/convex_dev/convex_docker_down.bash",
     "convex:docker:update": "bash ops/convex_dev/convex_docker_update.bash",
     "convex:deploy": "bash ops/convex_prod/convex_deploy_prod.bash",
-    "ui": "rsync -avh  ../adaptive-solid-ui/lib/ ./ui --delete",
+    "ui": "rsync -avh  ../solid-ui/lib/ ./ui --delete",
     "generateDemoList": "bun run ./src/ui/demos/generateDemoList.cli.ts",
     "generateTranslations": "bun run ./src/app/i18n/generateTranslations.ts",
     "update": "bun x npm-check-updates -u && bun i",
