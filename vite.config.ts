@@ -9,7 +9,7 @@ export default defineConfig({
     watch: {
       ignored: ["**/.github/**", "**/data/**", "**/dist/**", "**/ops/**", "**/out/**", "**/docs/**", "**/test/**"],
     },
-    allowedHosts: ["convex-auth.dev"],
+    allowedHosts: ["convex-auth.dev", "app.convex-auth.com"],
     fs: {
       // Allow serving files from one level up to the project root
       allow: [".."],

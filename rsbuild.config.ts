@@ -15,6 +15,8 @@ export default defineConfig({
       index: "./src/index.tsx",
     },
     define: {
+      // Expose PUBLIC_ env vars manually
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       "import.meta.env.MODE": JSON.stringify(process.env.NODE_ENV),
       "import.meta.env.PUBLIC_ENV_MODE": JSON.stringify(process.env.PUBLIC_ENV_MODE),
       "import.meta.env.PUBLIC_BASE_URL_SITE": JSON.stringify(process.env.PUBLIC_BASE_URL_SITE),
