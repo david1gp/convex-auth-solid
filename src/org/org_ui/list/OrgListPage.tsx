@@ -33,7 +33,7 @@ export function OrgListPage() {
 }
 
 function getPageTitle(orgName?: string) {
-  return ttc("Stakeholders")
+  return ttc("Organizations")
 }
 
 type Org = OrgModel
@@ -55,7 +55,7 @@ function OrgListLoader() {
 
   return (
     <>
-      <PageHeader title={ttc("Stakeholders")} class="mb-4">
+      <PageHeader title={ttc("Organizations")} class="mb-4">
         <OrgCreateLink />
       </PageHeader>
 
@@ -76,12 +76,12 @@ function OrgListLoader() {
 }
 
 function OrgsLoading() {
-  return <LoadingSection loadingSubject={ttc("Stakeholders")} />
+  return <LoadingSection loadingSubject={ttc("Organizations")} />
 }
 
 function NoOrgs(p: MayHaveClassAndChildren) {
   return (
-    <NoData noDataText={ttc("No Stakeholders")} class={p.class}>
+    <NoData noDataText={ttc("No Organizations")} class={p.class}>
       {p.children}
     </NoData>
   )
@@ -120,7 +120,7 @@ function OrgLink(p: { org: Org }) {
 function OrgCreateLink() {
   return (
     <LinkButton icon={mdiPlus} href={urlOrgAdd()} variant={buttonVariant.filledGreen}>
-      {ttc("Create Stakeholder")}
+      {ttc("Create Organization")}
     </LinkButton>
   )
 }

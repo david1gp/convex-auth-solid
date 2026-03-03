@@ -9,6 +9,6 @@ export function visibilityGetText(v?: string): string {
     case visibility.member:
       return ttc("Authorized LEG.TJ Members")
     case visibility.org:
-      return ttc("Stakeholder Members")
+      return ttc("Organization Members")
   }
 }

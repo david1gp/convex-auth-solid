@@ -22,7 +22,7 @@ export function OrgAddPage() {
 }
 
 function getPageTitle(orgName?: string) {
-  return ttc("Create new Stakeholder")
+  return ttc("Create new Organization")
 }
 
 export interface OrgAddProps extends MayHaveClass {}

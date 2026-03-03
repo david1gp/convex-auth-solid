@@ -3,9 +3,9 @@ import type { PageNameOrgMember } from "@/org/member_url/pageNameOrgMember"
 export type PageRouteOrgMember = keyof typeof pageRouteOrgMember
 
 export const pageRouteOrgMember = {
-  orgMemberList: "/stakeholders/:orgHandle/members",
-  orgMemberAdd: "/stakeholders/:orgHandle/members/add",
-  orgMemberView: "/stakeholders/:orgHandle/members/:memberId/view",
-  orgMemberEdit: "/stakeholders/:orgHandle/members/:memberId/edit",
-  orgMemberRemove: "/stakeholders/:orgHandle/members/:memberId/remove",
+  orgMemberList: "/org/:orgHandle/members",
+  orgMemberAdd: "/org/:orgHandle/members/add",
+  orgMemberView: "/org/:orgHandle/members/:memberId/view",
+  orgMemberEdit: "/org/:orgHandle/members/:memberId/edit",
+  orgMemberRemove: "/org/:orgHandle/members/:memberId/remove",
 } as const satisfies Record<PageNameOrgMember, string>

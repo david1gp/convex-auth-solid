@@ -18,7 +18,7 @@ export const orgFormField = {
 export const orgFormConfig = {
   orgHandle: {
     name: "orgHandle",
-    label: () => ttc("Stakeholder Handle"),
+    label: () => ttc("Organization Handle"),
     placeholder: () => ttc("A unique identifier, visible in the url, ex. your-company-name"),
     required: true,
     autocomplete: "organization-name",
@@ -41,7 +41,7 @@ export const orgFormConfig = {
 
   url: {
     ...formFieldConfigs.url,
-    placeholder: () => ttc("An optional external URL shown on Stakeholder page"),
+    placeholder: () => ttc("An optional external URL shown on Organization page"),
     schema: orgDataSchemaFields.url,
   } as const satisfies FormFieldConfig,
 

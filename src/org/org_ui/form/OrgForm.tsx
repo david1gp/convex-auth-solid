@@ -134,5 +134,5 @@ function ImageField(p: HasOrgFormStateManagement) {
 }
 
 function getOrgTitle(mode: FormMode): string {
-  return getFormModeTitle(mode, ttc("Stakeholder"))
+  return getFormModeTitle(mode, ttc("Organization"))
 }
