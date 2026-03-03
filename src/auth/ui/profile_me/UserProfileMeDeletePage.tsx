@@ -6,14 +6,14 @@ import { NavUserProfile } from "@/app/nav/NavUserProfile"
 import { apiAuthUserDelete } from "@/auth/api/apiAuthUserDelete"
 import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
 import { urlUserProfileMe, urlUserProfileMeDelete } from "@/auth/url/pageRouteAuth"
+import { navigateTo } from "@/utils/router/navigateTo"
+import { createSignal } from "solid-js"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { classMerge } from "~ui/utils/classMerge"
-import { navigateTo } from "@/utils/router/navigateTo"
-import { createSignal } from "solid-js"
 
 export function UserProfileMeDeletePage() {
   return (
@@ -90,7 +90,7 @@ function DeleteAccountForm() {
 
       <Button
         type="button"
-        variant={buttonVariant.destructive}
+        variant={buttonVariant.filledRed}
         onClick={handleDelete}
         disabled={isDeleting()}
         class="w-full"

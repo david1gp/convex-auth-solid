@@ -1,7 +1,7 @@
 import { ttc } from "@/app/i18n/ttc"
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import type { DocUser } from "@/auth/convex/IdUser"
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
@@ -39,7 +39,7 @@ export function UserProfilePage() {
                 </NavLinkButton>
               </>
             }
-            childrenCenter={<NavChildrenCenter hasBreadcrumbs={false} />}
+            childrenCenter={<NavCenter hasBreadcrumbs={false} />}
           />
           <UserProfileLoader username={getUsername()!} />
         </PageWrapper>

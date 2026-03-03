@@ -49,7 +49,7 @@ function WorkspaceView(p: WorkspaceComponentProps) {
         <h1 class="text-2xl font-bold">{p.workspace.name}</h1>
         <LinkButton
           href={urlWorkspaceEdit(p.workspace.workspaceHandle)}
-          variant={buttonVariant.default}
+          variant={buttonVariant.contrast}
           icon={formModeIcon.edit}
         >
           {ttt("Edit")}

@@ -12,9 +12,9 @@ import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
-import type { UserProfileMeEditFormStateManagement } from "./userProfileMeEditFormState"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
+import type { UserProfileMeEditFormStateManagement } from "./userProfileMeEditFormState"
 
 export interface UserProfileMeEditFormProps extends MayHaveClass {
   sm: UserProfileMeEditFormStateManagement
@@ -38,7 +38,7 @@ export function UserProfileMeEditForm(p: UserProfileMeEditFormProps) {
           <LinkButton href={urlUserProfileMe()} variant={buttonVariant.link}>
             {ttc("Cancel")}
           </LinkButton>
-          <Button type="submit" variant={buttonVariant.primary} disabled={p.sm.isLoading.get()}>
+          <Button type="submit" variant={buttonVariant.filledIndigo} disabled={p.sm.isLoading.get()}>
             {p.sm.isLoading.get() ? ttc("Saving...") : ttc("Save Changes")}
           </Button>
         </div>

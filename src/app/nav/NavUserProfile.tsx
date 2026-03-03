@@ -1,4 +1,4 @@
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { splitProps, type JSX } from "solid-js"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -15,7 +15,7 @@ export function NavUserProfile(p: NavUserProfileProps) {
     <NavStatic
       dense={true}
       childrenLeft={s.childrenLeft}
-      childrenCenter={<NavChildrenCenter hasBreadcrumbs={false} />}
+      childrenCenter={<NavCenter hasBreadcrumbs={false} />}
       childrenRight={s.children ?? s.childrenRight}
       {...rest}
     />

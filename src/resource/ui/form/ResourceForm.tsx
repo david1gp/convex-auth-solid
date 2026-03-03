@@ -95,7 +95,7 @@ export function ResourceForm(p: ResourceFormProps) {
           type="submit"
           size={buttonSize.lg}
           icon={formModeIcon[p.mode]}
-          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
           isLoading={p.sm.isSubmitting.get()}
           class="w-full"
         >

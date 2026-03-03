@@ -87,7 +87,7 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
         subtitle={ttc("Manage invitations of this organization")}
         class="mb-4"
       >
-        <LinkButton icon={mdiPlus} href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.success}>
+        <LinkButton icon={mdiPlus} href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.filledGreen}>
           {ttc("Add Invitation")}
         </LinkButton>
       </PageHeader>

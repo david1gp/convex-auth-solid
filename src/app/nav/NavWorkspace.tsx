@@ -1,6 +1,6 @@
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { workspaceNameGet } from "@/workspace/ui/workspaceNameRecordSignal"
 import { urlWorkspaceView } from "@/workspace/url/urlWorkspace"
@@ -20,9 +20,9 @@ export function NavWorkspace(p: NavWorkspaceProps) {
       class={p.class}
       childrenLeft={<NavWorkspaceBreadcrumbs {...rest}>{s.children}</NavWorkspaceBreadcrumbs>}
       childrenCenter={
-        <NavChildrenCenter>
+        <NavCenter>
           <NavWorkspaceBreadcrumbs {...rest}>{s.children}</NavWorkspaceBreadcrumbs>
-        </NavChildrenCenter>
+        </NavCenter>
       }
     />
   )

@@ -1,5 +1,5 @@
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
@@ -20,10 +20,10 @@ export function NavOrg(p: NavOrgProps) {
       dense={true}
       class={p.class}
       childrenCenter={
-        <NavChildrenCenter>
+        <NavCenter>
           <NavOrgBreadcrumbs {...rest}>{s.children}</NavOrgBreadcrumbs>
           <WorkspaceListLinkNavButton />
-        </NavChildrenCenter>
+        </NavCenter>
       }
     />
   )

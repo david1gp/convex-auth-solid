@@ -134,7 +134,7 @@ function LeaveButton(p: { orgHandle: string }) {
   }
 
   return (
-    <Button variant={buttonVariant.destructive} onClick={handleLeave} disabled={isLoading()} class="w-full">
+    <Button variant={buttonVariant.filledRed} onClick={handleLeave} disabled={isLoading()} class="w-full">
       {ttc("Leave Organization")}
     </Button>
   )

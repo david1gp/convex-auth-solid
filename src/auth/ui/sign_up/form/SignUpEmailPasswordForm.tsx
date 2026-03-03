@@ -96,7 +96,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
 
       <ButtonIcon
         type="submit"
-        variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+        variant={sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
         class="text-lg"
         isLoading={sm.isSubmitting.get()}
       >

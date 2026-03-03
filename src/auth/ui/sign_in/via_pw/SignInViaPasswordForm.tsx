@@ -58,7 +58,7 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
       <ButtonIcon
         type="submit"
         isLoading={sm.state.isSubmitting.get()}
-        variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+        variant={sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
         class="w-full"
       >
         {sm.state.isSubmitting.get() ? ttc("Signing in...") : ttc("Sign in")}

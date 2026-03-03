@@ -149,7 +149,7 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
       iconClass="fill-white"
       size={p.size}
       style={{ background: props.background }}
-      variant={buttonVariant.primary}
+      variant={buttonVariant.filledIndigo}
       class={p.class}
     >
       {text}

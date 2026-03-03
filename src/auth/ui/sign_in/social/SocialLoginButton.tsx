@@ -25,7 +25,7 @@ export function SocialLoginButton(p: SocialLoginButtonProps) {
       iconClass={"fill-white"}
       size={p.size}
       style={{ background: background }}
-      variant={buttonVariant.primary}
+      variant={buttonVariant.filledIndigo}
       class={p.class}
       aria-label={text}
     >

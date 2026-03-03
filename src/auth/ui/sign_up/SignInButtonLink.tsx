@@ -27,7 +27,7 @@ export function SignInButtonLink(p: SignInButtonLinkProps) {
       href={getUrl()}
       iconRight={s.iconRight ?? mdiArrowRight}
       size={s.size ?? buttonSize.default}
-      variant={s.variant ?? buttonVariant.default}
+      variant={s.variant ?? buttonVariant.contrast}
       {...rest}
     >
       {s.text ?? ttc("Sign In")}

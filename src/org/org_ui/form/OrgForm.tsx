@@ -1,12 +1,14 @@
 import { ttc } from "@/app/i18n/ttc"
+import { userRoleIsDevOrAdmin } from "@/auth/model_field/userRole"
 import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
 import { userSessionGet } from "@/auth/ui/signals/userSessionSignal"
-import { userRoleIsDevOrAdmin } from "@/auth/model_field/userRole"
 import { OrgFormImage } from "@/org/org_ui/form/OrgFormImage"
 import { orgFormConfig, orgFormField } from "@/org/org_ui/form/orgFormField"
 import type { OrgFormStateManagement } from "@/org/org_ui/form/orgFormStateManagement"
+import { urlOrgRemove } from "@/org/org_url/urlOrg"
 import { FormFieldInput } from "@/ui/form/FormFieldInput"
 import { isDevEnv } from "@/utils/env/isDevEnv"
+import { Show } from "solid-js"
 import { formMode, getFormModeTitle, type FormMode } from "~ui/input/form/formMode"
 import { formModeIcon } from "~ui/input/form/formModeIcon"
 import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
@@ -14,8 +16,6 @@ import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 import { classMerge } from "~ui/utils/classMerge"
-import { Show } from "solid-js"
-import { urlOrgRemove } from "@/org/org_url/urlOrg"
 
 interface HasOrgFormStateManagement {
   sm: OrgFormStateManagement
@@ -54,7 +54,7 @@ export function OrgForm(p: OrgContentProps) {
         <ButtonIcon
           type="submit"
           icon={formModeIcon[p.mode]}
-          variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          variant={p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
           isLoading={p.sm.isSubmitting.get()}
           class="w-full"
         >

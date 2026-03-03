@@ -114,7 +114,7 @@ function WorkspaceLink(p: { workspace: Workspace }) {
 
 function WorkspaceCreateLink() {
   return (
-    <LinkButton icon={mdiPlus} href={urlWorkspaceAdd()} variant={buttonVariant.success}>
+    <LinkButton icon={mdiPlus} href={urlWorkspaceAdd()} variant={buttonVariant.filledGreen}>
       {"Create Workspace"}
     </LinkButton>
   )

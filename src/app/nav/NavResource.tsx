@@ -1,6 +1,6 @@
 import { languageSignalGet } from "@/app/i18n/languageSignal"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
@@ -20,11 +20,11 @@ export function NavResource(p: NavAppDirProps) {
       dense={true}
       class={p.class}
       childrenCenter={
-        <NavChildrenCenter>
+        <NavCenter>
           <div class="flex flex-wrap gap-2">
             <NavResourceBreadcrumbs {...rest}>{s.children}</NavResourceBreadcrumbs>
           </div>
-        </NavChildrenCenter>
+        </NavCenter>
       }
       sitePath={getSitePath(p.resourceId)}
     />

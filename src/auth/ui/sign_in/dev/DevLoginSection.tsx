@@ -59,7 +59,7 @@ const userIdInputSignal = createSignalObject("adaptive-sm")
 function DevLoginButton(p: MayHaveClass) {
   const text = ttc("Sign in")
   return (
-    <LinkButton href={getDevUrl()} variant={buttonVariant.primary} class={p.class}>
+    <LinkButton href={getDevUrl()} variant={buttonVariant.filledIndigo} class={p.class}>
       {text}
     </LinkButton>
   )

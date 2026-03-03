@@ -167,7 +167,7 @@ function AcceptButton(p: InvitationDetailsProps) {
     navigateTo(url)
   }
   return (
-    <Button variant={buttonVariant.primary} onClick={handleAccept}>
+    <Button variant={buttonVariant.filledIndigo} onClick={handleAccept}>
       {ttc("Accept Invitation")}
     </Button>
   )

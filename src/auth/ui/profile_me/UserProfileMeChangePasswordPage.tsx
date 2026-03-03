@@ -253,7 +253,7 @@ function PasswordChangeStep2Form(p: {
 
 function SubmitButton(p: { isSubmitting: boolean; loadingText: string; text: string }) {
   return (
-    <Button type="submit" variant={buttonVariant.primary} disabled={p.isSubmitting} class="w-full">
+    <Button type="submit" variant={buttonVariant.filledIndigo} disabled={p.isSubmitting} class="w-full">
       {p.isSubmitting ? p.loadingText : p.text}
     </Button>
   )

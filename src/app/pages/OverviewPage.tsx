@@ -1,6 +1,6 @@
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { urlOverview } from "@/app/pages/urlOverview"
 import { AuthLinks } from "@/auth/ui/AuthLinks"
@@ -22,7 +22,7 @@ export function OverviewPage() {
             </NavLinkButton>
           </>
         }
-        childrenCenter={<NavChildrenCenter />}
+        childrenCenter={<NavCenter />}
       />
       <PageHeader
         title={getTitle()}

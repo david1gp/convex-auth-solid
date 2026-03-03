@@ -1,6 +1,6 @@
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { urlTodo } from "@/app/pages/urlTodo"
 import { TodoSection, type TodoSectionProps } from "@/ui/pages/TodoSection"
@@ -21,7 +21,7 @@ export function TodoPage(p: TodoSectionProps) {
             </>
           )
         }
-        childrenCenter={<NavChildrenCenter hasBreadcrumbs={false} />}
+        childrenCenter={<NavCenter hasBreadcrumbs={false} />}
       />
       <TodoSection {...p} />
     </PageWrapper>

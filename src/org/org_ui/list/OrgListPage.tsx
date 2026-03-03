@@ -119,7 +119,7 @@ function OrgLink(p: { org: Org }) {
 
 function OrgCreateLink() {
   return (
-    <LinkButton icon={mdiPlus} href={urlOrgAdd()} variant={buttonVariant.success}>
+    <LinkButton icon={mdiPlus} href={urlOrgAdd()} variant={buttonVariant.filledGreen}>
       {ttc("Create Stakeholder")}
     </LinkButton>
   )

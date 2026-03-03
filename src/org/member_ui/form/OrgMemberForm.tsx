@@ -32,7 +32,7 @@ export function OrgMemberForm(p: OrgMemberContentProps) {
         <ButtonIcon
           type="submit"
           icon={formModeIcon[p.mode]}
-          variant={p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          variant={p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
           isLoading={p.sm.isSubmitting.get()}
           class="w-full"
         >

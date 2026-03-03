@@ -47,7 +47,7 @@ export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {
       <ButtonIcon
         type="submit"
         isLoading={sm.isSubmitting.get()}
-        variant={sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+        variant={sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
         class="w-full"
       >
         {sm.isSubmitting.get() ? ttc("Sending link...") : ttc("Send link")}

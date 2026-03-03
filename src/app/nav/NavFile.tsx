@@ -1,5 +1,5 @@
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
@@ -22,11 +22,11 @@ export function NavFile(p: NavFileProps) {
       dense={true}
       class={p.class}
       childrenCenter={
-        <NavChildrenCenter>
+        <NavCenter>
           <div class="flex flex-wrap gap-2">
             <NavFileBreadcrumbs {...rest}>{s.children}</NavFileBreadcrumbs>
           </div>
-        </NavChildrenCenter>
+        </NavCenter>
       }
     />
   )

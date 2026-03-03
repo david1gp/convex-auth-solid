@@ -53,7 +53,7 @@ export function FileForm(p: FileFormProps) {
           type="submit"
           isLoading={p.sm.isSubmitting.get()}
           icon={formModeIcon[p.mode]}
-          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
           class="w-full"
         >
           {p.sm.isSubmitting.get() ? ttc("Saving...") : getFileTitle(p.mode)}

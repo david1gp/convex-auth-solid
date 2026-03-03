@@ -25,7 +25,7 @@ function SocialSignInButton(p: SocialSignInButtonProps) {
       icon={iconPath}
       iconClass="size-8"
       size={buttonSize.lg}
-      variant={buttonVariant.primary}
+      variant={buttonVariant.filledIndigo}
       class={classMerge(
         "justify-start",
         p.provider === "google" ? "bg-red-500 hover:bg-red-600" : "bg-gray-800 hover:bg-gray-900",

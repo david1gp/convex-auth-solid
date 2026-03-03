@@ -120,7 +120,7 @@ function ResourceList(p: ResourceListProps) {
 
 function ResourceCreateLink() {
   return (
-    <LinkButton icon={mdiPlus} href={urlResourceAdd()} variant={buttonVariant.success}>
+    <LinkButton icon={mdiPlus} href={urlResourceAdd()} variant={buttonVariant.filledGreen}>
       {ttc("Create Resource")}
     </LinkButton>
   )

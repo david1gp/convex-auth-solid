@@ -146,7 +146,7 @@ function OrgMemberLink(p: OrgMemberLinkProps) {
 
 function OrgMemberCreateLink(p: HasOrgHandle) {
   return (
-    <LinkButton icon={mdiPlus} href={urlOrgMemberAdd(p.orgHandle)} variant={buttonVariant.success}>
+    <LinkButton icon={mdiPlus} href={urlOrgMemberAdd(p.orgHandle)} variant={buttonVariant.filledGreen}>
       {ttc("Add Member")}
     </LinkButton>
   )

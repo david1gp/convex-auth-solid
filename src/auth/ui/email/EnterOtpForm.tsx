@@ -110,7 +110,7 @@ export function EnterOtpForm(p: EnterOtpFormProps) {
       </div>
       <ButtonIcon
         type="submit"
-        variant={buttonVariant.primary}
+        variant={buttonVariant.filledIndigo}
         icon={mdiEmailCheck}
         disabled={otp.get().length !== 6}
         isLoading={isSubmitting.get()}

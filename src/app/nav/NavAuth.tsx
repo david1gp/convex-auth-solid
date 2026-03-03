@@ -1,5 +1,5 @@
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
+import { NavCenter } from "@/app/nav/NavCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { LinkLikeNavText } from "@/app/nav/links/LinkLikeNavText"
 import { userSessionGet } from "@/auth/ui/signals/userSessionSignal"
@@ -24,7 +24,7 @@ export function NavAuth(p: NavAuthProps) {
       }
       childrenCenter={
         <Show when={userSessionGet()}>
-          <NavChildrenCenter />
+          <NavCenter />
         </Show>
       }
       childrenRight={s.children}

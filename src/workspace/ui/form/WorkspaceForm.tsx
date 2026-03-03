@@ -60,7 +60,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
           type="submit"
           disabled={p.sm.isSaving.get()}
           icon={formModeIcon[p.mode]}
-          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.destructive : buttonVariant.primary}
+          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
           class="w-full"
         >
           {p.sm.isSaving.get() ? ttt("Saving...") : getFormModeButtonTitle(p.mode, ttt("Workspace"))}

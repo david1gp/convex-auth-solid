@@ -6,18 +6,14 @@ import type { AppTab } from "@/app/tabs/appTab"
 import { appTab } from "@/app/tabs/appTab"
 import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
 
-export interface NavChildrenCenterProps extends MayHaveChildren {
+export interface NavCenterProps extends MayHaveChildren {
   activeTab?: AppTab
   hasBreadcrumbs?: boolean
 }
 
 const tabOrder: AppTab[] = [appTab.org, appTab.workspace, appTab.resource]
 
-function getTabIndex(tab: AppTab): number {
-  return tabOrder.indexOf(tab)
-}
-
-export function NavChildrenCenter(p: NavChildrenCenterProps) {
+export function NavCenter(p: NavCenterProps) {
   const maxIndex = tabOrder.length - 1
   const activeIndex = p.activeTab !== undefined ? Math.min(getTabIndex(p.activeTab), maxIndex) : -1
 
@@ -46,6 +42,10 @@ export function NavChildrenCenter(p: NavChildrenCenterProps) {
       ))}
     </>
   )
+}
+
+function getTabIndex(tab: AppTab): number {
+  return tabOrder.indexOf(tab)
 }
 
 function NavButtonForTab(p: { tab: AppTab; isActive?: boolean }) {

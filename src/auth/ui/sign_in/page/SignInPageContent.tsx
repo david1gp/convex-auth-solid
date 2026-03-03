@@ -86,7 +86,7 @@ function NoAccountSection(p: MayHaveClass) {
   return (
     <section class={classArr("flex flex-wrap gap-4 items-center", p.class)}>
       <h2 class="font-medium">{ttc("Don't have an account?")}</h2>
-      <SignUpButtonLink text={ttc("Sign Up instead")} variant={buttonVariant.default} class="pl-4" />
+      <SignUpButtonLink text={ttc("Sign Up instead")} variant={buttonVariant.contrast} class="pl-4" />
     </section>
   )
 }
