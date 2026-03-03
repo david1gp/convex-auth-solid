@@ -1,6 +1,5 @@
+import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
-import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { urlOverview } from "@/app/pages/urlOverview"
@@ -23,12 +22,7 @@ export function OverviewPage() {
             </NavLinkButton>
           </>
         }
-        childrenCenter={
-          <>
-            <OrganizationListNavButton />
-            <WorkspaceListLinkNavButton />
-          </>
-        }
+        childrenCenter={<NavChildrenCenter />}
       />
       <PageHeader
         title={getTitle()}

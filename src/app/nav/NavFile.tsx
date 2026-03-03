@@ -1,9 +1,8 @@
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
 import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
-import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { fileNameGet, fileNameRecordSignalRegisterHandler } from "@/file/ui/fileNameRecordSignal"
 import { urlFileEdit } from "@/file/url/urlFile"
 import type { HasResourceId } from "@/resource/model/HasResourceId"
@@ -23,13 +22,11 @@ export function NavFile(p: NavFileProps) {
       dense={true}
       class={p.class}
       childrenCenter={
-        <>
-          <OrganizationListNavButton />
-          <WorkspaceListLinkNavButton />
+        <NavChildrenCenter>
           <div class="flex flex-wrap gap-2">
             <NavFileBreadcrumbs {...rest}>{s.children}</NavFileBreadcrumbs>
           </div>
-        </>
+        </NavChildrenCenter>
       }
     />
   )

@@ -1,3 +1,4 @@
+import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
 import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { NavStatic } from "@/app/nav/NavStatic"
@@ -19,12 +20,9 @@ export function NavWorkspace(p: NavWorkspaceProps) {
       class={p.class}
       childrenLeft={<NavWorkspaceBreadcrumbs {...rest}>{s.children}</NavWorkspaceBreadcrumbs>}
       childrenCenter={
-        <>
-          <div class="flex flex-wrap gap-2">
-            <NavWorkspaceBreadcrumbs {...rest}>{s.children}</NavWorkspaceBreadcrumbs>
-          </div>
-          <WorkspaceListLinkNavButton />
-        </>
+        <NavChildrenCenter>
+          <NavWorkspaceBreadcrumbs {...rest}>{s.children}</NavWorkspaceBreadcrumbs>
+        </NavChildrenCenter>
       }
     />
   )

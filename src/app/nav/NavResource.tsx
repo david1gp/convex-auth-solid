@@ -1,10 +1,9 @@
 import { languageSignalGet } from "@/app/i18n/languageSignal"
 import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
+import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
 import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
-import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
 import { resourceNameGet, resourceNameRecordSignalRegisterHandler } from "@/resource/ui/resourceNameRecordSignal"
 import { urlResourceSiteList, urlResourceSiteView, urlResourceView } from "@/resource/url/urlResource"
 import { Show, splitProps } from "solid-js"
@@ -21,13 +20,11 @@ export function NavResource(p: NavAppDirProps) {
       dense={true}
       class={p.class}
       childrenCenter={
-        <>
-          <OrganizationListNavButton />
-          <WorkspaceListLinkNavButton />
+        <NavChildrenCenter>
           <div class="flex flex-wrap gap-2">
             <NavResourceBreadcrumbs {...rest}>{s.children}</NavResourceBreadcrumbs>
           </div>
-        </>
+        </NavChildrenCenter>
       }
       sitePath={getSitePath(p.resourceId)}
     />

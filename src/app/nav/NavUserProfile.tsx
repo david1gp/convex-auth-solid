@@ -1,6 +1,4 @@
-import { OrganizationListNavButton } from "@/app/nav/links/OrganizationListNavButton"
-import { ResourceListNavButton } from "@/app/nav/links/ResourceListNavButton"
-import { WorkspaceListLinkNavButton } from "@/app/nav/links/WorkspaceListLinkNavButton"
+import { NavChildrenCenter } from "@/app/nav/NavChildrenCenter"
 import { NavStatic } from "@/app/nav/NavStatic"
 import { splitProps, type JSX } from "solid-js"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
@@ -17,13 +15,7 @@ export function NavUserProfile(p: NavUserProfileProps) {
     <NavStatic
       dense={true}
       childrenLeft={s.childrenLeft}
-      childrenCenter={
-        <>
-          <OrganizationListNavButton />
-          <WorkspaceListLinkNavButton />
-          <ResourceListNavButton />
-        </>
-      }
+      childrenCenter={<NavChildrenCenter hasBreadcrumbs={false} />}
       childrenRight={s.children ?? s.childrenRight}
       {...rest}
     />
