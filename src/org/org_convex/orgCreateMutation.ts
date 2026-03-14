@@ -1,7 +1,7 @@
 import type { IdOrg } from "@/org/org_convex/IdOrg"
 import { orgHandleAvailableQueryFn } from "@/org/org_convex/orgHandleAvailableQuery"
-import { orgDataFields } from "@/org/org_convex/orgTables"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
 import { authMutationR } from "@/utils/convex_backend/authMutationR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
@@ -12,7 +12,7 @@ import { createError, createResult, type PromiseResult } from "~utils/result/Res
 
 export type OrgCreateValidatorType = typeof orgCreateValidator.type
 
-export const orgCreateFields = orgDataFields
+export const orgCreateFields = valibotToConvex(orgDataSchemaFields)
 
 export const orgCreateValidator = v.object(orgCreateFields)
 

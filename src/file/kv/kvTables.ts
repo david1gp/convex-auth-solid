@@ -1,14 +1,17 @@
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
+import * as a from "valibot"
 
-export const kvDataFields = {
-  key: v.string(),
-  data: v.string(),
-  updatedAt: v.string(),
+const kvDataSchemaFields = {
+  key: a.string(),
+  data: a.string(),
+  updatedAt: a.string(),
 } as const
 
 export const kvTables = {
-  kv: defineTable(kvDataFields)
+  kv: defineTable({
+    ...valibotToConvex(kvDataSchemaFields),
+  })
     //
     .index("byKey", ["key"]),
 } as const

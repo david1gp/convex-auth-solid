@@ -1,6 +1,6 @@
 import type { IdResource } from "@/resource/convex/IdResource"
-import { resourceDataFields } from "@/resource/convex/resourceTables"
 import { resourceDataSchemaFields } from "@/resource/model/resourceSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
 import { authMutationR } from "@/utils/convex_backend/authMutationR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
@@ -12,7 +12,7 @@ import { createResult, createResultError, type PromiseResult } from "~utils/resu
 export type ResourceCreateValidatorType = typeof resourceCreateValidator.type
 
 export const resourceCreateFields = {
-  ...resourceDataFields,
+  ...valibotToConvex(resourceDataSchemaFields),
   // Files
   fileIds: v.optional(v.array(v.string())),
 }

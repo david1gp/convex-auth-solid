@@ -1,7 +1,7 @@
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
-import { orgDataFields } from "@/org/org_convex/orgTables"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
 import { authMutationR } from "@/utils/convex_backend/authMutationR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
@@ -12,10 +12,12 @@ import { createError, createResult, createResultError, type PromiseResult } from
 
 export type OrgEditValidatorType = typeof orgEditValidator.type
 
-export const orgEditValidator = v.object(orgDataFields)
+export const orgEditFields = valibotToConvex(orgDataSchemaFields)
+
+export const orgEditValidator = v.object(orgEditFields)
 
 export const orgEditMutation = mutation({
-  args: createTokenValidator(orgDataFields),
+  args: createTokenValidator(orgEditFields),
   handler: async (ctx, args) => authMutationR(ctx, args, orgEditMutationFn),
 })
 

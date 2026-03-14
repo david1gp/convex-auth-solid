@@ -1,35 +1,30 @@
-import { languageOrNoneValidator } from "@/app/i18n/language"
-import { vIdUser } from "@/auth/convex/vIdUser"
-import { fileDataUnuploadedConvexFields } from "@/file/model/FileDataUnuploaded"
-import { fileDataUploadedConvexFields } from "@/file/model/FileDataUploaded"
-import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt"
+import { fileDataUnuploadedSchemaFields } from "@/file/model/FileDataUnuploaded"
+import { fileDataUploadedSchemaFields } from "@/file/model/FileDataUploaded"
+import { fileSchemaFields } from "@/file/model/fileSchema"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt"
+import { stringSchemaId } from "@/utils/valibot/stringSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
+import * as a from "valibot"
+import { vIdUser } from "@/auth/convex/vIdUser"
 
-export const fileMetaFields = {
-  // meta
-  fileId: v.string(),
-  resourceId: v.optional(v.string()),
-  userId: vIdUser,
-  username: v.optional(v.string()),
-  language: v.optional(languageOrNoneValidator),
+const fileMetaDataSchemaFields = {
+  fileId: stringSchemaId,
+  username: a.optional(stringSchemaId),
 } as const
 
-export const fileUploadedFields = {
-  ...fileMetaFields,
-  // data
-  ...fileDataUnuploadedConvexFields,
-  // uploaded
-  ...fileDataUploadedConvexFields,
-} as const
-
-export const fileFields = {
-  ...fileUploadedFields,
-  ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
+const fileTableDataSchemaFields = {
+  ...fileMetaDataSchemaFields,
+  ...fileSchemaFields,
 } as const
 
 export const fileTables = {
-  files: defineTable(fileFields)
+  files: defineTable({
+    userId: vIdUser,
+    ...valibotToConvex(fileTableDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAtDeletedAt),
+  })
     //
     .index("fileId", ["fileId"]),
 } as const

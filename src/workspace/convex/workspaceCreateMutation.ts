@@ -1,5 +1,6 @@
 import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
-import { workspaceDataFields } from "@/workspace/convex/workspaceTables"
+import { workspaceDataSchemaFields } from "@/workspace/model/workspaceSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import { nowIso } from "~utils/date/nowIso"
@@ -13,7 +14,7 @@ import { createError, createResult, createResultError, type PromiseResult } from
 
 export type WorkspaceCreateValidatorType = typeof workspaceCreateValidator.type
 
-export const workspaceCreateFields = workspaceDataFields
+export const workspaceCreateFields = valibotToConvex(workspaceDataSchemaFields)
 
 export const workspaceCreateValidator = v.object(workspaceCreateFields)
 

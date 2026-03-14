@@ -1,47 +1,45 @@
-import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
+import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
+import { resourceIdSchema } from "@/resource/model/resourceIdSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
+import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
+import { stringSchemaId } from "@/utils/valibot/stringSchema"
+import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
+import * as a from "valibot"
 import { vIdOrg } from "@/org/org_convex/vIdOrg"
 
-export const orgDataFields = {
-  // id
-  orgHandle: v.string(),
-  // data
-  name: v.optional(v.string()),
-  description: v.optional(v.string()),
-  url: v.optional(v.string()),
-  image: v.optional(v.string()),
+const orgResourceDataSchemaFields = {
+  orgHandle: orgDataSchemaFields.orgHandle,
+  resourceId: stringSchemaId,
+  createdAt: dateTimeSchema,
 } as const
 
-export const orgFields = {
-  ...orgDataFields,
-  ...fieldsConvexCreatedAtUpdatedAt,
-} as const
-
-export const orgResourceFields = {
-  orgId: vIdOrg,
-  orgHandle: v.string(),
-  resourceId: v.string(),
-  createdAt: v.string(),
-} as const
-
-export const orgMeetingsFields = {
-  orgId: vIdOrg,
-  orgHandle: v.string(),
-  meetingId: v.string(),
-  createdAt: v.string(),
+const orgMeetingsDataSchemaFields = {
+  orgHandle: orgDataSchemaFields.orgHandle,
+  meetingId: stringSchemaId,
+  createdAt: dateTimeSchema,
 } as const
 
 export const orgTables = {
-  orgs: defineTable(orgFields)
+  orgs: defineTable({
+    ...valibotToConvex(orgDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
+  })
     //
     .index("orgHandle", ["orgHandle"]),
 
-  orgResources: defineTable(orgResourceFields)
+  orgResources: defineTable({
+    ...valibotToConvex(orgResourceDataSchemaFields),
+    orgId: vIdOrg,
+  })
     //
     .index("orgHandle", ["orgHandle"]),
 
-  orgMeetings: defineTable(orgMeetingsFields)
+  orgMeetings: defineTable({
+    ...valibotToConvex(orgMeetingsDataSchemaFields),
+    orgId: vIdOrg,
+  })
     //
     .index("orgHandle", ["orgHandle"]),
 } as const

@@ -1,25 +1,13 @@
-import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
+import { workspaceDataSchemaFields } from "@/workspace/model/workspaceSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
+import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
-
-export const workspaceDataFields = {
-  username: v.optional(v.string()),
-  orgHandle: v.optional(v.string()),
-  workspaceHandle: v.string(),
-  // data
-  name: v.string(),
-  subtitle: v.optional(v.string()),
-  image: v.optional(v.string()),
-  url: v.optional(v.string()),
-} as const
-
-export const workspaceFields = {
-  ...workspaceDataFields,
-  ...fieldsConvexCreatedAtUpdatedAt,
-} as const
 
 export const workspaceTables = {
-  workspaces: defineTable(workspaceFields)
+  workspaces: defineTable({
+    ...valibotToConvex(workspaceDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
+  })
     //
     .index("workspaceHandle", ["workspaceHandle"]),
 } as const

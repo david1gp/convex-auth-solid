@@ -1,39 +1,32 @@
-import { languageValidator } from "@/app/i18n/language"
-import { resourceTypeValidator } from "@/resource/model_field/resourceType"
-import { visibilityValidator } from "@/resource/model_field/visibility"
-import { fieldsConvexCreatedAtUpdatedAt } from "@/utils/data/fieldsConvexCreatedAtUpdatedAt"
+import { resourceDataSchemaFields } from "@/resource/model/resourceSchema"
+import { stringSchemaId } from "@/utils/valibot/stringSchema"
+import { valibotToConvex } from "@/utils/convex/valibotToConvex"
+import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt"
+import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
+import * as a from "valibot"
 
-export const resourceDataFields = {
-  resourceId: v.string(),
-  name: v.optional(v.string()),
-  description: v.optional(v.string()),
-  type: v.optional(resourceTypeValidator),
-  visibility: v.optional(visibilityValidator),
-  image: v.optional(v.string()),
-  language: v.optional(languageValidator),
-} as const
-
-export const resourceFields = {
-  ...resourceDataFields,
-  ...fieldsConvexCreatedAtUpdatedAt,
-  deletedAt: v.optional(v.string()),
-} as const
-
-export const resourceFilesFields = {
-  resourceId: v.string(),
-  fileId: v.string(),
-  createdAt: v.string(),
+const resourceFilesDataSchemaFields = {
+  resourceId: stringSchemaId,
+  fileId: stringSchemaId,
+  createdAt: dateTimeSchema,
 } as const
 
 export const resourceTables = {
-  resources: defineTable(resourceFields)
+  resources: defineTable({
+    ...valibotToConvex(resourceDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
+    deletedAt: v.optional(v.string()),
+  })
     //
     .index("resourceId", ["resourceId"])
     .index("visibility", ["visibility"]),
 
-  resourceFiles: defineTable(resourceFilesFields)
+  resourceFiles: defineTable({
+    ...valibotToConvex(resourceFilesDataSchemaFields),
+  })
     //
     .index("resourceId", ["resourceId"]),
 } as const
