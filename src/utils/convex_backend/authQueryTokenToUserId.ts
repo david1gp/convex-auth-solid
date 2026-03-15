@@ -1,14 +1,14 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
-import type { MutationCtx } from "@convex/_generated/server"
+import type { QueryCtx } from "@convex/_generated/server"
 import type { PromiseResult } from "~result"
 
-export async function authMutationTokenToUserId<T extends { token: string }, R>(
-  ctx: MutationCtx,
+export async function authQueryTokenToUserId<T extends { token: string }, R>(
+  ctx: QueryCtx,
   args: T,
-  fn: (ctx: MutationCtx, data: Omit<T, "token"> & { userId: IdUser }) => PromiseResult<R>,
+  fn: (ctx: QueryCtx, data: Omit<T, "token"> & { userId: IdUser }) => PromiseResult<R>,
 ): PromiseResult<R> {
-  const op = "authMutationTokenToUserId"
+  const op = "authQueryTokenToUserId"
   const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)

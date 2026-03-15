@@ -1,5 +1,4 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
 import type { FileDataModelWithUserMetadata } from "@/file/model/FileModel"
 import { fileDataSchema } from "@/file/model/fileSchema"
 import { internal } from "@convex/_generated/api"
@@ -21,11 +20,11 @@ export async function r2FileCreateHttpHandler(ctx: ActionCtx, request: Request):
     return new Response(jsonStringifyPretty(err), { status: 400 })
   }
 
-  const tokenResult = await verifyTokenResult(authorization)
+  const tokenResult = await verifyTokenGetUserId(authorization)
   if (!tokenResult.success) {
     return new Response(jsonStringifyPretty(tokenResult), { status: 400 })
   }
-  const userId = tokenResult.data.sub as IdUser
+  const userId = tokenResult.data
 
   const user = await ctx.runQuery(internal.auth.userGetInternalQuery, { userId })
   if (!user) {

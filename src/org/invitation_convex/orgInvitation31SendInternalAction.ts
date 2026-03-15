@@ -1,6 +1,5 @@
 import { languageValidator } from "@/app/i18n/language"
-import type { IdUser } from "@/auth/convex/IdUser"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
 import {
     orgInvitation32SendEmailActionFn,
     type OrgInvitationSendEmailValidatorType,
@@ -29,14 +28,14 @@ export const orgInvitation31SendInternalAction = internalAction({
 
 export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationSendValidatorType): PromiseResult<null> {
   const op = "orgInvitationResend"
-  const verifiedResult = await verifyTokenResult(args.token)
+  const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)
     return verifiedResult
   }
 
   const invitedBy = await ctx.runQuery(internal.auth.userGetInternalQuery, {
-    userId: verifiedResult.data.sub as IdUser,
+    userId: verifiedResult.data,
   })
   if (!invitedBy) {
     return createResultError(op, "!user")

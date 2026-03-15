@@ -1,7 +1,6 @@
 import { languageValidator } from "@/app/i18n/language"
 import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
-import type { IdUser } from "@/auth/convex/IdUser"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
 import { orgInvitation21CreateMutationFn } from "@/org/invitation_convex/orgInvitation21CreateInternalMutation"
 import { orgMemberGetByUserIdFn } from "@/org/member_convex/orgMemberGetByUserIdFn"
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
@@ -37,12 +36,12 @@ export async function orgInvitation20InitMutationFn(
 ): PromiseResult<string> {
   const op = "orgInvitation20InitMutationFn"
 
-  const verifiedResult = await verifyTokenResult(args.token)
+  const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)
     return verifiedResult
   }
-  const invitedBy = verifiedResult.data.sub as IdUser
+  const invitedBy = verifiedResult.data
 
   const org = await ctx.db
     .query("orgs")

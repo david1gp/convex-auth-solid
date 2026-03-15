@@ -4,7 +4,7 @@ import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model_field/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
 import { orgGetQueryInternalFn } from "@/org/org_convex/orgGetQuery"
 import { stt } from "@/utils/i18n/stt"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
@@ -33,12 +33,12 @@ export async function orgInvitation50AcceptFn(
 ): PromiseResult<UserSession> {
   const op = "orgInvitationAccept"
 
-  const verifiedResult = await verifyTokenResult(args.token)
+  const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)
     return verifiedResult
   }
-  const userId = verifiedResult.data.sub as IdUser
+  const userId = verifiedResult.data
 
   // Find invitation
   const invitation = await ctx.db

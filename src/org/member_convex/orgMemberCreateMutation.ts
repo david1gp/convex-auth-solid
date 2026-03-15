@@ -1,6 +1,5 @@
-import type { IdUser } from "@/auth/convex/IdUser"
 import { vIdUser } from "@/auth/convex/vIdUser"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
 import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
@@ -34,12 +33,12 @@ export async function orgMemberCreateFn(
 ): PromiseResult<IdOrgMember> {
   const op = "orgMemberCreateFn"
 
-  const verifiedResult = await verifyTokenResult(args.token)
+  const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)
     return verifiedResult
   }
-  const invitedBy = verifiedResult.data.sub as IdUser
+  const invitedBy = verifiedResult.data
 
   const user = await ctx.db.get("users", args.userId)
   if (!user) {
