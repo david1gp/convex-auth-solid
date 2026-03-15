@@ -1,6 +1,6 @@
 import type { DocKv } from "@/file/kv/IdKv"
 import { kvGetQueryFn2 } from "@/file/kv/kvGetQuery"
-import { authMutation } from "@/utils/convex_backend/authMutation"
+import { authMutationWrapResult } from "@/utils/convex_backend/authMutationWrapResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -14,7 +14,7 @@ export const kvSetValidator = v.object(kvSetFields)
 export const kvSetMutation = mutation({
   args: createTokenValidator(kvSetFields),
   handler: async (ctx, args) => {
-    return authMutation(ctx, args, kvSetMutationFn)
+    return authMutationWrapResult(ctx, args, kvSetMutationFn)
   },
 })
 

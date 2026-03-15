@@ -1,5 +1,5 @@
 import type { DocOrg } from "@/org/org_convex/IdOrg"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -13,7 +13,7 @@ export const orgListValidator = v.object(orgListFields)
 
 export const orgListQuery = query({
   args: createTokenValidator(orgListFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgListQueryFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, orgListQueryFn),
 })
 
 export async function orgListQueryFn(ctx: QueryCtx, args: OrgListValidatorType): PromiseResult<DocOrg[]> {

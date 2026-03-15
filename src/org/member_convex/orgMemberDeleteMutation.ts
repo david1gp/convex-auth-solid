@@ -1,5 +1,5 @@
 import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -16,7 +16,7 @@ export const orgMemberDeleteValidator = v.object(orgMemberDeleteFields)
 
 export const orgMemberDeleteMutation = mutation({
   args: createTokenValidator(orgMemberDeleteFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgMemberDeleteFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, orgMemberDeleteFn),
 })
 
 export async function orgMemberDeleteFn(ctx: MutationCtx, args: OrgMemberDeleteValidatorType): PromiseResult<null> {

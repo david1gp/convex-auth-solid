@@ -3,7 +3,7 @@ import { fileGetByIdFn } from "@/file/convex/fileGetByIdFn"
 import { resourceDocToModel } from "@/resource/convex/resourceDocToModel"
 import { resourceGetDocFn } from "@/resource/convex/resourceGetQuery"
 import type { ResourceFilesModel } from "@/resource/model/ResourceFilesModel"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -20,7 +20,7 @@ export const resourceFilesGetValidator = v.object(resourceFilesGetFields)
 
 export const resourceFilesGetQuery = query({
   args: createTokenValidator(resourceFilesGetFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, resourceFilesGetFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, resourceFilesGetFn),
 })
 
 export const resourceFilesGetInternalQuery = internalQuery({

@@ -1,7 +1,7 @@
 import { languageOrNoneValidator } from "@/app/i18n/language"
 import { fileGetByIdFn } from "@/file/convex/fileGetByIdFn"
 import type { DocFile } from "@/file/convex/IdFile"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
@@ -22,7 +22,7 @@ export const fileEditValidator = v.object(fileEditFields)
 
 export const fileEditMutation = mutation({
   args: createTokenValidator(fileEditFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, fileEditFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, fileEditFn),
 })
 
 export const fileEditInternalMutation = internalMutation({

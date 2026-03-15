@@ -1,6 +1,6 @@
 import { resourceGetModelFn } from "@/resource/convex/resourceGetQuery"
 import type { ResourceModel } from "@/resource/model/ResourceModel"
-import { authQuery } from "@/utils/convex_backend/authQuery"
+import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -16,7 +16,7 @@ export const orgResourceListValidator = v.object(orgResourceListFields)
 
 export const orgResourceListQuery = query({
   args: createTokenValidator(orgResourceListFields),
-  handler: async (ctx, args) => authQuery(ctx, args, orgResourceListFn),
+  handler: async (ctx, args) => authQueryWrapResult(ctx, args, orgResourceListFn),
 })
 
 export const orgResourceListInternalQuery = internalQuery({

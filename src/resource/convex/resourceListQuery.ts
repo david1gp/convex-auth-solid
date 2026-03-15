@@ -3,7 +3,7 @@ import type { DocResource } from "@/resource/convex/IdResource"
 import { resourceDocToModel } from "@/resource/convex/resourceDocToModel"
 import type { ResourceModel } from "@/resource/model/ResourceModel"
 import { visibilityValidator } from "@/resource/model_field/visibility"
-import { authQuery } from "@/utils/convex_backend/authQuery"
+import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -20,7 +20,7 @@ export const resourceListValidator = v.object(resourceListFields)
 
 export const resourcesListQuery = query({
   args: createTokenValidator(resourceListFields),
-  handler: async (ctx, args) => authQuery(ctx, args, resourceListFn),
+  handler: async (ctx, args) => authQueryWrapResult(ctx, args, resourceListFn),
 })
 
 export const resourcesListInternalQuery = internalQuery({

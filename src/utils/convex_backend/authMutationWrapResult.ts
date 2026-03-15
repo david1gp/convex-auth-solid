@@ -1,11 +1,11 @@
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import type { MutationCtx } from "@convex/_generated/server"
-import { type PromiseResult } from "~result"
+import { createResult, type PromiseResult } from "~result"
 
-export async function authMutationR<T extends { token: string }, R>(
+export async function authMutationWrapResult<T extends { token: string }, R>(
   ctx: MutationCtx,
   args: T,
-  fn: (ctx: MutationCtx, data: Omit<T, "token">) => PromiseResult<R>,
+  fn: (ctx: MutationCtx, data: Omit<T, "token">) => Promise<R>,
 ): PromiseResult<R> {
   const verifiedResult = await verifyTokenResult(args.token)
   if (!verifiedResult.success) {
@@ -13,5 +13,6 @@ export async function authMutationR<T extends { token: string }, R>(
     return verifiedResult
   }
   const { token, ...data } = args
-  return fn(ctx, data)
+  const out = await fn(ctx, data)
+  return createResult(out)
 }

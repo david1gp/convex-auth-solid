@@ -1,6 +1,6 @@
 import { docOrgMemberToModel } from "@/org/member_convex/docOrgMemberToModel"
 import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -16,7 +16,7 @@ export const orgMembersListValidator = v.object(orgMembersListFields)
 
 export const orgMembersListQuery = query({
   args: createTokenValidator(orgMembersListFields),
-  handler: async (ctx, args) => await authQueryR(ctx, args, orgMemberListFn),
+  handler: async (ctx, args) => await authQueryResult(ctx, args, orgMemberListFn),
 })
 
 export async function orgMemberListFn(

@@ -1,4 +1,4 @@
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -14,7 +14,7 @@ export const orgInvitationDismissValidator = v.object(orgInvitationDismissFields
 
 export const orgInvitation60DismissMutation = mutation({
   args: createTokenValidator(orgInvitationDismissFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgInvitation60DismissMutationFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, orgInvitation60DismissMutationFn),
 })
 
 export async function orgInvitation60DismissMutationFn(

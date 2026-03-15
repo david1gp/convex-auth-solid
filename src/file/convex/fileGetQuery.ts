@@ -1,7 +1,7 @@
 import { fileDocToModel } from "@/file/convex/fileDocToModel"
 import { fileGetByIdFn } from "@/file/convex/fileGetByIdFn"
 import type { FileModel } from "@/file/model/FileModel"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
@@ -18,7 +18,7 @@ export const fileGetValidator = v.object(fileGetFields)
 
 export const fileGetQuery = query({
   args: createTokenValidator(fileGetFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, fileGetFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, fileGetFn),
 })
 
 export const fileGetInternalQuery = internalQuery({

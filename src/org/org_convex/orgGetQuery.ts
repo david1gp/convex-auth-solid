@@ -2,7 +2,7 @@ import { docOrgToModel } from "@/org/org_convex/docOrgInvitationToModel"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgModel } from "@/org/org_model/OrgModel"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -18,7 +18,7 @@ export const orgGetValidator = v.object(orgGetFields)
 
 export const orgGetQuery = query({
   args: createTokenValidator(orgGetFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgGetQueryFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, orgGetQueryFn),
 })
 export const orgGetInternalQuery = internalQuery({
   args: orgGetValidator,

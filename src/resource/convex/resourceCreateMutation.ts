@@ -1,7 +1,7 @@
 import type { IdResource } from "@/resource/convex/IdResource"
 import { resourceDataSchemaFields } from "@/resource/model/resourceSchema"
 import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -21,7 +21,7 @@ export const resourceCreateValidator = v.object(resourceCreateFields)
 
 export const resourceCreateMutation = mutation({
   args: createTokenValidator(resourceCreateFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, resourceCreateFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, resourceCreateFn),
 })
 
 export const resourceCreateInternalMutation = internalMutation({

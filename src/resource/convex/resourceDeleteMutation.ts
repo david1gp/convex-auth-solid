@@ -1,6 +1,6 @@
 import { resourceFileListFn } from "@/resource/convex/resourceFileListQuery"
 import { resourceFileRemoveMutationFn } from "@/resource/convex/resourceFileRemoveMutation"
-import { authMutation } from "@/utils/convex_backend/authMutation"
+import { authMutationWrapResult } from "@/utils/convex_backend/authMutationWrapResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -15,7 +15,7 @@ export const resourceDeleteValidator = v.object(resourceDeleteFields)
 
 export const resourceDeleteMutation = mutation({
   args: createTokenValidator(resourceDeleteFields),
-  handler: async (ctx, args) => authMutation(ctx, args, resourceDeleteFn),
+  handler: async (ctx, args) => authMutationWrapResult(ctx, args, resourceDeleteFn),
 })
 
 export const resourceDeleteInternalMutation = internalMutation({

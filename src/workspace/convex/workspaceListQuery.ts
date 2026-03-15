@@ -1,6 +1,6 @@
 import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import { type QueryCtx, internalQuery, query } from "@convex/_generated/server"
-import { authQuery } from "@/utils/convex_backend/authQuery"
+import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 
@@ -14,7 +14,7 @@ export const workspaceListValidator = v.object(workspaceListFields)
 
 export const workspacesListQuery = query({
   args: createTokenValidator(workspaceListFields),
-  handler: async (ctx, args) => authQuery(ctx, args, workspaceListFn),
+  handler: async (ctx, args) => authQueryWrapResult(ctx, args, workspaceListFn),
 })
 
 export const workspaceListInternal = internalQuery({

@@ -1,5 +1,5 @@
 import { r2ApiGetUploadUrl } from "@/r2/api/r2ApiGetUploadUrl"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -16,7 +16,7 @@ export const r2UploadUrlGetFieldsWithToken = createTokenValidator(r2UploadUrlGet
 
 export const r2UploadUrlGetQuery = query({
   args: r2UploadUrlGetFieldsWithToken,
-  handler: async (ctx, args) => authQueryR(ctx, args, r2UploadUrlGetFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, r2UploadUrlGetFn),
 })
 
 export const r2UploadUrlGetInternalQuery = internalQuery({

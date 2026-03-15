@@ -1,7 +1,7 @@
 import type { DocResource } from "@/resource/convex/IdResource"
 import { resourceDataSchemaFields } from "@/resource/model/resourceSchema"
 import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -19,7 +19,7 @@ export type ResourceEditValidatorType = typeof resourceEditValidator.type
 
 export const resourceEditMutation = mutation({
   args: createTokenValidator(resourceEditFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, resourceEditFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, resourceEditFn),
 })
 
 export const resourceEditInternalMutation = internalMutation({

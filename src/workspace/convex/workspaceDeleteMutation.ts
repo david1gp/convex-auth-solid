@@ -1,5 +1,5 @@
 import { type MutationCtx, internalMutation, mutation } from "@convex/_generated/server"
-import { authMutation } from "@/utils/convex_backend/authMutation"
+import { authMutationWrapResult } from "@/utils/convex_backend/authMutationWrapResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { v } from "convex/values"
 
@@ -13,7 +13,7 @@ export const workspaceDeleteValidator = v.object(workspaceDeleteFields)
 
 export const workspaceDeleteMutation = mutation({
   args: createTokenValidator(workspaceDeleteFields),
-  handler: async (ctx, args) => authMutation(ctx, args, workspaceDeleteFn),
+  handler: async (ctx, args) => authMutationWrapResult(ctx, args, workspaceDeleteFn),
 })
 
 export const workspaceDeleteInternal = internalMutation({

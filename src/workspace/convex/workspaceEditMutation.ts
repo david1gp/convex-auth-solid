@@ -1,4 +1,4 @@
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
@@ -23,7 +23,7 @@ export const workspaceEditValidator = v
 
 export const workspaceEditMutation = mutation({
   args: createTokenValidator(workspaceEditValidator.fields),
-  handler: async (ctx, args) => authMutationR(ctx, args, workspaceEditFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, workspaceEditFn),
 })
 
 export const workspaceEditInternal = internalMutation({

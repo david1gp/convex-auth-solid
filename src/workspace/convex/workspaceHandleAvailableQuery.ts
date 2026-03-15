@@ -1,4 +1,4 @@
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -13,7 +13,7 @@ export const workspaceHandleAvailableValidator = v.object(workspaceHandleAvailab
 
 export const workspaceHandleAvailable = query({
   args: createTokenValidator(workspaceHandleAvailableFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, workspaceHandleAvailableFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, workspaceHandleAvailableFn),
 })
 
 export const workspaceHandleAvailableInternal = internalQuery({

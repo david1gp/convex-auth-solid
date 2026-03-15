@@ -7,7 +7,7 @@ import { docOrgToModel } from "@/org/org_convex/docOrgInvitationToModel"
 import type { DocOrg } from "@/org/org_convex/IdOrg"
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import type { OrgViewPageType } from "@/org/org_model/OrgViewPageType"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -22,7 +22,7 @@ export const orgGetPageValidator = v.object(orgGetPageFields)
 
 export const orgGetPageQuery = query({
   args: createTokenValidator(orgGetPageFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgGetPageQueryFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, orgGetPageQueryFn),
 })
 
 export async function orgGetPageQueryFn(ctx: QueryCtx, args: OrgGetPageValidatorType): PromiseResult<OrgViewPageType> {

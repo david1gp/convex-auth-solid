@@ -2,7 +2,7 @@ import type { IdOrg } from "@/org/org_convex/IdOrg"
 import { orgHandleAvailableQueryFn } from "@/org/org_convex/orgHandleAvailableQuery"
 import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
 import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -18,7 +18,7 @@ export const orgCreateValidator = v.object(orgCreateFields)
 
 export const orgCreateMutation = mutation({
   args: createTokenValidator(orgCreateFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgCreateMutationFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, orgCreateMutationFn),
 })
 
 export async function orgCreateMutationFn(ctx: MutationCtx, args: OrgCreateValidatorType): PromiseResult<IdOrg> {

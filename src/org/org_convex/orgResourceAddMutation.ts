@@ -1,6 +1,6 @@
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
 import { vIdOrg } from "@/org/org_convex/vIdOrg"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -19,7 +19,7 @@ export const orgResourceAddValidator = v.object(orgResourceAddFields)
 
 export const orgResourceAddMutation = mutation({
   args: createTokenValidator(orgResourceAddFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, orgResourceAddMutationFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, orgResourceAddMutationFn),
 })
 
 export const orgResourceAddInternalMutation = internalMutation({

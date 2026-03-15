@@ -2,7 +2,7 @@ import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import type { QueryCtx } from "@convex/_generated/server"
 import { type PromiseResult } from "~result"
 
-export async function authQueryR<T extends { token: string }, R>(
+export async function authQueryResult<T extends { token: string }, R>(
   ctx: QueryCtx,
   args: T,
   fn: (ctx: QueryCtx, data: Omit<T, "token">) => PromiseResult<R>,

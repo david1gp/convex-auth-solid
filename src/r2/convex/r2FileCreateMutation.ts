@@ -1,6 +1,6 @@
 import { fileCreateFields, type FileCreateValidatorType } from "@/file/convex/fileCreateMutation"
 import { fileDataSchema } from "@/file/model/fileSchema"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
@@ -15,7 +15,7 @@ export type R2FileCreateValidatorType = typeof r2FileCreateValidator.type
 
 export const r2FileCreateMutation = mutation({
   args: createTokenValidator(r2FileCreateFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, r2FileCreateFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, r2FileCreateFn),
 })
 
 export const r2FileCreateInternalMutation = internalMutation({

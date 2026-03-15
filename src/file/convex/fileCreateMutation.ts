@@ -2,7 +2,7 @@ import { vIdUser } from "@/auth/convex/vIdUser"
 import type { IdFile } from "@/file/convex/IdFile"
 import { fileDataSchema, fileSchemaFields } from "@/file/model/fileSchema"
 import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { authMutationR } from "@/utils/convex_backend/authMutationR"
+import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { stringSchemaId } from "@/utils/valibot/stringSchema"
@@ -31,7 +31,7 @@ export type FileCreateValidatorType = typeof fileCreateValidator.type
 
 export const fileCreateMutation = mutation({
   args: createTokenValidator(fileCreateFields),
-  handler: async (ctx, args) => authMutationR(ctx, args, fileCreateFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, fileCreateFn),
 })
 
 export const fileCreateInternalMutation = internalMutation({

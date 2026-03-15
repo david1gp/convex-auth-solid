@@ -1,5 +1,5 @@
 import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
-import { authQueryR } from "@/utils/convex_backend/authQueryR"
+import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
@@ -14,7 +14,7 @@ export const orgHandleAvailableValidator = v.object(orgHandleAvailableFields)
 
 export const orgHandleAvailableQuery = query({
   args: createTokenValidator(orgHandleAvailableFields),
-  handler: async (ctx, args) => authQueryR(ctx, args, orgHandleAvailableQueryFn),
+  handler: async (ctx, args) => authQueryResult(ctx, args, orgHandleAvailableQueryFn),
 })
 
 export async function orgHandleAvailableQueryFn(
