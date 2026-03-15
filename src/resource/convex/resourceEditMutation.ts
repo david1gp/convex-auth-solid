@@ -6,8 +6,8 @@ import { createTokenValidator } from "@/utils/convex_backend/createTokenValidato
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export const resourceEditFields = {
   ...valibotToConvex(resourceDataSchemaFields),

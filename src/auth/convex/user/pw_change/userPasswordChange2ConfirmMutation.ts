@@ -18,8 +18,8 @@ import { createUserIdValidator } from "@/utils/convex_backend/createUserIdValida
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
+import { createError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createError, type PromiseResult } from "~utils/result/Result"
 
 const userPasswordChange2ConfirmFieldsBase = {
   newPassword: v.string(),

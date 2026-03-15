@@ -6,14 +6,14 @@ import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuth
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMessageTechnical"
 import {
-  apiGenerateEmailPasswordChangeV1,
-  type GeneratedEmailType,
-  type PasswordChangeV1Type,
+    apiGenerateEmailPasswordChangeV1,
+    type GeneratedEmailType,
+    type PasswordChangeV1Type,
 } from "@adaptive-ds/email-generator/index.js"
+import { createResult, type PromiseResult } from "~result"
 import { envMode } from "~ui/env/envMode"
 import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
 import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"
-import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export async function sendEmailChangePassword(
   name: string,

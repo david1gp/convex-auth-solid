@@ -16,11 +16,11 @@ import { mdiAccountMultiple, mdiPlus } from "@mdi/js"
 import { useParams } from "@solidjs/router"
 import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
+import type { Result, ResultOk } from "~result"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { LinkButton } from "~ui/interactive/link/LinkButton"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
-import type { Result, ResultOk } from "~utils/result/Result"
 
 export function OrgMemberListPage() {
   const params = useParams()

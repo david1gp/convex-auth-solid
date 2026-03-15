@@ -7,11 +7,11 @@ import { userDeleteHardFiles } from "@/auth/convex/user/delete_hard_parts/userDe
 import { userDeleteHardOrgMemberships } from "@/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import {
-  userDeleteValidatorInternal,
-  userDeleteValidatorPublic,
-  type UserDeleteValidatorInternalType,
+    userDeleteValidatorInternal,
+    userDeleteValidatorPublic,
+    type UserDeleteValidatorInternalType,
 } from "./userDeleteValidator"
 
 export const userDeleteHardMutation = mutation({

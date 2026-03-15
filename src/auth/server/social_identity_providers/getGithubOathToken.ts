@@ -2,7 +2,7 @@ import { envGithubClientSecretResult } from "@/app/env/private/envGithubClientSe
 import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
 import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { queryString } from "~utils/url/queryString"
 import { searchParamsToObject } from "~utils/url/searchParamsToObject"
 import { authErrorMessages } from "./authErrorMessages"

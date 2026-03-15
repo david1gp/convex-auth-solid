@@ -1,7 +1,7 @@
 import { cachePrefix } from "@/utils/ui/cachePrefix"
 import type { BaseSchema } from "valibot"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
+import { createResult, createResultError, type Result } from "~result"
 
 const enabled = true
 

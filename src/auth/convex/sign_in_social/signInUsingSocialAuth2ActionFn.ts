@@ -4,7 +4,7 @@ import type { CommonAuthProvider } from "@/auth/server/social_identity_providers
 import { socialLoginGetUserProfile } from "@/auth/server/social_identity_providers/socialLoginGetUserProfile"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
-import type { PromiseResult } from "~utils/result/Result"
+import type { PromiseResult } from "~result"
 
 export async function signInUsingSocialAuth2ActionFn(
   ctx: ActionCtx,

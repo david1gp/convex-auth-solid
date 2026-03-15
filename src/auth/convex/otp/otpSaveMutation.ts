@@ -3,8 +3,8 @@ import { vIdUser } from "@/auth/convex/vIdUser"
 import { otpPurposeValidator } from "@/auth/model_field/otpPurpose"
 import { internalMutation } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { type PromiseResult } from "~utils/result/Result"
 
 export const otpSaveInternalMutation = internalMutation({
   args: {

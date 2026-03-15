@@ -11,7 +11,7 @@ import { authQueryR } from "@/utils/convex_backend/authQueryR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 export const orgGetPageFields = {
   orgHandle: v.string(),

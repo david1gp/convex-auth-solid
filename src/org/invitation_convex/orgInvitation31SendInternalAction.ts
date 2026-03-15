@@ -2,15 +2,15 @@ import { languageValidator } from "@/app/i18n/language"
 import type { IdUser } from "@/auth/convex/IdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import {
-  orgInvitation32SendEmailActionFn,
-  type OrgInvitationSendEmailValidatorType,
+    orgInvitation32SendEmailActionFn,
+    type OrgInvitationSendEmailValidatorType,
 } from "@/org/invitation_convex/orgInvitation32SendEmailActionFn"
 import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
 import { stt1 } from "@/utils/i18n/stt"
 import { api, internal } from "@convex/_generated/api"
 import { internalAction, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResultError, type PromiseResult } from "~result"
 
 export type OrgInvitationSendValidatorType = typeof orgInvitation31SendValidator.type
 

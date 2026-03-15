@@ -6,8 +6,8 @@ import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHan
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createUserIdValidator } from "@/utils/convex_backend/createUserIdValidator"
 import { type MutationCtx, internalMutation } from "@convex/_generated/server"
+import { type PromiseResult, createResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { type PromiseResult, createResult } from "~utils/result/Result"
 
 export const userProfileFieldsValidatorInternal = createUserIdValidator(userProfileUpdateFields)
 export type UserProfileFieldsTypeInternal = typeof userProfileFieldsValidatorInternal.type

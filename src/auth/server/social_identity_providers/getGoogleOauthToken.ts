@@ -4,7 +4,7 @@ import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { queryString } from "~utils/url/queryString"
 import { intMin1OrStringSchema } from "~utils/valibot/intOrStringSchema"
 

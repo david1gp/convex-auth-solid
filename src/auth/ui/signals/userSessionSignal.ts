@@ -2,8 +2,8 @@ import { userSessionSchema, type UserSession } from "@/auth/model/UserSession"
 import { userRole } from "@/auth/model_field/userRole"
 import { userSessionsSignal } from "@/auth/ui/signals/userSessionsSignal"
 import * as a from "valibot"
+import { createResult, createResultError, type Result } from "~result"
 import { createSignalObject, type SetterSimplified, type SignalObject } from "~ui/utils/createSignalObject"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
 
 const userSessionsSessionStorageKey = "userSession"
 

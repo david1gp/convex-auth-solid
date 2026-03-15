@@ -1,4 +1,5 @@
 import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
+import { sendEmailSignUp } from "@/auth/convex/email/sendEmailSignUp"
 import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
 import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
 import { signUpErrorMessages } from "@/auth/convex/sign_up/signUpErrorMessages"
@@ -7,9 +8,8 @@ import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
+import { createError } from "~result"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
-import { createError } from "~utils/result/Result"
-import { sendEmailSignUp } from "@/auth/convex/email/sendEmailSignUp"
 import { commonApiErrorMessages } from "./commonApiErrorMessages"
 
 export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

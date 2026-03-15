@@ -3,9 +3,9 @@ import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { FileDataModel } from "@/file/model/FileModel"
 import { apiBaseR2 } from "@/r2/client/apiBaseR2"
 import { apiPathR2FileCreate } from "@/r2/convex/r2FileCreateHttpHandler"
-import type { PromiseResult } from "~utils/result/Result"
-import { createResult, createResultError } from "~utils/result/Result"
-import { resultTryParsingFetchErr } from "~utils/result/resultTryParsingFetchErr"
+import type { PromiseResult } from "~result"
+import { createResult, createResultError } from "~result"
+import { resultTryParsingFetchErr } from "~result/resultTryParsingFetchErr"
 
 export async function apiR2FileCreate(data: FileDataModel): PromiseResult<string> {
   const op = "apiR2FileCreate"

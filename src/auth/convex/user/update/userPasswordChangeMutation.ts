@@ -1,16 +1,16 @@
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
 import { hashPassword2 } from "@/auth/convex/pw/hashPassword"
 import { verifyHashedPassword2 } from "@/auth/convex/pw/verifyHashedPassword"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import { passwordSchema } from "@/auth/model_field/passwordSchema"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { vIdUser } from "@/auth/convex/vIdUser"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { type PromiseResult } from "~utils/result/Result"
+import { type PromiseResult } from "~result"
 
 const userPasswordChangeFieldsBase = {
   currentPassword: v.optional(v.string()),

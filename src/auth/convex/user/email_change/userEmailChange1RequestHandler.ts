@@ -4,7 +4,7 @@ import { emailSchema } from "@/utils/valibot/emailSchema"
 import { api } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
-import { createError } from "~utils/result/Result"
+import { createError } from "~result"
 
 const userEmailChangeSchema = a.object({
   token: a.string(),

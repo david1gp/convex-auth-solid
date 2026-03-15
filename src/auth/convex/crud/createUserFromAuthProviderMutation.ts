@@ -1,15 +1,15 @@
+import type { DocUser } from "@/auth/convex/IdUser"
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserProfile } from "@/auth/model/UserProfile"
 import { userRole } from "@/auth/model_field/userRole"
 import {
-  commonAuthProviderValidator,
-  getUserNameFromCommonAuthProvider,
-  type CommonAuthProvider,
+    commonAuthProviderValidator,
+    getUserNameFromCommonAuthProvider,
+    type CommonAuthProvider,
 } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import type { WithoutSystemFields } from "convex/server"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocUser } from "@/auth/convex/IdUser"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 export type UserFields = WithoutSystemFields<DocUser>
 

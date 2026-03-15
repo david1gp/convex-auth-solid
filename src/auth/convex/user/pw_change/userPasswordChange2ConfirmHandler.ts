@@ -3,7 +3,7 @@ import { passwordSchema } from "@/auth/model_field/passwordSchema"
 import { api } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
-import { createError } from "~utils/result/Result"
+import { createError } from "~result"
 
 const userPasswordChange2ConfirmSchema = a.object({
   token: a.string(),

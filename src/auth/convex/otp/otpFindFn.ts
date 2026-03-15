@@ -1,7 +1,7 @@
-import type { DocAuthOtp } from "@/auth/convex/IdUser"
-import type { OtpPurpose } from "@/auth/model_field/otpPurpose"
-import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
-import { type PromiseResult, createError } from "~utils/result/Result"
+import type { DocAuthOtp } from "@/auth/convex/IdUser";
+import type { OtpPurpose } from "@/auth/model_field/otpPurpose";
+import type { MutationCtx, QueryCtx } from "@convex/_generated/server";
+import { type PromiseResult, createError } from "~result";
 
 export async function otpFindFn(
   ctx: QueryCtx | MutationCtx,

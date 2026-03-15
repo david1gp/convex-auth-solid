@@ -2,8 +2,8 @@ import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTo
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import {
-  type UserProfileFieldsTypeInternal,
-  userProfileFieldsBase,
+    type UserProfileFieldsTypeInternal,
+    userProfileFieldsBase,
 } from "@/auth/convex/user/update/userProfileUpdateMutationInternal"
 import type { UserProfile } from "@/auth/model/UserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
@@ -11,12 +11,12 @@ import { loginMethod } from "@/auth/model_field/loginMethod"
 import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import type { OrgRole } from "@/org/org_model_field/orgRole"
-import { type MutationCtx, mutation } from "@convex/_generated/server"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { type MutationCtx, mutation } from "@convex/_generated/server"
+import { type PromiseResult, createResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { type PromiseResult, createResult } from "~utils/result/Result"
 
 export const userProfileFieldsValidatorPublic = createTokenValidator(userProfileFieldsBase)
 export type UserProfileFieldsTypePublic = typeof userProfileFieldsValidatorPublic.type

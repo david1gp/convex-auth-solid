@@ -1,6 +1,5 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
 import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
-import { createError, createResult, type PromiseResult } from "~utils/result/Result"
+import { createError, createResult, type PromiseResult } from "~result"
 
 export async function hashPassword2(password: string): PromiseResult<string> {
   const op = "hashPassword2"

@@ -1,4 +1,5 @@
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model_field/loginMethod"
 import { userRole } from "@/auth/model_field/userRole"
@@ -6,9 +7,8 @@ import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createError, createResult, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createError, createResult, type PromiseResult } from "~utils/result/Result"
-import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 
 export type SignUpConfirmValidatorType = typeof signUpConfirmEmailValidator.type
 export const signUpConfirmEmailValidator = v.object({

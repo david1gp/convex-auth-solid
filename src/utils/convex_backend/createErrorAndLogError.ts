@@ -1,4 +1,4 @@
-import { createResultError, type ResultErr } from "~utils/result/Result"
+import { createResultError, type ResultErr } from "~result"
 
 export function createErrorAndLogError(
   op: string,

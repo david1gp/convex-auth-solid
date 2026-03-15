@@ -1,4 +1,5 @@
 import { languageSchema } from "@/app/i18n/language"
+import type { OrgInvitationFormState } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 import { pageRouteOrgInvitation } from "@/org/invitation_url/pageRouteOrgInvitation"
 import { orgRoleSchema } from "@/org/org_model_field/orgRole"
 import { cachePrefix } from "@/utils/ui/cachePrefix"
@@ -6,9 +7,8 @@ import { debounceSaveMs } from "@/utils/ui/debounceMs"
 import { stringSchema0to100 } from "@/utils/valibot/stringSchema"
 import { debounce } from "@solid-primitives/scheduled"
 import * as a from "valibot"
+import { createResult, createResultError, type Result } from "~result"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
-import type { OrgInvitationFormState } from "@/org/invitation_ui/form/orgInvitationFormStateManagement"
 
 const orgInvitationFormLocalStorageKey = cachePrefix + pageRouteOrgInvitation.orgInvitationAdd
 

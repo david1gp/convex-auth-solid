@@ -2,7 +2,7 @@ import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
 import { createToken } from "@/auth/server/jwt_token/createToken"
 import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
 import type { OrgRole } from "@/org/org_model_field/orgRole"
-import { createError, createResult, type PromiseResult } from "~utils/result/Result"
+import { createError, createResult, type PromiseResult } from "~result"
 
 export async function createTokenResult(userId: string, orgHandle?: string, orgRole?: OrgRole): PromiseResult<string> {
   const expiresInDays = tokenValidDurationInDays

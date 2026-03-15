@@ -8,10 +8,10 @@ import { createMutation } from "@/utils/convex_client/createMutation"
 import { navigateTo } from "@/utils/router/navigateTo"
 import type { HasToken } from "@/utils/ui/HasToken"
 import { api } from "@convex/_generated/api"
+import type { Result } from "~result"
 import { type FormMode, formMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
-import type { Result } from "~utils/result/Result"
 
 export type ResourceFormActions = {
   create?: ResourceFormCreateFn

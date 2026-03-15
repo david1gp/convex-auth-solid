@@ -1,5 +1,7 @@
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 import type { DocUser } from "@/auth/convex/IdUser"
+import { otpConsumeFn } from "@/auth/convex/otp/otpConsumeFn"
+import { otpFindFn } from "@/auth/convex/otp/otpFindFn"
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
 import { loginMethod } from "@/auth/model_field/loginMethod"
@@ -8,10 +10,8 @@ import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createError, type PromiseResult } from "~utils/result/Result"
-import { otpConsumeFn } from "@/auth/convex/otp/otpConsumeFn"
-import { otpFindFn } from "@/auth/convex/otp/otpFindFn"
 
 export type signInViaEmailEnterOtp2ValidatorType = typeof signInViaEmailEnterOtp2Validator.type
 export const signInViaEmailEnterOtp2Validator = v.object({

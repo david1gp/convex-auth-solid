@@ -1,10 +1,10 @@
 import type { IdUser } from "@/auth/convex/IdUser"
 import {
-  getUserNameFromCommonAuthProvider,
-  type CommonAuthProvider,
+    getUserNameFromCommonAuthProvider,
+    type CommonAuthProvider,
 } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import { type MutationCtx } from "@convex/_generated/server"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 export async function updateUserFromAuthProviderFn(
   ctx: MutationCtx,

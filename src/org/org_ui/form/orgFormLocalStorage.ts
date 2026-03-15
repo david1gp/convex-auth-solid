@@ -1,13 +1,13 @@
 import { orgModelCreateEmpty, type OrgDataModel, type OrgModel } from "@/org/org_model/OrgModel"
 import { orgDataPartialSchema } from "@/org/org_model/orgSchema"
+import type { OrgFormState } from "@/org/org_ui/form/orgFormStateManagement"
 import { pageRouteOrg } from "@/org/org_url/pageRouteOrg"
 import { cachePrefix } from "@/utils/ui/cachePrefix"
 import { debounceSaveMs } from "@/utils/ui/debounceMs"
 import { debounce } from "@solid-primitives/scheduled"
 import * as a from "valibot"
+import { createResult, createResultError, type Result } from "~result"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
-import type { OrgFormState } from "@/org/org_ui/form/orgFormStateManagement"
 
 const orgFormLocalStorageKey = cachePrefix + pageRouteOrg.orgAdd
 

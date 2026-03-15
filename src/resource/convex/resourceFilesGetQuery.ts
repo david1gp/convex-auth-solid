@@ -7,8 +7,8 @@ import { authQueryR } from "@/utils/convex_backend/authQueryR"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { notEmptyFilter } from "~utils/arr/notEmptyFilter"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export const resourceFilesGetFields = {
   resourceId: v.string(),

@@ -15,8 +15,8 @@ import { createTokenValidator } from "@/utils/convex_backend/createTokenValidato
 import { createUserIdValidator } from "@/utils/convex_backend/createUserIdValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createError, type PromiseResult } from "~utils/result/Result"
 
 const userEmailChange2ConfirmFieldsBase = {
   newEmail: v.string(),

@@ -5,7 +5,7 @@ import { createQueryCached } from "@/utils/cache/createQueryCached"
 import { createQuery } from "@/utils/convex_client/createQuery"
 import { api } from "@convex/_generated/api"
 import * as a from "valibot"
-import type { Result } from "~utils/result/Result"
+import type { Result } from "~result"
 
 export function createQueryOrgList(): () => Result<OrgModel[]> | undefined {
   return createQueryCached<OrgModel[]>(

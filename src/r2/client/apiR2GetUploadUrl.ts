@@ -1,6 +1,6 @@
 import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
-import { type Result, createResult } from "~utils/result/Result"
-import { resultTryParsingFetchErr } from "~utils/result/resultTryParsingFetchErr"
+import { type Result, createResult } from "~result"
+import { resultTryParsingFetchErr } from "~result/resultTryParsingFetchErr"
 import { apiBaseR2 } from "./apiBaseR2"
 
 export const apiPathR2UploadUrl = "/uploadUrl"

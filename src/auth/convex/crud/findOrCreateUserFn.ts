@@ -1,13 +1,13 @@
+import { createUserFromAuthProviderFn } from "@/auth/convex/crud/createUserFromAuthProviderMutation"
+import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
+import { linkAuthToExistingUserFn } from "@/auth/convex/crud/linkAuthToExistingUserFn"
+import type { DocAuthAccount } from "@/auth/convex/IdUser"
+import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
 import { createUserSessionTimes, type UserSession } from "@/auth/model/UserSession"
 import { type CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
 import { type MutationCtx } from "@convex/_generated/server"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import type { DocAuthAccount } from "@/auth/convex/IdUser"
-import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
-import { createUserFromAuthProviderFn } from "@/auth/convex/crud/createUserFromAuthProviderMutation"
-import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
-import { linkAuthToExistingUserFn } from "@/auth/convex/crud/linkAuthToExistingUserFn"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 export type SignInUsingSocialAuthResultInternal = Omit<UserSession, "token">
 

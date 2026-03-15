@@ -1,6 +1,6 @@
 import { envVariableErrorMessage } from "@/app/env/envVariableErrorMessage"
 import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
+import { createResult, createResultError, type Result } from "~result"
 
 export function envBaseUrlR2Result(): Result<string> {
   const op = "envBaseUrlR2Result"

@@ -7,8 +7,8 @@ import { loginProvider, type LoginProvider } from "@/auth/model_field/socialLogi
 import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
+import { createResultError } from "~result"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
-import { createResultError } from "~utils/result/Result"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
 export async function signInUsingSocialAuth1RequestHandler(

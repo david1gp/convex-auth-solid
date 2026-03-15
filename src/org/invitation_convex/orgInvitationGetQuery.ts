@@ -3,7 +3,7 @@ import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 export const orgInvitationGetFields = {
   orgHandle: v.optional(v.string()),

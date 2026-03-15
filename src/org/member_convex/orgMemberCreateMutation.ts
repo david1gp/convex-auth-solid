@@ -1,12 +1,12 @@
 import type { IdUser } from "@/auth/convex/IdUser"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
+import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
 import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
-import { vIdUser } from "@/auth/convex/vIdUser"
-import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
 
 export type OrgMemberCreateValidatorType = typeof orgMemberCreateValidator.type
 

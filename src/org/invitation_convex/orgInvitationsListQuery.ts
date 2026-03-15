@@ -2,7 +2,7 @@ import { docOrgInvitationToModel } from "@/org/invitation_convex/docOrgInvitatio
 import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
 import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 export const orgInvitationsListFields = {
   orgHandle: v.string(),

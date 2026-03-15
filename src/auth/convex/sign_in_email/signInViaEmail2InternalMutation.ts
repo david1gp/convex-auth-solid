@@ -4,7 +4,7 @@ import { otpSaveFn } from "@/auth/convex/otp/otpSaveFn"
 import { otpPurpose } from "@/auth/model_field/otpPurpose"
 import { internalMutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createError, type PromiseResult } from "~utils/result/Result"
+import { createError, type PromiseResult } from "~result"
 
 export type SignInViaEmailSaveCodeValidatorType = typeof signInViaEmailSaveCodeValidator.type
 export const signInViaEmailSaveCodeValidator = v.object({

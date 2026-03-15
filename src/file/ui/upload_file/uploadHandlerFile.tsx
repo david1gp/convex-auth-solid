@@ -10,10 +10,10 @@ import { apiR2GetUploadUrl } from "@/r2/client/apiR2GetUploadUrl"
 import { apiR2UploadFileWithProgress } from "@/r2/client/apiR2UploadFile"
 import type { MayHaveResourceId } from "@/resource/model/MayHaveResourceId"
 import posthog from "posthog-js"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { SignalObject } from "~ui/utils/createSignalObject"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export interface FileUploadHandlerProps extends MayHaveResourceId {
   file: File

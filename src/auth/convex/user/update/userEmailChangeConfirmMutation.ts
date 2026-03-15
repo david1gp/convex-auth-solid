@@ -1,16 +1,16 @@
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
+import { otpConsumeFn } from "@/auth/convex/otp/otpConsumeFn"
+import { otpFindFn } from "@/auth/convex/otp/otpFindFn"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import { otpPurpose } from "@/auth/model_field/otpPurpose"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { vIdUser } from "@/auth/convex/vIdUser"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import type { PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import type { PromiseResult } from "~utils/result/Result"
-import { otpConsumeFn } from "@/auth/convex/otp/otpConsumeFn"
-import { otpFindFn } from "@/auth/convex/otp/otpFindFn"
 
 const userEmailChangeConfirmFieldsBase = {
   newEmail: v.string(),

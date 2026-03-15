@@ -6,7 +6,7 @@ import { stt1 } from "@/utils/i18n/stt"
 import { api } from "@convex/_generated/api"
 import { action, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResultError, type PromiseResult } from "~result"
 
 export type OrgInvitationResendValidatorType = typeof orgInvitation30ResendValidator.type
 

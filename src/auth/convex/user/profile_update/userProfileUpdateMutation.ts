@@ -1,8 +1,8 @@
 import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
 import type { IdUser } from "@/auth/convex/IdUser"
 import {
-  type UserProfileFieldsTypeInternal,
-  userProfileUpdateInternalFn,
+    type UserProfileFieldsTypeInternal,
+    userProfileUpdateInternalFn,
 } from "@/auth/convex/user/profile_update/userProfileUpdateMutationInternal"
 import type { UserProfile } from "@/auth/model/UserProfile"
 import type { UserSession } from "@/auth/model/UserSession"
@@ -12,8 +12,8 @@ import type { OrgRole } from "@/org/org_model_field/orgRole"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { type MutationCtx, mutation } from "@convex/_generated/server"
+import { type PromiseResult, createResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { type PromiseResult, createResult } from "~utils/result/Result"
 import { userProfileUpdateFields } from "./userProfileUpdate"
 
 export const userProfileFieldsValidatorPublic = createTokenValidator(userProfileUpdateFields)

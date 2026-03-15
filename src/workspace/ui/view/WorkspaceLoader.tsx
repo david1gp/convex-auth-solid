@@ -7,9 +7,9 @@ import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { HasWorkspaceHandle } from "@/workspace/model/HasWorkspaceHandle"
 import { api } from "@convex/_generated/api"
 import { Match, Switch, type JSXElement } from "solid-js"
+import type { ResultErr, ResultOk } from "~result"
 import { ttt } from "~ui/i18n/ttt"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { ResultErr, ResultOk } from "~utils/result/Result"
 
 export interface WorkspaceLoaderProps extends HasWorkspaceHandle, MayHaveClass {
   WorkspaceComponent: (p: WorkspaceComponentProps) => JSXElement

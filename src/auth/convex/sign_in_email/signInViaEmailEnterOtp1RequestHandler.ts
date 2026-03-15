@@ -4,8 +4,8 @@ import { signInViaEmailEnterOtpSchema } from "@/auth/model/signInSchema"
 import { internal } from "@convex/_generated/api"
 import { type ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
+import { createError } from "~result"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
-import { createError } from "~utils/result/Result"
 import { base64urlEncodeObject } from "~utils/url/base64url"
 
 export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

@@ -7,8 +7,8 @@ import { createTokenValidator } from "@/utils/convex_backend/createTokenValidato
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
+import { createError, createResult, createResultError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createError, createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export type OrgEditValidatorType = typeof orgEditValidator.type
 

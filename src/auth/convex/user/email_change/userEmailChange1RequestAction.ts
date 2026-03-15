@@ -15,7 +15,7 @@ import { internal } from "@convex/_generated/api"
 import { action, internalAction, type ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { type PromiseResult } from "~utils/result/Result"
+import { type PromiseResult } from "~result"
 
 export const userEmailChangeFieldsBase = {
   newEmail: v.string(),

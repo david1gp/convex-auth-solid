@@ -5,8 +5,8 @@ import { fileDataSchema } from "@/file/model/fileSchema"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
+import { createResultError } from "~result"
 import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
-import { createResultError } from "~utils/result/Result"
 
 export const apiPathR2FileCreate = "/fileCreate"
 

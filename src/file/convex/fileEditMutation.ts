@@ -6,8 +6,8 @@ import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogW
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export type FileEditValidatorType = typeof fileEditValidator.type
 

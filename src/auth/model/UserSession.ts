@@ -3,7 +3,7 @@ import { loginMethodSchema, type LoginMethod } from "@/auth/model_field/loginMet
 import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
 import dayjs from "dayjs"
 import * as a from "valibot"
-import { createError, createResult, type Result } from "~utils/result/Result"
+import { createError, createResult, type Result } from "~result"
 import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export type UserSession = {

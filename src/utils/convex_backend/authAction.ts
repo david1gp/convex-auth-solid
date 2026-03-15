@@ -1,6 +1,6 @@
 import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
 import type { ActionCtx } from "@convex/_generated/server"
-import { createResult, type PromiseResult } from "~utils/result/Result"
+import { createResult, type PromiseResult } from "~result"
 
 export async function authAction<T extends { token: string }, R>(
   ctx: ActionCtx,

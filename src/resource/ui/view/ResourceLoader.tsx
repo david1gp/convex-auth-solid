@@ -15,8 +15,8 @@ import { resultHasErrorMessage } from "@/utils/result/resultHasErrorMessage"
 import { api } from "@convex/_generated/api"
 import { createEffect, Match, Switch, type JSXElement } from "solid-js"
 import * as a from "valibot"
+import type { Result } from "~result"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { Result } from "~utils/result/Result"
 
 export interface ResourceLoaderProps extends HasResourceId, MayHaveClass {
   ResourceComponent: (p: ResourceComponentProps) => JSXElement

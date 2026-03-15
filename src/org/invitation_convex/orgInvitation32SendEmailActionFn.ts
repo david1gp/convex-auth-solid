@@ -1,8 +1,8 @@
 import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
 import { languageValidator } from "@/app/i18n/language"
 import {
-  sendEmailOrgInvitation,
-  type GenerateEmailOrgInvitationProps,
+    sendEmailOrgInvitation,
+    type GenerateEmailOrgInvitationProps,
 } from "@/auth/convex/email/sendEmailOrgInvitation"
 import type { OrgInvitationDataModel } from "@/org/invitation_model/OrgInvitationModel"
 import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
@@ -10,8 +10,8 @@ import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internal } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export type OrgInvitationSendEmailValidatorType = typeof orgInvitationSendEmailValidator.type
 

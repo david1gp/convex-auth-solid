@@ -1,6 +1,6 @@
-import { type QueryCtx, query } from "@convex/_generated/server"
+import { query, type QueryCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~utils/result/Result"
+import { createResult, type PromiseResult } from "~result"
 
 export const usernameAvailableFields = {
   username: v.string(),

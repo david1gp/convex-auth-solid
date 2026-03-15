@@ -5,10 +5,10 @@ import type { UploadAreaFileInfo } from "@/file/ui/stats/UploadAreaFileInfo"
 import { uploadHandlerFilePure } from "@/file/ui/upload_file/uploadHandlerFile"
 import type { MayHaveResourceId } from "@/resource/model/MayHaveResourceId"
 import posthog from "posthog-js"
+import { createResultError, type PromiseResult } from "~result"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import type { SignalObject } from "~ui/utils/createSignalObject"
-import { createResultError, type PromiseResult } from "~utils/result/Result"
 
 export interface ImageUploadHandlerProps extends MayHaveResourceId {
   file: File

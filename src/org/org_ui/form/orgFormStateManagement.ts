@@ -16,11 +16,11 @@ import { api } from "@convex/_generated/api"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as a from "valibot"
+import type { Result } from "~result"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import type { Result } from "~utils/result/Result"
 
 export type OrgFormData = {
   orgHandle: string

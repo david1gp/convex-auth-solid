@@ -39,7 +39,6 @@ export function posthogInit(session?: UserSession) {
     persistence: "localStorage",
     api_host: "/ph-api",
     ui_host: "/ph-ui",
-    loaded: session ? loaded : undefined,
     advanced_disable_feature_flags_on_first_load: true,
     advanced_disable_feature_flags: true,
     enable_recording_console_log: true,

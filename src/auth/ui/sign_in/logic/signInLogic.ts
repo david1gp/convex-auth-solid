@@ -5,7 +5,7 @@ import { createUrl } from "@/utils/router/createUrl"
 import { navigateTo } from "@/utils/router/navigateTo"
 import { searchParamGet } from "@/utils/router/searchParamGet"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
+import { createResult, createResultError, type Result } from "~result"
 import { base64urlDecodeObject } from "~utils/url/base64url"
 
 export function signInLogic(): void {

@@ -13,13 +13,13 @@ import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import { useNavigate } from "@solidjs/router"
 import * as a from "valibot"
+import type { Result } from "~result"
 import { ttt } from "~ui/i18n/ttt"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 import type { NavigateTo } from "~ui/utils/NavigateTo"
-import type { Result } from "~utils/result/Result"
 
 export type WorkspaceFormField = keyof typeof workspaceFormField
 

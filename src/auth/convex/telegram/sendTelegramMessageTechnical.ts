@@ -1,5 +1,5 @@
 import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import type { PromiseResult } from "~utils/result/Result"
+import type { PromiseResult } from "~result"
 import { sendTelegramMessageHtml, type TelegramEnvVariableNames } from "~utils/telegram/sendTelegramMessageHtml"
 
 export async function sendTelegramMessageAuth(

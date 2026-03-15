@@ -3,7 +3,7 @@ import { envMicrosoftClientIdResult } from "@/app/env/public/envMicrosoftClientI
 import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
 import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { queryString } from "~utils/url/queryString"
 import { searchParamsToObject } from "~utils/url/searchParamsToObject"
 import { authErrorMessages } from "./authErrorMessages"

@@ -6,8 +6,8 @@ import { createTokenValidator } from "@/utils/convex_backend/createTokenValidato
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
+import { createResult, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export const r2FileCreateFields = fileCreateFields
 export const r2FileCreateValidator = v.object(r2FileCreateFields)

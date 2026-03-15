@@ -3,7 +3,7 @@ import { envR2AccountIdResult } from "@/app/env/private/envR2AccountIdResult"
 import { envR2BucketNameResult } from "@/app/env/private/envR2BucketNameResult"
 import { envR2SecretAccessKeyResult } from "@/app/env/private/envR2SecretAccessKeyResult"
 import { S3Client } from "@bradenmacdonald/s3-lite-client"
-import { type Result, createResult } from "~utils/result/Result"
+import { type Result, createResult } from "~result"
 
 /**
  * - code - https://github.com/bradenmacdonald/s3-lite-client

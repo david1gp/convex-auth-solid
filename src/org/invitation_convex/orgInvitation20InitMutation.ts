@@ -8,8 +8,8 @@ import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
 import { internal } from "@convex/_generated/api"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { generateId12 } from "~utils/ran/generateId12"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export type OrgInvitationCreateValidatorType = typeof orgInvitationCreateActionValidator.type
 

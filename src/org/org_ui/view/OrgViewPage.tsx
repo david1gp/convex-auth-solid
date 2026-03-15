@@ -13,9 +13,9 @@ import { createQuery } from "@/utils/convex_client/createQuery"
 import { api } from "@convex/_generated/api"
 import { useParams } from "@solidjs/router"
 import { createEffect, Match, Switch } from "solid-js"
+import type { Result, ResultErr } from "~result"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { Result, ResultErr } from "~utils/result/Result"
 
 export function OrgViewPage() {
   const params = useParams()

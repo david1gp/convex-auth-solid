@@ -15,6 +15,7 @@ import { api } from "@convex/_generated/api"
 import { mdiAccountAlert } from "@mdi/js"
 import { useParams } from "@solidjs/router"
 import { Match, Switch, createSignal } from "solid-js"
+import type { ResultErr, ResultOk } from "~result"
 import { Button } from "~ui/interactive/button/Button"
 import { buttonVariant } from "~ui/interactive/button/buttonCva"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
@@ -23,7 +24,6 @@ import { classesCardWrapperP8 } from "~ui/static/container/classesCardWrapper"
 import { PageWrapper } from "~ui/static/page/PageWrapper"
 import { classArr } from "~ui/utils/classArr"
 import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { ResultErr, ResultOk } from "~utils/result/Result"
 
 export function OrgLeavePage() {
   const params = useParams()

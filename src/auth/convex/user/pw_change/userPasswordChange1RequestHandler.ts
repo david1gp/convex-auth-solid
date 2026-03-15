@@ -3,7 +3,7 @@ import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMess
 import { api } from "@convex/_generated/api"
 import type { ActionCtx } from "@convex/_generated/server"
 import * as a from "valibot"
-import { createError } from "~utils/result/Result"
+import { createError } from "~result"
 
 const userPasswordChange1RequestSchema = a.object({
   token: a.string(),

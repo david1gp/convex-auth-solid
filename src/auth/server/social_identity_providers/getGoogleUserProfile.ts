@@ -1,7 +1,7 @@
 import { loginProvider } from "@/auth/model_field/socialLoginProvider"
 import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 
 /**
  * https://github.com/nextauthjs/next-auth/blob/main/packages/core/src/providers/google.ts

@@ -1,14 +1,13 @@
 import type { DocUser, IdUser } from "@/auth/convex/IdUser"
 import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import type { UserProfile } from "@/auth/model/UserProfile"
 import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import type { OrgRole } from "@/org/org_model_field/orgRole"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
-import { vIdUser } from "@/auth/convex/vIdUser"
+import { type MutationCtx, internalMutation } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { type PromiseResult, createResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { type PromiseResult, createResult } from "~utils/result/Result"
 
 export const userProfileFieldsBase = {
   name: v.optional(v.string()),

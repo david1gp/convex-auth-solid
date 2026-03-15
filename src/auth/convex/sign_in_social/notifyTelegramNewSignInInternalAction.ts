@@ -3,8 +3,8 @@ import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMess
 import { userSessionValidator } from "@/auth/model/userSessionValidator"
 import { type ActionCtx, internalAction } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, type PromiseResult } from "~result"
 import { envMode } from "~ui/env/envMode"
-import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export const notifyTelegramNewSignUpArgsValidator = v.object({
   userSession: userSessionValidator,

@@ -7,7 +7,9 @@
       "@/*": ["./src/*"],
       "@convex/*": ["./convex/*"],
       "~ui/*": ["./node_modules/@adaptive-ds/solid-ui/dist/*"],
-      "~utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"]
+      "~utils/*": ["./node_modules/@adaptive-ds/utils/dist/*"],
+      "~result": ["./node_modules/@adaptive-ds/result/dist/index.js"],
+      "~result/*": ["./node_modules/@adaptive-ds/result/dist/*.js"]
     }
   },
   "include": ["src", "lib", "convex", "postcss.config.cjs"]

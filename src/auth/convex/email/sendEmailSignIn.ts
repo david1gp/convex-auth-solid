@@ -5,14 +5,14 @@ import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuth
 import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
 import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMessageTechnical"
 import {
-  apiGenerateEmailSignInV1,
-  type GeneratedEmailType,
-  type SignInV1Type,
+    apiGenerateEmailSignInV1,
+    type GeneratedEmailType,
+    type SignInV1Type,
 } from "@adaptive-ds/email-generator/index.js"
+import { createResult, type PromiseResult } from "~result"
 import { envMode } from "~ui/env/envMode"
 import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"
 import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
-import { createResult, type PromiseResult } from "~utils/result/Result"
 
 export async function sendEmailSignIn(email: string, code: string, url: string, l: Language): PromiseResult<null> {
   const data = { code, url, email }

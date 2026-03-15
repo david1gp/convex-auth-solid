@@ -3,20 +3,20 @@ import { authLog } from "@/auth/server/authLog"
 import type { CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
 import { getGithubOathToken } from "@/auth/server/social_identity_providers/getGithubOathToken"
 import {
-  getGithubUserProfile,
-  type GitHubUserProfile,
+    getGithubUserProfile,
+    type GitHubUserProfile,
 } from "@/auth/server/social_identity_providers/getGithubUserProfile"
 import { getGoogleOauthToken } from "@/auth/server/social_identity_providers/getGoogleOauthToken"
 import {
-  getGoogleUserProfile,
-  type GoogleUserProfile,
+    getGoogleUserProfile,
+    type GoogleUserProfile,
 } from "@/auth/server/social_identity_providers/getGoogleUserProfile"
 import { getMicrosoftOauthToken } from "@/auth/server/social_identity_providers/getMicrosoftOauthToken"
 import {
-  getMicrosoftUserProfile,
-  type MicrosoftUserProfile,
+    getMicrosoftUserProfile,
+    type MicrosoftUserProfile,
 } from "@/auth/server/social_identity_providers/getMicrosoftUserProfile"
-import { createResult, type PromiseResult } from "~utils/result/Result"
+import { createResult, type PromiseResult } from "~result"
 
 export const socialLoginGetUserProfile = {
   github: oauthGithub,

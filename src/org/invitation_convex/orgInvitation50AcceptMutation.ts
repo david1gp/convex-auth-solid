@@ -9,8 +9,8 @@ import { orgGetQueryInternalFn } from "@/org/org_convex/orgGetQuery"
 import { stt } from "@/utils/i18n/stt"
 import { mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 

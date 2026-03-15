@@ -3,8 +3,8 @@ import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
 import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
 import { workspaceSchema } from "@/workspace/model/workspaceSchema"
 import * as a from "valibot"
+import { createResult, createResultError, type Result } from "~result"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import { createResult, createResultError, type Result } from "~utils/result/Result"
 
 const workspaceListLocalStorageKey = cachePrefix + "workspaceList"
 

@@ -4,13 +4,13 @@ import { ttc } from "@/app/i18n/ttc"
 import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
 import type { DocOrgInvitation, IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
 import {
-  orgInvitationFormConfig,
-  orgInvitationFormField,
-  type OrgInvitationFormField,
+    orgInvitationFormConfig,
+    orgInvitationFormField,
+    type OrgInvitationFormField,
 } from "@/org/invitation_ui/form/orgInvitationFormField"
 import {
-  orgInvitationFormLocalStorage,
-  type OrgInvitationFormData,
+    orgInvitationFormLocalStorage,
+    type OrgInvitationFormData,
 } from "@/org/invitation_ui/form/orgInvitationFormLocalStorage"
 import { urlOrgInvitationList } from "@/org/invitation_url/urlOrgInvitation"
 import { orgRole, type OrgRole } from "@/org/org_model_field/orgRole"
@@ -22,11 +22,11 @@ import { api } from "@convex/_generated/api"
 import { mdiAlertCircle } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as a from "valibot"
+import type { Result } from "~result"
 import { formMode, type FormMode } from "~ui/input/form/formMode"
 import { toastAdd } from "~ui/interactive/toast/toastAdd"
 import { toastVariant } from "~ui/interactive/toast/toastVariant"
 import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
-import type { Result } from "~utils/result/Result"
 
 export type OrgInvitationFormState = {
   invitedName: SignalObject<string>

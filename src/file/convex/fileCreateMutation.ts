@@ -1,17 +1,16 @@
-import { fileSchemaFields } from "@/file/model/fileSchema"
+import { vIdUser } from "@/auth/convex/vIdUser"
 import type { IdFile } from "@/file/convex/IdFile"
-import { fileDataSchema } from "@/file/model/fileSchema"
+import { fileDataSchema, fileSchemaFields } from "@/file/model/fileSchema"
 import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { stringSchemaId } from "@/utils/valibot/stringSchema"
 import { authMutationR } from "@/utils/convex_backend/authMutationR"
 import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
 import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { stringSchemaId } from "@/utils/valibot/stringSchema"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
 import { v } from "convex/values"
 import * as a from "valibot"
+import { createResult, type PromiseResult } from "~result"
 import { nowIso } from "~utils/date/nowIso"
-import { createResult, type PromiseResult } from "~utils/result/Result"
-import { vIdUser } from "@/auth/convex/vIdUser"
 
 const fileMetaDataSchemaFields = {
   fileId: stringSchemaId,

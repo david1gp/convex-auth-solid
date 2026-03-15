@@ -1,6 +1,7 @@
 import { defineConfig } from "@rsbuild/core"
 import { pluginBabel } from "@rsbuild/plugin-babel"
 import { pluginSolid } from "@rsbuild/plugin-solid"
+import path from "path"
 
 export default defineConfig({
   server: {
@@ -34,10 +35,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": new URL("./src", import.meta.url).pathname,
-      "@convex": new URL("./convex", import.meta.url).pathname,
-      "~ui": new URL("./ui", import.meta.url).pathname,
-      "~utils": new URL("./node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
+      "@": path.resolve(__dirname, "./src"),
+      "@convex": path.resolve(__dirname, "./convex"),
+      "~ui": path.resolve(__dirname, "./ui"),
+      "~utils": path.resolve(__dirname, "./node_modules/@adaptive-ds/utils/dist"),
+      "~result": path.resolve(__dirname, "./node_modules/@adaptive-ds/result/dist"),
     },
   },
   plugins: [

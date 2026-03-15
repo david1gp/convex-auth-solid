@@ -2,11 +2,11 @@ import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
 import { userDeleteHardAuthSessions } from "@/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions"
 import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
 import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
-import { createResult, createResultError, type PromiseResult } from "~utils/result/Result"
+import { createResult, createResultError, type PromiseResult } from "~result"
 import {
-  userDeleteValidatorInternal,
-  userDeleteValidatorPublic,
-  type UserDeleteValidatorInternalType,
+    userDeleteValidatorInternal,
+    userDeleteValidatorPublic,
+    type UserDeleteValidatorInternalType,
 } from "./userDeleteValidator"
 
 export const userDeleteSoftMutation = mutation({
