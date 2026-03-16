@@ -51,10 +51,10 @@
         "./node_modules/@adaptive-ds/utils/dist/*"
       ],
       "~result": [
-        "./node_modules/@adaptive-ds/result/dist/index.d.ts"
+        "./node_modules/@adaptive-ds/result"
       ],
       "~result/*": [
-        "./node_modules/@adaptive-ds/result/dist/*.d.ts"
+        "./node_modules/@adaptive-ds/result/*"
       ]
     },
     //

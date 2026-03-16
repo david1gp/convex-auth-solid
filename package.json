@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@adaptive-ds/email-generator": "^0.9.2",
-    "@adaptive-ds/result": "^0.3.0",
+    "@adaptive-ds/result": "file:../../../../../tmp/adaptive-ds-result-0.4.0.tgz",
     "@adaptive-ds/solid-ui": "^0.13.1",
     "@adaptive-ds/utils": "^0.8.1",
     "@bradenmacdonald/s3-lite-client": "npm:@jsr/bradenmacdonald__s3-lite-client",
