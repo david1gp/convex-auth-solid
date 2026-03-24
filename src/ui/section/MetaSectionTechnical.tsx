@@ -1,10 +1,10 @@
-import { ttc } from "@/app/i18n/ttc"
-import { sharedMetaSection, sharedMetaSectionIcon } from "@/app/tabs/sharedMetaSection"
-import { sharedMetaSectionGetText } from "@/app/tabs/sharedMetaSectionGetText"
-import { DateView } from "@/ui/date/DateView"
-import { MetaFieldChildren } from "@/ui/section/MetaFieldChildren"
-import { MetaSection } from "@/ui/section/MetaSection"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { sharedMetaSection, sharedMetaSectionIcon } from "#src/app/tabs/sharedMetaSection.js"
+import { sharedMetaSectionGetText } from "#src/app/tabs/sharedMetaSectionGetText.js"
+import { DateView } from "#src/ui/date/DateView.js"
+import { MetaFieldChildren } from "#src/ui/section/MetaFieldChildren.js"
+import { MetaSection } from "#src/ui/section/MetaSection.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface MetaSectionTechnicalProps extends MayHaveClass {
   id: string

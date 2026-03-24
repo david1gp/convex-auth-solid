@@ -1,4 +1,4 @@
-import { type SignalObject, createSignalObject } from "~ui/utils/createSignalObject"
+import { type SignalObject, createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export type ResourceFormErrorState = {
   resourceId: SignalObject<string>

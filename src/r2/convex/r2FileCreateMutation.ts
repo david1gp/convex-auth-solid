@@ -1,13 +1,13 @@
-import { fileCreateFields, type FileCreateValidatorType } from "@/file/convex/fileCreateMutation"
-import { fileDataSchema } from "@/file/model/fileSchema"
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import { fileCreateFields, type FileCreateValidatorType } from "#src/file/convex/fileCreateMutation.js"
+import { fileDataSchema } from "#src/file/model/fileSchema.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { createResult, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export const r2FileCreateFields = fileCreateFields
 export const r2FileCreateValidator = v.object(r2FileCreateFields)

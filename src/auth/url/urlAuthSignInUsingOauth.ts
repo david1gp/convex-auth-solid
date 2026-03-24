@@ -1,4 +1,4 @@
-import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
+import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.js"
 
 export function urlAuthSignInUsingOauth(provider: string) {
   const r = envBaseUrlApiResult()

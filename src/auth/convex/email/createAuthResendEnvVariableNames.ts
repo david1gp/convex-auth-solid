@@ -1,5 +1,5 @@
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import type { ResendEnvVariableNames } from "~utils/email/resend/sendEmailsViaResend"
+import { privateEnvVariableName } from "#src/app/env/privateEnvVariableName.js"
+import type { ResendEnvVariableNames } from "#utils/email/resend/sendEmailsViaResend"
 
 export function createAuthResendEnvVariableNames(): ResendEnvVariableNames {
   return {

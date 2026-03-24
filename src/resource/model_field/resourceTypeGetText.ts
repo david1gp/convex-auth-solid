@@ -1,5 +1,5 @@
-import { ttc } from "@/app/i18n/ttc"
-import { resourceType, type ResourceType } from "@/resource/model_field/resourceType"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { resourceType, type ResourceType } from "#src/resource/model_field/resourceType.js"
 
 export function resourceTypeGetText(type?: string): string {
   if (!type) return ttc("Unknown")

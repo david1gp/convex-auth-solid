@@ -1,5 +1,4 @@
-import { ttc } from "@/app/i18n/ttc"
-import { sharedMetaSection, sharedMetaSectionIcon } from "@/app/tabs/sharedMetaSection"
+import { sharedMetaSection, sharedMetaSectionIcon } from "#src/app/tabs/sharedMetaSection.js"
 import { mdiFileMultiple, mdiInformation, mdiTagMultiple } from "@mdi/js"
 
 export type ResourceMetaSection = keyof typeof resourceMetaSection

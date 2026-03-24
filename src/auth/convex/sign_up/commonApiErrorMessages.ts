@@ -1,4 +1,4 @@
-import { stt } from "@/utils/i18n/stt"
+import { stt } from "#src/utils/i18n/stt.js"
 
 export const commonApiErrorMessages = {
   methodNotAllowed: stt("Method not allowed"),

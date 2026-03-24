@@ -1,8 +1,8 @@
-import { type Language, language } from "@/app/i18n/language"
-import type { FileModel } from "@/file/model/FileModel"
-import { type ResourceType, resourceType } from "@/resource/model_field/resourceType"
-import { type Visibility, visibility } from "@/resource/model_field/visibility"
-import { type SignalObject, createSignalObject } from "~ui/utils/createSignalObject"
+import { type Language, language } from "#src/app/i18n/language.js"
+import type { FileModel } from "#src/file/model/FileModel.js"
+import { type ResourceType, resourceType } from "#src/resource/model_field/resourceType.js"
+import { type Visibility, visibility } from "#src/resource/model_field/visibility.js"
+import { type SignalObject, createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export type ResourceFormState = {
   resourceId: SignalObject<string>

@@ -1,12 +1,12 @@
-import { envGoogleClientSecretResult } from "@/app/env/private/envGoogleClientSecretResult"
-import { envGoogleClientIdResult } from "@/app/env/public/envGoogleClientIdResult"
-import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
-import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
-import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { envGoogleClientSecretResult } from "#src/app/env/private/envGoogleClientSecretResult.js"
+import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdResult.js"
+import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.js"
+import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.js"
+import { queryString } from "#utils/url/queryString"
+import { intMin1OrStringSchema } from "#utils/valibot/intOrStringSchema"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { queryString } from "~utils/url/queryString"
-import { intMin1OrStringSchema } from "~utils/valibot/intOrStringSchema"
 
 export interface GoogleOauthToken {
   access_token: string

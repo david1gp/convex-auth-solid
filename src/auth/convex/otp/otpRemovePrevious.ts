@@ -1,6 +1,6 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import type { OtpPurpose } from "@/auth/model_field/otpPurpose"
-import type { MutationCtx } from "@convex/_generated/server"
+import type { IdUser } from "#src/auth/convex/IdUser.js";
+import type { OtpPurpose } from "#src/auth/model_field/otpPurpose.js";
+import type { MutationCtx } from "@convex/_generated/server.js";
 
 export async function otpRemovePreviousFn(
   ctx: MutationCtx,

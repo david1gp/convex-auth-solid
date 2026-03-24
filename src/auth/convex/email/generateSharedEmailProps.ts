@@ -1,8 +1,8 @@
-import { envBaseUrlSiteResult } from "@/app/env/public/envBaseUrlSiteResult"
-import type { Language } from "@/app/i18n/language"
-import { appNameServer } from "@/app/text/appName"
-import { appSubtitle } from "@/app/text/appSubtitle"
-import type { FooterV1Type } from "@adaptive-ds/email-generator/index.js"
+import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.js"
+import type { Language } from "#src/app/i18n/language.js"
+import { appNameServer } from "#src/app/text/appName.js"
+import { appSubtitle } from "#src/app/text/appSubtitle.js"
+import type { FooterV1Type } from "@adaptive-ds/email-generator/index.js.js"
 
 export function generateSharedEmailProps(l: Language) {
   const siteBaseUrlResult = envBaseUrlSiteResult()

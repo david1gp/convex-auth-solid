@@ -1,10 +1,10 @@
-import { ttc } from "@/app/i18n/ttc"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
 import utc from "dayjs/plugin/utc"
 import type { JSXElement } from "solid-js"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 dayjs.extend(relativeTime)
 dayjs.extend(utc)

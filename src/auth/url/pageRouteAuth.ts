@@ -1,5 +1,5 @@
-import { serializeUrlParams } from "~utils/url/serializeUrlParams"
-import type { PageNameAuth, pageNameAuth } from "./pageNameAuth"
+import { serializeUrlParams } from "#utils/url/serializeUrlParams"
+import type { PageNameAuth, pageNameAuth } from "./pageNameAuth.js"
 
 export type PageRouteAuth = keyof typeof pageNameAuth
 

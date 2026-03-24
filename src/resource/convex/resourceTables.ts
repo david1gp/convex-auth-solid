@@ -1,12 +1,10 @@
-import { resourceDataSchemaFields } from "@/resource/model/resourceSchema"
-import { stringSchemaId } from "@/utils/valibot/stringSchema"
-import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
-import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt"
-import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
+import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { stringSchemaId } from "#src/utils/valibot/stringSchema.js"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
-import * as a from "valibot"
 
 const resourceFilesDataSchemaFields = {
   resourceId: stringSchemaId,

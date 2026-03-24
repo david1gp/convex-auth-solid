@@ -1,11 +1,11 @@
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { OrgModel } from "@/org/org_model/OrgModel"
-import { orgSchema } from "@/org/org_model/orgSchema"
-import { createQueryCached } from "@/utils/cache/createQueryCached"
-import { createQuery } from "@/utils/convex_client/createQuery"
-import { api } from "@convex/_generated/api"
+import type { Result } from "#result"
+import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.js"
+import type { OrgModel } from "#src/org/org_model/OrgModel.js"
+import { orgSchema } from "#src/org/org_model/orgSchema.js"
+import { createQueryCached } from "#src/utils/cache/createQueryCached.js"
+import { createQuery } from "#src/utils/convex_client/createQuery.js"
+import { api } from "@convex/_generated/api.js"
 import * as a from "valibot"
-import type { Result } from "~result"
 
 export function createQueryOrgList(): () => Result<OrgModel[]> | undefined {
   return createQueryCached<OrgModel[]>(

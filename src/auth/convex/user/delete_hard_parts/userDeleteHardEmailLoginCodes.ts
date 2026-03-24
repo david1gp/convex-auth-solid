@@ -1,5 +1,5 @@
-import { type MutationCtx } from "@convex/_generated/server"
-import type { IdUser } from "@/auth/convex/IdUser"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { type MutationCtx } from "@convex/_generated/server.js"
 
 export async function userDeleteHardEmailLoginCodes(ctx: MutationCtx, userId: IdUser): Promise<void> {
   const codes = await ctx.db

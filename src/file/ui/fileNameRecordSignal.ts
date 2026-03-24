@@ -1,8 +1,8 @@
-import type { FileModel } from "@/file/model/FileModel"
-import { cachePrefix } from "@/utils/ui/cachePrefix"
+import { createResult, createResultError, type Result } from "#result"
+import type { FileModel } from "#src/file/model/FileModel.js"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 const fileNameLocalStorageKey = cachePrefix + "fileNameRecord"
 const fileNameRecordSchema = a.record(a.string(), a.string())

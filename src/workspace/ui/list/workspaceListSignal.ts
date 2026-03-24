@@ -1,10 +1,10 @@
-import { cachePrefix } from "@/utils/ui/cachePrefix"
-import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
-import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
-import { workspaceSchema } from "@/workspace/model/workspaceSchema"
+import { createResult, createResultError, type Result } from "#result"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
+import type { IdWorkspace } from "#src/workspace/convex/IdWorkspace.js"
+import type { WorkspaceModel } from "#src/workspace/model/WorkspaceModel.js"
+import { workspaceSchema } from "#src/workspace/model/workspaceSchema.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 const workspaceListLocalStorageKey = cachePrefix + "workspaceList"
 

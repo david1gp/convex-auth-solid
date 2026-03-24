@@ -1,4 +1,4 @@
-import { pageRouteOrgInvitation } from "@/org/invitation_url/pageRouteOrgInvitation"
+import { pageRouteOrgInvitation } from "#src/org/invitation_url/pageRouteOrgInvitation.js"
 
 export function urlOrgInvitationList(orgHandle: string): string {
   return pageRouteOrgInvitation.orgInvitationList.replace(":orgHandle", orgHandle)

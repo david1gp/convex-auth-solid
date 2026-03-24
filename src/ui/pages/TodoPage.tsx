@@ -1,10 +1,10 @@
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavCenter } from "@/app/nav/NavCenter"
-import { NavStatic } from "@/app/nav/NavStatic"
-import { urlTodo } from "@/app/pages/urlTodo"
-import { TodoSection, type TodoSectionProps } from "@/ui/pages/TodoSection"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.js"
+import { NavCenter } from "#src/app/nav/NavCenter.js"
+import { NavStatic } from "#src/app/nav/NavStatic.js"
+import { urlTodo } from "#src/app/pages/urlTodo.js"
+import { TodoSection, type TodoSectionProps } from "#src/ui/pages/TodoSection.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
 
 export function TodoPage(p: TodoSectionProps) {
   return (

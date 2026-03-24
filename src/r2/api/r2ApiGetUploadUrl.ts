@@ -1,5 +1,5 @@
-import { r2CreateClient } from "@/r2/api/r2CreateClient"
-import { createResult, type PromiseResult } from "~result"
+import { createResult, type PromiseResult } from "#result"
+import { r2CreateClient } from "#src/r2/api/r2CreateClient.js"
 
 const log = false
 

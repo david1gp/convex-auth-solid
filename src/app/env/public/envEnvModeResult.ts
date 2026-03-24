@@ -1,6 +1,6 @@
-import { envVariableErrorMessage } from "@/app/env/envVariableErrorMessage"
-import { publicEnvVariableName } from "@/app/env/publicEnvVariableName"
-import { createResult, createResultError, type Result } from "~result"
+import { createResult, createResultError, type Result } from "#result"
+import { envVariableErrorMessage } from "#src/app/env/envVariableErrorMessage.js"
+import { publicEnvVariableName } from "#src/app/env/publicEnvVariableName.js"
 
 export function envEnvModeResult(): Result<string> {
   const op = "envEnvModeResult"

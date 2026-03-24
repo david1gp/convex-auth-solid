@@ -1,5 +1,5 @@
-import { ttc } from "@/app/i18n/ttc"
-import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
+import { ttc } from "#src/app/i18n/ttc.js"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.js"
 import { mdiAccountQuestion, mdiEmailSync } from "@mdi/js"
 
 export type OrgInvitationStatus = keyof typeof orgInvitationStatus

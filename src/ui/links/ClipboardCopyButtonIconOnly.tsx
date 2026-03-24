@@ -1,13 +1,13 @@
-import { ttc } from "@/app/i18n/ttc"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { toastAdd } from "#ui/interactive/toast/toastAdd"
+import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
 import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
-import { ButtonIconOnly } from "~ui/interactive/button/ButtonIconOnly"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
-import type { MayHaveButtonVariant } from "~ui/utils/MayHaveButtonVariant"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { MayHaveDisabled } from "~ui/utils/MayHaveDisabled"
-import { createSignalObject } from "~ui/utils/createSignalObject"
 
 export interface ClipboardCopyButtonIconOnlyProps extends MayHaveButtonVariant, MayHaveClass, MayHaveDisabled {
   data: string

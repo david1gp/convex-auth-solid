@@ -1,7 +1,7 @@
-import { isEn } from "@/app/i18n/language"
-import { languageSignal } from "@/app/i18n/languageSignal"
-// import ruTranslations from "./ru.json" with { type: "json" }
-// import tjTranslations from "./tj.json" with { type: "json" }
+import { isEn } from "#src/app/i18n/language.js"
+import { languageSignal } from "#src/app/i18n/languageSignal.js"
+// import ruTranslations from "./ru.json.js" with { type: "json" }
+// import tjTranslations from "./tj.json.js" with { type: "json" }
 const ruTranslations = {}
 const tjTranslations = {}
 

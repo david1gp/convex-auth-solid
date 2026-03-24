@@ -1,11 +1,11 @@
-import { addRouteWithCors } from "@/auth/convex/headers/cors/addRouteWithCors"
-import { httpMethod } from "@/auth/convex/headers/httpMethod"
-import { apiPathResourceGet, resourceGetRequestHandler } from "@/resource/convex/resourceFilesGetHttpHandler"
+import { addRouteWithCors } from "#src/auth/convex/headers/cors/addRouteWithCors.js"
+import { httpMethod } from "#src/auth/convex/headers/httpMethod.js"
+import { apiPathResourceGet, resourceGetRequestHandler } from "#src/resource/convex/resourceFilesGetHttpHandler.js"
 import {
-  apiBaseResource,
-  apiPathResourceList,
-  resourceListHttpHandler,
-} from "@/resource/convex/resourceListHttpHandler"
+    apiBaseResource,
+    apiPathResourceList,
+    resourceListHttpHandler,
+} from "#src/resource/convex/resourceListHttpHandler.js"
 import type { HttpRouter } from "convex/server"
 
 export function addHttpRoutesResource(http: HttpRouter) {

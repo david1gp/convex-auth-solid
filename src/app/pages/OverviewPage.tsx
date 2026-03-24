@@ -1,12 +1,12 @@
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavCenter } from "@/app/nav/NavCenter"
-import { NavStatic } from "@/app/nav/NavStatic"
-import { urlOverview } from "@/app/pages/urlOverview"
-import { AuthLinks } from "@/auth/ui/AuthLinks"
-import { PageHeader } from "@/ui/header/PageHeader"
-import { ttt } from "~ui/i18n/ttt"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.js"
+import { NavCenter } from "#src/app/nav/NavCenter.js"
+import { NavStatic } from "#src/app/nav/NavStatic.js"
+import { urlOverview } from "#src/app/pages/urlOverview.js"
+import { AuthLinks } from "#src/auth/ui/AuthLinks.js"
+import { PageHeader } from "#src/ui/header/PageHeader.js"
+import { ttt } from "#ui/i18n/ttt"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
 
 export function OverviewPage() {
   const getTitle = () => ttt("Overview")

@@ -1,13 +1,10 @@
-import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
-import { resourceIdSchema } from "@/resource/model/resourceIdSchema"
-import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
-import { stringSchemaId } from "@/utils/valibot/stringSchema"
-import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
+import { vIdOrg } from "#src/org/org_convex/vIdOrg.js"
+import { orgDataSchemaFields } from "#src/org/org_model/orgSchema.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { stringSchemaId } from "#src/utils/valibot/stringSchema.js"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
-import * as a from "valibot"
-import { vIdOrg } from "@/org/org_convex/vIdOrg"
 
 const orgResourceDataSchemaFields = {
   orgHandle: orgDataSchemaFields.orgHandle,

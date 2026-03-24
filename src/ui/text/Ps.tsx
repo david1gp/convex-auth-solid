@@ -1,5 +1,5 @@
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { For } from "solid-js"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface PsProps extends MayHaveClass {
   text: string

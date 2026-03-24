@@ -1,6 +1,6 @@
-import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
 import * as a from "valibot"
-import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export const fieldsSchemaCreatedAtUpdatedAtDeletedAt = {
   ...fieldsSchemaCreatedAtUpdatedAt,

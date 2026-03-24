@@ -1,4 +1,4 @@
-import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
+import type { MutationCtx, QueryCtx } from "@convex/_generated/server.js"
 
 export async function fileGetByIdFn(ctx: QueryCtx | MutationCtx, fileId: string) {
   return await ctx.db

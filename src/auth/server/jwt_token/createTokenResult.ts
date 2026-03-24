@@ -1,8 +1,8 @@
-import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
-import { createToken } from "@/auth/server/jwt_token/createToken"
-import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
-import type { OrgRole } from "@/org/org_model_field/orgRole"
-import { createError, createResult, type PromiseResult } from "~result"
+import { createError, createResult, type PromiseResult } from "#result"
+import { envAuthSecretResult } from "#src/app/env/private/envAuthSecretResult.js"
+import { createToken } from "#src/auth/server/jwt_token/createToken.js"
+import { tokenValidDurationInDays } from "#src/auth/server/jwt_token/tokenValidDurationInDays.js"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
 
 export async function createTokenResult(userId: string, orgHandle?: string, orgRole?: OrgRole): PromiseResult<string> {
   const expiresInDays = tokenValidDurationInDays

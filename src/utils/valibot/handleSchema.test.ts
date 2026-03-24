@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import * as a from "valibot"
-import { handleSchema } from "./handleSchema"
+import { handleSchema } from "./handleSchema.js"
 
 test("handleSchemaValid", () => {
   const validHandles = ["abcde", "hello-world", "test-123", "my-handle-example", "my-name-1"]

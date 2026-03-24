@@ -1,20 +1,20 @@
-import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
-import type { IdUser } from "@/auth/convex/IdUser"
+import { type PromiseResult, createResult } from "#result"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
 import {
     type UserProfileFieldsTypeInternal,
     userProfileUpdateInternalFn,
-} from "@/auth/convex/user/profile_update/userProfileUpdateMutationInternal"
-import type { UserProfile } from "@/auth/model/UserProfile"
-import type { UserSession } from "@/auth/model/UserSession"
-import { type LoginMethod, loginMethod } from "@/auth/model_field/loginMethod"
-import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
-import type { OrgRole } from "@/org/org_model_field/orgRole"
-import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { type MutationCtx, mutation } from "@convex/_generated/server"
-import { type PromiseResult, createResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
-import { userProfileUpdateFields } from "./userProfileUpdate"
+} from "#src/auth/convex/user/profile_update/userProfileUpdateMutationInternal.js"
+import type { UserProfile } from "#src/auth/model/UserProfile.js"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { type LoginMethod, loginMethod } from "#src/auth/model_field/loginMethod.js"
+import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.js"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
+import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { type MutationCtx, mutation } from "@convex/_generated/server.js"
+import { userProfileUpdateFields } from "./userProfileUpdate.js"
 
 export const userProfileFieldsValidatorPublic = createTokenValidator(userProfileUpdateFields)
 export type UserProfileFieldsTypePublic = typeof userProfileFieldsValidatorPublic.type

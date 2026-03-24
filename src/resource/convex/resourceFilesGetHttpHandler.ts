@@ -1,8 +1,8 @@
-import { visibility } from "@/resource/model_field/visibility"
-import { internal } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
-import { createResultError } from "~result"
-import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
+import { createResultError } from "#result"
+import { visibility } from "#src/resource/model_field/visibility.js"
+import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
+import { internal } from "@convex/_generated/api.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 
 export const apiPathResourceGet = "/get"
 

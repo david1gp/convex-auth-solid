@@ -1,13 +1,13 @@
-import { language } from "@/app/i18n/language"
-import { languageGetText } from "@/app/i18n/languageGetText"
-import { ttc } from "@/app/i18n/ttc"
-import type { ResourceModel } from "@/resource/model/ResourceModel"
-import { resourceType } from "@/resource/model_field/resourceType"
-import { resourceTypeGetText } from "@/resource/model_field/resourceTypeGetText"
-import { visibility } from "@/resource/model_field/visibility"
-import { visibilityGetText } from "@/resource/model_field/visibilityGetText"
-import { resourceFormField } from "@/resource/ui/form/resourceFormField"
-import type { FilterFieldConfig } from "@/ui/input/search/FilterFieldConfig"
+import { language } from "#src/app/i18n/language.js"
+import { languageGetText } from "#src/app/i18n/languageGetText.js"
+import { ttc } from "#src/app/i18n/ttc.js"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
+import { resourceType } from "#src/resource/model_field/resourceType.js"
+import { resourceTypeGetText } from "#src/resource/model_field/resourceTypeGetText.js"
+import { visibility } from "#src/resource/model_field/visibility.js"
+import { visibilityGetText } from "#src/resource/model_field/visibilityGetText.js"
+import { resourceFormField } from "#src/resource/ui/form/resourceFormField.js"
+import type { FilterFieldConfig } from "#src/ui/input/search/FilterFieldConfig.js"
 
 export type ResourceFilterField = keyof typeof resourceFilterFields
 

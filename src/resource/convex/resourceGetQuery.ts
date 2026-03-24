@@ -1,11 +1,11 @@
-import type { DocResource } from "@/resource/convex/IdResource"
-import { resourceDocToModel } from "@/resource/convex/resourceDocToModel"
-import type { ResourceModel } from "@/resource/model/ResourceModel"
-import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import type { DocResource } from "#src/resource/convex/IdResource.js"
+import { resourceDocToModel } from "#src/resource/convex/resourceDocToModel.js"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~result"
 
 export const resourceGetFields = {
   resourceId: v.string(),

@@ -1,10 +1,10 @@
-import { languageSchema } from "@/app/i18n/language"
-import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
-import { emailSchema } from "@/utils/valibot/emailSchema"
-import { api } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
+import { createError } from "#result"
+import { languageSchema } from "#src/app/i18n/language.js"
+import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
+import { emailSchema } from "#src/utils/valibot/emailSchema.js"
+import { api } from "@convex/_generated/api.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
-import { createError } from "~result"
 
 const userEmailChangeSchema = a.object({
   token: a.string(),

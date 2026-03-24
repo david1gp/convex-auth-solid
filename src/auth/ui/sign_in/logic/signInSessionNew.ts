@@ -1,7 +1,7 @@
-import { posthogIdentify } from "@/app/posthog/posthog"
-import type { UserSession } from "@/auth/model/UserSession"
-import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
-import { userSessionsSignalAdd } from "@/auth/ui/signals/userSessionsSignal"
+import { posthogIdentify } from "#src/app/posthog/posthog.js"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.js"
+import { userSessionsSignalAdd } from "#src/auth/ui/signals/userSessionsSignal.js"
 
 export function signInSessionNew(newSession: UserSession) {
   userSessionsSignalAdd(newSession)

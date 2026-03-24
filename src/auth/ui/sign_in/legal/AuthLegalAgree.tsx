@@ -1,9 +1,9 @@
-import { envBaseUrlSiteResult } from "@/app/env/public/envBaseUrlSiteResult"
-import { ttc } from "@/app/i18n/ttc"
-import { authLegalAgreeText, type AuthLegalAgreeVariant } from "@/auth/ui/sign_in/legal/authLegalAgreeVariant"
-import { LinkText } from "~ui/interactive/link/LinkText"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.js"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { authLegalAgreeText, type AuthLegalAgreeVariant } from "#src/auth/ui/sign_in/legal/authLegalAgreeVariant.js"
+import { LinkText } from "#ui/interactive/link/LinkText"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface AuthLegalAgreeProps extends MayHaveClass {
   variant: AuthLegalAgreeVariant

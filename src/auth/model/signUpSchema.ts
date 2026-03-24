@@ -1,7 +1,7 @@
-import { languageSchema } from "@/app/i18n/language"
-import { passwordSchema } from "@/auth/model_field/passwordSchema"
-import { emailSchema } from "@/utils/valibot/emailSchema"
-import { stringSchemaName } from "@/utils/valibot/stringSchema"
+import { languageSchema } from "#src/app/i18n/language.js"
+import { passwordSchema } from "#src/auth/model_field/passwordSchema.js"
+import { emailSchema } from "#src/utils/valibot/emailSchema.js"
+import { stringSchemaName } from "#src/utils/valibot/stringSchema.js"
 import * as a from "valibot"
 
 export type SignUpType = a.InferOutput<typeof signUpSchema>

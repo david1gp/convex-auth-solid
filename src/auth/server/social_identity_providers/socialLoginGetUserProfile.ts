@@ -1,22 +1,22 @@
-import { socialLoginProvider, type LoginProvider } from "@/auth/model_field/socialLoginProvider"
-import { authLog } from "@/auth/server/authLog"
-import type { CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
-import { getGithubOathToken } from "@/auth/server/social_identity_providers/getGithubOathToken"
+import { createResult, type PromiseResult } from "#result"
+import { socialLoginProvider, type LoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import { authLog } from "#src/auth/server/authLog.js"
+import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.js"
+import { getGithubOathToken } from "#src/auth/server/social_identity_providers/getGithubOathToken.js"
 import {
     getGithubUserProfile,
     type GitHubUserProfile,
-} from "@/auth/server/social_identity_providers/getGithubUserProfile"
-import { getGoogleOauthToken } from "@/auth/server/social_identity_providers/getGoogleOauthToken"
+} from "#src/auth/server/social_identity_providers/getGithubUserProfile.js"
+import { getGoogleOauthToken } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.js"
 import {
     getGoogleUserProfile,
     type GoogleUserProfile,
-} from "@/auth/server/social_identity_providers/getGoogleUserProfile"
-import { getMicrosoftOauthToken } from "@/auth/server/social_identity_providers/getMicrosoftOauthToken"
+} from "#src/auth/server/social_identity_providers/getGoogleUserProfile.js"
+import { getMicrosoftOauthToken } from "#src/auth/server/social_identity_providers/getMicrosoftOauthToken.js"
 import {
     getMicrosoftUserProfile,
     type MicrosoftUserProfile,
-} from "@/auth/server/social_identity_providers/getMicrosoftUserProfile"
-import { createResult, type PromiseResult } from "~result"
+} from "#src/auth/server/social_identity_providers/getMicrosoftUserProfile.js"
 
 export const socialLoginGetUserProfile = {
   github: oauthGithub,

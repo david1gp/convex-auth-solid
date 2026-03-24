@@ -1,4 +1,4 @@
-import { isProdEnv } from "@/utils/env/isProdEnv"
+import { isProdEnv } from "#src/utils/env/isProdEnv.js"
 
 export function enablePosthog() {
   // return true

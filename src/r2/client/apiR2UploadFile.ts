@@ -1,4 +1,4 @@
-import { type Result, createResult, createResultError } from "~result"
+import { type Result, createResult, createResultError } from "#result"
 
 export async function apiR2UploadFile(url: string, data: Uint8Array, contentType: string): Promise<Result<void>> {
   const op = "r2ClientUploadFile"

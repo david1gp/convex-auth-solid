@@ -1,4 +1,4 @@
-import { signInLogic } from "@/auth/ui/sign_in/logic/signInLogic"
+import { signInLogic } from "#src/auth/ui/sign_in/logic/signInLogic.js"
 import { lazy, onMount } from "solid-js"
 
 export function SignInPageLoader() {
@@ -8,4 +8,4 @@ export function SignInPageLoader() {
   return <SignInPageAsync />
 }
 
-const SignInPageAsync = lazy(() => import("@/auth/ui/sign_in/page/SignInPage").then((c) => ({ default: c.SignInPage })))
+const SignInPageAsync = lazy(() => import("#src/auth/ui/sign_in/page/SignInPage.js").then((c) => ({ default: c.SignInPage })))

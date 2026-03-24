@@ -1,13 +1,13 @@
-import type { ResourceFilesModel } from "@/resource/model/ResourceFilesModel"
-import { resourceFilesSchema } from "@/resource/model/ResourceFilesModel"
-import type { ResourceFormState } from "@/resource/ui/form/ResourceFormState"
-import { pageRouteResource } from "@/resource/url/pageRouteResource"
-import { cachePrefix } from "@/utils/ui/cachePrefix"
-import { debounceSaveMs } from "@/utils/ui/debounceMs"
-import { debounce } from "@solid-primitives/scheduled"
+import { createResult, createResultError, type Result } from "#result"
+import type { ResourceFilesModel } from "#src/resource/model/ResourceFilesModel.js"
+import { resourceFilesSchema } from "#src/resource/model/ResourceFilesModel.js"
+import type { ResourceFormState } from "#src/resource/ui/form/ResourceFormState.js"
+import { pageRouteResource } from "#src/resource/url/pageRouteResource.js"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
+import { debounceSaveMs } from "#src/utils/ui/debounceMs.js"
+import { formMode, type FormMode } from "#ui/input/form/formMode"
+import { debounce } from "@solid-primitives/scheduled.js"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~result"
-import { formMode, type FormMode } from "~ui/input/form/formMode"
 
 const resourceFormLocalStorageKey = cachePrefix + pageRouteResource.resourceAdd
 

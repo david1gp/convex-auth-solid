@@ -1,37 +1,37 @@
-import { resourceCreateInternalMutation, resourceCreateMutation } from "@/resource/convex/resourceCreateMutation"
-import { resourceDeleteInternalMutation, resourceDeleteMutation } from "@/resource/convex/resourceDeleteMutation"
-import { resourceEditInternalMutation, resourceEditMutation } from "@/resource/convex/resourceEditMutation"
-import { resourceFileAddInternalMutation, resourceFileAddMutation } from "@/resource/convex/resourceFileAddMutation"
-import { resourceFileListInternalQuery, resourceFileListQuery } from "@/resource/convex/resourceFileListQuery"
+import { resourceCreateInternalMutation, resourceCreateMutation } from "#src/resource/convex/resourceCreateMutation.js"
+import { resourceDeleteInternalMutation, resourceDeleteMutation } from "#src/resource/convex/resourceDeleteMutation.js"
+import { resourceEditInternalMutation, resourceEditMutation } from "#src/resource/convex/resourceEditMutation.js"
+import { resourceFileAddInternalMutation, resourceFileAddMutation } from "#src/resource/convex/resourceFileAddMutation.js"
+import { resourceFileListInternalQuery, resourceFileListQuery } from "#src/resource/convex/resourceFileListQuery.js"
 import {
-  resourceFileRemoveInternalMutation,
-  resourceFileRemoveMutation,
-} from "@/resource/convex/resourceFileRemoveMutation"
-import { resourceFilesGetInternalQuery, resourceFilesGetQuery } from "@/resource/convex/resourceFilesGetQuery"
-import { resourceGetInternalQuery, resourceGetQuery } from "@/resource/convex/resourceGetQuery"
-import { resourcesListInternalQuery, resourcesListQuery } from "@/resource/convex/resourceListQuery"
+    resourceFileRemoveInternalMutation,
+    resourceFileRemoveMutation,
+} from "#src/resource/convex/resourceFileRemoveMutation.js"
+import { resourceFilesGetInternalQuery, resourceFilesGetQuery } from "#src/resource/convex/resourceFilesGetQuery.js"
+import { resourceGetInternalQuery, resourceGetQuery } from "#src/resource/convex/resourceGetQuery.js"
+import { resourcesListInternalQuery, resourcesListQuery } from "#src/resource/convex/resourceListQuery.js"
 
 export {
-  resourceCreateInternalMutation,
-  resourceCreateMutation,
-  resourceDeleteInternalMutation,
-  resourceDeleteMutation,
-  resourceEditInternalMutation,
-  resourceEditMutation,
-  // Resource
-  resourceFileAddInternalMutation,
-  resourceFileAddMutation,
-  resourceFileListInternalQuery,
-  resourceFileListQuery,
-  resourceFileRemoveInternalMutation,
-  resourceFileRemoveMutation,
-  // Resource Files Get
-  resourceFilesGetInternalQuery,
-  resourceFilesGetQuery,
-  // Get
-  resourceGetInternalQuery,
-  resourceGetQuery,
-  // List
-  resourcesListInternalQuery,
-  resourcesListQuery,
+    resourceCreateInternalMutation,
+    resourceCreateMutation,
+    resourceDeleteInternalMutation,
+    resourceDeleteMutation,
+    resourceEditInternalMutation,
+    resourceEditMutation,
+    // Resource
+    resourceFileAddInternalMutation,
+    resourceFileAddMutation,
+    resourceFileListInternalQuery,
+    resourceFileListQuery,
+    resourceFileRemoveInternalMutation,
+    resourceFileRemoveMutation,
+    // Resource Files Get
+    resourceFilesGetInternalQuery,
+    resourceFilesGetQuery,
+    // Get
+    resourceGetInternalQuery,
+    resourceGetQuery,
+    // List
+    resourcesListInternalQuery,
+    resourcesListQuery
 }

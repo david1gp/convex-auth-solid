@@ -1,10 +1,10 @@
-import { languageValidator } from "@/app/i18n/language"
-import type { IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import { languageValidator } from "#src/app/i18n/language.js"
+import type { IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.js"
+import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export const orgInvitationCreateDataFields = {
   // ids

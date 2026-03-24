@@ -1,5 +1,5 @@
-import { resourceIdGenerateFromName, resourceIdNamCutoffLength } from "@/resource/model/resourceIdGenerateFromName"
-import { resourceIdSchema } from "@/resource/model/resourceIdSchema"
+import { resourceIdGenerateFromName, resourceIdNamCutoffLength } from "#src/resource/model/resourceIdGenerateFromName.js"
+import { resourceIdSchema } from "#src/resource/model/resourceIdSchema.js"
 import { expect, test } from "bun:test"
 import * as a from "valibot"
 

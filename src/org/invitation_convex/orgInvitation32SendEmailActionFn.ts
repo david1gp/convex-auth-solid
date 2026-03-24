@@ -1,17 +1,17 @@
-import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
-import { languageValidator } from "@/app/i18n/language"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.js"
+import { languageValidator } from "#src/app/i18n/language.js"
 import {
     sendEmailOrgInvitation,
     type GenerateEmailOrgInvitationProps,
-} from "@/auth/convex/email/sendEmailOrgInvitation"
-import type { OrgInvitationDataModel } from "@/org/invitation_model/OrgInvitationModel"
-import { urlOrgInvitationAccept } from "@/org/invitation_url/urlOrgInvitation"
-import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
-import { internal } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
+} from "#src/auth/convex/email/sendEmailOrgInvitation.js"
+import type { OrgInvitationDataModel } from "#src/org/invitation_model/OrgInvitationModel.js"
+import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.js"
+import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internal } from "@convex/_generated/api.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export type OrgInvitationSendEmailValidatorType = typeof orgInvitationSendEmailValidator.type
 

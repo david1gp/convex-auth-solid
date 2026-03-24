@@ -1,7 +1,7 @@
-import type { HasConvexSystemFields } from "@/utils/convex_client/HasConvexSystemFields"
-import type { HasCreatedAtUpdatedAt } from "@/utils/data/HasCreatedAtUpdatedAt"
-import type { IdWorkspace } from "@/workspace/convex/IdWorkspace"
-import type { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
+import type { HasConvexSystemFields } from "#src/utils/convex_client/HasConvexSystemFields.js"
+import type { HasCreatedAtUpdatedAt } from "#src/utils/data/HasCreatedAtUpdatedAt.js"
+import type { IdWorkspace } from "#src/workspace/convex/IdWorkspace.js"
+import type { workspaceDataSchema } from "#src/workspace/model/workspaceSchema.js"
 import * as a from "valibot"
 
 export type WorkspaceDataModel = a.InferOutput<typeof workspaceDataSchema>

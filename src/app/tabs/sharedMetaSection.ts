@@ -1,5 +1,4 @@
 import { mdiCodeTags, mdiImage, mdiMonitor, mdiText } from "@mdi/js"
-import { ttc } from "@/app/i18n/ttc"
 
 export type AppCategory = keyof typeof sharedMetaSection
 

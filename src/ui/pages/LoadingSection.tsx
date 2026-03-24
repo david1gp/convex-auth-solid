@@ -1,12 +1,12 @@
-import { ttc, ttc1 } from "@/app/i18n/ttc"
-import styles from "@/ui/loaders/AnimateFadeIn.module.css"
-import { RandomLoader } from "@/ui/loaders/RandomLoader"
-import { classesCardWrapperBorderDark } from "~ui/static/container/classesCardWrapper"
-import { SeparatorWithText } from "~ui/static/separator/SeparatorWithText"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveChildrenAndClass } from "~ui/utils/MayHaveChildrenAndClass"
-import type { MayHaveId } from "~ui/utils/MayHaveId"
-import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
+import { ttc, ttc1 } from "#src/app/i18n/ttc.js"
+import styles from "#src/ui/loaders/AnimateFadeIn.module.css.js"
+import { RandomLoader } from "#src/ui/loaders/RandomLoader.js"
+import { classesCardWrapperBorderDark } from "#ui/static/container/classesCardWrapper"
+import { SeparatorWithText } from "#ui/static/separator/SeparatorWithText"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass"
+import type { MayHaveId } from "#ui/utils/MayHaveId"
+import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass"
 
 export interface LoadingSectionProps extends MayHaveId, MayHaveChildrenAndClass, MayHaveInnerClass {
   loadingText?: string

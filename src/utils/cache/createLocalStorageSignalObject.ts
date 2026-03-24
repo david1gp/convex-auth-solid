@@ -1,8 +1,8 @@
-import { cachePrefix } from "@/utils/ui/cachePrefix"
+import { createResult, createResultError, type Result } from "#result"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import type { BaseSchema } from "valibot"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export function createLocalStorageSignalObject<T>(
   key: string,

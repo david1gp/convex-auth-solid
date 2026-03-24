@@ -1,13 +1,13 @@
-import { NavStatic } from "@/app/nav/NavStatic"
+import { NavStatic } from "#src/app/nav/NavStatic.js"
+import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps"
+import { LinkBlock } from "#ui/demo_pages/LinkBlock"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover"
+import { objectEntries } from "#utils/obj/objectEntries"
+import { objectKeys } from "#utils/obj/objectKeys"
 import type { ComponentProps } from "solid-js"
 import { Show, splitProps } from "solid-js"
-import type { DemoNavDataProps } from "~ui/demo_pages/DemoNavDataProps"
-import { LinkBlock } from "~ui/demo_pages/LinkBlock"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { CorvuPopover } from "~ui/interactive/popover/CorvuPopover"
-import { objectEntries } from "~utils/obj/objectEntries"
-import { objectKeys } from "~utils/obj/objectKeys"
 
 export interface DemoNavProps extends DemoNavDataProps, ComponentProps<"nav"> {}
 

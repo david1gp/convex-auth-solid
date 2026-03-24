@@ -1,7 +1,7 @@
-import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
-import { resourceFilesSchema, type ResourceFilesModel } from "@/resource/model/ResourceFilesModel"
+import { createResult, createResultError, resultTryParsingFetchErr, type Result } from "#result"
+import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.js"
+import { resourceFilesSchema, type ResourceFilesModel } from "#src/resource/model/ResourceFilesModel.js"
 import * as a from "valibot"
-import { createResult, createResultError, resultTryParsingFetchErr, type Result } from "~result"
 
 export const apiBaseResource = "/api/resource"
 export const apiPathResourceGet = "/get"

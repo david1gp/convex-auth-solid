@@ -1,6 +1,6 @@
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import type { QueryCtx } from "@convex/_generated/server"
-import { type PromiseResult } from "~result"
+import { type PromiseResult } from "#result"
+import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.js"
+import type { QueryCtx } from "@convex/_generated/server.js"
 
 export async function authQueryResult<T extends { token: string }, R>(
   ctx: QueryCtx,

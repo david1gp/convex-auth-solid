@@ -1,9 +1,9 @@
-import { ttc } from "@/app/i18n/ttc"
-import { urlSupportMailTo } from "@/app/url/urlSupport"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { urlSupportMailTo } from "#src/app/url/urlSupport.js"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps"
 import { mdiEmail } from "@mdi/js"
 import { splitProps } from "solid-js"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import type { LinkButtonProps } from "~ui/interactive/link/LinkButtonProps"
 
 export function ContactSupportLinkButton(p: Omit<LinkButtonProps, "href">) {
   const [s, rest] = splitProps(p, ["icon", "children"])

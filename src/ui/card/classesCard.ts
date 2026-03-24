@@ -1,4 +1,4 @@
-import { classArr } from "~ui/utils/classArr"
+import { classArr } from "#ui/utils/classArr"
 
 export const classesCard = classArr(
   //

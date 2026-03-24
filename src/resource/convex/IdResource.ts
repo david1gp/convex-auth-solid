@@ -1,4 +1,4 @@
-import type { Doc, Id } from "@convex/_generated/dataModel"
+import type { Doc, Id } from "@convex/_generated/dataModel.js"
 
 export type IdResource = Id<"resources">
 export type DocResource = Doc<"resources">

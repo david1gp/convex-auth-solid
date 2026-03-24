@@ -1,6 +1,6 @@
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import type { MutationCtx } from "@convex/_generated/server"
-import { createResult, type PromiseResult } from "~result"
+import { createResult, type PromiseResult } from "#result"
+import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.js"
+import type { MutationCtx } from "@convex/_generated/server.js"
 
 export async function authMutationWrapResult<T extends { token: string }, R>(
   ctx: MutationCtx,

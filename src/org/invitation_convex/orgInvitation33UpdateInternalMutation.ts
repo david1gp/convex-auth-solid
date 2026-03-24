@@ -1,11 +1,11 @@
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import { orgInvitationDataSchemaFields } from "@/org/invitation_model/orgInvitationSchema"
-import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { createError, createResult, type PromiseResult } from "#result"
+import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.js"
+import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.js"
+import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { createError, createResult, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export type OrgInvitationUpdateValidatorType = typeof orgInvitationUpdateValidator.type
 

@@ -1,13 +1,13 @@
-import { ttc } from "@/app/i18n/ttc"
-import { urlPageSignIn } from "@/auth/url/pageRouteAuth"
-import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { createUrl } from "@/utils/router/createUrl"
-import { searchParamGet } from "@/utils/router/searchParamGet"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { urlPageSignIn } from "#src/auth/url/pageRouteAuth.js"
+import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.js"
+import { createUrl } from "#src/utils/router/createUrl.js"
+import { searchParamGet } from "#src/utils/router/searchParamGet.js"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps"
 import { mdiArrowRight } from "@mdi/js"
 import { splitProps } from "solid-js"
-import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import type { LinkButtonProps } from "~ui/interactive/link/LinkButtonProps"
 
 export interface SignInButtonLinkProps extends Omit<LinkButtonProps, "href"> {
   text?: string

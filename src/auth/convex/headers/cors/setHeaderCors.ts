@@ -1,7 +1,7 @@
-import { envBaseUrlAppResult } from "@/app/env/public/envBaseUrlAppResult"
-import { envBaseUrlSiteResult } from "@/app/env/public/envBaseUrlSiteResult"
-import { getOriginFromRequest } from "@/auth/convex/headers/getOriginFromRequest"
-import { isDevEnv } from "~ui/env/isDevEnv"
+import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.js"
+import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.js"
+import { getOriginFromRequest } from "#src/auth/convex/headers/getOriginFromRequest.js"
+import { isDevEnv } from "#ui/env/isDevEnv"
 
 const allowedMethods = ["OPTIONS", "GET", "POST"] as const
 const allowedHeaders = ["Authorization", "If-Modified-Since", "Content-Type"] as const

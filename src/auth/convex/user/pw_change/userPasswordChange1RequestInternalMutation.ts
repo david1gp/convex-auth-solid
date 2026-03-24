@@ -1,10 +1,10 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import { otpSaveFn } from "@/auth/convex/otp/otpSaveFn"
-import { vIdUser } from "@/auth/convex/vIdUser"
-import { otpPurpose } from "@/auth/model_field/otpPurpose"
-import { internalMutation } from "@convex/_generated/server"
+import { type PromiseResult } from "#result"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.js"
+import { vIdUser } from "#src/auth/convex/vIdUser.js"
+import { otpPurpose } from "#src/auth/model_field/otpPurpose.js"
+import { internalMutation } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { type PromiseResult } from "~result"
 
 const userPasswordChange1RequestValidator = v.object({
   userId: vIdUser,

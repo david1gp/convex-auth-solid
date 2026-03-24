@@ -1,14 +1,14 @@
-import type { Language } from "@/app/i18n/language"
-import { languageGetText } from "@/app/i18n/languageGetText"
-import { visibility, type Visibility } from "@/resource/model_field/visibility"
-import { visibilityGetText } from "@/resource/model_field/visibilityGetText"
-import { BadgeSoft } from "@/ui/badge/BadgeSoft"
+import type { Language } from "#src/app/i18n/language.js"
+import { languageGetText } from "#src/app/i18n/languageGetText.js"
+import { visibility, type Visibility } from "#src/resource/model_field/visibility.js"
+import { visibilityGetText } from "#src/resource/model_field/visibilityGetText.js"
+import { BadgeSoft } from "#src/ui/badge/BadgeSoft.js"
+import { Icon } from "#ui/static/icon/Icon"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { mdiEye, mdiEyeOff, mdiTranslateVariant } from "@mdi/js"
 import { Show } from "solid-js"
-import { Icon } from "~ui/static/icon/Icon"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface MetaSectionTechnicalProps extends MayHaveClass, MayHaveChildren {
   visibility?: Visibility

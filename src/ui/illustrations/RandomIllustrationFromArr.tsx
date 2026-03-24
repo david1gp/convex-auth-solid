@@ -1,8 +1,8 @@
-import { isDevEnv } from "@/utils/env/isDevEnv"
-import { classInvertBlack } from "~ui/static/img/classInvertBlack"
-import { Img } from "~ui/static/img/Img"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { isDevEnv } from "#src/utils/env/isDevEnv.js"
+import { classInvertBlack } from "#ui/static/img/classInvertBlack"
+import { Img } from "#ui/static/img/Img"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface RandomIllustrationFromArrProps extends MayHaveClass {
   images: string[]

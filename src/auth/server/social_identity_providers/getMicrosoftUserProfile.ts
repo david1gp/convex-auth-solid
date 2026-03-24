@@ -1,7 +1,7 @@
-import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"; // Adjust if needed
-import { authErrorMessages } from "@/auth/server/social_identity_providers/authErrorMessages"
-import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~result"
+import { createResult, createResultError, type PromiseResult } from "#result";
+import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"; // Adjust if needed
+import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.js";
+import * as a from "valibot";
 
 /**
  * Microsoft Graph /me endpoint for user profile

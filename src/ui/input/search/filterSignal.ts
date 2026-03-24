@@ -1,6 +1,6 @@
-import { debounceMs } from "@/utils/ui/debounceMs"
-import { createSignalObject } from "~ui/utils/createSignalObject"
-import { debounce } from "@solid-primitives/scheduled"
+import { debounceMs } from "#src/utils/ui/debounceMs.js"
+import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { debounce } from "@solid-primitives/scheduled.js"
 import { onMount } from "solid-js"
 
 export interface FilterSignal<T = Record<string, string>> {

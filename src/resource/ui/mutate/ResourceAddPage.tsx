@@ -1,11 +1,11 @@
-import { ttc } from "@/app/i18n/ttc"
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavResource } from "@/app/nav/NavResource"
-import { ResourceForm } from "@/resource/ui/form/ResourceForm"
-import { resourceFormStateManagement } from "@/resource/ui/form/resourceFormStateManagement"
-import { urlResourceAdd } from "@/resource/url/urlResource"
-import { formMode } from "~ui/input/form/formMode"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavResource } from "#src/app/nav/NavResource.js"
+import { ResourceForm } from "#src/resource/ui/form/ResourceForm.js"
+import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.js"
+import { urlResourceAdd } from "#src/resource/url/urlResource.js"
+import { formMode } from "#ui/input/form/formMode"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
 
 export function ResourceAddPage() {
   return (
@@ -24,12 +24,12 @@ function getPageTitle() {
   return ttc("Create new Resource")
 }
 
-import type { OrgModel } from "@/org/org_model/OrgModel"
-import { createQueryOrgList } from "@/resource/ui/org/createQueryOrgList"
-import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { LoadingSection } from "@/ui/pages/LoadingSection"
-import { resultHasErrorMessage } from "@/utils/result/resultHasErrorMessage"
-import { resultHasList } from "@/utils/result/resultHasList"
+import type { OrgModel } from "#src/org/org_model/OrgModel.js"
+import { createQueryOrgList } from "#src/resource/ui/org/createQueryOrgList.js"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
+import { LoadingSection } from "#src/ui/pages/LoadingSection.js"
+import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.js"
+import { resultHasList } from "#src/utils/result/resultHasList.js"
 import { Match, Switch } from "solid-js"
 
 export function ResourceAddLoader() {

@@ -1,22 +1,22 @@
-import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
-import type { DocUser, IdUser } from "@/auth/convex/IdUser"
-import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
+import { type PromiseResult, createResult } from "#result"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
+import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
+import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
 import {
     type UserProfileFieldsTypeInternal,
     userProfileFieldsBase,
-} from "@/auth/convex/user/update/userProfileUpdateMutationInternal"
-import type { UserProfile } from "@/auth/model/UserProfile"
-import type { UserSession } from "@/auth/model/UserSession"
-import { loginMethod } from "@/auth/model_field/loginMethod"
-import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import type { OrgRole } from "@/org/org_model_field/orgRole"
-import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
-import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { type MutationCtx, mutation } from "@convex/_generated/server"
-import { type PromiseResult, createResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
+} from "#src/auth/convex/user/update/userProfileUpdateMutationInternal.js"
+import type { UserProfile } from "#src/auth/model/UserProfile.js"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { loginMethod } from "#src/auth/model_field/loginMethod.js"
+import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.js"
+import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
+import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
+import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { type MutationCtx, mutation } from "@convex/_generated/server.js"
 
 export const userProfileFieldsValidatorPublic = createTokenValidator(userProfileFieldsBase)
 export type UserProfileFieldsTypePublic = typeof userProfileFieldsValidatorPublic.type

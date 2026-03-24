@@ -1,4 +1,4 @@
-import type { PageNameResource } from "@/resource/url/pageNameResource"
+import type { PageNameResource } from "#src/resource/url/pageNameResource.js"
 
 export type PageRouteResource = keyof typeof pageRouteResource
 

@@ -1,5 +1,5 @@
-import { ttc } from "@/app/i18n/ttc"
-import { inputMaxLengthDescription, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { inputMaxLengthDescription, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.js"
 import type { BaseSchema } from "valibot"
 
 // Pre-configured field types for common use cases

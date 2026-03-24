@@ -1,6 +1,6 @@
-import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
-import { hashPassword } from "@/auth/convex/pw/hashPassword"
-import { createError, createResult, type PromiseResult } from "~result"
+import { createError, createResult, type PromiseResult } from "#result"
+import { envAuthSecretResult } from "#src/app/env/private/envAuthSecretResult.js"
+import { hashPassword } from "#src/auth/convex/pw/hashPassword.js"
 
 export async function verifyHashedPassword2(password: string, hash: string): PromiseResult<boolean> {
   const op = "verifyHashedPassword2"

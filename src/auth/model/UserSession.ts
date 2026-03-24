@@ -1,10 +1,10 @@
-import { userProfileSchema, type UserProfile } from "@/auth/model/UserProfile"
-import { loginMethodSchema, type LoginMethod } from "@/auth/model_field/loginMethod"
-import { tokenValidDurationInDays } from "@/auth/server/jwt_token/tokenValidDurationInDays"
+import { createError, createResult, type Result } from "#result"
+import { userProfileSchema, type UserProfile } from "#src/auth/model/UserProfile.js"
+import { loginMethodSchema, type LoginMethod } from "#src/auth/model_field/loginMethod.js"
+import { tokenValidDurationInDays } from "#src/auth/server/jwt_token/tokenValidDurationInDays.js"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
 import dayjs from "dayjs"
 import * as a from "valibot"
-import { createError, createResult, type Result } from "~result"
-import { dateTimeSchema } from "~utils/valibot/dateTimeSchema"
 
 export type UserSession = {
   token: string

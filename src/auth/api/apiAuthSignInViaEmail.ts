@@ -1,7 +1,7 @@
-import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
-import { apiAuthFetch } from "@/auth/api/apiAuthFetch"
-import type { SignInViaEmailType } from "@/auth/model/signInSchema"
-import { apiPathAuth } from "@/auth/url/apiPathAuth"
+import { apiAuthBasePath } from "#src/auth/api/apiAuthBasePath.js"
+import { apiAuthFetch } from "#src/auth/api/apiAuthFetch.js"
+import type { SignInViaEmailType } from "#src/auth/model/signInSchema.js"
+import { apiPathAuth } from "#src/auth/url/apiPathAuth.js"
 
 export async function apiAuthSignInViaEmail(props: SignInViaEmailType) {
   return apiAuthFetch("apiClientSignInViaEmail", apiAuthBasePath + apiPathAuth.signInViaEmail, props)

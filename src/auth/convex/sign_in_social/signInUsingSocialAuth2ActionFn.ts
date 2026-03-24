@@ -1,10 +1,10 @@
-import type { UserSession } from "@/auth/model/UserSession"
-import type { LoginProvider } from "@/auth/model_field/socialLoginProvider"
-import type { CommonAuthProvider } from "@/auth/server/social_identity_providers/CommonAuthProvider"
-import { socialLoginGetUserProfile } from "@/auth/server/social_identity_providers/socialLoginGetUserProfile"
-import { internal } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
-import type { PromiseResult } from "~result"
+import type { PromiseResult } from "#result"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import type { LoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.js"
+import { socialLoginGetUserProfile } from "#src/auth/server/social_identity_providers/socialLoginGetUserProfile.js"
+import { internal } from "@convex/_generated/api.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 
 export async function signInUsingSocialAuth2ActionFn(
   ctx: ActionCtx,

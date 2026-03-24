@@ -1,6 +1,6 @@
-import { ttc } from "@/app/i18n/ttc"
-import { AuthLinks } from "@/auth/ui/AuthLinks"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { AuthLinks } from "#src/auth/ui/AuthLinks.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
 
 export function DemoAuthLinks() {
   return (

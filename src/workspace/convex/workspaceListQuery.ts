@@ -1,7 +1,7 @@
-import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
-import { type QueryCtx, internalQuery, query } from "@convex/_generated/server"
-import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import type { DocWorkspace } from "#src/workspace/convex/IdWorkspace.js"
+import { type QueryCtx, internalQuery, query } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export type WorkspaceListValidatorType = typeof workspaceListValidator.type

@@ -1,12 +1,12 @@
-import { envMicrosoftClientSecretResult } from "@/app/env/private/envMicrosoftClientSecretResult"
-import { envMicrosoftClientIdResult } from "@/app/env/public/envMicrosoftClientIdResult"
-import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
-import { urlAuthSignInUsingOauth } from "@/auth/url/urlAuthSignInUsingOauth"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { envMicrosoftClientSecretResult } from "#src/app/env/private/envMicrosoftClientSecretResult.js"
+import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.js"
+import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.js"
+import { queryString } from "#utils/url/queryString"
+import { searchParamsToObject } from "#utils/url/searchParamsToObject"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { queryString } from "~utils/url/queryString"
-import { searchParamsToObject } from "~utils/url/searchParamsToObject"
-import { authErrorMessages } from "./authErrorMessages"
+import { authErrorMessages } from "./authErrorMessages.js"
 
 export type MicrosoftOauthToken = {
   access_token: string

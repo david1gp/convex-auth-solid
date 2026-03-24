@@ -1,8 +1,8 @@
-import { cachePrefix } from "@/utils/ui/cachePrefix"
-import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
+import { createResult, createResultError, type Result } from "#result"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
+import type { WorkspaceModel } from "#src/workspace/model/WorkspaceModel.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 let hasLoaded = false
 

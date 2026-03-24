@@ -1,10 +1,10 @@
-import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
-import { vIdUser } from "@/auth/convex/vIdUser"
-import { otpPurposeValidator } from "@/auth/model_field/otpPurpose"
-import { internalMutation } from "@convex/_generated/server"
+import { type PromiseResult } from "#result"
+import { generateOtpCode } from "#src/auth/convex/pw/generateOtpCode.js"
+import { vIdUser } from "#src/auth/convex/vIdUser.js"
+import { otpPurposeValidator } from "#src/auth/model_field/otpPurpose.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export const otpSaveInternalMutation = internalMutation({
   args: {

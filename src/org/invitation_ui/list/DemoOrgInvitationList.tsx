@@ -1,10 +1,10 @@
-import { language } from "@/app/i18n/language"
-import { LayoutWrapperApp } from "@/app/layout/LayoutWrapperApp"
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import { OrgInvitationListSection, type OrgInvitationsProps } from "@/org/invitation_ui/list/OrgInvitationListSection"
-import { convexSystemFieldsCreateEmpty } from "@/utils/convex_client/HasConvexSystemFields"
-import { createdAtUpdatedAtCreate } from "@/utils/data/HasCreatedAtUpdatedAt"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
+import { language } from "#src/app/i18n/language.js"
+import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.js"
+import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.js"
+import { OrgInvitationListSection, type OrgInvitationsProps } from "#src/org/invitation_ui/list/OrgInvitationListSection.js"
+import { convexSystemFieldsCreateEmpty } from "#src/utils/convex_client/HasConvexSystemFields.js"
+import { createdAtUpdatedAtCreate } from "#src/utils/data/HasCreatedAtUpdatedAt.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
 
 export function DemoOrgInvitationList() {
   const props: OrgInvitationsProps = {

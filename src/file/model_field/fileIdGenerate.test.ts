@@ -1,5 +1,5 @@
-import { fileIdGenerate } from "@/file/model_field/fileIdGenerate"
-import { fileIdSchema } from "@/file/model_field/fileIdSchema"
+import { fileIdGenerate } from "#src/file/model_field/fileIdGenerate.js"
+import { fileIdSchema } from "#src/file/model_field/fileIdSchema.js"
 import { expect, test } from "bun:test"
 import * as a from "valibot"
 

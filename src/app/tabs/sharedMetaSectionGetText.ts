@@ -1,5 +1,5 @@
-import { sharedMetaSection, type AppCategory } from "@/app/tabs/sharedMetaSection"
-import { ttc } from "@/app/i18n/ttc"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { sharedMetaSection, type AppCategory } from "#src/app/tabs/sharedMetaSection.js"
 
 export function sharedMetaSectionGetText(section: string) {
   switch (section as AppCategory) {

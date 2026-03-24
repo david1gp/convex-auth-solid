@@ -1,7 +1,7 @@
-import { languageSchema } from "@/app/i18n/language"
-import { passwordSchema } from "@/auth/model_field/passwordSchema"
-import { emailSchema } from "@/utils/valibot/emailSchema"
-import { inputMaxLength100 } from "@/utils/valibot/inputMaxLength"
+import { languageSchema } from "#src/app/i18n/language.js"
+import { passwordSchema } from "#src/auth/model_field/passwordSchema.js"
+import { emailSchema } from "#src/utils/valibot/emailSchema.js"
+import { inputMaxLength100 } from "#src/utils/valibot/inputMaxLength.js"
 import * as a from "valibot"
 
 export type SignInViaPwType = a.InferOutput<typeof signInViaPwSchema>

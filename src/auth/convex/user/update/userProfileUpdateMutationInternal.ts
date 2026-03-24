@@ -1,13 +1,13 @@
-import type { DocUser, IdUser } from "@/auth/convex/IdUser"
-import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
-import { vIdUser } from "@/auth/convex/vIdUser"
-import type { UserProfile } from "@/auth/model/UserProfile"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import { createErrorAndLogError } from "@/utils/convex_backend/createErrorAndLogError"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server"
+import { type PromiseResult, createResult } from "#result"
+import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
+import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
+import { vIdUser } from "#src/auth/convex/vIdUser.js"
+import type { UserProfile } from "#src/auth/model/UserProfile.js"
+import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
+import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.js"
+import { nowIso } from "#utils/date/nowIso"
+import { type MutationCtx, internalMutation } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { type PromiseResult, createResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export const userProfileFieldsBase = {
   name: v.optional(v.string()),

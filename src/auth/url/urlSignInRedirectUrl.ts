@@ -1,5 +1,5 @@
-import { getDefaultUrlSignedIn } from "@/auth/url/getDefaultUrlSignedIn"
-import { pagePathIsAuth } from "@/auth/url/pagePathIsAuth"
+import { getDefaultUrlSignedIn } from "#src/auth/url/getDefaultUrlSignedIn.js"
+import { pagePathIsAuth } from "#src/auth/url/pagePathIsAuth.js"
 
 export function urlSignInRedirectUrl(fromPathname: string | null | undefined = location.pathname) {
   const defaultUrl = getDefaultUrlSignedIn()

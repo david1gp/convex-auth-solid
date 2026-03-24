@@ -1,4 +1,4 @@
-import { decodedTokenSchema } from "@/auth/model/DecodedToken"
+import { decodedTokenSchema } from "#src/auth/model/DecodedToken.js"
 import { expect, test } from "bun:test"
 import { jwtVerify, SignJWT } from "jose"
 import { jwtDecode } from "jwt-decode"

@@ -1,4 +1,4 @@
-import type { orgInvitationDataSchema, orgInvitationSchema } from "@/org/invitation_model/orgInvitationSchema"
+import type { orgInvitationDataSchema, orgInvitationSchema } from "#src/org/invitation_model/orgInvitationSchema.js"
 import * as a from "valibot"
 
 export type OrgInvitationDataModel = a.InferOutput<typeof orgInvitationDataSchema>

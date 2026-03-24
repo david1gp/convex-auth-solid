@@ -1,4 +1,4 @@
-import type { PageNameOrgInvitation } from "@/org/invitation_url/pageNameOrgInvitation"
+import type { PageNameOrgInvitation } from "#src/org/invitation_url/pageNameOrgInvitation.js"
 
 export type PageRouteOrgInvitation = keyof typeof pageRouteOrgInvitation
 

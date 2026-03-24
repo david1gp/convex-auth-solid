@@ -1,15 +1,15 @@
-import { findOrCreateUserFn } from "@/auth/convex/crud/findOrCreateUserFn"
-import { saveTokenIntoSessionReturnExpiresAtFn } from "@/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation"
-import type { IdUser } from "@/auth/convex/IdUser"
-import type { UserSession } from "@/auth/model/UserSession"
-import { createTokenResult } from "@/auth/server/jwt_token/createTokenResult"
+import { createResult, type PromiseResult } from "#result"
+import { findOrCreateUserFn } from "#src/auth/convex/crud/findOrCreateUserFn.js"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.js"
 import {
     type CommonAuthProvider,
     commonAuthProviderValidator,
-} from "@/auth/server/social_identity_providers/CommonAuthProvider.js"
-import { orgMemberGetHandleAndRoleFn } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
-import { createResult, type PromiseResult } from "~result"
+} from "#src/auth/server/social_identity_providers/CommonAuthProvider.js.js"
+import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server.js.js"
 
 export const signInUsingSocialAuth3InternalMutation = internalMutation({
   args: commonAuthProviderValidator,

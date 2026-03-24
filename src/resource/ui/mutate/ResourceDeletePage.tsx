@@ -1,13 +1,13 @@
-import { ttc } from "@/app/i18n/ttc"
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavResource } from "@/app/nav/NavResource"
-import { ResourceMutate } from "@/resource/ui/mutate/ResourceMutate"
-import { urlResourceRemove } from "@/resource/url/urlResource"
-import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { useParams } from "@solidjs/router"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavResource } from "#src/app/nav/NavResource.js"
+import { ResourceMutate } from "#src/resource/ui/mutate/ResourceMutate.js"
+import { urlResourceRemove } from "#src/resource/url/urlResource.js"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
+import { formMode, getFormModeTitle } from "#ui/input/form/formMode"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { useParams } from "@solidjs/router.js"
 import { Match, Switch } from "solid-js"
-import { formMode, getFormModeTitle } from "~ui/input/form/formMode"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 const mode = formMode.remove
 

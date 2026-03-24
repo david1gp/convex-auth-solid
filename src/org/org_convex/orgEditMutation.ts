@@ -1,14 +1,14 @@
-import type { DocOrg } from "@/org/org_convex/IdOrg"
-import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
-import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
-import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { mutation, type MutationCtx } from "@convex/_generated/server"
+import { createError, createResult, createResultError, type PromiseResult } from "#result"
+import type { DocOrg } from "#src/org/org_convex/IdOrg.js"
+import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.js"
+import { orgDataSchemaFields } from "#src/org/org_model/orgSchema.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { createError, createResult, createResultError, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export type OrgEditValidatorType = typeof orgEditValidator.type
 

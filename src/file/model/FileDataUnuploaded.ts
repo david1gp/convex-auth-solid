@@ -1,8 +1,8 @@
-import { languageOrNoneSchema, type LanguageOrNone } from "@/app/i18n/language"
-import { stringSchemaUrl } from "@/utils/valibot/stringSchema"
+import { languageOrNoneSchema, type LanguageOrNone } from "#src/app/i18n/language.js"
+import { stringSchemaUrl } from "#src/utils/valibot/stringSchema.js"
+import { intSchemaMin0 } from "#utils/valibot/intSchema"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { intSchemaMin0 } from "~utils/valibot/intSchema"
 
 export interface FileDataUnuploaded {
   displayName: string

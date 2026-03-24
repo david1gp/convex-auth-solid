@@ -1,10 +1,10 @@
-import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
-import type { IdUser } from "@/auth/convex/IdUser"
-import { otpSaveFn } from "@/auth/convex/otp/otpSaveFn"
-import { otpPurpose } from "@/auth/model_field/otpPurpose"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { createError, type PromiseResult } from "#result"
+import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.js"
+import { otpPurpose } from "#src/auth/model_field/otpPurpose.js"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createError, type PromiseResult } from "~result"
 
 export type SignInViaEmailSaveCodeValidatorType = typeof signInViaEmailSaveCodeValidator.type
 export const signInViaEmailSaveCodeValidator = v.object({

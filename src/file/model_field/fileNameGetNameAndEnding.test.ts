@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { fileNameGetNameAndEnding } from "./fileNameGetNameAndEnding"
+import { fileNameGetNameAndEnding } from "./fileNameGetNameAndEnding.js"
 
 describe("getNameAndEnding", () => {
   it("should have ending with length of 10 -> that should get reduced to 5", () => {

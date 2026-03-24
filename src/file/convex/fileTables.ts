@@ -1,13 +1,10 @@
-import { fileDataUnuploadedSchemaFields } from "@/file/model/FileDataUnuploaded"
-import { fileDataUploadedSchemaFields } from "@/file/model/FileDataUploaded"
-import { fileSchemaFields } from "@/file/model/fileSchema"
-import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt"
-import { stringSchemaId } from "@/utils/valibot/stringSchema"
-import { valibotToConvex } from "@/utils/convex/valibotToConvex"
+import { vIdUser } from "#src/auth/convex/vIdUser.js"
+import { fileSchemaFields } from "#src/file/model/fileSchema.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt.js"
+import { stringSchemaId } from "#src/utils/valibot/stringSchema.js"
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
 import * as a from "valibot"
-import { vIdUser } from "@/auth/convex/vIdUser"
 
 const fileMetaDataSchemaFields = {
   fileId: stringSchemaId,

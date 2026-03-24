@@ -1,12 +1,12 @@
-import { ttc } from "@/app/i18n/ttc"
-import type { FileDataUnuploaded } from "@/file/model/FileDataUnuploaded"
-import { bytesToFormatedText } from "@/file/ui/stats/bytesToFormatedText"
-import { classesCard } from "@/ui/card/classesCard"
+import { ttc } from "#src/app/i18n/ttc.js"
+import type { FileDataUnuploaded } from "#src/file/model/FileDataUnuploaded.js"
+import { bytesToFormatedText } from "#src/file/ui/stats/bytesToFormatedText.js"
+import { classesCard } from "#src/ui/card/classesCard.js"
+import { Icon } from "#ui/static/icon/Icon"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { mdiLoading } from "@mdi/js"
 import { Show } from "solid-js"
-import { Icon } from "~ui/static/icon/Icon"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface UploadFileStatsProps extends MayHaveClass {
   info: FileDataUnuploaded

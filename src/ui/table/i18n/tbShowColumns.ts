@@ -1,4 +1,4 @@
-import type { TranslationBlock } from "@/app/i18n/TranslationBlock"
+import type { TranslationBlock } from "#src/app/i18n/TranslationBlock.js"
 
 export const tbShowColumns = {
   en: "Show columns",

@@ -1,7 +1,7 @@
-import { fileDataUnuploadedSchemaFields } from "@/file/model/FileDataUnuploaded"
-import { fileDataUploadedSchemaFields } from "@/file/model/FileDataUploaded"
-import { resourceIdSchema } from "@/resource/model/resourceIdSchema"
-import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt"
+import { fileDataUnuploadedSchemaFields } from "#src/file/model/FileDataUnuploaded.js"
+import { fileDataUploadedSchemaFields } from "#src/file/model/FileDataUploaded.js"
+import { resourceIdSchema } from "#src/resource/model/resourceIdSchema.js"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt.js"
 import * as a from "valibot"
 
 export const fileSchemaFields = {

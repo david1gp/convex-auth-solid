@@ -1,11 +1,11 @@
-import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
-import type { UserSession } from "@/auth/model/UserSession"
-import { signUpConfirmEmailSchema } from "@/auth/model/signUpConfirmEmailSchema"
-import { internal } from "@convex/_generated/api"
-import { type ActionCtx } from "@convex/_generated/server"
+import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { signUpConfirmEmailSchema } from "#src/auth/model/signUpConfirmEmailSchema.js"
+import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
+import { base64urlEncodeObject } from "#utils/url/base64url.js"
+import { internal } from "@convex/_generated/api.js"
+import { type ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
-import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
-import { base64urlEncodeObject } from "~utils/url/base64url"
 
 export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signUpConfirmEmail1HttpHandler"

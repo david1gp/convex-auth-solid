@@ -1,4 +1,4 @@
-import { pageRouteOrg } from "@/org/org_url/pageRouteOrg"
+import { pageRouteOrg } from "#src/org/org_url/pageRouteOrg.js"
 
 export function urlOrgList() {
   return pageRouteOrg.orgList

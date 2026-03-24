@@ -1,13 +1,13 @@
-import { LogoutButton } from "@/app/nav/LogoutButton"
-import type { UserSession } from "@/auth/model/UserSession"
-import { userSessionSignal } from "@/auth/ui/signals/userSessionSignal"
-import { urlUserProfileMe } from "@/auth/url/pageRouteAuth"
+import { LogoutButton } from "#src/app/nav/LogoutButton.js"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.js"
+import { urlUserProfileMe } from "#src/auth/url/pageRouteAuth.js"
+import { ttt } from "#ui/i18n/ttt"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon"
 import { mdiAccount } from "@mdi/js"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { CorvuPopoverIcon } from "~ui/interactive/popover/CorvuPopoverIcon"
 
 export function UserNavButton() {
   return <Show when={userSessionSignal.get()}>{(userSession) => <UserPopover />}</Show>

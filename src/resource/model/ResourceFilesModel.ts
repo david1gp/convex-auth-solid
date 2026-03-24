@@ -1,7 +1,7 @@
-import type { FileModel } from "@/file/model/FileModel"
-import { fileSchema } from "@/file/model/fileSchema"
-import type { ResourceModel } from "@/resource/model/ResourceModel"
-import { resourceSchema } from "@/resource/model/resourceSchema"
+import type { FileModel } from "#src/file/model/FileModel.js"
+import { fileSchema } from "#src/file/model/fileSchema.js"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
+import { resourceSchema } from "#src/resource/model/resourceSchema.js"
 import * as a from "valibot"
 
 export interface ResourceFilesModel {

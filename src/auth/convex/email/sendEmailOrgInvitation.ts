@@ -1,18 +1,18 @@
-import { envBaseUrlEmailGeneratorResult } from "@/app/env/private/envBaseUrlEmailGeneratorResult"
-import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
-import { type Language } from "@/app/i18n/language"
-import { createAuthResendEnvVariableNames } from "@/auth/convex/email/createAuthResendEnvVariableNames"
-import { generateSharedEmailProps } from "@/auth/convex/email/generateSharedEmailProps"
-import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMessageTechnical"
+import { createError, createResult, type PromiseResult } from "#result"
+import { envBaseUrlEmailGeneratorResult } from "#src/app/env/private/envBaseUrlEmailGeneratorResult.js"
+import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.js"
+import { type Language } from "#src/app/i18n/language.js"
+import { createAuthResendEnvVariableNames } from "#src/auth/convex/email/createAuthResendEnvVariableNames.js"
+import { generateSharedEmailProps } from "#src/auth/convex/email/generateSharedEmailProps.js"
+import { sendTelegramMessageAuth } from "#src/auth/convex/telegram/sendTelegramMessageTechnical.js"
+import { envMode } from "#ui/env/envMode"
+import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi"
+import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend"
 import {
     apiGenerateEmailOrgInvitationV1,
     type GeneratedEmailType,
     type OrgInvitationV1Type,
-} from "@adaptive-ds/email-generator/index.js"
-import { createError, createResult, type PromiseResult } from "~result"
-import { envMode } from "~ui/env/envMode"
-import type { ResendAddressInfo } from "~utils/email/resend/sendEmailsViaResendApi"
-import { sendSingleEmailViaResend } from "~utils/email/resend/sendEmailViaResend"
+} from "@adaptive-ds/email-generator/index.js.js"
 
 export type GenerateEmailOrgInvitationProps = {
   invitedName: string

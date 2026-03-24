@@ -1,9 +1,9 @@
-export { workspaceCreateInternal, workspaceCreateMutation } from "@/workspace/convex/workspaceCreateMutation"
-export { workspaceDeleteInternal, workspaceDeleteMutation } from "@/workspace/convex/workspaceDeleteMutation"
-export { workspaceEditInternal, workspaceEditMutation } from "@/workspace/convex/workspaceEditMutation"
-export { workspaceGetInternal, workspaceGetQuery } from "@/workspace/convex/workspaceGetQuery"
+export { workspaceCreateInternal, workspaceCreateMutation } from "#src/workspace/convex/workspaceCreateMutation.js"
+export { workspaceDeleteInternal, workspaceDeleteMutation } from "#src/workspace/convex/workspaceDeleteMutation.js"
+export { workspaceEditInternal, workspaceEditMutation } from "#src/workspace/convex/workspaceEditMutation.js"
+export { workspaceGetInternal, workspaceGetQuery } from "#src/workspace/convex/workspaceGetQuery.js"
 export {
-  workspaceHandleAvailable,
-  workspaceHandleAvailableInternal,
-} from "@/workspace/convex/workspaceHandleAvailableQuery"
-export { workspaceListInternal, workspacesListQuery } from "@/workspace/convex/workspaceListQuery"
+    workspaceHandleAvailable,
+    workspaceHandleAvailableInternal
+} from "#src/workspace/convex/workspaceHandleAvailableQuery.js"
+export { workspaceListInternal, workspacesListQuery } from "#src/workspace/convex/workspaceListQuery.js"

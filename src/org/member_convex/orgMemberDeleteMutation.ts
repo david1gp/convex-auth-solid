@@ -1,9 +1,9 @@
-import type { IdOrgMember } from "@/org/member_convex/IdOrgMember"
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { mutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import type { IdOrgMember } from "#src/org/member_convex/IdOrgMember.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~result"
 
 export type OrgMemberDeleteValidatorType = typeof orgMemberDeleteValidator.type
 

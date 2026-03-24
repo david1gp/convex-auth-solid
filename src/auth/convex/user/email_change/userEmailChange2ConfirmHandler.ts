@@ -1,8 +1,8 @@
-import { commonApiErrorMessages } from "@/auth/convex/sign_up/commonApiErrorMessages"
-import { api } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
+import { createError } from "#result"
+import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
+import { api } from "@convex/_generated/api.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
-import { createError } from "~result"
 
 const userEmailChangeConfirmSchema = a.object({
   token: a.string(),

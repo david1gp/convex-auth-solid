@@ -1,4 +1,4 @@
-import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
+import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.js"
 
 export function isDevEnv() {
   const op = "isDevEnvVite"

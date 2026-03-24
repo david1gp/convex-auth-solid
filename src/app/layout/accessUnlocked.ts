@@ -1,5 +1,5 @@
-import type { UserSession } from "@/auth/model/UserSession"
-import { userRoleIsDevOrAdmin } from "@/auth/model_field/userRole"
+import type { UserSession } from "#src/auth/model/UserSession.js"
+import { userRoleIsDevOrAdmin } from "#src/auth/model_field/userRole.js"
 
 const log = false
 

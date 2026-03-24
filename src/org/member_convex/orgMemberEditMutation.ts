@@ -1,11 +1,11 @@
-import type { DocOrgMember, IdOrgMember } from "@/org/member_convex/IdOrgMember"
-import { orgRoleValidator } from "@/org/org_model_field/orgRoleValidator"
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { mutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import type { DocOrgMember, IdOrgMember } from "#src/org/member_convex/IdOrgMember.js"
+import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export type OrgMemberEditValidatorType = typeof orgMemberEditValidator.type
 

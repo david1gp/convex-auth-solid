@@ -1,8 +1,8 @@
-import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~result"
 
 export const workspaceHandleAvailableFields = {
   workspaceHandle: v.string(),

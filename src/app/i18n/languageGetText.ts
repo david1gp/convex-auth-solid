@@ -1,6 +1,6 @@
-import type { Language, LanguageOrNone } from "@/app/i18n/language"
-import { language, languageOrNone } from "@/app/i18n/language"
-import { ttc } from "./ttc"
+import type { Language, LanguageOrNone } from "#src/app/i18n/language.js"
+import { language, languageOrNone } from "#src/app/i18n/language.js"
+import { ttc } from "./ttc.js"
 
 export function languageGetText(l: string) {
   switch (l as Language) {

@@ -1,9 +1,9 @@
-import { envBaseUrlApiResult } from "@/app/env/public/envBaseUrlApiResult"
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { FileDataModel } from "@/file/model/FileModel"
-import { apiBaseR2 } from "@/r2/client/apiBaseR2"
-import { apiPathR2FileCreate } from "@/r2/convex/r2FileCreateHttpHandler"
-import { createResult, createResultError, resultTryParsingFetchErr, type PromiseResult } from "~result"
+import { createResult, createResultError, resultTryParsingFetchErr, type PromiseResult } from "#result"
+import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.js"
+import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.js"
+import type { FileDataModel } from "#src/file/model/FileModel.js"
+import { apiBaseR2 } from "#src/r2/client/apiBaseR2.js"
+import { apiPathR2FileCreate } from "#src/r2/convex/r2FileCreateHttpHandler.js"
 
 export async function apiR2FileCreate(data: FileDataModel): PromiseResult<string> {
   const op = "apiR2FileCreate"

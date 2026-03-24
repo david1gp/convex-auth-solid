@@ -1,5 +1,5 @@
-import type { DocOrg } from "@/org/org_convex/IdOrg"
-import type { MutationCtx, QueryCtx } from "@convex/_generated/server"
+import type { DocOrg } from "#src/org/org_convex/IdOrg.js"
+import type { MutationCtx, QueryCtx } from "@convex/_generated/server.js"
 
 export async function orgGetByHandleFn(ctx: QueryCtx | MutationCtx, orgHandle: string): Promise<DocOrg | null> {
   return await ctx.db

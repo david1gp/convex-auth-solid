@@ -1,8 +1,8 @@
-import { ttl1 } from "@/app/i18n/ttl"
-import { tbDecreaseByX } from "@/ui/input/number/i18n/tbDecreaseByX"
-import { tbIncreaseByX } from "@/ui/input/number/i18n/tbIncreaseByX"
-import { NumberInputS, type NumberInputSProps } from "~ui/input/number/NumberInputS"
-import type { NumberInputText } from "~ui/input/number/NumberInputTexts"
+import { ttl1 } from "#src/app/i18n/ttl.js"
+import { tbDecreaseByX } from "#src/ui/input/number/i18n/tbDecreaseByX.js"
+import { tbIncreaseByX } from "#src/ui/input/number/i18n/tbIncreaseByX.js"
+import { NumberInputS, type NumberInputSProps } from "#ui/input/number/NumberInputS"
+import type { NumberInputText } from "#ui/input/number/NumberInputTexts"
 
 export function NumberInputST(p: Omit<NumberInputSProps, "texts">) {
   const texts: NumberInputText = {

@@ -1,32 +1,32 @@
-import { language, type Language } from "@/app/i18n/language"
-import { languageSignalGet } from "@/app/i18n/languageSignal"
-import { ttc } from "@/app/i18n/ttc"
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import type { DocOrgInvitation, IdOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
+import type { Result } from "#result"
+import { language, type Language } from "#src/app/i18n/language.js"
+import { languageSignalGet } from "#src/app/i18n/languageSignal.js"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.js"
+import type { DocOrgInvitation, IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.js"
 import {
     orgInvitationFormConfig,
     orgInvitationFormField,
     type OrgInvitationFormField,
-} from "@/org/invitation_ui/form/orgInvitationFormField"
+} from "#src/org/invitation_ui/form/orgInvitationFormField.js"
 import {
     orgInvitationFormLocalStorage,
     type OrgInvitationFormData,
-} from "@/org/invitation_ui/form/orgInvitationFormLocalStorage"
-import { urlOrgInvitationList } from "@/org/invitation_url/urlOrgInvitation"
-import { orgRole, type OrgRole } from "@/org/org_model_field/orgRole"
-import { createMutation } from "@/utils/convex_client/createMutation"
-import { navigateTo } from "@/utils/router/navigateTo"
-import { debounceMs } from "@/utils/ui/debounceMs"
-import type { HasToken } from "@/utils/ui/HasToken"
-import { api } from "@convex/_generated/api"
+} from "#src/org/invitation_ui/form/orgInvitationFormLocalStorage.js"
+import { urlOrgInvitationList } from "#src/org/invitation_url/urlOrgInvitation.js"
+import { orgRole, type OrgRole } from "#src/org/org_model_field/orgRole.js"
+import { createMutation } from "#src/utils/convex_client/createMutation.js"
+import { navigateTo } from "#src/utils/router/navigateTo.js"
+import { debounceMs } from "#src/utils/ui/debounceMs.js"
+import type { HasToken } from "#src/utils/ui/HasToken.js"
+import { formMode, type FormMode } from "#ui/input/form/formMode"
+import { toastAdd } from "#ui/interactive/toast/toastAdd"
+import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import { api } from "@convex/_generated/api.js"
 import { mdiAlertCircle } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled.js"
 import * as a from "valibot"
-import type { Result } from "~result"
-import { formMode, type FormMode } from "~ui/input/form/formMode"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 export type OrgInvitationFormState = {
   invitedName: SignalObject<string>

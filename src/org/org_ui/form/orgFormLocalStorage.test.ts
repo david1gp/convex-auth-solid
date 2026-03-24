@@ -1,5 +1,5 @@
-import { expect, test, describe } from "bun:test"
-import { orgDataPartialSchema } from "@/org/org_model/orgSchema"
+import { orgDataPartialSchema } from "#src/org/org_model/orgSchema.js"
+import { describe, expect, test } from "bun:test"
 import * as a from "valibot"
 
 describe("orgFormLocalStorage", () => {

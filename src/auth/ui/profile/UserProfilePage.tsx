@@ -1,23 +1,23 @@
-import { ttc } from "@/app/i18n/ttc"
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavCenter } from "@/app/nav/NavCenter"
-import { NavStatic } from "@/app/nav/NavStatic"
-import type { DocUser } from "@/auth/convex/IdUser"
-import { docUserToUserProfile } from "@/auth/convex/user/docUserToUserProfile"
-import { UserProfileForm } from "@/auth/ui/profile/UserProfileForm"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.js"
+import { NavCenter } from "#src/app/nav/NavCenter.js"
+import { NavStatic } from "#src/app/nav/NavStatic.js"
+import type { DocUser } from "#src/auth/convex/IdUser.js"
+import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
+import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.js"
 import {
-  userProfileFormStateManagement,
-  type UserProfileFormStateManagement,
-} from "@/auth/ui/profile/userProfileFormState"
-import { urlUserProfileView } from "@/auth/url/pageRouteAuth"
-import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { createQuery } from "@/utils/convex_client/createQuery"
-import { api } from "@convex/_generated/api"
-import { useParams } from "@solidjs/router"
+    userProfileFormStateManagement,
+    type UserProfileFormStateManagement,
+} from "#src/auth/ui/profile/userProfileFormState.js"
+import { urlUserProfileView } from "#src/auth/url/pageRouteAuth.js"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
+import { createQuery } from "#src/utils/convex_client/createQuery.js"
+import { formMode } from "#ui/input/form/formMode"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { api } from "@convex/_generated/api.js"
+import { useParams } from "@solidjs/router.js"
 import { Match, Switch } from "solid-js"
-import { formMode } from "~ui/input/form/formMode"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function UserProfilePage() {
   const params = useParams()

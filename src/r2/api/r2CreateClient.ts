@@ -1,9 +1,9 @@
-import { envR2AccessKeyIdResult } from "@/app/env/private/envR2AccessKeyIdResult"
-import { envR2AccountIdResult } from "@/app/env/private/envR2AccountIdResult"
-import { envR2BucketNameResult } from "@/app/env/private/envR2BucketNameResult"
-import { envR2SecretAccessKeyResult } from "@/app/env/private/envR2SecretAccessKeyResult"
-import { S3Client } from "@bradenmacdonald/s3-lite-client"
-import { type Result, createResult } from "~result"
+import { type Result, createResult } from "#result"
+import { envR2AccessKeyIdResult } from "#src/app/env/private/envR2AccessKeyIdResult.js"
+import { envR2AccountIdResult } from "#src/app/env/private/envR2AccountIdResult.js"
+import { envR2BucketNameResult } from "#src/app/env/private/envR2BucketNameResult.js"
+import { envR2SecretAccessKeyResult } from "#src/app/env/private/envR2SecretAccessKeyResult.js"
+import { S3Client } from "@bradenmacdonald/s3-lite-client.js"
 
 /**
  * - code - https://github.com/bradenmacdonald/s3-lite-client

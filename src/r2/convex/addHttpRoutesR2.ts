@@ -1,10 +1,10 @@
-import { addRouteWithCors } from "@/auth/convex/headers/cors/addRouteWithCors"
-import { httpMethod } from "@/auth/convex/headers/httpMethod"
-import { apiBaseR2 } from "@/r2/client/apiBaseR2"
-import { apiPathR2FileCreate, r2FileCreateHttpHandler } from "@/r2/convex/r2FileCreateHttpHandler"
-import { r2UploadUrlGetHttpHandler } from "@/r2/convex/r2UploadUrlGetHttpHandler"
+import { addRouteWithCors } from "#src/auth/convex/headers/cors/addRouteWithCors.js"
+import { httpMethod } from "#src/auth/convex/headers/httpMethod.js"
+import { apiBaseR2 } from "#src/r2/client/apiBaseR2.js"
+import { apiPathR2FileCreate, r2FileCreateHttpHandler } from "#src/r2/convex/r2FileCreateHttpHandler.js"
+import { r2UploadUrlGetHttpHandler } from "#src/r2/convex/r2UploadUrlGetHttpHandler.js"
 import type { HttpRouter } from "convex/server"
-import { apiPathR2UploadUrl } from "../client/apiR2GetUploadUrl"
+import { apiPathR2UploadUrl } from "../client/apiR2GetUploadUrl.js"
 
 export function addHttpRoutesR2(http: HttpRouter) {
   addRouteWithCors(http, apiBaseR2 + apiPathR2UploadUrl, httpMethod.GET, r2UploadUrlGetHttpHandler)

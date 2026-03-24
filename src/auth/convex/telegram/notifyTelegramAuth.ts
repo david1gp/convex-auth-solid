@@ -1,10 +1,10 @@
-import { envEnvModeResult } from "@/app/env/public/envEnvModeResult"
-import { sendTelegramMessageAuth } from "@/auth/convex/telegram/sendTelegramMessageTechnical"
-import { userSessionValidator } from "@/auth/model/userSessionValidator"
-import { type ActionCtx, internalAction } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.js"
+import { sendTelegramMessageAuth } from "#src/auth/convex/telegram/sendTelegramMessageTechnical.js"
+import { userSessionValidator } from "#src/auth/model/userSessionValidator.js"
+import { envMode } from "#ui/env/envMode"
+import { type ActionCtx, internalAction } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~result"
-import { envMode } from "~ui/env/envMode"
 
 export const notifyTelegramAuthValidator = v.object({
   userSession: userSessionValidator,

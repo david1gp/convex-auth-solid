@@ -1,8 +1,8 @@
-import type { DocOrg } from "@/org/org_convex/IdOrg"
-import type { OrgModel } from "@/org/org_model/OrgModel"
-import { orgHandleSchema } from "@/org/org_model_field/orgHandleSchema"
-import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
-import { stringSchemaDescription, stringSchemaName, stringSchemaUrl } from "@/utils/valibot/stringSchema"
+import type { DocOrg } from "#src/org/org_convex/IdOrg.js"
+import type { OrgModel } from "#src/org/org_model/OrgModel.js"
+import { orgHandleSchema } from "#src/org/org_model_field/orgHandleSchema.js"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { stringSchemaDescription, stringSchemaName, stringSchemaUrl } from "#src/utils/valibot/stringSchema.js"
 import * as a from "valibot"
 
 export const orgDataSchemaFields = {

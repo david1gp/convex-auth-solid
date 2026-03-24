@@ -1,11 +1,11 @@
-import { fileDocToModel } from "@/file/convex/fileDocToModel"
-import { fileGetByIdFn } from "@/file/convex/fileGetByIdFn"
-import type { FileModel } from "@/file/model/FileModel"
-import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
+import { fileDocToModel } from "#src/file/convex/fileDocToModel.js"
+import { fileGetByIdFn } from "#src/file/convex/fileGetByIdFn.js"
+import type { FileModel } from "#src/file/model/FileModel.js"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { notEmptyFilter } from "#utils/arr/notEmptyFilter"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { notEmptyFilter } from "~utils/arr/notEmptyFilter"
 
 export type ResourceFileListValidatorType = typeof resourceFileListValidator.type
 

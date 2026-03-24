@@ -1,7 +1,7 @@
-import { ttc } from "@/app/i18n/ttc"
-import { fileSchemaFields } from "@/file/model/fileSchema"
-import type { FormFieldConfig } from "@/ui/form/formFieldConfigs"
-import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { fileSchemaFields } from "#src/file/model/fileSchema.js"
+import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.js"
+import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.js"
 
 export type FileFormField = keyof typeof fileFormField
 

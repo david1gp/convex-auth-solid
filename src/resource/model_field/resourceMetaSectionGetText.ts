@@ -1,6 +1,6 @@
-import { ttc } from "@/app/i18n/ttc"
-import { sharedMetaSectionGetText } from "@/app/tabs/sharedMetaSectionGetText"
-import { resourceMetaSection, type ResourceMetaSection } from "@/resource/model_field/resourceMetaSection"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { sharedMetaSectionGetText } from "#src/app/tabs/sharedMetaSectionGetText.js"
+import { resourceMetaSection, type ResourceMetaSection } from "#src/resource/model_field/resourceMetaSection.js"
 
 export function resourceMetaSectionGetText(section: string) {
   switch (section as ResourceMetaSection) {

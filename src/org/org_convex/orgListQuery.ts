@@ -1,9 +1,9 @@
-import type { DocOrg } from "@/org/org_convex/IdOrg"
-import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { query, type QueryCtx } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import type { DocOrg } from "#src/org/org_convex/IdOrg.js"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~result"
 
 export type OrgListValidatorType = typeof orgListValidator.type
 

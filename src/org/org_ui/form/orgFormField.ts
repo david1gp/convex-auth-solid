@@ -1,7 +1,7 @@
-import { ttc } from "@/app/i18n/ttc"
-import { orgDataSchemaFields } from "@/org/org_model/orgSchema"
-import type { FormFieldConfig } from "@/ui/form/formFieldConfigs"
-import { formFieldConfigs } from "@/ui/form/formFieldConfigs"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { orgDataSchemaFields } from "#src/org/org_model/orgSchema.js"
+import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.js"
+import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.js"
 
 export type OrgFormField = keyof typeof orgFormField
 

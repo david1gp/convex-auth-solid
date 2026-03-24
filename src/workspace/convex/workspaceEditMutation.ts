@@ -1,12 +1,12 @@
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { workspaceDataSchema } from "@/workspace/model/workspaceSchema"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { workspaceDataSchema } from "#src/workspace/model/workspaceSchema.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import * as va from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
-import type { DocWorkspace } from "./IdWorkspace"
+import type { DocWorkspace } from "./IdWorkspace.js"
 
 export type WorkspaceEditValidatorType = typeof workspaceEditValidator.type
 

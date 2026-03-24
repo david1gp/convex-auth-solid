@@ -1,5 +1,5 @@
-import type { DocOrgInvitation } from "@/org/invitation_convex/IdOrgInvitation"
-import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
+import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.js"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.js"
 
 export function docOrgInvitationToModel({ _id, _creationTime, ...rest }: DocOrgInvitation): OrgInvitationModel {
   return rest

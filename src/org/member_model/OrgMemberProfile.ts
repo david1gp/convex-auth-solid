@@ -1,6 +1,6 @@
-import { userProfileSchema, type UserProfile } from "@/auth/model/UserProfile"
-import type { OrgMemberModel } from "@/org/member_model/OrgMemberModel"
-import { orgMemberSchemaFields } from "@/org/member_model/OrgMemberSchema"
+import { userProfileSchema, type UserProfile } from "#src/auth/model/UserProfile.js"
+import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.js"
+import { orgMemberSchemaFields } from "#src/org/member_model/OrgMemberSchema.js"
 import * as a from "valibot"
 
 export interface OrgMemberProfile extends OrgMemberModel {

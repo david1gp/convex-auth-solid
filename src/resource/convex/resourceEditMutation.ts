@@ -1,13 +1,13 @@
-import type { DocResource } from "@/resource/convex/IdResource"
-import { resourceDataSchemaFields } from "@/resource/model/resourceSchema"
-import { valibotToConvex } from "@/utils/convex/valibotToConvex"
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import type { DocResource } from "#src/resource/convex/IdResource.js"
+import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export const resourceEditFields = {
   ...valibotToConvex(resourceDataSchemaFields),

@@ -1,4 +1,4 @@
-import type { Result } from "~result"
+import type { Result } from "#result"
 
 export function resultHasErrorMessage<T>(r: Result<T> | undefined) {
   if (!r) return ""

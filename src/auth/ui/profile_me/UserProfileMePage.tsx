@@ -1,36 +1,36 @@
-import { ttc } from "@/app/i18n/ttc"
-import { LayoutWrapperAuth } from "@/app/layout/LayoutWrapperAuth"
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavBreadcrumbSeparator } from "@/app/nav/NavBreadcrumbSeparator"
-import { NavUserProfile } from "@/app/nav/NavUserProfile"
-import type { UserProfile } from "@/auth/model/UserProfile"
-import { UserProfileForm } from "@/auth/ui/profile/UserProfileForm"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.js"
+import { NavUserProfile } from "#src/app/nav/NavUserProfile.js"
+import type { UserProfile } from "#src/auth/model/UserProfile.js"
+import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.js"
 import {
-  userProfileFormStateManagement,
-  type UserProfileFormStateManagement,
-} from "@/auth/ui/profile/userProfileFormState"
-import { userSessionGet } from "@/auth/ui/signals/userSessionSignal"
+    userProfileFormStateManagement,
+    type UserProfileFormStateManagement,
+} from "#src/auth/ui/profile/userProfileFormState.js"
+import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.js"
 import {
-  urlUserProfileMe,
-  urlUserProfileMeChangeEmail,
-  urlUserProfileMeChangePassword,
-  urlUserProfileMeEdit,
-  urlUserProfileMeImage,
-} from "@/auth/url/pageRouteAuth"
-import { orgNameGet } from "@/org/org_ui/orgNameRecordSignal"
-import { urlOrgLeave, urlOrgView } from "@/org/org_url/urlOrg"
+    urlUserProfileMe,
+    urlUserProfileMeChangeEmail,
+    urlUserProfileMeChangePassword,
+    urlUserProfileMeEdit,
+    urlUserProfileMeImage,
+} from "#src/auth/url/pageRouteAuth.js"
+import { orgNameGet } from "#src/org/org_ui/orgNameRecordSignal.js"
+import { urlOrgLeave, urlOrgView } from "#src/org/org_url/urlOrg.js"
+import { formMode } from "#ui/input/form/formMode"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly"
+import { Icon } from "#ui/static/icon/Icon"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { classArr } from "#ui/utils/classArr"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter"
 import { mdiLocationExit, mdiSquareEditOutline } from "@mdi/js"
 import { Show } from "solid-js"
-import { formMode } from "~ui/input/form/formMode"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { LinkButtonIconOnly } from "~ui/interactive/link/LinkButtonIconOnly"
-import { Icon } from "~ui/static/icon/Icon"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
-import { classArr } from "~ui/utils/classArr"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
 
 export function UserProfileMePage() {
   return (

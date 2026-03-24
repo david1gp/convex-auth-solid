@@ -1,10 +1,10 @@
-import { AuthSectionHeroIcon } from "@/auth/ui/shared/AuthSectionHeroIcon"
-import { classesCardWrapperP4 } from "~ui/static/container/classesCardWrapper"
-import { classArr } from "~ui/utils/classArr"
-import type { HasIcon } from "~ui/utils/HasIcon"
-import type { HasSubtitle } from "~ui/utils/HasSubtitle"
-import type { HasTitle } from "~ui/utils/HasTitle"
-import type { MayHaveChildrenAndClass } from "~ui/utils/MayHaveChildrenAndClass"
+import { AuthSectionHeroIcon } from "#src/auth/ui/shared/AuthSectionHeroIcon.js"
+import { classesCardWrapperP4 } from "#ui/static/container/classesCardWrapper"
+import { classArr } from "#ui/utils/classArr"
+import type { HasIcon } from "#ui/utils/HasIcon"
+import type { HasSubtitle } from "#ui/utils/HasSubtitle"
+import type { HasTitle } from "#ui/utils/HasTitle"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass"
 
 export interface AuthSectionCardProps extends HasIcon, HasTitle, HasSubtitle, MayHaveChildrenAndClass {}
 

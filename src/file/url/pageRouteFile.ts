@@ -1,4 +1,4 @@
-import type { PageNameFile } from "@/file/url/pageNameFile"
+import type { PageNameFile } from "#src/file/url/pageNameFile.js"
 
 export type PageRouteFile = keyof typeof pageRouteFile
 

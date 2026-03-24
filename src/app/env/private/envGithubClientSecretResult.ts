@@ -1,6 +1,6 @@
-import { envVariableErrorMessage } from "@/app/env/envVariableErrorMessage"
-import { privateEnvVariableName } from "@/app/env/privateEnvVariableName"
-import { createResult, createResultError, type Result } from "~result"
+import { createResult, createResultError, type Result } from "#result"
+import { envVariableErrorMessage } from "#src/app/env/envVariableErrorMessage.js"
+import { privateEnvVariableName } from "#src/app/env/privateEnvVariableName.js"
 
 export function envGithubClientSecretResult(): Result<string> {
   const op = "envGithubClientSecretResult"

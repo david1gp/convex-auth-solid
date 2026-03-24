@@ -1,33 +1,33 @@
-import { orgInvitation20InitMutation } from "@/org/invitation_convex/orgInvitation20InitMutation"
-import { orgInvitation21CreateInternalMutation } from "@/org/invitation_convex/orgInvitation21CreateInternalMutation"
-import { orgInvitation30ResendAction } from "@/org/invitation_convex/orgInvitation30ResendAction"
-import { orgInvitation31SendInternalAction } from "@/org/invitation_convex/orgInvitation31SendInternalAction"
-import { orgInvitation33UpdateInternalMutation } from "@/org/invitation_convex/orgInvitation33UpdateInternalMutation"
-import { orgInvitation50AcceptMutation } from "@/org/invitation_convex/orgInvitation50AcceptMutation"
-import { orgInvitation60DismissMutation } from "@/org/invitation_convex/orgInvitation60DismissMutation"
-import { orgInvitationGetInternalQuery, orgInvitationGetQuery } from "@/org/invitation_convex/orgInvitationGetQuery"
-import { orgInvitationsListQuery } from "@/org/invitation_convex/orgInvitationsListQuery"
-import { orgLeaveMutation } from "@/org/member_convex/orgLeaveMutation"
-import { orgMemberCreateMutation } from "@/org/member_convex/orgMemberCreateMutation"
-import { orgMemberDeleteMutation } from "@/org/member_convex/orgMemberDeleteMutation"
-import { orgMemberEditMutation } from "@/org/member_convex/orgMemberEditMutation"
-import { getOrgMemberHandleAndRoleInternalQuery } from "@/org/member_convex/orgMemberGetHandleAndRoleInternalQuery"
-import { orgMemberGetQuery } from "@/org/member_convex/orgMemberGetQuery"
-import { orgMembersListQuery } from "@/org/member_convex/orgMemberListQuery"
-import { orgCleanupIfEmptyInternalMutation } from "@/org/org_convex/orgCleanupIfEmptyMutation"
-import { orgCreateMutation } from "@/org/org_convex/orgCreateMutation"
-import { orgDeleteMutation } from "@/org/org_convex/orgDeleteMutation"
-import { orgEditMutation } from "@/org/org_convex/orgEditMutation"
-import { orgGetPageQuery } from "@/org/org_convex/orgGetPageQuery"
-import { orgGetInternalQuery, orgGetQuery } from "@/org/org_convex/orgGetQuery"
-import { orgHandleAvailableQuery } from "@/org/org_convex/orgHandleAvailableQuery"
-import { orgListQuery } from "@/org/org_convex/orgListQuery"
-import { orgResourceAddInternalMutation, orgResourceAddMutation } from "@/org/org_convex/orgResourceAddMutation"
-import { orgResourceListInternalQuery, orgResourceListQuery } from "@/org/org_convex/orgResourceListQuery"
+import { orgInvitation20InitMutation } from "#src/org/invitation_convex/orgInvitation20InitMutation.js"
+import { orgInvitation21CreateInternalMutation } from "#src/org/invitation_convex/orgInvitation21CreateInternalMutation.js"
+import { orgInvitation30ResendAction } from "#src/org/invitation_convex/orgInvitation30ResendAction.js"
+import { orgInvitation31SendInternalAction } from "#src/org/invitation_convex/orgInvitation31SendInternalAction.js"
+import { orgInvitation33UpdateInternalMutation } from "#src/org/invitation_convex/orgInvitation33UpdateInternalMutation.js"
+import { orgInvitation50AcceptMutation } from "#src/org/invitation_convex/orgInvitation50AcceptMutation.js"
+import { orgInvitation60DismissMutation } from "#src/org/invitation_convex/orgInvitation60DismissMutation.js"
+import { orgInvitationGetInternalQuery, orgInvitationGetQuery } from "#src/org/invitation_convex/orgInvitationGetQuery.js"
+import { orgInvitationsListQuery } from "#src/org/invitation_convex/orgInvitationsListQuery.js"
+import { orgLeaveMutation } from "#src/org/member_convex/orgLeaveMutation.js"
+import { orgMemberCreateMutation } from "#src/org/member_convex/orgMemberCreateMutation.js"
+import { orgMemberDeleteMutation } from "#src/org/member_convex/orgMemberDeleteMutation.js"
+import { orgMemberEditMutation } from "#src/org/member_convex/orgMemberEditMutation.js"
+import { getOrgMemberHandleAndRoleInternalQuery } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
+import { orgMemberGetQuery } from "#src/org/member_convex/orgMemberGetQuery.js"
+import { orgMembersListQuery } from "#src/org/member_convex/orgMemberListQuery.js"
+import { orgCleanupIfEmptyInternalMutation } from "#src/org/org_convex/orgCleanupIfEmptyMutation.js"
+import { orgCreateMutation } from "#src/org/org_convex/orgCreateMutation.js"
+import { orgDeleteMutation } from "#src/org/org_convex/orgDeleteMutation.js"
+import { orgEditMutation } from "#src/org/org_convex/orgEditMutation.js"
+import { orgGetPageQuery } from "#src/org/org_convex/orgGetPageQuery.js"
+import { orgGetInternalQuery, orgGetQuery } from "#src/org/org_convex/orgGetQuery.js"
+import { orgHandleAvailableQuery } from "#src/org/org_convex/orgHandleAvailableQuery.js"
+import { orgListQuery } from "#src/org/org_convex/orgListQuery.js"
+import { orgResourceAddInternalMutation, orgResourceAddMutation } from "#src/org/org_convex/orgResourceAddMutation.js"
+import { orgResourceListInternalQuery, orgResourceListQuery } from "#src/org/org_convex/orgResourceListQuery.js"
 import {
   orgResourceRemoveInternalMutation,
   orgResourceRemoveMutation,
-} from "@/org/org_convex/orgResourceRemoveMutation"
+} from "#src/org/org_convex/orgResourceRemoveMutation.js"
 
 export {
   getOrgMemberHandleAndRoleInternalQuery,
@@ -65,5 +65,5 @@ export {
   orgResourceListInternalQuery,
   orgResourceListQuery,
   orgResourceRemoveInternalMutation,
-  orgResourceRemoveMutation,
+  orgResourceRemoveMutation
 }

@@ -1,4 +1,4 @@
-import { loginProvider } from "@/auth/model_field/socialLoginProvider"
+import { loginProvider } from "#src/auth/model_field/socialLoginProvider.js"
 import * as a from "valibot"
 
 export type LoginMethod = keyof typeof loginMethod

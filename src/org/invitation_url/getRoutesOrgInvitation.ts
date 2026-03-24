@@ -1,17 +1,17 @@
-import type { PageNameOrgInvitation } from "@/org/invitation_url/pageNameOrgInvitation"
-import { pageRouteOrgInvitation } from "@/org/invitation_url/pageRouteOrgInvitation"
+import type { PageNameOrgInvitation } from "#src/org/invitation_url/pageNameOrgInvitation.js"
+import { pageRouteOrgInvitation } from "#src/org/invitation_url/pageRouteOrgInvitation.js"
+import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig"
+import { objectEntries } from "#utils/obj/objectEntries"
 import { lazy } from "solid-js"
-import type { RouteComponent, RouteObject } from "~ui/utils/RouteConfig"
-import { objectEntries } from "~utils/obj/objectEntries"
 
 const OrgInvitationListPage = lazy(() =>
-  import("@/org/invitation_ui/list/OrgInvitationListPage").then((c) => ({ default: c.OrgInvitationListPage })),
+  import("#src/org/invitation_ui/list/OrgInvitationListPage.js").then((c) => ({ default: c.OrgInvitationListPage })),
 )
 const OrgInvitationAddPage = lazy(() =>
-  import("@/org/invitation_ui/mutate/OrgInvitationAddPage").then((c) => ({ default: c.OrgInvitationAddPage })),
+  import("#src/org/invitation_ui/mutate/OrgInvitationAddPage.js").then((c) => ({ default: c.OrgInvitationAddPage })),
 )
 const OrgInvitationAcceptPage = lazy(() =>
-  import("@/org/invitation_ui/accept/OrgInvitationAcceptPage").then((c) => ({ default: c.OrgInvitationAcceptPage })),
+  import("#src/org/invitation_ui/accept/OrgInvitationAcceptPage.js").then((c) => ({ default: c.OrgInvitationAcceptPage })),
 )
 
 export function getRoutesOrgInvitation(): RouteObject[] {

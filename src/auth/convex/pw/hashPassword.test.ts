@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
-import { hashPassword, hashPassword2 } from "./hashPassword"
-import { verifyHashedPassword, verifyHashedPassword2 } from "./verifyHashedPassword"
+import { hashPassword, hashPassword2 } from "./hashPassword.js"
+import { verifyHashedPassword, verifyHashedPassword2 } from "./verifyHashedPassword.js"
 
 test("hashPassword produces a consistent hash for given password and salt", async () => {
   const password = "password123"

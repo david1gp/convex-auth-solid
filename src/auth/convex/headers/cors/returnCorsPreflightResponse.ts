@@ -1,6 +1,6 @@
-import { setHeaderCors } from "@/auth/convex/headers/cors/setHeaderCors"
-import { setHeaderServerTimingSingleValue } from "@/auth/convex/headers/setHeaderServerTiming"
-import type { ActionCtx } from "@convex/_generated/server"
+import { setHeaderCors } from "#src/auth/convex/headers/cors/setHeaderCors.js"
+import { setHeaderServerTimingSingleValue } from "#src/auth/convex/headers/setHeaderServerTiming.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 
 export async function returnCorsPreflightResponse(
   ctx: ActionCtx,

@@ -1,13 +1,13 @@
-import { inputMaxLength500, inputMaxLengthDefault } from "@/utils/valibot/inputMaxLength"
+import { inputMaxLength500, inputMaxLengthDefault } from "#src/utils/valibot/inputMaxLength.js"
+import { formMode, formModeIsReadOnly, type FormMode } from "#ui/input/form/formMode"
+import { Input } from "#ui/input/input/Input"
+import { Label } from "#ui/input/label/Label"
+import { LabelAsterix } from "#ui/input/label/LabelAsterix"
+import { Textarea } from "#ui/input/textarea/Textarea"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { Show } from "solid-js"
-import { formMode, formModeIsReadOnly, type FormMode } from "~ui/input/form/formMode"
-import { Input } from "~ui/input/input/Input"
-import { Label } from "~ui/input/label/Label"
-import { LabelAsterix } from "~ui/input/label/LabelAsterix"
-import { Textarea } from "~ui/input/textarea/Textarea"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { FormFieldConfig } from "./formFieldConfigs"
+import type { FormFieldConfig } from "./formFieldConfigs.js"
 
 export interface FormFieldInputProps extends MayHaveClass {
   // Field configuration

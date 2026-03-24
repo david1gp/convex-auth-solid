@@ -1,9 +1,9 @@
-import { ttc } from "@/app/i18n/ttc"
-import { DateView } from "@/ui/date/DateView"
-import { TextWithHeadderVertical } from "@/ui/date/TextWithHeadderVertical"
-import { classArr } from "~ui/utils/classArr"
-import type { MayHaveChildren } from "~ui/utils/MayHaveChildren"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { DateView } from "#src/ui/date/DateView.js"
+import { TextWithHeadderVertical } from "#src/ui/date/TextWithHeadderVertical.js"
+import { classArr } from "#ui/utils/classArr"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface UpdatedAtCreatedAtProps extends MayHaveClass, MayHaveChildren {
   updatedAt: string

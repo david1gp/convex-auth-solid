@@ -1,7 +1,7 @@
-import { envAuthSecretResult } from "@/app/env/private/envAuthSecretResult"
-import type { DecodedToken } from "@/auth/model/DecodedToken"
-import { verifyToken } from "@/auth/server/jwt_token/verifyToken"
-import { type PromiseResult } from "~result"
+import { type PromiseResult } from "#result"
+import { envAuthSecretResult } from "#src/app/env/private/envAuthSecretResult.js"
+import type { DecodedToken } from "#src/auth/model/DecodedToken.js"
+import { verifyToken } from "#src/auth/server/jwt_token/verifyToken.js"
 
 export async function verifyTokenResult(token: string): PromiseResult<DecodedToken> {
   // env variable

@@ -1,6 +1,6 @@
 import type { FunctionArgs, FunctionReference, FunctionReturnType } from "convex/server"
 import { from, useContext } from "solid-js"
-import { ConvexContext } from "./convexContext"
+import { ConvexContext } from "./convexContext.js"
 
 export function createQuery<Query extends FunctionReference<"query">>(
   query: Query,

@@ -1,7 +1,7 @@
-import type { DocKv } from "@/file/kv/IdKv"
-import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalQuery, query, type MutationCtx, type QueryCtx } from "@convex/_generated/server"
+import type { DocKv } from "#src/file/kv/IdKv.js"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { internalQuery, query, type MutationCtx, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export const kvGetFields = {

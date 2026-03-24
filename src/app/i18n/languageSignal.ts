@@ -1,8 +1,8 @@
-import { languageDefault, languageSchema, type Language } from "@/app/i18n/language"
-import { languageFromBrowser } from "@/app/i18n/languageFromBrowser"
+import { createResult, createResultError } from "#result"
+import { languageDefault, languageSchema, type Language } from "#src/app/i18n/language.js"
+import { languageFromBrowser } from "#src/app/i18n/languageFromBrowser.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import * as a from "valibot"
-import { createResult, createResultError } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 const languageLocalStorageKey = "language"
 

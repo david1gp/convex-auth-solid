@@ -1,11 +1,11 @@
-import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
-import type { FileDataModelWithUserMetadata } from "@/file/model/FileModel"
-import { fileDataSchema } from "@/file/model/fileSchema"
-import { internal } from "@convex/_generated/api"
-import type { ActionCtx } from "@convex/_generated/server"
+import { createResultError } from "#result"
+import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.js"
+import type { FileDataModelWithUserMetadata } from "#src/file/model/FileModel.js"
+import { fileDataSchema } from "#src/file/model/fileSchema.js"
+import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
+import { internal } from "@convex/_generated/api.js"
+import type { ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
-import { createResultError } from "~result"
-import { jsonStringifyPretty } from "~utils/json/jsonStringifyPretty"
 
 export const apiPathR2FileCreate = "/fileCreate"
 

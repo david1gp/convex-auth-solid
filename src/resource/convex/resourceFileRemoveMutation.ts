@@ -1,6 +1,6 @@
-import { authMutationWrapResult } from "@/utils/convex_backend/authMutationWrapResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export type MeetingOrgRemoveMutationValidatorType = typeof resourceFileRemoveValidator.type

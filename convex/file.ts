@@ -1,18 +1,18 @@
-import { fileCreateInternalMutation, fileCreateMutation } from "@/file/convex/fileCreateMutation"
-import { fileDeleteInternalMutation, fileDeleteMutation } from "@/file/convex/fileDeleteMutation"
-import { fileEditInternalMutation, fileEditMutation } from "@/file/convex/fileEditMutation"
-import { fileGetInternalQuery, fileGetQuery } from "@/file/convex/fileGetQuery"
-import { filesListInternalQuery, filesListQuery } from "@/file/convex/fileListQuery"
+import { fileCreateInternalMutation, fileCreateMutation } from "#src/file/convex/fileCreateMutation.js"
+import { fileDeleteInternalMutation, fileDeleteMutation } from "#src/file/convex/fileDeleteMutation.js"
+import { fileEditInternalMutation, fileEditMutation } from "#src/file/convex/fileEditMutation.js"
+import { fileGetInternalQuery, fileGetQuery } from "#src/file/convex/fileGetQuery.js"
+import { filesListInternalQuery, filesListQuery } from "#src/file/convex/fileListQuery.js"
 
 export {
-  fileCreateInternalMutation,
-  fileCreateMutation,
-  fileDeleteInternalMutation,
-  fileDeleteMutation,
-  fileEditInternalMutation,
-  fileEditMutation,
-  fileGetInternalQuery,
-  fileGetQuery,
-  filesListInternalQuery,
-  filesListQuery,
+    fileCreateInternalMutation,
+    fileCreateMutation,
+    fileDeleteInternalMutation,
+    fileDeleteMutation,
+    fileEditInternalMutation,
+    fileEditMutation,
+    fileGetInternalQuery,
+    fileGetQuery,
+    filesListInternalQuery,
+    filesListQuery
 }

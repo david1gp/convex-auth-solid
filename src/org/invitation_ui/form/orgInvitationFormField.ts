@@ -1,9 +1,9 @@
-import { languageSchema } from "@/app/i18n/language"
-import { ttc } from "@/app/i18n/ttc"
-import { orgRoleSchema } from "@/org/org_model_field/orgRole"
-import type { FormFieldConfig } from "@/ui/form/formFieldConfigs"
-import { emailSchema } from "@/utils/valibot/emailSchema"
-import { stringSchema } from "@/utils/valibot/stringSchema"
+import { languageSchema } from "#src/app/i18n/language.js"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { orgRoleSchema } from "#src/org/org_model_field/orgRole.js"
+import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.js"
+import { emailSchema } from "#src/utils/valibot/emailSchema.js"
+import { stringSchema } from "#src/utils/valibot/stringSchema.js"
 
 export type OrgInvitationFormField = keyof typeof orgInvitationFormField
 

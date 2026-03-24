@@ -1,6 +1,6 @@
-import { imageDimensionsFromHtmlElement } from "@/file/ui/stats/imageDimensionsFromHtml"
-import type { UploadAreaFileInfo } from "@/file/ui/stats/UploadAreaFileInfo"
-import type { SignalObject } from "~ui/utils/createSignalObject"
+import { imageDimensionsFromHtmlElement } from "#src/file/ui/stats/imageDimensionsFromHtml.js"
+import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.js"
+import type { SignalObject } from "#ui/utils/createSignalObject.js"
 
 export async function fileInformationGet(selectedFile: File, info: SignalObject<UploadAreaFileInfo | null>) {
   const fileInfo: UploadAreaFileInfo = {

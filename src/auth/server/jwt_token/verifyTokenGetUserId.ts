@@ -1,6 +1,6 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import { verifyTokenResult } from "@/auth/server/jwt_token/verifyTokenResult"
-import { type PromiseResult, createResult } from "~result"
+import { type PromiseResult, createResult } from "#result"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.js"
 
 export async function verifyTokenGetUserId(token: string): PromiseResult<IdUser> {
   const decoded = await verifyTokenResult(token)

@@ -1,4 +1,4 @@
-import { r2UploadUrlGetInternalQuery, r2UploadUrlGetQuery } from "@/r2/convex/r2UploadUrlGetQuery"
-import { r2FileCreateMutation, r2FileCreateInternalMutation } from "@/r2/convex/r2FileCreateMutation"
+import { r2FileCreateInternalMutation, r2FileCreateMutation } from "#src/r2/convex/r2FileCreateMutation.js"
+import { r2UploadUrlGetInternalQuery, r2UploadUrlGetQuery } from "#src/r2/convex/r2UploadUrlGetQuery.js"
 
-export { r2UploadUrlGetInternalQuery, r2UploadUrlGetQuery, r2FileCreateMutation, r2FileCreateInternalMutation }
+export { r2FileCreateInternalMutation, r2FileCreateMutation, r2UploadUrlGetInternalQuery, r2UploadUrlGetQuery }

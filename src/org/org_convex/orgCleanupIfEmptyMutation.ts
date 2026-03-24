@@ -1,6 +1,6 @@
-import { internalMutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~result"
 
 export type OrgCleanupIfEmptyValidatorType = typeof orgCleanupIfEmptyValidator.type
 

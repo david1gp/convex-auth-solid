@@ -1,6 +1,6 @@
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { classMerge } from "~ui/utils/classMerge"
-import styles from "./LoaderSpin4Square.module.css"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
+import styles from "./LoaderSpin4Square.module.css.js"
 
 /**
  * https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje

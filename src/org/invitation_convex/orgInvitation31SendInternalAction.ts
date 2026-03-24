@@ -1,15 +1,15 @@
-import { languageValidator } from "@/app/i18n/language"
-import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
+import { createResultError, type PromiseResult } from "#result"
+import { languageValidator } from "#src/app/i18n/language.js"
+import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.js"
 import {
     orgInvitation32SendEmailActionFn,
     type OrgInvitationSendEmailValidatorType,
-} from "@/org/invitation_convex/orgInvitation32SendEmailActionFn"
-import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
-import { stt1 } from "@/utils/i18n/stt"
-import { api, internal } from "@convex/_generated/api"
-import { internalAction, type ActionCtx } from "@convex/_generated/server"
+} from "#src/org/invitation_convex/orgInvitation32SendEmailActionFn.js"
+import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.js"
+import { stt1 } from "#src/utils/i18n/stt.js"
+import { api, internal } from "@convex/_generated/api.js"
+import { internalAction, type ActionCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResultError, type PromiseResult } from "~result"
 
 export type OrgInvitationSendValidatorType = typeof orgInvitation31SendValidator.type
 

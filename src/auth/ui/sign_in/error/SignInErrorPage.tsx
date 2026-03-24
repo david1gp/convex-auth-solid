@@ -1,11 +1,11 @@
-import { ttc } from "@/app/i18n/ttc"
-import { ContactSupportLinkButton } from "@/ui/links/ContactSupportLinkButton"
-import { GoSignInLinkButton } from "@/ui/links/GoSignInLinkButton"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { ContactSupportLinkButton } from "#src/ui/links/ContactSupportLinkButton.js"
+import { GoSignInLinkButton } from "#src/ui/links/GoSignInLinkButton.js"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva"
+import { Icon } from "#ui/static/icon/Icon"
+import { classesPageWrapper } from "#ui/static/page/classesPageWrapper"
+import { classArr } from "#ui/utils/classArr"
 import { mdiAlertBoxOutline } from "@mdi/js"
-import { buttonSize, buttonVariant } from "~ui/interactive/button/buttonCva"
-import { Icon } from "~ui/static/icon/Icon"
-import { classesPageWrapper } from "~ui/static/page/classesPageWrapper"
-import { classArr } from "~ui/utils/classArr"
 
 const classesPageWrapperInner = classArr(
   "max-w-md w-full", // sizing

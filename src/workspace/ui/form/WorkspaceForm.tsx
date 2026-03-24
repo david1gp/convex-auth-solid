@@ -1,27 +1,27 @@
-import { addKeyboardListenerAlt } from "@/auth/ui/sign_up/form/addKeyboardListenerAlt"
-import { isDevEnv } from "@/utils/env/isDevEnv"
-import { inputMaxLength100, inputMaxLengthUrl } from "@/utils/valibot/inputMaxLength"
-import { workspaceFormField, type WorkspaceFormStateManagement } from "@/workspace/ui/form/workspaceFormStateManagement"
-import { urlWorkspaceRemove } from "@/workspace/url/urlWorkspace"
-import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
+import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.js"
+import { isDevEnv } from "#src/utils/env/isDevEnv.js"
+import { inputMaxLength100, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.js"
+import { workspaceFormField, type WorkspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.js"
+import { urlWorkspaceRemove } from "#src/workspace/url/urlWorkspace.js"
+import { ttt } from "#ui/i18n/ttt"
 import {
-  formMode,
-  formModeIsReadOnly,
-  getFormModeButtonTitle,
-  getFormModeTitle,
-  type FormMode,
-} from "~ui/input/form/formMode"
-import { formModeIcon } from "~ui/input/form/formModeIcon"
-import { Input } from "~ui/input/input/Input"
-import { Label } from "~ui/input/label/Label"
-import { LabelAsterix } from "~ui/input/label/LabelAsterix"
-import { Textarea } from "~ui/input/textarea/Textarea"
-import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { classMerge } from "~ui/utils/classMerge"
+    formMode,
+    formModeIsReadOnly,
+    getFormModeButtonTitle,
+    getFormModeTitle,
+    type FormMode,
+} from "#ui/input/form/formMode"
+import { formModeIcon } from "#ui/input/form/formModeIcon"
+import { Input } from "#ui/input/input/Input"
+import { Label } from "#ui/input/label/Label"
+import { LabelAsterix } from "#ui/input/label/LabelAsterix"
+import { Textarea } from "#ui/input/textarea/Textarea"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
+import { Show } from "solid-js"
 
 interface HasOrgFormStateManagement {
   sm: WorkspaceFormStateManagement

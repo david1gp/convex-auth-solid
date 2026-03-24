@@ -1,11 +1,11 @@
-import { NavWorkspace } from "@/app/nav/NavWorkspace"
-import { LinkLikeText } from "@/ui/links/LinkLikeText"
-import { WorkspaceForm } from "@/workspace/ui/form/WorkspaceForm"
-import { workspaceFormStateManagement } from "@/workspace/ui/form/workspaceFormStateManagement"
-import { ttt } from "~ui/i18n/ttt"
-import { formMode } from "~ui/input/form/formMode"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { NavWorkspace } from "#src/app/nav/NavWorkspace.js"
+import { LinkLikeText } from "#src/ui/links/LinkLikeText.js"
+import { WorkspaceForm } from "#src/workspace/ui/form/WorkspaceForm.js"
+import { workspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.js"
+import { ttt } from "#ui/i18n/ttt"
+import { formMode } from "#ui/input/form/formMode"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export function WorkspaceAddPage() {
   return (

@@ -1,5 +1,5 @@
-import { ttc } from "@/app/i18n/ttc"
-import { visibility, type Visibility } from "@/resource/model_field/visibility"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { visibility, type Visibility } from "#src/resource/model_field/visibility.js"
 
 export function visibilityGetText(v?: string): string {
   if (!v) return ttc("Private")

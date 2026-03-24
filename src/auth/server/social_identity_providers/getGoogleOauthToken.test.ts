@@ -1,4 +1,4 @@
-import { googleOauthTokenSchema } from "@/auth/server/social_identity_providers/getGoogleOauthToken"
+import { googleOauthTokenSchema } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.js"
 import { expect, test } from "bun:test"
 import * as a from "valibot"
 

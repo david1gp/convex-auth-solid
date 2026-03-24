@@ -1,7 +1,7 @@
-import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
-import { apiAuthFetch } from "@/auth/api/apiAuthFetch"
-import { apiPathAuth } from "@/auth/url/apiPathAuth"
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
+import { apiAuthBasePath } from "#src/auth/api/apiAuthBasePath.js"
+import { apiAuthFetch } from "#src/auth/api/apiAuthFetch.js"
+import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.js"
+import { apiPathAuth } from "#src/auth/url/apiPathAuth.js"
 
 export async function apiAuthUserDelete() {
   const token = userTokenGet()

@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import * as a from "valibot"
-import { fileIdSchema } from "./fileIdSchema"
+import { fileIdSchema } from "./fileIdSchema.js"
 
 test("fileIdSchemaValid", () => {
   const validFileIds = [

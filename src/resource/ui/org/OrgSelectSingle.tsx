@@ -1,10 +1,10 @@
-import { ttc } from "@/app/i18n/ttc"
-import type { OrgModel } from "@/org/org_model/OrgModel"
-import { constructOrgRecord } from "@/resource/ui/org/constructOrgRecord"
+import { ttc } from "#src/app/i18n/ttc.js"
+import type { OrgModel } from "#src/org/org_model/OrgModel.js"
+import { constructOrgRecord } from "#src/resource/ui/org/constructOrgRecord.js"
+import { CheckSingle } from "#ui/input/check/CheckSingle"
+import type { createSignalObject } from "#ui/utils/createSignalObject.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { createEffect } from "solid-js"
-import { CheckSingle } from "~ui/input/check/CheckSingle"
-import type { createSignalObject } from "~ui/utils/createSignalObject"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 interface OrgSelectSingleProps extends MayHaveClass {
   valueSignal: ReturnType<typeof createSignalObject<string>>

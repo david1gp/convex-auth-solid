@@ -1,11 +1,11 @@
-import { envGithubClientSecretResult } from "@/app/env/private/envGithubClientSecretResult"
-import { envGithubClientIdResult } from "@/app/env/public/envGithubClientIdResult"
-import { socialLoginProvider } from "@/auth/model_field/socialLoginProvider"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { envGithubClientSecretResult } from "#src/app/env/private/envGithubClientSecretResult.js"
+import { envGithubClientIdResult } from "#src/app/env/public/envGithubClientIdResult.js"
+import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import { queryString } from "#utils/url/queryString"
+import { searchParamsToObject } from "#utils/url/searchParamsToObject"
 import * as a from "valibot"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { queryString } from "~utils/url/queryString"
-import { searchParamsToObject } from "~utils/url/searchParamsToObject"
-import { authErrorMessages } from "./authErrorMessages"
+import { authErrorMessages } from "./authErrorMessages.js"
 
 export type GitHubOauthToken = {
   access_token: string

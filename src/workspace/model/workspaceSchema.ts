@@ -1,14 +1,14 @@
-import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
-import { convexSchemaSystemFields } from "@/utils/valibot/convexSchemaSystemFields"
-import { handleSchema } from "@/utils/valibot/handleSchema"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { convexSchemaSystemFields } from "#src/utils/valibot/convexSchemaSystemFields.js"
+import { handleSchema } from "#src/utils/valibot/handleSchema.js"
 import {
-  stringSchemaDescription,
-  stringSchemaId,
-  stringSchemaName,
-  stringSchemaUrl,
-} from "@/utils/valibot/stringSchema"
-import type { DocWorkspace } from "@/workspace/convex/IdWorkspace"
-import type { WorkspaceModel } from "@/workspace/model/WorkspaceModel"
+    stringSchemaDescription,
+    stringSchemaId,
+    stringSchemaName,
+    stringSchemaUrl,
+} from "#src/utils/valibot/stringSchema.js"
+import type { DocWorkspace } from "#src/workspace/convex/IdWorkspace.js"
+import type { WorkspaceModel } from "#src/workspace/model/WorkspaceModel.js"
 import * as a from "valibot"
 
 export const workspaceDataSchemaFields = {

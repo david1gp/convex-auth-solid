@@ -1,11 +1,11 @@
-import { orgGetByHandleFn } from "@/org/org_convex/orgGetByHandleFn"
-import { vIdOrg } from "@/org/org_convex/vIdOrg"
-import { authMutationResult } from "@/utils/convex_backend/authMutationResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.js"
+import { vIdOrg } from "#src/org/org_convex/vIdOrg.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { nowIso } from "#utils/date/nowIso"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, createResultError, type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
 
 export type OrgResourceAddMutationValidatorType = typeof orgResourceAddValidator.type
 

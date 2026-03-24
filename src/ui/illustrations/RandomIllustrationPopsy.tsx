@@ -1,7 +1,7 @@
-import { ttc } from "@/app/i18n/ttc"
-import { illustrationPopsyValues } from "@/ui/illustrations/illustrationsPopsy"
-import { RandomIllustrationFromArr } from "@/ui/illustrations/RandomIllustrationFromArr"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { illustrationPopsyValues } from "#src/ui/illustrations/illustrationsPopsy.js"
+import { RandomIllustrationFromArr } from "#src/ui/illustrations/RandomIllustrationFromArr.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface RandomIllustrationPopsyProps extends MayHaveClass {
   addIndex?: number

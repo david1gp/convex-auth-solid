@@ -1,7 +1,7 @@
-import { apiAuthBasePath } from "@/auth/api/apiAuthBasePath"
-import { apiAuthFetch } from "@/auth/api/apiAuthFetch"
-import type { UserPasswordChange1RequestTypePublic } from "@/auth/convex/user/pw_change/userPasswordChange1RequestAction"
-import { apiPathAuth } from "@/auth/url/apiPathAuth"
+import { apiAuthBasePath } from "#src/auth/api/apiAuthBasePath.js"
+import { apiAuthFetch } from "#src/auth/api/apiAuthFetch.js"
+import type { UserPasswordChange1RequestTypePublic } from "#src/auth/convex/user/pw_change/userPasswordChange1RequestAction.js"
+import { apiPathAuth } from "#src/auth/url/apiPathAuth.js"
 
 export async function apiAuthPasswordChange(props: UserPasswordChange1RequestTypePublic) {
   return apiAuthFetch("apiClientChangePassword", apiAuthBasePath + apiPathAuth.passwordChangeRequest, props)

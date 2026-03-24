@@ -1,10 +1,10 @@
-import { classesActiveLink } from "@/app/nav/links/classesActiveLink"
-import { urlWorkspaceList } from "@/workspace/url/urlWorkspace"
-import { ttt } from "~ui/i18n/ttt"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import { classArr } from "~ui/utils/classArr"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.js"
+import { urlWorkspaceList } from "#src/workspace/url/urlWorkspace.js"
+import { ttt } from "#ui/i18n/ttt"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import { classArr } from "#ui/utils/classArr"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 export interface WorkspaceListLinkNavButtonProps extends MayHaveClass {
   isActive?: boolean

@@ -1,7 +1,7 @@
-import { userSessionIsStillValid, userSessionSchema, type UserSession } from "@/auth/model/UserSession"
+import { createResult, createResultError } from "#result"
+import { userSessionIsStillValid, userSessionSchema, type UserSession } from "#src/auth/model/UserSession.js"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import * as a from "valibot"
-import { createResult, createResultError } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 const userSessionsLocalStorageKey = "userSessions"
 const userSessionsSchema = a.array(userSessionSchema)

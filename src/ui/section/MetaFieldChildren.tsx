@@ -1,6 +1,6 @@
-import { classMerge } from "~ui/utils/classMerge"
-import type { HasChildren } from "~ui/utils/HasChildren"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge"
+import type { HasChildren } from "#ui/utils/HasChildren"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 
 interface FieldChildrenProps extends MayHaveClass, HasChildren {
   heading: string

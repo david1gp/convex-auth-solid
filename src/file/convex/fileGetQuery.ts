@@ -1,12 +1,12 @@
-import { fileDocToModel } from "@/file/convex/fileDocToModel"
-import { fileGetByIdFn } from "@/file/convex/fileGetByIdFn"
-import type { FileModel } from "@/file/model/FileModel"
-import { authQueryResult } from "@/utils/convex_backend/authQueryResult"
-import { createErrorAndLogWarn } from "@/utils/convex_backend/createErrorAndLogWarn"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
+import { createResult, type PromiseResult } from "#result"
+import { fileDocToModel } from "#src/file/convex/fileDocToModel.js"
+import { fileGetByIdFn } from "#src/file/convex/fileGetByIdFn.js"
+import type { FileModel } from "#src/file/model/FileModel.js"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
+import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { createResult, type PromiseResult } from "~result"
 
 export const fileGetFields = {
   fileId: v.string(),

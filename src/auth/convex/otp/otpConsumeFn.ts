@@ -1,7 +1,7 @@
-import type { IdAuthOtp } from "@/auth/convex/IdUser"
-import type { MutationCtx } from "@convex/_generated/server"
-import type { PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
+import type { PromiseResult } from "#result"
+import type { IdAuthOtp } from "#src/auth/convex/IdUser.js"
+import { nowIso } from "#utils/date/nowIso"
+import type { MutationCtx } from "@convex/_generated/server.js"
 
 export async function otpConsumeFn(ctx: MutationCtx, args: { otpId: IdAuthOtp }): PromiseResult<void> {
   const op = "otpCodeConsumeFn"

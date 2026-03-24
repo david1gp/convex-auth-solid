@@ -1,8 +1,8 @@
-import { resourceFileListFn } from "@/resource/convex/resourceFileListQuery"
-import { resourceFileRemoveMutationFn } from "@/resource/convex/resourceFileRemoveMutation"
-import { authMutationWrapResult } from "@/utils/convex_backend/authMutationWrapResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
+import { resourceFileListFn } from "#src/resource/convex/resourceFileListQuery.js"
+import { resourceFileRemoveMutationFn } from "#src/resource/convex/resourceFileRemoveMutation.js"
+import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export type ResourceDeleteValidatorType = typeof resourceDeleteValidator.type

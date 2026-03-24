@@ -1,11 +1,11 @@
-import type { SocialLoginProvider } from "@/auth/model_field/socialLoginProvider"
-import { socialProviderButtonProps } from "@/auth/ui/sign_in/social/SocialProviderButtonProps"
-import { urlAuthProvider } from "@/auth/url/urlAuthProvider"
-import { urlSignInRedirectUrl } from "@/auth/url/urlSignInRedirectUrl"
-import { buttonVariant, type ButtonSize } from "~ui/interactive/button/buttonCva"
-import { LinkButton } from "~ui/interactive/link/LinkButton"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import { capitalizeFirstLetter } from "~utils/text/capitalizeFirstLetter"
+import type { SocialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import { socialProviderButtonProps } from "#src/auth/ui/sign_in/social/SocialProviderButtonProps.js"
+import { urlAuthProvider } from "#src/auth/url/urlAuthProvider.js"
+import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.js"
+import { buttonVariant, type ButtonSize } from "#ui/interactive/button/buttonCva"
+import { LinkButton } from "#ui/interactive/link/LinkButton"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter"
 
 export interface SocialLoginButtonProps extends MayHaveClass {
   provider: SocialLoginProvider

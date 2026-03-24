@@ -1,4 +1,4 @@
-import { loginProviderValidator } from "@/auth/model_field/loginMethodValidator"
+import { loginProviderValidator } from "#src/auth/model_field/loginMethodValidator.js"
 import { v, type Infer } from "convex/values"
 
 export type CommonAuthProvider = Infer<typeof commonAuthProviderValidator>

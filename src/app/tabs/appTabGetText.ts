@@ -1,5 +1,5 @@
-import { ttc } from "@/app/i18n/ttc"
-import { appTab, type AppTab } from "@/app/tabs/appTab"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { appTab, type AppTab } from "#src/app/tabs/appTab.js"
 
 export function appTabGetText(tab: string): string {
   switch (tab as AppTab) {

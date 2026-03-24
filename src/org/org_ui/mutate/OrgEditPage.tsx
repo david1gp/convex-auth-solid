@@ -1,14 +1,13 @@
-import { ttc } from "@/app/i18n/ttc"
-import { NavLinkButton } from "@/app/nav/links/NavLinkButton"
-import { NavOrg } from "@/app/nav/NavOrg"
-import { OrgMemberListPage } from "@/org/member_ui/list/OrgMemberListPage"
-import { OrgMutate } from "@/org/org_ui/mutate/OrgMutate"
-import { urlOrgEdit } from "@/org/org_url/urlOrg"
-import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { useParams } from "@solidjs/router"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
+import { NavOrg } from "#src/app/nav/NavOrg.js"
+import { OrgMutate } from "#src/org/org_ui/mutate/OrgMutate.js"
+import { urlOrgEdit } from "#src/org/org_url/urlOrg.js"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
+import { formMode, getFormModeTitle } from "#ui/input/form/formMode"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { useParams } from "@solidjs/router.js"
 import { Match, Switch } from "solid-js"
-import { formMode, getFormModeTitle } from "~ui/input/form/formMode"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 const mode = formMode.edit
 

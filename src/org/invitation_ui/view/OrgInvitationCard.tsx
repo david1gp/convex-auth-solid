@@ -1,28 +1,28 @@
-import { ttc, ttc1 } from "@/app/i18n/ttc"
-import { userTokenGet } from "@/auth/ui/signals/userSessionSignal"
-import { allowEmailResendingInSeconds } from "@/org/invitation_model/allowEmailResendingInSeconds"
-import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
-import { orgInvitationShowRole } from "@/org/invitation_model/orgInvitationShowRole"
+import { ttc, ttc1 } from "#src/app/i18n/ttc.js"
+import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.js"
+import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.js"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.js"
+import { orgInvitationShowRole } from "#src/org/invitation_model/orgInvitationShowRole.js"
 import {
-  invitationModelToStatus,
-  orgInvitationStatusIcon,
-  orgInvitationStatusText,
-} from "@/org/invitation_ui/view/orgInvitationStatus"
-import { DateView } from "@/ui/date/DateView"
-import { createAction } from "@/utils/convex_client/createAction"
-import { createMutation } from "@/utils/convex_client/createMutation"
-import { api } from "@convex/_generated/api"
+    invitationModelToStatus,
+    orgInvitationStatusIcon,
+    orgInvitationStatusText,
+} from "#src/org/invitation_ui/view/orgInvitationStatus.js"
+import { DateView } from "#src/ui/date/DateView.js"
+import { createAction } from "#src/utils/convex_client/createAction.js"
+import { createMutation } from "#src/utils/convex_client/createMutation.js"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
+import { toastAdd } from "#ui/interactive/toast/toastAdd"
+import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { Icon } from "#ui/static/icon/Icon"
+import { classArr } from "#ui/utils/classArr"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren"
+import { api } from "@convex/_generated/api.js"
 import { mdiClose, mdiEmailAlert, mdiEmailFast } from "@mdi/js"
 import { Show } from "solid-js"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { ButtonIcon } from "~ui/interactive/button/ButtonIcon"
-import { toastAdd } from "~ui/interactive/toast/toastAdd"
-import { toastVariant } from "~ui/interactive/toast/toastVariant"
-import { Icon } from "~ui/static/icon/Icon"
-import { classArr } from "~ui/utils/classArr"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
-import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 
 export interface OrgInvitationCardProps extends MayHaveClass {
   invitation: OrgInvitationModel

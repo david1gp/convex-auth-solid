@@ -1,7 +1,7 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import { verifyTokenGetUserId } from "@/auth/server/jwt_token/verifyTokenGetUserId"
-import type { MutationCtx } from "@convex/_generated/server"
-import type { PromiseResult } from "~result"
+import type { PromiseResult } from "#result"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.js"
+import type { MutationCtx } from "@convex/_generated/server.js"
 
 export async function authMutationTokenToUserId<T extends { token: string }, R>(
   ctx: MutationCtx,

@@ -1,5 +1,5 @@
-import { fileNameGetNameAndEnding } from "@/file/model_field/fileNameGetNameAndEnding"
-import { generateId20 } from "~utils/ran/generateId20"
+import { fileNameGetNameAndEnding } from "#src/file/model_field/fileNameGetNameAndEnding.js"
+import { generateId20 } from "#utils/ran/generateId20"
 
 export function fileIdGenerate(name: string, now = new Date()): string {
   const datePart = generateFilIdDatePart(now)

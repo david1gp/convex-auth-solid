@@ -1,4 +1,4 @@
-import { userProfileSchema, type UserProfile } from "@/auth/model/UserProfile"
+import { userProfileSchema, type UserProfile } from "#src/auth/model/UserProfile.js"
 import * as a from "valibot"
 
 export type UserProfileDictionary = Record<string, UserProfile>

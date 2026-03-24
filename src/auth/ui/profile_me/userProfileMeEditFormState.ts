@@ -1,4 +1,4 @@
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 
 export type UserProfileMeEditFormState = {
   name: SignalObject<string>

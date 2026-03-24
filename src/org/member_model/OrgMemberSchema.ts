@@ -1,6 +1,6 @@
-import { orgRoleSchema } from "@/org/org_model_field/orgRole"
-import { fieldsSchemaCreatedAtUpdatedAt } from "@/utils/data/fieldsSchemaCreatedAtUpdatedAt"
-import { stringSchemaId } from "@/utils/valibot/stringSchema"
+import { orgRoleSchema } from "#src/org/org_model_field/orgRole.js"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { stringSchemaId } from "#src/utils/valibot/stringSchema.js"
 import * as a from "valibot"
 
 export const orgMemberDataSchemaFields = {

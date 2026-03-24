@@ -1,10 +1,10 @@
-import type { OrgInvitationModel } from "@/org/invitation_model/OrgInvitationModel"
-import { invitationModelToStatus, orgInvitationStatusText } from "@/org/invitation_ui/view/orgInvitationStatus"
-import { DateView } from "@/ui/date/DateView"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.js"
+import { invitationModelToStatus, orgInvitationStatusText } from "#src/org/invitation_ui/view/orgInvitationStatus.js"
+import { DateView } from "#src/ui/date/DateView.js"
+import { ttt } from "#ui/i18n/ttt"
+import { classMerge } from "#ui/utils/classMerge"
+import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren"
 import { Show } from "solid-js"
-import { ttt } from "~ui/i18n/ttt"
-import { classMerge } from "~ui/utils/classMerge"
-import type { MayHaveClassAndChildren } from "~ui/utils/MayHaveClassAndChildren"
 
 export interface OrgInvitationStatusProps extends MayHaveClassAndChildren {
   invitation: OrgInvitationModel

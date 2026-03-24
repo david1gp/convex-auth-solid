@@ -1,13 +1,13 @@
-import { ttc } from "@/app/i18n/ttc"
-import { NavResource } from "@/app/nav/NavResource"
-import { ResourceFileListLoader } from "@/file/ui/list/ResourceFileListLoader"
-import { ResourceLoader } from "@/resource/ui/view/ResourceLoader"
-import { ResourceViewDetailed } from "@/resource/ui/view/ResourceViewDetailed"
-import { ErrorPage } from "@/ui/pages/ErrorPage"
-import { useParams } from "@solidjs/router"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { NavResource } from "#src/app/nav/NavResource.js"
+import { ResourceFileListLoader } from "#src/file/ui/list/ResourceFileListLoader.js"
+import { ResourceLoader } from "#src/resource/ui/view/ResourceLoader.js"
+import { ResourceViewDetailed } from "#src/resource/ui/view/ResourceViewDetailed.js"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
+import { formMode } from "#ui/input/form/formMode"
+import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { useParams } from "@solidjs/router.js"
 import { Match, Switch } from "solid-js"
-import { formMode } from "~ui/input/form/formMode"
-import { PageWrapper } from "~ui/static/page/PageWrapper"
 
 export function ResourceViewPage() {
   const params = useParams()

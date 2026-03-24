@@ -1,10 +1,10 @@
-import { resourceGetModelFn } from "@/resource/convex/resourceGetQuery"
-import type { ResourceModel } from "@/resource/model/ResourceModel"
-import { authQueryWrapResult } from "@/utils/convex_backend/authQueryWrapResult"
-import { createTokenValidator } from "@/utils/convex_backend/createTokenValidator"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server"
+import { resourceGetModelFn } from "#src/resource/convex/resourceGetQuery.js"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { notEmptyFilter } from "#utils/arr/notEmptyFilter"
+import { internalQuery, query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { notEmptyFilter } from "~utils/arr/notEmptyFilter"
 
 export type OrgResourceListValidatorType = typeof orgResourceListValidator.type
 

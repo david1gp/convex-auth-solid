@@ -1,9 +1,9 @@
-import { socialLoginProviderValidator } from "@/auth/model_field/loginMethodValidator"
-import type { LoginProvider } from "@/auth/model_field/socialLoginProvider"
-import type { Id } from "@convex/_generated/dataModel"
-import { type MutationCtx } from "@convex/_generated/server"
+import { vIdUser } from "#src/auth/convex/vIdUser.js"
+import { socialLoginProviderValidator } from "#src/auth/model_field/loginMethodValidator.js"
+import type { LoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
+import type { Id } from "@convex/_generated/dataModel.js"
+import { type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import { vIdUser } from "@/auth/convex/vIdUser"
 
 export const linkAuthToExistingUserValidator = v.object({
   userId: vIdUser,

@@ -1,9 +1,9 @@
-import { envBaseUrlSiteResult } from "@/app/env/public/envBaseUrlSiteResult"
-import { ttc } from "@/app/i18n/ttc"
+import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.js"
+import { ttc } from "#src/app/i18n/ttc.js"
+import { buttonVariant } from "#ui/interactive/button/buttonCva"
+import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass"
 import { mdiAlphaSCircleOutline } from "@mdi/js"
-import { buttonVariant } from "~ui/interactive/button/buttonCva"
-import { LinkButtonIconOnly } from "~ui/interactive/link/LinkButtonIconOnly"
-import type { MayHaveClass } from "~ui/utils/MayHaveClass"
 
 export interface SiteNavLinkButtonProps extends MayHaveClass {
   sitePath?: string

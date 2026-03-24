@@ -1,5 +1,5 @@
-import { pageRouteAuth } from "@/auth/url/pageRouteAuth"
-import { serializeUrlParams } from "~utils/url/serializeUrlParams"
+import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.js"
+import { serializeUrlParams } from "#utils/url/serializeUrlParams"
 
 export function urlSignUpConfirmEmail(email: string, code: string, returnPath?: string) {
   const obj: Record<string, string> = { email, code }

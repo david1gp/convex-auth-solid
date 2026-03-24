@@ -1,7 +1,7 @@
+import { createResult, createResultError, type Result } from "#result"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import { onCleanup, onMount } from "solid-js"
 import * as a from "valibot"
-import { createResult, createResultError, type Result } from "~result"
-import { createSignalObject, type SignalObject } from "~ui/utils/createSignalObject"
 
 const inDevModeLocalStorageKey = "inDevMode"
 

@@ -1,6 +1,6 @@
-import { type QueryCtx, query } from "@convex/_generated/server"
+import type { DocUser } from "#src/auth/convex/IdUser.js"
+import { type QueryCtx, query } from "@convex/_generated/server.js"
 import { v } from "convex/values"
-import type { DocUser } from "@/auth/convex/IdUser"
 
 export const userGetByUsernameQuery = query({
   args: { username: v.string() },

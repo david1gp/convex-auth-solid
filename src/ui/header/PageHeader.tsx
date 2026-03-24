@@ -1,11 +1,11 @@
+import { Icon } from "#ui/static/icon/Icon"
+import { classMerge } from "#ui/utils/classMerge"
+import type { HasTitle } from "#ui/utils/HasTitle"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass"
+import type { MayHaveIcon } from "#ui/utils/MayHaveIcon"
+import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass"
+import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle"
 import type { JSXElement } from "solid-js"
-import { Icon } from "~ui/static/icon/Icon"
-import { classMerge } from "~ui/utils/classMerge"
-import type { HasTitle } from "~ui/utils/HasTitle"
-import type { MayHaveChildrenAndClass } from "~ui/utils/MayHaveChildrenAndClass"
-import type { MayHaveIcon } from "~ui/utils/MayHaveIcon"
-import type { MayHaveInnerClass } from "~ui/utils/MayHaveInnerClass"
-import type { MayHaveSubtitle } from "~ui/utils/MayHaveSubtitle"
 
 export interface PageHeaderProps
   extends HasTitle, MayHaveIcon, MayHaveSubtitle, MayHaveInnerClass, MayHaveChildrenAndClass {

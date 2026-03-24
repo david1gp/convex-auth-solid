@@ -1,18 +1,18 @@
-import { findUserByEmailFn } from "@/auth/convex/crud/findUserByEmailQuery"
-import { userDeleteHardOtps } from "@/auth/convex/user/delete_hard/userDeleteHardOtps"
-import { userDeleteHardAuthAccounts } from "@/auth/convex/user/delete_hard_parts/userDeleteHardAuthAccounts"
-import { userDeleteHardAuthSessions } from "@/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions"
-import { userDeleteHardEmailLoginCodes } from "@/auth/convex/user/delete_hard_parts/userDeleteHardEmailLoginCodes"
-import { userDeleteHardFiles } from "@/auth/convex/user/delete_hard_parts/userDeleteHardFiles"
-import { userDeleteHardOrgMemberships } from "@/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships"
-import { authMutationTokenToUserId } from "@/utils/convex_backend/authMutationTokenToUserId"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server"
-import { createResult, createResultError, type PromiseResult } from "~result"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
+import { userDeleteHardOtps } from "#src/auth/convex/user/delete_hard/userDeleteHardOtps.js"
+import { userDeleteHardAuthAccounts } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthAccounts.js"
+import { userDeleteHardAuthSessions } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions.js"
+import { userDeleteHardEmailLoginCodes } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardEmailLoginCodes.js"
+import { userDeleteHardFiles } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardFiles.js"
+import { userDeleteHardOrgMemberships } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships.js"
+import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
+import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import {
     userDeleteValidatorInternal,
     userDeleteValidatorPublic,
     type UserDeleteValidatorInternalType,
-} from "./userDeleteValidator"
+} from "./userDeleteValidator.js"
 
 export const userDeleteHardMutation = mutation({
   args: userDeleteValidatorPublic,

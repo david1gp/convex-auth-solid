@@ -1,9 +1,9 @@
-import type { IdUser } from "@/auth/convex/IdUser"
-import { generateOtpCode } from "@/auth/convex/pw/generateOtpCode"
-import type { OtpPurpose } from "@/auth/model_field/otpPurpose"
-import type { MutationCtx } from "@convex/_generated/server"
-import { type PromiseResult } from "~result"
-import { nowIso } from "~utils/date/nowIso"
+import { type PromiseResult } from "#result"
+import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { generateOtpCode } from "#src/auth/convex/pw/generateOtpCode.js"
+import type { OtpPurpose } from "#src/auth/model_field/otpPurpose.js"
+import { nowIso } from "#utils/date/nowIso"
+import type { MutationCtx } from "@convex/_generated/server.js"
 
 export async function otpSaveFn(
   ctx: MutationCtx,
