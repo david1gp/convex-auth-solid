@@ -4,12 +4,12 @@ import { orgMemberFormField } from "#src/org/member_ui/form/orgMemberFormField.j
 import type { OrgMemberFormStateManagement } from "#src/org/member_ui/form/orgMemberFormStateManagement.js"
 import { orgRole } from "#src/org/org_model_field/orgRole.js"
 import { isDevEnv } from "#src/utils/env/isDevEnv.js"
-import { getFormModeTitle, type FormMode } from "#ui/input/form/formMode"
-import { formModeIcon } from "#ui/input/form/formModeIcon"
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import { getFormModeTitle, type FormMode } from "#ui/input/form/formMode.js"
+import { formModeIcon } from "#ui/input/form/formModeIcon.js"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { Show } from "solid-js"
 
 interface HasOrgMemberFormStateManagement {

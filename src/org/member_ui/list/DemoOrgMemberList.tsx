@@ -1,9 +1,9 @@
-import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.js"
+import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.jsx"
 import type { OrgMemberProfile } from "#src/org/member_model/OrgMemberProfile.js"
-import type { OrgMemberListProps } from "#src/org/member_ui/list/OrgMemberListSection.js"
-import { OrgMemberListSection } from "#src/org/member_ui/list/OrgMemberListSection.js"
+import type { OrgMemberListProps } from "#src/org/member_ui/list/OrgMemberListSection.jsx"
+import { OrgMemberListSection } from "#src/org/member_ui/list/OrgMemberListSection.jsx"
 import { createdAtUpdatedAtCreate } from "#src/utils/data/HasCreatedAtUpdatedAt.js"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
 export function DemoOrgMemberList() {
   const props: OrgMemberListProps = {

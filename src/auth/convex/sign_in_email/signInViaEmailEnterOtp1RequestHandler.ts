@@ -1,11 +1,11 @@
+import { internal } from "#convex/_generated/api.js"
+import { type ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
 import type { UserSession } from "#src/auth/model/UserSession.js"
 import { signInViaEmailEnterOtpSchema } from "#src/auth/model/signInSchema.js"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 import { base64urlEncodeObject } from "#utils/url/base64url.js"
-import { internal } from "@convex/_generated/api.js"
-import { type ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
 
 export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

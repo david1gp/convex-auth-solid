@@ -1,3 +1,4 @@
+import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
 import type { PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
 import { otpConsumeFn } from "#src/auth/convex/otp/otpConsumeFn.js"
@@ -8,8 +9,7 @@ import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutatio
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.js"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
-import { nowIso } from "#utils/date/nowIso"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 
 const userEmailChangeConfirmFieldsBase = {

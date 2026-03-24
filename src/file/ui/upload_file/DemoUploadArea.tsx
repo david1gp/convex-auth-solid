@@ -1,7 +1,7 @@
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.js"
 import { fileInformationGet } from "#src/file/ui/stats/fileInformationGet.js"
-import { UploadAreaFile } from "#src/file/ui/upload_file/UploadAreaFile.js"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { UploadAreaFile } from "#src/file/ui/upload_file/UploadAreaFile.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.js"
 
 export function DemoUploadArea() {

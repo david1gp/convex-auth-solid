@@ -1,3 +1,4 @@
+import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, createResult, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
@@ -6,8 +7,7 @@ import { loginMethod } from "#src/auth/model_field/loginMethod.js"
 import { userRole } from "#src/auth/model_field/userRole.js"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.js"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
-import { nowIso } from "#utils/date/nowIso"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 
 export type SignUpConfirmValidatorType = typeof signUpConfirmEmailValidator.type

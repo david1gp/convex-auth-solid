@@ -1,4 +1,4 @@
-import { generateDemoList } from "#ui/generate_demo_list/generateDemoList"
+import { generateDemoList } from "#ui/generate_demo_list/generateDemoList.js"
 
 // const got = await findDemoFilesRecursive("./src/")
 // console.log(got)

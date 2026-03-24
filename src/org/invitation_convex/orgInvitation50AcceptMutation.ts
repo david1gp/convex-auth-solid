@@ -1,3 +1,4 @@
+import { mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
@@ -8,8 +9,7 @@ import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.js"
 import { orgGetQueryInternalFn } from "#src/org/org_convex/orgGetQuery.js"
 import { stt } from "#src/utils/i18n/stt.js"
-import { nowIso } from "#utils/date/nowIso"
-import { mutation, type MutationCtx } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type

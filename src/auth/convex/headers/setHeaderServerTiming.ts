@@ -1,4 +1,4 @@
-import { numRound2 } from "#utils/num/numRound"
+import { numRound2 } from "#utils/num/numRound.js"
 
 export type ServerTimingValues = {
   name: string

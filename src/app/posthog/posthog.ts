@@ -2,7 +2,7 @@ import { enablePosthog } from "#src/app/config/enablePosthog.js"
 import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.js"
 import { envPosthogAppIdResult } from "#src/app/env/public/envPosthogAppIdResult.js"
 import type { UserSession } from "#src/auth/model/UserSession.js"
-import posthog, { type PostHog, type PostHogConfig } from "posthog-js"
+import { posthog, type PostHog, type PostHogConfig } from "posthog-js"
 
 /**
  * https://posthog.com/docs/product-analytics/identify

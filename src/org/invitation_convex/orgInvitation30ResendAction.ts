@@ -1,11 +1,11 @@
+import { api } from "#convex/_generated/api.js"
+import { action, type ActionCtx } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
 import { languageValidator } from "#src/app/i18n/language.js"
 import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.js"
 import { orgInvitation31SendFn } from "#src/org/invitation_convex/orgInvitation31SendInternalAction.js"
 import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.js"
 import { stt1 } from "#src/utils/i18n/stt.js"
-import { api } from "@convex/_generated/api.js"
-import { action, type ActionCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export type OrgInvitationResendValidatorType = typeof orgInvitation30ResendValidator.type

@@ -1,3 +1,5 @@
+import { internal } from "#convex/_generated/api.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.js"
 import { sendEmailSignUp } from "#src/auth/convex/email/sendEmailSignUp.js"
@@ -7,8 +9,6 @@ import { signUpErrorMessages } from "#src/auth/convex/sign_up/signUpErrorMessage
 import { signUpSchema } from "#src/auth/model/signUpSchema.js"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.js"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import { internal } from "@convex/_generated/api.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
 import { commonApiErrorMessages } from "./commonApiErrorMessages.js"
 

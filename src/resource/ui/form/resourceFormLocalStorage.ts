@@ -5,8 +5,8 @@ import type { ResourceFormState } from "#src/resource/ui/form/ResourceFormState.
 import { pageRouteResource } from "#src/resource/url/pageRouteResource.js"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
 import { debounceSaveMs } from "#src/utils/ui/debounceMs.js"
-import { formMode, type FormMode } from "#ui/input/form/formMode"
-import { debounce } from "@solid-primitives/scheduled.js"
+import { formMode, type FormMode } from "#ui/input/form/formMode.js"
+import { debounce } from "@solid-primitives/scheduled"
 import * as a from "valibot"
 
 const resourceFormLocalStorageKey = cachePrefix + pageRouteResource.resourceAdd

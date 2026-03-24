@@ -1,6 +1,6 @@
-import { classMerge } from "#ui/utils/classMerge"
-import type { HasChildren } from "#ui/utils/HasChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { HasChildren } from "#ui/utils/HasChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface TextWithHeadderVerticalProps extends MayHaveClass, HasChildren {
   text: string

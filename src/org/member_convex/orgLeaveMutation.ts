@@ -1,3 +1,5 @@
+import { internal } from "#convex/_generated/api.js"
+import { mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
@@ -7,9 +9,7 @@ import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
 import { createUserIdValidator } from "#src/utils/convex_backend/createUserIdValidator.js"
-import { nowIso } from "#utils/date/nowIso"
-import { internal } from "@convex/_generated/api.js"
-import { mutation, type MutationCtx } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 
 export const orgLeaveFields = {

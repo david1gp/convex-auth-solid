@@ -1,11 +1,11 @@
 import type { HasFileId } from "#src/file/model_field/HasFileId.js"
 import { fileNameSet } from "#src/file/ui/fileNameRecordSignal.js"
-import { FileForm } from "#src/file/ui/form/FileForm.js"
+import { FileForm } from "#src/file/ui/form/FileForm.jsx"
 import { fileFormStateManagement } from "#src/file/ui/form/fileFormStateManagement.js"
-import { FileLoader, type FileComponentProps } from "#src/file/ui/mutate/FileLoader.js"
+import { FileLoader, type FileComponentProps } from "#src/file/ui/mutate/FileLoader.jsx"
 import type { HasResourceId } from "#src/resource/model/HasResourceId.js"
-import type { HasFormModeMutate } from "#ui/input/form/formModeMutate"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { createEffect } from "solid-js"
 
 interface FileMutateProps extends HasFileId, HasResourceId, HasFormModeMutate, MayHaveClass {}

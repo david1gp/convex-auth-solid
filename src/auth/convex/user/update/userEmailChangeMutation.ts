@@ -1,3 +1,4 @@
+import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { type PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
 import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.js"
@@ -9,7 +10,6 @@ import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAnd
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
 import { emailSchema } from "#src/utils/valibot/emailSchema.js"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import * as a from "valibot"
 

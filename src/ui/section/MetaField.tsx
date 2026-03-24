@@ -1,5 +1,5 @@
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 interface FieldProps extends MayHaveClass {
   heading: string

@@ -4,8 +4,8 @@ import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdRe
 import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
 import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.js"
 import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.js"
-import { queryString } from "#utils/url/queryString"
-import { intMin1OrStringSchema } from "#utils/valibot/intOrStringSchema"
+import { queryString } from "#utils/url/queryString.js"
+import { intMin1OrStringSchema } from "#utils/valibot/intOrStringSchema.js"
 import * as a from "valibot"
 
 export interface GoogleOauthToken {

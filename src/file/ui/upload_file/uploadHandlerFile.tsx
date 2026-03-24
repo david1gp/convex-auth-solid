@@ -10,10 +10,10 @@ import { apiR2FileCreate } from "#src/r2/client/apiR2FileCreate.js"
 import { apiR2GetUploadUrl } from "#src/r2/client/apiR2GetUploadUrl.js"
 import { apiR2UploadFileWithProgress } from "#src/r2/client/apiR2UploadFile.js"
 import type { MayHaveResourceId } from "#src/resource/model/MayHaveResourceId.js"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
-import posthog from "posthog-js"
+import { posthog } from "posthog-js"
 
 export interface FileUploadHandlerProps extends MayHaveResourceId {
   file: File

@@ -1,3 +1,4 @@
+import { query, type QueryCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
 import { docOrgInvitationToModel } from "#src/org/invitation_convex/docOrgInvitationToModel.js"
@@ -10,7 +11,6 @@ import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.js"
 import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.js"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
-import { query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export const orgGetPageFields = {

@@ -1,22 +1,22 @@
 import type { PageNameWorkspace } from "#src/workspace/url/pageNameWorkspace.js"
 import { pageRouteWorkspace } from "#src/workspace/url/pageRouteWorkspace.js"
-import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig"
+import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.js"
 import { lazy } from "solid-js"
 
 const WorkspaceListPage = lazy(() =>
-  import("#src/workspace/ui/list/WorkspaceListPage.js").then((c) => ({ default: c.WorkspaceListPage })),
+  import("#src/workspace/ui/list/WorkspaceListPage.jsx").then((c) => ({ default: c.WorkspaceListPage })),
 )
 const WorkspaceEditPage = lazy(() =>
-  import("#src/workspace/ui/mutate/WorkspaceEditPage.js").then((c) => ({ default: c.WorkspaceEditPage })),
+  import("#src/workspace/ui/mutate/WorkspaceEditPage.jsx").then((c) => ({ default: c.WorkspaceEditPage })),
 )
 const WorkspaceViewPage = lazy(() =>
-  import("#src/workspace/ui/view/WorkspaceViewPage.js").then((c) => ({ default: c.WorkspaceViewPage })),
+  import("#src/workspace/ui/view/WorkspaceViewPage.jsx").then((c) => ({ default: c.WorkspaceViewPage })),
 )
 const WorkspaceAddPage = lazy(() =>
-  import("#src/workspace/ui/mutate/WorkspaceAddPage.js").then((c) => ({ default: c.WorkspaceAddPage })),
+  import("#src/workspace/ui/mutate/WorkspaceAddPage.jsx").then((c) => ({ default: c.WorkspaceAddPage })),
 )
 const WorkspaceRemovePage = lazy(() =>
-  import("#src/workspace/ui/mutate/WorkspaceDeletePage.js").then((c) => ({ default: c.WorkspaceDeletePage })),
+  import("#src/workspace/ui/mutate/WorkspaceDeletePage.jsx").then((c) => ({ default: c.WorkspaceDeletePage })),
 )
 
 export function getRoutesWorkspace(): RouteObject[] {

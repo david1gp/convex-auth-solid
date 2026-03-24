@@ -1,3 +1,4 @@
+import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { findOrCreateUserFn } from "#src/auth/convex/crud/findOrCreateUserFn.js"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
@@ -7,9 +8,8 @@ import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.
 import {
     type CommonAuthProvider,
     commonAuthProviderValidator,
-} from "#src/auth/server/social_identity_providers/CommonAuthProvider.js.js"
+} from "#src/auth/server/social_identity_providers/CommonAuthProvider.js"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
-import { internalMutation, type MutationCtx } from "@convex/_generated/server.js.js"
 
 export const signInUsingSocialAuth3InternalMutation = internalMutation({
   args: commonAuthProviderValidator,

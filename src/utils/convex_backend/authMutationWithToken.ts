@@ -1,7 +1,7 @@
+import type { MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import type { DecodedToken } from "#src/auth/model/DecodedToken.js"
 import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.js"
-import type { MutationCtx } from "@convex/_generated/server.js"
 
 export async function authMutationWithToken<T extends { token: string }, R>(
   ctx: MutationCtx,

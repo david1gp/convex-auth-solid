@@ -1,6 +1,6 @@
 import { languageOrNoneSchema, type LanguageOrNone } from "#src/app/i18n/language.js"
 import { stringSchemaUrl } from "#src/utils/valibot/stringSchema.js"
-import { intSchemaMin0 } from "#utils/valibot/intSchema"
+import { intSchemaMin0 } from "#utils/valibot/intSchema.js"
 import { v } from "convex/values"
 import * as a from "valibot"
 

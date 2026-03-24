@@ -8,7 +8,7 @@ import type { HasCreatedAtUpdatedDeletedAt } from "#src/utils/data/HasCreatedAtU
 import { emailSchema } from "#src/utils/valibot/emailSchema.js"
 import { handleSchema } from "#src/utils/valibot/handleSchema.js"
 import { stringSchema0to500, stringSchemaId, stringSchemaName } from "#src/utils/valibot/stringSchema.js"
-import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 import { v } from "convex/values"
 import * as a from "valibot"
 

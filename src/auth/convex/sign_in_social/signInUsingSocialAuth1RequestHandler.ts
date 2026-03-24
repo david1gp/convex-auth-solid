@@ -1,3 +1,5 @@
+import { internal } from "#convex/_generated/api.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
 import { enableGithub } from "#src/app/config/enableGithub.js"
 import { enableSignInDev } from "#src/app/config/enableSignInDev.js"
@@ -8,8 +10,6 @@ import { loginProvider, type LoginProvider } from "#src/auth/model_field/socialL
 import { getDefaultUrlSignedIn } from "#src/auth/url/getDefaultUrlSignedIn.js"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 import { base64urlEncodeObject } from "#utils/url/base64url.js"
-import { internal } from "@convex/_generated/api.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
 
 export async function signInUsingSocialAuth1RequestHandler(
   provider: LoginProvider,

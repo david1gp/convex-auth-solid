@@ -3,12 +3,12 @@ import { ttc } from "#src/app/i18n/ttc.js"
 import type { FileModel } from "#src/file/model/FileModel.js"
 import { fileInformationGet } from "#src/file/ui/stats/fileInformationGet.js"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.js"
-import { uploadHandlerFilePure } from "#src/file/ui/upload_file/uploadHandlerFile.js"
+import { uploadHandlerFilePure } from "#src/file/ui/upload_file/uploadHandlerFile.jsx"
 import type { MayHaveResourceId } from "#src/resource/model/MayHaveResourceId.js"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
-import { toastVariant } from "#ui/interactive/toast/toastVariant"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
+import { toastVariant } from "#ui/interactive/toast/toastVariant.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
-import posthog from "posthog-js"
+import { posthog } from "posthog-js"
 
 export interface ImageUploadHandlerProps extends MayHaveResourceId {
   file: File

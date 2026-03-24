@@ -1,3 +1,4 @@
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { type PromiseResult, createResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
 import type { IdUser } from "#src/auth/convex/IdUser.js"
@@ -12,8 +13,7 @@ import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.
 import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
-import { nowIso } from "#utils/date/nowIso"
-import { type MutationCtx, mutation } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import { userProfileUpdateFields } from "./userProfileUpdate.js"
 
 export const userProfileFieldsValidatorPublic = createTokenValidator(userProfileUpdateFields)

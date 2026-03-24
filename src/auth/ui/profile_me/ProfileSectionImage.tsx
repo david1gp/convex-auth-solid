@@ -1,6 +1,6 @@
 import { ttc } from "#src/app/i18n/ttc.js"
-import { Img } from "#ui/static/img/Img"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { Img } from "#ui/static/img/Img.jsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface ProfileSectionImageProps extends MayHaveClass {
   image?: string

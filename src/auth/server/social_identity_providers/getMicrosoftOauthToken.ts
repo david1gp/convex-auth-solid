@@ -3,8 +3,8 @@ import { envMicrosoftClientSecretResult } from "#src/app/env/private/envMicrosof
 import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.js"
 import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
 import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.js"
-import { queryString } from "#utils/url/queryString"
-import { searchParamsToObject } from "#utils/url/searchParamsToObject"
+import { queryString } from "#utils/url/queryString.js"
+import { searchParamsToObject } from "#utils/url/searchParamsToObject.js"
 import * as a from "valibot"
 import { authErrorMessages } from "./authErrorMessages.js"
 

@@ -1,6 +1,6 @@
-import { InputS } from "#ui/input/input/InputS"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+import { InputS } from "#ui/input/input/InputS.jsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import type { SignalObject } from "#ui/utils/createSignalObject.js"
 
 interface OtpInput6NumbersProps extends MayHaveClass {

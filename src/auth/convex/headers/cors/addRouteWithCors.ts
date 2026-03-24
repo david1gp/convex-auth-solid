@@ -1,7 +1,7 @@
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { corsOptionsHttpHandler } from "#src/auth/convex/headers/cors/corsOptionsHttpHandler.js"
 import { createHttpActionWithCors } from "#src/auth/convex/headers/cors/createHttpActionWithCors.js"
 import type { HttpMethod } from "#src/auth/convex/headers/httpMethod.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
 import type { HttpRouter } from "convex/server"
 
 export type ConvexHandlerType = (ctx: ActionCtx, request: Request) => Promise<Response>

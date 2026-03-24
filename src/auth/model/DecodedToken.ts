@@ -1,4 +1,4 @@
-import { intSchemaMin0 } from "#utils/valibot/intSchema"
+import { intSchemaMin0 } from "#utils/valibot/intSchema.js"
 import * as a from "valibot"
 
 export type DecodedToken = {

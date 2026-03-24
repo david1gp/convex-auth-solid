@@ -1,6 +1,6 @@
 import { classesBadgeSoft } from "#src/ui/badge/classesBadgeSoft.js"
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.js"
 import { splitProps } from "solid-js"
 
 export interface BasgeSoftProps extends MayHaveChildrenAndClass {}

@@ -1,22 +1,22 @@
 import type { PageNameResource } from "#src/resource/url/pageNameResource.js"
 import { pageRouteResource } from "#src/resource/url/pageRouteResource.js"
-import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig"
+import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.js"
 import { lazy } from "solid-js"
 
 const ResourceListPage = lazy(() =>
-  import("#src/resource/ui/list/ResourceListPage.js").then((c) => ({ default: c.ResourceListPage })),
+  import("#src/resource/ui/list/ResourceListPage.jsx").then((c) => ({ default: c.ResourceListPage })),
 )
 const ResourceEditPage = lazy(() =>
-  import("#src/resource/ui/mutate/ResourceEditPage.js").then((c) => ({ default: c.ResourceEditPage })),
+  import("#src/resource/ui/mutate/ResourceEditPage.jsx").then((c) => ({ default: c.ResourceEditPage })),
 )
 const ResourceViewPage = lazy(() =>
-  import("#src/resource/ui/view/ResourceViewPage.js").then((c) => ({ default: c.ResourceViewPage })),
+  import("#src/resource/ui/view/ResourceViewPage.jsx").then((c) => ({ default: c.ResourceViewPage })),
 )
 const ResourceAddPage = lazy(() =>
-  import("#src/resource/ui/mutate/ResourceAddPage.js").then((c) => ({ default: c.ResourceAddPage })),
+  import("#src/resource/ui/mutate/ResourceAddPage.jsx").then((c) => ({ default: c.ResourceAddPage })),
 )
 const ResourceRemovePage = lazy(() =>
-  import("#src/resource/ui/mutate/ResourceDeletePage.js").then((c) => ({ default: c.ResourceDeletePage })),
+  import("#src/resource/ui/mutate/ResourceDeletePage.jsx").then((c) => ({ default: c.ResourceDeletePage })),
 )
 
 export function getRoutesResource(): RouteObject[] {

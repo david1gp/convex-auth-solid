@@ -1,3 +1,4 @@
+import { type MutationCtx, internalMutation } from "#convex/_generated/server.js"
 import { type PromiseResult, createResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
@@ -6,8 +7,7 @@ import type { UserProfile } from "#src/auth/model/UserProfile.js"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.js"
 import { createUserIdValidator } from "#src/utils/convex_backend/createUserIdValidator.js"
-import { nowIso } from "#utils/date/nowIso"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 
 export const userProfileFieldsValidatorInternal = createUserIdValidator(userProfileUpdateFields)
 export type UserProfileFieldsTypeInternal = typeof userProfileFieldsValidatorInternal.type

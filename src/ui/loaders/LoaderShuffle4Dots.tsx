@@ -1,6 +1,6 @@
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
-import styles from "./LoaderShuffle4Dots.module.css.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
+import styles from "./LoaderShuffle4Dots.module.css"
 
 /**
  * https://dev.to/afif/adding-100-css-loaders-to-the-collection-of-500-css-loaders-2a3p

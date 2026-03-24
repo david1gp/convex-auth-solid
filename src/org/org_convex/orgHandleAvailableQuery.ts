@@ -1,8 +1,8 @@
+import { query, type QueryCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.js"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
-import { query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export const orgHandleAvailableFields = {

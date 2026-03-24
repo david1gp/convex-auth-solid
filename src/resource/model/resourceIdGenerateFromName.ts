@@ -1,6 +1,6 @@
 import { generateFilIdDatePart } from "#src/file/model_field/fileIdGenerate.js"
-import { generateId10 } from "#utils/ran/generateId10"
-import { generateId20 } from "#utils/ran/generateId20"
+import { generateId10 } from "#utils/ran/generateId10.js"
+import { generateId20 } from "#utils/ran/generateId20.js"
 
 export const resourceIdNamCutoffLength = 50
 

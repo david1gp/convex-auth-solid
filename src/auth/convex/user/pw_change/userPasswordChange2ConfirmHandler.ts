@@ -1,8 +1,8 @@
+import { api } from "#convex/_generated/api.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
 import { passwordSchema } from "#src/auth/model_field/passwordSchema.js"
-import { api } from "@convex/_generated/api.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
 
 const userPasswordChange2ConfirmSchema = a.object({

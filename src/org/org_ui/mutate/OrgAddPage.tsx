@@ -1,12 +1,12 @@
 import { ttc } from "#src/app/i18n/ttc.js"
-import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
-import { NavOrg } from "#src/app/nav/NavOrg.js"
-import { OrgForm } from "#src/org/org_ui/form/OrgForm.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.jsx"
+import { NavOrg } from "#src/app/nav/NavOrg.jsx"
+import { OrgForm } from "#src/org/org_ui/form/OrgForm.jsx"
 import { orgFormStateManagement } from "#src/org/org_ui/form/orgFormStateManagement.js"
 import { urlOrgAdd } from "#src/org/org_url/urlOrg.js"
-import { formMode } from "#ui/input/form/formMode"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { formMode } from "#ui/input/form/formMode.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export function OrgAddPage() {
   return (

@@ -1,5 +1,5 @@
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.js"
-import { serializeUrlParams } from "#utils/url/serializeUrlParams"
+import { serializeUrlParams } from "#utils/url/serializeUrlParams.js"
 
 export function urlSignInEnterOtp(email: string, code?: string, returnPath?: string) {
   const obj: Record<string, string> = { email }

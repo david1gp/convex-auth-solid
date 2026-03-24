@@ -1,3 +1,5 @@
+import { internal } from "#convex/_generated/api.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import type { IdUser } from "#src/auth/convex/IdUser.js"
 import { verifyHashedPassword2 } from "#src/auth/convex/pw/verifyHashedPassword.js"
@@ -7,9 +9,7 @@ import { signInViaPwSchema } from "#src/auth/model/signInSchema.js"
 import type { UserSession } from "#src/auth/model/UserSession.js"
 import { loginMethod } from "#src/auth/model_field/loginMethod.js"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.js"
-import { nowIso } from "#utils/date/nowIso"
-import { internal } from "@convex/_generated/api.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import * as a from "valibot"
 
 export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

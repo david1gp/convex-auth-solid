@@ -1,3 +1,4 @@
+import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
 import { userDeleteHardOtps } from "#src/auth/convex/user/delete_hard/userDeleteHardOtps.js"
@@ -7,7 +8,6 @@ import { userDeleteHardEmailLoginCodes } from "#src/auth/convex/user/delete_hard
 import { userDeleteHardFiles } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardFiles.js"
 import { userDeleteHardOrgMemberships } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships.js"
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
-import { internalMutation, mutation, type MutationCtx } from "@convex/_generated/server.js"
 import {
     userDeleteValidatorInternal,
     userDeleteValidatorPublic,

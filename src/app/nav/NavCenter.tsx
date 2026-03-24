@@ -1,10 +1,10 @@
-import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.js"
-import { OrganizationListNavButton } from "#src/app/nav/links/OrganizationListNavButton.js"
-import { ResourceListNavButton } from "#src/app/nav/links/ResourceListNavButton.js"
-import { WorkspaceListLinkNavButton } from "#src/app/nav/links/WorkspaceListLinkNavButton.js"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.jsx"
+import { OrganizationListNavButton } from "#src/app/nav/links/OrganizationListNavButton.jsx"
+import { ResourceListNavButton } from "#src/app/nav/links/ResourceListNavButton.jsx"
+import { WorkspaceListLinkNavButton } from "#src/app/nav/links/WorkspaceListLinkNavButton.jsx"
 import type { AppTab } from "#src/app/tabs/appTab.js"
 import { appTab } from "#src/app/tabs/appTab.js"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
 
 export interface NavCenterProps extends MayHaveChildren {
   activeTab?: AppTab

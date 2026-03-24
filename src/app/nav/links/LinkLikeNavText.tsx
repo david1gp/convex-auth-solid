@@ -1,6 +1,6 @@
 import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.js"
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.js"
 
 export interface LinkLikeTextProps extends MayHaveClassAndChildren {
   isActive?: boolean

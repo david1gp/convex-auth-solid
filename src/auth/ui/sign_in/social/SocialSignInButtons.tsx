@@ -1,11 +1,11 @@
 import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
 import { urlAuthProvider } from "#src/auth/url/urlAuthProvider.js"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.js"
-import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva"
-import { LinkButton } from "#ui/interactive/link/LinkButton"
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
 import { mdiGithub, mdiGoogle } from "@mdi/js"
 
 interface SocialSignInButtonProps extends MayHaveClass {

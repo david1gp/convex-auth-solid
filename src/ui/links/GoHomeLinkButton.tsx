@@ -1,7 +1,7 @@
 import { ttc } from "#src/app/i18n/ttc.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { LinkButton } from "#ui/interactive/link/LinkButton"
-import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps.jsx"
 import { mdiHome } from "@mdi/js"
 import { splitProps } from "solid-js"
 

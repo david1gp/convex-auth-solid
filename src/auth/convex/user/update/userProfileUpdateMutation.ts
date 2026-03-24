@@ -1,3 +1,4 @@
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { type PromiseResult, createResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.js"
@@ -15,8 +16,7 @@ import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
-import { nowIso } from "#utils/date/nowIso"
-import { type MutationCtx, mutation } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 
 export const userProfileFieldsValidatorPublic = createTokenValidator(userProfileFieldsBase)
 export type UserProfileFieldsTypePublic = typeof userProfileFieldsValidatorPublic.type

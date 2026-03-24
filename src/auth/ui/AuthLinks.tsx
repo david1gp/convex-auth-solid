@@ -1,6 +1,6 @@
 import { pageNameAuth, type PageNameAuth } from "#src/auth/url/pageNameAuth.js";
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.js";
-import { BulletLinksO } from "#ui/interactive/list/BulletLinksO";
+import { BulletLinksO } from "#ui/interactive/list/BulletLinksO.jsx";
 
 export function AuthLinks() {
   const authLinks = [

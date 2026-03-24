@@ -1,8 +1,8 @@
 import type { FilterFieldConfig } from "#src/ui/input/search/FilterFieldConfig.js"
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { dateFormatFull } from "#utils/date/dateFormat"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { dateFormatFull } from "#utils/date/dateFormat.js"
 import { mdiClose } from "@mdi/js"
 import { For } from "solid-js"
 

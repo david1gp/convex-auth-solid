@@ -1,9 +1,9 @@
 import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { LinkButton } from "#ui/interactive/link/LinkButton"
-import { classArr } from "#ui/utils/classArr"
-import type { HasChildren } from "#ui/utils/HasChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { classArr } from "#ui/utils/classArr.js"
+import type { HasChildren } from "#ui/utils/HasChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface NavLinkButtonProps extends HasChildren, MayHaveClass {
   href: string

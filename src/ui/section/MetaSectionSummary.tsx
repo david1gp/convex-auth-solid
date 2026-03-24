@@ -1,9 +1,9 @@
 import { sharedMetaSection, sharedMetaSectionIcon } from "#src/app/tabs/sharedMetaSection.js"
 import { sharedMetaSectionGetText } from "#src/app/tabs/sharedMetaSectionGetText.js"
-import { MetaSection } from "#src/ui/section/MetaSection.js"
-import { Ps } from "#src/ui/text/Ps.js"
-import { classMerge } from "#ui/utils/classMerge"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { MetaSection } from "#src/ui/section/MetaSection.jsx"
+import { Ps } from "#src/ui/text/Ps.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { Show } from "solid-js"
 
 export interface MetaSectionSummaryProps extends MayHaveClass {

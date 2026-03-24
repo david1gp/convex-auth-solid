@@ -1,8 +1,8 @@
 import { classesCard } from "#src/ui/card/classesCard.js"
-import { Icon } from "#ui/static/icon/Icon"
-import { classMerge } from "#ui/utils/classMerge"
-import type { HasChildren } from "#ui/utils/HasChildren"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { Icon } from "#ui/static/icon/Icon.jsx"
+import { classMerge } from "#ui/utils/classMerge.js"
+import type { HasChildren } from "#ui/utils/HasChildren.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 
 export interface MetaSectionProps<T extends string> extends MayHaveClass, HasChildren {
   s: T

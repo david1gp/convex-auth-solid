@@ -1,21 +1,21 @@
 import type { PageNameOrgMember } from "#src/org/member_url/pageNameOrgMember.js"
 import { pageRouteOrgMember } from "#src/org/member_url/pageRouteOrgMember.js"
-import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig"
-import { objectEntries } from "#utils/obj/objectEntries"
+import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.js"
+import { objectEntries } from "#utils/obj/objectEntries.js"
 import { lazy } from "solid-js"
 
 const OrgMemberListPage = lazy(() =>
-  import("#src/org/member_ui/list/OrgMemberListPage.js").then((c) => ({ default: c.OrgMemberListPage })),
+  import("#src/org/member_ui/list/OrgMemberListPage.jsx").then((c) => ({ default: c.OrgMemberListPage })),
 )
 const OrgMemberEditPage = lazy(() =>
-  import("#src/org/member_ui/mutate/OrgMemberEditPage.js").then((c) => ({ default: c.OrgMemberEditPage })),
+  import("#src/org/member_ui/mutate/OrgMemberEditPage.jsx").then((c) => ({ default: c.OrgMemberEditPage })),
 )
-const OrgMemberViewPage = lazy(() => import("#src/ui/pages/TodoPage.js").then((c) => ({ default: c.TodoPage })))
+const OrgMemberViewPage = lazy(() => import("#src/ui/pages/TodoPage.jsx").then((c) => ({ default: c.TodoPage })))
 const OrgMemberAddPage = lazy(() =>
-  import("#src/org/member_ui/mutate/OrgMemberAddPage.js").then((c) => ({ default: c.OrgMemberAddPage })),
+  import("#src/org/member_ui/mutate/OrgMemberAddPage.jsx").then((c) => ({ default: c.OrgMemberAddPage })),
 )
 const OrgMemberRemovePage = lazy(() =>
-  import("#src/org/member_ui/mutate/OrgMemberDeletePage.js").then((c) => ({ default: c.OrgMemberDeletePage })),
+  import("#src/org/member_ui/mutate/OrgMemberDeletePage.jsx").then((c) => ({ default: c.OrgMemberDeletePage })),
 )
 
 export function getRoutesOrgMember(): RouteObject[] {

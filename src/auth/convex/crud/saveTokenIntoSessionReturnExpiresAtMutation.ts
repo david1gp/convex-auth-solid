@@ -1,10 +1,10 @@
+import type { Id } from "#convex/_generated/dataModel.js"
+import type { MutationCtx } from "#convex/_generated/server.js"
+import { internalMutation } from "#convex/_generated/server.js"
 import { vIdUser } from "#src/auth/convex/vIdUser.js"
 import type { LoginMethod } from "#src/auth/model_field/loginMethod.js"
 import { loginMethodValidator } from "#src/auth/model_field/loginMethodValidator.js"
 import { tokenValidDurationInDays } from "#src/auth/server/jwt_token/tokenValidDurationInDays.js"
-import type { Id } from "@convex/_generated/dataModel.js"
-import type { MutationCtx } from "@convex/_generated/server.js"
-import { internalMutation } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import dayjs from "dayjs"
 

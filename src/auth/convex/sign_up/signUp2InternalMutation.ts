@@ -1,6 +1,6 @@
+import { type MutationCtx, internalMutation } from "#convex/_generated/server.js"
 import type { IdAuthUserEmailRegistration } from "#src/auth/convex/IdUser.js"
-import { nowIso } from "#utils/date/nowIso"
-import { type MutationCtx, internalMutation } from "@convex/_generated/server.js"
+import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 
 export const signUpCodeFields = {

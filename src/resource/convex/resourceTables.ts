@@ -2,7 +2,7 @@ import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.js"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.js"
-import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
 

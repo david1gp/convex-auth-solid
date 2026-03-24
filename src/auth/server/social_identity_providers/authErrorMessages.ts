@@ -1,4 +1,4 @@
-import { stringifyValibotErrors } from "#utils/valibot/stringifyValibotErrors"
+import { stringifyValibotErrors } from "#utils/valibot/stringifyValibotErrors.js"
 
 export const authErrorMessages = {
   // token

@@ -5,8 +5,8 @@ import type { OrgFormState } from "#src/org/org_ui/form/orgFormStateManagement.j
 import { pageRouteOrg } from "#src/org/org_url/pageRouteOrg.js"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
 import { debounceSaveMs } from "#src/utils/ui/debounceMs.js"
-import { formMode, type FormMode } from "#ui/input/form/formMode"
-import { debounce } from "@solid-primitives/scheduled.js"
+import { formMode, type FormMode } from "#ui/input/form/formMode.js"
+import { debounce } from "@solid-primitives/scheduled"
 import * as a from "valibot"
 
 const orgFormLocalStorageKey = cachePrefix + pageRouteOrg.orgAdd

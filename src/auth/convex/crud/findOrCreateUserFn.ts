@@ -1,3 +1,4 @@
+import { type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFromAuthProviderMutation.js"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
@@ -7,7 +8,6 @@ import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile
 import { createUserSessionTimes, type UserSession } from "#src/auth/model/UserSession.js"
 import { type CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.js"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
-import { type MutationCtx } from "@convex/_generated/server.js"
 
 export type SignInUsingSocialAuthResultInternal = Omit<UserSession, "token">
 

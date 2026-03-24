@@ -6,7 +6,7 @@ import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCrea
 import { emailSchema } from "#src/utils/valibot/emailSchema.js"
 import { handleSchema } from "#src/utils/valibot/handleSchema.js"
 import { stringSchema0to100, stringSchemaId } from "#src/utils/valibot/stringSchema.js"
-import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 import * as a from "valibot"
 
 export const orgInvitationDataSchemaFields = {

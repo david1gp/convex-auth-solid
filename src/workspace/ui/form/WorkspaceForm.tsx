@@ -3,24 +3,24 @@ import { isDevEnv } from "#src/utils/env/isDevEnv.js"
 import { inputMaxLength100, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.js"
 import { workspaceFormField, type WorkspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.js"
 import { urlWorkspaceRemove } from "#src/workspace/url/urlWorkspace.js"
-import { ttt } from "#ui/i18n/ttt"
+import { ttt } from "#ui/i18n/ttt.js"
 import {
     formMode,
     formModeIsReadOnly,
     getFormModeButtonTitle,
     getFormModeTitle,
     type FormMode,
-} from "#ui/input/form/formMode"
-import { formModeIcon } from "#ui/input/form/formModeIcon"
-import { Input } from "#ui/input/input/Input"
-import { Label } from "#ui/input/label/Label"
-import { LabelAsterix } from "#ui/input/label/LabelAsterix"
-import { Textarea } from "#ui/input/textarea/Textarea"
-import { ButtonIcon } from "#ui/interactive/button/ButtonIcon"
-import { buttonVariant } from "#ui/interactive/button/buttonCva"
-import { LinkButton } from "#ui/interactive/link/LinkButton"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
-import { classMerge } from "#ui/utils/classMerge"
+} from "#ui/input/form/formMode.js"
+import { formModeIcon } from "#ui/input/form/formModeIcon.js"
+import { Input } from "#ui/input/input/Input.jsx"
+import { Label } from "#ui/input/label/Label.jsx"
+import { LabelAsterix } from "#ui/input/label/LabelAsterix.jsx"
+import { Textarea } from "#ui/input/textarea/Textarea.jsx"
+import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.js"
 import { Show } from "solid-js"
 
 interface HasOrgFormStateManagement {

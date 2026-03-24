@@ -1,22 +1,22 @@
+import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.js"
-import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
-import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.js"
-import { NavCenter } from "#src/app/nav/NavCenter.js"
-import { NavStatic } from "#src/app/nav/NavStatic.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.jsx"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.jsx"
+import { NavCenter } from "#src/app/nav/NavCenter.jsx"
+import { NavStatic } from "#src/app/nav/NavStatic.jsx"
 import type { DocUser } from "#src/auth/convex/IdUser.js"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
-import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.js"
+import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.jsx"
 import {
     userProfileFormStateManagement,
     type UserProfileFormStateManagement,
 } from "#src/auth/ui/profile/userProfileFormState.js"
 import { urlUserProfileView } from "#src/auth/url/pageRouteAuth.js"
-import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.jsx"
 import { createQuery } from "#src/utils/convex_client/createQuery.js"
-import { formMode } from "#ui/input/form/formMode"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
-import { api } from "@convex/_generated/api.js"
-import { useParams } from "@solidjs/router.js"
+import { formMode } from "#ui/input/form/formMode.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { useParams } from "@solidjs/router"
 import { Match, Switch } from "solid-js"
 
 export function UserProfilePage() {

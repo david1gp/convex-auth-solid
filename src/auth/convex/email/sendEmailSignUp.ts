@@ -5,14 +5,14 @@ import type { Language } from "#src/app/i18n/language.js"
 import { createAuthResendEnvVariableNames } from "#src/auth/convex/email/createAuthResendEnvVariableNames.js"
 import { generateSharedEmailProps } from "#src/auth/convex/email/generateSharedEmailProps.js"
 import { sendTelegramMessageAuth } from "#src/auth/convex/telegram/sendTelegramMessageTechnical.js"
-import { envMode } from "#ui/env/envMode"
-import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend"
-import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi"
+import { envMode } from "#ui/env/envMode.js"
+import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
+import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi.js"
 import {
     apiGenerateEmailSignUpV1,
     type GeneratedEmailType,
     type SignUpV1Type,
-} from "@adaptive-ds/email-generator/index.js.js"
+} from "@adaptive-ds/email-generator/index.js"
 
 export async function sendEmailSignUp(
   name: string,

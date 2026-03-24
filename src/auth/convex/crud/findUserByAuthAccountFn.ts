@@ -1,6 +1,6 @@
+import { type QueryCtx } from "#convex/_generated/server.js"
 import type { DocAuthAccount } from "#src/auth/convex/IdUser.js"
 import { socialLoginProviderValidator } from "#src/auth/model_field/loginMethodValidator.js"
-import { type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 
 export const findUserByAuthAccountValidator = v.object({

@@ -1,6 +1,6 @@
 import { ttl1 } from "#src/app/i18n/ttl.js"
 import { tbLoadingX } from "#src/ui/loaders/i18n/tbLoadingX.js"
-import { RandomLoader } from "#ui/static/loaders/RandomLoader"
+import { RandomLoader } from "#ui/static/loaders/RandomLoader.jsx"
 
 export interface LoadingPageProps {
   loadingX?: string

@@ -1,3 +1,5 @@
+import { internal } from "#convex/_generated/api.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.js"
 import { sendEmailSignIn } from "#src/auth/convex/email/sendEmailSignIn.js"
@@ -5,8 +7,6 @@ import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorM
 import { signInViaEmailSchema } from "#src/auth/model/signInSchema.js"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.js"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import { internal } from "@convex/_generated/api.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
 import * as a from "valibot"
 
 export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {

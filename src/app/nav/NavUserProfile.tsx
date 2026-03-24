@@ -1,6 +1,6 @@
-import { NavCenter } from "#src/app/nav/NavCenter.js"
-import { NavStatic } from "#src/app/nav/NavStatic.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass"
+import { NavCenter } from "#src/app/nav/NavCenter.jsx"
+import { NavStatic } from "#src/app/nav/NavStatic.jsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
 import { splitProps, type JSX } from "solid-js"
 
 export interface NavUserProfileProps extends MayHaveClass {

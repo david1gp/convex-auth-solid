@@ -6,8 +6,8 @@ import { orgRoleSchema } from "#src/org/org_model_field/orgRole.js"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
 import { debounceSaveMs } from "#src/utils/ui/debounceMs.js"
 import { stringSchema0to100 } from "#src/utils/valibot/stringSchema.js"
-import { formMode, type FormMode } from "#ui/input/form/formMode"
-import { debounce } from "@solid-primitives/scheduled.js"
+import { formMode, type FormMode } from "#ui/input/form/formMode.js"
+import { debounce } from "@solid-primitives/scheduled"
 import * as a from "valibot"
 
 const orgInvitationFormLocalStorageKey = cachePrefix + pageRouteOrgInvitation.orgInvitationAdd

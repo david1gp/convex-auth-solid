@@ -1,11 +1,11 @@
 import { ttc } from "#src/app/i18n/ttc.js"
-import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.js"
-import { NavResource } from "#src/app/nav/NavResource.js"
-import { ResourceForm } from "#src/resource/ui/form/ResourceForm.js"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.jsx"
+import { NavResource } from "#src/app/nav/NavResource.jsx"
+import { ResourceForm } from "#src/resource/ui/form/ResourceForm.jsx"
 import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.js"
 import { urlResourceAdd } from "#src/resource/url/urlResource.js"
-import { formMode } from "#ui/input/form/formMode"
-import { PageWrapper } from "#ui/static/page/PageWrapper"
+import { formMode } from "#ui/input/form/formMode.js"
+import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
 export function ResourceAddPage() {
   return (
@@ -25,9 +25,9 @@ function getPageTitle() {
 }
 
 import type { OrgModel } from "#src/org/org_model/OrgModel.js"
-import { createQueryOrgList } from "#src/resource/ui/org/createQueryOrgList.js"
-import { ErrorPage } from "#src/ui/pages/ErrorPage.js"
-import { LoadingSection } from "#src/ui/pages/LoadingSection.js"
+import { createQueryOrgList } from "#src/resource/ui/org/createQueryOrgList.jsx"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.jsx"
+import { LoadingSection } from "#src/ui/pages/LoadingSection.jsx"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.js"
 import { resultHasList } from "#src/utils/result/resultHasList.js"
 import { Match, Switch } from "solid-js"

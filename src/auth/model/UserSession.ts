@@ -2,7 +2,7 @@ import { createError, createResult, type Result } from "#result"
 import { userProfileSchema, type UserProfile } from "#src/auth/model/UserProfile.js"
 import { loginMethodSchema, type LoginMethod } from "#src/auth/model_field/loginMethod.js"
 import { tokenValidDurationInDays } from "#src/auth/server/jwt_token/tokenValidDurationInDays.js"
-import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 import dayjs from "dayjs"
 import * as a from "valibot"
 

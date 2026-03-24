@@ -1,7 +1,7 @@
+import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
-import { internalQuery, query, type QueryCtx } from "@convex/_generated/server.js"
 import { v } from "convex/values"
 import type { DocWorkspace } from "./IdWorkspace.js"
 

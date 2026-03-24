@@ -1,5 +1,5 @@
+import { type MutationCtx } from "#convex/_generated/server.js"
 import type { IdUser } from "#src/auth/convex/IdUser.js"
-import { type MutationCtx } from "@convex/_generated/server.js"
 
 export async function userDeleteHardOrgMemberships(ctx: MutationCtx, userId: IdUser): Promise<void> {
   // Remove user's organization memberships

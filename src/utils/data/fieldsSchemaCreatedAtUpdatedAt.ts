@@ -1,4 +1,4 @@
-import { dateTimeSchema } from "#utils/valibot/dateTimeSchema"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 
 export const fieldsSchemaCreatedAtUpdatedAt = {
   createdAt: dateTimeSchema,

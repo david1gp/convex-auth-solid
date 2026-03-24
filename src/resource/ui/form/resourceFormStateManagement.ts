@@ -13,11 +13,11 @@ import { resourceFormConfig, type ResourceFormField, resourceFormField } from "#
 import { resourceFormLocalStorage } from "#src/resource/ui/form/resourceFormLocalStorage.js"
 import { type ResourceFormState, resourceFormStateCreate } from "#src/resource/ui/form/ResourceFormState.js"
 import { debounceMs } from "#src/utils/ui/debounceMs.js"
-import { formMode, type FormMode } from "#ui/input/form/formMode"
-import { toastAdd } from "#ui/interactive/toast/toastAdd"
+import { formMode, type FormMode } from "#ui/input/form/formMode.js"
+import { toastAdd } from "#ui/interactive/toast/toastAdd.js"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled.js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as a from "valibot"
 
 export type ResourceFormData = {

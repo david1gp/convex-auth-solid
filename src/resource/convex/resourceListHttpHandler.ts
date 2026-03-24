@@ -1,9 +1,9 @@
+import { internal } from "#convex/_generated/api.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import type { Language } from "#src/app/i18n/language.js"
 import { languageParseString } from "#src/app/i18n/language.js"
 import { visibility } from "#src/resource/model_field/visibility.js"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import { internal } from "@convex/_generated/api.js"
-import type { ActionCtx } from "@convex/_generated/server.js"
 
 export const apiBaseResource = "/api/resource"
 export const apiPathResourceList = "/list"
