@@ -1,6 +1,6 @@
 # Convex Auth Solid
 
-Build authenticated SolidJS apps lightning-fast with Convex.
+Build authenticated SolidJS apps with Convex, without turning setup into a side quest.
 
 - **Drop-in template** - get auth running in minutes.
 - **Battle-tested flows** - login, signup, session management, and more.
@@ -59,17 +59,45 @@ Quick link
    bun install
    ```
 
-3. **Copy UI library:**
+3. **Download the UI components locally:**
 
-   Copy the `lib` folder from https://github.com/david1gp/solid-ui to `ui` in the project root.
+   ```bash
+   bunx degit https://github.com/david1gp/solid-ui/ui ui
+   ```
 
-4. **Set up Convex:**
+   Keeping the UI code local is the recommended setup here:
+
+   - Some bundlers can accidentally bundle more than one `solid-js` instance when UI components are imported from `node_modules`, which can lead to confusing runtime behavior.
+   - Local components are also much nicer to customize. You can restyle, adjust, or replace them freely, similar to the `shadcn/ui` approach.
+
+4. **Set up absolute import aliases in `package.json`:**
+
+   It is recommended to define your app aliases in `package.json` `imports`, so local modules and copied UI components can be imported consistently across the project.
+
+   ```json
+   {
+     "imports": {
+       "#convex/*": "./convex/*",
+       "#src/*.js": "./src/*.ts",
+       "#src/*.jsx": "./src/*.tsx",
+       "#src/*": "./src/*",
+       "#ui/*.js": "./ui/*.ts",
+       "#ui/*.jsx": "./ui/*.tsx",
+       "#ui/*": "./ui/*",
+       "#utils/*": "@adaptive-ds/utils/*",
+       "#result": "@adaptive-ds/result",
+       "#result/*": "@adaptive-ds/result/*"
+     }
+   }
+   ```
+
+5. **Set up Convex:**
 
    ```bash
    bun run convex:dev
    ```
 
-5. **Start the dev server:**
+6. **Start the dev server:**
 
    ```bash
    bun run dev
