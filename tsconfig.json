@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "Preserve",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "noEmit": true,
+    "types": [
+      "bun"
+    ],
     //
     // dom
     //
@@ -31,32 +34,7 @@
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
     "downlevelIteration": true,
-    "baseUrl": ".",
-    "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
-    //
-    // absolute import paths
-    //
-    "paths": {
-      "@convex/*": [
-        "./convex/*"
-      ],
-      "@/*": [
-        "./src/*"
-      ],
-      "~ui/*": [
-        "./ui/*"
-      ],
-      "~utils/*": [
-        "./node_modules/@adaptive-ds/utils/dist/*"
-      ],
-      "~result": [
-        "./node_modules/@adaptive-ds/result"
-      ],
-      "~result/*": [
-        "./node_modules/@adaptive-ds/result/*"
-      ]
-    },
     //
     // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
     //
@@ -79,22 +57,23 @@
   },
   "include": [
     "convex",
-    "lib",
     "src",
+    "ui",
     "test"
   ],
   "exclude": [
-    ".github",
+    ".idea",
     ".vscode",
     "build",
     "dist",
-    "export",
     "out",
     "data",
     "docs",
     "node_modules",
     "ops",
-    "public"
+    "public",
+    "public-image-versions",
+    "public-images"
   ],
   "references": [
     {

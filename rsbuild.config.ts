@@ -1,7 +1,6 @@
 import { defineConfig } from "@rsbuild/core"
 import { pluginBabel } from "@rsbuild/plugin-babel"
 import { pluginSolid } from "@rsbuild/plugin-solid"
-import path from "path"
 
 export default defineConfig({
   server: {
@@ -31,15 +30,6 @@ export default defineConfig({
         process.env.PUBLIC_B2_OBJECT_STORAGE_DOWNLOAD_URL,
       ),
       "import.meta.env.PUBLIC_POSTHOG_APP_ID": JSON.stringify(process.env.PUBLIC_POSTHOG_APP_ID),
-    },
-  },
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "@convex": path.resolve(__dirname, "./convex"),
-      "~ui": path.resolve(__dirname, "./ui"),
-      "~utils": path.resolve(__dirname, "./node_modules/@adaptive-ds/utils/dist"),
-      "~result": path.resolve(__dirname, "./node_modules/@adaptive-ds/result/dist"),
     },
   },
   plugins: [

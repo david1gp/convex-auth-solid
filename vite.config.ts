@@ -15,14 +15,6 @@ export default defineConfig({
       allow: [".."],
     },
   },
-  resolve: {
-    alias: {
-      "@": new URL("./src", import.meta.url).pathname,
-      "@convex": new URL("./convex", import.meta.url).pathname,
-      "~ui": new URL("./ui", import.meta.url).pathname,
-      "~utils": new URL("./node_modules/@adaptive-ds/utils/dist", import.meta.url).pathname,
-    },
-  },
   plugins: [solid(), tailwindcss()],
   envPrefix: "PUBLIC_",
   define: {

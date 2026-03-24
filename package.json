@@ -33,7 +33,8 @@
     "convex:docker:down": "bash ops/convex_dev/convex_docker_down.bash",
     "convex:docker:update": "bash ops/convex_dev/convex_docker_update.bash",
     "convex:deploy": "bash ops/convex_prod/convex_deploy_prod.bash",
-    "ui": "rsync -avh  ../solid-ui/lib/ ./ui --delete",
+    "ui": "rsync -avh --delete ../solid-ui/ui/ ./ui/",
+    "ui:push": "rsync -avh --delete ./ui/  ../adaptive/solid-ui/ui/",
     "generateDemoList": "bun run ./src/ui/demos/generateDemoList.cli.ts",
     "generateTranslations": "bun run ./src/app/i18n/generateTranslations.ts",
     "update": "bun x npm-check-updates -u && bun i",
@@ -84,6 +85,18 @@
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-solid": "^2.11.11",
     "wrangler": "^4.73.0"
+  },
+  "imports": {
+    "#convex/*": "./convex/*",
+    "#src/*.js": "./src/*.ts",
+    "#src/*.jsx": "./src/*.tsx",
+    "#src/*": "./src/*",
+    "#ui/*.js": "./ui/*.ts",
+    "#ui/*.jsx": "./ui/*.tsx",
+    "#ui/*": "./ui/*",
+    "#utils/*": "@adaptive-ds/utils/*",
+    "#result": "@adaptive-ds/result",
+    "#result/*": "@adaptive-ds/result/*"
   },
   "prettier": {
     "semi": false,
