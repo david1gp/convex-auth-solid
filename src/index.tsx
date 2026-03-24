@@ -1,5 +1,6 @@
 /* @refresh reload */
 
+import { demoList } from "#src/app/demos/demoList.js"
 import { getRoutesApp } from "#src/app/getRoutesApp.jsx"
 import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.jsx"
 import { NavDemo } from "#src/app/nav/NavDemo.jsx"
@@ -8,7 +9,6 @@ import { getRoutesAuth } from "#src/auth/ui/getRoutesAuth.jsx"
 import { getRoutesOrgInvitation } from "#src/org/invitation_url/getRoutesOrgInvitation.js"
 import { getRoutesOrgMember } from "#src/org/member_url/getRoutesOrgMember.js"
 import { getRoutesOrg } from "#src/org/org_url/getRoutesOrg.js"
-import { demoList } from "#src/ui/demos/demoList.js"
 import { getRoutesWorkspace } from "#src/workspace/url/getRoutesWorkspace.js"
 import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"

@@ -37,7 +37,7 @@
     "convex:deploy": "bash ops/convex_prod/convex_deploy_prod.bash",
     "ui": "rsync -avh --delete ../solid-ui/ui/ ./ui/",
     "ui:push": "rsync -avh --delete ./ui/  ../adaptive/solid-ui/ui/",
-    "generateDemoList": "bun run ./src/ui/demos/generateDemoList.cli.ts",
+    "generateDemoList": "bun run ./src/app/demos/generateDemoList.cli.ts",
     "generateTranslations": "bun run ./src/app/i18n/generateTranslations.ts",
     "update": "bun x npm-check-updates -u && bun i",
     "update:commit": "bun x npm-check-updates -u && bun i && git add package.json && bun run tsc && git commit -m \"chore(deps): update dependencies\" && git push",
