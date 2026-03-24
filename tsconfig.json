@@ -3,15 +3,11 @@
     "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": false,
-    "resolveJsonModule": true,
     "noEmit": true,
     "types": [
       "bun"
     ],
-    //
     // dom
-    //
     "lib": [
       "esnext",
       "dom",
@@ -19,32 +15,21 @@
     ],
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    //
     // performance
-    //
     "isolatedModules": true,
     "skipLibCheck": true,
     "incremental": true,
     "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
-    //
     // my configs
-    //
     "allowJs": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": true,
     "noUncheckedSideEffectImports": true,
-    //
-    // type imports - https://www.typescriptlang.org/tsconfig#verbatimModuleSyntax
-    //
     "verbatimModuleSyntax": true,
-    //
-    // https://devblogs.microsoft.com/typescript/announcing-typescript-5-8/#the---erasablesyntaxonly-option
-    //
     "erasableSyntaxOnly": true,
-    //
     // code quality settings
-    //
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": false,
@@ -58,11 +43,14 @@
     "convex",
     "src",
     "ui",
-    "test"
+    "test",
+    "vite.config.ts",
+    "rsbuild.config.ts"
   ],
   "exclude": [
     ".idea",
     ".vscode",
+    ".wrangler",
     "build",
     "dist",
     "out",
@@ -73,10 +61,5 @@
     "public",
     "public-image-versions",
     "public-images"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
   ]
 }
