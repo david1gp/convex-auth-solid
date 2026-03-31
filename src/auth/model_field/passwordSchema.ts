@@ -1,5 +1,5 @@
-import { cantBeEmpty } from "#src/utils/valibot/cantBeEmpty.js"
-import { inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.js"
+import { cantBeEmpty } from "#src/utils/valibot/cantBeEmpty.ts"
+import { inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.ts"
 import * as a from "valibot"
 
 export const requiredPasswordLength = 12

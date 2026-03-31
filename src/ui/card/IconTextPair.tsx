@@ -1,6 +1,6 @@
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface IconTextPairProps extends MayHaveClass {
   icon: string

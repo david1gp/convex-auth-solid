@@ -1,6 +1,6 @@
-import { isProdEnvVite } from "#src/utils/ui/isProdEnvVite.js"
-import { pathDemos } from "#ui/demo_pages/pathDemos.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { isProdEnvVite } from "#src/utils/ui/isProdEnvVite.ts"
+import { pathDemos } from "#ui/demo_pages/pathDemos.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { mdiAlphaDCircleOutline } from "@mdi/js"
 

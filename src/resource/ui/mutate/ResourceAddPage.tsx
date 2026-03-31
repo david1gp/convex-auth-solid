@@ -1,10 +1,10 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.jsx"
-import { NavResource } from "#src/app/nav/NavResource.jsx"
-import { ResourceForm } from "#src/resource/ui/form/ResourceForm.jsx"
-import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.js"
-import { urlResourceAdd } from "#src/resource/url/urlResource.js"
-import { formMode } from "#ui/input/form/formMode.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
+import { NavResource } from "#src/app/nav/NavResource.tsx"
+import { ResourceForm } from "#src/resource/ui/form/ResourceForm.tsx"
+import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
+import { urlResourceAdd } from "#src/resource/url/urlResource.ts"
+import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
 export function ResourceAddPage() {
@@ -24,12 +24,12 @@ function getPageTitle() {
   return ttc("Create new Resource")
 }
 
-import type { OrgModel } from "#src/org/org_model/OrgModel.js"
-import { createQueryOrgList } from "#src/resource/ui/org/createQueryOrgList.jsx"
-import { ErrorPage } from "#src/ui/pages/ErrorPage.jsx"
-import { LoadingSection } from "#src/ui/pages/LoadingSection.jsx"
-import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.js"
-import { resultHasList } from "#src/utils/result/resultHasList.js"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { createQueryOrgList } from "#src/resource/ui/org/createQueryOrgList.tsx"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
+import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
+import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
+import { resultHasList } from "#src/utils/result/resultHasList.ts"
 import { Match, Switch } from "solid-js"
 
 export function ResourceAddLoader() {

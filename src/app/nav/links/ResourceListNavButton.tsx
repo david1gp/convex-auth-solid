@@ -1,11 +1,11 @@
-import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.js"
-import { appTab, appTabIcon } from "#src/app/tabs/appTab.js"
-import { appTabGetText } from "#src/app/tabs/appTabGetText.js"
-import { urlResourceList } from "#src/resource/url/urlResource.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.ts"
+import { appTab, appTabIcon } from "#src/app/tabs/appTab.ts"
+import { appTabGetText } from "#src/app/tabs/appTabGetText.ts"
+import { urlResourceList } from "#src/resource/url/urlResource.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import { classArr } from "#ui/utils/classArr.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classArr } from "#ui/utils/classArr.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface ResourceListLinkButtonProps extends MayHaveClass {
   isActive?: boolean

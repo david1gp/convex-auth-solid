@@ -1,12 +1,12 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { urlSupportMailTo, urlSupportTelegram } from "#src/app/url/urlSupport.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { urlSupportMailTo, urlSupportTelegram } from "#src/app/url/urlSupport.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
 import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
-import { iconTelegram } from "#ui/static/icons/iconTelegram.js"
+import { iconTelegram } from "#ui/static/icons/iconTelegram.ts"
 import { mdiEmail, mdiHelpCircleOutline } from "@mdi/js"
 
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface SupportPopoverProps extends MayHaveClass {}
 

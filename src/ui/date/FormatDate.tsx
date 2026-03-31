@@ -1,5 +1,5 @@
-import { languageSignalGet } from "#src/app/i18n/languageSignal.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { dateFormatFull } from "#utils/date/dateFormat.js"
 
 export interface FormatDateProps extends MayHaveClass {

@@ -1,7 +1,7 @@
-import { envR2AccessKeyIdResult } from "#src/app/env/private/envR2AccessKeyIdResult.js"
-import { envR2AccountIdResult } from "#src/app/env/private/envR2AccountIdResult.js"
-import { envR2BucketNameResult } from "#src/app/env/private/envR2BucketNameResult.js"
-import { envR2SecretAccessKeyResult } from "#src/app/env/private/envR2SecretAccessKeyResult.js"
+import { envR2AccessKeyIdResult } from "#src/app/env/private/envR2AccessKeyIdResult.ts"
+import { envR2AccountIdResult } from "#src/app/env/private/envR2AccountIdResult.ts"
+import { envR2BucketNameResult } from "#src/app/env/private/envR2BucketNameResult.ts"
+import { envR2SecretAccessKeyResult } from "#src/app/env/private/envR2SecretAccessKeyResult.ts"
 import { S3Client } from "@bradenmacdonald/s3-lite-client"
 
 const accessKeyIdResult = envR2AccessKeyIdResult()

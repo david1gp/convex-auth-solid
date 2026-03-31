@@ -1,4 +1,4 @@
-import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.js"
+import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.ts"
 
 export function isProdEnv() {
   const op = "isProdEnvVite"

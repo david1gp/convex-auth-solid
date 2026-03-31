@@ -1,8 +1,8 @@
-import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
-import { SocialLoginButton } from "#src/auth/ui/sign_in/social/SocialLoginButton.jsx"
-import { buttonSize } from "#ui/interactive/button/buttonCva.js"
-import { classArr } from "#ui/utils/classArr.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { SocialLoginButton } from "#src/auth/ui/sign_in/social/SocialLoginButton.tsx"
+import { buttonSize } from "#ui/interactive/button/buttonCva.ts"
+import { classArr } from "#ui/utils/classArr.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface SocialLoginButtonsProps extends MayHaveClass {
   redirectPath?: string

@@ -1,4 +1,4 @@
-import { orgDataPartialSchema } from "#src/org/org_model/orgSchema.js"
+import { orgDataPartialSchema } from "#src/org/org_model/orgSchema.ts"
 import { describe, expect, test } from "bun:test"
 import * as a from "valibot"
 

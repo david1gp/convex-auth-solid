@@ -1,6 +1,6 @@
-import { userRoleIsDev } from "#src/auth/model_field/userRole.js"
-import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.js"
-import { isDevEnv } from "#ui/env/isDevEnv.js"
+import { userRoleIsDev } from "#src/auth/model_field/userRole.ts"
+import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
+import { isDevEnv } from "#ui/env/isDevEnv.ts"
 
 export function hasDevMode(): boolean {
   if (isDevEnv()) return true

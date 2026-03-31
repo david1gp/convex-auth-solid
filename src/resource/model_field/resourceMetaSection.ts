@@ -1,4 +1,4 @@
-import { sharedMetaSection, sharedMetaSectionIcon } from "#src/app/tabs/sharedMetaSection.js"
+import { sharedMetaSection, sharedMetaSectionIcon } from "#src/app/tabs/sharedMetaSection.ts"
 import { mdiFileMultiple, mdiInformation, mdiTagMultiple } from "@mdi/js"
 
 export type ResourceMetaSection = keyof typeof resourceMetaSection

@@ -1,5 +1,5 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
 import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps.jsx"
 import { mdiHome } from "@mdi/js"

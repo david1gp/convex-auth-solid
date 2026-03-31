@@ -1,5 +1,5 @@
-import type { Language, LanguageOrNone } from "#src/app/i18n/language.js"
-import { language, languageOrNone } from "#src/app/i18n/language.js"
+import type { Language, LanguageOrNone } from "#src/app/i18n/language.ts"
+import { language, languageOrNone } from "#src/app/i18n/language.ts"
 import { ttc } from "./ttc.js"
 
 export function languageGetText(l: string) {

@@ -1,4 +1,4 @@
-import { isDevEnv } from "#src/utils/env/isDevEnv.js"
+import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 
 export function enableSignInDev() {
   return false

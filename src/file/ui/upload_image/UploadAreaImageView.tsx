@@ -1,7 +1,7 @@
-import { uploadFileTexts, uploadImageTexts, type UploadStatus, uploadStatus } from "#src/file/model_field/uploadStatus.js"
-import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.js"
+import { uploadFileTexts, uploadImageTexts, type UploadStatus, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
+import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classArr } from "#ui/utils/classArr.js"
+import { classArr } from "#ui/utils/classArr.ts"
 import { mdiAlertCircle, mdiCloudUpload, mdiImage } from "@mdi/js"
 import { type JSX, Match, Show, Switch } from "solid-js"
 

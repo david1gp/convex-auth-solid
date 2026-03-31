@@ -1,8 +1,8 @@
-import type { ResourceType } from "#src/resource/model_field/resourceType.js"
-import { resourceTypeGetText } from "#src/resource/model_field/resourceTypeGetText.js"
-import { BadgeSoft } from "#src/ui/badge/BadgeSoft.jsx"
+import type { ResourceType } from "#src/resource/model_field/resourceType.ts"
+import { resourceTypeGetText } from "#src/resource/model_field/resourceTypeGetText.ts"
+import { BadgeSoft } from "#src/ui/badge/BadgeSoft.tsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { mdiTag } from "@mdi/js"
 import { Show } from "solid-js"
 

@@ -1,7 +1,7 @@
 import { api } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
-import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
+import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
 
 export async function userDelete1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "userDelete1RequestHandler"

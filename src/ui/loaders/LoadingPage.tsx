@@ -1,5 +1,5 @@
-import { ttl1 } from "#src/app/i18n/ttl.js"
-import { tbLoadingX } from "#src/ui/loaders/i18n/tbLoadingX.js"
+import { ttl1 } from "#src/app/i18n/ttl.ts"
+import { tbLoadingX } from "#src/ui/loaders/i18n/tbLoadingX.ts"
 import { RandomLoader } from "#ui/static/loaders/RandomLoader.jsx"
 
 export interface LoadingPageProps {

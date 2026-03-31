@@ -1,5 +1,5 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { orgRole, type OrgRole } from "#src/org/org_model_field/orgRole.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { orgRole, type OrgRole } from "#src/org/org_model_field/orgRole.ts"
 
 export function orgRoleGetText(r: string) {
   switch (r as OrgRole) {

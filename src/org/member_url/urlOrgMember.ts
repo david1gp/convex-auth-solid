@@ -1,4 +1,4 @@
-import { pageRouteOrgMember } from "#src/org/member_url/pageRouteOrgMember.js"
+import { pageRouteOrgMember } from "#src/org/member_url/pageRouteOrgMember.ts"
 
 export function urlOrgMemberList(orgHandle: string) {
   return replaceOrgHandle(pageRouteOrgMember.orgMemberList, orgHandle)

@@ -1,17 +1,17 @@
-import type { PageNameFile } from "#src/file/url/pageNameFile.js"
-import { pageRouteFile } from "#src/file/url/pageRouteFile.js"
-import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.js"
+import type { PageNameFile } from "#src/file/url/pageNameFile.ts"
+import { pageRouteFile } from "#src/file/url/pageRouteFile.ts"
+import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.ts"
 import { lazy } from "solid-js"
 
 const ResourceFileAddPage = lazy(() =>
-  import("#src/file/ui/mutate/ResourceFileAddPage.jsx").then((c) => ({ default: c.ResourceFileAddPage })),
+  import("#src/file/ui/mutate/ResourceFileAddPage.tsx").then((c) => ({ default: c.ResourceFileAddPage })),
 )
 const ResourceFileEditPage = lazy(() =>
-  import("#src/file/ui/mutate/ResourceFileEditPage.jsx").then((c) => ({ default: c.ResourceFileEditPage })),
+  import("#src/file/ui/mutate/ResourceFileEditPage.tsx").then((c) => ({ default: c.ResourceFileEditPage })),
 )
 
 const ResourceFileRemovePage = lazy(() =>
-  import("#src/file/ui/mutate/ResourceFileRemovePage.jsx").then((c) => ({ default: c.ResourceFileRemovePage })),
+  import("#src/file/ui/mutate/ResourceFileRemovePage.tsx").then((c) => ({ default: c.ResourceFileRemovePage })),
 )
 
 export function getRoutesFile(): RouteObject[] {

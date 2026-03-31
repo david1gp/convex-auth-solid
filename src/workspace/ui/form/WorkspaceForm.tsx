@@ -1,26 +1,26 @@
-import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.js"
-import { isDevEnv } from "#src/utils/env/isDevEnv.js"
-import { inputMaxLength100, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.js"
-import { workspaceFormField, type WorkspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.js"
-import { urlWorkspaceRemove } from "#src/workspace/url/urlWorkspace.js"
-import { ttt } from "#ui/i18n/ttt.js"
+import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
+import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
+import { inputMaxLength100, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.ts"
+import { workspaceFormField, type WorkspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.ts"
+import { urlWorkspaceRemove } from "#src/workspace/url/urlWorkspace.ts"
+import { ttt } from "#ui/i18n/ttt.ts"
 import {
     formMode,
     formModeIsReadOnly,
     getFormModeButtonTitle,
     getFormModeTitle,
     type FormMode,
-} from "#ui/input/form/formMode.js"
-import { formModeIcon } from "#ui/input/form/formModeIcon.js"
+} from "#ui/input/form/formMode.ts"
+import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Label } from "#ui/input/label/Label.jsx"
 import { LabelAsterix } from "#ui/input/label/LabelAsterix.jsx"
 import { Textarea } from "#ui/input/textarea/Textarea.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
-import { classMerge } from "#ui/utils/classMerge.js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
+import { classMerge } from "#ui/utils/classMerge.ts"
 import { Show } from "solid-js"
 
 interface HasOrgFormStateManagement {

@@ -1,5 +1,5 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { urlSupportMailTo } from "#src/app/url/urlSupport.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { urlSupportMailTo } from "#src/app/url/urlSupport.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
 import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps.jsx"
 import { mdiEmail } from "@mdi/js"

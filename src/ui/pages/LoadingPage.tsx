@@ -1,4 +1,4 @@
-import { LoadingSection, type LoadingSectionProps } from "#src/ui/pages/LoadingSection.jsx"
+import { LoadingSection, type LoadingSectionProps } from "#src/ui/pages/LoadingSection.tsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
 export function LoadingPage(p: LoadingSectionProps) {

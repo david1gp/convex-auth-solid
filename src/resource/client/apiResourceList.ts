@@ -1,7 +1,7 @@
 import { createResult, createResultError, resultTryParsingFetchErr, type Result } from "#result"
-import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.js"
-import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
-import { resourceSchema } from "#src/resource/model/resourceSchema.js"
+import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.ts"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
+import { resourceSchema } from "#src/resource/model/resourceSchema.ts"
 import * as a from "valibot"
 
 export const apiBaseResource = "/api/resource"

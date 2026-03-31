@@ -1,11 +1,11 @@
 import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { docOrgToModel } from "#src/org/org_convex/docOrgInvitationToModel.js"
-import type { DocOrg } from "#src/org/org_convex/IdOrg.js"
-import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.js"
-import type { OrgModel } from "#src/org/org_model/OrgModel.js"
-import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { docOrgToModel } from "#src/org/org_convex/docOrgInvitationToModel.ts"
+import type { DocOrg } from "#src/org/org_convex/IdOrg.ts"
+import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { v } from "convex/values"
 
 export const orgGetFields = {

@@ -1,6 +1,6 @@
-import { ttl1 } from "#src/app/i18n/ttl.js"
-import { tbDecreaseByX } from "#src/ui/input/number/i18n/tbDecreaseByX.js"
-import { tbIncreaseByX } from "#src/ui/input/number/i18n/tbIncreaseByX.js"
+import { ttl1 } from "#src/app/i18n/ttl.ts"
+import { tbDecreaseByX } from "#src/ui/input/number/i18n/tbDecreaseByX.ts"
+import { tbIncreaseByX } from "#src/ui/input/number/i18n/tbIncreaseByX.ts"
 import { NumberInputS, type NumberInputSProps } from "#ui/input/number/NumberInputS.jsx"
 import type { NumberInputText } from "#ui/input/number/NumberInputTexts.jsx"
 

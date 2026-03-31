@@ -1,4 +1,4 @@
-import { pageRouteWorkspace } from "#src/workspace/url/pageRouteWorkspace.js"
+import { pageRouteWorkspace } from "#src/workspace/url/pageRouteWorkspace.ts"
 
 export function urlWorkspaceList() {
   return pageRouteWorkspace.workspaceList

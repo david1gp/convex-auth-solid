@@ -1,4 +1,4 @@
-import { language, languageOrNone, type LanguageOrNone } from "#src/app/i18n/language.js"
+import { language, languageOrNone, type LanguageOrNone } from "#src/app/i18n/language.ts"
 
 export function detectLanguage(mimeType: string, fileName: string): LanguageOrNone {
   if (mimeType.startsWith("image/")) {

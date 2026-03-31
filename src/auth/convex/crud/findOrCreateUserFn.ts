@@ -1,13 +1,13 @@
 import { type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFromAuthProviderMutation.js"
-import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
-import { linkAuthToExistingUserFn } from "#src/auth/convex/crud/linkAuthToExistingUserFn.js"
-import type { DocAuthAccount } from "#src/auth/convex/IdUser.js"
-import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
-import { createUserSessionTimes, type UserSession } from "#src/auth/model/UserSession.js"
-import { type CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.js"
-import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.js"
+import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFromAuthProviderMutation.ts"
+import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
+import { linkAuthToExistingUserFn } from "#src/auth/convex/crud/linkAuthToExistingUserFn.ts"
+import type { DocAuthAccount } from "#src/auth/convex/IdUser.ts"
+import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
+import { createUserSessionTimes, type UserSession } from "#src/auth/model/UserSession.ts"
+import { type CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
+import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
 
 export type SignInUsingSocialAuthResultInternal = Omit<UserSession, "token">
 

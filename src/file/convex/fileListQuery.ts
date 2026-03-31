@@ -1,8 +1,8 @@
 import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
-import { fileDocToModel } from "#src/file/convex/fileDocToModel.js"
-import type { FileModel } from "#src/file/model/FileModel.js"
-import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { fileDocToModel } from "#src/file/convex/fileDocToModel.ts"
+import type { FileModel } from "#src/file/model/FileModel.ts"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { v } from "convex/values"
 
 export type FileListValidatorType = typeof fileListValidator.type

@@ -1,5 +1,5 @@
-import { fileIdSchema } from "#src/file/model_field/fileIdSchema.js"
-import { stringSchemaUrl } from "#src/utils/valibot/stringSchema.js"
+import { fileIdSchema } from "#src/file/model_field/fileIdSchema.ts"
+import { stringSchemaUrl } from "#src/utils/valibot/stringSchema.ts"
 import { v } from "convex/values"
 import * as a from "valibot"
 

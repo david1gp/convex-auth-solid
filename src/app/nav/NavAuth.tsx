@@ -1,10 +1,10 @@
-import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.jsx"
-import { NavCenter } from "#src/app/nav/NavCenter.jsx"
-import { NavStatic } from "#src/app/nav/NavStatic.jsx"
-import { LinkLikeNavText } from "#src/app/nav/links/LinkLikeNavText.jsx"
-import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.js"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
+import { NavCenter } from "#src/app/nav/NavCenter.tsx"
+import { NavStatic } from "#src/app/nav/NavStatic.tsx"
+import { LinkLikeNavText } from "#src/app/nav/links/LinkLikeNavText.tsx"
+import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { Show, splitProps } from "solid-js"
 
 export interface NavAuthProps extends MayHaveChildren, MayHaveClass {

@@ -1,5 +1,5 @@
-import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
-import type { HasCreatedAtUpdatedAt } from "#src/utils/data/HasCreatedAtUpdatedAt.js"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import type { HasCreatedAtUpdatedAt } from "#src/utils/data/HasCreatedAtUpdatedAt.ts"
 
 export type OrgMemberDataModel = {
   memberId: string

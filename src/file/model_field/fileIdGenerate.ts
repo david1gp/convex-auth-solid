@@ -1,4 +1,4 @@
-import { fileNameGetNameAndEnding } from "#src/file/model_field/fileNameGetNameAndEnding.js"
+import { fileNameGetNameAndEnding } from "#src/file/model_field/fileNameGetNameAndEnding.ts"
 import { generateId20 } from "#utils/ran/generateId20.js"
 
 export function fileIdGenerate(name: string, now = new Date()): string {

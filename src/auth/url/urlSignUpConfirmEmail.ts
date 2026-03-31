@@ -1,4 +1,4 @@
-import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.js"
+import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import { serializeUrlParams } from "#utils/url/serializeUrlParams.js"
 
 export function urlSignUpConfirmEmail(email: string, code: string, returnPath?: string) {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { language } from "#src/app/i18n/language.js"
+import { language } from "#src/app/i18n/language.ts"
 import { readFileSync, writeFileSync } from "fs"
 import { join } from "path"
 import { Project, ts } from "ts-morph"

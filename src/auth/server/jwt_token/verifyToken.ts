@@ -1,5 +1,5 @@
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { type DecodedToken, decodedTokenSchema } from "#src/auth/model/DecodedToken.js"
+import { type DecodedToken, decodedTokenSchema } from "#src/auth/model/DecodedToken.ts"
 import { jwtVerify } from "jose"
 import * as a from "valibot"
 

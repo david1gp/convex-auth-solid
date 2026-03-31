@@ -1,7 +1,7 @@
 import { query, type QueryCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { docOrgInvitationToModel } from "#src/org/invitation_convex/docOrgInvitationToModel.js"
-import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.js"
+import { docOrgInvitationToModel } from "#src/org/invitation_convex/docOrgInvitationToModel.ts"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 import { v } from "convex/values"
 
 export const orgInvitationsListFields = {

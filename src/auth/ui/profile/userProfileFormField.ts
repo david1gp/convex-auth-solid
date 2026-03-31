@@ -1,7 +1,7 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.js"
-import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.js"
-import { inputMaxLength500, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.ts"
+import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.ts"
+import { inputMaxLength500, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.ts"
 
 export type UserProfileFormField = keyof typeof userProfileFormField
 

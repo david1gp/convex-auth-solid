@@ -12,6 +12,7 @@
     "jsxImportSource": "solid-js",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "types": [
       "bun"
     ],

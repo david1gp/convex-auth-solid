@@ -1,6 +1,6 @@
 import { createResult, createResultError, type Result } from "#result"
-import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
 import type { BaseSchema } from "valibot"
 import * as a from "valibot"
 

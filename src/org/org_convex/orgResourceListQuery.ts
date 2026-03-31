@@ -1,8 +1,8 @@
 import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
-import { resourceGetModelFn } from "#src/resource/convex/resourceGetQuery.js"
-import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
-import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { resourceGetModelFn } from "#src/resource/convex/resourceGetQuery.ts"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { notEmptyFilter } from "#utils/arr/notEmptyFilter.js"
 import { v } from "convex/values"
 

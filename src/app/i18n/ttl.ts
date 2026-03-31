@@ -1,5 +1,5 @@
-import { languageSignal } from "#src/app/i18n/languageSignal.js"
-import type { TranslationBlock } from "#src/app/i18n/TranslationBlock.js"
+import { languageSignal } from "#src/app/i18n/languageSignal.ts"
+import type { TranslationBlock } from "#src/app/i18n/TranslationBlock.ts"
 
 /**
  * Translation function for UI library, requires translation of all available languages in a TranslationBlock

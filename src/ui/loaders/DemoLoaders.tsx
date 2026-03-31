@@ -1,7 +1,7 @@
-import { LoaderShuffle4Dots } from "#src/ui/loaders/LoaderShuffle4Dots.jsx"
-import { LoaderShuffle9Squares } from "#src/ui/loaders/LoaderShuffle9Squares.jsx"
-import { LoaderSpin4Square } from "#src/ui/loaders/LoaderSpin4Square.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { LoaderShuffle4Dots } from "#src/ui/loaders/LoaderShuffle4Dots.tsx"
+import { LoaderShuffle9Squares } from "#src/ui/loaders/LoaderShuffle9Squares.tsx"
+import { LoaderSpin4Square } from "#src/ui/loaders/LoaderSpin4Square.tsx"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export function DemoLoaders(p: MayHaveClass) {
   return (

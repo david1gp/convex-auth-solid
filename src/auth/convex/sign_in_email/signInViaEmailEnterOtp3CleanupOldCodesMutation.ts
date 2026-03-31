@@ -1,6 +1,6 @@
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
-import { otpCleanupOldFn } from "#src/auth/convex/otp/otpsCleanupOldMutation.js"
-import { week1timeMs } from "#src/auth/convex/otp/week1timeMs.js"
+import { otpCleanupOldFn } from "#src/auth/convex/otp/otpsCleanupOldMutation.ts"
+import { week1timeMs } from "#src/auth/convex/otp/week1timeMs.ts"
 
 export const signInViaEmailEnterOtp3CleanupOldCodesInternalMutation = internalMutation({
   args: {},

@@ -1,13 +1,13 @@
 import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
-import { userDeleteHardOtps } from "#src/auth/convex/user/delete_hard/userDeleteHardOtps.js"
-import { userDeleteHardAuthAccounts } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthAccounts.js"
-import { userDeleteHardAuthSessions } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions.js"
-import { userDeleteHardEmailLoginCodes } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardEmailLoginCodes.js"
-import { userDeleteHardFiles } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardFiles.js"
-import { userDeleteHardOrgMemberships } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships.js"
-import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
+import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
+import { userDeleteHardOtps } from "#src/auth/convex/user/delete_hard/userDeleteHardOtps.ts"
+import { userDeleteHardAuthAccounts } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthAccounts.ts"
+import { userDeleteHardAuthSessions } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions.ts"
+import { userDeleteHardEmailLoginCodes } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardEmailLoginCodes.ts"
+import { userDeleteHardFiles } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardFiles.ts"
+import { userDeleteHardOrgMemberships } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships.ts"
+import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.ts"
 import {
     userDeleteValidatorInternal,
     userDeleteValidatorPublic,

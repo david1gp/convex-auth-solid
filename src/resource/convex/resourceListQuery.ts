@@ -1,11 +1,11 @@
 import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
-import { languageValidator } from "#src/app/i18n/language.js"
-import type { DocResource } from "#src/resource/convex/IdResource.js"
-import { resourceDocToModel } from "#src/resource/convex/resourceDocToModel.js"
-import type { ResourceModel } from "#src/resource/model/ResourceModel.js"
-import { visibilityValidator } from "#src/resource/model_field/visibility.js"
-import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { languageValidator } from "#src/app/i18n/language.ts"
+import type { DocResource } from "#src/resource/convex/IdResource.ts"
+import { resourceDocToModel } from "#src/resource/convex/resourceDocToModel.ts"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
+import { visibilityValidator } from "#src/resource/model_field/visibility.ts"
+import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { v } from "convex/values"
 
 export const resourceListFields = {

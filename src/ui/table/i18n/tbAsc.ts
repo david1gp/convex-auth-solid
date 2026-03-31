@@ -1,4 +1,4 @@
-import type { TranslationBlock } from "#src/app/i18n/TranslationBlock.js"
+import type { TranslationBlock } from "#src/app/i18n/TranslationBlock.ts"
 
 export const tbAsc = {
   en: "Ascending",

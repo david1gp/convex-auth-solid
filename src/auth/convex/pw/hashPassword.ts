@@ -1,5 +1,5 @@
 import { createError, createResult, type PromiseResult } from "#result"
-import { envAuthSecretResult } from "#src/app/env/private/envAuthSecretResult.js"
+import { envAuthSecretResult } from "#src/app/env/private/envAuthSecretResult.ts"
 
 export async function hashPassword2(password: string): PromiseResult<string> {
   const op = "hashPassword2"

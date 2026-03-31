@@ -1,9 +1,9 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { fileSchema } from "#src/file/model/fileSchema.js"
-import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.js"
-import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.js"
-import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.js"
-import { inputMaxLengthDefault } from "#src/utils/valibot/inputMaxLength.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { fileSchema } from "#src/file/model/fileSchema.ts"
+import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.ts"
+import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.ts"
+import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.ts"
+import { inputMaxLengthDefault } from "#src/utils/valibot/inputMaxLength.ts"
 import * as a from "valibot"
 
 export type ResourceFormField = keyof typeof resourceFormField

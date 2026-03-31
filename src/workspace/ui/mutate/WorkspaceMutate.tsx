@@ -1,9 +1,9 @@
-import type { HasWorkspaceHandle } from "#src/workspace/model/HasWorkspaceHandle.js"
-import { WorkspaceForm } from "#src/workspace/ui/form/WorkspaceForm.jsx"
-import { workspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.js"
-import { WorkspaceLoader, type WorkspaceComponentProps } from "#src/workspace/ui/view/WorkspaceLoader.jsx"
-import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import type { HasWorkspaceHandle } from "#src/workspace/model/HasWorkspaceHandle.ts"
+import { WorkspaceForm } from "#src/workspace/ui/form/WorkspaceForm.tsx"
+import { workspaceFormStateManagement } from "#src/workspace/ui/form/workspaceFormStateManagement.ts"
+import { WorkspaceLoader, type WorkspaceComponentProps } from "#src/workspace/ui/view/WorkspaceLoader.tsx"
+import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface WorkspaceMutateProps extends HasWorkspaceHandle, HasFormModeMutate, MayHaveClass {}
 

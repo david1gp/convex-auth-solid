@@ -1,10 +1,10 @@
-import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.js"
-import { urlOrgList } from "#src/org/org_url/urlOrg.js"
-import { ttt } from "#ui/i18n/ttt.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.ts"
+import { urlOrgList } from "#src/org/org_url/urlOrg.ts"
+import { ttt } from "#ui/i18n/ttt.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import { classArr } from "#ui/utils/classArr.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classArr } from "#ui/utils/classArr.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface OrganizationListLinkButtonProps extends MayHaveClass {
   isActive?: boolean

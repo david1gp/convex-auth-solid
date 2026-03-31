@@ -1,4 +1,4 @@
-import { fieldsConvexCreatedAtUpdatedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAt.js"
+import { fieldsConvexCreatedAtUpdatedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAt.ts"
 import { v } from "convex/values"
 
 export const fieldsConvexCreatedAtUpdatedAtDeletedAt = {

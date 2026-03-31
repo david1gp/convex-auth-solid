@@ -1,53 +1,53 @@
+import { type DemoListType } from "#ui/generate_demo_list/DemoListType.ts"
 import { lazy } from "solid-js"
-import { type DemoListType } from "#ui/generate_demo_list/DemoListType.js"
 
 const DemoOrgMemberList = lazy(async () => {
-  const c = await import("#src/org/member_ui/list/DemoOrgMemberList.jsx")
+  const c = await import("#src/org/member_ui/list/DemoOrgMemberList.tsx")
   return { default: c.DemoOrgMemberList }
 })
 
 const DemoOrgInvitationList = lazy(async () => {
-  const c = await import("#src/org/invitation_ui/list/DemoOrgInvitationList.jsx")
+  const c = await import("#src/org/invitation_ui/list/DemoOrgInvitationList.tsx")
   return { default: c.DemoOrgInvitationList }
 })
 
 const DemoAuthLinks = lazy(async () => {
-  const c = await import("#src/auth/ui/DemoAuthLinks.jsx")
+  const c = await import("#src/auth/ui/DemoAuthLinks.tsx")
   return { default: c.DemoAuthLinks }
 })
 
 const DemoSignInErrorPage = lazy(async () => {
-  const c = await import("#src/auth/ui/sign_in/error/DemoSignInErrorPage.jsx")
+  const c = await import("#src/auth/ui/sign_in/error/DemoSignInErrorPage.tsx")
   return { default: c.DemoSignInErrorPage }
 })
 
 const DemoAccessBlocked = lazy(async () => {
-  const c = await import("#src/auth/ui/locked/DemoAccessBlocked.jsx")
+  const c = await import("#src/auth/ui/locked/DemoAccessBlocked.tsx")
   return { default: c.DemoAccessBlocked }
 })
 
 const DemoUploadArea = lazy(async () => {
-  const c = await import("#src/file/ui/upload_file/DemoUploadArea.jsx")
+  const c = await import("#src/file/ui/upload_file/DemoUploadArea.tsx")
   return { default: c.DemoUploadArea }
 })
 
 const DemoAnimateFadeIn = lazy(async () => {
-  const c = await import("#src/ui/loaders/DemoAnimateFadeIn.jsx")
+  const c = await import("#src/ui/loaders/DemoAnimateFadeIn.tsx")
   return { default: c.DemoAnimateFadeIn }
 })
 
 const DemoLoaders = lazy(async () => {
-  const c = await import("#src/ui/loaders/DemoLoaders.jsx")
+  const c = await import("#src/ui/loaders/DemoLoaders.tsx")
   return { default: c.DemoLoaders }
 })
 
 const DemosLinkButton = lazy(async () => {
-  const c = await import("#src/ui/links/DemosLinkButton.jsx")
+  const c = await import("#src/ui/links/DemosLinkButton.tsx")
   return { default: c.DemosLinkButton }
 })
 
 const DemoR2Upload = lazy(async () => {
-  const c = await import("#src/r2/ui/DemoR2Upload.jsx")
+  const c = await import("#src/r2/ui/DemoR2Upload.tsx")
   return { default: c.DemoR2Upload }
 })
 

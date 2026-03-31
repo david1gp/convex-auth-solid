@@ -1,6 +1,6 @@
 import type { QueryCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
-import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.js"
+import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.ts"
 
 export async function authQueryWrapResult<T extends { token: string }, R>(
   ctx: QueryCtx,

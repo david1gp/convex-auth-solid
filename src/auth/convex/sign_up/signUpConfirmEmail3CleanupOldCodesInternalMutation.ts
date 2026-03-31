@@ -1,5 +1,5 @@
 import { type MutationCtx, internalMutation } from "#convex/_generated/server.js"
-import { week1timeMs } from "#src/auth/convex/otp/week1timeMs.js"
+import { week1timeMs } from "#src/auth/convex/otp/week1timeMs.ts"
 
 export const signUpConfirmEmail3CleanupOldCodesInternalMutation = internalMutation({
   args: {},

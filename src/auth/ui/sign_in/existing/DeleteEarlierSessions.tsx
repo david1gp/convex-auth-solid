@@ -1,11 +1,11 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.js"
-import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant.js"
-import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.js"
-import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.js"
+import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant.ts"
+import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
+import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.ts"
 
 interface DeleteEarlierSessionsProps extends MayHaveIcon, MayHaveButtonVariant, MayHaveClassAndChildren {}
 

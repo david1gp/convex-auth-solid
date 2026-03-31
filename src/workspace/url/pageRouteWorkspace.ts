@@ -1,4 +1,4 @@
-import type { PageNameWorkspace } from "#src/workspace/url/pageNameWorkspace.js"
+import type { PageNameWorkspace } from "#src/workspace/url/pageNameWorkspace.ts"
 
 export type PageRouteWorkspace = keyof typeof pageRouteWorkspace
 

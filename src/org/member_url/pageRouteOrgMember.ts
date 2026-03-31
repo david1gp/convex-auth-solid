@@ -1,4 +1,4 @@
-import type { PageNameOrgMember } from "#src/org/member_url/pageNameOrgMember.js"
+import type { PageNameOrgMember } from "#src/org/member_url/pageNameOrgMember.ts"
 
 export type PageRouteOrgMember = keyof typeof pageRouteOrgMember
 

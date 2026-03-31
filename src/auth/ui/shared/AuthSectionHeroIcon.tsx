@@ -1,7 +1,7 @@
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
-import type { HasIcon } from "#ui/utils/HasIcon.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classMerge } from "#ui/utils/classMerge.ts"
+import type { HasIcon } from "#ui/utils/HasIcon.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface AuthSectionHeroIconProps extends HasIcon, MayHaveClass {}
 

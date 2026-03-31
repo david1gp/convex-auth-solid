@@ -1,7 +1,7 @@
 import { createResult, createResultError } from "#result"
-import { languageDefault, languageSchema, type Language } from "#src/app/i18n/language.js"
-import { languageFromBrowser } from "#src/app/i18n/languageFromBrowser.js"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import { languageDefault, languageSchema, type Language } from "#src/app/i18n/language.ts"
+import { languageFromBrowser } from "#src/app/i18n/languageFromBrowser.ts"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
 import * as a from "valibot"
 
 const languageLocalStorageKey = "language"

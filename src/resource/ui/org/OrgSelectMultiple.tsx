@@ -1,9 +1,9 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import type { OrgModel } from "#src/org/org_model/OrgModel.js"
-import { constructOrgRecord } from "#src/resource/ui/org/constructOrgRecord.jsx"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { constructOrgRecord } from "#src/resource/ui/org/constructOrgRecord.tsx"
 import { CheckMultiple } from "#ui/input/check/CheckMultiple.jsx"
-import type { createSignalObject } from "#ui/utils/createSignalObject.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import type { createSignalObject } from "#ui/utils/createSignalObject.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { createEffect } from "solid-js"
 
 interface OrgSelectMultipleProps extends MayHaveClass {

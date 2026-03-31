@@ -1,9 +1,9 @@
 import { query, type QueryCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { docOrgMemberToModel } from "#src/org/member_convex/docOrgMemberToModel.js"
-import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.js"
-import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { docOrgMemberToModel } from "#src/org/member_convex/docOrgMemberToModel.ts"
+import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.ts"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { v } from "convex/values"
 
 export type OrgMembersListValidatorType = typeof orgMembersListValidator.type

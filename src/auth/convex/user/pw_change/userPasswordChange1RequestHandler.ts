@@ -1,8 +1,8 @@
 import { api } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
-import { languageSchema } from "#src/app/i18n/language.js"
-import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.js"
+import { languageSchema } from "#src/app/i18n/language.ts"
+import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
 import * as a from "valibot"
 
 const userPasswordChange1RequestSchema = a.object({

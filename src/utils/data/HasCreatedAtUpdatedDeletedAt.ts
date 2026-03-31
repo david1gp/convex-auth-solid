@@ -1,5 +1,5 @@
-import type { HasCreatedAt } from "#src/utils/data/HasCreatedAt.js"
-import type { HasUpdatedAt } from "#src/utils/data/HasUpdatedAt.js"
-import type { MayHaveDeletedAt } from "#src/utils/data/MayHaveDeletedAt.js"
+import type { HasCreatedAt } from "#src/utils/data/HasCreatedAt.ts"
+import type { HasUpdatedAt } from "#src/utils/data/HasUpdatedAt.ts"
+import type { MayHaveDeletedAt } from "#src/utils/data/MayHaveDeletedAt.ts"
 
 export interface HasCreatedAtUpdatedDeletedAt extends HasCreatedAt, HasUpdatedAt, MayHaveDeletedAt {}

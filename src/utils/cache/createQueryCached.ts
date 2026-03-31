@@ -1,5 +1,5 @@
 import { createResult, createResultError, type Result } from "#result"
-import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
 import type { BaseSchema } from "valibot"
 import * as a from "valibot"
 

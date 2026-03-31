@@ -1,8 +1,8 @@
-import { envGithubClientIdResult } from "#src/app/env/public/envGithubClientIdResult.js"
-import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdResult.js"
-import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.js"
-import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
-import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.js"
+import { envGithubClientIdResult } from "#src/app/env/public/envGithubClientIdResult.ts"
+import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdResult.ts"
+import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.ts"
+import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.ts"
 
 export function urlAuthProvider(provider: SocialLoginProvider, redirectUrl: string = "") {
   return urlOAuthSwitcher(provider, redirectUrl)

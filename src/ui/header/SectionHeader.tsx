@@ -1,8 +1,8 @@
-import type { PageHeaderProps } from "#src/ui/header/PageHeader.jsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import type { PageHeaderProps } from "#src/ui/header/PageHeader.tsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
+import { classMerge } from "#ui/utils/classMerge.ts"
 
 export interface SectionHeaderProps extends PageHeaderProps {
   icon: string

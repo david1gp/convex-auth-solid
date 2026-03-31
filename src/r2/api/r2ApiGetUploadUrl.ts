@@ -1,5 +1,5 @@
 import { createResult, type PromiseResult } from "#result"
-import { r2CreateClient } from "#src/r2/api/r2CreateClient.js"
+import { r2CreateClient } from "#src/r2/api/r2CreateClient.ts"
 
 const log = false
 

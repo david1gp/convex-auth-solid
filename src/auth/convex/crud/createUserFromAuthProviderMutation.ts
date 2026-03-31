@@ -1,14 +1,14 @@
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import type { DocUser } from "#src/auth/convex/IdUser.js"
-import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.js"
-import type { UserProfile } from "#src/auth/model/UserProfile.js"
-import { userRole } from "#src/auth/model_field/userRole.js"
+import type { DocUser } from "#src/auth/convex/IdUser.ts"
+import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
+import type { UserProfile } from "#src/auth/model/UserProfile.ts"
+import { userRole } from "#src/auth/model_field/userRole.ts"
 import {
     commonAuthProviderValidator,
     getUserNameFromCommonAuthProvider,
     type CommonAuthProvider,
-} from "#src/auth/server/social_identity_providers/CommonAuthProvider.js"
+} from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import type { WithoutSystemFields } from "convex/server"
 
 export type UserFields = WithoutSystemFields<DocUser>

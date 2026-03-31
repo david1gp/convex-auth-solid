@@ -1,8 +1,8 @@
-import { ResourceForm } from "#src/resource/ui/form/ResourceForm.jsx"
-import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.js"
-import { ResourceLoader, type ResourceComponentProps } from "#src/resource/ui/view/ResourceLoader.jsx"
-import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { ResourceForm } from "#src/resource/ui/form/ResourceForm.tsx"
+import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
+import { ResourceLoader, type ResourceComponentProps } from "#src/resource/ui/view/ResourceLoader.tsx"
+import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface ResourceMutateProps extends MayHaveClass, HasFormModeMutate {
   resourceId: string

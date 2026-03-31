@@ -1,5 +1,5 @@
-import type { HasCreatedAt } from "#src/utils/data/HasCreatedAt.js"
-import type { HasUpdatedAt } from "#src/utils/data/HasUpdatedAt.js"
+import type { HasCreatedAt } from "#src/utils/data/HasCreatedAt.ts"
+import type { HasUpdatedAt } from "#src/utils/data/HasUpdatedAt.ts"
 
 export interface HasCreatedAtUpdatedAt extends HasCreatedAt, HasUpdatedAt {}
 

@@ -1,4 +1,4 @@
-import { language, type Language } from "#src/app/i18n/language.js"
+import { language, type Language } from "#src/app/i18n/language.ts"
 
 export function languageFromBrowser(): Language | undefined {
   const op = "languageFromBrowser"

@@ -1,6 +1,6 @@
-import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.js"
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
-import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
+import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { defineTable } from "convex/server"
 
 export const orgInvitationTables = {

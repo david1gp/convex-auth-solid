@@ -1,7 +1,7 @@
 import { createResult, createResultError, type Result } from "#result"
-import type { OrgModel } from "#src/org/org_model/OrgModel.js"
-import { cachePrefix } from "#src/utils/ui/cachePrefix.js"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
 import * as a from "valibot"
 
 const orgNameLocalStorageKey = cachePrefix + "orgNameRecord"

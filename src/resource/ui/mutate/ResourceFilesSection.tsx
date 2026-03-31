@@ -1,10 +1,10 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { ResourceFileListLoader } from "#src/file/ui/list/ResourceFileListLoader.jsx"
-import { ResourceFileAdd } from "#src/file/ui/mutate/ResourceFileAdd.jsx"
-import type { HasResourceId } from "#src/resource/model/HasResourceId.js"
-import { formMode } from "#ui/input/form/formMode.js"
-import { classMerge } from "#ui/utils/classMerge.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { ResourceFileListLoader } from "#src/file/ui/list/ResourceFileListLoader.tsx"
+import { ResourceFileAdd } from "#src/file/ui/mutate/ResourceFileAdd.tsx"
+import type { HasResourceId } from "#src/resource/model/HasResourceId.ts"
+import { formMode } from "#ui/input/form/formMode.ts"
+import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface ResourceFilesSectionProps extends HasResourceId, MayHaveClass {}
 export function ResourceFilesSection(p: ResourceFilesSectionProps) {

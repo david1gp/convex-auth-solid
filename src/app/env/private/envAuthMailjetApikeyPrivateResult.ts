@@ -1,6 +1,6 @@
 import { createResult, createResultError, type Result } from "#result"
-import { envVariableErrorMessage } from "#src/app/env/envVariableErrorMessage.js"
-import { privateEnvVariableName } from "#src/app/env/privateEnvVariableName.js"
+import { envVariableErrorMessage } from "#src/app/env/envVariableErrorMessage.ts"
+import { privateEnvVariableName } from "#src/app/env/privateEnvVariableName.ts"
 
 export function envAuthMailjetApikeyPrivateResult(): Result<string> {
   const op = "getAuthMailjetApikeyPrivateResult"

@@ -1,6 +1,6 @@
-import type { IdUser } from "#src/auth/convex/IdUser.js"
-import type { fileDataSchema } from "#src/file/model/fileSchema.js"
-import type { HasCreatedAtUpdatedAt } from "#src/utils/data/HasCreatedAtUpdatedAt.js"
+import type { IdUser } from "#src/auth/convex/IdUser.ts"
+import type { fileDataSchema } from "#src/file/model/fileSchema.ts"
+import type { HasCreatedAtUpdatedAt } from "#src/utils/data/HasCreatedAtUpdatedAt.ts"
 import * as a from "valibot"
 
 export type FileDataModel = a.InferOutput<typeof fileDataSchema>

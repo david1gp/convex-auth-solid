@@ -1,14 +1,14 @@
-import { enablePosthog } from "#src/app/config/enablePosthog.js"
-import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.js"
-import { envPosthogAppIdResult } from "#src/app/env/public/envPosthogAppIdResult.js"
-import type { UserSession } from "#src/auth/model/UserSession.js"
+import { enablePosthog } from "#src/app/config/enablePosthog.ts"
+import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.ts"
+import { envPosthogAppIdResult } from "#src/app/env/public/envPosthogAppIdResult.ts"
+import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { posthog, type PostHog, type PostHogConfig } from "posthog-js"
 
 /**
  * https://posthog.com/docs/product-analytics/identify
- * {@link import("#src/ops/monitoring_ui/PosthogMonitoringWrapper.tsx.js")}
- * {@link import("#src/ops/monitoring_ui/identifyUserInBrowserForMonitoring.tsx.js")}
- * {@link import("#src/astro/layouts/head/posthog.ts.js")}
+ * {@link import("#src/ops/monitoring_ui/PosthogMonitoringWrapper.tsx.ts")}
+ * {@link import("#src/ops/monitoring_ui/identifyUserInBrowserForMonitoring.tsx.ts")}
+ * {@link import("#src/astro/layouts/head/posthog.ts.ts")}
  */
 export function posthogInit(session?: UserSession) {
   if (!enablePosthog()) {

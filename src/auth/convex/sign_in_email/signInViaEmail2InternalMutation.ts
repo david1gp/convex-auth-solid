@@ -1,9 +1,9 @@
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, type PromiseResult } from "#result"
-import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.js"
-import type { IdUser } from "#src/auth/convex/IdUser.js"
-import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.js"
-import { otpPurpose } from "#src/auth/model_field/otpPurpose.js"
+import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
+import type { IdUser } from "#src/auth/convex/IdUser.ts"
+import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.ts"
+import { otpPurpose } from "#src/auth/model_field/otpPurpose.ts"
 import { v } from "convex/values"
 
 export type SignInViaEmailSaveCodeValidatorType = typeof signInViaEmailSaveCodeValidator.type

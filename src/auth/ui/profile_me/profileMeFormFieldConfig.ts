@@ -1,5 +1,5 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.ts"
 
 export const profileMeFormField = {
   currentPassword: "currentPassword",

@@ -1,8 +1,8 @@
-import { vIdOrg } from "#src/org/org_convex/vIdOrg.js"
-import { orgDataSchemaFields } from "#src/org/org_model/orgSchema.js"
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
-import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
-import { stringSchemaId } from "#src/utils/valibot/stringSchema.js"
+import { vIdOrg } from "#src/org/org_convex/vIdOrg.ts"
+import { orgDataSchemaFields } from "#src/org/org_model/orgSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
+import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 import { defineTable } from "convex/server"
 

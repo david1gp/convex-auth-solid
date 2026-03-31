@@ -1,5 +1,5 @@
-import { debounceMs } from "#src/utils/ui/debounceMs.js"
-import { createSignalObject } from "#ui/utils/createSignalObject.js"
+import { debounceMs } from "#src/utils/ui/debounceMs.ts"
+import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import { debounce } from "@solid-primitives/scheduled"
 import { onMount } from "solid-js"
 

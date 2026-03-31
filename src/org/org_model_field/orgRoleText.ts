@@ -1,5 +1,5 @@
-import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
-import { ttt } from "#ui/i18n/ttt.js"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import { ttt } from "#ui/i18n/ttt.ts"
 
 export const orgRoleText = {
   member: ttt("Member"),

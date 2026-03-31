@@ -1,8 +1,8 @@
 import { internalQuery, type MutationCtx, type QueryCtx } from "#convex/_generated/server.js"
-import type { IdUser } from "#src/auth/convex/IdUser.js"
-import { vIdUser } from "#src/auth/convex/vIdUser.js"
-import { orgMemberGetByUserIdFn } from "#src/org/member_convex/orgMemberGetByUserIdFn.js"
-import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
+import type { IdUser } from "#src/auth/convex/IdUser.ts"
+import { vIdUser } from "#src/auth/convex/vIdUser.ts"
+import { orgMemberGetByUserIdFn } from "#src/org/member_convex/orgMemberGetByUserIdFn.ts"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
 import { v } from "convex/values"
 
 export type OrgHandleAndRole = {

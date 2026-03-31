@@ -1,6 +1,6 @@
 import { createResult, createResultError, type PromiseResult } from "#result";
-import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"; // Adjust if needed
-import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.js";
+import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"; // Adjust if needed
+import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.ts";
 import * as a from "valibot";
 
 /**

@@ -1,4 +1,4 @@
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { defineTable } from "convex/server"
 import * as a from "valibot"
 

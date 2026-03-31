@@ -1,5 +1,5 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { AuthLinks } from "#src/auth/ui/AuthLinks.jsx"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { AuthLinks } from "#src/auth/ui/AuthLinks.tsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
 export function DemoAuthLinks() {

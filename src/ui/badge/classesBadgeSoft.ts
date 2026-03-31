@@ -1,4 +1,4 @@
-import { classArr } from "#ui/utils/classArr.js"
+import { classArr } from "#ui/utils/classArr.ts"
 
 export const classesBadgeSoft = classArr(
   "inline-flex items-center", // layout

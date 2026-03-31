@@ -1,9 +1,9 @@
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.js"
-import type { FileDataModelWithUserMetadata } from "#src/file/model/FileModel.js"
-import { fileDataSchema } from "#src/file/model/fileSchema.js"
+import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
+import type { FileDataModelWithUserMetadata } from "#src/file/model/FileModel.ts"
+import { fileDataSchema } from "#src/file/model/fileSchema.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 import * as a from "valibot"
 

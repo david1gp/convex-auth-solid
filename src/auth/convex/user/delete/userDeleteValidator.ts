@@ -1,5 +1,5 @@
-import { vIdUser } from "#src/auth/convex/vIdUser.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { vIdUser } from "#src/auth/convex/vIdUser.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { v } from "convex/values"
 
 export const userDeleteFields = {

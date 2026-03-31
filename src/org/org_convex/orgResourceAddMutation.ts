@@ -1,9 +1,9 @@
 import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.js"
-import { vIdOrg } from "#src/org/org_convex/vIdOrg.js"
-import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
+import { vIdOrg } from "#src/org/org_convex/vIdOrg.ts"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 

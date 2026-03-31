@@ -1,6 +1,6 @@
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.js"
-import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.js"
-import { workspaceDataSchemaFields } from "#src/workspace/model/workspaceSchema.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
+import { workspaceDataSchemaFields } from "#src/workspace/model/workspaceSchema.ts"
 import { defineTable } from "convex/server"
 
 export const workspaceTables = {

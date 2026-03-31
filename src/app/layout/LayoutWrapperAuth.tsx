@@ -1,9 +1,9 @@
-import { LayoutWrapperConvex } from "#src/app/layout/LayoutWrapperConvex.jsx"
-import { SignInPageLoader } from "#src/auth/ui/sign_in/page/SignInPageLoader.jsx"
-import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.js"
-import { userSessionsSignalRegisterHandler } from "#src/auth/ui/signals/userSessionsSignal.js"
-import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.js"
-import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.js"
+import { LayoutWrapperConvex } from "#src/app/layout/LayoutWrapperConvex.tsx"
+import { SignInPageLoader } from "#src/auth/ui/sign_in/page/SignInPageLoader.tsx"
+import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionsSignalRegisterHandler } from "#src/auth/ui/signals/userSessionsSignal.ts"
+import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
+import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
 import { Match, Switch } from "solid-js"
 
 export interface LayoutWrapperAuthProps extends MayHaveChildren, MayHaveTitle {}

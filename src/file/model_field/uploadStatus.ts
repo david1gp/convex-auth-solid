@@ -1,4 +1,4 @@
-import { ttc } from "#src/app/i18n/ttc.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
 
 export type UploadStatus = keyof typeof uploadStatus
 

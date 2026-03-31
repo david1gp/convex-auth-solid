@@ -1,10 +1,10 @@
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
-import type { HasTitle } from "#ui/utils/HasTitle.js"
-import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.js"
-import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.js"
-import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.js"
-import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle.js"
+import { classMerge } from "#ui/utils/classMerge.ts"
+import type { HasTitle } from "#ui/utils/HasTitle.ts"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.ts"
+import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.ts"
+import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.ts"
+import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle.ts"
 import type { JSXElement } from "solid-js"
 
 export interface PageHeaderProps

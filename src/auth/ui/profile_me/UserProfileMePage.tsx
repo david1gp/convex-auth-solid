@@ -1,33 +1,33 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.jsx"
-import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.jsx"
-import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.jsx"
-import { NavUserProfile } from "#src/app/nav/NavUserProfile.jsx"
-import type { UserProfile } from "#src/auth/model/UserProfile.js"
-import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.jsx"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
+import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
+import { NavUserProfile } from "#src/app/nav/NavUserProfile.tsx"
+import type { UserProfile } from "#src/auth/model/UserProfile.ts"
+import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.tsx"
 import {
     userProfileFormStateManagement,
     type UserProfileFormStateManagement,
-} from "#src/auth/ui/profile/userProfileFormState.js"
-import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.js"
+} from "#src/auth/ui/profile/userProfileFormState.ts"
+import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import {
     urlUserProfileMe,
     urlUserProfileMeChangeEmail,
     urlUserProfileMeChangePassword,
     urlUserProfileMeEdit,
     urlUserProfileMeImage,
-} from "#src/auth/url/pageRouteAuth.js"
-import { orgNameGet } from "#src/org/org_ui/orgNameRecordSignal.js"
-import { urlOrgLeave, urlOrgView } from "#src/org/org_url/urlOrg.js"
-import { formMode } from "#ui/input/form/formMode.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+} from "#src/auth/url/pageRouteAuth.ts"
+import { orgNameGet } from "#src/org/org_ui/orgNameRecordSignal.ts"
+import { urlOrgLeave, urlOrgView } from "#src/org/org_url/urlOrg.ts"
+import { formMode } from "#ui/input/form/formMode.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
 import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { classArr } from "#ui/utils/classArr.js"
-import { classMerge } from "#ui/utils/classMerge.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { classArr } from "#ui/utils/classArr.ts"
+import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
 import { mdiLocationExit, mdiSquareEditOutline } from "@mdi/js"
 import { Show } from "solid-js"

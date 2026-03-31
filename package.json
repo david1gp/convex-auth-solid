@@ -47,7 +47,6 @@
   "dependencies": {
     "@adaptive-ds/email-generator": "^0.11.0",
     "@adaptive-ds/result": "^0.5.0",
-    "@adaptive-ds/solid-ui": "^0.13.1",
     "@adaptive-ds/utils": "^0.13.0",
     "@bradenmacdonald/s3-lite-client": "^0.9.5",
     "@corvu/dialog": "^0.2.4",
@@ -90,11 +89,7 @@
   },
   "imports": {
     "#convex/*": "./convex/*",
-    "#src/*.js": "./src/*.ts",
-    "#src/*.jsx": "./src/*.tsx",
     "#src/*": "./src/*",
-    "#ui/*.js": "./ui/*.ts",
-    "#ui/*.jsx": "./ui/*.tsx",
     "#ui/*": "./ui/*",
     "#utils/*": "@adaptive-ds/utils/*",
     "#result": "@adaptive-ds/result",
@@ -106,7 +101,7 @@
     "trailingComma": "all"
   },
   "type": "module",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "homepage": "https://github.com/david1gp/convex-auth-solid",
   "description": "Build authenticated SolidJS apps lightning-fast with Convex",
@@ -129,14 +124,5 @@
   ],
   "repository": {
     "url": "git+https://github.com/david1gp/convex-auth-solid.git"
-  },
-  "exports": {
-    "./*": {
-      "import": "./dist/*.js",
-      "types": "./dist/*.d.ts"
-    }
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }

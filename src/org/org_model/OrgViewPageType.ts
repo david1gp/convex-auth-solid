@@ -1,8 +1,8 @@
-import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.js"
-import { orgInvitationSchema } from "#src/org/invitation_model/orgInvitationSchema.js"
-import { orgMemberProfileSchema, type OrgMemberProfile } from "#src/org/member_model/OrgMemberProfile.js"
-import type { OrgModel } from "#src/org/org_model/OrgModel.js"
-import { orgSchema } from "#src/org/org_model/orgSchema.js"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
+import { orgInvitationSchema } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { orgMemberProfileSchema, type OrgMemberProfile } from "#src/org/member_model/OrgMemberProfile.ts"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { orgSchema } from "#src/org/org_model/orgSchema.ts"
 import * as a from "valibot"
 
 export type OrgViewPageType = {

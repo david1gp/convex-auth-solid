@@ -1,15 +1,15 @@
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.js"
-import { languageValidator } from "#src/app/i18n/language.js"
+import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
+import { languageValidator } from "#src/app/i18n/language.ts"
 import {
     sendEmailOrgInvitation,
     type GenerateEmailOrgInvitationProps,
-} from "#src/auth/convex/email/sendEmailOrgInvitation.js"
-import type { OrgInvitationDataModel } from "#src/org/invitation_model/OrgInvitationModel.js"
-import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.js"
-import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.js"
+} from "#src/auth/convex/email/sendEmailOrgInvitation.ts"
+import type { OrgInvitationDataModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
+import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.ts"
+import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 

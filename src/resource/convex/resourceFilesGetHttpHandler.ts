@@ -1,7 +1,7 @@
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
-import { visibility } from "#src/resource/model_field/visibility.js"
+import { visibility } from "#src/resource/model_field/visibility.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 
 export const apiPathResourceGet = "/get"

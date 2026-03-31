@@ -1,5 +1,5 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon, type ButtonIconProps } from "#ui/interactive/button/ButtonIcon.jsx"
 import { mdiArrowLeft } from "@mdi/js"
 import { splitProps } from "solid-js"

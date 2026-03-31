@@ -1,9 +1,9 @@
-import { envBaseUrlConvexResult } from "#src/app/env/public/envBaseUrlConvexResult.js"
-import { ConvexContext } from "#src/utils/convex_client/convexContext.js"
+import { envBaseUrlConvexResult } from "#src/app/env/public/envBaseUrlConvexResult.ts"
+import { ConvexContext } from "#src/utils/convex_client/convexContext.ts"
 import { Toaster } from "#ui/interactive/toast/Toaster.jsx"
 import { TailwindIndicator } from "#ui/static/dev/TailwindIndicator.jsx"
-import type { HasChildren } from "#ui/utils/HasChildren.js"
-import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.js"
+import type { HasChildren } from "#ui/utils/HasChildren.ts"
+import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
 import { ConvexClient } from "convex/browser"
 import { createEffect } from "solid-js"
 

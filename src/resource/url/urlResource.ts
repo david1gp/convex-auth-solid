@@ -1,6 +1,6 @@
-import type { Language } from "#src/app/i18n/language.js"
-import { pageRouteResource } from "#src/resource/url/pageRouteResource.js"
-import { stringReplaceParam1 } from "#src/utils/text/stringReplaceParam1.js"
+import type { Language } from "#src/app/i18n/language.ts"
+import { pageRouteResource } from "#src/resource/url/pageRouteResource.ts"
+import { stringReplaceParam1 } from "#src/utils/text/stringReplaceParam1.ts"
 
 export function urlResourceList() {
   return pageRouteResource.resourceList

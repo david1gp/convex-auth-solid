@@ -1,8 +1,8 @@
-import type { UserProfile } from "#src/auth/model/UserProfile.js"
-import type { UserRole } from "#src/auth/model_field/userRole.js"
-import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
-import type { FormMode } from "#ui/input/form/formMode.js"
-import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.js"
+import type { UserProfile } from "#src/auth/model/UserProfile.ts"
+import type { UserRole } from "#src/auth/model_field/userRole.ts"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import type { FormMode } from "#ui/input/form/formMode.ts"
+import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
 
 export type UserProfileFormData = {
   userId: string

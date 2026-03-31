@@ -1,7 +1,7 @@
-import type { SocialLoginProvider } from "#src/auth/model_field/socialLoginProvider.js"
-import { iconGithub } from "#ui/static/icons/iconGithub.js"
-import { iconGoogle } from "#ui/static/icons/iconGoogle.js"
-import { iconMicrosoft } from "#ui/static/icons/iconMicrosoft.js"
+import type { SocialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { iconGithub } from "#ui/static/icons/iconGithub.ts"
+import { iconGoogle } from "#ui/static/icons/iconGoogle.ts"
+import { iconMicrosoft } from "#ui/static/icons/iconMicrosoft.ts"
 
 export type SocialProviderButtonProps = {
   background: string

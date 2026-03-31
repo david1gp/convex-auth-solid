@@ -1,8 +1,8 @@
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
-import { languageValidator } from "#src/app/i18n/language.js"
-import type { IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.js"
-import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.js"
+import { languageValidator } from "#src/app/i18n/language.ts"
+import type { IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
+import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 import { v } from "convex/values"
 

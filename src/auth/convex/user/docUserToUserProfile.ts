@@ -1,6 +1,6 @@
-import type { DocUser } from "#src/auth/convex/IdUser.js"
-import type { UserProfile } from "#src/auth/model/UserProfile.js"
-import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
+import type { DocUser } from "#src/auth/convex/IdUser.ts"
+import type { UserProfile } from "#src/auth/model/UserProfile.ts"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
 
 export function docUserToUserProfile(u: DocUser, orgHandle?: string, orgRole?: OrgRole): UserProfile {
   const {

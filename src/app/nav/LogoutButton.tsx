@@ -1,10 +1,10 @@
-import { autoLoginIfUserRoleOnly, userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.js"
-import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.js"
-import { ttt } from "#ui/i18n/ttt.js"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { autoLoginIfUserRoleOnly, userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
+import { ttt } from "#ui/i18n/ttt.ts"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { linkIcons } from "#ui/static/icon/linkIcons.js"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.js"
+import { linkIcons } from "#ui/static/icon/linkIcons.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface LogoutButtonProps extends MayHaveClass {
   text?: string

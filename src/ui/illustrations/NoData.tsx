@@ -1,9 +1,9 @@
-import { RandomIllustrationPopsy } from "#src/ui/illustrations/RandomIllustrationPopsy.jsx"
-import { classesCardWrapper } from "#ui/static/card/classesCardWrapper.js"
+import { RandomIllustrationPopsy } from "#src/ui/illustrations/RandomIllustrationPopsy.tsx"
+import { classesCardWrapper } from "#ui/static/card/classesCardWrapper.ts"
 import { SeparatorWithText } from "#ui/static/separator/SeparatorWithText.jsx"
-import { classMerge } from "#ui/utils/classMerge.js"
-import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.js"
-import type { MayHaveId } from "#ui/utils/MayHaveId.js"
+import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.ts"
+import type { MayHaveId } from "#ui/utils/MayHaveId.ts"
 
 export interface NoDataProps extends MayHaveId, MayHaveChildrenAndClass {
   noDataText?: string

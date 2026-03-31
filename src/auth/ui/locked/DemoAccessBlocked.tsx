@@ -1,4 +1,4 @@
-import { AccessBlocked } from "#src/auth/ui/locked/AccessBlocked.jsx"
+import { AccessBlocked } from "#src/auth/ui/locked/AccessBlocked.tsx"
 
 export function DemoAccessBlocked() {
   return <AccessBlocked />

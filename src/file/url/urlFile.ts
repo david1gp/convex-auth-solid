@@ -1,6 +1,6 @@
-import { pageRouteFile } from "#src/file/url/pageRouteFile.js"
-import { stringReplaceParam1 } from "#src/utils/text/stringReplaceParam1.js"
-import { stringReplaceParam2 } from "#src/utils/text/stringReplaceParam2.js"
+import { pageRouteFile } from "#src/file/url/pageRouteFile.ts"
+import { stringReplaceParam1 } from "#src/utils/text/stringReplaceParam1.ts"
+import { stringReplaceParam2 } from "#src/utils/text/stringReplaceParam2.ts"
 
 export function urlFileEdit(resourceId: string, fileId: string) {
   //  + "?" + serializeUrlParams({ displayName })

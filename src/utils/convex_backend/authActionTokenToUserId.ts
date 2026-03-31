@@ -1,7 +1,7 @@
 import type { ActionCtx } from "#convex/_generated/server.js"
 import type { PromiseResult } from "#result"
-import type { IdUser } from "#src/auth/convex/IdUser.js"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.js"
+import type { IdUser } from "#src/auth/convex/IdUser.ts"
+import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 
 export async function authActionTokenToUserId<T extends { token: string }, R>(
   ctx: ActionCtx,

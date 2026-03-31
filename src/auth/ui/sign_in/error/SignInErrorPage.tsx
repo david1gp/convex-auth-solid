@@ -1,10 +1,10 @@
-import { ttc } from "#src/app/i18n/ttc.js"
-import { ContactSupportLinkButton } from "#src/ui/links/ContactSupportLinkButton.jsx"
-import { GoSignInLinkButton } from "#src/ui/links/GoSignInLinkButton.jsx"
-import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import { ContactSupportLinkButton } from "#src/ui/links/ContactSupportLinkButton.tsx"
+import { GoSignInLinkButton } from "#src/ui/links/GoSignInLinkButton.tsx"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
-import { classesPageWrapper } from "#ui/static/page/classesPageWrapper.js"
-import { classArr } from "#ui/utils/classArr.js"
+import { classesPageWrapper } from "#ui/static/page/classesPageWrapper.ts"
+import { classArr } from "#ui/utils/classArr.ts"
 import { mdiAlertBoxOutline } from "@mdi/js"
 
 const classesPageWrapperInner = classArr(

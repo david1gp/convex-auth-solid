@@ -1,18 +1,18 @@
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { type PromiseResult, createResult } from "#result"
-import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.js"
-import type { IdUser } from "#src/auth/convex/IdUser.js"
+import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
+import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import {
     type UserProfileFieldsTypeInternal,
     userProfileUpdateInternalFn,
-} from "#src/auth/convex/user/profile_update/userProfileUpdateMutationInternal.js"
-import type { UserProfile } from "#src/auth/model/UserProfile.js"
-import type { UserSession } from "#src/auth/model/UserSession.js"
-import { type LoginMethod, loginMethod } from "#src/auth/model_field/loginMethod.js"
-import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.js"
-import type { OrgRole } from "#src/org/org_model_field/orgRole.js"
-import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+} from "#src/auth/convex/user/profile_update/userProfileUpdateMutationInternal.ts"
+import type { UserProfile } from "#src/auth/model/UserProfile.ts"
+import type { UserSession } from "#src/auth/model/UserSession.ts"
+import { type LoginMethod, loginMethod } from "#src/auth/model_field/loginMethod.ts"
+import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
+import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 import { userProfileUpdateFields } from "./userProfileUpdate.js"
 

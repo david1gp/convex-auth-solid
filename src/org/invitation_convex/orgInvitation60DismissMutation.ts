@@ -1,7 +1,7 @@
 import { mutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.js"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.js"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { v } from "convex/values"
 
 export type OrgInvitationDismissValidatorType = typeof orgInvitationDismissValidator.type
