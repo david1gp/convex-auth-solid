@@ -4,7 +4,7 @@ import { constructOrgRecord } from "#src/resource/ui/org/constructOrgRecord.tsx"
 import { CheckSingle } from "#ui/input/check/CheckSingle.jsx"
 import type { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { createEffect } from "solid-js"
+import { createMemo } from "solid-js"
 
 interface OrgSelectSingleProps extends MayHaveClass {
   valueSignal: ReturnType<typeof createSignalObject<string>>
@@ -12,20 +12,14 @@ interface OrgSelectSingleProps extends MayHaveClass {
 }
 
 export function OrgSelectSingle(p: OrgSelectSingleProps) {
-  let idNameRecord = constructOrgRecord(p.orgOptions)
-
-  createEffect(() => {
-    const options = p.orgOptions
-    if (!options) return
-    idNameRecord = constructOrgRecord(p.orgOptions)
-  })
+  const idNameRecord = createMemo(() => constructOrgRecord(p.orgOptions))
 
   function getOptions() {
     return p.orgOptions.map((o) => o.orgHandle)
   }
 
   function valueText(value: string) {
-    return idNameRecord[value] ?? ttc("Untitled")
+    return idNameRecord()[value] ?? ttc("Untitled")
   }
 
   return (
