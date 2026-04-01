@@ -9,7 +9,9 @@ import { getRoutesAuth } from "#src/auth/ui/getRoutesAuth.tsx"
 import { getRoutesOrgInvitation } from "#src/org/invitation_url/getRoutesOrgInvitation.ts"
 import { getRoutesOrgMember } from "#src/org/member_url/getRoutesOrgMember.ts"
 import { getRoutesOrg } from "#src/org/org_url/getRoutesOrg.ts"
-import { getRoutesWorkspace } from "#src/workspace/url/getRoutesWorkspace.ts"
+import { getRoutesWorkspaceInvitation } from "#src/workspace/invitation_url/getRoutesWorkspaceInvitation.ts"
+import { getRoutesWorkspaceMember } from "#src/workspace/member_url/getRoutesWorkspaceMember.ts"
+import { getRoutesWorkspace } from "#src/workspace/workspace_url/getRoutesWorkspace.ts"
 import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { Router } from "@solidjs/router"
@@ -27,6 +29,8 @@ const routesApp = [
       ...getRoutesOrgMember(),
       ...getRoutesOrgInvitation(),
       ...getRoutesWorkspace(),
+      ...getRoutesWorkspaceMember(),
+      ...getRoutesWorkspaceInvitation(),
     ],
   },
 ]

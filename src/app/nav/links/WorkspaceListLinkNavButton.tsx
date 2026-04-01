@@ -1,5 +1,5 @@
 import { classesActiveLink } from "#src/app/nav/links/classesActiveLink.ts"
-import { urlWorkspaceList } from "#src/workspace/url/urlWorkspace.ts"
+import { urlWorkspaceList } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
