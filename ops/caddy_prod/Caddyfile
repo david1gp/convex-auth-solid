@@ -1,20 +1,20 @@
 convex.convex-auth-solid.com {
 	header {
-		Routed "Convex"
+		Routed "convex"
 	}
 	reverse_proxy localhost:3210
 }
 
 api.convex-auth-solid.com {
 	header {
-		Routed "API"
+		Routed "api"
 	}
 	reverse_proxy localhost:3211
 }
 
 dash.convex-auth-solid.com {
 	header {
-		Routed "Dash"
+		Routed "dash"
 	}
 	reverse_proxy localhost:6790
 }
