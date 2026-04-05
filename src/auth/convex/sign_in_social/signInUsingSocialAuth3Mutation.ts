@@ -6,8 +6,8 @@ import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import {
-    type CommonAuthProvider,
-    commonAuthProviderValidator,
+  type CommonAuthProvider,
+  commonAuthProviderValidator,
 } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
 
@@ -41,7 +41,15 @@ export async function signInUsingSocialAuth3MutationFn(
   // event
   const r: UserSession = {
     token,
-    ...userWithoutToken,
+    profile: {
+      ...userWithoutToken.profile,
+      orgHandle,
+      orgRole,
+    },
+    hasPw: userWithoutToken.hasPw,
+    signedInMethod: userWithoutToken.signedInMethod,
+    signedInAt: userWithoutToken.signedInAt,
+    expiresAt: userWithoutToken.expiresAt,
   }
   return createResult(r)
 }
