@@ -1,5 +1,5 @@
 import type { QueryCtx } from "#convex/_generated/server.js"
-import type { PromiseResult } from "#result"
+import { createResultError, type PromiseResult } from "#result"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 
@@ -9,6 +9,9 @@ export async function authQueryTokenToUserId<T extends { token: string }, R>(
   fn: (ctx: QueryCtx, data: Omit<T, "token"> & { userId: IdUser }) => PromiseResult<R>,
 ): PromiseResult<R> {
   const op = "authQueryTokenToUserId"
+  if (!args.token) {
+    return createResultError("authActionResult", "missing token")
+  }
   const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)
