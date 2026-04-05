@@ -8,8 +8,9 @@ export async function authMutationWithToken<T extends { token: string }, R>(
   args: T,
   fn: (ctx: MutationCtx, data: Omit<T, "token">, decodedToken: DecodedToken) => Promise<R>,
 ): PromiseResult<R> {
+  const op = "authMutationWithToken"
   if (!args.token) {
-    return createResultError("authMutationWithToken", "missing token")
+    return createResultError(op, "missing token")
   }
   const verifiedResult = await verifyTokenResult(args.token)
   if (!verifiedResult.success) {

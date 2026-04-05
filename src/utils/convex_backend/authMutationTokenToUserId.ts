@@ -10,7 +10,7 @@ export async function authMutationTokenToUserId<T extends { token: string }, R>(
 ): PromiseResult<R> {
   const op = "authMutationTokenToUserId"
   if (!args.token) {
-    return createResultError("authMutationTokenToUserId", "missing token")
+    return createResultError(op, "missing token")
   }
   const verifiedResult = await verifyTokenGetUserId(args.token)
   if (!verifiedResult.success) {

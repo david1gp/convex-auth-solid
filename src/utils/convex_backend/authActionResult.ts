@@ -7,8 +7,9 @@ export async function authActionResult<T extends { token: string }, R>(
   args: T,
   fn: (ctx: ActionCtx, data: Omit<T, "token">) => PromiseResult<R>,
 ): PromiseResult<R> {
+  const op = "authActionResult"
   if (!args.token) {
-    return createResultError("authActionResult", "missing token")
+    return createResultError(op, "missing token")
   }
   const verifiedResult = await verifyTokenResult(args.token)
   if (!verifiedResult.success) {
