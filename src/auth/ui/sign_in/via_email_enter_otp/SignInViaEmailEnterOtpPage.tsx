@@ -1,7 +1,7 @@
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
-import { apiAuthSignInViaEmailEnterOtp } from "#src/auth/api/apiAuthSignInViaEmailEnterOtp.ts"
+import { apiAuthSignInViaEmailEnterOtp } from "#src/auth/api_client/apiAuthSignInViaEmailEnterOtp.ts"
 import { EnterOtpForm } from "#src/auth/ui/email/EnterOtpForm.tsx"
 import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"

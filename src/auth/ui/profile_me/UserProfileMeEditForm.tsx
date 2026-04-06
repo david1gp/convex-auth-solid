@@ -1,5 +1,5 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { apiAuthProfileUpdate } from "#src/auth/api/apiAuthProfileUpdate.ts"
+import { apiAuthProfileUpdate } from "#src/auth/api_client/apiAuthProfileUpdate.ts"
 import type { UserProfileFieldsTypePublic } from "#src/auth/convex/user/profile_update/userProfileUpdateMutation.ts"
 import { userProfileFormConfig } from "#src/auth/ui/profile/userProfileFormField.ts"
 import { userSessionGet, userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"

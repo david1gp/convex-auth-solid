@@ -1,6 +1,6 @@
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { apiAuthSignInViaPw } from "#src/auth/api/apiAuthSignInViaPw.ts"
+import { apiAuthSignInViaPw } from "#src/auth/api_client/apiAuthSignInViaPw.ts"
 import { passwordSchema } from "#src/auth/model_field/passwordSchema.ts"
 import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"

@@ -1,7 +1,7 @@
 import type { Language } from "#src/app/i18n/language.ts"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { apiAuthSignUp } from "#src/auth/api/apiAuthSignUp.ts"
+import { apiAuthSignUp } from "#src/auth/api_client/apiAuthSignUp.ts"
 import type { SignUpType } from "#src/auth/model/signUpSchema.ts"
 import { signUpTermsSchema } from "#src/auth/model/signUpTermsSchema.ts"
 import { passwordSchema } from "#src/auth/model_field/passwordSchema.ts"

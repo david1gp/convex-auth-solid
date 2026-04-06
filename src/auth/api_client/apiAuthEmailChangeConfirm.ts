@@ -1,5 +1,5 @@
-import { apiAuthBasePath } from "#src/auth/api/apiAuthBasePath.ts"
-import { apiAuthFetch } from "#src/auth/api/apiAuthFetch.ts"
+import { apiAuthBasePath } from "#src/auth/api_client/apiAuthBasePath.ts"
+import { apiAuthFetch } from "#src/auth/api_client/apiAuthFetch.ts"
 import type { UserEmailChangeConfirmTypePublic } from "#src/auth/convex/user/email_change/userEmailChange2ConfirmMutation.ts"
 import { apiPathAuth } from "#src/auth/url/apiPathAuth.ts"
 

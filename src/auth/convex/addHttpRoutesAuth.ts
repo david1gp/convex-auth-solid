@@ -1,4 +1,4 @@
-import { apiAuthBasePath } from "#src/auth/api/apiAuthBasePath.ts"
+import { apiAuthBasePath } from "#src/auth/api_client/apiAuthBasePath.ts"
 import { addRouteWithCors } from "#src/auth/convex/headers/cors/addRouteWithCors.ts"
 import { httpMethod } from "#src/auth/convex/headers/httpMethod.ts"
 import { signInViaEmail1RequestHandler } from "#src/auth/convex/sign_in_email/signInViaEmail1RequestHandler.ts"

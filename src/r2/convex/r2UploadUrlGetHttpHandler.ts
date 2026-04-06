@@ -1,7 +1,7 @@
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
 import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.ts"
-import { r2ApiGetUploadUrl } from "#src/r2/api/r2ApiGetUploadUrl.ts"
+import { r2ApiGetUploadUrl } from "#src/r2/api_r2/r2ApiGetUploadUrl.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 
 export async function r2UploadUrlGetHttpHandler(ctx: ActionCtx, request: Request): Promise<Response> {

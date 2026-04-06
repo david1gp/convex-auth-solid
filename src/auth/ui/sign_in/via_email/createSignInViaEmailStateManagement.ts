@@ -1,6 +1,6 @@
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { apiAuthSignInViaEmail } from "#src/auth/api/apiAuthSignInViaEmail.ts"
+import { apiAuthSignInViaEmail } from "#src/auth/api_client/apiAuthSignInViaEmail.ts"
 import { urlSignInEnterOtp } from "#src/auth/url/urlSignInEnterOtp.ts"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
