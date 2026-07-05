@@ -12,7 +12,7 @@ dist.convex-auth.com, dist.convex-auth.dev {
 	header {
 		Routed "dist"
 	}
-	root * /home/david/Coding/adaptive-convex-auth/public
+	root * /home/david/Coding/adaptive/convex-auth-solid/public
 	file_server
 }
 
@@ -21,7 +21,7 @@ convex.convex-auth.com, convex.convex-auth.dev {
 	header {
 		Routed "convex"
 	}
-	reverse_proxy localhost:3017
+	reverse_proxy localhost:3230
 }
 
 api.convex-auth.com, api.convex-auth.dev {
@@ -29,7 +29,7 @@ api.convex-auth.com, api.convex-auth.dev {
 	header {
 		Routed "api"
 	}
-	reverse_proxy localhost:3018
+	reverse_proxy localhost:3231
 }
 
 dash.convex-auth.com, dash.convex-auth.dev {
@@ -37,13 +37,5 @@ dash.convex-auth.com, dash.convex-auth.dev {
 	header {
 		Routed "dash"
 	}
-	reverse_proxy localhost:6790
-}
-
-ddash.convex-auth.com, ddash.convex-auth.dev {
-	import shared_config_simple
-	header {
-		Routed "ddash"
-	}
-	reverse_proxy localhost:6790
+	reverse_proxy localhost:6793
 }

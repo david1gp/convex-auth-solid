@@ -1,26 +1,22 @@
 #!/usr/bin/env bash
-
+# Export a Convex snapshot zip from a deployment.
+#
+# Usage: bash ops/convex/export_zip.bash <development>
 set -x # Print all executed commands to the terminal
 set -e # Exit immediately if a command exits with a non-zero status
 
-
-if [[ $# -ne 1 ]]; then
-  echo -e "Usage: $0 zip-file-to-import"
-  exit 1
-fi
-
-if [[ ! -f "$1" ]]; then
-  echo -e "Error: File '$1' does not exist"
-  exit 1
-fi
-
 scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-envFile=$scriptDir/.env.prod.convex
+
+envName="${1:-development}"
+envFile=$scriptDir/../../.env.$envName
 
 if [[ ! -f "$envFile" ]]; then
   echo -e "Error: File $envFile does not exist"
   exit 1
 fi
 
+mkdir -p ./data/convex
 
-bun run convex import --env-file=$envFile $1
+bun run convex export \
+  --env-file=$envFile \
+  --path ./data/convex/$(date +%Y-%m-%d_%H-%M-%S).zip

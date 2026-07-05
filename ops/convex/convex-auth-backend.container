@@ -1,0 +1,40 @@
+# Self-hosted Convex backend (Podman Quadlet), dev-only — this project has no
+# self-hosted prod deployment. Per-machine values live in ./.env.docker
+# (gitignored, see env.docker.example).
+# Quadlet turns this into `convex-auth-backend.service` on `daemon-reload`.
+#
+# No host networking: the backend always listens on 3210/3211 in-container and
+# allgroups-chat owns those host ports on david's machine. Publish distinct
+# localhost ports instead (Caddy proxies convex./api.convex-auth.dev to them).
+#
+# https://github.com/get-convex/convex-backend/pkgs/container/convex-backend
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
+[Unit]
+Description=convex-auth-solid self-hosted Convex backend (Podman Quadlet)
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+ContainerName=convex-auth-backend
+Image=ghcr.io/get-convex/convex-backend:latest
+AutoUpdate=registry
+PublishPort=127.0.0.1:3230:3210
+PublishPort=127.0.0.1:3231:3211
+Volume=convex-auth-data.volume:/convex/data
+EnvironmentFile=%h/convex-auth-solid/ops/convex/.env.docker
+# Compose defaults that aren't in .env.docker:
+Environment=DOCUMENT_RETENTION_DELAY=172800
+Environment=RUST_LOG=info
+# The .service stays "activating" until the container is healthy, so units
+# ordered After= it wait for a working backend.
+Notify=healthy
+HealthCmd=curl -f http://localhost:3210/version
+HealthInterval=5s
+HealthStartPeriod=10s
+
+[Service]
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

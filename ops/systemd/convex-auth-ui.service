@@ -1,0 +1,16 @@
+[Unit]
+Description=convex-auth-solid demo frontend dev server (rsbuild, :3016)
+# %h/convex-auth-solid is a symlink to the repo checkout, created by
+# ops/systemd/install.bash. See ops/README.md.
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/convex-auth-solid
+Environment=PATH=%h/.local/bin:%h/.bun/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/env bun run dev
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

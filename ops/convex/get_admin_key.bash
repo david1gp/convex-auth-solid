@@ -2,5 +2,4 @@
 set -x # Print all executed commands to the terminal
 set -e # Exit immediately if a command exits with a non-zero status
 
-docker pull ghcr.io/get-convex/convex-backend:latest
-docker pull ghcr.io/get-convex/convex-dashboard:latest
+podman exec convex-auth-backend ./generate_admin_key.sh

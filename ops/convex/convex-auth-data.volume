@@ -1,0 +1,5 @@
+# Podman volume for the self-hosted Convex backend data.
+# Quadlet generates a `convex-auth-data-volume.service`; VolumeName pins the
+# actual podman volume name (without the default `systemd-` prefix).
+[Volume]
+VolumeName=convex-auth-data
