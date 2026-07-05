@@ -5,7 +5,7 @@ import type { HasResourceId } from "#src/resource/model/HasResourceId.ts"
 import { urlResourceList, urlResourceView } from "#src/resource/url/urlResource.ts"
 import { classesCard } from "#src/ui/card/classesCard.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
@@ -39,12 +39,12 @@ export function ResourceFileAdd(p: ResourceFileAddProps) {
       />
       <Show when={hasUploaded()}>
         <div class="flex flex-wrap gap-2 justify-center">
-          <LinkButton variant={buttonVariant.link} icon={mdiArrowLeft} href={urlResourceList()}>
+          <LinkButtonInternal variant={buttonVariant.link} icon={mdiArrowLeft} to={urlResourceList()}>
             {ttc("Resources")}
-          </LinkButton>
-          <LinkButton variant={buttonVariant.link} icon={mdiEye} href={urlResourceView(p.resourceId)}>
+          </LinkButtonInternal>
+          <LinkButtonInternal variant={buttonVariant.link} icon={mdiEye} to={urlResourceView(p.resourceId)}>
             {ttc("View resource")}
-          </LinkButton>
+          </LinkButtonInternal>
         </div>
       </Show>
     </>

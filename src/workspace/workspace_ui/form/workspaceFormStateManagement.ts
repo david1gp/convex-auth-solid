@@ -18,7 +18,7 @@ import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObj
 import type { NavigateTo } from "#ui/utils/NavigateTo.ts"
 import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import { useNavigate } from "@solidjs/router"
+import { useNavigate } from "@tanstack/solid-router"
 import * as a from "valibot"
 
 export type WorkspaceFormField = keyof typeof workspaceFormField
@@ -355,7 +355,7 @@ async function createAction(
   }
   // const workspaceId = await getMutationAdd(p.session, state)
   const url = urlWorkspaceView(data.workspaceHandle)
-  navigate(url)
+  navigate({ to: url })
 }
 
 async function editAction(
@@ -382,7 +382,7 @@ async function editAction(
     toastAdd({ title: editResult.errorMessage, variant: toastVariant.error })
     return
   }
-  navigate(getReturnPath(mode, workspaceHandle))
+  navigate({ to: getReturnPath(mode, workspaceHandle) })
 }
 async function removeAction(
   workspaceHandle: string | undefined,
@@ -405,7 +405,7 @@ async function removeAction(
     toastAdd({ title: deleteResult.errorMessage, variant: toastVariant.error })
     return
   }
-  navigate(getReturnPath(mode, workspaceHandle))
+  navigate({ to: getReturnPath(mode, workspaceHandle) })
 }
 
 function getReturnPath(mode: FormMode, workspaceHandle?: string) {

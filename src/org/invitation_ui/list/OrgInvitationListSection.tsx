@@ -7,7 +7,7 @@ import { orgPageSection } from "#src/org/org_ui/view/orgPageSection.tsx"
 import { SectionHeader } from "#src/ui/header/SectionHeader.tsx"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { mdiEmail } from "@mdi/js"
@@ -37,15 +37,15 @@ function NoOrgInvitationsText() {
 
 function Header(p: OrgInvitationsProps) {
   return (
-    <SectionHeader icon={mdiEmail} href={urlOrgInvitationAdd(p.orgHandle)} title={ttc("Member Invitations")}>
-      <LinkButton
-        href={urlOrgInvitationAdd(p.orgHandle)}
+    <SectionHeader icon={mdiEmail} to={urlOrgInvitationAdd(p.orgHandle)} title={ttc("Member Invitations")}>
+      <LinkButtonInternal
+        to={urlOrgInvitationAdd(p.orgHandle)}
         variant={buttonVariant.subtle}
         icon={formModeIcon.add}
         class="hover:bg-gray-200"
       >
         {ttc("Invite Member")}
-      </LinkButton>
+      </LinkButtonInternal>
     </SectionHeader>
   )
 }

@@ -12,9 +12,10 @@ import { getRoutesOrg } from "#src/org/org_url/getRoutesOrg.ts"
 import { getRoutesWorkspaceInvitation } from "#src/workspace/invitation_url/getRoutesWorkspaceInvitation.ts"
 import { getRoutesWorkspaceMember } from "#src/workspace/member_url/getRoutesWorkspaceMember.ts"
 import { getRoutesWorkspace } from "#src/workspace/workspace_url/getRoutesWorkspace.ts"
-import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes.jsx"
-import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
-import { Router } from "@solidjs/router"
+import { buildRouter } from "#src/app/router/buildRouter.tsx"
+import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes.tsx"
+import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.tsx"
+import { RouterProvider } from "@tanstack/solid-router"
 import { render } from "solid-js/web"
 import "./tailwind.css"
 
@@ -44,5 +45,13 @@ const routesDemo = [
 
 const allRoutes = [...getRoutesAuth(), ...routesApp, ...routesDemo]
 
+const router = buildRouter(allRoutes)
+
+declare module "@tanstack/solid-router" {
+  interface Register {
+    router: typeof router
+  }
+}
+
 const root = document.getElementById("root")
-render(() => <Router>{allRoutes}</Router>, root!)
+render(() => <RouterProvider router={router} />, root!)

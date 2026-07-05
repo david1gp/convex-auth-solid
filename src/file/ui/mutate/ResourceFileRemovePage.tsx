@@ -6,15 +6,15 @@ import { urlFileRemove } from "#src/file/url/urlFile.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 const mode = formMode.remove
 
 export function ResourceFileRemovePage() {
-  const params = useParams()
-  const getResourceId = () => params.resourceId
-  const getFileId = () => params.fileId
+  const params = useParams({ strict: false })
+  const getResourceId = () => params().resourceId
+  const getFileId = () => params().fileId
   return (
     <Switch>
       <Match when={!getResourceId()}>

@@ -5,14 +5,14 @@ import { WorkspaceMutate } from "#src/workspace/workspace_ui/mutate/WorkspaceMut
 import { ttt } from "#ui/i18n/ttt.ts"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 const mode = formMode.edit
 
 export function WorkspaceEditPage() {
-  const params = useParams()
-  const getWorkspaceHandle = () => params.workspaceHandle
+  const params = useParams({ strict: false })
+  const getWorkspaceHandle = () => params().workspaceHandle
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>

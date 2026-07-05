@@ -5,9 +5,9 @@ import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEma
 import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 import { orgInvitationShowRole } from "#src/org/invitation_model/orgInvitationShowRole.ts"
 import {
-    invitationModelToStatus,
-    orgInvitationStatusIcon,
-    orgInvitationStatusText,
+  invitationModelToStatus,
+  orgInvitationStatusIcon,
+  orgInvitationStatusText,
 } from "#src/org/invitation_ui/view/orgInvitationStatus.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"

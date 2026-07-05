@@ -22,12 +22,12 @@ import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { mdiAccountAlert } from "@mdi/js"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch, createSignal } from "solid-js"
 
 export function OrgLeavePage() {
-  const params = useParams()
-  const getOrgHandle = () => params.orgHandle
+  const params = useParams({ strict: false })
+  const getOrgHandle = () => params().orgHandle
   return (
     <Switch>
       <Match when={!getOrgHandle()}>

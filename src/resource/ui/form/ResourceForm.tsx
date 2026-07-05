@@ -20,7 +20,7 @@ import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { LabelPseudo } from "#ui/input/label/LabelPseudo.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { Show } from "solid-js"
@@ -48,13 +48,13 @@ export function ResourceForm(p: ResourceFormProps) {
       <div class="flex flex-wrap justify-between mt-6 mb-2 col-span-full">
         <h1 class="text-2xl font-bold">{getResourceTitle(p.mode)}</h1>
         {p.mode === formMode.edit && (
-          <LinkButton
-            href={urlResourceRemove(p.sm.serverState.get().resource.resourceId)}
+          <LinkButtonInternal
+            to={urlResourceRemove(p.sm.serverState.get().resource.resourceId)}
             icon={formModeIcon.remove}
             variant={buttonVariant.link}
           >
             {ttc("Remove")}
-          </LinkButton>
+          </LinkButtonInternal>
         )}
       </div>
       <form class="contents" onSubmit={p.sm.handleSubmit}>
@@ -95,7 +95,9 @@ export function ResourceForm(p: ResourceFormProps) {
           type="submit"
           size={buttonSize.lg}
           icon={formModeIcon[p.mode]}
-          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
+          variant={
+            p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo
+          }
           isLoading={p.sm.isSubmitting.get()}
           class="w-full"
         >

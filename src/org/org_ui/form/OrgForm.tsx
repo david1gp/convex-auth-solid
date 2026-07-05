@@ -12,7 +12,7 @@ import { formMode, getFormModeTitle, type FormMode } from "#ui/input/form/formMo
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { Show } from "solid-js"
@@ -35,14 +35,14 @@ export function OrgForm(p: OrgContentProps) {
       <div class="flex flex-wrap justify-between items-center mt-6 mb-2">
         <h1 class="text-2xl font-bold">{getOrgTitle(p.mode)}</h1>
         <Show when={p.mode === formMode.edit && isAdminOrDev()}>
-          <LinkButton
+          <LinkButtonInternal
             icon={formModeIcon.remove}
-            href={urlOrgRemove(p.sm.state.orgHandle.get())}
+            to={urlOrgRemove(p.sm.state.orgHandle.get())}
             variant={buttonVariant.link}
             class="text-red-600 dark:text-red-400"
           >
             {ttc("Remove")}
-          </LinkButton>
+          </LinkButtonInternal>
         </Show>
       </div>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>

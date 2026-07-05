@@ -4,12 +4,11 @@ import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { createUrl } from "#src/utils/router/createUrl.ts"
 import { searchParamGet } from "#src/utils/router/searchParamGet.ts"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import type { LinkButtonProps } from "#ui/interactive/link/LinkButtonProps.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { mdiArrowRight } from "@mdi/js"
-import { splitProps } from "solid-js"
+import { splitProps, type ComponentProps } from "solid-js"
 
-export interface SignInButtonLinkProps extends Omit<LinkButtonProps, "href"> {
+export interface SignInButtonLinkProps extends Omit<ComponentProps<typeof LinkButtonInternal>, "to" | "href"> {
   text?: string
 }
 
@@ -23,14 +22,14 @@ export function SignInButtonLink(p: SignInButtonLinkProps) {
     return urlPageSignIn(email, returnPath)
   }
   return (
-    <LinkButton
-      href={getUrl()}
+    <LinkButtonInternal
+      to={getUrl()}
       iconRight={s.iconRight ?? mdiArrowRight}
       size={s.size ?? buttonSize.default}
       variant={s.variant ?? buttonVariant.contrast}
       {...rest}
     >
       {s.text ?? ttc("Sign In")}
-    </LinkButton>
+    </LinkButtonInternal>
   )
 }

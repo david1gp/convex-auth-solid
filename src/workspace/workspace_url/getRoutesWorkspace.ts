@@ -16,7 +16,9 @@ const WorkspaceAddPage = lazy(() =>
   import("#src/workspace/workspace_ui/mutate/WorkspaceAddPage.tsx").then((c) => ({ default: c.WorkspaceAddPage })),
 )
 const WorkspaceRemovePage = lazy(() =>
-  import("#src/workspace/workspace_ui/mutate/WorkspaceDeletePage.tsx").then((c) => ({ default: c.WorkspaceDeletePage })),
+  import("#src/workspace/workspace_ui/mutate/WorkspaceDeletePage.tsx").then((c) => ({
+    default: c.WorkspaceDeletePage,
+  })),
 )
 
 export function getRoutesWorkspace(): RouteObject[] {

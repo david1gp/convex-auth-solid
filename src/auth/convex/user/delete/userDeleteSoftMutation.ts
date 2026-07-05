@@ -4,9 +4,9 @@ import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts
 import { userDeleteHardAuthSessions } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions.ts"
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.ts"
 import {
-    userDeleteValidatorInternal,
-    userDeleteValidatorPublic,
-    type UserDeleteValidatorInternalType,
+  userDeleteValidatorInternal,
+  userDeleteValidatorPublic,
+  type UserDeleteValidatorInternalType,
 } from "./userDeleteValidator.js"
 
 export const userDeleteSoftMutation = mutation({

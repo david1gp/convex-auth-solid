@@ -9,9 +9,9 @@ import { envMode } from "#ui/env/envMode.ts"
 import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi.js"
 import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
 import {
-    apiGenerateEmailOrgInvitationV1,
-    type GeneratedEmailType,
-    type OrgInvitationV1Type,
+  apiGenerateEmailOrgInvitationV1,
+  type GeneratedEmailType,
+  type OrgInvitationV1Type,
 } from "@adaptive-ds/email-generator/index.js"
 
 export type GenerateEmailOrgInvitationProps = {

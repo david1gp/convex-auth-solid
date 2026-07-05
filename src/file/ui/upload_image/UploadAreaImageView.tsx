@@ -1,4 +1,9 @@
-import { uploadFileTexts, uploadImageTexts, type UploadStatus, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
+import {
+  uploadFileTexts,
+  uploadImageTexts,
+  type UploadStatus,
+  uploadStatus,
+} from "#src/file/model_field/uploadStatus.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.ts"

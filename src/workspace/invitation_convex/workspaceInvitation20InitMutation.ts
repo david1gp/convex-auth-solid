@@ -72,11 +72,10 @@ export async function workspaceInvitation20InitMutationFn(
     expiresAt: expiresAt,
   })
 
-  await ctx.scheduler.runAfter(
-    0,
-    internal.workspace.workspaceInvitation31SendInternalAction,
-    { token: args.token, invitationCode },
-  )
+  await ctx.scheduler.runAfter(0, internal.workspace.workspaceInvitation31SendInternalAction, {
+    token: args.token,
+    invitationCode,
+  })
 
   return createResult(invitationCode)
 }

@@ -25,10 +25,10 @@ export function NavStatic(p: NavStaticProps) {
     <nav class={classMerge("flex flex-wrap justify-between mx-auto", "w-full max-w-7xl", "mb-4", p.class)}>
       <div class="flex flex-wrap gap-2">
         {p.dense ? (
-          <LogoImageOnly href={urlOverview()} />
+          <LogoImageOnly to={urlOverview()} />
         ) : (
           <LogoImageText
-            href={urlOverview()}
+            to={urlOverview()}
             logoText={appNameClient()}
             logoTextClass="text-md font-medium flex items-center"
           />

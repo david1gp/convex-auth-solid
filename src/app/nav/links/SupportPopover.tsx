@@ -1,7 +1,7 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { urlSupportMailTo, urlSupportTelegram } from "#src/app/url/urlSupport.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
 import { iconTelegram } from "#ui/static/icons/iconTelegram.ts"
 import { mdiEmail, mdiHelpCircleOutline } from "@mdi/js"
@@ -22,12 +22,17 @@ export function SupportPopover(p: SupportPopoverProps) {
       innerClass="flex flex-col gap-2"
     >
       <h3 class="text-lg font-medium ml-3">{getTitle()}</h3>
-      <LinkButton href={urlSupportMailTo} icon={mdiEmail} variant={buttonVariant.link} class="justify-start">
+      <LinkButtonExternal href={urlSupportMailTo} icon={mdiEmail} variant={buttonVariant.link} class="justify-start">
         {ttc("E-Mail")}
-      </LinkButton>
-      <LinkButton href={urlSupportTelegram} icon={iconTelegram} variant={buttonVariant.link} class="justify-start">
+      </LinkButtonExternal>
+      <LinkButtonExternal
+        href={urlSupportTelegram}
+        icon={iconTelegram}
+        variant={buttonVariant.link}
+        class="justify-start"
+      >
         {ttc("Telegram Group")}
-      </LinkButton>
+      </LinkButtonExternal>
     </CorvuPopoverIcon>
   )
 }

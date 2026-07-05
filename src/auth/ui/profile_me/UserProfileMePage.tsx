@@ -6,23 +6,23 @@ import { NavUserProfile } from "#src/app/nav/NavUserProfile.tsx"
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
 import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.tsx"
 import {
-    userProfileFormStateManagement,
-    type UserProfileFormStateManagement,
+  userProfileFormStateManagement,
+  type UserProfileFormStateManagement,
 } from "#src/auth/ui/profile/userProfileFormState.ts"
 import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import {
-    urlUserProfileMe,
-    urlUserProfileMeChangeEmail,
-    urlUserProfileMeChangePassword,
-    urlUserProfileMeEdit,
-    urlUserProfileMeImage,
+  urlUserProfileMe,
+  urlUserProfileMeChangeEmail,
+  urlUserProfileMeChangePassword,
+  urlUserProfileMeEdit,
+  urlUserProfileMeImage,
 } from "#src/auth/url/pageRouteAuth.ts"
 import { orgNameGet } from "#src/org/org_ui/orgNameRecordSignal.ts"
 import { urlOrgLeave, urlOrgView } from "#src/org/org_url/urlOrg.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
@@ -110,7 +110,11 @@ function ProfileSectionInfo(p: { userProfile: Pick<UserProfile, "name" | "bio" |
     <section id="info" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{p.userProfile.name}</h2>
-        <LinkButtonIconOnly href={urlUserProfileMeEdit()} icon={mdiSquareEditOutline} variant={buttonVariant.link} />
+        <LinkButtonIconOnlyInternal
+          to={urlUserProfileMeEdit()}
+          icon={mdiSquareEditOutline}
+          variant={buttonVariant.link}
+        />
       </div>
 
       {p.userProfile.bio && <p class="text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{p.userProfile.bio}</p>}
@@ -137,8 +141,8 @@ function ProfileSectionEmail(p: { email?: string }) {
           <span class="text-sm text-muted-foreground font-medium">{ttc("Email")}</span>
           <p class="text-gray-900 dark:text-gray-100">{p.email ?? ""}</p>
         </div>
-        <LinkButtonIconOnly
-          href={urlUserProfileMeChangeEmail()}
+        <LinkButtonIconOnlyInternal
+          to={urlUserProfileMeChangeEmail()}
           icon={mdiSquareEditOutline}
           variant={buttonVariant.link}
         />
@@ -168,13 +172,17 @@ function ProfileSectionOrg(p: { orgHandle?: string; orgRole?: string }) {
                 <span class="text-sm text-muted-foreground font-medium">{ttc("Organization")}</span>
                 <br />
                 <div class="flex flex-wrap gap-2">
-                  <LinkButton href={urlOrgView(orgHandle())} variant={buttonVariant.link} class="pl-0">
+                  <LinkButtonInternal to={urlOrgView(orgHandle())} variant={buttonVariant.link} class="pl-0">
                     {orgName ?? orgHandle()}
-                  </LinkButton>
+                  </LinkButtonInternal>
                   {p.orgRole && <p class="text-gray-600 dark:text-gray-400 py-2">{capitalizeFirstLetter(p.orgRole)}</p>}
                 </div>
               </div>
-              <LinkButtonIconOnly href={urlOrgLeave(orgHandle())} icon={mdiLocationExit} variant={buttonVariant.link} />
+              <LinkButtonIconOnlyInternal
+                to={urlOrgLeave(orgHandle())}
+                icon={mdiLocationExit}
+                variant={buttonVariant.link}
+              />
             </div>
           )
         }}
@@ -188,9 +196,13 @@ function ProfileSectionActions() {
     <section id="actions" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <h3 class="text-sm text-muted-foreground font-medium">{ttc("Account Actions")}</h3>
       <div class={classArr("grid grid-cols-1 md:grid-cols-3 gap-4")}>
-        <LinkButton href={urlUserProfileMeChangePassword()} variant={buttonVariant.link} class="justify-start pl-0">
+        <LinkButtonInternal
+          to={urlUserProfileMeChangePassword()}
+          variant={buttonVariant.link}
+          class="justify-start pl-0"
+        >
           {ttc("Change Password")}
-        </LinkButton>
+        </LinkButtonInternal>
       </div>
     </section>
   )

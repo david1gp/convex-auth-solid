@@ -11,7 +11,8 @@ import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { Show, createEffect } from "solid-js"
 
-interface WorkspaceInvitationMutateProps extends HasWorkspaceHandle, HasWorkspaceInvitationCode, HasFormModeMutate, MayHaveClass {}
+interface WorkspaceInvitationMutateProps
+  extends HasWorkspaceHandle, HasWorkspaceInvitationCode, HasFormModeMutate, MayHaveClass {}
 
 export function WorkspaceInvitationMutate(p: WorkspaceInvitationMutateProps) {
   const getInvitation = createQuery(api.workspace.workspaceInvitationGetQuery, {

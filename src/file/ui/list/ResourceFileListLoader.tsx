@@ -17,7 +17,7 @@ import { resultHasList } from "#src/utils/result/resultHasList.ts"
 import { formMode, type HasFormMode } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { classesGridCols2xl } from "#ui/static/grid/classesGridCols.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -41,17 +41,17 @@ export function ResourceFileListLoader(p: ResourceFileListProps) {
       <Show when={p.mode === formMode.view}>
         <SectionHeader
           title={ttc("Files")}
-          href={urlFileUpload(p.resourceId)}
+          to={urlFileUpload(p.resourceId)}
           icon={appTabIcon.resource}
           class="mt-4 mb-1"
         >
-          <LinkButtonIconOnly
+          <LinkButtonIconOnlyInternal
             icon={formModeIcon.edit}
-            href={urlFileUpload(p.resourceId)}
+            to={urlFileUpload(p.resourceId)}
             variant={buttonVariant.ghost}
             title={ttc("Manage")}
             class="hover:bg-gray-200"
-          ></LinkButtonIconOnly>
+          ></LinkButtonIconOnlyInternal>
         </SectionHeader>
       </Show>
 

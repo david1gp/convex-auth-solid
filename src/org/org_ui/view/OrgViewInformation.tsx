@@ -5,7 +5,7 @@ import { urlOrgEdit } from "#src/org/org_url/urlOrg.ts"
 import { Ps } from "#src/ui/text/Ps.tsx"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { Img } from "#ui/static/img/Img.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
@@ -26,14 +26,14 @@ export function OrgViewInformation(p: OrgViewProps) {
       <ShowDescription {...p} />
       <ShowUrl {...p} />
       {p.showEditButton && (
-        <LinkButton
-          href={urlOrgEdit(p.org.orgHandle)}
+        <LinkButtonInternal
+          to={urlOrgEdit(p.org.orgHandle)}
           variant={buttonVariant.ghost}
           icon={formModeIcon.edit}
           class="flex mt-4"
         >
           {ttc("Edit")}
-        </LinkButton>
+        </LinkButtonInternal>
       )}
     </section>
   )

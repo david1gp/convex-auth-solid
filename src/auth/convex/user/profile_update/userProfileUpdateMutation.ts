@@ -3,8 +3,8 @@ import { type PromiseResult, createResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import {
-    type UserProfileFieldsTypeInternal,
-    userProfileUpdateInternalFn,
+  type UserProfileFieldsTypeInternal,
+  userProfileUpdateInternalFn,
 } from "#src/auth/convex/user/profile_update/userProfileUpdateMutationInternal.ts"
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"

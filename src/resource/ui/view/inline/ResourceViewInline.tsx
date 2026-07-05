@@ -7,8 +7,8 @@ import { MetaSectionSummary } from "#src/ui/section/MetaSectionSummary.tsx"
 import { Ps } from "#src/ui/text/Ps.tsx"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { classesCardWrapper } from "#ui/static/card/classesCardWrapper.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -56,13 +56,13 @@ function ShowName(p: ResourceViewInlineProps) {
     <div class="flex flex-wrap justify-between items-center">
       <div>
         <h3>
-          <LinkButton
-            href={urlResourceView(p.resource.resourceId)}
+          <LinkButtonInternal
+            to={urlResourceView(p.resource.resourceId)}
             variant={buttonVariant.link}
             class={classArr("text-2xl font-bold", "pl-0")}
           >
             {p.resource.name ?? ttc("Unnamed Resource")}
-          </LinkButton>
+          </LinkButtonInternal>
         </h3>
         <Show when={p.resource.description}>
           {(getDescription) => (
@@ -73,8 +73,8 @@ function ShowName(p: ResourceViewInlineProps) {
         </Show>
         <ResourceTypeBadge type={p.resource.type} class="w-content mt-2" />
       </div>
-      <LinkButtonIconOnly
-        href={urlResourceEdit(p.resource.resourceId)}
+      <LinkButtonIconOnlyInternal
+        to={urlResourceEdit(p.resource.resourceId)}
         variant={buttonVariant.ghost}
         icon={formModeIcon.edit}
         title={ttc("Edit")}

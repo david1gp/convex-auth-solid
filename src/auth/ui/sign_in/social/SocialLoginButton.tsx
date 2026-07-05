@@ -3,7 +3,7 @@ import { socialProviderButtonProps } from "#src/auth/ui/sign_in/social/SocialPro
 import { urlAuthProvider } from "#src/auth/url/urlAuthProvider.ts"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { buttonVariant, type ButtonSize } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
 
@@ -19,7 +19,7 @@ export function SocialLoginButton(p: SocialLoginButtonProps) {
   const text = "Sign in with " + capitalizeFirstLetter(p.provider)
   const url = urlAuthProvider(p.provider, currentUrl)
   return (
-    <LinkButton
+    <LinkButtonExternal
       href={url}
       icon={mdiIconPath}
       iconClass={"fill-white"}
@@ -30,6 +30,6 @@ export function SocialLoginButton(p: SocialLoginButtonProps) {
       aria-label={text}
     >
       {text}
-    </LinkButton>
+    </LinkButtonExternal>
   )
 }

@@ -9,7 +9,7 @@ import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -35,9 +35,9 @@ export function UserProfileMeEditForm(p: UserProfileMeEditFormProps) {
         <UrlField sm={p.sm} />
 
         <div class="mt-6 flex justify-end space-x-4">
-          <LinkButton href={urlUserProfileMe()} variant={buttonVariant.link}>
+          <LinkButtonInternal to={urlUserProfileMe()} variant={buttonVariant.link}>
             {ttc("Cancel")}
-          </LinkButton>
+          </LinkButtonInternal>
           <Button type="submit" variant={buttonVariant.filledIndigo} disabled={p.sm.isLoading.get()}>
             {p.sm.isLoading.get() ? ttc("Saving...") : ttc("Save Changes")}
           </Button>

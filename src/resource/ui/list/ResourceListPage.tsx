@@ -5,10 +5,10 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
 import { resourceSchema } from "#src/resource/model/resourceSchema.ts"
 import {
-    resourceFilter,
-    resourceFilterCreate,
-    resourceFilterFields,
-    type ResourceFilterState,
+  resourceFilter,
+  resourceFilterCreate,
+  resourceFilterFields,
+  type ResourceFilterState,
 } from "#src/resource/model_field/resourceFilterFields.ts"
 import { resourceNameAddList } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { ResourceCardLink } from "#src/resource/ui/shared/ResourceCardLink.tsx"
@@ -25,7 +25,7 @@ import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import { resultHasList } from "#src/utils/result/resultHasList.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classesGridCols2xl } from "#ui/static/grid/classesGridCols.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
@@ -120,8 +120,8 @@ function ResourceList(p: ResourceListProps) {
 
 function ResourceCreateLink() {
   return (
-    <LinkButton icon={mdiPlus} href={urlResourceAdd()} variant={buttonVariant.filledGreen}>
+    <LinkButtonInternal icon={mdiPlus} to={urlResourceAdd()} variant={buttonVariant.filledGreen}>
       {ttc("Create Resource")}
-    </LinkButton>
+    </LinkButtonInternal>
   )
 }

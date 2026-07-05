@@ -58,10 +58,7 @@ export async function workspaceInvitation31SendFn(
     return createResultError(op, "Invitation is not pending")
   }
 
-  const allowSendingInSeconds = allowEmailResendingInSeconds(
-    invitation.expiresAt,
-    0,
-  )
+  const allowSendingInSeconds = allowEmailResendingInSeconds(invitation.expiresAt, 0)
   if (allowSendingInSeconds > 0) {
     const errorMessage = stt1("Allow resending in [X] seconds", allowSendingInSeconds.toString())
     return createResultError(op, errorMessage)

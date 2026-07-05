@@ -13,7 +13,7 @@ import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { searchParamGet } from "#src/utils/router/searchParamGet.ts"
 import { classesBgGray } from "#ui/classes/classesBg.jsx"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { linkIcons } from "#ui/static/icon/linkIcons.ts"
 import { Img } from "#ui/static/img/Img.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
@@ -143,7 +143,7 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
     return urlAuthProvider(p.provider, returnPath)
   }
   return (
-    <LinkButton
+    <LinkButtonExternal
       href={getReturnPath()}
       icon={props.mdiIconPath}
       iconClass="fill-white"
@@ -153,7 +153,7 @@ function SocialSignUpButton(p: SocialSignUpButtonProps) {
       class={p.class}
     >
       {text}
-    </LinkButton>
+    </LinkButtonExternal>
   )
 }
 

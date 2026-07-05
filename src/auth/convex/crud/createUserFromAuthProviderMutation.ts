@@ -5,9 +5,9 @@ import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
 import { userRole } from "#src/auth/model_field/userRole.ts"
 import {
-    commonAuthProviderValidator,
-    getUserNameFromCommonAuthProvider,
-    type CommonAuthProvider,
+  commonAuthProviderValidator,
+  getUserNameFromCommonAuthProvider,
+  type CommonAuthProvider,
 } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import type { WithoutSystemFields } from "convex/server"
 

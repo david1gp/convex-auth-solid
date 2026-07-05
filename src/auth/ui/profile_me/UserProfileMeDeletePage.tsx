@@ -41,11 +41,7 @@ export function UserProfileMeDeletePage() {
 
 function PageContent() {
   return (
-    <div
-      class={classMerge(
-        "max-w-xl mx-auto",
-      )}
-    >
+    <div class={classMerge("max-w-xl mx-auto")}>
       <h1 class="text-3xl font-bold mb-4">{ttc("Delete Account")}</h1>
 
       <DeleteAccountForm />

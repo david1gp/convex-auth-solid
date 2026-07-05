@@ -5,7 +5,7 @@ import type { HasResourceId } from "#src/resource/model/HasResourceId.ts"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { splitProps } from "solid-js"
@@ -16,15 +16,15 @@ export function FileCardEdit(p: FileCardEditProps) {
   const [s, rest] = splitProps(p, ["resourceId"])
   return (
     <FileCardView {...rest}>
-      <LinkButtonIconOnly
+      <LinkButtonIconOnlyInternal
         icon={formModeIcon.edit}
-        href={urlFileEdit(s.resourceId, rest.file.fileId)}
+        to={urlFileEdit(s.resourceId, rest.file.fileId)}
         variant={buttonVariant.ghost}
         title={getFormModeTitle(formMode.edit, "File")}
       />
-      <LinkButtonIconOnly
+      <LinkButtonIconOnlyInternal
         icon={formModeIcon.remove}
-        href={urlFileRemove(s.resourceId, rest.file.fileId)}
+        to={urlFileRemove(s.resourceId, rest.file.fileId)}
         variant={buttonVariant.ghost}
         title={getFormModeTitle(formMode.remove, "File")}
       />

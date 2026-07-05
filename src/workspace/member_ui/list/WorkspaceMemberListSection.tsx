@@ -22,7 +22,11 @@ export function WorkspaceMemberListSection(p: WorkspaceMemberListProps) {
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <For each={p.members}>
             {(member) => (
-              <WorkspaceMemberCard showActions={showMemberActionsNotImplemented} workspaceHandle={p.workspaceHandle} member={member} />
+              <WorkspaceMemberCard
+                showActions={showMemberActionsNotImplemented}
+                workspaceHandle={p.workspaceHandle}
+                member={member}
+              />
             )}
           </For>
         </div>
@@ -32,10 +36,7 @@ export function WorkspaceMemberListSection(p: WorkspaceMemberListProps) {
 }
 
 function Header(p: WorkspaceMemberListProps) {
-  return (
-    <SectionHeader icon={mdiAccountMultiple} title={ttc("Workspace Members")}>
-    </SectionHeader>
-  )
+  return <SectionHeader icon={mdiAccountMultiple} title={ttc("Workspace Members")}></SectionHeader>
 }
 
 function NoWorkspaceMembersText() {

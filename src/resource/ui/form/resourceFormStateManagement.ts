@@ -9,7 +9,11 @@ import { resourceType, type ResourceType } from "#src/resource/model_field/resou
 import { visibility, type Visibility } from "#src/resource/model_field/visibility.ts"
 import { type ResourceFormActions, resourceFormCreateActions } from "#src/resource/ui/form/resourceFormCreateActions.ts"
 import { resourceCreateErrorState, type ResourceFormErrorState } from "#src/resource/ui/form/ResourceFormErrorState.ts"
-import { resourceFormConfig, type ResourceFormField, resourceFormField } from "#src/resource/ui/form/resourceFormField.ts"
+import {
+  resourceFormConfig,
+  type ResourceFormField,
+  resourceFormField,
+} from "#src/resource/ui/form/resourceFormField.ts"
 import { resourceFormLocalStorage } from "#src/resource/ui/form/resourceFormLocalStorage.ts"
 import { type ResourceFormState, resourceFormStateCreate } from "#src/resource/ui/form/ResourceFormState.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"

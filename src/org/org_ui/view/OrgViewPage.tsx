@@ -14,12 +14,12 @@ import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { createEffect, Match, Switch } from "solid-js"
 
 export function OrgViewPage() {
-  const params = useParams()
-  const getOrgHandleParam = () => params.orgHandle
+  const params = useParams({ strict: false })
+  const getOrgHandleParam = () => params().orgHandle
   return (
     <Switch>
       <Match when={!getOrgHandleParam()}>

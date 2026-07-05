@@ -5,13 +5,19 @@ import { objectEntries } from "#utils/obj/objectEntries.js"
 import { lazy } from "solid-js"
 
 const WorkspaceInvitationListPage = lazy(() =>
-  import("#src/workspace/invitation_ui/list/WorkspaceInvitationListPage.tsx").then((c) => ({ default: c.WorkspaceInvitationListPage })),
+  import("#src/workspace/invitation_ui/list/WorkspaceInvitationListPage.tsx").then((c) => ({
+    default: c.WorkspaceInvitationListPage,
+  })),
 )
 const WorkspaceInvitationAddPage = lazy(() =>
-  import("#src/workspace/invitation_ui/mutate/WorkspaceInvitationAddPage.tsx").then((c) => ({ default: c.WorkspaceInvitationAddPage })),
+  import("#src/workspace/invitation_ui/mutate/WorkspaceInvitationAddPage.tsx").then((c) => ({
+    default: c.WorkspaceInvitationAddPage,
+  })),
 )
 const WorkspaceInvitationAcceptPage = lazy(() =>
-  import("#src/workspace/invitation_ui/accept/WorkspaceInvitationAcceptPage.tsx").then((c) => ({ default: c.WorkspaceInvitationAcceptPage })),
+  import("#src/workspace/invitation_ui/accept/WorkspaceInvitationAcceptPage.tsx").then((c) => ({
+    default: c.WorkspaceInvitationAcceptPage,
+  })),
 )
 
 export function getRoutesWorkspaceInvitation(): RouteObject[] {
@@ -19,7 +25,10 @@ export function getRoutesWorkspaceInvitation(): RouteObject[] {
     workspaceInvitationList: WorkspaceInvitationListPage,
     workspaceInvitationAdd: WorkspaceInvitationAddPage,
     workspaceInvitationAccept: WorkspaceInvitationAcceptPage,
-  } as const satisfies Record<"workspaceInvitationList" | "workspaceInvitationAdd" | "workspaceInvitationAccept", RouteComponent>
+  } as const satisfies Record<
+    "workspaceInvitationList" | "workspaceInvitationAdd" | "workspaceInvitationAccept",
+    RouteComponent
+  >
   return objectEntries(routeMapping).map(([routeKey, component]) => ({
     path: pageRouteWorkspaceInvitation[routeKey as keyof typeof pageRouteWorkspaceInvitation],
     component,

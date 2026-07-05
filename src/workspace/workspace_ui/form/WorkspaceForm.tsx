@@ -1,7 +1,10 @@
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { inputMaxLength100, inputMaxLengthUrl } from "#src/utils/valibot/inputMaxLength.ts"
-import { workspaceFormField, type WorkspaceFormStateManagement } from "#src/workspace/workspace_ui/form/workspaceFormStateManagement.ts"
+import {
+  workspaceFormField,
+  type WorkspaceFormStateManagement,
+} from "#src/workspace/workspace_ui/form/workspaceFormStateManagement.ts"
 import { urlWorkspaceRemove } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import {
@@ -18,7 +21,7 @@ import { LabelAsterix } from "#ui/input/label/LabelAsterix.jsx"
 import { Textarea } from "#ui/input/textarea/Textarea.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { Show } from "solid-js"
@@ -41,13 +44,13 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
       <div class="flex flex-wrap justify-between mt-6 mb-2">
         <h1 class="text-2xl font-bold">{getWorkspaceTitle(p.mode)}</h1>
         {p.mode === formMode.edit && (
-          <LinkButton
+          <LinkButtonInternal
             icon={formModeIcon.remove}
-            href={urlWorkspaceRemove(p.workspaceHandle ?? "missing")}
+            to={urlWorkspaceRemove(p.workspaceHandle ?? "missing")}
             variant={buttonVariant.link}
           >
             {ttt("Remove")}
-          </LinkButton>
+          </LinkButtonInternal>
         )}
       </div>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
@@ -60,7 +63,9 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
           type="submit"
           disabled={p.sm.isSaving.get()}
           icon={formModeIcon[p.mode]}
-          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
+          variant={
+            p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo
+          }
           class="w-full"
         >
           {p.sm.isSaving.get() ? ttt("Saving...") : getFormModeButtonTitle(p.mode, ttt("Workspace"))}
@@ -145,7 +150,10 @@ function DescriptionField(p: HasOrgFormStateManagement) {
           p.sm.validateOnChange(workspaceFormField.description)(value)
         }}
         onBlur={(e) => p.sm.validateOnChange(workspaceFormField.description)(e.currentTarget.value)}
-        class={classMerge("w-full", p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive")}
+        class={classMerge(
+          "w-full",
+          p.sm.errors.description.get() && "border-destructive focus-visible:ring-destructive",
+        )}
         maxLength={inputMaxLengthUrl}
         disabled={p.sm.mode === formMode.remove}
         readOnly={formModeIsReadOnly(p.sm.mode)}

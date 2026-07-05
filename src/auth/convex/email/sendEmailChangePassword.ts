@@ -10,9 +10,9 @@ import { envMode } from "#ui/env/envMode.ts"
 import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
 import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi.js"
 import {
-    apiGenerateEmailPasswordChangeV1,
-    type GeneratedEmailType,
-    type PasswordChangeV1Type,
+  apiGenerateEmailPasswordChangeV1,
+  type GeneratedEmailType,
+  type PasswordChangeV1Type,
 } from "@adaptive-ds/email-generator/index.js"
 
 export async function sendEmailChangePassword(

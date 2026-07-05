@@ -17,18 +17,18 @@ import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 import { mdiPlus } from "@mdi/js"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { createEffect, For, Match, Show, splitProps, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
 
 export function OrgInvitationListPage() {
-  const params = useParams()
-  const getOrgHandle = () => params.orgHandle
+  const params = useParams({ strict: false })
+  const getOrgHandle = () => params().orgHandle
   return (
     <Switch>
       <Match when={!getOrgHandle()}>
@@ -87,9 +87,9 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
         subtitle={ttc("Manage invitations of this organization")}
         class="mb-4"
       >
-        <LinkButton icon={mdiPlus} href={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.filledGreen}>
+        <LinkButtonInternal icon={mdiPlus} to={urlOrgInvitationAdd(p.orgHandle)} variant={buttonVariant.filledGreen}>
           {ttc("Add Invitation")}
-        </LinkButton>
+        </LinkButtonInternal>
       </PageHeader>
       <Switch fallback={<p>Fallback content</p>}>
         <Match when={getOrgInvitationsResult() === undefined}>

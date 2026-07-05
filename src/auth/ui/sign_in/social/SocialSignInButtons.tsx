@@ -2,7 +2,7 @@ import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.t
 import { urlAuthProvider } from "#src/auth/url/urlAuthProvider.ts"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
@@ -20,7 +20,7 @@ function SocialSignInButton(p: SocialSignInButtonProps) {
   const text = `Sign in with ${capitalizeFirstLetter(p.provider)}`
 
   return (
-    <LinkButton
+    <LinkButtonExternal
       href={url}
       icon={iconPath}
       iconClass="size-8"
@@ -34,7 +34,7 @@ function SocialSignInButton(p: SocialSignInButtonProps) {
       aria-label={text}
     >
       {text}
-    </LinkButton>
+    </LinkButtonExternal>
   )
 }
 

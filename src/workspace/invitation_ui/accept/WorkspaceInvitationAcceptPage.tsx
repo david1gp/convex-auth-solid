@@ -25,13 +25,13 @@ import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { mdiAccountAlert } from "@mdi/js"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 import * as a from "valibot"
 
 export function WorkspaceInvitationAcceptPage() {
-  const params = useParams()
-  const getInvitationCode = () => params.invitationCode
+  const params = useParams({ strict: false })
+  const getInvitationCode = () => params().invitationCode
   return (
     <Switch>
       <Match when={!getInvitationCode()}>

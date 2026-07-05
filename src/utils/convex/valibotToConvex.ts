@@ -4,9 +4,8 @@ import * as a from "valibot"
 type Schema = a.BaseSchema<unknown, unknown, a.BaseIssue<unknown>>
 type SchemaRecord = Record<string, Schema>
 
-type UnwrapSchema<TSchema extends Schema> = TSchema extends a.SchemaWithPipe<infer TPipe>
-  ? Extract<TPipe[0], Schema>
-  : TSchema
+type UnwrapSchema<TSchema extends Schema> =
+  TSchema extends a.SchemaWithPipe<infer TPipe> ? Extract<TPipe[0], Schema> : TSchema
 
 export type ConvexValidatorFromValibotSchema<TSchema extends Schema> =
   UnwrapSchema<TSchema> extends
@@ -14,8 +13,8 @@ export type ConvexValidatorFromValibotSchema<TSchema extends Schema> =
     | a.ExactOptionalSchema<any, any>
     | a.UndefinedableSchema<any, any>
     | a.NullishSchema<any, any>
-  ? Validator<a.InferOutput<UnwrapSchema<TSchema>>, "optional", any>
-  : Validator<a.InferOutput<UnwrapSchema<TSchema>>, "required", any>
+    ? Validator<a.InferOutput<UnwrapSchema<TSchema>>, "optional", any>
+    : Validator<a.InferOutput<UnwrapSchema<TSchema>>, "required", any>
 
 export type ConvexFieldsFromValibotFields<TFields extends SchemaRecord> = {
   [K in keyof TFields]: ConvexValidatorFromValibotSchema<TFields[K]>
@@ -109,7 +108,9 @@ function valibotFieldToConvexValidatorUnknown(schema: UnknownSchema): Validator<
       if (!Array.isArray(schema.options) || schema.options.length === 0) {
         throw new Error("valibot-to-convex: union schema is missing `options`")
       }
-      return v.union(...schema.options.map((option) => valibotFieldToConvexValidatorUnknownRequired(schemaFromOption(option))))
+      return v.union(
+        ...schema.options.map((option) => valibotFieldToConvexValidatorUnknownRequired(schemaFromOption(option))),
+      )
     default:
       throw new Error(`valibot-to-convex: unsupported valibot schema type "${schema.type}"`)
   }
@@ -127,7 +128,12 @@ function unwrapSchema(schema: UnknownSchema): UnknownSchema {
 }
 
 function literalToConvex(value: unknown): Validator<any, "required", any> {
-  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") {
+  if (
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean" ||
+    typeof value === "bigint"
+  ) {
     return v.literal(value)
   }
   throw new Error(`valibot-to-convex: unsupported literal type "${typeof value}"`)

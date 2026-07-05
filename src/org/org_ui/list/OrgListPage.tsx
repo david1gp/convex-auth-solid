@@ -16,7 +16,7 @@ import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import { resultHasList } from "#src/utils/result/resultHasList.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 import { mdiPlus } from "@mdi/js"
@@ -114,13 +114,13 @@ function hasOrgs(orgsResult: Result<Org[]> | undefined): Org[] | null {
 }
 
 function OrgLink(p: { org: Org }) {
-  return <LinkButton href={urlOrgView(p.org.orgHandle)}>{p.org.name}</LinkButton>
+  return <LinkButtonInternal to={urlOrgView(p.org.orgHandle)}>{p.org.name}</LinkButtonInternal>
 }
 
 function OrgCreateLink() {
   return (
-    <LinkButton icon={mdiPlus} href={urlOrgAdd()} variant={buttonVariant.filledGreen}>
+    <LinkButtonInternal icon={mdiPlus} to={urlOrgAdd()} variant={buttonVariant.filledGreen}>
       {ttc("Create Organization")}
-    </LinkButton>
+    </LinkButtonInternal>
   )
 }

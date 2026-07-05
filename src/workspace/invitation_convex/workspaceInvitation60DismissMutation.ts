@@ -16,8 +16,7 @@ export const workspaceInvitationDismissValidator = v.object(workspaceInvitationD
 
 export const workspaceInvitation60DismissMutation = mutation({
   args: createTokenValidator(workspaceInvitationDismissFields),
-  handler: async (ctx, args) =>
-    authMutationResult(ctx, args, workspaceInvitation60DismissMutationFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, workspaceInvitation60DismissMutationFn),
 })
 
 export async function workspaceInvitation60DismissMutationFn(

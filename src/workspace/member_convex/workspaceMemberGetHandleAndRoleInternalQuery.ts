@@ -24,7 +24,10 @@ export const getWorkspaceMemberHandleAndRoleInternalQuery = internalQuery({
   handler: getWorkspaceMemberHandleAndRoleQueryFn,
 })
 
-export async function getWorkspaceMemberHandleAndRoleQueryFn(ctx: QueryCtx, args: GetWorkspaceMemberHandleAndRoleValidatorType) {
+export async function getWorkspaceMemberHandleAndRoleQueryFn(
+  ctx: QueryCtx,
+  args: GetWorkspaceMemberHandleAndRoleValidatorType,
+) {
   return workspaceMemberGetHandleAndRoleFn(ctx, args.userId)
 }
 

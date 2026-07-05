@@ -9,12 +9,12 @@ import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 export function WorkspaceMemberAddPage() {
-  const params = useParams()
-  const getWorkspaceHandle = () => params.workspaceHandle
+  const params = useParams({ strict: false })
+  const getWorkspaceHandle = () => params().workspaceHandle
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>

@@ -19,7 +19,10 @@ export const workspaceMemberDeleteMutation = mutation({
   handler: async (ctx, args) => authMutationResult(ctx, args, workspaceMemberDeleteFn),
 })
 
-export async function workspaceMemberDeleteFn(ctx: MutationCtx, args: WorkspaceMemberDeleteValidatorType): PromiseResult<null> {
+export async function workspaceMemberDeleteFn(
+  ctx: MutationCtx,
+  args: WorkspaceMemberDeleteValidatorType,
+): PromiseResult<null> {
   const op = "workspaceMemberDeleteFn"
 
   const workspace = await ctx.db

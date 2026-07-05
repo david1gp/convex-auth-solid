@@ -25,7 +25,10 @@ export const workspaceMemberLeaveMutation = mutation({
   handler: async (ctx, args) => authMutationTokenToUserId(ctx, args, workspaceLeaveFn),
 })
 
-export async function workspaceLeaveFn(ctx: MutationCtx, args: WorkspaceLeaveValidatorType): PromiseResult<UserSession> {
+export async function workspaceLeaveFn(
+  ctx: MutationCtx,
+  args: WorkspaceLeaveValidatorType,
+): PromiseResult<UserSession> {
   const op = "workspaceLeaveFn"
 
   const workspace = await ctx.db

@@ -1,7 +1,11 @@
 import { envGithubClientIdResult } from "#src/app/env/public/envGithubClientIdResult.ts"
 import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdResult.ts"
 import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.ts"
-import { loginProvider, socialLoginProvider, type SocialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import {
+  loginProvider,
+  socialLoginProvider,
+  type SocialLoginProvider,
+} from "#src/auth/model_field/socialLoginProvider.ts"
 import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.ts"
 
 export function urlAuthProvider(provider: SocialLoginProvider, redirectUrl: string = "") {

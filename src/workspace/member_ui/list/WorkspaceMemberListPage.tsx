@@ -5,7 +5,11 @@ import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
-import { urlWorkspaceMemberAdd, urlWorkspaceMemberList, urlWorkspaceMemberEdit } from "#src/workspace/member_url/urlWorkspaceMember.ts"
+import {
+  urlWorkspaceMemberAdd,
+  urlWorkspaceMemberList,
+  urlWorkspaceMemberEdit,
+} from "#src/workspace/member_url/urlWorkspaceMember.ts"
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model_field/HasWorkspaceHandle.ts"
 import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
@@ -14,17 +18,17 @@ import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 import { mdiAccountMultiple, mdiPlus } from "@mdi/js"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
 
 export function WorkspaceMemberListPage() {
-  const params = useParams()
-  const getWorkspaceHandle = () => params.workspaceHandle
+  const params = useParams({ strict: false })
+  const getWorkspaceHandle = () => params().workspaceHandle
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>
@@ -90,7 +94,10 @@ function WorkspaceMemberListLoader(p: WorkspaceMemberListLoaderProps) {
           <NoWorkspaceMembers />
         </Match>
         <Match when={true}>
-          <WorkspaceMemberList workspaceHandle={p.workspaceHandle} getWorkspaceMembers={getWorkspaceMembers(getWorkspaceMembersResult())} />
+          <WorkspaceMemberList
+            workspaceHandle={p.workspaceHandle}
+            getWorkspaceMembers={getWorkspaceMembers(getWorkspaceMembersResult())}
+          />
         </Match>
       </Switch>
     </>
@@ -105,7 +112,9 @@ export function NoWorkspaceMembers(p: MayHaveClassAndChildren) {
   )
 }
 
-function getWorkspaceMembers(workspaceMembersResult: Result<WorkspaceMember[]> | undefined): Accessor<WorkspaceMember[]> {
+function getWorkspaceMembers(
+  workspaceMembersResult: Result<WorkspaceMember[]> | undefined,
+): Accessor<WorkspaceMember[]> {
   return () => {
     return (workspaceMembersResult as ResultOk<WorkspaceMember[]>).data
   }
@@ -118,7 +127,9 @@ interface WorkspaceMemberListProps extends HasWorkspaceHandle {
 function WorkspaceMemberList(p: WorkspaceMemberListProps) {
   return (
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getWorkspaceMembers()}>{(member) => <WorkspaceMemberLink workspaceHandle={p.workspaceHandle} member={member} />}</For>
+      <For each={p.getWorkspaceMembers()}>
+        {(member) => <WorkspaceMemberLink workspaceHandle={p.workspaceHandle} member={member} />}
+      </For>
     </div>
   )
 }
@@ -140,13 +151,21 @@ interface WorkspaceMemberLinkProps extends HasWorkspaceHandle {
 }
 
 function WorkspaceMemberLink(p: WorkspaceMemberLinkProps) {
-  return <LinkButton href={urlWorkspaceMemberEdit(p.workspaceHandle, p.member.memberId)}>{p.member.userId}</LinkButton>
+  return (
+    <LinkButtonInternal to={urlWorkspaceMemberEdit(p.workspaceHandle, p.member.memberId)}>
+      {p.member.userId}
+    </LinkButtonInternal>
+  )
 }
 
 function WorkspaceMemberCreateLink(p: HasWorkspaceHandle) {
   return (
-    <LinkButton icon={mdiPlus} href={urlWorkspaceMemberAdd(p.workspaceHandle)} variant={buttonVariant.filledGreen}>
+    <LinkButtonInternal
+      icon={mdiPlus}
+      to={urlWorkspaceMemberAdd(p.workspaceHandle)}
+      variant={buttonVariant.filledGreen}
+    >
       {ttc("Add Member")}
-    </LinkButton>
+    </LinkButtonInternal>
   )
 }

@@ -10,12 +10,12 @@ import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 export function WorkspaceInvitationAddPage() {
-  const params = useParams()
-  const getWorkspaceHandle = () => params.workspaceHandle
+  const params = useParams({ strict: false })
+  const getWorkspaceHandle = () => params().workspaceHandle
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>
@@ -52,7 +52,14 @@ export interface WorkspaceInvitationAddProps extends HasWorkspaceHandle, MayHave
 
 export function WorkspaceInvitationAdd(p: WorkspaceInvitationAddProps) {
   const sm = workspaceInvitationFormStateManagement(formMode.add, p.workspaceHandle)
-  return <WorkspaceInvitationForm title={inviteToText(getWorkspaceName(p.workspaceHandle))} mode={formMode.add} sm={sm} class={p.class} />
+  return (
+    <WorkspaceInvitationForm
+      title={inviteToText(getWorkspaceName(p.workspaceHandle))}
+      mode={formMode.add}
+      sm={sm}
+      class={p.class}
+    />
+  )
 }
 
 function getWorkspaceName(workspaceHandle: string) {

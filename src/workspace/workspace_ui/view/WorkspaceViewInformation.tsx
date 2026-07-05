@@ -5,7 +5,7 @@ import { workspacePageSection } from "#src/workspace/workspace_ui/view/workspace
 import { urlWorkspaceEdit } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { Img } from "#ui/static/img/Img.tsx"
 import { classArr } from "#ui/utils/classArr.ts"
@@ -26,14 +26,14 @@ export function WorkspaceViewInformation(p: WorkspaceViewProps) {
       <ShowSubtitle {...p} />
       <ShowUrl {...p} />
       {p.showEditButton && (
-        <LinkButton
-          href={urlWorkspaceEdit(p.workspace.workspaceHandle)}
+        <LinkButtonInternal
+          to={urlWorkspaceEdit(p.workspace.workspaceHandle)}
           variant={buttonVariant.ghost}
           icon={formModeIcon.edit}
           class="flex mt-4"
         >
           {ttc("Edit")}
-        </LinkButton>
+        </LinkButtonInternal>
       )}
     </section>
   )

@@ -5,9 +5,16 @@ import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
 import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
-import { workspaceMemberFormField, type WorkspaceMemberFormField } from "#src/workspace/member_ui/form/workspaceMemberFormField.ts"
+import {
+  workspaceMemberFormField,
+  type WorkspaceMemberFormField,
+} from "#src/workspace/member_ui/form/workspaceMemberFormField.ts"
 import { urlWorkspaceMemberList, urlWorkspaceMemberDelete } from "#src/workspace/member_url/urlWorkspaceMember.ts"
-import { workspaceRole, workspaceRoleSchema, type WorkspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import {
+  workspaceRole,
+  workspaceRoleSchema,
+  type WorkspaceRole,
+} from "#src/workspace/workspace_model_field/workspaceRole.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
@@ -114,7 +121,11 @@ export function workspaceMemberFormStateManagement(
   }
 }
 
-function loadData(data: WorkspaceMemberModel, serverState: SignalObject<WorkspaceMemberModel>, state: WorkspaceMemberFormState): void {
+function loadData(
+  data: WorkspaceMemberModel,
+  serverState: SignalObject<WorkspaceMemberModel>,
+  state: WorkspaceMemberFormState,
+): void {
   serverState.set(data)
   state.role.set(data.role)
 }
@@ -131,7 +142,11 @@ function fillTestData(state: WorkspaceMemberFormState, errors: WorkspaceMemberFo
   }
 }
 
-function validateOnChange(field: WorkspaceMemberFormField, state: WorkspaceMemberFormState, errors: WorkspaceMemberFormErrorState) {
+function validateOnChange(
+  field: WorkspaceMemberFormField,
+  state: WorkspaceMemberFormState,
+  errors: WorkspaceMemberFormErrorState,
+) {
   return debounce((value: string) => {
     updateFieldError(field, value, state, errors)
   }, debounceMs)
@@ -214,7 +229,11 @@ async function handleSubmit(
   isSubmitting.set(false)
 }
 
-function createActions(mode: FormMode, workspaceHandle: string, memberId: IdWorkspaceMember | undefined): WorkspaceMemberFormActions {
+function createActions(
+  mode: FormMode,
+  workspaceHandle: string,
+  memberId: IdWorkspaceMember | undefined,
+): WorkspaceMemberFormActions {
   const actions: WorkspaceMemberFormActions = {}
   if (mode === formMode.add) {
     const addMutation = createMutation(api.workspace.workspaceMemberCreateMutation)

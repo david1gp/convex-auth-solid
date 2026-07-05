@@ -4,7 +4,7 @@ import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { urlUserProfileMe } from "#src/auth/url/pageRouteAuth.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
 import { mdiAccount } from "@mdi/js"
 import { Show } from "solid-js"
@@ -22,9 +22,9 @@ function UserPopover() {
       innerClass="flex flex-col gap-1"
     >
       <UserSessionInfo userSession={userSessionSignal.get()!} />
-      <LinkButton icon={mdiAccount} variant={buttonVariant.link} href={urlUserProfileMe()} class="justify-start">
+      <LinkButtonInternal icon={mdiAccount} variant={buttonVariant.link} to={urlUserProfileMe()} class="justify-start">
         {ttt("My Profile")}
-      </LinkButton>
+      </LinkButtonInternal>
       )
       <LogoutButton class="justify-start" />
     </CorvuPopoverIcon>

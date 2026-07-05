@@ -5,16 +5,24 @@ import { objectEntries } from "#utils/obj/objectEntries.js"
 import { lazy } from "solid-js"
 
 const WorkspaceMemberListPage = lazy(() =>
-  import("#src/workspace/member_ui/list/WorkspaceMemberListPage.tsx").then((c) => ({ default: c.WorkspaceMemberListPage })),
+  import("#src/workspace/member_ui/list/WorkspaceMemberListPage.tsx").then((c) => ({
+    default: c.WorkspaceMemberListPage,
+  })),
 )
 const WorkspaceMemberEditPage = lazy(() =>
-  import("#src/workspace/member_ui/mutate/WorkspaceMemberEditPage.tsx").then((c) => ({ default: c.WorkspaceMemberEditPage })),
+  import("#src/workspace/member_ui/mutate/WorkspaceMemberEditPage.tsx").then((c) => ({
+    default: c.WorkspaceMemberEditPage,
+  })),
 )
 const WorkspaceMemberAddPage = lazy(() =>
-  import("#src/workspace/member_ui/mutate/WorkspaceMemberAddPage.tsx").then((c) => ({ default: c.WorkspaceMemberAddPage })),
+  import("#src/workspace/member_ui/mutate/WorkspaceMemberAddPage.tsx").then((c) => ({
+    default: c.WorkspaceMemberAddPage,
+  })),
 )
 const WorkspaceMemberRemovePage = lazy(() =>
-  import("#src/workspace/member_ui/mutate/WorkspaceMemberDeletePage.tsx").then((c) => ({ default: c.WorkspaceMemberDeletePage })),
+  import("#src/workspace/member_ui/mutate/WorkspaceMemberDeletePage.tsx").then((c) => ({
+    default: c.WorkspaceMemberDeletePage,
+  })),
 )
 
 export function getRoutesWorkspaceMember(): RouteObject[] {

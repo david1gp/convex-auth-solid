@@ -8,7 +8,7 @@ import { classesCard } from "#src/ui/card/classesCard.ts"
 import { ClipboardCopyButtonIcon } from "#src/ui/links/ClipboardCopyButtonIcon.tsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -55,9 +55,9 @@ export function FileCardView(p: FileCardViewProps) {
             {ttc("Download")}
           </ButtonIcon>
         )}
-        <LinkButton icon={mdiEye} href={p.file.url} variant={buttonVariant.subtle} newTab class="flex-1">
+        <LinkButtonExternal icon={mdiEye} href={p.file.url} variant={buttonVariant.subtle} newTab class="flex-1">
           {ttc("View")}
-        </LinkButton>
+        </LinkButtonExternal>
         <ClipboardCopyButtonIcon
           variant={buttonVariant.subtle}
           data={p.file.url}

@@ -12,7 +12,7 @@ import { workspaceListSignal } from "#src/workspace/workspace_ui/list/workspaceL
 import { urlWorkspaceAdd, urlWorkspaceView } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 import { mdiPlus } from "@mdi/js"
@@ -109,13 +109,13 @@ function hasWorkspaces(workspacesResult: Result<Workspace[]> | undefined): Works
 }
 
 function WorkspaceLink(p: { workspace: Workspace }) {
-  return <LinkButton href={urlWorkspaceView(p.workspace.workspaceHandle)}>{p.workspace.name}</LinkButton>
+  return <LinkButtonInternal to={urlWorkspaceView(p.workspace.workspaceHandle)}>{p.workspace.name}</LinkButtonInternal>
 }
 
 function WorkspaceCreateLink() {
   return (
-    <LinkButton icon={mdiPlus} href={urlWorkspaceAdd()} variant={buttonVariant.filledGreen}>
+    <LinkButtonInternal icon={mdiPlus} to={urlWorkspaceAdd()} variant={buttonVariant.filledGreen}>
       {"Create Workspace"}
-    </LinkButton>
+    </LinkButtonInternal>
   )
 }

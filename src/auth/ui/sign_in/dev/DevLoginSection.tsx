@@ -7,7 +7,7 @@ import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -59,9 +59,9 @@ const userIdInputSignal = createSignalObject("adaptive-sm")
 function DevLoginButton(p: MayHaveClass) {
   const text = ttc("Sign in")
   return (
-    <LinkButton href={getDevUrl()} variant={buttonVariant.filledIndigo} class={p.class}>
+    <LinkButtonExternal href={getDevUrl()} variant={buttonVariant.filledIndigo} class={p.class}>
       {text}
-    </LinkButton>
+    </LinkButtonExternal>
   )
 }
 

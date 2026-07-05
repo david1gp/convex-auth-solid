@@ -2,7 +2,7 @@ import { NavStatic } from "#src/app/nav/NavStatic.tsx"
 import type { DemoNavDataProps } from "#ui/demo_pages/DemoNavDataProps.ts"
 import { LinkBlock } from "#ui/demo_pages/LinkBlock.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { objectEntries } from "#utils/obj/objectEntries.js"
 import { objectKeys } from "#utils/obj/objectKeys.js"
@@ -40,9 +40,13 @@ function ChildrenLeftCategory(s: DemoNavDataProps) {
   return (
     <>
       <NavSeparatingSlash />
-      <LinkButton variant={buttonVariant.ghost} href={`${s.demoPrefix}/${s.category}/`} class="text-lg font-medium">
+      <LinkButtonInternal
+        variant={buttonVariant.ghost}
+        to={`${s.demoPrefix}/${s.category}/`}
+        class="text-lg font-medium"
+      >
         {s.category}
-      </LinkButton>
+      </LinkButtonInternal>
     </>
   )
 }

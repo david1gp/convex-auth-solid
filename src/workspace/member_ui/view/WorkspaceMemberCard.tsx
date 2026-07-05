@@ -9,7 +9,7 @@ import { ClipboardCopyButtonIcon } from "#src/ui/links/ClipboardCopyButtonIcon.t
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
@@ -36,14 +36,14 @@ export function WorkspaceMemberCard(p: WorkspaceMemberCardProps) {
 
       {p.member.profile.email && (
         <div class="flex flex-wrap gap-1">
-          <LinkButton
+          <LinkButtonExternal
             variant={buttonVariant.subtle}
             icon={mdiEmailOutline}
             href={"mailto:" + p.member.profile.email}
             class="flex-1 flex"
           >
             {p.member.profile.email}
-          </LinkButton>
+          </LinkButtonExternal>
           <ClipboardCopyButtonIcon
             data={p.member.profile.email}
             copyText={ttc("Copy E-Mail to clipboard")}

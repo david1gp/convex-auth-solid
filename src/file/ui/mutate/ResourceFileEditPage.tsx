@@ -6,15 +6,15 @@ import { urlResourceEdit } from "#src/resource/url/urlResource.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 const mode = formMode.edit
 
 export function ResourceFileEditPage() {
-  const params = useParams()
-  const getResourceId = () => params.resourceId
-  const getFileId = () => params.fileId
+  const params = useParams({ strict: false })
+  const getResourceId = () => params().resourceId
+  const getFileId = () => params().fileId
 
   return (
     <Switch>

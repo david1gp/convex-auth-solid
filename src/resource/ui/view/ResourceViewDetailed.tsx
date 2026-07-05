@@ -8,7 +8,7 @@ import { MetaSectionSummary } from "#src/ui/section/MetaSectionSummary.tsx"
 import { MetaSectionTechnical } from "#src/ui/section/MetaSectionTechnical.tsx"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -59,8 +59,8 @@ function Header(p: ResourceViewProps) {
         </MetaSectionDisplay>
       }
     >
-      <LinkButtonIconOnly
-        href={urlResourceEdit(p.resource.resourceId)}
+      <LinkButtonIconOnlyInternal
+        to={urlResourceEdit(p.resource.resourceId)}
         variant={buttonVariant.ghost}
         icon={formModeIcon.edit}
         title={ttc("Edit")}

@@ -17,18 +17,18 @@ import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 import { mdiPlus } from "@mdi/js"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { createEffect, For, Match, Show, splitProps, Switch, type Accessor } from "solid-js"
 import * as a from "valibot"
 
 export function WorkspaceInvitationListPage() {
-  const params = useParams()
-  const getWorkspaceHandle = () => params.workspaceHandle
+  const params = useParams({ strict: false })
+  const getWorkspaceHandle = () => params().workspaceHandle
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>
@@ -64,10 +64,13 @@ type FetchWorkspaceInvitations = Accessor<Result<WorkspaceInvitationModel[]> | u
 interface WorkspaceInvitationListLoaderProps extends HasWorkspaceHandle {}
 
 function WorkspaceInvitationListLoader(p: WorkspaceInvitationListLoaderProps) {
-  const getWorkspaceInvitationsQuery: FetchWorkspaceInvitations = createQuery(api.workspace.workspaceInvitationsListQuery, {
-    token: userTokenGet(),
-    workspaceHandle: p.workspaceHandle,
-  })
+  const getWorkspaceInvitationsQuery: FetchWorkspaceInvitations = createQuery(
+    api.workspace.workspaceInvitationsListQuery,
+    {
+      token: userTokenGet(),
+      workspaceHandle: p.workspaceHandle,
+    },
+  )
   const getWorkspaceInvitationsResult = createQueryCached<WorkspaceInvitationModel[]>(
     getWorkspaceInvitationsQuery,
     "workspaceInvitationsListQuery" + "/" + p.workspaceHandle,
@@ -86,9 +89,13 @@ function WorkspaceInvitationListLoader(p: WorkspaceInvitationListLoaderProps) {
         subtitle={ttc("Manage invitations of this workspace")}
         class="mb-4"
       >
-        <LinkButton icon={mdiPlus} href={urlWorkspaceInvitationAdd(p.workspaceHandle)} variant={buttonVariant.filledGreen}>
+        <LinkButtonInternal
+          icon={mdiPlus}
+          to={urlWorkspaceInvitationAdd(p.workspaceHandle)}
+          variant={buttonVariant.filledGreen}
+        >
           {ttc("Add Invitation")}
-        </LinkButton>
+        </LinkButtonInternal>
       </PageHeader>
       <Switch fallback={<p>Fallback content</p>}>
         <Match when={getWorkspaceInvitationsResult() === undefined}>

@@ -7,7 +7,7 @@ import type { HasWorkspaceHandle } from "#src/workspace/workspace_model_field/Ha
 import { workspacePageSection } from "#src/workspace/workspace_ui/view/workspacePageSection.tsx"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { mdiEmail } from "@mdi/js"
@@ -24,7 +24,9 @@ export function WorkspaceInvitationListSection(p: WorkspaceInvitationsProps) {
       <Header {...rest} />
       <Show when={p.invitations.length > 0} fallback={<NoWorkspaceInvitationsText />}>
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <For each={p.invitations}>{(invitation) => <WorkspaceInvitationCard {...rest} invitation={invitation} />}</For>
+          <For each={p.invitations}>
+            {(invitation) => <WorkspaceInvitationCard {...rest} invitation={invitation} />}
+          </For>
         </div>
       </Show>
     </section>
@@ -37,15 +39,15 @@ function NoWorkspaceInvitationsText() {
 
 function Header(p: WorkspaceInvitationsProps) {
   return (
-    <SectionHeader icon={mdiEmail} href={urlWorkspaceInvitationAdd(p.workspaceHandle)} title={ttc("Member Invitations")}>
-      <LinkButton
-        href={urlWorkspaceInvitationAdd(p.workspaceHandle)}
+    <SectionHeader icon={mdiEmail} to={urlWorkspaceInvitationAdd(p.workspaceHandle)} title={ttc("Member Invitations")}>
+      <LinkButtonInternal
+        to={urlWorkspaceInvitationAdd(p.workspaceHandle)}
         variant={buttonVariant.subtle}
         icon={formModeIcon.add}
         class="hover:bg-gray-200"
       >
         {ttc("Invite Member")}
-      </LinkButton>
+      </LinkButtonInternal>
     </SectionHeader>
   )
 }

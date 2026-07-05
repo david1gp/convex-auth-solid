@@ -5,7 +5,11 @@ import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
 import { NavUserProfile } from "#src/app/nav/NavUserProfile.tsx"
-import { createSignalObject, createStepUrlSignal, type SignalObject } from "#src/auth/ui/profile_me/createStepUrlSignal.ts"
+import {
+  createSignalObject,
+  createStepUrlSignal,
+  type SignalObject,
+} from "#src/auth/ui/profile_me/createStepUrlSignal.ts"
 import { profileMeFormFieldConfig } from "#src/auth/ui/profile_me/profileMeFormFieldConfig.ts"
 import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts"
 import { userSessionGet, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"

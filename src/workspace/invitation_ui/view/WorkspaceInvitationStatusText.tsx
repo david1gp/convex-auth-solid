@@ -1,7 +1,10 @@
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { workspaceInvitationStatusText } from "#src/workspace/invitation_ui/orgInvitationStatus.ts"
-import { invitationModelToStatus, type WorkspaceInvitationStatus } from "#src/workspace/invitation_ui/orgInvitationStatus.ts"
+import {
+  invitationModelToStatus,
+  type WorkspaceInvitationStatus,
+} from "#src/workspace/invitation_ui/orgInvitationStatus.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"

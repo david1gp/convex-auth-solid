@@ -7,7 +7,7 @@ import { urlSupportMailTo, urlSupportTelegram } from "#src/app/url/urlSupport.ts
 import { DeleteEarlierSessions } from "#src/auth/ui/sign_in/existing/DeleteEarlierSessions.tsx"
 import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { iconTelegram } from "#ui/static/icons/iconTelegram.ts"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { SuccessPage } from "#ui/static/pages/SuccessPage.jsx"
@@ -49,12 +49,22 @@ export function AccessBlocked() {
 
         <p class="font-medium mb-2">{ttc("Contact us:")}</p>
         <div class="flex flex-col gap-2 mb-4">
-          <LinkButton href={urlSupportMailTo} icon={mdiEmail} variant={buttonVariant.link} class="justify-start">
+          <LinkButtonExternal
+            href={urlSupportMailTo}
+            icon={mdiEmail}
+            variant={buttonVariant.link}
+            class="justify-start"
+          >
             {ttc("E-Mail")}
-          </LinkButton>
-          <LinkButton href={urlSupportTelegram} icon={iconTelegram} variant={buttonVariant.link} class="justify-start">
+          </LinkButtonExternal>
+          <LinkButtonExternal
+            href={urlSupportTelegram}
+            icon={iconTelegram}
+            variant={buttonVariant.link}
+            class="justify-start"
+          >
             {ttc("Telegram")}
-          </LinkButton>
+          </LinkButtonExternal>
         </div>
 
         <DevModeToggle class="mt-2" />

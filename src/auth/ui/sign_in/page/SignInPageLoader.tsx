@@ -8,4 +8,6 @@ export function SignInPageLoader() {
   return <SignInPageAsync />
 }
 
-const SignInPageAsync = lazy(() => import("#src/auth/ui/sign_in/page/SignInPage.tsx").then((c) => ({ default: c.SignInPage })))
+const SignInPageAsync = lazy(() =>
+  import("#src/auth/ui/sign_in/page/SignInPage.tsx").then((c) => ({ default: c.SignInPage })),
+)

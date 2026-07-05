@@ -9,9 +9,9 @@ import { userDeleteHardFiles } from "#src/auth/convex/user/delete_hard_parts/use
 import { userDeleteHardOrgMemberships } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardOrgMemberships.ts"
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.ts"
 import {
-    userDeleteValidatorInternal,
-    userDeleteValidatorPublic,
-    type UserDeleteValidatorInternalType,
+  userDeleteValidatorInternal,
+  userDeleteValidatorPublic,
+  type UserDeleteValidatorInternalType,
 } from "./userDeleteValidator.js"
 
 export const userDeleteHardMutation = mutation({

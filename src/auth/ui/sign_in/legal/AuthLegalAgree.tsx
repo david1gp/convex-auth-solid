@@ -1,7 +1,7 @@
 import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { authLegalAgreeText, type AuthLegalAgreeVariant } from "#src/auth/ui/sign_in/legal/authLegalAgreeVariant.tsx"
-import { LinkText } from "#ui/interactive/link/LinkText.jsx"
+import { LinkTextExternal } from "#ui/interactive/link/LinkText.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
@@ -20,13 +20,13 @@ export function AuthLegalAgree(p: AuthLegalAgreeProps) {
   return (
     <div class={classMerge("text-muted-foreground", p.class)}>
       {authLegalAgreeText(p.variant)}
-      <LinkText href={baseUrlSite + "/terms"} class="mx-1">
+      <LinkTextExternal href={baseUrlSite + "/terms"} class="mx-1">
         {ttc("Terms of Service")}
-      </LinkText>
+      </LinkTextExternal>
       {ttc("and")}
-      <LinkText href={baseUrlSite + "/privacy"} class="mx-1">
+      <LinkTextExternal href={baseUrlSite + "/privacy"} class="mx-1">
         {ttc("Privacy Policy")}
-      </LinkText>
+      </LinkTextExternal>
     </div>
   )
 }

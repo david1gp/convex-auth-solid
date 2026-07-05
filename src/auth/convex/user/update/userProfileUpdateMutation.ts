@@ -4,8 +4,8 @@ import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/sav
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import {
-    type UserProfileFieldsTypeInternal,
-    userProfileFieldsBase,
+  type UserProfileFieldsTypeInternal,
+  userProfileFieldsBase,
 } from "#src/auth/convex/user/update/userProfileUpdateMutationInternal.ts"
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"

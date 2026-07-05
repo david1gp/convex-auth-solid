@@ -8,20 +8,20 @@ import type { DocUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.tsx"
 import {
-    userProfileFormStateManagement,
-    type UserProfileFormStateManagement,
+  userProfileFormStateManagement,
+  type UserProfileFormStateManagement,
 } from "#src/auth/ui/profile/userProfileFormState.ts"
 import { urlUserProfileView } from "#src/auth/url/pageRouteAuth.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 export function UserProfilePage() {
-  const params = useParams()
-  const getUsername = () => params.username
+  const params = useParams({ strict: false })
+  const getUsername = () => params().username
   return (
     <Switch>
       <Match when={!getUsername()}>

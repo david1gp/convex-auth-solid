@@ -11,7 +11,9 @@ const OrgInvitationAddPage = lazy(() =>
   import("#src/org/invitation_ui/mutate/OrgInvitationAddPage.tsx").then((c) => ({ default: c.OrgInvitationAddPage })),
 )
 const OrgInvitationAcceptPage = lazy(() =>
-  import("#src/org/invitation_ui/accept/OrgInvitationAcceptPage.tsx").then((c) => ({ default: c.OrgInvitationAcceptPage })),
+  import("#src/org/invitation_ui/accept/OrgInvitationAcceptPage.tsx").then((c) => ({
+    default: c.OrgInvitationAcceptPage,
+  })),
 )
 
 export function getRoutesOrgInvitation(): RouteObject[] {

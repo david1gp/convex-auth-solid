@@ -6,15 +6,15 @@ import { urlWorkspaceMemberDelete } from "#src/workspace/member_url/urlWorkspace
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 const mode = formMode.remove
 
 export function WorkspaceMemberDeletePage() {
-  const params = useParams()
-  const getWorkspaceHandle = () => params.workspaceHandle
-  const getMemberId = () => params.memberId
+  const params = useParams({ strict: false })
+  const getWorkspaceHandle = () => params().workspaceHandle
+  const getMemberId = () => params().memberId
   return (
     <Switch>
       <Match when={!getWorkspaceHandle()}>

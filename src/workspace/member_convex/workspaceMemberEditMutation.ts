@@ -22,7 +22,10 @@ export const workspaceMemberEditMutation = mutation({
   handler: async (ctx, args) => authMutationResult(ctx, args, workspaceMemberEditFn),
 })
 
-export async function workspaceMemberEditFn(ctx: MutationCtx, args: WorkspaceMemberEditValidatorType): PromiseResult<null> {
+export async function workspaceMemberEditFn(
+  ctx: MutationCtx,
+  args: WorkspaceMemberEditValidatorType,
+): PromiseResult<null> {
   const op = "workspaceMemberEditFn"
 
   const workspace = await ctx.db

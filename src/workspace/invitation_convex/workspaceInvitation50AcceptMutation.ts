@@ -70,10 +70,7 @@ export async function workspaceInvitation50AcceptFn(
     return createResultError(op, "User not found", userId)
   }
 
-  if (
-    user.email &&
-    user.email.toLowerCase().trim() !== invitation.invitedEmail.toLowerCase().trim()
-  ) {
+  if (user.email && user.email.toLowerCase().trim() !== invitation.invitedEmail.toLowerCase().trim()) {
     const errorMessage = stt(
       "Email mismatch, please use the same email as in the invitation (" + invitation.invitedEmail + ").",
     )

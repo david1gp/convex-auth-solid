@@ -4,8 +4,8 @@ import { createResult, createResultError, type PromiseResult } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
 import { languageValidator } from "#src/app/i18n/language.ts"
 import {
-    sendEmailOrgInvitation,
-    type GenerateEmailOrgInvitationProps,
+  sendEmailOrgInvitation,
+  type GenerateEmailOrgInvitationProps,
 } from "#src/auth/convex/email/sendEmailOrgInvitation.ts"
 import type { OrgInvitationDataModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.ts"

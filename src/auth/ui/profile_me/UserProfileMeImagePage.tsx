@@ -13,7 +13,7 @@ import { classesCard } from "#src/ui/card/classesCard.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
@@ -155,9 +155,9 @@ function UserProfileImageForm() {
       </div>
 
       <div class="mt-6 flex justify-start">
-        <LinkButton icon={mdiArrowLeft} href={urlUserProfileMe()} variant={buttonVariant.link}>
+        <LinkButtonInternal icon={mdiArrowLeft} to={urlUserProfileMe()} variant={buttonVariant.link}>
           {ttc("Back to Profile")}
-        </LinkButton>
+        </LinkButtonInternal>
       </div>
     </div>
   )

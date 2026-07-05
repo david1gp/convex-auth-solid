@@ -1,7 +1,10 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
-import { workspaceInvitationFormConfig, workspaceInvitationFormField } from "#src/workspace/invitation_ui/form/workspaceInvitationFormField.ts"
+import {
+  workspaceInvitationFormConfig,
+  workspaceInvitationFormField,
+} from "#src/workspace/invitation_ui/form/workspaceInvitationFormField.ts"
 import type { WorkspaceInvitationFormStateManagement } from "#src/workspace/invitation_ui/form/workspaceInvitationFormStateManagement.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
@@ -18,7 +21,8 @@ interface HasWorkspaceInvitationFormStateManagement {
   sm: WorkspaceInvitationFormStateManagement
 }
 
-export interface WorkspaceInvitationContentProps extends MayHaveTitle, MayHaveClass, HasWorkspaceInvitationFormStateManagement {
+export interface WorkspaceInvitationContentProps
+  extends MayHaveTitle, MayHaveClass, HasWorkspaceInvitationFormStateManagement {
   mode: FormMode
 }
 

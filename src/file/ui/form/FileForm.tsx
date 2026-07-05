@@ -15,7 +15,7 @@ import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { LabelPseudo } from "#ui/input/label/LabelPseudo.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButton } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { Show } from "solid-js"
@@ -37,13 +37,13 @@ export function FileForm(p: FileFormProps) {
       <div class="flex flex-wrap justify-between mt-6 mb-2">
         <h1 class="text-2xl font-bold">{getFileTitle(p.mode)}</h1>
         {p.mode === formMode.edit && (
-          <LinkButton
-            href={urlFileRemove(p.resourceId, p.fileId)}
+          <LinkButtonInternal
+            to={urlFileRemove(p.resourceId, p.fileId)}
             icon={formModeIcon.remove}
             variant={buttonVariant.link}
           >
             {ttc("Remove")}
-          </LinkButton>
+          </LinkButtonInternal>
         )}
       </div>
       <form class="space-y-4" onSubmit={p.sm.handleSubmit}>
@@ -53,7 +53,9 @@ export function FileForm(p: FileFormProps) {
           type="submit"
           isLoading={p.sm.isSubmitting.get()}
           icon={formModeIcon[p.mode]}
-          variant={p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo}
+          variant={
+            p.mode === formMode.remove || p.sm.hasErrors() ? buttonVariant.filledRed : buttonVariant.filledIndigo
+          }
           class="w-full"
         >
           {p.sm.isSubmitting.get() ? ttc("Saving...") : getFileTitle(p.mode)}

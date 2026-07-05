@@ -6,14 +6,14 @@ import { urlOrgEdit } from "#src/org/org_url/urlOrg.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 const mode = formMode.edit
 
 export function OrgEditPage() {
-  const params = useParams()
-  const getOrgHandleParam = () => params.orgHandle
+  const params = useParams({ strict: false })
+  const getOrgHandleParam = () => params().orgHandle
   return (
     <Switch>
       <Match when={!getOrgHandleParam()}>

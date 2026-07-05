@@ -9,9 +9,9 @@ import { envMode } from "#ui/env/envMode.ts"
 import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi.js"
 import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
 import {
-    apiGenerateEmailSignInV1,
-    type GeneratedEmailType,
-    type SignInV1Type,
+  apiGenerateEmailSignInV1,
+  type GeneratedEmailType,
+  type SignInV1Type,
 } from "@adaptive-ds/email-generator/index.js"
 
 export async function sendEmailSignIn(email: string, code: string, url: string, l: Language): PromiseResult<null> {

@@ -8,7 +8,7 @@ import { type HasFormMode, formMode, getFormModeTitle } from "#ui/input/form/for
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
-import { LinkButtonIconOnly } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
+import { LinkButtonIconOnlyExternal, LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { classesCardWrapper } from "#ui/static/card/classesCardWrapper.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -29,7 +29,13 @@ export function FileCardLine(p: FileCardLineProps) {
       )}
     >
       <h3 class="text-lg font-semibold break-all font-mono flex items-center flex-1">{p.file.displayName}</h3>
-      <LinkButtonIconOnly icon={mdiEye} href={p.file.url} variant={buttonVariant.ghost} newTab title={ttc("View")} />
+      <LinkButtonIconOnlyExternal
+        icon={mdiEye}
+        href={p.file.url}
+        variant={buttonVariant.ghost}
+        newTab
+        title={ttc("View")}
+      />
       <ButtonIconOnly
         icon={mdiDownload}
         variant={buttonVariant.ghost}
@@ -48,15 +54,15 @@ export function FileCardLine(p: FileCardLineProps) {
 
       <Show when={p.mode !== formMode.view}>
         <>
-          <LinkButtonIconOnly
+          <LinkButtonIconOnlyInternal
             icon={formModeIcon.edit}
-            href={urlFileEdit(p.resourceId, p.file.fileId)}
+            to={urlFileEdit(p.resourceId, p.file.fileId)}
             variant={buttonVariant.ghost}
             title={getFormModeTitle(formMode.edit, "File")}
           />
-          <LinkButtonIconOnly
+          <LinkButtonIconOnlyInternal
             icon={formModeIcon.remove}
-            href={urlFileRemove(p.resourceId, p.file.fileId)}
+            to={urlFileRemove(p.resourceId, p.file.fileId)}
             variant={buttonVariant.ghost}
             title={getFormModeTitle(formMode.remove, "File")}
           />

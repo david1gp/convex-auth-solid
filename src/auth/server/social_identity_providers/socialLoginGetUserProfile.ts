@@ -4,18 +4,18 @@ import { authLog } from "#src/auth/server/authLog.ts"
 import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import { getGithubOathToken } from "#src/auth/server/social_identity_providers/getGithubOathToken.ts"
 import {
-    getGithubUserProfile,
-    type GitHubUserProfile,
+  getGithubUserProfile,
+  type GitHubUserProfile,
 } from "#src/auth/server/social_identity_providers/getGithubUserProfile.ts"
 import { getGoogleOauthToken } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.ts"
 import {
-    getGoogleUserProfile,
-    type GoogleUserProfile,
+  getGoogleUserProfile,
+  type GoogleUserProfile,
 } from "#src/auth/server/social_identity_providers/getGoogleUserProfile.ts"
 import { getMicrosoftOauthToken } from "#src/auth/server/social_identity_providers/getMicrosoftOauthToken.ts"
 import {
-    getMicrosoftUserProfile,
-    type MicrosoftUserProfile,
+  getMicrosoftUserProfile,
+  type MicrosoftUserProfile,
 } from "#src/auth/server/social_identity_providers/getMicrosoftUserProfile.ts"
 
 export const socialLoginGetUserProfile = {

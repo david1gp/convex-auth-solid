@@ -4,7 +4,9 @@ import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.ts"
 import { lazy } from "solid-js"
 
 const SignUpPage = lazy(() => import("#src/auth/ui/sign_up/SignUpPage.tsx").then((c) => ({ default: c.SignUpPage })))
-const SignInPage = lazy(() => import("#src/auth/ui/sign_in/page/SignInPage.tsx").then((c) => ({ default: c.SignInPage })))
+const SignInPage = lazy(() =>
+  import("#src/auth/ui/sign_in/page/SignInPage.tsx").then((c) => ({ default: c.SignInPage })),
+)
 const SignInErrorPage = lazy(() =>
   import("#src/auth/ui/sign_in/error/SignInErrorPage.tsx").then((c) => ({ default: c.SignInErrorPage })),
 )

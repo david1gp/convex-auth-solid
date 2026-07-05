@@ -8,12 +8,12 @@ import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@solidjs/router"
+import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 
 export function ResourceFileAddPage() {
-  const params = useParams()
-  const getResourceIdParam = () => params.resourceId
+  const params = useParams({ strict: false })
+  const getResourceIdParam = () => params().resourceId
   return (
     <Switch>
       <Match when={!getResourceIdParam()}>

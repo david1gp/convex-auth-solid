@@ -16,7 +16,8 @@ import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { Match, Switch } from "solid-js"
 
-interface WorkspaceMemberMutateProps extends HasWorkspaceHandle, HasWorkspaceMemberId, HasFormModeMutate, MayHaveClass {}
+interface WorkspaceMemberMutateProps
+  extends HasWorkspaceHandle, HasWorkspaceMemberId, HasFormModeMutate, MayHaveClass {}
 
 export function WorkspaceMemberMutate(p: WorkspaceMemberMutateProps) {
   const getMember = createQuery(api.workspace.workspaceMemberGetQuery, {
@@ -32,7 +33,12 @@ export function WorkspaceMemberMutate(p: WorkspaceMemberMutateProps) {
       </Match>
       <Match when={resultHasErrorMessage(getMember())}>{(errorMessage) => <ErrorPage title={errorMessage()} />}</Match>
       <Match when={member()}>
-        <WorkspaceMemberMutateForm mode={p.mode} workspaceHandle={p.workspaceHandle} memberId={p.memberId} member={member()!} />
+        <WorkspaceMemberMutateForm
+          mode={p.mode}
+          workspaceHandle={p.workspaceHandle}
+          memberId={p.memberId}
+          member={member()!}
+        />
       </Match>
     </Switch>
   )

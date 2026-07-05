@@ -102,10 +102,5 @@ function addHttpRoutesAuthProfile(http: HttpRouter) {
     userEmailChange2ConfirmHandler,
   )
   // Delete user routes
-  addRouteWithCors(
-    http,
-    apiAuthBasePath + apiPathAuth.userDelete,
-    httpMethod.POST,
-    userDelete1RequestHandler,
-  )
+  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.userDelete, httpMethod.POST, userDelete1RequestHandler)
 }

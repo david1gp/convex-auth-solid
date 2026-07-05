@@ -5,9 +5,9 @@ import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/Id
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
 import {
-    invitationModelToStatus,
-    workspaceInvitationStatusIcon,
-    workspaceInvitationStatusText,
+  invitationModelToStatus,
+  workspaceInvitationStatusIcon,
+  workspaceInvitationStatusText,
 } from "#src/workspace/invitation_ui/orgInvitationStatus.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
@@ -145,6 +145,9 @@ interface WorkspaceInvitationStatusIconProps extends MayHaveClass {
 
 function WorkspaceInvitationStatusIcon(p: WorkspaceInvitationStatusIconProps) {
   return (
-    <Icon path={workspaceInvitationStatusIcon[invitationModelToStatus(p.invitation)]} class={classMerge("size-8", p.class)} />
+    <Icon
+      path={workspaceInvitationStatusIcon[invitationModelToStatus(p.invitation)]}
+      class={classMerge("size-8", p.class)}
+    />
   )
 }

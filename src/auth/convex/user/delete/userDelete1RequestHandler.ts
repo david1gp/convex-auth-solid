@@ -30,7 +30,10 @@ export async function userDelete1RequestHandler(ctx: ActionCtx, request: Request
     const result = await ctx.runMutation(api.auth.userDeleteSoftMutation, args)
 
     if (!result.success) {
-      return Response.json({ success: false, op: result.op, errorMessage: result.errorMessage, errorData: result.errorData }, { status: 400 })
+      return Response.json(
+        { success: false, op: result.op, errorMessage: result.errorMessage, errorData: result.errorData },
+        { status: 400 },
+      )
     }
 
     return Response.json({ success: true, data: null })

@@ -4,8 +4,8 @@ import { createResultError, type PromiseResult } from "#result"
 import { languageValidator } from "#src/app/i18n/language.ts"
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 import {
-    orgInvitation32SendEmailActionFn,
-    type OrgInvitationSendEmailValidatorType,
+  orgInvitation32SendEmailActionFn,
+  type OrgInvitationSendEmailValidatorType,
 } from "#src/org/invitation_convex/orgInvitation32SendEmailActionFn.ts"
 import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.ts"
 import { stt1 } from "#src/utils/i18n/stt.ts"
