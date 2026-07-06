@@ -1,10 +1,10 @@
-import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
 import { vIdOrg } from "#src/org/org_convex/vIdOrg.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 
 export type OrgResourceRemoveMutationValidatorType = typeof orgResourceRemoveValidator.type
 

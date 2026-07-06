@@ -1,3 +1,4 @@
+import { posthog } from "posthog-js"
 import { createResultError, type PromiseResult } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { FileModel } from "#src/file/model/FileModel.ts"
@@ -8,7 +9,6 @@ import type { MayHaveResourceId } from "#src/resource/model/MayHaveResourceId.ts
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import type { SignalObject } from "#ui/utils/createSignalObject.ts"
-import { posthog } from "posthog-js"
 
 export interface ImageUploadHandlerProps extends MayHaveResourceId {
   file: File

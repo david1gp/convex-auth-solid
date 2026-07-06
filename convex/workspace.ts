@@ -54,7 +54,10 @@ export {
   getWorkspaceMemberHandleAndRoleInternalQuery,
   workspaceMemberGetHandleAndRoleFn,
 } from "#src/workspace/member_convex/workspaceMemberGetHandleAndRoleInternalQuery.ts"
-export { workspaceMemberGetFn, workspaceMemberGetQuery } from "#src/workspace/member_convex/workspaceMemberGetQuery.ts"
+export {
+  workspaceMemberGetFn,
+  workspaceMemberGetQuery,
+} from "#src/workspace/member_convex/workspaceMemberGetQuery.ts"
 export {
   workspaceMemberListFn,
   workspaceMemberListQuery,
@@ -67,10 +70,19 @@ export {
   workspaceDeleteInternal,
   workspaceDeleteMutation,
 } from "#src/workspace/workspace_convex/workspaceDeleteMutation.ts"
-export { workspaceEditInternal, workspaceEditMutation } from "#src/workspace/workspace_convex/workspaceEditMutation.ts"
-export { workspaceGetInternal, workspaceGetQuery } from "#src/workspace/workspace_convex/workspaceGetQuery.ts"
+export {
+  workspaceEditInternal,
+  workspaceEditMutation,
+} from "#src/workspace/workspace_convex/workspaceEditMutation.ts"
+export {
+  workspaceGetInternal,
+  workspaceGetQuery,
+} from "#src/workspace/workspace_convex/workspaceGetQuery.ts"
 export {
   workspaceHandleAvailable,
   workspaceHandleAvailableInternal,
 } from "#src/workspace/workspace_convex/workspaceHandleAvailableQuery.ts"
-export { workspaceListInternal, workspacesListQuery } from "#src/workspace/workspace_convex/workspaceListQuery.ts"
+export {
+  workspaceListInternal,
+  workspacesListQuery,
+} from "#src/workspace/workspace_convex/workspaceListQuery.ts"

@@ -1,3 +1,6 @@
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime.js"
+import { For, type JSX, Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { DeleteEarlierSessions } from "#src/auth/ui/sign_in/existing/DeleteEarlierSessions.tsx"
@@ -12,9 +15,6 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.ts"
-import dayjs from "dayjs"
-import relativeTime from "dayjs/plugin/relativeTime.js"
-import { For, Show, type JSX } from "solid-js"
 
 dayjs.extend(relativeTime)
 

@@ -1,3 +1,8 @@
+import {
+  apiGenerateEmailSignUpV1,
+  type GeneratedEmailType,
+  type SignUpV1Type,
+} from "@adaptive-ds/email-generator/index.js"
 import { createResult, type PromiseResult } from "#result"
 import { envBaseUrlEmailGeneratorResult } from "#src/app/env/private/envBaseUrlEmailGeneratorResult.ts"
 import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.ts"
@@ -6,13 +11,8 @@ import { createAuthResendEnvVariableNames } from "#src/auth/convex/email/createA
 import { generateSharedEmailProps } from "#src/auth/convex/email/generateSharedEmailProps.ts"
 import { sendTelegramMessageAuth } from "#src/auth/convex/telegram/sendTelegramMessageTechnical.ts"
 import { envMode } from "#ui/env/envMode.ts"
-import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
 import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi.js"
-import {
-  apiGenerateEmailSignUpV1,
-  type GeneratedEmailType,
-  type SignUpV1Type,
-} from "@adaptive-ds/email-generator/index.js"
+import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
 
 export async function sendEmailSignUp(
   name: string,

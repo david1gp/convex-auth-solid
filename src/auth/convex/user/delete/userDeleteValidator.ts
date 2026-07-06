@@ -1,12 +1,15 @@
+import { v } from "convex/values"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 
 export const userDeleteFields = {
   email: v.optional(v.string()),
 } as const
 
-export const userDeleteValidatorInternal = v.object({ ...userDeleteFields, userId: vIdUser })
+export const userDeleteValidatorInternal = v.object({
+  ...userDeleteFields,
+  userId: vIdUser,
+})
 
 export type UserDeleteValidatorInternalType = typeof userDeleteValidatorInternal.type
 

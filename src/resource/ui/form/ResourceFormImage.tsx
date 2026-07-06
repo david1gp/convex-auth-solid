@@ -1,16 +1,16 @@
+import { mdiTrashCanOutline } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { UploadAreaImage } from "#src/file/ui/upload_image/UploadAreaImage.tsx"
 import { resourceFormConfig, resourceFormField } from "#src/resource/ui/form/resourceFormField.ts"
-import { type ResourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
+import type { ResourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { classesCard } from "#src/ui/card/classesCard.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { Label } from "#ui/input/label/Label.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiTrashCanOutline } from "@mdi/js"
-import { Show } from "solid-js"
 
 interface HasResourceFormStateManagement {
   sm: ResourceFormStateManagement

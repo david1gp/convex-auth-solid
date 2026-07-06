@@ -1,3 +1,4 @@
+import { mdiTranslateVariant } from "@mdi/js"
 import { language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"
 import { languageSignal, languageSignalRegisterHandler } from "#src/app/i18n/languageSignal.ts"
@@ -6,7 +7,6 @@ import { CheckSingle } from "#ui/input/check/CheckSingle.jsx"
 import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiTranslateVariant } from "@mdi/js"
 import { tbLanguageDescription } from "./i18n/tbLanguageDescription.js"
 import { tbSelectLanguage } from "./i18n/tbSelectLanguage.js"
 

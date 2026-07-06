@@ -1,7 +1,7 @@
-import { workspaceInvitationDataSchemaFields } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { defineTable } from "convex/server"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
-import { defineTable } from "convex/server"
+import { workspaceInvitationDataSchemaFields } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 
 export const workspaceInvitationTables = {
   workspaceInvitations: defineTable({

@@ -1,3 +1,5 @@
+import { useParams } from "@tanstack/solid-router"
+import { createEffect, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { Result, ResultErr } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -5,7 +7,7 @@ import { NavOrg } from "#src/app/nav/NavOrg.tsx"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { OrgInvitationListSection } from "#src/org/invitation_ui/list/OrgInvitationListSection.tsx"
 import { OrgMemberListSection } from "#src/org/member_ui/list/OrgMemberListSection.tsx"
-import { orgViewPageSchema, type OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
+import { type OrgViewPageType, orgViewPageSchema } from "#src/org/org_model/OrgViewPageType.ts"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { orgNameSet } from "#src/org/org_ui/orgNameRecordSignal.ts"
 import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
@@ -14,8 +16,6 @@ import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { useParams } from "@tanstack/solid-router"
-import { createEffect, Match, Switch } from "solid-js"
 
 export function OrgViewPage() {
   const params = useParams({ strict: false })

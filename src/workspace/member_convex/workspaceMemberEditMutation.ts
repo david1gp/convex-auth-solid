@@ -1,11 +1,11 @@
-import { mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import type { DocWorkspaceMember, IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
-import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import type { DocWorkspaceMember, IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
+import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
 
 export type WorkspaceMemberEditValidatorType = typeof workspaceMemberEditValidator.type
 

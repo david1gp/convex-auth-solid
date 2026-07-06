@@ -1,10 +1,10 @@
+import { mdiClose } from "@mdi/js"
+import { For } from "solid-js"
 import type { FilterFieldConfig } from "#src/ui/input/search/FilterFieldConfig.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { dateFormatFull } from "#utils/date/dateFormat.js"
-import { mdiClose } from "@mdi/js"
-import { For } from "solid-js"
 
 export function SearchFilterButtons<T extends Record<string, string>>(p: FilterButtonProps<T>) {
   function handleFilterRemove(fieldKey: string) {

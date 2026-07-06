@@ -5,15 +5,9 @@
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "types": [
-      "bun"
-    ],
+    "types": ["bun"],
     // dom
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     // performance
@@ -40,14 +34,7 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "convex",
-    "src",
-    "ui",
-    "test",
-    "vite.config.ts",
-    "rsbuild.config.ts"
-  ],
+  "include": ["convex", "src", "ui", "test", "vite.config.ts", "rsbuild.config.ts"],
   "exclude": [
     ".idea",
     ".vscode",

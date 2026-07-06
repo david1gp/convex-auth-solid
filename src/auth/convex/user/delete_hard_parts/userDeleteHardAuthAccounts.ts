@@ -1,4 +1,4 @@
-import { type MutationCtx } from "#convex/_generated/server.js"
+import type { MutationCtx } from "#convex/_generated/server.js"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 
 export async function userDeleteHardAuthAccounts(ctx: MutationCtx, userId: IdUser): Promise<void> {

@@ -1,17 +1,27 @@
+import { lazy } from "solid-js"
 import type { PageNameAuth } from "#src/auth/url/pageNameAuth.ts"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.ts"
-import { lazy } from "solid-js"
 
-const SignUpPage = lazy(() => import("#src/auth/ui/sign_up/SignUpPage.tsx").then((c) => ({ default: c.SignUpPage })))
+const SignUpPage = lazy(() =>
+  import("#src/auth/ui/sign_up/SignUpPage.tsx").then((c) => ({
+    default: c.SignUpPage,
+  })),
+)
 const SignInPage = lazy(() =>
-  import("#src/auth/ui/sign_in/page/SignInPage.tsx").then((c) => ({ default: c.SignInPage })),
+  import("#src/auth/ui/sign_in/page/SignInPage.tsx").then((c) => ({
+    default: c.SignInPage,
+  })),
 )
 const SignInErrorPage = lazy(() =>
-  import("#src/auth/ui/sign_in/error/SignInErrorPage.tsx").then((c) => ({ default: c.SignInErrorPage })),
+  import("#src/auth/ui/sign_in/error/SignInErrorPage.tsx").then((c) => ({
+    default: c.SignInErrorPage,
+  })),
 )
 const RegistrationConfirmEmailPage = lazy(() =>
-  import("#src/auth/ui/sign_up/email/SignUpConfirmEmailPage.tsx").then((c) => ({ default: c.SignUpConfirmEmailPage })),
+  import("#src/auth/ui/sign_up/email/SignUpConfirmEmailPage.tsx").then((c) => ({
+    default: c.SignUpConfirmEmailPage,
+  })),
 )
 const SignInViaEmailEnterOtpPage = lazy(() =>
   import("#src/auth/ui/sign_in/via_email_enter_otp/SignInViaEmailEnterOtpPage.tsx").then((c) => ({
@@ -24,10 +34,14 @@ const ViewUserProfilePage = lazy(() =>
   })),
 )
 const UserProfileMePage = lazy(() =>
-  import("#src/auth/ui/profile_me/UserProfileMePage.tsx").then((c) => ({ default: c.UserProfileMePage })),
+  import("#src/auth/ui/profile_me/UserProfileMePage.tsx").then((c) => ({
+    default: c.UserProfileMePage,
+  })),
 )
 const UserProfileMeEditPage = lazy(() =>
-  import("#src/auth/ui/profile_me/UserProfileMeEditPage.tsx").then((c) => ({ default: c.UserProfileMeEditPage })),
+  import("#src/auth/ui/profile_me/UserProfileMeEditPage.tsx").then((c) => ({
+    default: c.UserProfileMeEditPage,
+  })),
 )
 const UserProfileMeChangePasswordPage = lazy(() =>
   import("#src/auth/ui/profile_me/UserProfileMeChangePasswordPage.tsx").then((c) => ({
@@ -40,10 +54,14 @@ const UserProfileMeChangeEmailPage = lazy(() =>
   })),
 )
 const UserProfileMeImagePage = lazy(() =>
-  import("#src/auth/ui/profile_me/UserProfileMeImagePage.tsx").then((c) => ({ default: c.UserProfileMeImagePage })),
+  import("#src/auth/ui/profile_me/UserProfileMeImagePage.tsx").then((c) => ({
+    default: c.UserProfileMeImagePage,
+  })),
 )
 const UserProfileMeDeletePage = lazy(() =>
-  import("#src/auth/ui/profile_me/UserProfileMeDeletePage.tsx").then((c) => ({ default: c.UserProfileMeDeletePage })),
+  import("#src/auth/ui/profile_me/UserProfileMeDeletePage.tsx").then((c) => ({
+    default: c.UserProfileMeDeletePage,
+  })),
 )
 
 export function getRoutesAuth(): RouteObject[] {

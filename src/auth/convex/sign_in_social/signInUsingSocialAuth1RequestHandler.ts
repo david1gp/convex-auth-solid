@@ -6,7 +6,7 @@ import { enableSignInDev } from "#src/app/config/enableSignInDev.ts"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
 import { signInUsingSocialAuth2ActionFn } from "#src/auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
-import { loginProvider, type LoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { type LoginProvider, loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { getDefaultUrlSignedIn } from "#src/auth/url/getDefaultUrlSignedIn.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 import { base64urlEncodeObject } from "#utils/url/base64url.js"
@@ -61,14 +61,18 @@ export async function signInUsingSocialAuth1RequestHandler(
   const userSessionSerializedResult = base64urlEncodeObject(userSession)
   if (!userSessionSerializedResult.success) {
     console.warn(userSessionSerializedResult)
-    return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 400 })
+    return new Response(jsonStringifyPretty(userSessionSerializedResult), {
+      status: 400,
+    })
   }
   const userSessionSerialized = userSessionSerializedResult.data
 
   const hostnameAppResult = envBaseUrlAppResult()
   if (!hostnameAppResult.success) {
     console.error(hostnameAppResult)
-    return new Response(jsonStringifyPretty(hostnameAppResult), { status: 500 })
+    return new Response(jsonStringifyPretty(hostnameAppResult), {
+      status: 500,
+    })
   }
   const hostnameApp = hostnameAppResult.data
   const redirectUrl = new URL(state, hostnameApp)

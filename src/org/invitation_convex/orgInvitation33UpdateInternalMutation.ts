@@ -1,11 +1,11 @@
+import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, createResult, type PromiseResult } from "#result"
 import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
 import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
 import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export type OrgInvitationUpdateValidatorType = typeof orgInvitationUpdateValidator.type
 

@@ -1,5 +1,5 @@
 import type { MutationCtx, QueryCtx } from "#convex/_generated/server.js"
-import { type PromiseResult, createError } from "#result"
+import { createError, type PromiseResult } from "#result"
 import type { DocAuthOtp } from "#src/auth/convex/IdUser.ts"
 import type { OtpPurpose } from "#src/auth/model_field/otpPurpose.ts"
 

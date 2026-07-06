@@ -1,3 +1,5 @@
+import { mdiArrowLeft, mdiEye } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { UploadAreaFile } from "#src/file/ui/upload_file/UploadAreaFile.tsx"
@@ -9,8 +11,6 @@ import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import { mdiArrowLeft, mdiEye } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface ResourceFileAddProps extends HasResourceId {}
 

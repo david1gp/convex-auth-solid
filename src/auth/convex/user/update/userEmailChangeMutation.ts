@@ -1,5 +1,7 @@
-import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
-import { type PromiseResult } from "#result"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
+import type { PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.ts"
 import { verifyHashedPassword2 } from "#src/auth/convex/pw/verifyHashedPassword.ts"
@@ -10,15 +12,16 @@ import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAnd
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export const userEmailChangeFieldsBase = {
   currentPassword: v.optional(v.string()),
   newEmail: v.string(),
 } as const
 
-export const userEmailChangeValidatorInternal = v.object({ ...userEmailChangeFieldsBase, userId: vIdUser })
+export const userEmailChangeValidatorInternal = v.object({
+  ...userEmailChangeFieldsBase,
+  userId: vIdUser,
+})
 export type UserEmailChangeTypeInternal = typeof userEmailChangeValidatorInternal.type
 
 export const userEmailChangeValidatorPublic = createTokenValidator(userEmailChangeFieldsBase)
@@ -69,7 +72,11 @@ async function userEmailChangeFn(ctx: MutationCtx, args: UserEmailChangeTypeInte
     return createErrorAndLogWarn(op, "Email already in use")
   }
 
-  const saveResult = await otpSaveFn(ctx, { userId, email: args.newEmail, purpose: otpPurpose.emailChange })
+  const saveResult = await otpSaveFn(ctx, {
+    userId,
+    email: args.newEmail,
+    purpose: otpPurpose.emailChange,
+  })
   if (!saveResult.success) return saveResult
 
   return { success: true, data: saveResult.data }

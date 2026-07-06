@@ -1,3 +1,5 @@
+import { mdiEmailFast } from "@mdi/js"
+import { Show } from "solid-js"
 import { language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -8,16 +10,14 @@ import type { OrgInvitationFormStateManagement } from "#src/org/invitation_ui/fo
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { CheckSingle } from "#ui/input/check/CheckSingle.jsx"
-import { formMode, getFormModeTitle, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { LabelPseudo } from "#ui/input/label/LabelPseudo.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
+import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
-import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiEmailFast } from "@mdi/js"
-import { Show } from "solid-js"
 
 interface HasOrgInvitationFormStateManagement {
   sm: OrgInvitationFormStateManagement

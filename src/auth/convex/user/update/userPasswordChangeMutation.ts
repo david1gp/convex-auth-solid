@@ -1,5 +1,7 @@
-import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
-import { type PromiseResult } from "#result"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
+import type { PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { hashPassword2 } from "#src/auth/convex/pw/hashPassword.ts"
 import { verifyHashedPassword2 } from "#src/auth/convex/pw/verifyHashedPassword.ts"
@@ -9,15 +11,16 @@ import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutatio
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.ts"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 const userPasswordChangeFieldsBase = {
   currentPassword: v.optional(v.string()),
   newPassword: v.string(),
 } as const
 
-export const userPasswordChangeValidatorInternal = v.object({ ...userPasswordChangeFieldsBase, userId: vIdUser })
+export const userPasswordChangeValidatorInternal = v.object({
+  ...userPasswordChangeFieldsBase,
+  userId: vIdUser,
+})
 export type UserPasswordChangeTypeInternal = typeof userPasswordChangeValidatorInternal.type
 
 export const userPasswordChangeValidatorPublic = createTokenValidator(userPasswordChangeFieldsBase)

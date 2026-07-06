@@ -1,10 +1,10 @@
+import { v } from "convex/values"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import type { IdWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
-import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
 import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
 
 export const workspaceInvitationCreateDataFields = {
   workspaceHandle: v.string(),

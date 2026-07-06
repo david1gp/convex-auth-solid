@@ -1,8 +1,8 @@
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
-import * as a from "valibot"
 
 const userEmailChangeConfirmSchema = a.object({
   token: a.string(),
@@ -14,7 +14,9 @@ export async function userEmailChange2ConfirmHandler(ctx: ActionCtx, request: Re
   const op = "userEmailChangeConfirm1RequestHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const body = await request.text()

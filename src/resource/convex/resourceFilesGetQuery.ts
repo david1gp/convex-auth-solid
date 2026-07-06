@@ -1,4 +1,5 @@
-import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { fileDocToModel } from "#src/file/convex/fileDocToModel.ts"
 import { fileGetByIdFn } from "#src/file/convex/fileGetByIdFn.ts"
@@ -8,7 +9,6 @@ import type { ResourceFilesModel } from "#src/resource/model/ResourceFilesModel.
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { notEmptyFilter } from "#utils/arr/notEmptyFilter.js"
-import { v } from "convex/values"
 
 export const resourceFilesGetFields = {
   resourceId: v.string(),

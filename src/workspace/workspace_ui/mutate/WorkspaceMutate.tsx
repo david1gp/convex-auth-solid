@@ -1,7 +1,7 @@
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model/HasWorkspaceHandle.ts"
 import { WorkspaceForm } from "#src/workspace/workspace_ui/form/WorkspaceForm.tsx"
 import { workspaceFormStateManagement } from "#src/workspace/workspace_ui/form/workspaceFormStateManagement.ts"
-import { WorkspaceLoader, type WorkspaceComponentProps } from "#src/workspace/workspace_ui/view/WorkspaceLoader.tsx"
+import { type WorkspaceComponentProps, WorkspaceLoader } from "#src/workspace/workspace_ui/view/WorkspaceLoader.tsx"
 import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 

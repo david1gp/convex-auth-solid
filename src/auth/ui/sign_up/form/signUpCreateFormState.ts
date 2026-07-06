@@ -1,3 +1,7 @@
+import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import { posthog } from "posthog-js"
+import * as a from "valibot"
 import type { Language } from "#src/app/i18n/language.ts"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -15,10 +19,6 @@ import { stringSchemaName } from "#src/utils/valibot/stringSchema.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import { posthog } from "posthog-js"
-import * as a from "valibot"
 
 export type SignUpFormField = keyof typeof signUpFormField
 
@@ -181,16 +181,32 @@ async function handleSubmit(e: SubmitEvent, s: SignUpFormState) {
 
   if (!isSuccess) {
     if (!nameResult.success) {
-      toastAdd({ title: nameResult.issues[0].message, icon: signUpFormFieldIcon.name, id: signUpFormField.name })
+      toastAdd({
+        title: nameResult.issues[0].message,
+        icon: signUpFormFieldIcon.name,
+        id: signUpFormField.name,
+      })
     }
     if (!emailResult.success) {
-      toastAdd({ title: emailResult.issues[0].message, icon: signUpFormFieldIcon.email, id: signUpFormField.email })
+      toastAdd({
+        title: emailResult.issues[0].message,
+        icon: signUpFormFieldIcon.email,
+        id: signUpFormField.email,
+      })
     }
     if (!pwResult.success) {
-      toastAdd({ title: pwResult.issues[0].message, icon: signUpFormFieldIcon.pw, id: signUpFormField.pw })
+      toastAdd({
+        title: pwResult.issues[0].message,
+        icon: signUpFormFieldIcon.pw,
+        id: signUpFormField.pw,
+      })
     }
     if (!termsResult.success) {
-      toastAdd({ title: termsResult.issues[0].message, icon: signUpFormFieldIcon.terms, id: signUpFormField.terms })
+      toastAdd({
+        title: termsResult.issues[0].message,
+        icon: signUpFormFieldIcon.terms,
+        id: signUpFormField.terms,
+      })
     }
     return
   }
@@ -227,7 +243,10 @@ async function handleSignUp(values: HandleSignUpData, s: SignUpFormState) {
     }
     return
   }
-  toastAdd({ title: ttc("Successfully signed up"), variant: toastVariant.success })
+  toastAdd({
+    title: ttc("Successfully signed up"),
+    variant: toastVariant.success,
+  })
   const returnPathSearch = searchParamGet("returnPath")
   const returnPath = returnPathSearch || urlSignInRedirectUrl(location.pathname)
   console.log(op, "returnPath:", returnPath)

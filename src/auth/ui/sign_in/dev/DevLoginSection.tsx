@@ -1,3 +1,4 @@
+import { mdiAccountHardHat } from "@mdi/js"
 import { enableSignInDev } from "#src/app/config/enableSignInDev.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { AuthSectionCard } from "#src/auth/ui/shared/AuthSectionCard.tsx"
@@ -11,7 +12,6 @@ import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiAccountHardHat } from "@mdi/js"
 
 export function DevLoginSection(p: MayHaveClass) {
   if (!enableSignInDev()) return null

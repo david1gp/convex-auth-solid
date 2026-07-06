@@ -1,5 +1,5 @@
-import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import * as a from "valibot"
+import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 
 export type LoginMethod = keyof typeof loginMethod
 

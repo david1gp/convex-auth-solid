@@ -1,3 +1,5 @@
+import { mdiHandWave } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import { orgPageSection } from "#src/org/org_ui/view/orgPageSection.tsx"
@@ -10,8 +12,6 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { Img } from "#ui/static/img/Img.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiHandWave } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface OrgViewProps extends MayHaveClass {
   org: OrgModel

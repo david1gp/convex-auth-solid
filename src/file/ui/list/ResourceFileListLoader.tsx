@@ -1,3 +1,5 @@
+import { For, Match, Show, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { appTabIcon } from "#src/app/tabs/appTab.ts"
@@ -21,8 +23,6 @@ import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconO
 import { classesGridCols2xl } from "#ui/static/grid/classesGridCols.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { For, Match, Show, Switch } from "solid-js"
-import * as a from "valibot"
 
 export interface ResourceFileListProps extends HasResourceId, HasFormMode, MayHaveClass {}
 

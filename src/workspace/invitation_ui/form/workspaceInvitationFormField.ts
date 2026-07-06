@@ -1,7 +1,7 @@
-import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import { ttc } from "#src/app/i18n/ttc.ts"
 import type { FormFieldConfig } from "#src/ui/form/formFieldConfigs.ts"
 import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
-import { ttc } from "#src/app/i18n/ttc.ts"
+import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 
 export type WorkspaceInvitationFormField = keyof typeof workspaceInvitationFormField
 

@@ -1,5 +1,5 @@
+import { type Infer, v } from "convex/values"
 import { loginProviderValidator } from "#src/auth/model_field/loginMethodValidator.ts"
-import { v, type Infer } from "convex/values"
 
 export type CommonAuthProvider = Infer<typeof commonAuthProviderValidator>
 

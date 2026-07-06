@@ -1,3 +1,4 @@
+import type { JSXElement } from "solid-js"
 import { LanguageSwitcher } from "#src/app/i18n/ui/LanguageSwitcher.tsx"
 import { SiteNavLinkButton } from "#src/app/nav/links/SiteNavLinkButton.tsx"
 import { SupportPopover } from "#src/app/nav/links/SupportPopover.tsx"
@@ -10,7 +11,6 @@ import { LogoImageOnly } from "#ui/static/logo/LogoImageOnly.jsx"
 import { LogoImageText } from "#ui/static/logo/LogoImageText.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import type { JSXElement } from "solid-js"
 
 export interface NavStaticProps extends MayHaveClass {
   dense: boolean

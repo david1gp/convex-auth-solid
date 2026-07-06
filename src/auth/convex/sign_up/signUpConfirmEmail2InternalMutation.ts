@@ -1,3 +1,4 @@
+import { v } from "convex/values"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, createResult, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
@@ -8,7 +9,6 @@ import { userRole } from "#src/auth/model_field/userRole.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
 
 export type SignUpConfirmValidatorType = typeof signUpConfirmEmailValidator.type
 export const signUpConfirmEmailValidator = v.object({
@@ -82,7 +82,9 @@ export async function signUpConfirmEmail2InternalMutationFn(
   //
   // 5. Mark code as consumed
   //
-  await ctx.db.patch("authUserEmailRegistrations", registration._id, { consumedAt: nowIso() })
+  await ctx.db.patch("authUserEmailRegistrations", registration._id, {
+    consumedAt: nowIso(),
+  })
 
   //
   // 6. Create user profile

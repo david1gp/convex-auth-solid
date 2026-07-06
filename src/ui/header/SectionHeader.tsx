@@ -1,9 +1,9 @@
+import type { ComponentProps } from "solid-js"
 import type { PageHeaderProps } from "#src/ui/header/PageHeader.tsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButtonInternal, LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal, LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import type { ComponentProps } from "solid-js"
 
 export interface SectionHeaderProps extends PageHeaderProps {
   icon: string

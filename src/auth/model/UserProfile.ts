@@ -1,6 +1,8 @@
-import { userRoleSchema, type UserRole } from "#src/auth/model_field/userRole.ts"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { type UserRole, userRoleSchema } from "#src/auth/model_field/userRole.ts"
 import { userRoleValidator } from "#src/auth/model_field/userRoleValidator.ts"
-import { orgRoleSchema, type OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import { type OrgRole, orgRoleSchema } from "#src/org/org_model_field/orgRole.ts"
 import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
 import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt.ts"
 import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt.ts"
@@ -9,8 +11,6 @@ import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { handleSchema } from "#src/utils/valibot/handleSchema.ts"
 import { stringSchema0to500, stringSchemaId, stringSchemaName } from "#src/utils/valibot/stringSchema.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export interface UserProfile extends HasCreatedAtUpdatedDeletedAt {
   userId: string

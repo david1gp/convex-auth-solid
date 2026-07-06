@@ -1,9 +1,9 @@
+import { mdiCodeBraces, mdiCodeJson } from "@mdi/js"
 import { hasDevMode } from "#src/app/config/hasDevMode.ts"
 import { inDevModeSignal, onDevModeSignalRegisterHandler } from "#src/app/config/inDevModeSignal.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import { ToggleButtonIconOnly } from "#ui/interactive/toggle/ToggleButtonIconOnly.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiCodeBraces, mdiCodeJson } from "@mdi/js"
 
 export function DevModeToggle(p: MayHaveClass) {
   if (!hasDevMode()) return null

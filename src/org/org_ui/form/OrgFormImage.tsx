@@ -1,16 +1,16 @@
+import { mdiTrashCanOutline } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { UploadAreaImage } from "#src/file/ui/upload_image/UploadAreaImage.tsx"
 import { orgFormConfig, orgFormField } from "#src/org/org_ui/form/orgFormField.ts"
-import { type OrgFormStateManagement } from "#src/org/org_ui/form/orgFormStateManagement.ts"
+import type { OrgFormStateManagement } from "#src/org/org_ui/form/orgFormStateManagement.ts"
 import { classesCard } from "#src/ui/card/classesCard.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { Label } from "#ui/input/label/Label.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiTrashCanOutline } from "@mdi/js"
-import { Show } from "solid-js"
 
 interface HasOrgFormStateManagement {
   sm: OrgFormStateManagement

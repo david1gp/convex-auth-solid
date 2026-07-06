@@ -1,10 +1,10 @@
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
 import type { IdWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
 import type { WorkspaceModel } from "#src/workspace/workspace_model/WorkspaceModel.ts"
 import { workspaceSchema } from "#src/workspace/workspace_model/workspaceSchema.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import * as a from "valibot"
 
 const workspaceListLocalStorageKey = cachePrefix + "workspaceList"
 

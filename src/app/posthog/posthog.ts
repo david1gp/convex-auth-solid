@@ -1,8 +1,8 @@
+import { type PostHog, type PostHogConfig, posthog } from "posthog-js"
 import { enablePosthog } from "#src/app/config/enablePosthog.ts"
 import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.ts"
 import { envPosthogAppIdResult } from "#src/app/env/public/envPosthogAppIdResult.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
-import { posthog, type PostHog, type PostHogConfig } from "posthog-js"
 
 /**
  * https://posthog.com/docs/product-analytics/identify

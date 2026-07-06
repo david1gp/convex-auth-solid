@@ -1,10 +1,10 @@
+import { defineTable } from "convex/server"
+import { v } from "convex/values"
 import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
-import { defineTable } from "convex/server"
-import { v } from "convex/values"
 
 const resourceFilesDataSchemaFields = {
   resourceId: stringSchemaId,

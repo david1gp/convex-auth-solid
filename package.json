@@ -21,7 +21,7 @@
     "rsbuild:build": "nice -15 rsbuild build",
     "rsbuild:deploy": "bun run rsbuild:build && bun run frontend:upload && bun run frontend:tag",
     "rsbuild:clean": "rm -rf node_modules/.cache",
-    "format": "prettier --write --cache \"{convex,functions,src,test,ui}/**/*.{astro,js,jsx,ts,tsx}\"",
+    "format": "biome format --write convex functions src package.json tsconfig.json biome.json",
     "test": "bun test --env-file .env.development",
     "test:w": "bun test --env-file .env.development --watch",
     "convex:dev": "export CI=1 && clear && bun run convex dev --env-file=.env.development",
@@ -62,7 +62,7 @@
     "valibot": "^1.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.10",
+    "@biomejs/biome": "^2.5.2",
     "@rsbuild/core": "^2.0.15",
     "@rsbuild/plugin-babel": "^2.0.0",
     "@rsbuild/plugin-node-polyfill": "^1.4.6",

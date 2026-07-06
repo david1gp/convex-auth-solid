@@ -1,10 +1,10 @@
+import * as a from "valibot"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { convexSchemaSystemFields } from "#src/utils/valibot/convexSchemaSystemFields.ts"
 import { handleSchema } from "#src/utils/valibot/handleSchema.ts"
 import { stringSchemaDescription, stringSchemaName, stringSchemaUrl } from "#src/utils/valibot/stringSchema.ts"
 import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
 import type { WorkspaceModel } from "#src/workspace/workspace_model/WorkspaceModel.ts"
-import * as a from "valibot"
 
 export const workspaceDataSchemaFields = {
   workspaceHandle: a.pipe(handleSchema),

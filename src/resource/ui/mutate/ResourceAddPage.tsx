@@ -24,13 +24,13 @@ function getPageTitle() {
   return ttc("Create new Resource")
 }
 
+import { Match, Switch } from "solid-js"
 import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import { createQueryOrgList } from "#src/resource/ui/org/createQueryOrgList.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import { resultHasList } from "#src/utils/result/resultHasList.ts"
-import { Match, Switch } from "solid-js"
 
 export function ResourceAddLoader() {
   const getOrgOptionsResult = createQueryOrgList()

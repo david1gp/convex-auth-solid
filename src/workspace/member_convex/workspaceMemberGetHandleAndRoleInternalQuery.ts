@@ -1,9 +1,9 @@
+import { v } from "convex/values"
 import { internalQuery, type MutationCtx, type QueryCtx } from "#convex/_generated/server.js"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import { workspaceMemberGetByUserIdFn } from "#src/workspace/member_convex/workspaceMemberGetByUserIdFn.ts"
 import type { WorkspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
-import { v } from "convex/values"
 
 export type WorkspaceHandleAndRole = {
   workspaceHandle?: string
@@ -39,5 +39,8 @@ export async function workspaceMemberGetHandleAndRoleFn(
   if (!workspaceMember) return createEmptyWorkspaceHandleAndRole()
   const workspace = await ctx.db.get("workspaces", workspaceMember.workspaceId)
   if (!workspace) return createEmptyWorkspaceHandleAndRole()
-  return { workspaceHandle: workspace.workspaceHandle, workspaceRole: workspaceMember.role }
+  return {
+    workspaceHandle: workspace.workspaceHandle,
+    workspaceRole: workspaceMember.role,
+  }
 }

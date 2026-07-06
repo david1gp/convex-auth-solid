@@ -1,7 +1,7 @@
+import { lazy } from "solid-js"
 import type { PageNameWorkspace } from "#src/workspace/workspace_url/pageNameWorkspace.ts"
 import { pageRouteWorkspace } from "#src/workspace/workspace_url/pageRouteWorkspace.ts"
 import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.ts"
-import { lazy } from "solid-js"
 
 const WorkspaceListPage = lazy(() =>
   import("#src/workspace/workspace_ui/list/WorkspaceListPage.tsx").then((c) => ({ default: c.WorkspaceListPage })),

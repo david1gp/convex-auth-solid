@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
@@ -7,13 +8,14 @@ import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorM
 import { signInViaEmailSchema } from "#src/auth/model/signInSchema.ts"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import * as a from "valibot"
 
 export async function signInViaEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInEmail1HttpHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const textBody = await request.text()

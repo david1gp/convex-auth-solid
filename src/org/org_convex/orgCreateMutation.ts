@@ -1,4 +1,6 @@
-import { mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createError, createResult, type PromiseResult } from "#result"
 import type { IdOrg } from "#src/org/org_convex/IdOrg.ts"
 import { orgHandleAvailableQueryFn } from "#src/org/org_convex/orgHandleAvailableQuery.ts"
@@ -7,8 +9,6 @@ import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export type OrgCreateValidatorType = typeof orgCreateValidator.type
 
@@ -31,7 +31,9 @@ export async function orgCreateMutationFn(ctx: MutationCtx, args: OrgCreateValid
     return createError(op, a.summarize(parse.issues))
   }
 
-  const handleAvailableResult = await orgHandleAvailableQueryFn(ctx, { orgHandle: args.orgHandle })
+  const handleAvailableResult = await orgHandleAvailableQueryFn(ctx, {
+    orgHandle: args.orgHandle,
+  })
   if (!handleAvailableResult.success) return handleAvailableResult
   if (!handleAvailableResult.data) {
     const errorMessage = "Handle not available, please try a different one"

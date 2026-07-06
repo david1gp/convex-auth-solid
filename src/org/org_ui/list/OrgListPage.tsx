@@ -1,3 +1,6 @@
+import { mdiPlus } from "@mdi/js"
+import { type Accessor, createEffect, For, Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result, ResultOk } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -19,9 +22,6 @@ import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
-import { mdiPlus } from "@mdi/js"
-import { createEffect, For, Match, Switch, type Accessor } from "solid-js"
-import * as a from "valibot"
 
 export function OrgListPage() {
   return (

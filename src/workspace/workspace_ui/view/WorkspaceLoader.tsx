@@ -1,3 +1,4 @@
+import { type JSXElement, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { ResultErr, ResultOk } from "#result"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -9,7 +10,6 @@ import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.t
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model/HasWorkspaceHandle.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { Match, Switch, type JSXElement } from "solid-js"
 
 export interface WorkspaceLoaderProps extends HasWorkspaceHandle, MayHaveClass {
   WorkspaceComponent: (p: WorkspaceComponentProps) => JSXElement
@@ -33,7 +33,10 @@ export function WorkspaceLoader(p: WorkspaceLoaderProps) {
         <ErrorPage title={(getData()! as ResultErr).errorMessage || "Error loading workspace"} />
       </Match>
       <Match when={true}>
-        {p.WorkspaceComponent({ workspace: (getData() as ResultOk<DocWorkspace>).data, class: p.class })}
+        {p.WorkspaceComponent({
+          workspace: (getData() as ResultOk<DocWorkspace>).data,
+          class: p.class,
+        })}
       </Match>
     </Switch>
   )

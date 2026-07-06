@@ -1,6 +1,6 @@
-import { googleOauthTokenSchema } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.ts"
 import { expect, test } from "bun:test"
 import * as a from "valibot"
+import { googleOauthTokenSchema } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.ts"
 
 test("getGoogleOauthToken", () => {
   const example = `

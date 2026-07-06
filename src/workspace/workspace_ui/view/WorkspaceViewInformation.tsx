@@ -1,3 +1,5 @@
+import { mdiHandWave } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { Ps } from "#src/ui/text/Ps.tsx"
 import type { WorkspaceModel } from "#src/workspace/workspace_model/WorkspaceModel.ts"
@@ -10,8 +12,6 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { Img } from "#ui/static/img/Img.tsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiHandWave } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface WorkspaceViewProps extends MayHaveClass {
   workspace: WorkspaceModel

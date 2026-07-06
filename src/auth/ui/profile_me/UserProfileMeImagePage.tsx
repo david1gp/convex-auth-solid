@@ -1,3 +1,4 @@
+import { mdiArrowLeft, mdiTrashCanOutline } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
@@ -11,15 +12,14 @@ import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.t
 import { UploadAreaImage } from "#src/file/ui/upload_image/UploadAreaImage.tsx"
 import { classesCard } from "#src/ui/card/classesCard.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiArrowLeft, mdiTrashCanOutline } from "@mdi/js"
 
 const showUrlInput = false
 

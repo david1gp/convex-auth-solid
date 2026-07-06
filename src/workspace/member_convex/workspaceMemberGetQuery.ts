@@ -1,11 +1,11 @@
-import { query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
+import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
+import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { docWorkspaceMemberToModel } from "#src/workspace/member_convex/docWorkspaceMemberToModel.ts"
 import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
 import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
-import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
-import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 
 export const workspaceMemberGetFields = {
   workspaceHandle: v.string(),
@@ -37,7 +37,7 @@ export async function workspaceMemberGetFn(
     return createResultError(op, "Workspace not found", args.workspaceHandle)
   }
 
-  let member = await ctx.db.get("workspaceMembers", args.memberId as IdWorkspaceMember)
+  const member = await ctx.db.get("workspaceMembers", args.memberId as IdWorkspaceMember)
   if (!member || member.workspaceId !== workspace._id) {
     return createResultError(op, "Workspace member not found", args.memberId)
   }

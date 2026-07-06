@@ -1,7 +1,7 @@
 import { InputS } from "#ui/input/input/InputS.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { SignalObject } from "#ui/utils/createSignalObject.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface OtpInput6NumbersProps extends MayHaveClass {
   id: string
@@ -12,7 +12,7 @@ interface OtpInput6NumbersProps extends MayHaveClass {
 export function OtpInput6Numbers(p: OtpInput6NumbersProps) {
   const handleInput = (e: InputEvent) => {
     const target = e.currentTarget as HTMLInputElement
-    let value = target.value.replace(/\D/g, "").slice(0, 6)
+    const value = target.value.replace(/\D/g, "").slice(0, 6)
     p.valueSignal.set(value)
   }
 

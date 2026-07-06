@@ -1,12 +1,12 @@
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
-import { type ActionCtx } from "#convex/_generated/server.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
-import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { signInViaEmailEnterOtpSchema } from "#src/auth/model/signInSchema.ts"
+import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 import { base64urlEncodeObject } from "#utils/url/base64url.js"
-import * as a from "valibot"
 
 export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInViaEmailEnterOtp1RequestHandler"
@@ -15,7 +15,9 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   // 1. validate request
   //
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const textBody = await request.text()
@@ -59,7 +61,9 @@ export async function signInViaEmailEnterOtp1RequestHandler(ctx: ActionCtx, requ
   const userSessionSerializedResult = base64urlEncodeObject(userSession)
   if (!userSessionSerializedResult.success) {
     console.error(op, userSessionSerializedResult.errorMessage)
-    return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 400 })
+    return new Response(jsonStringifyPretty(userSessionSerializedResult), {
+      status: 400,
+    })
   }
 
   return new Response(jsonStringifyPretty(userSession))

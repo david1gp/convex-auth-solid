@@ -1,5 +1,5 @@
-import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { fileInformationGet } from "#src/file/ui/stats/fileInformationGet.ts"
+import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { UploadAreaFile } from "#src/file/ui/upload_file/UploadAreaFile.tsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"

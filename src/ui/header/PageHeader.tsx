@@ -1,3 +1,4 @@
+import type { JSXElement } from "solid-js"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { HasTitle } from "#ui/utils/HasTitle.ts"
@@ -5,10 +6,13 @@ import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.
 import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.ts"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.ts"
 import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle.ts"
-import type { JSXElement } from "solid-js"
 
 export interface PageHeaderProps
-  extends HasTitle, MayHaveIcon, MayHaveSubtitle, MayHaveInnerClass, MayHaveChildrenAndClass {
+  extends HasTitle,
+    MayHaveIcon,
+    MayHaveSubtitle,
+    MayHaveInnerClass,
+    MayHaveChildrenAndClass {
   subtitleChildren?: JSXElement
 }
 

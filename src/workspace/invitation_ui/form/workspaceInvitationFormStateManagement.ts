@@ -1,33 +1,33 @@
+import { mdiAlertCircle } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { navigateTo } from "#src/utils/router/navigateTo.ts"
+import { debounceMs } from "#src/utils/ui/debounceMs.ts"
+import type { HasToken } from "#src/utils/ui/HasToken.ts"
 import type {
   DocWorkspaceInvitation,
   IdWorkspaceInvitation,
 } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import {
+  type WorkspaceInvitationFormField,
   workspaceInvitationFormConfig,
   workspaceInvitationFormField,
-  type WorkspaceInvitationFormField,
 } from "#src/workspace/invitation_ui/form/workspaceInvitationFormField.ts"
 import {
-  workspaceInvitationFormLocalStorage,
   type WorkspaceInvitationFormData,
+  workspaceInvitationFormLocalStorage,
 } from "#src/workspace/invitation_ui/form/workspaceInvitationFormLocalStorage.ts"
 import { urlWorkspaceInvitationList } from "#src/workspace/invitation_url/urlWorkspaceInvitation.ts"
-import { workspaceRole, type WorkspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { navigateTo } from "#src/utils/router/navigateTo.ts"
-import { debounceMs } from "#src/utils/ui/debounceMs.ts"
-import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type WorkspaceRole, workspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type WorkspaceInvitationFormState = {
   invitedEmail: SignalObject<string>
@@ -228,7 +228,11 @@ async function handleSubmit(
       })
     }
     if (!roleResult.success) {
-      toastAdd({ title: roleResult.issues[0].message, icon: mdiAlertCircle, id: workspaceInvitationFormField.role })
+      toastAdd({
+        title: roleResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: workspaceInvitationFormField.role,
+      })
     }
     return
   }
@@ -236,12 +240,18 @@ async function handleSubmit(
   isSubmitting.set(true)
 
   if (actions.add) {
-    const data: WorkspaceInvitationFormData = { invitedEmail, role: role as WorkspaceRole }
+    const data: WorkspaceInvitationFormData = {
+      invitedEmail,
+      role: role as WorkspaceRole,
+    }
     await actions.add(data)
   }
 
   if (actions.edit) {
-    const data: WorkspaceInvitationFormData = { invitedEmail, role: role as WorkspaceRole }
+    const data: WorkspaceInvitationFormData = {
+      invitedEmail,
+      role: role as WorkspaceRole,
+    }
     await actions.edit(data)
   }
 
@@ -299,7 +309,10 @@ async function addAction(
   })
   if (!invitationIdResult.success) {
     console.error(invitationIdResult)
-    toastAdd({ title: invitationIdResult.errorMessage, variant: toastVariant.error })
+    toastAdd({
+      title: invitationIdResult.errorMessage,
+      variant: toastVariant.error,
+    })
     return
   }
   workspaceInvitationFormLocalStorage.clearLocalStorage()

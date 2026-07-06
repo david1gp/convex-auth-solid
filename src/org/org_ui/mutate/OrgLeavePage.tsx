@@ -1,3 +1,6 @@
+import { mdiAccountAlert } from "@mdi/js"
+import { useParams } from "@tanstack/solid-router"
+import { createSignal, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { ResultErr, ResultOk } from "#result"
 import { ttc, ttc1 } from "#src/app/i18n/ttc.ts"
@@ -21,9 +24,6 @@ import { classesCardWrapperP8 } from "#ui/static/card/classesCardWrapper.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiAccountAlert } from "@mdi/js"
-import { useParams } from "@tanstack/solid-router"
-import { Match, Switch, createSignal } from "solid-js"
 
 export function OrgLeavePage() {
   const params = useParams({ strict: false })
@@ -124,7 +124,11 @@ function LeaveButton(p: { orgHandle: string }) {
     })
 
     if (!leaveResult.success) {
-      toastAdd({ icon: mdiAccountAlert, title: leaveResult.errorMessage, variant: toastVariant.error })
+      toastAdd({
+        icon: mdiAccountAlert,
+        title: leaveResult.errorMessage,
+        variant: toastVariant.error,
+      })
       setIsLoading(false)
       return
     }

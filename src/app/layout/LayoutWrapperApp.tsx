@@ -1,3 +1,4 @@
+import { Match, Switch } from "solid-js"
 import { accessBlocked } from "#src/app/layout/accessUnlocked.ts"
 import { LayoutWrapperConvex } from "#src/app/layout/LayoutWrapperConvex.tsx"
 import { AccessBlocked } from "#src/auth/ui/locked/AccessBlocked.tsx"
@@ -6,7 +7,6 @@ import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { userSessionsSignalRegisterHandler } from "#src/auth/ui/signals/userSessionsSignal.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
-import { Match, Switch } from "solid-js"
 
 export interface LayoutWrapperAppProps extends MayHaveChildren, MayHaveTitle {}
 

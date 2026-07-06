@@ -1,5 +1,5 @@
-import { type DemoListType } from "#ui/generate_demo_list/DemoListType.ts"
 import { lazy } from "solid-js"
+import type { DemoListType } from "#ui/generate_demo_list/DemoListType.ts"
 
 const DemoOrgMemberList = lazy(async () => {
   const c = await import("#src/org/member_ui/list/DemoOrgMemberList.tsx")

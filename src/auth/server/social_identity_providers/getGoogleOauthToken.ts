@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { envGoogleClientSecretResult } from "#src/app/env/private/envGoogleClientSecretResult.ts"
 import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdResult.ts"
@@ -6,7 +7,6 @@ import { authErrorMessages } from "#src/auth/server/social_identity_providers/au
 import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.ts"
 import { queryString } from "#utils/url/queryString.js"
 import { intMin1OrStringSchema } from "#utils/valibot/intOrStringSchema.js"
-import * as a from "valibot"
 
 export interface GoogleOauthToken {
   access_token: string

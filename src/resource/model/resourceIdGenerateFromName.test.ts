@@ -1,10 +1,10 @@
+import { expect, test } from "bun:test"
+import * as a from "valibot"
 import {
   resourceIdGenerateFromName,
   resourceIdNamCutoffLength,
 } from "#src/resource/model/resourceIdGenerateFromName.ts"
 import { resourceIdSchema } from "#src/resource/model/resourceIdSchema.ts"
-import { expect, test } from "bun:test"
-import * as a from "valibot"
 
 type Entry = {
   start?: string

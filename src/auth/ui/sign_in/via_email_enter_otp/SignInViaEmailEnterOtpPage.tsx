@@ -1,3 +1,6 @@
+import { mdiEmailSearchOutline } from "@mdi/js"
+import { posthog } from "posthog-js"
+import type { Component } from "solid-js"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
@@ -12,9 +15,6 @@ import { Icon } from "#ui/static/icon/Icon.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiEmailSearchOutline } from "@mdi/js"
-import { posthog } from "posthog-js"
-import { type Component } from "solid-js"
 
 export const SignInViaEmailEnterOtpPage: Component<{}> = () => {
   const getTitle = () => ttc("Enter Code to Sign In")
@@ -55,7 +55,11 @@ export const SignInViaEmailEnterOtp: Component<MayHaveClass> = (p) => {
 
 async function handleConfirm(otp: string, email: string, returnPath: string) {
   const op = "handleConfirm.apiAuthSignInViaEmailEnterOtp"
-  const result = await apiAuthSignInViaEmailEnterOtp({ email, code: otp, l: languageSignalGet() })
+  const result = await apiAuthSignInViaEmailEnterOtp({
+    email,
+    code: otp,
+    l: languageSignalGet(),
+  })
   posthog.capture(op, result)
   if (!result.success) {
     const errorMessage = ttc("Error entering otp")
@@ -63,7 +67,10 @@ async function handleConfirm(otp: string, email: string, returnPath: string) {
     toastAdd({ title: errorMessage, description: result.errorMessage })
     return
   }
-  toastAdd({ title: ttc("Successfully entered OTP"), variant: toastVariant.success })
+  toastAdd({
+    title: ttc("Successfully entered OTP"),
+    variant: toastVariant.success,
+  })
   const userSession = result.data
   signInSessionNew(userSession)
   navigateTo(returnPath)

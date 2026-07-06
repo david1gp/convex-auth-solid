@@ -1,5 +1,5 @@
 import type { MutationCtx } from "#convex/_generated/server.js"
-import { type PromiseResult } from "#result"
+import type { PromiseResult } from "#result"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { generateOtpCode } from "#src/auth/convex/pw/generateOtpCode.ts"
 import type { OtpPurpose } from "#src/auth/model_field/otpPurpose.ts"

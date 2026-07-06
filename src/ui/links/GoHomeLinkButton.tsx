@@ -1,8 +1,8 @@
+import { mdiHome } from "@mdi/js"
+import { type ComponentProps, splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import { mdiHome } from "@mdi/js"
-import { splitProps, type ComponentProps } from "solid-js"
 
 export function GoHomeLinkButton(p: Omit<ComponentProps<typeof LinkButtonInternal>, "to" | "href">) {
   const [s, rest] = splitProps(p, ["icon", "variant", "children"])

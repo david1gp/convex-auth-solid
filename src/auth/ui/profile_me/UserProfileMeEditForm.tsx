@@ -12,8 +12,8 @@ import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { UserProfileMeEditFormStateManagement } from "./userProfileMeEditFormState.js"
 
 export interface UserProfileMeEditFormProps extends MayHaveClass {

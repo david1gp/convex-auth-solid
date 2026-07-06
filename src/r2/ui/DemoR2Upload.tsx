@@ -1,3 +1,4 @@
+import { Show } from "solid-js"
 import { envBaseUrlR2Result } from "#src/app/env/public/envBaseUrlR2Result.ts"
 import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.tsx"
 import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -11,7 +12,6 @@ import { apiR2UploadFileWithProgress } from "#src/r2/api_client/apiR2UploadFile.
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import { Show } from "solid-js"
 
 export function DemoR2Upload() {
   return (
@@ -60,7 +60,9 @@ function ProgressView(p: { progress: SignalObject<{ loaded: number; total: numbe
         <div class="w-full bg-gray-200 h-2">
           <div
             class="bg-blue-500 h-2"
-            style={{ width: `${(progress.get()!.loaded / progress.get()!.total) * 100}%` }}
+            style={{
+              width: `${(progress.get()!.loaded / progress.get()!.total) * 100}%`,
+            }}
           />
         </div>
       </div>

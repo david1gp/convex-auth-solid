@@ -6,8 +6,8 @@ import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreateStateManagement.js"
 
 export function SignInViaPasswordForm(p: MayHaveClass) {

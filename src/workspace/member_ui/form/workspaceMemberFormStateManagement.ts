@@ -1,31 +1,31 @@
+import { mdiAlertCircle } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
-import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
-import {
-  workspaceMemberFormField,
-  type WorkspaceMemberFormField,
-} from "#src/workspace/member_ui/form/workspaceMemberFormField.ts"
-import { urlWorkspaceMemberList, urlWorkspaceMemberDelete } from "#src/workspace/member_url/urlWorkspaceMember.ts"
-import {
-  workspaceRole,
-  workspaceRoleSchema,
-  type WorkspaceRole,
-} from "#src/workspace/workspace_model_field/workspaceRole.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
+import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
+import {
+  type WorkspaceMemberFormField,
+  workspaceMemberFormField,
+} from "#src/workspace/member_ui/form/workspaceMemberFormField.ts"
+import { urlWorkspaceMemberDelete, urlWorkspaceMemberList } from "#src/workspace/member_url/urlWorkspaceMember.ts"
+import {
+  type WorkspaceRole,
+  workspaceRole,
+  workspaceRoleSchema,
+} from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type WorkspaceMemberFormData = {
   userId: string
@@ -205,7 +205,11 @@ async function handleSubmit(
 
   if (!isSuccess) {
     if (!roleResult.success) {
-      toastAdd({ title: roleResult.issues[0].message, icon: mdiAlertCircle, id: workspaceMemberFormField.role })
+      toastAdd({
+        title: roleResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: workspaceMemberFormField.role,
+      })
     }
     return
   }
@@ -213,12 +217,18 @@ async function handleSubmit(
   isSubmitting.set(true)
 
   if (actions.add) {
-    const data: WorkspaceMemberFormData = { userId, role: role as WorkspaceRole }
+    const data: WorkspaceMemberFormData = {
+      userId,
+      role: role as WorkspaceRole,
+    }
     await actions.add(data)
   }
 
   if (actions.edit) {
-    const data: WorkspaceMemberFormData = { userId, role: role as WorkspaceRole }
+    const data: WorkspaceMemberFormData = {
+      userId,
+      role: role as WorkspaceRole,
+    }
     await actions.edit(data)
   }
 
@@ -280,7 +290,10 @@ async function addAction(
   })
   if (!memberIdResult.success) {
     console.error(memberIdResult)
-    toastAdd({ title: memberIdResult.errorMessage, variant: toastVariant.error })
+    toastAdd({
+      title: memberIdResult.errorMessage,
+      variant: toastVariant.error,
+    })
     return
   }
   const url = urlWorkspaceMemberList(workspaceHandle)

@@ -1,13 +1,17 @@
-import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import type { DocKv } from "#src/file/kv/IdKv.ts"
 import { kvGetQueryFn2 } from "#src/file/kv/kvGetQuery.ts"
 import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 
 export type KvSetType = typeof kvSetValidator.type
 
-export const kvSetFields = { key: v.string(), data: v.string(), updatedAt: v.optional(v.string()) } as const
+export const kvSetFields = {
+  key: v.string(),
+  data: v.string(),
+  updatedAt: v.optional(v.string()),
+} as const
 
 export const kvSetValidator = v.object(kvSetFields)
 

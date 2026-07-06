@@ -1,3 +1,5 @@
+import { mdiEmail } from "@mdi/js"
+import { For, Show, splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { SectionHeader } from "#src/ui/header/SectionHeader.tsx"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
@@ -8,10 +10,8 @@ import { workspacePageSection } from "#src/workspace/workspace_ui/view/workspace
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiEmail } from "@mdi/js"
-import { For, Show, splitProps } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface WorkspaceInvitationsProps extends HasWorkspaceHandle, MayHaveClass {
   invitations: WorkspaceInvitationModel[]

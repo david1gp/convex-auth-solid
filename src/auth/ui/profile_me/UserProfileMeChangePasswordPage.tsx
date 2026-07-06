@@ -1,3 +1,4 @@
+import { Show } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -26,7 +27,6 @@ import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { Show } from "solid-js"
 
 export function UserProfileMeChangePasswordPage() {
   return (

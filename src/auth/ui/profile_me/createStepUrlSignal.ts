@@ -1,5 +1,5 @@
-import { type SetterSimplified, type SignalObject, createSignalObject } from "#ui/utils/createSignalObject.ts"
 import { createSignal, onMount } from "solid-js"
+import { createSignalObject, type SetterSimplified, type SignalObject } from "#ui/utils/createSignalObject.ts"
 
 export { createSignalObject, type SignalObject }
 

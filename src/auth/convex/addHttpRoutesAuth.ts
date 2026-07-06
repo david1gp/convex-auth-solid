@@ -1,3 +1,4 @@
+import type { HttpRouter } from "convex/server"
 import { apiAuthBasePath } from "#src/auth/api_client/apiAuthBasePath.ts"
 import { addRouteWithCors } from "#src/auth/convex/headers/cors/addRouteWithCors.ts"
 import { httpMethod } from "#src/auth/convex/headers/httpMethod.ts"
@@ -15,7 +16,6 @@ import { userPasswordChange1RequestHandler } from "#src/auth/convex/user/pw_chan
 import { userPasswordChange2ConfirmHandler } from "#src/auth/convex/user/pw_change/userPasswordChange2ConfirmHandler.ts"
 import { loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { apiPathAuth } from "#src/auth/url/apiPathAuth.ts"
-import type { HttpRouter } from "convex/server"
 
 export function addHttpRoutesAuth(http: HttpRouter) {
   // Oauth / GitHub

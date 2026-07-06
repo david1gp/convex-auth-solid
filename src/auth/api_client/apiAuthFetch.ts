@@ -1,6 +1,6 @@
-import { createResult, resultTryParsingFetchErr, type PromiseResult } from "#result"
-import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.ts"
 import * as a from "valibot"
+import { createResult, type PromiseResult, resultTryParsingFetchErr } from "#result"
+import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.ts"
 
 export async function apiAuthFetch<T>(
   op: string,

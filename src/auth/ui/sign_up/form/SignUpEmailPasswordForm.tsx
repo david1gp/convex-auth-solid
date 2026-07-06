@@ -1,3 +1,4 @@
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { AuthLegalAgree } from "#src/auth/ui/sign_in/legal/AuthLegalAgree.tsx"
 import { authLegalAgreeVariant } from "#src/auth/ui/sign_in/legal/authLegalAgreeVariant.tsx"
@@ -9,9 +10,8 @@ import { Checkbox } from "#ui/input/check/Checkbox.jsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { signUpCreateStateManagement, signUpFormField } from "./signUpCreateFormState.js"
 
 interface SignUpEmailPasswordFormProps extends MayHaveClass {}

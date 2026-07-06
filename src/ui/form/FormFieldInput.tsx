@@ -1,12 +1,12 @@
+import { Show } from "solid-js"
 import { inputMaxLength500, inputMaxLengthDefault } from "#src/utils/valibot/inputMaxLength.ts"
-import { formMode, formModeIsReadOnly, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode, formModeIsReadOnly } from "#ui/input/form/formMode.ts"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Label } from "#ui/input/label/Label.jsx"
 import { LabelAsterix } from "#ui/input/label/LabelAsterix.jsx"
 import { Textarea } from "#ui/input/textarea/Textarea.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { Show } from "solid-js"
 import type { FormFieldConfig } from "./formFieldConfigs.js"
 
 export interface FormFieldInputProps extends MayHaveClass {

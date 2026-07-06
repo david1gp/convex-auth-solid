@@ -1,6 +1,6 @@
+import { mdiAccountQuestion, mdiCheck, mdiClockOutline, mdiClose } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
-import { mdiAccountQuestion, mdiCheck, mdiClose, mdiClockOutline } from "@mdi/js"
 
 export type WorkspaceInvitationStatus = keyof typeof workspaceInvitationStatus
 

@@ -1,22 +1,22 @@
+import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
-import { language, languageOrNone, type Language, type LanguageOrNone } from "#src/app/i18n/language.ts"
+import { type Language, type LanguageOrNone, language, languageOrNone } from "#src/app/i18n/language.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { FileModel } from "#src/file/model/FileModel.ts"
-import { fileFormConfig, fileFormField, type FileFormField } from "#src/file/ui/form/fileFormField.ts"
+import { type FileFormField, fileFormConfig, fileFormField } from "#src/file/ui/form/fileFormField.ts"
 import { urlResourceList, urlResourceView } from "#src/resource/url/urlResource.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type FileFormData = {
   displayName: string
@@ -180,10 +180,18 @@ async function handleSubmit(
 
   if (!isSuccess) {
     if (!displayNameResult.success) {
-      toastAdd({ title: displayNameResult.issues[0].message, icon: mdiAlertCircle, id: "fileId" })
+      toastAdd({
+        title: displayNameResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "fileId",
+      })
     }
     if (!languageResult.success) {
-      toastAdd({ title: languageResult.issues[0].message, icon: mdiAlertCircle, id: "language" })
+      toastAdd({
+        title: languageResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "language",
+      })
     }
     return
   }

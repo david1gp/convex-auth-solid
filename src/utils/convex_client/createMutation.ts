@@ -10,7 +10,7 @@ export function createMutation<Mutation extends FunctionReference<"mutation">>(
     throw "No convex context"
   }
   return (args) => {
-    let fullArgs = args ?? {}
+    const fullArgs = args ?? {}
     return convex.mutation(mutation, fullArgs)
   }
 }

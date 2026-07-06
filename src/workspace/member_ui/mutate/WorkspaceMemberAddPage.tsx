@@ -1,16 +1,16 @@
+import { useParams } from "@tanstack/solid-router"
+import { Match, Switch } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
+import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { WorkspaceMemberForm } from "#src/workspace/member_ui/form/WorkspaceMemberForm.tsx"
 import { workspaceMemberFormStateManagement } from "#src/workspace/member_ui/form/workspaceMemberFormStateManagement.ts"
 import { urlWorkspaceMemberAdd } from "#src/workspace/member_url/urlWorkspaceMember.ts"
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model_field/HasWorkspaceHandle.ts"
-import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { useParams } from "@tanstack/solid-router"
-import { Match, Switch } from "solid-js"
 
 export function WorkspaceMemberAddPage() {
   const params = useParams({ strict: false })

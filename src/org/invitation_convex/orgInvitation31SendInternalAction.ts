@@ -1,15 +1,15 @@
+import { v } from "convex/values"
 import { api, internal } from "#convex/_generated/api.js"
-import { internalAction, type ActionCtx } from "#convex/_generated/server.js"
+import { type ActionCtx, internalAction } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
 import { languageValidator } from "#src/app/i18n/language.ts"
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 import {
-  orgInvitation32SendEmailActionFn,
   type OrgInvitationSendEmailValidatorType,
+  orgInvitation32SendEmailActionFn,
 } from "#src/org/invitation_convex/orgInvitation32SendEmailActionFn.ts"
 import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.ts"
 import { stt1 } from "#src/utils/i18n/stt.ts"
-import { v } from "convex/values"
 
 export type OrgInvitationSendValidatorType = typeof orgInvitation31SendValidator.type
 
@@ -41,7 +41,9 @@ export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationS
     return createResultError(op, "!user")
   }
 
-  const invitationResult = await ctx.runQuery(api.org.orgInvitationGetQuery, { invitationCode: args.invitationCode })
+  const invitationResult = await ctx.runQuery(api.org.orgInvitationGetQuery, {
+    invitationCode: args.invitationCode,
+  })
   if (!invitationResult.success) {
     return invitationResult
   }
@@ -59,7 +61,10 @@ export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationS
     return createResultError(op, errorMessage)
   }
 
-  const orgResult = await ctx.runQuery(api.org.orgGetQuery, { token: args.token, orgHandle: invitation.orgHandle })
+  const orgResult = await ctx.runQuery(api.org.orgGetQuery, {
+    token: args.token,
+    orgHandle: invitation.orgHandle,
+  })
   if (!orgResult.success) {
     return orgResult
   }

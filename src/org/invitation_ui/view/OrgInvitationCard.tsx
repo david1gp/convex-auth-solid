@@ -1,3 +1,5 @@
+import { mdiClose, mdiEmailAlert, mdiEmailFast } from "@mdi/js"
+import { Show } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc, ttc1 } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -12,8 +14,8 @@ import {
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -21,8 +23,6 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
-import { mdiClose, mdiEmailAlert, mdiEmailFast } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface OrgInvitationCardProps extends MayHaveClass {
   invitation: OrgInvitationModel
@@ -94,7 +94,10 @@ function OrgInvitationActions(p: OrgInvitationCardProps) {
       return
     }
 
-    const gotResult = await resendAction({ token: userTokenGet(), invitationCode: p.invitation.invitationCode })
+    const gotResult = await resendAction({
+      token: userTokenGet(),
+      invitationCode: p.invitation.invitationCode,
+    })
     if (!gotResult.success) {
       const icon = mdiEmailAlert
       const title = gotResult.errorMessage
@@ -102,7 +105,10 @@ function OrgInvitationActions(p: OrgInvitationCardProps) {
     }
   }
   async function dismissClick() {
-    const gotResult = await dismissAction({ token: userTokenGet(), invitationCode: p.invitation.invitationCode })
+    const gotResult = await dismissAction({
+      token: userTokenGet(),
+      invitationCode: p.invitation.invitationCode,
+    })
     if (!gotResult.success) {
       const icon = mdiEmailAlert
       const title = gotResult.errorMessage

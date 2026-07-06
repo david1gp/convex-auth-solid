@@ -1,6 +1,6 @@
-import { orgDataPartialSchema } from "#src/org/org_model/orgSchema.ts"
 import { describe, expect, test } from "bun:test"
 import * as a from "valibot"
+import { orgDataPartialSchema } from "#src/org/org_model/orgSchema.ts"
 
 describe("orgFormLocalStorage", () => {
   test("orgDataPartialSchema validates partial org data", () => {

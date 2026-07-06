@@ -1,3 +1,5 @@
+import { mdiTag } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
 import { resourceTypeGetText } from "#src/resource/model_field/resourceTypeGetText.ts"
@@ -7,8 +9,6 @@ import { IconTextPair } from "#src/ui/card/IconTextPair.tsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiTag } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface ResourceCardLinkProps {
   resource: ResourceModel

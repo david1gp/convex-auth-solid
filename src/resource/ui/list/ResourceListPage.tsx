@@ -1,3 +1,6 @@
+import { mdiPlus } from "@mdi/js"
+import { createEffect, For, Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavResource } from "#src/app/nav/NavResource.tsx"
@@ -5,10 +8,10 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
 import { resourceSchema } from "#src/resource/model/resourceSchema.ts"
 import {
+  type ResourceFilterState,
   resourceFilter,
   resourceFilterCreate,
   resourceFilterFields,
-  type ResourceFilterState,
 } from "#src/resource/model_field/resourceFilterFields.ts"
 import { resourceNameAddList } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { ResourceCardLink } from "#src/resource/ui/shared/ResourceCardLink.tsx"
@@ -32,9 +35,6 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
-import { mdiPlus } from "@mdi/js"
-import { createEffect, For, Match, Switch } from "solid-js"
-import * as a from "valibot"
 
 export function ResourceListPage() {
   return (

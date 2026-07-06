@@ -1,8 +1,8 @@
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import * as a from "valibot"
 
 const resourceNameLocalStorageKey = cachePrefix + "resourceNameRecord"
 const resourceNameRecordSchema = a.record(a.string(), a.string())

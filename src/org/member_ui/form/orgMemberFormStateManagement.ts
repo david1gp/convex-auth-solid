@@ -1,3 +1,6 @@
+import { mdiAlertCircle } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -5,20 +8,17 @@ import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { IdOrgMember } from "#src/org/member_convex/IdOrgMember.ts"
 import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.ts"
-import { orgMemberFormField, type OrgMemberFormField } from "#src/org/member_ui/form/orgMemberFormField.ts"
+import { type OrgMemberFormField, orgMemberFormField } from "#src/org/member_ui/form/orgMemberFormField.ts"
 import { urlOrgMemberList, urlOrgMemberView } from "#src/org/member_url/urlOrgMember.ts"
-import { orgRole, orgRoleSchema, type OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import { type OrgRole, orgRole, orgRoleSchema } from "#src/org/org_model_field/orgRole.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type OrgMemberFormData = {
   userId: string
@@ -190,7 +190,11 @@ async function handleSubmit(
 
   if (!isSuccess) {
     if (!roleResult.success) {
-      toastAdd({ title: roleResult.issues[0].message, icon: mdiAlertCircle, id: orgMemberFormField.role })
+      toastAdd({
+        title: roleResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgMemberFormField.role,
+      })
     }
     return
   }
@@ -261,7 +265,10 @@ async function addAction(
   })
   if (!memberIdResult.success) {
     console.error(memberIdResult)
-    toastAdd({ title: memberIdResult.errorMessage, variant: toastVariant.error })
+    toastAdd({
+      title: memberIdResult.errorMessage,
+      variant: toastVariant.error,
+    })
     return
   }
   const url = urlOrgMemberView(orgHandle, memberIdResult.data)

@@ -1,8 +1,8 @@
-import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 
 export const workspaceHandleAvailableFields = {
   workspaceHandle: v.string(),

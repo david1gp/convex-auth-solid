@@ -1,12 +1,12 @@
+import { v } from "convex/values"
 import { internal } from "#convex/_generated/api.js"
-import { action, type ActionCtx } from "#convex/_generated/server.js"
+import { type ActionCtx, action } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
 import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.ts"
+import { stt1 } from "#src/utils/i18n/stt.ts"
 import { workspaceInvitation31SendFn } from "#src/workspace/invitation_convex/workspaceInvitation31SendInternalAction.ts"
 import { allowEmailResendingInSeconds } from "#src/workspace/invitation_model/allowEmailResendingInSeconds.ts"
 import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
-import { stt1 } from "#src/utils/i18n/stt.ts"
-import { v } from "convex/values"
 
 export type WorkspaceInvitationResendValidatorType = typeof workspaceInvitation30ResendValidator.type
 
@@ -53,5 +53,8 @@ export async function workspaceInvitation30ResendFn(
     return createResultError(op, errorMessage)
   }
 
-  return workspaceInvitation31SendFn(ctx, { token: args.token, invitationCode: args.invitationCode })
+  return workspaceInvitation31SendFn(ctx, {
+    token: args.token,
+    invitationCode: args.invitationCode,
+  })
 }

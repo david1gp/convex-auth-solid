@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
@@ -5,7 +6,6 @@ import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetU
 import type { FileDataModelWithUserMetadata } from "#src/file/model/FileModel.ts"
 import { fileDataSchema } from "#src/file/model/fileSchema.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import * as a from "valibot"
 
 export const apiPathR2FileCreate = "/fileCreate"
 
@@ -26,7 +26,9 @@ export async function r2FileCreateHttpHandler(ctx: ActionCtx, request: Request):
   }
   const userId = tokenResult.data
 
-  const user = await ctx.runQuery(internal.auth.userGetInternalQuery, { userId })
+  const user = await ctx.runQuery(internal.auth.userGetInternalQuery, {
+    userId,
+  })
   if (!user) {
     const errorMessage = "User not found"
     console.error(op, errorMessage)

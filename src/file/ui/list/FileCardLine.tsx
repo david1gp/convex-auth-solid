@@ -1,19 +1,19 @@
+import { mdiDownload, mdiEye } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { HasFileModel } from "#src/file/model/HasFileModel.ts"
 import { downloadFileByUrl } from "#src/file/ui/list/downloadFileByUrl.tsx"
 import { urlFileEdit, urlFileRemove } from "#src/file/url/urlFile.ts"
 import type { HasResourceId } from "#src/resource/model/HasResourceId.ts"
 import { ClipboardCopyButtonIconOnly } from "#src/ui/links/ClipboardCopyButtonIconOnly.tsx"
-import { type HasFormMode, formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
+import { formMode, getFormModeTitle, type HasFormMode } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonIconOnlyExternal, LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import { classesCardWrapper } from "#ui/static/card/classesCardWrapper.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiDownload, mdiEye } from "@mdi/js"
-import { Show } from "solid-js"
 
 interface FileCardLineProps extends HasResourceId, HasFormMode, HasFileModel, MayHaveClass {}
 

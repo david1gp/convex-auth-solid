@@ -1,5 +1,6 @@
+import { v } from "convex/values"
 import { internal } from "#convex/_generated/api.js"
-import { mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
@@ -7,7 +8,6 @@ import { workspaceInvitation21CreateMutationFn } from "#src/workspace/invitation
 import { workspaceMemberGetByUserIdFn } from "#src/workspace/member_convex/workspaceMemberGetByUserIdFn.ts"
 import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
 import { generateId12 } from "#utils/ran/generateId12.js"
-import { v } from "convex/values"
 
 export type WorkspaceInvitationCreateValidatorType = typeof workspaceInvitationCreateActionValidator.type
 

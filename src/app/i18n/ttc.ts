@@ -1,5 +1,6 @@
 import { isEn } from "#src/app/i18n/language.ts"
 import { languageSignal } from "#src/app/i18n/languageSignal.ts"
+
 // import ruTranslations from "./ru.json.js" with { type: "json" }
 // import tjTranslations from "./tj.json.js" with { type: "json" }
 const ruTranslations = {}

@@ -1,8 +1,8 @@
+import { lazy } from "solid-js"
 import type { PageNameWorkspaceMember } from "#src/workspace/member_url/pageNameWorkspaceMember.ts"
 import { pageRouteWorkspaceMember } from "#src/workspace/member_url/pageRouteWorkspaceMember.ts"
 import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.ts"
 import { objectEntries } from "#utils/obj/objectEntries.js"
-import { lazy } from "solid-js"
 
 const WorkspaceMemberListPage = lazy(() =>
   import("#src/workspace/member_ui/list/WorkspaceMemberListPage.tsx").then((c) => ({

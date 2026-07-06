@@ -1,4 +1,6 @@
-import { mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createError, createResult, createResultError, type PromiseResult } from "#result"
 import type { DocOrg } from "#src/org/org_convex/IdOrg.ts"
 import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
@@ -7,8 +9,6 @@ import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export type OrgEditValidatorType = typeof orgEditValidator.type
 

@@ -1,3 +1,4 @@
+import { mdiCrane } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { GoBackLinkButton } from "#src/ui/links/GoBackLinkButton.tsx"
 import { GoHomeLinkButton } from "#src/ui/links/GoHomeLinkButton.tsx"
@@ -6,7 +7,6 @@ import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveChildrenAndClass } from "#ui/utils/MayHaveChildrenAndClass.ts"
 import type { MayHaveId } from "#ui/utils/MayHaveId.ts"
 import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
-import { mdiCrane } from "@mdi/js"
 
 export interface TodoSectionProps extends MayHaveTitle, MayHaveId, MayHaveChildrenAndClass {
   iconClass?: string

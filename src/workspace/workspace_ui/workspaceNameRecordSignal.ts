@@ -1,8 +1,8 @@
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
 import type { WorkspaceModel } from "#src/workspace/workspace_model/WorkspaceModel.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import * as a from "valibot"
 
 let hasLoaded = false
 

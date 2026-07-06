@@ -1,16 +1,18 @@
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError, createResult } from "#result"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
 import { userProfileUpdateSchema } from "#src/auth/convex/user/profile_update/userProfileUpdate.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
-import * as a from "valibot"
 
 export async function userProfileUpdate1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "userProfileUpdate1RequestHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const body = await request.text()

@@ -17,7 +17,10 @@ export function accessUnlocked(session: UserSession | undefined | null) {
     if (log)
       console.info(
         "!inOrg -> access blocked",
-        { orgHandle: session.profile.orgHandle, orgRole: session.profile.orgRole },
+        {
+          orgHandle: session.profile.orgHandle,
+          orgRole: session.profile.orgRole,
+        },
         session,
       )
   }

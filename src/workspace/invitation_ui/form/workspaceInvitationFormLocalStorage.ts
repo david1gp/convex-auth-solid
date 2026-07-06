@@ -1,13 +1,13 @@
+import { debounce } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
-import type { WorkspaceInvitationFormState } from "#src/workspace/invitation_ui/form/workspaceInvitationFormStateManagement.ts"
-import { pageRouteWorkspaceInvitation } from "#src/workspace/invitation_url/pageRouteWorkspaceInvitation.ts"
-import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
 import { debounceSaveMs } from "#src/utils/ui/debounceMs.ts"
 import { stringSchema0to100 } from "#src/utils/valibot/stringSchema.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
-import { debounce } from "@solid-primitives/scheduled"
-import * as a from "valibot"
+import type { WorkspaceInvitationFormState } from "#src/workspace/invitation_ui/form/workspaceInvitationFormStateManagement.ts"
+import { pageRouteWorkspaceInvitation } from "#src/workspace/invitation_url/pageRouteWorkspaceInvitation.ts"
+import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 
 const workspaceInvitationFormLocalStorageKey = cachePrefix + pageRouteWorkspaceInvitation.workspaceInvitationAdd
 

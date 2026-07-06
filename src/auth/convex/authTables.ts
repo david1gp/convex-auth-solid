@@ -1,11 +1,11 @@
+import { defineTable } from "convex/server"
+import { v } from "convex/values"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import { loginMethodValidator } from "#src/auth/model_field/loginMethodValidator.ts"
 import { otpPurposeValidator } from "#src/auth/model_field/otpPurpose.ts"
 import { userRoleValidator } from "#src/auth/model_field/userRoleValidator.ts"
 import { fieldsConvexCreatedAtUpdatedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAt.ts"
 import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt.ts"
-import { defineTable } from "convex/server"
-import { v } from "convex/values"
 
 export const authTables = {
   users: defineTable({

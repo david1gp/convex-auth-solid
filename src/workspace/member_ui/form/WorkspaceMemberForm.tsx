@@ -1,16 +1,16 @@
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
+import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { workspaceMemberFormField } from "#src/workspace/member_ui/form/workspaceMemberFormField.ts"
 import type { WorkspaceMemberFormStateManagement } from "#src/workspace/member_ui/form/workspaceMemberFormStateManagement.ts"
 import { workspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
-import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
-import { getFormModeTitle, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface HasWorkspaceMemberFormStateManagement {
   sm: WorkspaceMemberFormStateManagement

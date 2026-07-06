@@ -1,4 +1,6 @@
-import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import type { IdFile } from "#src/file/convex/IdFile.ts"
@@ -9,8 +11,6 @@ import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAnd
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 const fileMetaDataSchemaFields = {
   fileId: stringSchemaId,

@@ -1,5 +1,5 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { workspaceRole, type WorkspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import { type WorkspaceRole, workspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 
 export function workspaceRoleGetText(r: string) {
   switch (r as WorkspaceRole) {

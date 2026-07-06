@@ -1,4 +1,6 @@
-import { internalMutation, mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import * as a from "valibot"
+import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { DocResource } from "#src/resource/convex/IdResource.ts"
 import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.ts"
@@ -6,8 +8,6 @@ import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export const resourceEditFields = {
   ...valibotToConvex(resourceDataSchemaFields),

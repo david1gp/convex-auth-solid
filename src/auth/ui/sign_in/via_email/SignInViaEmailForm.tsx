@@ -1,3 +1,4 @@
+import { type Component, onMount } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
@@ -8,9 +9,8 @@ import { searchParamSet } from "#src/utils/router/searchParamSet.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { onMount, type Component } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { createSignInViaEmailStateManagement } from "./createSignInViaEmailStateManagement.js"
 
 export const SignInViaEmailForm: Component<MayHaveClass> = (p) => {

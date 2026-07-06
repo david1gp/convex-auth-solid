@@ -1,4 +1,4 @@
-import { type PromiseResult, createResult } from "#result"
+import { createResult, type PromiseResult } from "#result"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.ts"
 

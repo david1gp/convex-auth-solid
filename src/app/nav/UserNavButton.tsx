@@ -1,3 +1,5 @@
+import { mdiAccount } from "@mdi/js"
+import { Show } from "solid-js"
 import { LogoutButton } from "#src/app/nav/LogoutButton.tsx"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -6,8 +8,6 @@ import { ttt } from "#ui/i18n/ttt.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
-import { mdiAccount } from "@mdi/js"
-import { Show } from "solid-js"
 
 export function UserNavButton() {
   return <Show when={userSessionSignal.get()}>{(userSession) => <UserPopover />}</Show>

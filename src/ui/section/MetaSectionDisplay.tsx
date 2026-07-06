@@ -1,14 +1,14 @@
+import { mdiEye, mdiEyeOff, mdiTranslateVariant } from "@mdi/js"
+import { Show } from "solid-js"
 import type { Language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"
-import { visibility, type Visibility } from "#src/resource/model_field/visibility.ts"
+import { type Visibility, visibility } from "#src/resource/model_field/visibility.ts"
 import { visibilityGetText } from "#src/resource/model_field/visibilityGetText.ts"
 import { BadgeSoft } from "#src/ui/badge/BadgeSoft.tsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiEye, mdiEyeOff, mdiTranslateVariant } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface MetaSectionTechnicalProps extends MayHaveClass, MayHaveChildren {
   visibility?: Visibility

@@ -1,8 +1,8 @@
-import { query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docWorkspaceInvitationToModel } from "#src/workspace/invitation_convex/docWorkspaceInvitationToModel.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
-import { v } from "convex/values"
 
 export const workspaceInvitationsListFields = {
   workspaceHandle: v.string(),

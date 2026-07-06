@@ -3,7 +3,7 @@ import type { Result } from "#result"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { ResourceDataModel } from "#src/resource/model/ResourceModel.ts"
 import { resourceFormLocalStorage } from "#src/resource/ui/form/resourceFormLocalStorage.ts"
-import { type ResourceFormData } from "#src/resource/ui/form/resourceFormStateManagement.ts"
+import type { ResourceFormData } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { resourceNameSet } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { urlResourceList, urlResourceView } from "#src/resource/url/urlResource.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
@@ -61,7 +61,10 @@ async function createAction(
   })
   if (!resourceIdResult.success) {
     console.error(resourceIdResult)
-    toastAdd({ title: resourceIdResult.errorMessage, variant: toastVariant.error })
+    toastAdd({
+      title: resourceIdResult.errorMessage,
+      variant: toastVariant.error,
+    })
     return
   }
   resourceFormLocalStorage.clearLocalStorage()

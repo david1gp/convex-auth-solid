@@ -1,4 +1,4 @@
-import { pageNameAuth, type PageNameAuth } from "#src/auth/url/pageNameAuth.ts"
+import { type PageNameAuth, pageNameAuth } from "#src/auth/url/pageNameAuth.ts"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import { BulletLinksO } from "#ui/interactive/list/BulletLinksO.jsx"
 

@@ -1,9 +1,9 @@
-import { uploadFileTexts, type UploadStatus, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
+import { mdiAlertCircle, mdiCloudUpload, mdiFile, mdiLoading } from "@mdi/js"
+import { type JSX, Match, Show, Switch } from "solid-js"
+import { type UploadStatus, uploadFileTexts, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
-import { mdiAlertCircle, mdiCloudUpload, mdiFile, mdiLoading } from "@mdi/js"
-import { type JSX, Match, Show, Switch } from "solid-js"
 
 interface UploadAreaFileViewProps {
   status: UploadStatus

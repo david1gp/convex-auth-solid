@@ -1,3 +1,4 @@
+import { mdiClose, mdiEmailOutline, mdiPencil } from "@mdi/js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -7,14 +8,13 @@ import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { ClipboardCopyButtonIcon } from "#src/ui/links/ClipboardCopyButtonIcon.tsx"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiClose, mdiEmailOutline, mdiPencil } from "@mdi/js"
 
 export interface OrgMemberCardProps extends MayHaveClass, HasOrgHandle {
   member: OrgMemberProfile

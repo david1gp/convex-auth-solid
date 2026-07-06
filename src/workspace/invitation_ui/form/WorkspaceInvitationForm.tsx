@@ -1,28 +1,30 @@
+import { mdiEmailFast } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
+import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
+import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
 import {
   workspaceInvitationFormConfig,
   workspaceInvitationFormField,
 } from "#src/workspace/invitation_ui/form/workspaceInvitationFormField.ts"
 import type { WorkspaceInvitationFormStateManagement } from "#src/workspace/invitation_ui/form/workspaceInvitationFormStateManagement.ts"
-import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
-import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
-import { formMode, getFormModeTitle, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
+import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
-import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiEmailFast } from "@mdi/js"
 
 interface HasWorkspaceInvitationFormStateManagement {
   sm: WorkspaceInvitationFormStateManagement
 }
 
 export interface WorkspaceInvitationContentProps
-  extends MayHaveTitle, MayHaveClass, HasWorkspaceInvitationFormStateManagement {
+  extends MayHaveTitle,
+    MayHaveClass,
+    HasWorkspaceInvitationFormStateManagement {
   mode: FormMode
 }
 

@@ -9,7 +9,7 @@ export const language = {
   tj: "tj",
 } as const
 
-export let languageDefault: Language = language.en
+export const languageDefault: Language = language.en
 
 export function isEn(l: Language): boolean {
   return l === language.en

@@ -1,7 +1,7 @@
+import { v } from "convex/values"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
 import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
-import { v } from "convex/values"
 
 export type WorkspaceInvitationSendEmailValidatorType = typeof workspaceInvitationSendEmailValidator.type
 

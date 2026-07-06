@@ -1,28 +1,28 @@
-import { language, type Language } from "#src/app/i18n/language.ts"
+import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
+import { type Language, language } from "#src/app/i18n/language.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { imageUrlExample } from "#src/app/url/imageUrlExample.ts"
 import type { FileModel } from "#src/file/model/FileModel.ts"
 import type { ResourceFilesModel } from "#src/resource/model/ResourceFilesModel.ts"
-import { resourceIdGenerateFromName } from "#src/resource/model/resourceIdGenerateFromName.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
-import { resourceType, type ResourceType } from "#src/resource/model_field/resourceType.ts"
-import { visibility, type Visibility } from "#src/resource/model_field/visibility.ts"
+import { resourceIdGenerateFromName } from "#src/resource/model/resourceIdGenerateFromName.ts"
+import { type ResourceType, resourceType } from "#src/resource/model_field/resourceType.ts"
+import { type Visibility, visibility } from "#src/resource/model_field/visibility.ts"
+import { type ResourceFormErrorState, resourceCreateErrorState } from "#src/resource/ui/form/ResourceFormErrorState.ts"
+import { type ResourceFormState, resourceFormStateCreate } from "#src/resource/ui/form/ResourceFormState.ts"
 import { type ResourceFormActions, resourceFormCreateActions } from "#src/resource/ui/form/resourceFormCreateActions.ts"
-import { resourceCreateErrorState, type ResourceFormErrorState } from "#src/resource/ui/form/ResourceFormErrorState.ts"
 import {
-  resourceFormConfig,
   type ResourceFormField,
+  resourceFormConfig,
   resourceFormField,
 } from "#src/resource/ui/form/resourceFormField.ts"
 import { resourceFormLocalStorage } from "#src/resource/ui/form/resourceFormLocalStorage.ts"
-import { type ResourceFormState, resourceFormStateCreate } from "#src/resource/ui/form/ResourceFormState.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type ResourceFormData = {
   resourceId: string
@@ -304,10 +304,18 @@ async function handleSubmit(
 
   if (!isSuccess) {
     if (!resourceIdResult.success) {
-      toastAdd({ title: resourceIdResult.issues[0].message, icon: mdiAlertCircle, id: "resourceId" })
+      toastAdd({
+        title: resourceIdResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "resourceId",
+      })
     }
     if (!nameResult.success) {
-      toastAdd({ title: nameResult.issues[0].message, icon: mdiAlertCircle, id: "name" })
+      toastAdd({
+        title: nameResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "name",
+      })
     }
     return
   }

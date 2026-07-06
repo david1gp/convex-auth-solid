@@ -1,3 +1,4 @@
+import { splitProps } from "solid-js"
 import type { HasFileModel } from "#src/file/model/HasFileModel.ts"
 import { FileCardView } from "#src/file/ui/list/FileCardView.tsx"
 import { urlFileEdit, urlFileRemove } from "#src/file/url/urlFile.ts"
@@ -8,7 +9,6 @@ import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { splitProps } from "solid-js"
 
 export interface FileCardEditProps extends HasResourceId, HasFileModel, MayHaveClass, MayHaveChildren {}
 

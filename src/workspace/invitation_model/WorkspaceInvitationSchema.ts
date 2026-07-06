@@ -1,9 +1,9 @@
-import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import * as a from "valibot"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
+import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
-import * as a from "valibot"
 
 export const workspaceInvitationStatus = {
   pending: "pending",

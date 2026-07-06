@@ -1,3 +1,4 @@
+import { mdiAlertBoxOutline } from "@mdi/js"
 import { ContactSupportLinkButton } from "#src/ui/links/ContactSupportLinkButton.tsx"
 import { GoBackLinkButton } from "#src/ui/links/GoBackLinkButton.tsx"
 import { GoHomeLinkButton } from "#src/ui/links/GoHomeLinkButton.tsx"
@@ -10,7 +11,6 @@ import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveIcon } from "#ui/utils/MayHaveIcon.ts"
 import type { MayHaveSubtitle } from "#ui/utils/MayHaveSubtitle.ts"
-import { mdiAlertBoxOutline } from "@mdi/js"
 
 export interface ErrorPageProps extends HasTitle, MayHaveSubtitle, MayHaveIcon, MayHaveClass, MayHaveChildren {}
 

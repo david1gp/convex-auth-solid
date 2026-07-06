@@ -1,3 +1,4 @@
+import { Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -14,7 +15,6 @@ import { resultHasData } from "#src/utils/result/resultHasData.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { Match, Switch } from "solid-js"
 
 interface OrgMemberMutateProps extends HasOrgHandle, HasOrgMemberId, HasFormModeMutate, MayHaveClass {}
 

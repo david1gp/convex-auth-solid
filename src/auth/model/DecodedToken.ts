@@ -1,5 +1,5 @@
-import { intSchemaMin0 } from "#utils/valibot/intSchema.js"
 import * as a from "valibot"
+import { intSchemaMin0 } from "#utils/valibot/intSchema.js"
 
 export type DecodedToken = {
   // subject, whom the token refers to

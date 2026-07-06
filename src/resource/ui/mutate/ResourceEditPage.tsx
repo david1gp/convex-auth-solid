@@ -1,3 +1,5 @@
+import { useParams } from "@tanstack/solid-router"
+import { Match, Switch } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavResource } from "#src/app/nav/NavResource.tsx"
@@ -6,8 +8,6 @@ import { urlResourceEdit } from "#src/resource/url/urlResource.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@tanstack/solid-router"
-import { Match, Switch } from "solid-js"
 
 const mode = formMode.edit
 

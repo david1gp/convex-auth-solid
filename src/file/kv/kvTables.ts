@@ -1,6 +1,6 @@
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { defineTable } from "convex/server"
 import * as a from "valibot"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 const kvDataSchemaFields = {
   key: a.string(),

@@ -1,17 +1,17 @@
+import { v } from "convex/values"
 import { internal } from "#convex/_generated/api.js"
-import { mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
+import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { loginMethod } from "#src/auth/model_field/loginMethod.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
-import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import { stt } from "#src/utils/i18n/stt.ts"
+import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
 
 export type WorkspaceInvitationAcceptValidatorType = typeof workspaceInvitationAcceptValidator.type
 

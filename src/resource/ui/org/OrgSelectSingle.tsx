@@ -1,10 +1,10 @@
+import { createMemo } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import { constructOrgRecord } from "#src/resource/ui/org/constructOrgRecord.tsx"
 import { CheckSingle } from "#ui/input/check/CheckSingle.jsx"
 import type { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { createMemo } from "solid-js"
 
 interface OrgSelectSingleProps extends MayHaveClass {
   valueSignal: ReturnType<typeof createSignalObject<string>>

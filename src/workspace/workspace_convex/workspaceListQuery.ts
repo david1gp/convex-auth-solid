@@ -1,8 +1,8 @@
-import { type QueryCtx, internalQuery, query } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
-import { v } from "convex/values"
 
 export type WorkspaceListValidatorType = typeof workspaceListValidator.type
 

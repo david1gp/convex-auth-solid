@@ -1,9 +1,9 @@
 #!/usr/bin/env bun
 
-import { language } from "#src/app/i18n/language.ts"
 import { readFileSync, writeFileSync } from "fs"
 import { join } from "path"
 import { Project, ts } from "ts-morph"
+import { language } from "#src/app/i18n/language.ts"
 
 interface TranslationCall {
   text: string
@@ -84,8 +84,16 @@ export function extractTranslationTexts(projectPath: string = process.cwd()): Tr
  */
 function getLanguageFiles(projectPath: string): LanguageFile[] {
   return [
-    { code: language.ru, name: "Russian", path: join(projectPath, "src/app/i18n/ru.json") },
-    { code: language.tj, name: "Tajik", path: join(projectPath, "src/app/i18n/tj.json") },
+    {
+      code: language.ru,
+      name: "Russian",
+      path: join(projectPath, "src/app/i18n/ru.json"),
+    },
+    {
+      code: language.tj,
+      name: "Tajik",
+      path: join(projectPath, "src/app/i18n/tj.json"),
+    },
   ]
 }
 
@@ -136,7 +144,7 @@ export async function generateTranslationKeys(projectPath: string = process.cwd(
 
     for (const translationCall of translationTexts) {
       const key = translationCall.text
-      if (!existingTranslations.hasOwnProperty(key)) {
+      if (!Object.hasOwn(existingTranslations, key)) {
         // For English, use the text itself as value (for now)
         // For other languages, use empty string for translation
         const value = languageFile.code === "en" ? key : ""

@@ -1,17 +1,20 @@
+import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
+import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveButtonVariant } from "#ui/utils/MayHaveButtonVariant.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveDisabled } from "#ui/utils/MayHaveDisabled.ts"
-import { createSignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
 
 export interface ClipboardCopyButtonIconProps
-  extends MayHaveButtonVariant, MayHaveClass, MayHaveDisabled, MayHaveChildren {
+  extends MayHaveButtonVariant,
+    MayHaveClass,
+    MayHaveDisabled,
+    MayHaveChildren {
   data: string
   copyText?: string
   toastText?: string

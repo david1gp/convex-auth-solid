@@ -1,3 +1,5 @@
+import { For, Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -11,8 +13,6 @@ import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { resultHasList } from "#src/utils/result/resultHasList.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { For, Match, Switch } from "solid-js"
-import * as a from "valibot"
 
 interface ResourceViewInlineSectionProps extends HasResourceModel, MayHaveClass {}
 

@@ -1,16 +1,16 @@
 import { createResult, type PromiseResult } from "#result"
-import { socialLoginProvider, type LoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { type LoginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { authLog } from "#src/auth/server/authLog.ts"
 import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import { getGithubOathToken } from "#src/auth/server/social_identity_providers/getGithubOathToken.ts"
 import {
-  getGithubUserProfile,
   type GitHubUserProfile,
+  getGithubUserProfile,
 } from "#src/auth/server/social_identity_providers/getGithubUserProfile.ts"
 import { getGoogleOauthToken } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.ts"
 import {
-  getGoogleUserProfile,
   type GoogleUserProfile,
+  getGoogleUserProfile,
 } from "#src/auth/server/social_identity_providers/getGoogleUserProfile.ts"
 import { getMicrosoftOauthToken } from "#src/auth/server/social_identity_providers/getMicrosoftOauthToken.ts"
 import {

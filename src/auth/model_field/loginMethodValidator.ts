@@ -1,10 +1,10 @@
-import { loginMethod, type LoginMethod } from "#src/auth/model_field/loginMethod.ts"
+import { v } from "convex/values"
+import { type LoginMethod, loginMethod } from "#src/auth/model_field/loginMethod.ts"
 import {
   loginProvider,
-  socialLoginProvider,
   type SocialLoginProvider,
+  socialLoginProvider,
 } from "#src/auth/model_field/socialLoginProvider.ts"
-import { v } from "convex/values"
 
 export const loginMethodValidator = v.union(
   v.literal(loginMethod.email),

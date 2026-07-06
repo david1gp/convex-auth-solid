@@ -1,5 +1,5 @@
-import type { WorkspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 import type { HasCreatedAtUpdatedAt } from "#src/utils/data/HasCreatedAtUpdatedAt.ts"
+import type { WorkspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 
 export type WorkspaceMemberDataModel = {
   memberId: string

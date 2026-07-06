@@ -1,8 +1,8 @@
-import { internalQuery, query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 import type { DocWorkspace } from "./IdWorkspace.js"
 
 export const workspaceGetFields = {
@@ -28,7 +28,7 @@ export async function workspaceGetFn(
   args: WorkspaceGetValidatorType,
 ): PromiseResult<DocWorkspace | null> {
   const op = "workspaceGetFn"
-  let workspace = await ctx.db
+  const workspace = await ctx.db
     .query("workspaces")
     .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", args.workspaceHandle))
     .unique()

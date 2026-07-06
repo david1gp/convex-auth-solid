@@ -1,5 +1,6 @@
+import { type Accessor, type JSX, Show } from "solid-js"
 import type { FileModel } from "#src/file/model/FileModel.ts"
-import { uploadStatus, type UploadStatus } from "#src/file/model_field/uploadStatus.ts"
+import { type UploadStatus, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { UploadFileStats } from "#src/file/ui/stats/UploadFileStats.tsx"
 import { UploadAreaFileView } from "#src/file/ui/upload_file/UploadAreaFileView.tsx"
@@ -10,7 +11,6 @@ import type { SignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveId } from "#ui/utils/MayHaveId.ts"
 import { generateId12 } from "#utils/ran/generateId12.js"
-import { Show, type Accessor, type JSX } from "solid-js"
 
 export interface UploadAreaFileProps extends MayHaveResourceId, MayHaveClass, MayHaveId {
   hasUploaded: Accessor<boolean>

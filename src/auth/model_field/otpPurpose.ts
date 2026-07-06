@@ -1,5 +1,5 @@
-import * as a from "valibot"
 import { v } from "convex/values"
+import * as a from "valibot"
 
 export type OtpPurpose = keyof typeof otpPurpose
 

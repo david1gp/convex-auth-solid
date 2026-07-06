@@ -1,3 +1,5 @@
+import { createEffect, type JSXElement, Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -10,8 +12,6 @@ import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { resultHasData } from "#src/utils/result/resultHasData.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { createEffect, Match, Switch, type JSXElement } from "solid-js"
-import * as a from "valibot"
 
 export interface OrgLoaderProps extends HasOrgHandle, MayHaveClass {
   OrgComponent: (p: OrgComponentProps) => JSXElement

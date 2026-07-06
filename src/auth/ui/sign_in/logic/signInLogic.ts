@@ -1,12 +1,12 @@
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
-import { userSessionSchema, type UserSession } from "#src/auth/model/UserSession.ts"
+import { type UserSession, userSessionSchema } from "#src/auth/model/UserSession.ts"
 import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import { createUrl } from "#src/utils/router/createUrl.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { searchParamGet } from "#src/utils/router/searchParamGet.ts"
 import { base64urlDecodeObject } from "#utils/url/base64url.js"
-import * as a from "valibot"
 
 export function signInLogic(): void {
   const op = "signInLogic"

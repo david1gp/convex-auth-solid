@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { envMicrosoftClientSecretResult } from "#src/app/env/private/envMicrosoftClientSecretResult.ts"
 import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.ts"
@@ -5,7 +6,6 @@ import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.t
 import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.ts"
 import { queryString } from "#utils/url/queryString.js"
 import { searchParamsToObject } from "#utils/url/searchParamsToObject.js"
-import * as a from "valibot"
 import { authErrorMessages } from "./authErrorMessages.js"
 
 export type MicrosoftOauthToken = {

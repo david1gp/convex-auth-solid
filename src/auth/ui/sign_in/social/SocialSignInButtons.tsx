@@ -1,3 +1,4 @@
+import { mdiGithub, mdiGoogle } from "@mdi/js"
 import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { urlAuthProvider } from "#src/auth/url/urlAuthProvider.ts"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
@@ -6,7 +7,6 @@ import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
-import { mdiGithub, mdiGoogle } from "@mdi/js"
 
 interface SocialSignInButtonProps extends MayHaveClass {
   provider: keyof typeof socialLoginProvider

@@ -1,8 +1,8 @@
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
 import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import { cachePrefix } from "#src/utils/ui/cachePrefix.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import * as a from "valibot"
 
 const orgNameLocalStorageKey = cachePrefix + "orgNameRecord"
 const orgNameRecordSchema = a.record(a.string(), a.string())

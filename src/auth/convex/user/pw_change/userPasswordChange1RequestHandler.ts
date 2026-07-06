@@ -1,9 +1,9 @@
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { languageSchema } from "#src/app/i18n/language.ts"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
-import * as a from "valibot"
 
 const userPasswordChange1RequestSchema = a.object({
   token: a.string(),
@@ -14,7 +14,9 @@ export async function userPasswordChange1RequestHandler(ctx: ActionCtx, request:
   const op = "userPasswordChange1RequestHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const body = await request.text()

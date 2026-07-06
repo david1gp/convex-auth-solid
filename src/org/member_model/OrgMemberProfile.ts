@@ -1,7 +1,7 @@
-import { userProfileSchema, type UserProfile } from "#src/auth/model/UserProfile.ts"
+import * as a from "valibot"
+import { type UserProfile, userProfileSchema } from "#src/auth/model/UserProfile.ts"
 import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.ts"
 import { orgMemberSchemaFields } from "#src/org/member_model/OrgMemberSchema.ts"
-import * as a from "valibot"
 
 export interface OrgMemberProfile extends OrgMemberModel {
   profile: UserProfile

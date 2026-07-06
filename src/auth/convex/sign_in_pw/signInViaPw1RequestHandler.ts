@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
@@ -10,13 +11,14 @@ import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { loginMethod } from "#src/auth/model_field/loginMethod.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import * as a from "valibot"
 
 export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInPw1HttpHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const body = await request.text()
@@ -38,7 +40,9 @@ export async function signInViaPw1RequestHandler(ctx: ActionCtx, request: Reques
   const { email, pw } = validation.output
 
   // Find user by email
-  const user = await ctx.runQuery(internal.auth.findUserByEmailInternalQuery, { email })
+  const user = await ctx.runQuery(internal.auth.findUserByEmailInternalQuery, {
+    email,
+  })
   if (!user) {
     const errorMessage = "User not found"
     const errorResult = createError(op, errorMessage, email)

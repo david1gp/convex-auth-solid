@@ -1,3 +1,7 @@
+import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import { useNavigate } from "@tanstack/solid-router"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
@@ -11,15 +15,11 @@ import type { WorkspaceDataModel } from "#src/workspace/workspace_model/Workspac
 import { workspaceDataSchemaFields } from "#src/workspace/workspace_model/workspaceSchema.ts"
 import { urlWorkspaceList, urlWorkspaceView } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
 import type { NavigateTo } from "#ui/utils/NavigateTo.ts"
-import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import { useNavigate } from "@tanstack/solid-router"
-import * as a from "valibot"
 
 export type WorkspaceFormField = keyof typeof workspaceFormField
 
@@ -247,19 +247,39 @@ async function handleSubmit(
 
   if (!isSuccess) {
     if (!nameResult.success) {
-      toastAdd({ title: nameResult.issues[0].message, icon: mdiAlertCircle, id: "name" })
+      toastAdd({
+        title: nameResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "name",
+      })
     }
     if (!handleResult.success) {
-      toastAdd({ title: handleResult.issues[0].message, icon: mdiAlertCircle, id: "handle" })
+      toastAdd({
+        title: handleResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "handle",
+      })
     }
     if (!descriptionResult.success) {
-      toastAdd({ title: descriptionResult.issues[0].message, icon: mdiAlertCircle, id: "description" })
+      toastAdd({
+        title: descriptionResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "description",
+      })
     }
     if (!imageResult.success) {
-      toastAdd({ title: imageResult.issues[0].message, icon: mdiAlertCircle, id: "image" })
+      toastAdd({
+        title: imageResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "image",
+      })
     }
     if (!urlResult.success) {
-      toastAdd({ title: urlResult.issues[0].message, icon: mdiAlertCircle, id: "url" })
+      toastAdd({
+        title: urlResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: "url",
+      })
     }
     return
   }
@@ -267,7 +287,13 @@ async function handleSubmit(
   isSaving.set(true)
 
   if (actions.create) {
-    const data: WorkspaceFormData = { name, workspaceHandle, description, image, url }
+    const data: WorkspaceFormData = {
+      name,
+      workspaceHandle,
+      description,
+      image,
+      url,
+    }
     await actions.create(data)
   }
 
@@ -334,7 +360,9 @@ function createActions(
 interface WorkspaceCreateMutationProps extends WorkspaceDataModel, HasToken {}
 
 interface WorkspaceEditMutationProps
-  extends Partial<Omit<WorkspaceDataModel, "workspaceHandle">>, HasWorkspaceHandle, HasToken {}
+  extends Partial<Omit<WorkspaceDataModel, "workspaceHandle">>,
+    HasWorkspaceHandle,
+    HasToken {}
 
 interface WorkspaceRemoveMutationProps extends HasWorkspaceHandle, HasToken {}
 
@@ -350,7 +378,10 @@ async function createAction(
   })
   if (!workspaceIdResult.success) {
     console.error(workspaceIdResult)
-    toastAdd({ title: workspaceIdResult.errorMessage, variant: toastVariant.error })
+    toastAdd({
+      title: workspaceIdResult.errorMessage,
+      variant: toastVariant.error,
+    })
     return
   }
   // const workspaceId = await getMutationAdd(p.session, state)

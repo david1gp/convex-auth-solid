@@ -1,3 +1,4 @@
+import { Show, splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { HasResourceModel } from "#src/resource/model/HasResourceModel.ts"
 import { ResourceTypeBadge } from "#src/resource/ui/view/ResourceTypeBadge.tsx"
@@ -12,7 +13,6 @@ import { LinkButtonIconOnlyInternal } from "#ui/interactive/link/LinkButtonIconO
 import { classesGridCols3xl } from "#ui/static/grid/classesGridCols.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { Show, splitProps } from "solid-js"
 
 export interface ResourceViewProps extends HasResourceModel, MayHaveClass {
   showCardWrapper?: boolean

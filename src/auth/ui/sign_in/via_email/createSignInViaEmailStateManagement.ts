@@ -1,3 +1,6 @@
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import { posthog } from "posthog-js"
+import * as a from "valibot"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { apiAuthSignInViaEmail } from "#src/auth/api_client/apiAuthSignInViaEmail.ts"
@@ -9,9 +12,6 @@ import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import { posthog } from "posthog-js"
-import * as a from "valibot"
 
 export type SignInViaEmailUiState = {
   email: SignalObject<string>
@@ -145,10 +145,16 @@ async function handleSignInViaEmail(
   posthog.capture(op, result)
 
   if (!result.success) {
-    toastAdd({ title: ttc("Error signing in"), description: result.errorMessage })
+    toastAdd({
+      title: ttc("Error signing in"),
+      description: result.errorMessage,
+    })
     return
   }
-  toastAdd({ title: ttc("Successfully signed in"), variant: toastVariant.success })
+  toastAdd({
+    title: ttc("Successfully signed in"),
+    variant: toastVariant.success,
+  })
 
   const returnPath = urlSignInRedirectUrl(document.location.pathname)
   const url = urlSignInEnterOtp(email, "", returnPath)

@@ -1,10 +1,10 @@
-import { query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { docWorkspaceMemberToModel } from "#src/workspace/member_convex/docWorkspaceMemberToModel.ts"
-import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
+import { docWorkspaceMemberToModel } from "#src/workspace/member_convex/docWorkspaceMemberToModel.ts"
+import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
 
 export type WorkspaceMembersListValidatorType = typeof workspaceMembersListValidator.type
 

@@ -1,9 +1,9 @@
+import { mdiAlphaSCircleOutline } from "@mdi/js"
 import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonIconOnlyExternal } from "#ui/interactive/link/LinkButtonIconOnly.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiAlphaSCircleOutline } from "@mdi/js"
 
 export interface SiteNavLinkButtonProps extends MayHaveClass {
   sitePath?: string

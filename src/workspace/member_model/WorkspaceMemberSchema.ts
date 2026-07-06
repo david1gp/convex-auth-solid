@@ -1,7 +1,7 @@
-import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import * as a from "valibot"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
-import * as a from "valibot"
+import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 
 export const workspaceMemberDataSchemaFields = {
   memberId: stringSchemaId,

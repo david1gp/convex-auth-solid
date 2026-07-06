@@ -10,7 +10,7 @@ export function createQuery<Query extends FunctionReference<"query">>(
   if (convex === undefined) {
     throw "No convex context"
   }
-  let fullArgs = args ?? {}
+  const fullArgs = args ?? {}
   return from((setter) => {
     const unsubscriber = convex!.onUpdate(query, fullArgs, setter)
     return unsubscriber

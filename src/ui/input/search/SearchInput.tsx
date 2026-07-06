@@ -1,16 +1,16 @@
+import { mdiMagnify } from "@mdi/js"
+import { debounce } from "@solid-primitives/scheduled"
+import { onMount } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import { Input } from "#ui/input/input/Input.jsx"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
-import { type SignalObject } from "#ui/utils/createSignalObject.ts"
+import type { SignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveId } from "#ui/utils/MayHaveId.ts"
 import { generateId12 } from "#utils/ran/generateId12.js"
-import { mdiMagnify } from "@mdi/js"
-import { debounce } from "@solid-primitives/scheduled"
-import { onMount } from "solid-js"
 
 export interface ResourceListSearchProps extends MayHaveId, MayHaveClass, MayHaveChildren {
   searchSignal: SignalObject<string>

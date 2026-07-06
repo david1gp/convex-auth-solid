@@ -1,6 +1,8 @@
+import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
-import { action, internalAction, type ActionCtx } from "#convex/_generated/server.js"
-import { type PromiseResult } from "#result"
+import { type ActionCtx, action, internalAction } from "#convex/_generated/server.js"
+import type { PromiseResult } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
 import { languageValidator } from "#src/app/i18n/language.ts"
 import { sendEmailChangeEmail } from "#src/auth/convex/email/sendEmailChangeEmail.ts"
@@ -14,8 +16,6 @@ import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAnd
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
-import { v } from "convex/values"
-import * as a from "valibot"
 
 export const userEmailChangeFieldsBase = {
   newEmail: v.string(),
@@ -26,7 +26,10 @@ export const userEmailChangeFieldsBase = {
 export const userEmailChangeValidatorPublic = createTokenValidator(userEmailChangeFieldsBase)
 export type UserEmailChangeTypePublic = typeof userEmailChangeValidatorPublic.type
 
-export const userEmailChangeValidatorInternal = v.object({ ...userEmailChangeFieldsBase, userId: vIdUser })
+export const userEmailChangeValidatorInternal = v.object({
+  ...userEmailChangeFieldsBase,
+  userId: vIdUser,
+})
 
 export type UserEmailChangeTypeInternal = typeof userEmailChangeValidatorInternal.type
 

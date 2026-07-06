@@ -1,3 +1,4 @@
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UserRole } from "#src/auth/model_field/userRole.ts"
 import { userProfileFormConfig, userProfileFormField } from "#src/auth/ui/profile/userProfileFormField.ts"
@@ -5,11 +6,10 @@ import { ProfileSectionImage } from "#src/auth/ui/profile_me/ProfileSectionImage
 import type { OrgRole } from "#src/org/org_model_field/orgRole.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
-import { type FormMode } from "#ui/input/form/formMode.ts"
+import type { FormMode } from "#ui/input/form/formMode.ts"
 import { Label } from "#ui/input/label/Label.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { UserProfileFormStateManagement } from "./userProfileFormState.js"
 
 interface HasUserProfileFormStateManagement {

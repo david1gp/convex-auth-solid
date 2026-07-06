@@ -1,32 +1,32 @@
+import { mdiAlertCircle } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
-import { language, type Language } from "#src/app/i18n/language.ts"
+import { type Language, language } from "#src/app/i18n/language.ts"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { DocOrgInvitation, IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
 import {
+  type OrgInvitationFormField,
   orgInvitationFormConfig,
   orgInvitationFormField,
-  type OrgInvitationFormField,
 } from "#src/org/invitation_ui/form/orgInvitationFormField.ts"
 import {
-  orgInvitationFormLocalStorage,
   type OrgInvitationFormData,
+  orgInvitationFormLocalStorage,
 } from "#src/org/invitation_ui/form/orgInvitationFormLocalStorage.ts"
 import { urlOrgInvitationList } from "#src/org/invitation_url/urlOrgInvitation.ts"
-import { orgRole, type OrgRole } from "#src/org/org_model_field/orgRole.ts"
+import { type OrgRole, orgRole } from "#src/org/org_model_field/orgRole.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type OrgInvitationFormState = {
   invitedName: SignalObject<string>
@@ -249,7 +249,11 @@ async function handleSubmit(
       })
     }
     if (!roleResult.success) {
-      toastAdd({ title: roleResult.issues[0].message, icon: mdiAlertCircle, id: orgInvitationFormField.role })
+      toastAdd({
+        title: roleResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgInvitationFormField.role,
+      })
     }
     return
   }
@@ -257,12 +261,22 @@ async function handleSubmit(
   isSubmitting.set(true)
 
   if (actions.add) {
-    const data: OrgInvitationFormData = { invitedName, invitedEmail, role: role as OrgRole, l }
+    const data: OrgInvitationFormData = {
+      invitedName,
+      invitedEmail,
+      role: role as OrgRole,
+      l,
+    }
     await actions.add(data)
   }
 
   if (actions.edit) {
-    const data: OrgInvitationFormData = { invitedName, invitedEmail, role: role as OrgRole, l }
+    const data: OrgInvitationFormData = {
+      invitedName,
+      invitedEmail,
+      role: role as OrgRole,
+      l,
+    }
     await actions.edit(data)
   }
 
@@ -324,7 +338,10 @@ async function addAction(
   })
   if (!invitationIdResult.success) {
     console.error(invitationIdResult)
-    toastAdd({ title: invitationIdResult.errorMessage, variant: toastVariant.error })
+    toastAdd({
+      title: invitationIdResult.errorMessage,
+      variant: toastVariant.error,
+    })
     return
   }
   orgInvitationFormLocalStorage.clearLocalStorage()

@@ -1,6 +1,6 @@
 import { ResourceForm } from "#src/resource/ui/form/ResourceForm.tsx"
 import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
-import { ResourceLoader, type ResourceComponentProps } from "#src/resource/ui/view/ResourceLoader.tsx"
+import { type ResourceComponentProps, ResourceLoader } from "#src/resource/ui/view/ResourceLoader.tsx"
 import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 

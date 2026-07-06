@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { languageSchema } from "#src/app/i18n/language.ts"
 import type { DocResource } from "#src/resource/convex/IdResource.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
@@ -6,7 +7,6 @@ import { resourceTypeSchema } from "#src/resource/model_field/resourceType.ts"
 import { visibilitySchema } from "#src/resource/model_field/visibility.ts"
 import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt.ts"
 import { stringSchemaDescription, stringSchemaName } from "#src/utils/valibot/stringSchema.ts"
-import * as a from "valibot"
 
 export const resourceDataSchemaFields = {
   resourceId: resourceIdSchema,

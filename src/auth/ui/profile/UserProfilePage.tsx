@@ -1,3 +1,5 @@
+import { useParams } from "@tanstack/solid-router"
+import { Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
@@ -8,16 +10,14 @@ import type { DocUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.tsx"
 import {
-  userProfileFormStateManagement,
   type UserProfileFormStateManagement,
+  userProfileFormStateManagement,
 } from "#src/auth/ui/profile/userProfileFormState.ts"
 import { urlUserProfileView } from "#src/auth/url/pageRouteAuth.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@tanstack/solid-router"
-import { Match, Switch } from "solid-js"
 
 export function UserProfilePage() {
   const params = useParams({ strict: false })

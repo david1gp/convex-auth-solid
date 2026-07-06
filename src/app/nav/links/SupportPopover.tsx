@@ -1,10 +1,10 @@
+import { mdiEmail, mdiHelpCircleOutline } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { urlSupportMailTo, urlSupportTelegram } from "#src/app/url/urlSupport.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { CorvuPopoverIcon } from "#ui/interactive/popover/CorvuPopoverIcon.jsx"
 import { iconTelegram } from "#ui/static/icons/iconTelegram.ts"
-import { mdiEmail, mdiHelpCircleOutline } from "@mdi/js"
 
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 

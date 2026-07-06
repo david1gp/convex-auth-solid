@@ -1,11 +1,11 @@
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
-import { type ActionCtx } from "#convex/_generated/server.js"
+import type { ActionCtx } from "#convex/_generated/server.js"
 import { commonApiErrorMessages } from "#src/auth/convex/sign_up/commonApiErrorMessages.ts"
-import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { signUpConfirmEmailSchema } from "#src/auth/model/signUpConfirmEmailSchema.ts"
+import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 import { base64urlEncodeObject } from "#utils/url/base64url.js"
-import * as a from "valibot"
 
 export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signUpConfirmEmail1HttpHandler"
@@ -14,7 +14,9 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   // 1. validate request
   //
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
   const textBody = await request.text()
   if (!textBody) {
@@ -63,7 +65,9 @@ export async function signUpConfirmEmail1RequestHandler(ctx: ActionCtx, request:
   const userSessionSerializedResult = base64urlEncodeObject(userSession)
   if (!userSessionSerializedResult.success) {
     console.error(userSessionSerializedResult)
-    return new Response(jsonStringifyPretty(userSessionSerializedResult), { status: 500 })
+    return new Response(jsonStringifyPretty(userSessionSerializedResult), {
+      status: 500,
+    })
   }
 
   return new Response(JSON.stringify(userSession, null, 2))

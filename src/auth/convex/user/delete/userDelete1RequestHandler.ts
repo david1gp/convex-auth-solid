@@ -7,7 +7,9 @@ export async function userDelete1RequestHandler(ctx: ActionCtx, request: Request
   const op = "userDelete1RequestHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   try {
@@ -31,7 +33,12 @@ export async function userDelete1RequestHandler(ctx: ActionCtx, request: Request
 
     if (!result.success) {
       return Response.json(
-        { success: false, op: result.op, errorMessage: result.errorMessage, errorData: result.errorData },
+        {
+          success: false,
+          op: result.op,
+          errorMessage: result.errorMessage,
+          errorData: result.errorData,
+        },
         { status: 400 },
       )
     }

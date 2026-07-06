@@ -1,3 +1,4 @@
+import { mdiLockOutline } from "@mdi/js"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
@@ -19,7 +20,6 @@ import { iconGithub } from "#ui/static/icons/iconGithub.ts"
 import { iconGoogle } from "#ui/static/icons/iconGoogle.ts"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiLockOutline } from "@mdi/js"
 
 export function SignInPageContent(p: MayHaveClass) {
   return (

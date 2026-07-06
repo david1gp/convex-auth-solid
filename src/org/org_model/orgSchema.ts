@@ -1,9 +1,9 @@
+import * as a from "valibot"
 import type { DocOrg } from "#src/org/org_convex/IdOrg.ts"
 import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import { orgHandleSchema } from "#src/org/org_model_field/orgHandleSchema.ts"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { stringSchemaDescription, stringSchemaName, stringSchemaUrl } from "#src/utils/valibot/stringSchema.ts"
-import * as a from "valibot"
 
 export const orgDataSchemaFields = {
   orgHandle: orgHandleSchema,

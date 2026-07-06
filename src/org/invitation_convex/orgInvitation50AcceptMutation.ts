@@ -1,7 +1,8 @@
-import { mutation, type MutationCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
+import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { loginMethod } from "#src/auth/model_field/loginMethod.ts"
@@ -10,7 +11,6 @@ import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetU
 import { orgGetQueryInternalFn } from "#src/org/org_convex/orgGetQuery.ts"
 import { stt } from "#src/utils/i18n/stt.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 
@@ -51,7 +51,9 @@ export async function orgInvitation50AcceptFn(
   }
 
   // Get org details for token
-  const orgResult = await orgGetQueryInternalFn(ctx, { orgHandle: invitation.orgHandle })
+  const orgResult = await orgGetQueryInternalFn(ctx, {
+    orgHandle: invitation.orgHandle,
+  })
   if (!orgResult.success) {
     return orgResult
   }

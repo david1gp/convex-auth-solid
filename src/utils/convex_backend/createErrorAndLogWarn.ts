@@ -1,4 +1,4 @@
-import { type ResultErr, createResultError } from "#result"
+import { createResultError, type ResultErr } from "#result"
 
 export function createErrorAndLogWarn(
   op: string,

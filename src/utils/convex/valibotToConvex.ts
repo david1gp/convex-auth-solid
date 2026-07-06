@@ -1,5 +1,5 @@
-import { v, type Validator } from "convex/values"
-import * as a from "valibot"
+import { type Validator, v } from "convex/values"
+import type * as a from "valibot"
 
 type Schema = a.BaseSchema<unknown, unknown, a.BaseIssue<unknown>>
 type SchemaRecord = Record<string, Schema>

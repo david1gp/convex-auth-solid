@@ -1,4 +1,5 @@
 export type OrgRole = keyof typeof orgRole
+
 import * as a from "valibot"
 
 export const orgRole = {

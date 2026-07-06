@@ -1,3 +1,5 @@
+import { mdiLoading } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { FileDataUnuploaded } from "#src/file/model/FileDataUnuploaded.ts"
 import { bytesToFormatedText } from "#src/file/ui/stats/bytesToFormatedText.ts"
@@ -5,8 +7,6 @@ import { classesCard } from "#src/ui/card/classesCard.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiLoading } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface UploadFileStatsProps extends MayHaveClass {
   info: FileDataUnuploaded

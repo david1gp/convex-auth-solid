@@ -1,9 +1,9 @@
+import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
-import { userSessionSchema, type UserSession } from "#src/auth/model/UserSession.ts"
+import { type UserSession, userSessionSchema } from "#src/auth/model/UserSession.ts"
 import { userRole } from "#src/auth/model_field/userRole.ts"
 import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
 import { createSignalObject, type SetterSimplified, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import * as a from "valibot"
 
 const userSessionsSessionStorageKey = "userSession"
 

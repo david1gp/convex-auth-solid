@@ -1,5 +1,5 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { resourceType, type ResourceType } from "#src/resource/model_field/resourceType.ts"
+import { type ResourceType, resourceType } from "#src/resource/model_field/resourceType.ts"
 
 export function resourceTypeGetText(type?: string): string {
   if (!type) return ttc("Unknown")

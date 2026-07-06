@@ -1,13 +1,13 @@
+import { mdiAccountMultiple } from "@mdi/js"
+import { For, Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { OrgMemberProfile } from "#src/org/member_model/OrgMemberProfile.ts"
 import { OrgMemberCard } from "#src/org/member_ui/view/OrgMemberCard.tsx"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { orgPageSection } from "#src/org/org_ui/view/orgPageSection.tsx"
 import { SectionHeader } from "#src/ui/header/SectionHeader.tsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiAccountMultiple } from "@mdi/js"
-import { For, Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface OrgMemberListProps extends HasOrgHandle, MayHaveClass {
   members: OrgMemberProfile[]

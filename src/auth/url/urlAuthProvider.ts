@@ -3,8 +3,8 @@ import { envGoogleClientIdResult } from "#src/app/env/public/envGoogleClientIdRe
 import { envMicrosoftClientIdResult } from "#src/app/env/public/envMicrosoftClientIdResult.ts"
 import {
   loginProvider,
-  socialLoginProvider,
   type SocialLoginProvider,
+  socialLoginProvider,
 } from "#src/auth/model_field/socialLoginProvider.ts"
 import { urlAuthSignInUsingOauth } from "#src/auth/url/urlAuthSignInUsingOauth.ts"
 

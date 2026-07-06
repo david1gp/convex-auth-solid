@@ -1,15 +1,15 @@
+import { mdiClose, mdiFilterVariant } from "@mdi/js"
+import { For, Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { FilterFieldConfig } from "#src/ui/input/search/FilterFieldConfig.ts"
 import { InputS } from "#ui/input/input/InputS.jsx"
 import { SelectSingleNative } from "#ui/input/select/SelectSingleNative.jsx"
-import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
+import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { CorvuPopover } from "#ui/interactive/popover/CorvuPopover.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
-import { type SignalObject } from "#ui/utils/createSignalObject.ts"
+import type { SignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiClose, mdiFilterVariant } from "@mdi/js"
-import { For, Show } from "solid-js"
 
 export interface SearchFilterProps<T extends Record<string, string>> extends MayHaveClass {
   filterSignal: {

@@ -1,3 +1,5 @@
+import { mdiEmail } from "@mdi/js"
+import { For, Show, splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 import { OrgInvitationCard } from "#src/org/invitation_ui/view/OrgInvitationCard.tsx"
@@ -8,10 +10,8 @@ import { SectionHeader } from "#src/ui/header/SectionHeader.tsx"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiEmail } from "@mdi/js"
-import { For, Show, splitProps } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface OrgInvitationsProps extends HasOrgHandle, MayHaveClass {
   invitations: OrgInvitationModel[]

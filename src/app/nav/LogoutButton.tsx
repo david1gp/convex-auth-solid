@@ -1,8 +1,8 @@
 import { autoLoginIfUserRoleOnly, userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { linkIcons } from "#ui/static/icon/linkIcons.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 

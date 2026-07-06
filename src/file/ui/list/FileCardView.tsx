@@ -1,3 +1,5 @@
+import { mdiDownload, mdiEye } from "@mdi/js"
+import { Show } from "solid-js"
 import { language, languageOrNone } from "#src/app/i18n/language.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { HasFileModel } from "#src/file/model/HasFileModel.ts"
@@ -6,14 +8,12 @@ import { bytesToFormatedText } from "#src/file/ui/stats/bytesToFormatedText.ts"
 import type { MayHaveResourceId } from "#src/resource/model/MayHaveResourceId.ts"
 import { classesCard } from "#src/ui/card/classesCard.ts"
 import { ClipboardCopyButtonIcon } from "#src/ui/links/ClipboardCopyButtonIcon.tsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiDownload, mdiEye } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface FileCardViewProps extends MayHaveResourceId, HasFileModel, MayHaveClass, MayHaveChildren {
   showDownload?: boolean

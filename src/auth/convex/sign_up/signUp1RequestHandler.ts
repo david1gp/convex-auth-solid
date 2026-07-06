@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
@@ -9,14 +10,15 @@ import { signUpErrorMessages } from "#src/auth/convex/sign_up/signUpErrorMessage
 import { signUpSchema } from "#src/auth/model/signUpSchema.ts"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import * as a from "valibot"
 import { commonApiErrorMessages } from "./commonApiErrorMessages.js"
 
 export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signUp1RequestHandler"
 
   if (request.method !== "POST") {
-    return new Response(commonApiErrorMessages.methodNotAllowed, { status: 405 })
+    return new Response(commonApiErrorMessages.methodNotAllowed, {
+      status: 405,
+    })
   }
 
   const textBody = await request.text()
@@ -53,7 +55,9 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const hashedPasswordResult = await hashPassword2(pw)
   if (!hashedPasswordResult.success) {
     console.warn(hashedPasswordResult)
-    return new Response(jsonStringifyPretty(hashedPasswordResult), { status: 500 })
+    return new Response(jsonStringifyPretty(hashedPasswordResult), {
+      status: 500,
+    })
   }
   const hashedPassword = hashedPasswordResult.data
 
@@ -71,7 +75,9 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const hostnameAppResult = envBaseUrlAppResult()
   if (!hostnameAppResult.success) {
     console.error(hostnameAppResult)
-    return new Response(jsonStringifyPretty(hostnameAppResult), { status: 500 })
+    return new Response(jsonStringifyPretty(hostnameAppResult), {
+      status: 500,
+    })
   }
   const hostnameApp = hostnameAppResult.data
   const confirmUrl = new URL(pageRouteAuth.signUpConfirmEmail, hostnameApp)

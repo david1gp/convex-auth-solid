@@ -1,7 +1,7 @@
-import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
 import { OrganizationListNavButton } from "#src/app/nav/links/OrganizationListNavButton.tsx"
 import { ResourceListNavButton } from "#src/app/nav/links/ResourceListNavButton.tsx"
 import { WorkspaceListLinkNavButton } from "#src/app/nav/links/WorkspaceListLinkNavButton.tsx"
+import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
 import type { AppTab } from "#src/app/tabs/appTab.ts"
 import { appTab } from "#src/app/tabs/appTab.ts"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"

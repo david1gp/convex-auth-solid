@@ -1,3 +1,5 @@
+import { useParams } from "@tanstack/solid-router"
+import { Match, Switch } from "solid-js"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
 import { LinkLikeText } from "#src/ui/links/LinkLikeText.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
@@ -5,8 +7,6 @@ import { WorkspaceMutate } from "#src/workspace/workspace_ui/mutate/WorkspaceMut
 import { ttt } from "#ui/i18n/ttt.ts"
 import { formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { useParams } from "@tanstack/solid-router"
-import { Match, Switch } from "solid-js"
 
 const mode = formMode.remove
 

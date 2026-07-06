@@ -1,3 +1,4 @@
+import type { WithoutSystemFields } from "convex/server"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { DocUser } from "#src/auth/convex/IdUser.ts"
@@ -5,11 +6,10 @@ import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
 import { userRole } from "#src/auth/model_field/userRole.ts"
 import {
+  type CommonAuthProvider,
   commonAuthProviderValidator,
   getUserNameFromCommonAuthProvider,
-  type CommonAuthProvider,
 } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
-import type { WithoutSystemFields } from "convex/server"
 
 export type UserFields = WithoutSystemFields<DocUser>
 
@@ -49,7 +49,11 @@ export async function createUserFromAuthProviderFn(
     updatedAt: iso,
   } as const satisfies WithoutSystemFields<DocUser>
   const userId = await ctx.db.insert("users", toCreate)
-  const userProfile: UserProfile = docUserToUserProfile({ _id: userId, _creationTime: now.getTime(), ...toCreate })
+  const userProfile: UserProfile = docUserToUserProfile({
+    _id: userId,
+    _creationTime: now.getTime(),
+    ...toCreate,
+  })
 
   // Create auth account
   await ctx.db.insert("authAccounts", {

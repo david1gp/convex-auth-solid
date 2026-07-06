@@ -1,5 +1,5 @@
-import { type MutationCtx, internalMutation } from "#convex/_generated/server.js"
-import { type PromiseResult, createResult } from "#result"
+import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
+import { createResult, type PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import { userProfileUpdateFields } from "#src/auth/convex/user/profile_update/userProfileUpdate.ts"

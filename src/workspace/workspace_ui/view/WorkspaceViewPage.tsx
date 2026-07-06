@@ -1,7 +1,9 @@
+import { useParams } from "@tanstack/solid-router"
+import { For, Match, Show, Switch } from "solid-js"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
 import { LinkLikeText } from "#src/ui/links/LinkLikeText.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
-import { WorkspaceLoader, type WorkspaceComponentProps } from "#src/workspace/workspace_ui/view/WorkspaceLoader.tsx"
+import { type WorkspaceComponentProps, WorkspaceLoader } from "#src/workspace/workspace_ui/view/WorkspaceLoader.tsx"
 import { urlWorkspaceEdit } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
@@ -10,8 +12,6 @@ import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { Img } from "#ui/static/img/Img.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
-import { useParams } from "@tanstack/solid-router"
-import { For, Match, Show, Switch } from "solid-js"
 
 export function WorkspaceViewPage() {
   const params = useParams({ strict: false })

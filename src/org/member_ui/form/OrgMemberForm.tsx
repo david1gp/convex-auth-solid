@@ -1,16 +1,16 @@
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { orgMemberFormField } from "#src/org/member_ui/form/orgMemberFormField.ts"
 import type { OrgMemberFormStateManagement } from "#src/org/member_ui/form/orgMemberFormStateManagement.ts"
 import { orgRole } from "#src/org/org_model_field/orgRole.ts"
 import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
-import { getFormModeTitle, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface HasOrgMemberFormStateManagement {
   sm: OrgMemberFormStateManagement

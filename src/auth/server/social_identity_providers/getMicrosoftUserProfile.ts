@@ -1,7 +1,7 @@
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts" // Adjust if needed
 import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.ts"
-import * as a from "valibot"
 
 /**
  * Microsoft Graph /me endpoint for user profile

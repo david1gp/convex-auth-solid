@@ -1,3 +1,4 @@
+import { createSignal } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
@@ -13,7 +14,6 @@ import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { createSignal } from "solid-js"
 
 export function UserProfileMeDeletePage() {
   return (

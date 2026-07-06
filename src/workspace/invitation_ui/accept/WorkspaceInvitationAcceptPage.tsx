@@ -1,3 +1,7 @@
+import { mdiAccountAlert } from "@mdi/js"
+import { useParams } from "@tanstack/solid-router"
+import { Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { ResultErr, ResultOk } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -24,10 +28,6 @@ import { classesCardWrapperP8 } from "#ui/static/card/classesCardWrapper.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { mdiAccountAlert } from "@mdi/js"
-import { useParams } from "@tanstack/solid-router"
-import { Match, Switch } from "solid-js"
-import * as a from "valibot"
 
 export function WorkspaceInvitationAcceptPage() {
   const params = useParams({ strict: false })
@@ -150,7 +150,11 @@ function AcceptButton(p: InvitationDetailsProps) {
     })
 
     if (!result.success) {
-      toastAdd({ icon: mdiAccountAlert, title: result.errorMessage, variant: toastVariant.error })
+      toastAdd({
+        icon: mdiAccountAlert,
+        title: result.errorMessage,
+        variant: toastVariant.error,
+      })
       return
     }
     const session = result.data

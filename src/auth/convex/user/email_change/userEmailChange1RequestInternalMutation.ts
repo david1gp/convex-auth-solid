@@ -1,10 +1,10 @@
+import { v } from "convex/values"
 import { internalMutation } from "#convex/_generated/server.js"
-import { type PromiseResult } from "#result"
+import type { PromiseResult } from "#result"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.ts"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import { otpPurpose } from "#src/auth/model_field/otpPurpose.ts"
-import { v } from "convex/values"
 
 const userEmailChange1RequestValidator = v.object({
   userId: vIdUser,

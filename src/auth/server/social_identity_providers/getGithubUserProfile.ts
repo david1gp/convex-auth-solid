@@ -1,8 +1,8 @@
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { authErrorMessages } from "#src/auth/server/social_identity_providers/authErrorMessages.ts"
 import { intOrStringSchema } from "#utils/valibot/intOrStringSchema.js"
-import * as a from "valibot"
 
 /**
  * https://docs.github.com/en/rest/users/users#get-the-authenticated-user

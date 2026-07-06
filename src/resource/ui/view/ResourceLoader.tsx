@@ -1,3 +1,5 @@
+import { createEffect, type JSXElement, Match, Switch } from "solid-js"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -15,8 +17,6 @@ import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { createEffect, Match, Switch, type JSXElement } from "solid-js"
-import * as a from "valibot"
 
 export interface ResourceLoaderProps extends HasResourceId, MayHaveClass {
   ResourceComponent: (p: ResourceComponentProps) => JSXElement
@@ -56,7 +56,11 @@ export function ResourceLoader(p: ResourceLoaderProps) {
       </Match>
       <Match when={hasData(getData())}>
         {(getLoadedData) =>
-          p.ResourceComponent({ resource: getLoadedData().resource, files: getLoadedData().files, class: p.class })
+          p.ResourceComponent({
+            resource: getLoadedData().resource,
+            files: getLoadedData().files,
+            class: p.class,
+          })
         }
       </Match>
     </Switch>

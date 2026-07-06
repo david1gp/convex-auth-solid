@@ -1,8 +1,8 @@
+import { lazy } from "solid-js"
 import type { PageNameWorkspaceInvitation } from "#src/workspace/invitation_url/pageNameWorkspaceInvitation.ts"
 import { pageRouteWorkspaceInvitation } from "#src/workspace/invitation_url/pageRouteWorkspaceInvitation.ts"
 import type { RouteComponent, RouteObject } from "#ui/utils/RouteConfig.ts"
 import { objectEntries } from "#utils/obj/objectEntries.js"
-import { lazy } from "solid-js"
 
 const WorkspaceInvitationListPage = lazy(() =>
   import("#src/workspace/invitation_ui/list/WorkspaceInvitationListPage.tsx").then((c) => ({

@@ -1,3 +1,5 @@
+import { mdiAccountPlus } from "@mdi/js"
+import type { Component } from "solid-js"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
@@ -24,8 +26,6 @@ import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
-import { mdiAccountPlus } from "@mdi/js"
-import { type Component } from "solid-js"
 
 interface SignUpPageProps extends MayHaveClass, MayHaveInnerClass {}
 

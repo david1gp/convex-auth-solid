@@ -1,3 +1,4 @@
+import { mdiAccountPlus } from "@mdi/js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
 import { SignInPageContent } from "#src/auth/ui/sign_in/page/SignInPageContent.tsx"
@@ -8,7 +9,6 @@ import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveInnerClass } from "#ui/utils/MayHaveInnerClass.ts"
-import { mdiAccountPlus } from "@mdi/js"
 
 interface SignInPageContent2Props extends MayHaveClass, MayHaveInnerClass {}
 

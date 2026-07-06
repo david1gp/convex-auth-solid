@@ -1,6 +1,11 @@
+import { mdiClose, mdiEmailFast } from "@mdi/js"
+import { Show } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { DateView } from "#src/ui/date/DateView.tsx"
+import { createAction } from "#src/utils/convex_client/createAction.ts"
+import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
@@ -9,11 +14,9 @@ import {
   workspaceInvitationStatusIcon,
   workspaceInvitationStatusText,
 } from "#src/workspace/invitation_ui/orgInvitationStatus.ts"
-import { DateView } from "#src/ui/date/DateView.tsx"
-import { createAction } from "#src/utils/convex_client/createAction.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
+import { workspaceRoleGetText } from "#src/workspace/workspace_model_field/workspaceRoleGetText.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -21,9 +24,6 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
-import { workspaceRoleGetText } from "#src/workspace/workspace_model_field/workspaceRoleGetText.ts"
-import { mdiClose, mdiEmailFast } from "@mdi/js"
-import { Show } from "solid-js"
 
 export interface WorkspaceInvitationCardProps extends MayHaveClass {
   invitation: WorkspaceInvitationModel
@@ -85,7 +85,10 @@ function WorkspaceInvitationActions(p: WorkspaceInvitationCardProps) {
   const dismissAction = createMutation(api.workspace.workspaceInvitation60DismissMutation)
 
   async function resendClick() {
-    const result = await resendAction({ token: userTokenGet(), invitationCode: p.invitation.invitationCode })
+    const result = await resendAction({
+      token: userTokenGet(),
+      invitationCode: p.invitation.invitationCode,
+    })
     if (!result.success) {
       const icon = mdiEmailFast
       const title = result.errorMessage
@@ -94,7 +97,10 @@ function WorkspaceInvitationActions(p: WorkspaceInvitationCardProps) {
   }
 
   async function dismissClick() {
-    const gotResult = await dismissAction({ token: userTokenGet(), invitationCode: p.invitation.invitationCode })
+    const gotResult = await dismissAction({
+      token: userTokenGet(),
+      invitationCode: p.invitation.invitationCode,
+    })
     if (!gotResult.success) {
       const icon = mdiEmailFast
       const title = gotResult.errorMessage

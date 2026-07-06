@@ -1,11 +1,11 @@
-import { query, type QueryCtx } from "#convex/_generated/server.js"
+import { v } from "convex/values"
+import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docOrgMemberToModel } from "#src/org/member_convex/docOrgMemberToModel.ts"
 import type { IdOrgMember } from "#src/org/member_convex/IdOrgMember.ts"
 import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { v } from "convex/values"
 
 export const orgMemberGetFields = {
   orgHandle: v.string(),
@@ -37,7 +37,7 @@ export async function orgMemberGetFn(
     return createResultError(op, "Organization not found", args.orgHandle)
   }
 
-  let member = await ctx.db.get("orgMembers", args.memberId as IdOrgMember)
+  const member = await ctx.db.get("orgMembers", args.memberId as IdOrgMember)
   if (!member || member.orgId !== org._id) {
     return createResultError(op, "Org member not found", args.memberId)
   }

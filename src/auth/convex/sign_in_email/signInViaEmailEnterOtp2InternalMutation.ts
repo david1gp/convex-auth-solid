@@ -1,3 +1,4 @@
+import { v } from "convex/values"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
@@ -11,7 +12,6 @@ import { otpPurpose } from "#src/auth/model_field/otpPurpose.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { v } from "convex/values"
 
 export type signInViaEmailEnterOtp2ValidatorType = typeof signInViaEmailEnterOtp2Validator.type
 export const signInViaEmailEnterOtp2Validator = v.object({
@@ -31,7 +31,11 @@ export async function signInViaEmailEnterOtp2InternalMutationFn(
   const op = "signInConfirm2MutationFn"
   const { email, code } = args
 
-  const otpFindResult = await otpFindFn(ctx, { email, code, purpose: otpPurpose.signIn })
+  const otpFindResult = await otpFindFn(ctx, {
+    email,
+    code,
+    purpose: otpPurpose.signIn,
+  })
   if (!otpFindResult.success) {
     return createError(op, otpFindResult.errorMessage || "Invalid code")
   }

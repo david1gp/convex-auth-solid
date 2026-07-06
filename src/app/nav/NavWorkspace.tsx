@@ -1,3 +1,4 @@
+import { Show, splitProps } from "solid-js"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { WorkspaceListLinkNavButton } from "#src/app/nav/links/WorkspaceListLinkNavButton.tsx"
 import { NavCenter } from "#src/app/nav/NavCenter.tsx"
@@ -7,7 +8,6 @@ import { urlWorkspaceView } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { SetPageTitle } from "#ui/static/meta/SetPageTitle.jsx"
 import type { MayHaveChildren } from "#ui/utils/MayHaveChildren.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { Show, splitProps } from "solid-js"
 import { NavBreadcrumbSeparator } from "./NavBreadcrumbSeparator.js"
 
 export interface NavWorkspaceProps extends NavWorkspaceBreadcrumbsProps, MayHaveChildren, MayHaveClass {}

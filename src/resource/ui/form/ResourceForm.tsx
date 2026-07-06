@@ -1,3 +1,4 @@
+import { Show } from "solid-js"
 import { language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -10,20 +11,19 @@ import { visibilityGetText } from "#src/resource/model_field/visibilityGetText.t
 import { ResourceFormFiles } from "#src/resource/ui/form/ResourceFormFiles.tsx"
 import { ResourceFormImage } from "#src/resource/ui/form/ResourceFormImage.tsx"
 import { resourceFormConfig, resourceFormField } from "#src/resource/ui/form/resourceFormField.ts"
-import { type ResourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
+import type { ResourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { urlResourceRemove } from "#src/resource/url/urlResource.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { CheckSingle } from "#ui/input/check/CheckSingle.jsx"
-import { formMode, getFormModeButtonTitle, getFormModeTitle, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode, getFormModeButtonTitle, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { LabelPseudo } from "#ui/input/label/LabelPseudo.jsx"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 interface HasResourceFormStateManagement {
   sm: ResourceFormStateManagement

@@ -1,3 +1,8 @@
+import {
+  apiGenerateEmailSignInV1,
+  type GeneratedEmailType,
+  type SignInV1Type,
+} from "@adaptive-ds/email-generator/index.js"
 import { createResult, type PromiseResult } from "#result"
 import { envBaseUrlEmailGeneratorResult } from "#src/app/env/private/envBaseUrlEmailGeneratorResult.ts"
 import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.ts"
@@ -8,11 +13,6 @@ import { sendTelegramMessageAuth } from "#src/auth/convex/telegram/sendTelegramM
 import { envMode } from "#ui/env/envMode.ts"
 import type { ResendAddressInfo } from "#utils/email/resend/sendEmailsViaResendApi.js"
 import { sendSingleEmailViaResend } from "#utils/email/resend/sendEmailViaResend.js"
-import {
-  apiGenerateEmailSignInV1,
-  type GeneratedEmailType,
-  type SignInV1Type,
-} from "@adaptive-ds/email-generator/index.js"
 
 export async function sendEmailSignIn(email: string, code: string, url: string, l: Language): PromiseResult<null> {
   const data = { code, url, email }

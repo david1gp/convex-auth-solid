@@ -1,6 +1,6 @@
-import { type QueryCtx, internalQuery } from "#convex/_generated/server.js"
-import type { DocUser } from "#src/auth/convex/IdUser.ts"
 import { v } from "convex/values"
+import { internalQuery, type QueryCtx } from "#convex/_generated/server.js"
+import type { DocUser } from "#src/auth/convex/IdUser.ts"
 
 export const findUserByEmailInternalQuery = internalQuery({
   args: { email: v.string() },

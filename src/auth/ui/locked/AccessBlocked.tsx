@@ -1,3 +1,5 @@
+import { mdiArrowULeftTop, mdiEmail } from "@mdi/js"
+import { Show } from "solid-js"
 import { DevModeToggle } from "#src/app/config/DevModeToggle.tsx"
 import { inDevModeSignal } from "#src/app/config/inDevModeSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
@@ -11,8 +13,6 @@ import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
 import { iconTelegram } from "#ui/static/icons/iconTelegram.ts"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
 import { SuccessPage } from "#ui/static/pages/SuccessPage.jsx"
-import { mdiArrowULeftTop, mdiEmail } from "@mdi/js"
-import { Show } from "solid-js"
 
 export function AccessBlocked() {
   const signedInEmail = () => userSessionGet()?.profile.email

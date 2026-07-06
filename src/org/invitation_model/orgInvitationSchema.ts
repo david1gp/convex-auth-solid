@@ -1,3 +1,4 @@
+import * as a from "valibot"
 import { languageSchema } from "#src/app/i18n/language.ts"
 import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
 import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
@@ -7,7 +8,6 @@ import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { handleSchema } from "#src/utils/valibot/handleSchema.ts"
 import { stringSchema0to100, stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
-import * as a from "valibot"
 
 export const orgInvitationDataSchemaFields = {
   // ids

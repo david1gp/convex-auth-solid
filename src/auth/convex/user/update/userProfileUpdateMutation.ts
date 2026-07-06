@@ -1,5 +1,5 @@
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
-import { type PromiseResult, createResult } from "#result"
+import { createResult, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"

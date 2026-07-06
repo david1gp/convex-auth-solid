@@ -1,4 +1,4 @@
-import { type QueryCtx, internalQuery } from "#convex/_generated/server.js"
+import { internalQuery, type QueryCtx } from "#convex/_generated/server.js"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 

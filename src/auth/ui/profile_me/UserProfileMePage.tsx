@@ -1,3 +1,5 @@
+import { mdiLocationExit, mdiSquareEditOutline } from "@mdi/js"
+import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
@@ -6,8 +8,8 @@ import { NavUserProfile } from "#src/app/nav/NavUserProfile.tsx"
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
 import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.tsx"
 import {
-  userProfileFormStateManagement,
   type UserProfileFormStateManagement,
+  userProfileFormStateManagement,
 } from "#src/auth/ui/profile/userProfileFormState.ts"
 import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import {
@@ -29,8 +31,6 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
-import { mdiLocationExit, mdiSquareEditOutline } from "@mdi/js"
-import { Show } from "solid-js"
 
 export function UserProfileMePage() {
   return (

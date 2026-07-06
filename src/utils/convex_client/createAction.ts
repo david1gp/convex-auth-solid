@@ -1,4 +1,4 @@
-import { type FunctionArgs, type FunctionReference, type FunctionReturnType } from "convex/server"
+import type { FunctionArgs, FunctionReference, FunctionReturnType } from "convex/server"
 import { useContext } from "solid-js"
 import { ConvexContext } from "./convexContext.js"
 
@@ -10,7 +10,7 @@ export function createAction<Action extends FunctionReference<"action">>(
     throw "No convex context"
   }
   return (args) => {
-    let fullArgs = args ?? {}
+    const fullArgs = args ?? {}
     return convex.action(action, fullArgs)
   }
 }

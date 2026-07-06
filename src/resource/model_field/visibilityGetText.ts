@@ -1,5 +1,5 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { visibility, type Visibility } from "#src/resource/model_field/visibility.ts"
+import { type Visibility, visibility } from "#src/resource/model_field/visibility.ts"
 
 export function visibilityGetText(v?: string): string {
   if (!v) return ttc("Private")

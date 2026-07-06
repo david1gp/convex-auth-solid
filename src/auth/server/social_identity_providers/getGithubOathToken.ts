@@ -1,10 +1,10 @@
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { envGithubClientSecretResult } from "#src/app/env/private/envGithubClientSecretResult.ts"
 import { envGithubClientIdResult } from "#src/app/env/public/envGithubClientIdResult.ts"
 import { socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { queryString } from "#utils/url/queryString.js"
 import { searchParamsToObject } from "#utils/url/searchParamsToObject.js"
-import * as a from "valibot"
 import { authErrorMessages } from "./authErrorMessages.js"
 
 export type GitHubOauthToken = {

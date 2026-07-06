@@ -1,5 +1,5 @@
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import styles from "./LoaderShuffle4Dots.module.css"
 
 /**

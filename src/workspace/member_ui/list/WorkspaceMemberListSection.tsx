@@ -1,13 +1,13 @@
+import { mdiAccountMultiple } from "@mdi/js"
+import { For, Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { SectionHeader } from "#src/ui/header/SectionHeader.tsx"
 import type { WorkspaceMemberProfile } from "#src/workspace/member_model/WorkspaceMemberProfile.ts"
 import { WorkspaceMemberCard } from "#src/workspace/member_ui/view/WorkspaceMemberCard.tsx"
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model_field/HasWorkspaceHandle.ts"
 import { workspacePageSection } from "#src/workspace/workspace_ui/view/workspacePageSection.tsx"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
-import { mdiAccountMultiple } from "@mdi/js"
-import { For, Show } from "solid-js"
+import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export interface WorkspaceMemberListProps extends HasWorkspaceHandle, MayHaveClass {
   members: WorkspaceMemberProfile[]

@@ -1,3 +1,4 @@
+import { createEffect, Show } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
@@ -9,7 +10,6 @@ import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQuery } from "#src/utils/convex_client/createQuery.ts"
 import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { Show, createEffect } from "solid-js"
 
 interface OrgInvitationMutateProps extends HasOrgHandle, HasOrgInvitationCode, HasFormModeMutate, MayHaveClass {}
 

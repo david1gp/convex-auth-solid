@@ -1,26 +1,26 @@
+import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
+import { debounce, type Scheduled } from "@solid-primitives/scheduled"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { imageUrlExample } from "#src/app/url/imageUrlExample.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { IdOrg } from "#src/org/org_convex/IdOrg.ts"
-import { orgModelCreateEmpty, type OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { type OrgModel, orgModelCreateEmpty } from "#src/org/org_model/OrgModel.ts"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { orgHandleGenerate } from "#src/org/org_model_field/orgHandleSchema.ts"
-import { orgFormConfig, orgFormField, type OrgFormField } from "#src/org/org_ui/form/orgFormField.ts"
+import { type OrgFormField, orgFormConfig, orgFormField } from "#src/org/org_ui/form/orgFormField.ts"
 import { orgFormLocalStorage } from "#src/org/org_ui/form/orgFormLocalStorage.ts"
 import { urlOrgList, urlOrgView } from "#src/org/org_url/urlOrg.ts"
 import { createMutation } from "#src/utils/convex_client/createMutation.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import { formMode, type FormMode } from "#ui/input/form/formMode.ts"
+import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { createSignalObject, type SignalObject } from "#ui/utils/createSignalObject.ts"
-import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
-import { debounce, type Scheduled } from "@solid-primitives/scheduled"
-import * as a from "valibot"
 
 export type OrgFormData = {
   orgHandle: string
@@ -229,19 +229,39 @@ async function handleSubmit(
 
   if (!isSuccess) {
     if (!nameResult.success) {
-      toastAdd({ title: nameResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.name })
+      toastAdd({
+        title: nameResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgFormField.name,
+      })
     }
     if (!handleResult.success) {
-      toastAdd({ title: handleResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.orgHandle })
+      toastAdd({
+        title: handleResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgFormField.orgHandle,
+      })
     }
     if (!descriptionResult.success) {
-      toastAdd({ title: descriptionResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.description })
+      toastAdd({
+        title: descriptionResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgFormField.description,
+      })
     }
     if (!urlResult.success) {
-      toastAdd({ title: urlResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.url })
+      toastAdd({
+        title: urlResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgFormField.url,
+      })
     }
     if (!imageResult.success) {
-      toastAdd({ title: imageResult.issues[0].message, icon: mdiAlertCircle, id: orgFormField.image })
+      toastAdd({
+        title: imageResult.issues[0].message,
+        icon: mdiAlertCircle,
+        id: orgFormField.image,
+      })
     }
     return
   }
