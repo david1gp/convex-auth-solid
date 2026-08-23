@@ -1,4 +1,5 @@
-import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
+import { mdiAlertCircle } from "@adaptive-ds/mdi/mdiAlertCircle.js"
+import { mdiPenOff } from "@adaptive-ds/mdi/mdiPenOff.js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as a from "valibot"
 import { type Language, language } from "#src/app/i18n/language.ts"

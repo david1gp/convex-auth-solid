@@ -1,4 +1,4 @@
-import { mdiAccountPlus } from "@mdi/js"
+import { mdiAccountPlus } from "@adaptive-ds/mdi/mdiAccountPlus.js"
 import type { Component } from "solid-js"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"

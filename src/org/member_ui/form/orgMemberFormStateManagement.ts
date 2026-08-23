@@ -1,4 +1,4 @@
-import { mdiAlertCircle } from "@mdi/js"
+import { mdiAlertCircle } from "@adaptive-ds/mdi/mdiAlertCircle.js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"

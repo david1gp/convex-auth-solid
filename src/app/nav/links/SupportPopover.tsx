@@ -1,4 +1,5 @@
-import { mdiEmail, mdiHelpCircleOutline } from "@mdi/js"
+import { mdiEmail } from "@adaptive-ds/mdi/mdiEmail.js"
+import { mdiHelpCircleOutline } from "@adaptive-ds/mdi/mdiHelpCircleOutline.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { urlSupportMailTo, urlSupportTelegram } from "#src/app/url/urlSupport.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"

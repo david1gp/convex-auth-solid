@@ -1,4 +1,4 @@
-import { mdiEmail } from "@mdi/js"
+import { mdiEmail } from "@adaptive-ds/mdi/mdiEmail.js"
 import { splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { urlSupportMailTo } from "#src/app/url/urlSupport.ts"

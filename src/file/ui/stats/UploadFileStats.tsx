@@ -1,4 +1,4 @@
-import { mdiLoading } from "@mdi/js"
+import { mdiLoading } from "@adaptive-ds/mdi/mdiLoading.js"
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { FileDataUnuploaded } from "#src/file/model/FileDataUnuploaded.ts"

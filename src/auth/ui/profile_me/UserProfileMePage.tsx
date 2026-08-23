@@ -1,4 +1,5 @@
-import { mdiLocationExit, mdiSquareEditOutline } from "@mdi/js"
+import { mdiLocationExit } from "@adaptive-ds/mdi/mdiLocationExit.js"
+import { mdiSquareEditOutline } from "@adaptive-ds/mdi/mdiSquareEditOutline.js"
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"

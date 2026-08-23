@@ -1,4 +1,4 @@
-import { mdiAccountPlus } from "@mdi/js"
+import { mdiAccountPlus } from "@adaptive-ds/mdi/mdiAccountPlus.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
 import { SignInPageContent } from "#src/auth/ui/sign_in/page/SignInPageContent.tsx"

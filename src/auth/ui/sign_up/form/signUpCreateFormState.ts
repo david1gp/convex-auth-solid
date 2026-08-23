@@ -1,4 +1,7 @@
-import { mdiAccountCancel, mdiCheckboxBlankOff, mdiEmailOff, mdiLockOff } from "@mdi/js"
+import { mdiAccountCancel } from "@adaptive-ds/mdi/mdiAccountCancel.js"
+import { mdiCheckboxBlankOff } from "@adaptive-ds/mdi/mdiCheckboxBlankOff.js"
+import { mdiEmailOff } from "@adaptive-ds/mdi/mdiEmailOff.js"
+import { mdiLockOff } from "@adaptive-ds/mdi/mdiLockOff.js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import { posthog } from "posthog-js"
 import * as a from "valibot"

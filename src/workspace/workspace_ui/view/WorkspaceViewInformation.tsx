@@ -1,4 +1,4 @@
-import { mdiHandWave } from "@mdi/js"
+import { mdiHandWave } from "@adaptive-ds/mdi/mdiHandWave.js"
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { Ps } from "#src/ui/text/Ps.tsx"

@@ -1,4 +1,5 @@
-import { mdiAlertCircle, mdiPenOff } from "@mdi/js"
+import { mdiAlertCircle } from "@adaptive-ds/mdi/mdiAlertCircle.js"
+import { mdiPenOff } from "@adaptive-ds/mdi/mdiPenOff.js"
 import { debounce, type Scheduled } from "@solid-primitives/scheduled"
 import { useNavigate } from "@tanstack/solid-router"
 import * as a from "valibot"

@@ -1,4 +1,4 @@
-import { mdiPlus } from "@mdi/js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { type Accessor, createEffect, For, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { Result, ResultOk } from "#result"

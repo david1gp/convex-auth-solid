@@ -1,4 +1,4 @@
-import { mdiEmailCheck } from "@mdi/js"
+import { mdiEmailCheck } from "@adaptive-ds/mdi/mdiEmailCheck.js"
 import { createEffect, onMount, Show } from "solid-js"
 import * as a from "valibot"
 import { ttc } from "#src/app/i18n/ttc.ts"

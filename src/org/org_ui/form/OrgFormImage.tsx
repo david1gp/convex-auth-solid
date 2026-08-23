@@ -1,4 +1,4 @@
-import { mdiTrashCanOutline } from "@mdi/js"
+import { mdiTrashCanOutline } from "@adaptive-ds/mdi/mdiTrashCanOutline.js"
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"

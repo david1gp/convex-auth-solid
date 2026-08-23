@@ -1,4 +1,5 @@
-import { mdiArrowLeft, mdiTrashCanOutline } from "@mdi/js"
+import { mdiArrowLeft } from "@adaptive-ds/mdi/mdiArrowLeft.js"
+import { mdiTrashCanOutline } from "@adaptive-ds/mdi/mdiTrashCanOutline.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"

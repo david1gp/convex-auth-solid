@@ -1,4 +1,4 @@
-import { mdiLockOutline } from "@mdi/js"
+import { mdiLockOutline } from "@adaptive-ds/mdi/mdiLockOutline.js"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"

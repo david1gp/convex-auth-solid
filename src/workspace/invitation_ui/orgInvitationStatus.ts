@@ -1,4 +1,7 @@
-import { mdiAccountQuestion, mdiCheck, mdiClockOutline, mdiClose } from "@mdi/js"
+import { mdiAccountQuestion } from "@adaptive-ds/mdi/mdiAccountQuestion.js"
+import { mdiCheck } from "@adaptive-ds/mdi/mdiCheck.js"
+import { mdiClockOutline } from "@adaptive-ds/mdi/mdiClockOutline.js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 

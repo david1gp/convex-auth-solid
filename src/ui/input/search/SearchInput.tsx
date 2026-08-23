@@ -1,4 +1,4 @@
-import { mdiMagnify } from "@mdi/js"
+import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { debounce } from "@solid-primitives/scheduled"
 import { onMount } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"

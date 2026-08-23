@@ -1,4 +1,4 @@
-import { mdiHome } from "@mdi/js"
+import { mdiHome } from "@adaptive-ds/mdi/mdiHome.js"
 import { type ComponentProps, splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"

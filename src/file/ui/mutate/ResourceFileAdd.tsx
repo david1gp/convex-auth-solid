@@ -1,4 +1,5 @@
-import { mdiArrowLeft, mdiEye } from "@mdi/js"
+import { mdiArrowLeft } from "@adaptive-ds/mdi/mdiArrowLeft.js"
+import { mdiEye } from "@adaptive-ds/mdi/mdiEye.js"
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"

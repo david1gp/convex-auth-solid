@@ -1,4 +1,6 @@
-import { mdiClose, mdiEmailOutline, mdiPencil } from "@mdi/js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
+import { mdiEmailOutline } from "@adaptive-ds/mdi/mdiEmailOutline.js"
+import { mdiPencil } from "@adaptive-ds/mdi/mdiPencil.js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"

@@ -1,4 +1,4 @@
-import { mdiArrowRight } from "@mdi/js"
+import { mdiArrowRight } from "@adaptive-ds/mdi/mdiArrowRight.js"
 import { type ComponentProps, splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { urlPageSignUp } from "#src/auth/url/pageRouteAuth.ts"

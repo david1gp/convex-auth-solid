@@ -1,4 +1,4 @@
-import { mdiClose } from "@mdi/js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { For } from "solid-js"
 import type { FilterFieldConfig } from "#src/ui/input/search/FilterFieldConfig.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"

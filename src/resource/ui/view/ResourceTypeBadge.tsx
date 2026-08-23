@@ -1,4 +1,4 @@
-import { mdiTag } from "@mdi/js"
+import { mdiTag } from "@adaptive-ds/mdi/mdiTag.js"
 import { Show } from "solid-js"
 import type { ResourceType } from "#src/resource/model_field/resourceType.ts"
 import { resourceTypeGetText } from "#src/resource/model_field/resourceTypeGetText.ts"

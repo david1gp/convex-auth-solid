@@ -1,4 +1,4 @@
-import { mdiAlertBoxOutline } from "@mdi/js"
+import { mdiAlertBoxOutline } from "@adaptive-ds/mdi/mdiAlertBoxOutline.js"
 import { ContactSupportLinkButton } from "#src/ui/links/ContactSupportLinkButton.tsx"
 import { GoBackLinkButton } from "#src/ui/links/GoBackLinkButton.tsx"
 import { GoHomeLinkButton } from "#src/ui/links/GoHomeLinkButton.tsx"

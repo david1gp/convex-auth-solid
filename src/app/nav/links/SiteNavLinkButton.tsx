@@ -1,4 +1,4 @@
-import { mdiAlphaSCircleOutline } from "@mdi/js"
+import { mdiAlphaSCircleOutline } from "@adaptive-ds/mdi/mdiAlphaSCircleOutline.js"
 import { envBaseUrlSiteResult } from "#src/app/env/public/envBaseUrlSiteResult.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"

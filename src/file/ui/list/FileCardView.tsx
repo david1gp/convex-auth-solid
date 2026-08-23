@@ -1,4 +1,5 @@
-import { mdiDownload, mdiEye } from "@mdi/js"
+import { mdiDownload } from "@adaptive-ds/mdi/mdiDownload.js"
+import { mdiEye } from "@adaptive-ds/mdi/mdiEye.js"
 import { Show } from "solid-js"
 import { language, languageOrNone } from "#src/app/i18n/language.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"

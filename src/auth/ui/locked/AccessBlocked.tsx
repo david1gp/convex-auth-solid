@@ -1,4 +1,5 @@
-import { mdiArrowULeftTop, mdiEmail } from "@mdi/js"
+import { mdiArrowULeftTop } from "@adaptive-ds/mdi/mdiArrowULeftTop.js"
+import { mdiEmail } from "@adaptive-ds/mdi/mdiEmail.js"
 import { Show } from "solid-js"
 import { DevModeToggle } from "#src/app/config/DevModeToggle.tsx"
 import { inDevModeSignal } from "#src/app/config/inDevModeSignal.ts"

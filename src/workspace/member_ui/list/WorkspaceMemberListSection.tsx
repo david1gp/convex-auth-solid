@@ -1,4 +1,4 @@
-import { mdiAccountMultiple } from "@mdi/js"
+import { mdiAccountMultiple } from "@adaptive-ds/mdi/mdiAccountMultiple.js"
 import { For, Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { SectionHeader } from "#src/ui/header/SectionHeader.tsx"

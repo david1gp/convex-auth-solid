@@ -1,4 +1,5 @@
-import { mdiCheckboxMarkedOutline, mdiContentCopy } from "@mdi/js"
+import { mdiCheckboxMarkedOutline } from "@adaptive-ds/mdi/mdiCheckboxMarkedOutline.js"
+import { mdiContentCopy } from "@adaptive-ds/mdi/mdiContentCopy.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { ButtonIconOnly } from "#ui/interactive/button/ButtonIconOnly.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"

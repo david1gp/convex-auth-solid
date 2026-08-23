@@ -1,4 +1,4 @@
-import { mdiCrane } from "@mdi/js"
+import { mdiCrane } from "@adaptive-ds/mdi/mdiCrane.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { GoBackLinkButton } from "#src/ui/links/GoBackLinkButton.tsx"
 import { GoHomeLinkButton } from "#src/ui/links/GoHomeLinkButton.tsx"

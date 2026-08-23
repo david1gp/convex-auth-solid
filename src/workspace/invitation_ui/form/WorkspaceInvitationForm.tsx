@@ -1,4 +1,4 @@
-import { mdiEmailFast } from "@mdi/js"
+import { mdiEmailFast } from "@adaptive-ds/mdi/mdiEmailFast.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"

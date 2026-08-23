@@ -1,4 +1,4 @@
-import { mdiPlus } from "@mdi/js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { createEffect, For, Match, Switch } from "solid-js"
 import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"

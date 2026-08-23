@@ -1,4 +1,6 @@
-import { mdiClose, mdiEmailAlert, mdiEmailFast } from "@mdi/js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
+import { mdiEmailAlert } from "@adaptive-ds/mdi/mdiEmailAlert.js"
+import { mdiEmailFast } from "@adaptive-ds/mdi/mdiEmailFast.js"
 import { Show } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc, ttc1 } from "#src/app/i18n/ttc.ts"

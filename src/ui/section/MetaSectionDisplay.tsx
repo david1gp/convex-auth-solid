@@ -1,4 +1,6 @@
-import { mdiEye, mdiEyeOff, mdiTranslateVariant } from "@mdi/js"
+import { mdiEye } from "@adaptive-ds/mdi/mdiEye.js"
+import { mdiEyeOff } from "@adaptive-ds/mdi/mdiEyeOff.js"
+import { mdiTranslateVariant } from "@adaptive-ds/mdi/mdiTranslateVariant.js"
 import { Show } from "solid-js"
 import type { Language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"

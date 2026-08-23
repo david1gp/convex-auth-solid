@@ -1,4 +1,6 @@
-import { mdiAlertCircle, mdiCloudUpload, mdiImage } from "@mdi/js"
+import { mdiAlertCircle } from "@adaptive-ds/mdi/mdiAlertCircle.js"
+import { mdiCloudUpload } from "@adaptive-ds/mdi/mdiCloudUpload.js"
+import { mdiImage } from "@adaptive-ds/mdi/mdiImage.js"
 import { type JSX, Match, Show, Switch } from "solid-js"
 import {
   type UploadStatus,

@@ -1,4 +1,5 @@
-import { mdiAccountQuestion, mdiEmailSync } from "@mdi/js"
+import { mdiAccountQuestion } from "@adaptive-ds/mdi/mdiAccountQuestion.js"
+import { mdiEmailSync } from "@adaptive-ds/mdi/mdiEmailSync.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 

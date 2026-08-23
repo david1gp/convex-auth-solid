@@ -1,4 +1,6 @@
-import { mdiAccountGroup, mdiBriefcase, mdiFileDocument } from "@mdi/js"
+import { mdiAccountGroup } from "@adaptive-ds/mdi/mdiAccountGroup.js"
+import { mdiBriefcase } from "@adaptive-ds/mdi/mdiBriefcase.js"
+import { mdiFileDocument } from "@adaptive-ds/mdi/mdiFileDocument.js"
 
 export type AppTab = keyof typeof appTab
 

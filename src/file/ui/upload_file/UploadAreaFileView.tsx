@@ -1,4 +1,7 @@
-import { mdiAlertCircle, mdiCloudUpload, mdiFile, mdiLoading } from "@mdi/js"
+import { mdiAlertCircle } from "@adaptive-ds/mdi/mdiAlertCircle.js"
+import { mdiCloudUpload } from "@adaptive-ds/mdi/mdiCloudUpload.js"
+import { mdiFile } from "@adaptive-ds/mdi/mdiFile.js"
+import { mdiLoading } from "@adaptive-ds/mdi/mdiLoading.js"
 import { type JSX, Match, Show, Switch } from "solid-js"
 import { type UploadStatus, uploadFileTexts, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"

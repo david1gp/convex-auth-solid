@@ -1,4 +1,5 @@
-import { mdiClose, mdiFilterVariant } from "@mdi/js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
+import { mdiFilterVariant } from "@adaptive-ds/mdi/mdiFilterVariant.js"
 import { For, Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { FilterFieldConfig } from "#src/ui/input/search/FilterFieldConfig.ts"

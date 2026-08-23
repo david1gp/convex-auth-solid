@@ -1,4 +1,4 @@
-import { mdiEmailSearchOutline } from "@mdi/js"
+import { mdiEmailSearchOutline } from "@adaptive-ds/mdi/mdiEmailSearchOutline.js"
 import { posthog } from "posthog-js"
 import type { Component } from "solid-js"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"

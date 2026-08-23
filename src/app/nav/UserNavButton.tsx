@@ -1,4 +1,4 @@
-import { mdiAccount } from "@mdi/js"
+import { mdiAccount } from "@adaptive-ds/mdi/mdiAccount.js"
 import { Show } from "solid-js"
 import { LogoutButton } from "#src/app/nav/LogoutButton.tsx"
 import type { UserSession } from "#src/auth/model/UserSession.ts"

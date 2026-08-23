@@ -1,4 +1,5 @@
-import { mdiAccountMultiple, mdiPlus } from "@mdi/js"
+import { mdiAccountMultiple } from "@adaptive-ds/mdi/mdiAccountMultiple.js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { useParams } from "@tanstack/solid-router"
 import { type Accessor, createEffect, For, Match, Switch } from "solid-js"
 import * as a from "valibot"

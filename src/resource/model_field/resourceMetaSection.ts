@@ -1,4 +1,6 @@
-import { mdiFileMultiple, mdiInformation, mdiTagMultiple } from "@mdi/js"
+import { mdiFileMultiple } from "@adaptive-ds/mdi/mdiFileMultiple.js"
+import { mdiInformation } from "@adaptive-ds/mdi/mdiInformation.js"
+import { mdiTagMultiple } from "@adaptive-ds/mdi/mdiTagMultiple.js"
 import { sharedMetaSection, sharedMetaSectionIcon } from "#src/app/tabs/sharedMetaSection.ts"
 
 export type ResourceMetaSection = keyof typeof resourceMetaSection

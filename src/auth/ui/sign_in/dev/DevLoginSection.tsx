@@ -1,4 +1,4 @@
-import { mdiAccountHardHat } from "@mdi/js"
+import { mdiAccountHardHat } from "@adaptive-ds/mdi/mdiAccountHardHat.js"
 import { enableSignInDev } from "#src/app/config/enableSignInDev.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { AuthSectionCard } from "#src/auth/ui/shared/AuthSectionCard.tsx"

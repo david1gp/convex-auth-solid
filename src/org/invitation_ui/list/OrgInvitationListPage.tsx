@@ -1,4 +1,4 @@
-import { mdiPlus } from "@mdi/js"
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { useParams } from "@tanstack/solid-router"
 import { type Accessor, createEffect, For, Match, Show, Switch, splitProps } from "solid-js"
 import * as a from "valibot"

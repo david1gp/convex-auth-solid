@@ -1,4 +1,4 @@
-import { mdiEmailFast } from "@mdi/js"
+import { mdiEmailFast } from "@adaptive-ds/mdi/mdiEmailFast.js"
 import { Show } from "solid-js"
 import { language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"

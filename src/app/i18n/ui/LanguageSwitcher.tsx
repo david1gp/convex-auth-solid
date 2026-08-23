@@ -1,4 +1,4 @@
-import { mdiTranslateVariant } from "@mdi/js"
+import { mdiTranslateVariant } from "@adaptive-ds/mdi/mdiTranslateVariant.js"
 import { language } from "#src/app/i18n/language.ts"
 import { languageGetText } from "#src/app/i18n/languageGetText.ts"
 import { languageSignal, languageSignalRegisterHandler } from "#src/app/i18n/languageSignal.ts"

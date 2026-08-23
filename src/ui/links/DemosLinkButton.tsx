@@ -1,4 +1,4 @@
-import { mdiAlphaDCircleOutline } from "@mdi/js"
+import { mdiAlphaDCircleOutline } from "@adaptive-ds/mdi/mdiAlphaDCircleOutline.js"
 import { isProdEnvVite } from "#src/utils/ui/isProdEnvVite.ts"
 import { pathDemos } from "#ui/demo_pages/pathDemos.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"

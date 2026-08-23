@@ -1,4 +1,4 @@
-import { mdiArrowLeft } from "@mdi/js"
+import { mdiArrowLeft } from "@adaptive-ds/mdi/mdiArrowLeft.js"
 import { splitProps } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { ButtonIcon, type ButtonIconProps } from "#ui/interactive/button/ButtonIcon.jsx"

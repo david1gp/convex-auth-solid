@@ -1,4 +1,7 @@
-import { mdiCodeTags, mdiImage, mdiMonitor, mdiText } from "@mdi/js"
+import { mdiCodeTags } from "@adaptive-ds/mdi/mdiCodeTags.js"
+import { mdiImage } from "@adaptive-ds/mdi/mdiImage.js"
+import { mdiMonitor } from "@adaptive-ds/mdi/mdiMonitor.js"
+import { mdiText } from "@adaptive-ds/mdi/mdiText.js"
 
 export type AppCategory = keyof typeof sharedMetaSection
 

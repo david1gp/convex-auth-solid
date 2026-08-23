@@ -1,4 +1,4 @@
-import { mdiAccountAlert } from "@mdi/js"
+import { mdiAccountAlert } from "@adaptive-ds/mdi/mdiAccountAlert.js"
 import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 import * as a from "valibot"
