@@ -80,7 +80,7 @@ export default defineConfig({
       strategy: "split-by-experience",
       forceSplitting: {
         "@adaptive-ds/mdi": /node_modules[\\/]@adaptive-ds[\\/]mdi/,
-        "tailwind-merge": /node_modules[\\/]tailwind-merge/,
+        "cn": /node_modules[\\/]cn/,
         "posthog-js": /node_modules[\\/]posthog-js/,
       },
     },
