@@ -103,6 +103,92 @@ Quick link
    bun run dev
    ```
 
+## Optional OIDC sign-in
+
+OIDC is an optional, server-configured sign-in method. The template keeps the
+button hidden unless the frontend setting below is enabled. Add these values to
+the environment used by the frontend and Convex actions (the root
+`.env.development` is ignored by git):
+
+```dotenv
+# frontend visibility and button label
+PUBLIC_OIDC_ENABLED="true"
+PUBLIC_OIDC_LABEL="Sign in with SSO"
+
+# server-only OIDC configuration
+OIDC_ISSUER="https://id.example.com"
+OIDC_CLIENT_ID="replace-with-client-id"
+OIDC_CLIENT_SECRET="replace-with-client-secret"
+# Optional; defaults to: openid profile email
+OIDC_SCOPES="openid profile email"
+```
+
+`OIDC_ISSUER` must be an HTTPS issuer without a query string or fragment.
+`OIDC_CLIENT_ID` is required. Omit `OIDC_CLIENT_SECRET` only for a provider
+registered as a public client that supports token-endpoint authentication
+`none`; with a secret, the integration uses confidential-client authentication
+(`client_secret_basic`, or `client_secret_post` when that is the provider's
+supported option). Keep the secret server-side. `OIDC_SCOPES` is
+space-separated and must include `openid`.
+
+Register this exact HTTPS callback URL with the provider:
+
+```text
+${PUBLIC_BASE_URL_API}/api/auth/oidc/callback
+```
+
+The sign-in link uses the Convex HTTP API origin, not the frontend origin:
+
+```text
+${PUBLIC_BASE_URL_API}/api/auth/oidc/start?returnTo=%2F
+```
+
+The server performs authorization-code flow with PKCE (`S256`), a nonce, and
+ID-token signature/claim verification. `AUTH_SECRET` is also required: it
+signs the short-lived `__Host-oidc-transaction` cookie with HMAC-SHA-256. The
+cookie is `Secure`, `HttpOnly`, `SameSite=Lax`, and valid for ten minutes, so
+use HTTPS for the API callback in browser deployments. `returnTo` must be a
+relative, same-origin path; the callback falls back to the signed-in default
+page for unsafe values.
+
+After successful authentication, the callback redirects to
+`PUBLIC_BASE_URL_APP` with a `userSession` query parameter. Existing
+`signInLogic` validates that payload with the Valibot `UserSession` schema and
+calls `signInSessionNew`; no OIDC token or PKCE work belongs in the browser.
+Accounts are separated by the provider issuer plus the OIDC subject (`iss` +
+`sub`), so the same subject at two issuers is not merged.
+
+### Zitadel example
+
+For Zitadel, create a dedicated project and OIDC Web application for this
+template. Enable authorization-code flow with PKCE, register the exact callback
+above, and choose either a public client (no secret) or a confidential client
+with Basic authentication. Use the standard scopes `openid profile email`.
+
+Example values (placeholders only):
+
+```text
+Issuer:       https://<zitadel-domain>
+Callback:     https://api.example.com/api/auth/oidc/callback
+Client ID:    <zitadel-client-id>
+Secret:       <zitadel-client-secret>  # confidential clients only
+Scopes:       openid profile email
+```
+
+The issuer must be the same value advertised by Zitadel discovery. Keep client
+credentials in the Convex/server environment and configure Zitadel's access
+policies separately from this generic OIDC integration.
+
+### Convex integration notes
+
+`convex/http.ts` creates one Hono dispatcher, registers the auth routes, and
+wraps it as a Convex HTTP action. `addHttpRoutesAuth` registers
+`GET /api/auth/oidc/start` and `GET /api/auth/oidc/callback`; the handlers own
+the transaction cookie, provider exchange, identity lookup, and session
+completion. The existing `src/utils/convex/valibotToConvex.ts` adapter converts
+Valibot field schemas to Convex validators for schema tables, while runtime
+request and session data continues to be validated with Valibot.
+
 ## Tech Stack
 
 - **Solid.js** – Reactive UI framework
