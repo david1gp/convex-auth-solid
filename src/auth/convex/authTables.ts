@@ -1,7 +1,7 @@
 import { defineTable } from "convex/server"
 import { v } from "convex/values"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
-import { loginMethodValidator } from "#src/auth/model_field/loginMethodValidator.ts"
+import { loginMethodValidator, loginProviderValidator } from "#src/auth/model_field/loginMethodValidator.ts"
 import { otpPurposeValidator } from "#src/auth/model_field/otpPurpose.ts"
 import { userRoleValidator } from "#src/auth/model_field/userRoleValidator.ts"
 import { fieldsConvexCreatedAtUpdatedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAt.ts"
@@ -26,13 +26,15 @@ export const authTables = {
 
   authAccounts: defineTable({
     userId: vIdUser,
-    provider: v.string(),
+    provider: loginProviderValidator,
+    issuer: v.optional(v.string()),
     providerAccountId: v.string(),
     ...fieldsConvexCreatedAtUpdatedAt,
   })
     //
     .index("userIdAndProvider", ["userId", "provider"])
-    .index("providerAndAccountId", ["provider", "providerAccountId"]),
+    .index("providerAndAccountId", ["provider", "providerAccountId"])
+    .index("providerIssuerAndAccountId", ["provider", "issuer", "providerAccountId"]),
 
   authSessions: defineTable({
     userId: vIdUser,

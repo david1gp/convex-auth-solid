@@ -1,20 +1,41 @@
-import { type Infer, v } from "convex/values"
-import { loginProviderValidator } from "#src/auth/model_field/loginMethodValidator.ts"
+import * as a from "valibot"
+import { loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { valibotFieldToConvexValidator } from "#src/utils/convex/valibotToConvex.ts"
 
-export type CommonAuthProvider = Infer<typeof commonAuthProviderValidator>
+const commonAuthProviderDataSchema = {
+  providerId: a.string(),
+  givenName: a.string(),
+  familyName: a.string(),
+  image: a.string(),
+  username: a.string(),
+  email: a.string(),
+} as const
 
-export const commonAuthProviderValidator = v.object({
-  // provider
-  provider: loginProviderValidator,
-  providerId: v.string(),
-  // data
-  givenName: v.string(),
-  familyName: v.string(),
-  image: v.string(),
-  username: v.string(),
-  // email
-  email: v.string(),
+const legacyAuthProviderSchema = a.object({
+  provider: a.enum(socialLoginProvider),
+  ...commonAuthProviderDataSchema,
 })
+
+const devAuthProviderSchema = a.object({
+  provider: a.literal(loginProvider.dev),
+  ...commonAuthProviderDataSchema,
+})
+
+const oidcAuthProviderSchema = a.object({
+  provider: a.literal(loginProvider.oidc),
+  issuer: a.pipe(a.string(), a.minLength(1)),
+  ...commonAuthProviderDataSchema,
+})
+
+export const commonAuthProviderSchema = a.union([
+  legacyAuthProviderSchema,
+  devAuthProviderSchema,
+  oidcAuthProviderSchema,
+])
+
+export type CommonAuthProvider = a.InferOutput<typeof commonAuthProviderSchema>
+
+export const commonAuthProviderValidator = valibotFieldToConvexValidator(commonAuthProviderSchema)
 
 export function getUserNameFromCommonAuthProvider(
   user: Pick<CommonAuthProvider, "givenName" | "familyName" | "username" | "email">,
