@@ -1,9 +1,11 @@
-import type { HttpRouter } from "convex/server"
 import { apiAuthBasePath } from "#src/auth/api_client/apiAuthBasePath.ts"
 import { addRouteWithCors } from "#src/auth/convex/headers/cors/addRouteWithCors.ts"
+import type { HonoDispatcher } from "#src/auth/convex/headers/honoDispatcher.ts"
 import { httpMethod } from "#src/auth/convex/headers/httpMethod.ts"
 import { signInViaEmail1RequestHandler } from "#src/auth/convex/sign_in_email/signInViaEmail1RequestHandler.ts"
 import { signInViaEmailEnterOtp1RequestHandler } from "#src/auth/convex/sign_in_email/signInViaEmailEnterOtp1RequestHandler.ts"
+import { signInViaOidcCallbackRequestHandler } from "#src/auth/convex/sign_in_oidc/signInViaOidcCallbackRequestHandler.ts"
+import { signInViaOidcStartRequestHandler } from "#src/auth/convex/sign_in_oidc/signInViaOidcStartRequestHandler.ts"
 import { signInViaPw1RequestHandler } from "#src/auth/convex/sign_in_pw/signInViaPw1RequestHandler.ts"
 import { signInUsingSocialAuth1RequestHandler } from "#src/auth/convex/sign_in_social/signInUsingSocialAuth1RequestHandler.ts"
 import { signUp1RequestHandler } from "#src/auth/convex/sign_up/signUp1RequestHandler.ts"
@@ -17,70 +19,88 @@ import { userPasswordChange2ConfirmHandler } from "#src/auth/convex/user/pw_chan
 import { loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { apiPathAuth } from "#src/auth/url/apiPathAuth.ts"
 
-export function addHttpRoutesAuth(http: HttpRouter) {
+export function addHttpRoutesAuth(dispatcher: HonoDispatcher) {
   // Oauth / GitHub
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaGithub, httpMethod.GET, async (ctx, request) => {
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signInViaGithub, httpMethod.GET, async (ctx, request) => {
     return signInUsingSocialAuth1RequestHandler(socialLoginProvider.github, ctx, request)
   })
   // Oauth / Google
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaGoogle, httpMethod.GET, async (ctx, request) => {
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signInViaGoogle, httpMethod.GET, async (ctx, request) => {
     return signInUsingSocialAuth1RequestHandler(socialLoginProvider.google, ctx, request)
   })
+  // Generic OpenID Connect
+  addRouteWithCors(
+    dispatcher,
+    apiAuthBasePath + apiPathAuth.signInViaOidc,
+    httpMethod.GET,
+    signInViaOidcStartRequestHandler,
+  )
+  addRouteWithCors(
+    dispatcher,
+    apiAuthBasePath + apiPathAuth.signInViaOidcCallback,
+    httpMethod.GET,
+    signInViaOidcCallbackRequestHandler,
+  )
   // Oauth / Dev
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaDev, httpMethod.GET, async (ctx, request) => {
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signInViaDev, httpMethod.GET, async (ctx, request) => {
     return signInUsingSocialAuth1RequestHandler(loginProvider.dev, ctx, request)
   })
 
   // Sign up routes
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signUp, httpMethod.POST, signUp1RequestHandler)
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signUp, httpMethod.POST, signUp1RequestHandler)
   // Sign up confirm email routes
   addRouteWithCors(
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.signUpConfirmEmail,
     httpMethod.POST,
     signUpConfirmEmail1RequestHandler,
   )
 
   // Sign in via password routes
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaPw, httpMethod.POST, signInViaPw1RequestHandler)
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signInViaPw, httpMethod.POST, signInViaPw1RequestHandler)
   // Sign in via email routes
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.signInViaEmail, httpMethod.POST, signInViaEmail1RequestHandler)
+  addRouteWithCors(
+    dispatcher,
+    apiAuthBasePath + apiPathAuth.signInViaEmail,
+    httpMethod.POST,
+    signInViaEmail1RequestHandler,
+  )
 
   // Sign in via email enter OTP routes
   addRouteWithCors(
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.signInViaEmailEnterOtp,
     httpMethod.POST,
     signInViaEmailEnterOtp1RequestHandler,
   )
   // Profile actions
-  addHttpRoutesAuthProfile(http)
+  addHttpRoutesAuthProfile(dispatcher)
 
   // Is online routes
-  addRouteWithCors(http, "/api/isOnline", httpMethod.GET, async (ctx, request) => {
+  addRouteWithCors(dispatcher, "/api/isOnline", httpMethod.GET, async () => {
     return new Response("OK")
   })
-  return http
+  return dispatcher
 }
 
-function addHttpRoutesAuthProfile(http: HttpRouter) {
+function addHttpRoutesAuthProfile(dispatcher: HonoDispatcher) {
   // Update profile routes
   addRouteWithCors(
     //
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.profileUpdate,
     httpMethod.POST,
     userProfileUpdate1RequestHandler,
   )
   // Change password routes
   addRouteWithCors(
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.passwordChangeRequest,
     httpMethod.POST,
     userPasswordChange1RequestHandler,
   )
   addRouteWithCors(
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.passwordChangeConfirm,
     httpMethod.POST,
     userPasswordChange2ConfirmHandler,
@@ -88,7 +108,7 @@ function addHttpRoutesAuthProfile(http: HttpRouter) {
   // Change email routes
   addRouteWithCors(
     //
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.emailChangeRequest,
     httpMethod.POST,
     userEmailChange1RequestHandler,
@@ -96,11 +116,11 @@ function addHttpRoutesAuthProfile(http: HttpRouter) {
   // Change email confirm routes
   addRouteWithCors(
     //
-    http,
+    dispatcher,
     apiAuthBasePath + apiPathAuth.emailChangeConfirm,
     httpMethod.POST,
     userEmailChange2ConfirmHandler,
   )
   // Delete user routes
-  addRouteWithCors(http, apiAuthBasePath + apiPathAuth.userDelete, httpMethod.POST, userDelete1RequestHandler)
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.userDelete, httpMethod.POST, userDelete1RequestHandler)
 }

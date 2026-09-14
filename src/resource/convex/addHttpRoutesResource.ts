@@ -1,5 +1,5 @@
-import type { HttpRouter } from "convex/server"
 import { addRouteWithCors } from "#src/auth/convex/headers/cors/addRouteWithCors.ts"
+import type { HonoDispatcher } from "#src/auth/convex/headers/honoDispatcher.ts"
 import { httpMethod } from "#src/auth/convex/headers/httpMethod.ts"
 import { apiPathResourceGet, resourceGetRequestHandler } from "#src/resource/convex/resourceFilesGetHttpHandler.ts"
 import {
@@ -8,8 +8,8 @@ import {
   resourceListHttpHandler,
 } from "#src/resource/convex/resourceListHttpHandler.ts"
 
-export function addHttpRoutesResource(http: HttpRouter) {
-  addRouteWithCors(http, apiBaseResource + apiPathResourceList, httpMethod.GET, resourceListHttpHandler)
-  addRouteWithCors(http, apiBaseResource + apiPathResourceGet, httpMethod.GET, resourceGetRequestHandler)
-  return http
+export function addHttpRoutesResource(dispatcher: HonoDispatcher) {
+  addRouteWithCors(dispatcher, apiBaseResource + apiPathResourceList, httpMethod.GET, resourceListHttpHandler)
+  addRouteWithCors(dispatcher, apiBaseResource + apiPathResourceGet, httpMethod.GET, resourceGetRequestHandler)
+  return dispatcher
 }
