@@ -4,6 +4,7 @@ import { createResult, createResultError, type PromiseResult } from "#result"
 import type { DocUser } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import type { UserProfile } from "#src/auth/model/UserProfile.ts"
+import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { userRole } from "#src/auth/model_field/userRole.ts"
 import {
   type CommonAuthProvider,
@@ -25,12 +26,23 @@ export async function createUserFromAuthProviderFn(
   const op = "createUserFromAuthProviderFn"
 
   // Check if authAccount already exists
-  const existingAuthAccount = await ctx.db
-    .query("authAccounts")
-    .withIndex("providerAndAccountId", (q) =>
-      q.eq("provider", authProvider.provider).eq("providerAccountId", authProvider.providerId),
-    )
-    .unique()
+  const existingAuthAccount =
+    authProvider.provider === loginProvider.oidc
+      ? await ctx.db
+          .query("authAccounts")
+          .withIndex("providerIssuerAndAccountId", (q) =>
+            q
+              .eq("provider", authProvider.provider)
+              .eq("issuer", authProvider.issuer)
+              .eq("providerAccountId", authProvider.providerId),
+          )
+          .unique()
+      : await ctx.db
+          .query("authAccounts")
+          .withIndex("providerAndAccountId", (q) =>
+            q.eq("provider", authProvider.provider).eq("providerAccountId", authProvider.providerId),
+          )
+          .unique()
   if (existingAuthAccount) {
     return createResultError(op, "Auth account already exists")
   }
@@ -59,6 +71,7 @@ export async function createUserFromAuthProviderFn(
   await ctx.db.insert("authAccounts", {
     userId,
     provider: authProvider.provider,
+    ...(authProvider.provider === loginProvider.oidc && { issuer: authProvider.issuer }),
     providerAccountId: authProvider.providerId,
     createdAt: iso,
     updatedAt: iso,

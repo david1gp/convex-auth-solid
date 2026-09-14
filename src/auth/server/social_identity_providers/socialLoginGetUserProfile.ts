@@ -1,5 +1,5 @@
 import { createResult, type PromiseResult } from "#result"
-import { type LoginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { type LoginProvider, loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { authLog } from "#src/auth/server/authLog.ts"
 import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import { getGithubOathToken } from "#src/auth/server/social_identity_providers/getGithubOathToken.ts"
@@ -23,7 +23,10 @@ export const socialLoginGetUserProfile = {
   google: oauthGoogle,
   dev: oauthDev,
   microsoft: oauthMicrosoft,
-} satisfies Record<LoginProvider, (cid: string, code: string) => PromiseResult<CommonAuthProvider>>
+} satisfies Record<
+  Exclude<LoginProvider, typeof loginProvider.oidc>,
+  (cid: string, code: string) => PromiseResult<CommonAuthProvider>
+>
 
 async function getProfile<T, P>(props: T, fn: (code: T) => PromiseResult<P>): PromiseResult<P> {
   const op = "getProfile"

@@ -3,6 +3,8 @@ export type ApiRouteAuth = keyof typeof apiRouteAuth
 export const apiRouteAuth = {
   signInViaGoogle: "signInViaGoogle",
   signInViaGithub: "signInViaGithub",
+  signInViaOidc: "signInViaOidc",
+  signInViaOidcCallback: "signInViaOidcCallback",
   signInViaDev: "signInViaDev",
   signUp: "signUp",
   signUpConfirmEmail: "signUpConfirmEmail",
@@ -20,6 +22,8 @@ export const apiRouteAuth = {
 export const apiPathAuth = {
   signInViaGoogle: "/google",
   signInViaGithub: "/github",
+  signInViaOidc: "/oidc/start",
+  signInViaOidcCallback: "/oidc/callback",
   signInViaDev: "/dev",
   signUp: "/sign-up",
   signUpConfirmEmail: "/sign-up-confirm-email",

@@ -16,6 +16,7 @@ export type LoginProvider = keyof typeof loginProvider
 
 export const loginProvider = {
   ...socialLoginProvider,
+  oidc: "oidc",
   dev: "dev",
 } as const
 

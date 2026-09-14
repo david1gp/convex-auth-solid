@@ -8,6 +8,7 @@ import { DevLoginSection } from "#src/auth/ui/sign_in/dev/DevLoginSection.tsx"
 import { SignInWithAnExistingSession } from "#src/auth/ui/sign_in/existing/SignInWithAnExistingSession.tsx"
 import { AuthLegalAgree } from "#src/auth/ui/sign_in/legal/AuthLegalAgree.tsx"
 import { authLegalAgreeVariant } from "#src/auth/ui/sign_in/legal/authLegalAgreeVariant.tsx"
+import { OidcSignInSection } from "#src/auth/ui/sign_in/oidc/OidcSignInSection.tsx"
 import { AuthMiniHero } from "#src/auth/ui/sign_in/page/AuthMiniHero.tsx"
 import { SignUpButtonLink } from "#src/auth/ui/sign_in/page/SignUpButtonLink.tsx"
 import { SocialLoginButton } from "#src/auth/ui/sign_in/social/SocialLoginButton.tsx"
@@ -50,6 +51,7 @@ export function SignInPageContent(p: MayHaveClass) {
         <SignInViaEmailForm class={"w-full"} />
       </AuthSectionCard>
 
+      <OidcSignInSection />
       <AuthSectionSocials />
 
       <DevLoginSection class="" />

@@ -23,6 +23,8 @@ export default defineConfig({
       "import.meta.env.PUBLIC_BASE_URL_APP": JSON.stringify(process.env.PUBLIC_BASE_URL_APP),
       "import.meta.env.PUBLIC_BASE_URL_CONVEX": JSON.stringify(process.env.PUBLIC_BASE_URL_CONVEX),
       "import.meta.env.PUBLIC_BASE_URL_API": JSON.stringify(process.env.PUBLIC_BASE_URL_API),
+      "process.env.PUBLIC_OIDC_ENABLED": JSON.stringify(process.env.PUBLIC_OIDC_ENABLED),
+      "process.env.PUBLIC_OIDC_LABEL": JSON.stringify(process.env.PUBLIC_OIDC_LABEL),
       "import.meta.env.PUBLIC_GITHUB_CLIENT_ID": JSON.stringify(process.env.PUBLIC_GITHUB_CLIENT_ID),
       "import.meta.env.PUBLIC_GOOGLE_CLIENT_ID": JSON.stringify(process.env.PUBLIC_GOOGLE_CLIENT_ID),
       "import.meta.env.PUBLIC_MICROSOFT_CLIENT_ID": JSON.stringify(process.env.PUBLIC_MICROSOFT_CLIENT_ID),

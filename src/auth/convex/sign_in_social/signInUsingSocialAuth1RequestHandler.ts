@@ -1,18 +1,16 @@
-import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
 import { enableSignInDev } from "#src/app/config/enableSignInDev.ts"
-import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
+import { signInCallbackCompletionResponseCreate } from "#src/auth/convex/sign_in_shared/signInCallbackCompletionResponseCreate.ts"
 import { signInUsingSocialAuth2ActionFn } from "#src/auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { type LoginProvider, loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { getDefaultUrlSignedIn } from "#src/auth/url/getDefaultUrlSignedIn.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
-import { base64urlEncodeObject } from "#utils/url/base64url.js"
 
 export async function signInUsingSocialAuth1RequestHandler(
-  provider: LoginProvider,
+  provider: Exclude<LoginProvider, typeof loginProvider.oidc>,
   ctx: ActionCtx,
   request: Request,
 ): Promise<Response> {
@@ -20,7 +18,7 @@ export async function signInUsingSocialAuth1RequestHandler(
   const url = new URL(request.url)
   const error = url.searchParams.get("error")
   if (error) {
-    const errorMessage = "oauth returned error value: " + error
+    const errorMessage = `oauth returned error value: ${error}`
     const err = createResultError(op, errorMessage)
     console.warn(err)
     return new Response(jsonStringifyPretty(err), { status: 400 })
@@ -57,33 +55,5 @@ export async function signInUsingSocialAuth1RequestHandler(
 
   const defaultStartPage = getDefaultUrlSignedIn()
   const state = url.searchParams.get("state") || defaultStartPage
-
-  const userSessionSerializedResult = base64urlEncodeObject(userSession)
-  if (!userSessionSerializedResult.success) {
-    console.warn(userSessionSerializedResult)
-    return new Response(jsonStringifyPretty(userSessionSerializedResult), {
-      status: 400,
-    })
-  }
-  const userSessionSerialized = userSessionSerializedResult.data
-
-  const hostnameAppResult = envBaseUrlAppResult()
-  if (!hostnameAppResult.success) {
-    console.error(hostnameAppResult)
-    return new Response(jsonStringifyPretty(hostnameAppResult), {
-      status: 500,
-    })
-  }
-  const hostnameApp = hostnameAppResult.data
-  const redirectUrl = new URL(state, hostnameApp)
-  redirectUrl.searchParams.set("userSession", userSessionSerialized)
-  // redirectUrl.searchParams.set("redirectUrl", state)
-  console.log("user signed in", { state, redirectUrl })
-
-  await ctx.scheduler.runAfter(0, internal.auth.notifyTelegramAuthInternalAction, {
-    userSession,
-    operationName: "oauth",
-  })
-
-  return Response.redirect(redirectUrl.toString(), 302)
+  return signInCallbackCompletionResponseCreate(ctx, userSession, state, "oauth")
 }

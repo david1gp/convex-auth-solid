@@ -1,6 +1,7 @@
 import type { MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
+import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import {
   type CommonAuthProvider,
   getUserNameFromCommonAuthProvider,
@@ -42,10 +43,21 @@ export async function updateUserFromAuthProviderFn(
   })
 
   // Update auth account if needed
-  const authAccount = await ctx.db
-    .query("authAccounts")
-    .withIndex("userIdAndProvider", (q) => q.eq("userId", userId).eq("provider", authProvider.provider))
-    .unique()
+  const authAccount =
+    authProvider.provider === loginProvider.oidc
+      ? await ctx.db
+          .query("authAccounts")
+          .withIndex("providerIssuerAndAccountId", (q) =>
+            q
+              .eq("provider", authProvider.provider)
+              .eq("issuer", authProvider.issuer)
+              .eq("providerAccountId", authProvider.providerId),
+          )
+          .unique()
+      : await ctx.db
+          .query("authAccounts")
+          .withIndex("userIdAndProvider", (q) => q.eq("userId", userId).eq("provider", authProvider.provider))
+          .unique()
 
   if (authAccount) {
     await ctx.db.patch("authAccounts", authAccount._id, {

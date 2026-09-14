@@ -6,6 +6,7 @@ import { linkAuthToExistingUserFn } from "#src/auth/convex/crud/linkAuthToExisti
 import type { DocAuthAccount } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import { createUserSessionTimes, type UserSession } from "#src/auth/model/UserSession.ts"
+import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
 
@@ -18,12 +19,23 @@ export async function findOrCreateUserFn(
   const op = "findOrCreateUser"
 
   // Check for existing auth account
-  const existingAuthAccount: DocAuthAccount | null = await ctx.db
-    .query("authAccounts")
-    .withIndex("providerAndAccountId", (q) =>
-      q.eq("provider", authData.provider).eq("providerAccountId", authData.providerId),
-    )
-    .unique()
+  const existingAuthAccount: DocAuthAccount | null =
+    authData.provider === loginProvider.oidc
+      ? await ctx.db
+          .query("authAccounts")
+          .withIndex("providerIssuerAndAccountId", (q) =>
+            q
+              .eq("provider", authData.provider)
+              .eq("issuer", authData.issuer)
+              .eq("providerAccountId", authData.providerId),
+          )
+          .unique()
+      : await ctx.db
+          .query("authAccounts")
+          .withIndex("providerAndAccountId", (q) =>
+            q.eq("provider", authData.provider).eq("providerAccountId", authData.providerId),
+          )
+          .unique()
   if (existingAuthAccount) {
     const user = await ctx.db.get("users", existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
@@ -39,7 +51,7 @@ export async function findOrCreateUserFn(
   }
 
   // Check for existing user by email
-  if (authData.email) {
+  if (authData.provider !== loginProvider.oidc && authData.email) {
     const existingUser = await findUserByEmailFn(ctx, authData.email)
     if (existingUser) {
       if (existingUser.deletedAt) return createResultError(op, "User account has been deleted")
@@ -58,7 +70,7 @@ export async function findOrCreateUserFn(
   // No existing user found - create new one
   const createdResult = await createUserFromAuthProviderFn(ctx, authData)
   if (!createdResult.success) {
-    return createResultError(op, "Failed to create user: " + createdResult.errorMessage)
+    return createResultError(op, `Failed to create user: ${createdResult.errorMessage}`)
   }
   const userSession: SignInUsingSocialAuthResultInternal = {
     profile: createdResult.data,
