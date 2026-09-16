@@ -17,10 +17,17 @@ export const resourceTables = {
     ...valibotToConvex(resourceDataSchemaFields),
     ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
     deletedAt: v.optional(v.string()),
+    searchText: v.optional(v.string()),
   })
     //
     .index("resourceId", ["resourceId"])
-    .index("visibility", ["visibility"]),
+    .index("visibility", ["visibility"])
+    .index("type", ["type"])
+    .index("language", ["language"])
+    .searchIndex("search", {
+      searchField: "searchText",
+      filterFields: ["type", "visibility", "language"],
+    }),
 
   resourceFiles: defineTable({
     ...valibotToConvex(resourceFilesDataSchemaFields),

@@ -3,6 +3,8 @@ import { internalMutation, type MutationCtx, mutation } from "#convex/_generated
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
 import { vIdOrg } from "#src/org/org_convex/vIdOrg.ts"
+import { resourceGetDocFn } from "#src/resource/convex/resourceGetQuery.ts"
+import { resourceSearchProjection } from "#src/resource/convex/resourceSearchProjection.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
@@ -36,10 +38,15 @@ export async function orgResourceAddMutationFn(
   if (!org) {
     return createResultError(op, "Organization not found", args.orgHandle)
   }
+  const resource = await resourceGetDocFn(ctx, args.resourceId)
+  if (!resource) {
+    return createResultError(op, "Resource not found", args.resourceId)
+  }
   await ctx.db.insert("orgResources", {
     orgId: org._id,
     orgHandle: org.orgHandle,
     resourceId: args.resourceId,
+    ...resourceSearchProjection(resource),
     createdAt: nowIso(),
   })
   return createResult(null)

@@ -4,11 +4,15 @@ import { fileDocToModel } from "#src/file/convex/fileDocToModel.ts"
 import type { FileModel } from "#src/file/model/FileModel.ts"
 import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
+import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
+import { paginationResultMap } from "#src/utils/convex_backend/paginationResultMap.ts"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
 
 export type FileListValidatorType = typeof fileListValidator.type
 
 export const fileListFields = {
-  // Add filtering options here if needed
+  paginationOpts: paginationOptsValidator,
 } as const
 
 export const fileListValidator = v.object(fileListFields)
@@ -23,7 +27,7 @@ export const filesListInternalQuery = internalQuery({
   handler: fileListFn,
 })
 
-export async function fileListFn(ctx: QueryCtx, _args: FileListValidatorType): Promise<FileModel[]> {
-  const docs = await ctx.db.query("files").collect()
-  return docs.map(fileDocToModel)
+export async function fileListFn(ctx: QueryCtx, args: FileListValidatorType): Promise<PaginationResultType<FileModel>> {
+  const docs = await ctx.db.query("files").paginate(args.paginationOpts ?? paginationDefaultOptions)
+  return paginationResultMap(docs, fileDocToModel)
 }

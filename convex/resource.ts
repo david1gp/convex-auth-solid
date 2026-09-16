@@ -1,6 +1,14 @@
 import { resourceCreateInternalMutation, resourceCreateMutation } from "#src/resource/convex/resourceCreateMutation.ts"
-import { resourceDeleteInternalMutation, resourceDeleteMutation } from "#src/resource/convex/resourceDeleteMutation.ts"
-import { resourceEditInternalMutation, resourceEditMutation } from "#src/resource/convex/resourceEditMutation.ts"
+import {
+  resourceDeleteInternalMutation,
+  resourceDeleteMutation,
+  resourceOrgResourcesDeleteInternalMutation,
+} from "#src/resource/convex/resourceDeleteMutation.ts"
+import {
+  resourceEditInternalMutation,
+  resourceEditMutation,
+  resourceEditOrgResourceProjectionsInternalMutation,
+} from "#src/resource/convex/resourceEditMutation.ts"
 import {
   resourceFileAddInternalMutation,
   resourceFileAddMutation,
@@ -13,6 +21,7 @@ import {
 import { resourceFilesGetInternalQuery, resourceFilesGetQuery } from "#src/resource/convex/resourceFilesGetQuery.ts"
 import { resourceGetInternalQuery, resourceGetQuery } from "#src/resource/convex/resourceGetQuery.ts"
 import { resourcesListInternalQuery, resourcesListQuery } from "#src/resource/convex/resourceListQuery.ts"
+import { resourceSearchProjectionBackfillInternalMutation } from "#src/resource/convex/resourceSearchProjectionBackfillMutation.ts"
 
 export {
   resourceCreateInternalMutation,
@@ -21,6 +30,7 @@ export {
   resourceDeleteMutation,
   resourceEditInternalMutation,
   resourceEditMutation,
+  resourceEditOrgResourceProjectionsInternalMutation,
   // Resource
   resourceFileAddInternalMutation,
   resourceFileAddMutation,
@@ -34,6 +44,8 @@ export {
   // Get
   resourceGetInternalQuery,
   resourceGetQuery,
+  resourceOrgResourcesDeleteInternalMutation,
+  resourceSearchProjectionBackfillInternalMutation,
   // List
   resourcesListInternalQuery,
   resourcesListQuery,

@@ -3,6 +3,7 @@ import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { IdResource } from "#src/resource/convex/IdResource.ts"
+import { resourceSearchProjection } from "#src/resource/convex/resourceSearchProjection.ts"
 import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
@@ -45,8 +46,10 @@ export async function resourceCreateFn(ctx: MutationCtx, args: ResourceCreateVal
   const { fileIds, ...rest } = parse.output
 
   const now = nowIso()
+  const searchProjection = resourceSearchProjection(rest)
   const id = await ctx.db.insert("resources", {
     ...rest,
+    ...searchProjection,
     createdAt: now,
     updatedAt: now,
   })

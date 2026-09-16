@@ -1,12 +1,17 @@
 import { v } from "convex/values"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
+import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
+import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
+import { paginationResultMap } from "#src/utils/convex_backend/paginationResultMap.ts"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
 import { docWorkspaceInvitationToModel } from "#src/workspace/invitation_convex/docWorkspaceInvitationToModel.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 
 export const workspaceInvitationsListFields = {
   workspaceHandle: v.string(),
   token: v.string(),
+  paginationOpts: paginationOptsValidator,
 } as const
 
 export type WorkspaceInvitationsListValidatorType = typeof workspaceInvitationsListValidator.type
@@ -20,7 +25,7 @@ export const workspaceInvitationsListQuery = query({
 export async function workspaceInvitation10ListFn(
   ctx: QueryCtx,
   args: WorkspaceInvitationsListValidatorType,
-): PromiseResult<WorkspaceInvitationModel[]> {
+): PromiseResult<PaginationResultType<WorkspaceInvitationModel>> {
   const op = "workspaceInvitationsListFn"
 
   const workspace = await ctx.db
@@ -33,8 +38,8 @@ export async function workspaceInvitation10ListFn(
 
   const invitations = await ctx.db
     .query("workspaceInvitations")
-    .filter((q) => q.eq(q.field("workspaceHandle"), workspace.workspaceHandle))
-    .collect()
+    .withIndex("workspaceHandle", (q) => q.eq("workspaceHandle", workspace.workspaceHandle))
+    .paginate(args.paginationOpts ?? paginationDefaultOptions)
 
-  return createResult(invitations.map(docWorkspaceInvitationToModel))
+  return createResult(paginationResultMap(invitations, docWorkspaceInvitationToModel))
 }

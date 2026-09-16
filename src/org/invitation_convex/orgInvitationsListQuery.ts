@@ -3,10 +3,15 @@ import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docOrgInvitationToModel } from "#src/org/invitation_convex/docOrgInvitationToModel.ts"
 import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
+import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
+import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
+import { paginationResultMap } from "#src/utils/convex_backend/paginationResultMap.ts"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
 
 export const orgInvitationsListFields = {
   orgHandle: v.string(),
   token: v.string(),
+  paginationOpts: paginationOptsValidator,
 } as const
 
 export type OrgInvitationsListValidatorType = typeof orgInvitationsListValidator.type
@@ -20,7 +25,7 @@ export const orgInvitationsListQuery = query({
 export async function orgInvitation10ListFn(
   ctx: QueryCtx,
   args: OrgInvitationsListValidatorType,
-): PromiseResult<OrgInvitationModel[]> {
+): PromiseResult<PaginationResultType<OrgInvitationModel>> {
   const op = "orgInvitationsListFn"
 
   const org = await ctx.db
@@ -33,8 +38,8 @@ export async function orgInvitation10ListFn(
 
   const invitations = await ctx.db
     .query("orgInvitations")
-    .filter((q) => q.eq(q.field("orgHandle"), org.orgHandle))
-    .collect()
+    .withIndex("orgHandle", (q) => q.eq("orgHandle", org.orgHandle))
+    .paginate(args.paginationOpts ?? paginationDefaultOptions)
 
-  return createResult(invitations.map(docOrgInvitationToModel))
+  return createResult(paginationResultMap(invitations, docOrgInvitationToModel))
 }

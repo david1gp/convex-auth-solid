@@ -19,7 +19,10 @@ import { orgMemberGetQuery } from "#src/org/member_convex/orgMemberGetQuery.ts"
 import { orgMembersListQuery } from "#src/org/member_convex/orgMemberListQuery.ts"
 import { orgCleanupIfEmptyInternalMutation } from "#src/org/org_convex/orgCleanupIfEmptyMutation.ts"
 import { orgCreateMutation } from "#src/org/org_convex/orgCreateMutation.ts"
-import { orgDeleteMutation } from "#src/org/org_convex/orgDeleteMutation.ts"
+import {
+  orgDeleteMutation,
+  orgResourceProjectionsDeleteInternalMutation,
+} from "#src/org/org_convex/orgDeleteMutation.ts"
 import { orgEditMutation } from "#src/org/org_convex/orgEditMutation.ts"
 import { orgGetPageQuery } from "#src/org/org_convex/orgGetPageQuery.ts"
 import { orgGetInternalQuery, orgGetQuery } from "#src/org/org_convex/orgGetQuery.ts"
@@ -67,6 +70,7 @@ export {
   orgResourceAddMutation,
   orgResourceListInternalQuery,
   orgResourceListQuery,
+  orgResourceProjectionsDeleteInternalMutation,
   orgResourceRemoveInternalMutation,
   orgResourceRemoveMutation,
 }

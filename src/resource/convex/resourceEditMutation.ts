@@ -1,12 +1,16 @@
 import { v } from "convex/values"
 import * as a from "valibot"
+import { internal } from "#convex/_generated/api.js"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { DocResource } from "#src/resource/convex/IdResource.ts"
+import { resourceSearchProjection } from "#src/resource/convex/resourceSearchProjection.ts"
 import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
+import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export const resourceEditFields = {
@@ -25,6 +29,18 @@ export const resourceEditMutation = mutation({
 export const resourceEditInternalMutation = internalMutation({
   args: resourceEditValidator,
   handler: resourceEditFn,
+})
+
+const resourceEditOrgResourceProjectionsFields = {
+  resourceId: v.string(),
+  paginationOpts: paginationOptsValidator,
+} as const
+
+const resourceEditOrgResourceProjectionsValidator = v.object(resourceEditOrgResourceProjectionsFields)
+
+export const resourceEditOrgResourceProjectionsInternalMutation = internalMutation({
+  args: resourceEditOrgResourceProjectionsValidator,
+  handler: resourceEditOrgResourceProjectionsFn,
 })
 
 export async function resourceEditFn(ctx: MutationCtx, args: ResourceEditValidatorType): PromiseResult<null> {
@@ -59,10 +75,52 @@ export async function resourceEditFn(ctx: MutationCtx, args: ResourceEditValidat
 
   // const { resourceId, ...rest } = args
   const patch: Partial<DocResource> = rest
+  const searchProjection = resourceSearchProjection({ ...resource, ...rest })
+  Object.assign(patch, searchProjection)
   patch.updatedAt = nowIso()
 
   await ctx.db.patch("resources", resource._id, patch)
+  await ctx.scheduler.runAfter(0, internal.resource.resourceEditOrgResourceProjectionsInternalMutation, {
+    resourceId: resource.resourceId,
+    paginationOpts: paginationDefaultOptions,
+  })
   return createResult(null)
+}
+
+async function resourceEditOrgResourceProjectionsFn(
+  ctx: MutationCtx,
+  args: typeof resourceEditOrgResourceProjectionsValidator.type,
+): Promise<null> {
+  const paginationOpts = args.paginationOpts ?? paginationDefaultOptions
+  const resource = await ctx.db
+    .query("resources")
+    .withIndex("resourceId", (q) => q.eq("resourceId", args.resourceId))
+    .unique()
+
+  if (!resource) {
+    await ctx.scheduler.runAfter(0, internal.resource.resourceOrgResourcesDeleteInternalMutation, {
+      resourceId: args.resourceId,
+      paginationOpts,
+    })
+    return null
+  }
+
+  const searchProjection = resourceSearchProjection(resource)
+  const result = await ctx.db
+    .query("orgResources")
+    .withIndex("resourceId", (q) => q.eq("resourceId", args.resourceId))
+    .paginate(paginationOpts)
+
+  await Promise.all(result.page.map((orgResource) => ctx.db.patch("orgResources", orgResource._id, searchProjection)))
+
+  if (!result.isDone) {
+    await ctx.scheduler.runAfter(0, internal.resource.resourceEditOrgResourceProjectionsInternalMutation, {
+      resourceId: args.resourceId,
+      paginationOpts: { ...paginationOpts, cursor: result.continueCursor },
+    })
+  }
+
+  return null
 }
 
 export async function updateAssignedFileIds(
@@ -70,8 +128,6 @@ export async function updateAssignedFileIds(
   resourceId: string,
   fileIds: string[],
 ): PromiseResult<null> {
-  const op = "updateAssignedFileIds"
-
   // Get current file assignments for this resource
   const existing = await ctx.db
     .query("resourceFiles")

@@ -9,6 +9,7 @@ export const orgInvitationTables = {
     ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
   })
     //
+    .index("orgHandle", ["orgHandle"])
     .index("invitedEmail", ["invitedEmail"])
     .index("invitationCode", ["invitationCode"]),
 } as const

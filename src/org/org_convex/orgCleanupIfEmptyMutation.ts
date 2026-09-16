@@ -1,6 +1,8 @@
 import { v } from "convex/values"
+import { internal } from "#convex/_generated/api.js"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
+import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 
 export type OrgCleanupIfEmptyValidatorType = typeof orgCleanupIfEmptyValidator.type
 
@@ -16,8 +18,6 @@ export const orgCleanupIfEmptyInternalMutation = internalMutation({
 })
 
 export async function orgCleanupIfEmptyFn(ctx: MutationCtx, args: OrgCleanupIfEmptyValidatorType): PromiseResult<null> {
-  const op = "orgCleanupIfEmptyFn"
-
   const org = await ctx.db
     .query("orgs")
     .withIndex("orgHandle", (q) => q.eq("orgHandle", args.orgHandle))
@@ -35,6 +35,11 @@ export async function orgCleanupIfEmptyFn(ctx: MutationCtx, args: OrgCleanupIfEm
     return createResult(null)
   }
 
+  await ctx.scheduler.runAfter(0, internal.org.orgResourceProjectionsDeleteInternalMutation, {
+    orgId: org._id,
+    orgHandle: org.orgHandle,
+    paginationOpts: paginationDefaultOptions,
+  })
   await ctx.db.delete("orgs", org._id)
   return createResult(null)
 }

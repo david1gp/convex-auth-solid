@@ -8,6 +8,7 @@ export const workspaceInvitationTables = {
     ...valibotToConvex(workspaceInvitationDataSchemaFields),
     ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
   })
+    .index("workspaceHandle", ["workspaceHandle"])
     .index("invitedEmail", ["invitedEmail"])
     .index("invitationCode", ["invitationCode"]),
 } as const
