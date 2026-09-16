@@ -1,91 +1,109 @@
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { createEffect, For, Match, Switch } from "solid-js"
-import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
+import type { Result } from "#result"
+import type { Language } from "#src/app/i18n/language.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavResource } from "#src/app/nav/NavResource.tsx"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
 import { resourceSchema } from "#src/resource/model/resourceSchema.ts"
 import {
   type ResourceFilterState,
-  resourceFilter,
   resourceFilterCreate,
   resourceFilterFields,
 } from "#src/resource/model_field/resourceFilterFields.ts"
+import type { ResourceType } from "#src/resource/model_field/resourceType.ts"
+import type { Visibility } from "#src/resource/model_field/visibility.ts"
 import { resourceNameAddList } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { ResourceCardLink } from "#src/resource/ui/shared/ResourceCardLink.tsx"
 import { urlResourceAdd } from "#src/resource/url/urlResource.ts"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
-import { createFilterSignal } from "#src/ui/input/search/filterSignal.ts"
 import { SearchFilterButtons } from "#src/ui/input/search/SearchFilterButtons.tsx"
 import { SearchFilterPopover } from "#src/ui/input/search/SearchFilterPopover.tsx"
 import { SearchInput } from "#src/ui/input/search/SearchInput.tsx"
+import { searchFilterStateCreate } from "#src/ui/input/search/searchFilterStateCreate.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
-import { resultHasList } from "#src/utils/result/resultHasList.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { classesGridCols2xl } from "#ui/static/grid/classesGridCols.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classArr } from "#ui/utils/classArr.ts"
-import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 
 export function ResourceListPage() {
   return (
     <PageWrapper>
-      <NavResource getResourcePageTitle={() => ttc("Resources")}></NavResource>
+      <NavResource getResourcePageTitle={() => ttc("Resources")} />
       <ResourceListLoader />
     </PageWrapper>
   )
 }
 
 function ResourceListLoader() {
-  const getResourceQuery = createQuery(api.resource.resourcesListQuery, {
-    token: userTokenGet(),
-  })
-  const getResourcesResult = createQueryCached<ResourceModel[]>(
-    getResourceQuery,
-    "resourcesListQuery",
-    a.array(resourceSchema),
-  )
-
-  const searchSignal = createSignalObject("")
-  const filterSignal = createFilterSignal<ResourceFilterState>(resourceFilterCreate())
-  function filterResources(resources: ResourceModel[]): ResourceModel[] {
-    const search = searchSignal.get()
-    const filters = filterSignal.get()
-    return resourceFilter(resources, search, filters)
+  const searchState = searchFilterStateCreate<ResourceFilterState>(resourceFilterCreate())
+  const getResourceFilters = () => {
+    const filters = searchState.debouncedFilters()
+    return {
+      searchText: searchState.debouncedSearch() || undefined,
+      type: (filters.type || undefined) as ResourceType | undefined,
+      visibility: (filters.visibility || undefined) as Visibility | undefined,
+      l: (filters.language || undefined) as Language | undefined,
+    }
   }
+  const pagination = cursorPaginationCreate({
+    query: api.resource.resourcesListQuery,
+    queryKey: "resourcesListQuery",
+    args: () => ({
+      token: userTokenGet(),
+      ...getResourceFilters(),
+    }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    filters: getResourceFilters,
+    itemSchema: resourceSchema,
+  })
 
   return (
     <>
       <div class="flex flex-wrap gap-2 justify-between mb-4">
         <div class="flex flex-wrap gap-2 items-center">
-          <SearchInput searchSignal={searchSignal} />
-          <SearchFilterPopover filterSignal={filterSignal} filterFields={resourceFilterFields} />
-          <SearchFilterButtons filterSignal={filterSignal} filterFields={resourceFilterFields} />
+          <SearchInput searchSignal={searchState.searchSignal} searchState={searchState} debounceMs={0} />
+          <SearchFilterPopover filterSignal={searchState.filterSignal} filterFields={resourceFilterFields} />
+          <SearchFilterButtons filterSignal={searchState.filterSignal} filterFields={resourceFilterFields} />
         </div>
         <ResourceCreateLink />
       </div>
 
       <Switch>
-        <Match when={!getResourcesResult()}>
+        <Match when={pagination.page() === undefined}>
           <LoadingSection loadingSubject={ttc("Resources")} />
         </Match>
-        <Match when={resultHasErrorMessage(getResourcesResult())}>
+        <Match when={resultHasErrorMessage(pagination.page())}>
           {(errorMessage) => <ErrorPage title={errorMessage()} />}
         </Match>
-        <Match when={!resultHasList(getResourcesResult())}>
+        <Match when={resultHasNoResources(pagination.page())}>
           <NoResources />
         </Match>
-        <Match when={resultHasList(getResourcesResult())}>
-          {(getList) => <ResourceList resources={filterResources(getList())} />}
+        <Match when={getResourcesPage(pagination.page())}>
+          {(getPage) => (
+            <>
+              <ResourceList resources={getPage().page} />
+              <PaginationControls
+                page={() => pagination.history().length + 1}
+                canPrevious={pagination.canPrevious}
+                canNext={pagination.canNext}
+                previous={pagination.previous}
+                next={pagination.next}
+                loading={pagination.loading}
+              />
+            </>
+          )}
         </Match>
       </Switch>
     </>
@@ -102,6 +120,18 @@ export function NoResources(p: MayHaveClassAndChildren) {
 
 interface ResourceListProps extends MayHaveClass {
   resources: ResourceModel[]
+}
+
+function getResourcesPage(
+  result: Result<PaginationResultType<ResourceModel>> | undefined,
+): PaginationResultType<ResourceModel> | null {
+  if (!result?.success) return null
+  return result.data
+}
+
+function resultHasNoResources(result: Result<PaginationResultType<ResourceModel>> | undefined): boolean {
+  const page = getResourcesPage(result)
+  return page !== null && page.page.length <= 0
 }
 
 function ResourceList(p: ResourceListProps) {

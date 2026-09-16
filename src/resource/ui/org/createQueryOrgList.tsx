@@ -1,18 +1,14 @@
-import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
-import type { Result } from "#result"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { orgSchema } from "#src/org/org_model/orgSchema.ts"
-import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 
-export function createQueryOrgList(): () => Result<OrgModel[]> | undefined {
-  return createQueryCached<OrgModel[]>(
-    createQuery(api.org.orgListQuery, {
-      token: userTokenGet(),
-    }),
-    "orgListQuery",
-    a.array(orgSchema),
-  )
+export function createQueryOrgList() {
+  return cursorPaginationCreate({
+    query: api.org.orgListQuery,
+    queryKey: "orgListQuery",
+    args: () => ({ token: userTokenGet() }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    itemSchema: orgSchema,
+  })
 }

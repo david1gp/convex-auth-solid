@@ -31,6 +31,7 @@ interface HasResourceFormStateManagement {
 export interface ResourceFormProps extends MayHaveClass, HasResourceFormStateManagement {
   resourceId?: string
   mode: FormMode
+  showFiles?: boolean
 }
 
 export function ResourceForm(p: ResourceFormProps) {
@@ -78,11 +79,12 @@ export function ResourceForm(p: ResourceFormProps) {
           </div>
         </section>
 
-        {/* Files */}
-        <section class="contents">
-          <h2 class="text-2xl font-semibold mb-4 text-muted-foreground">{ttc("Files")}</h2>
-          <ResourceFormFiles sm={p.sm} />
-        </section>
+        {p.showFiles !== false && (
+          <section class="contents">
+            <h2 class="text-2xl font-semibold mb-4 text-muted-foreground">{ttc("Files")}</h2>
+            <ResourceFormFiles sm={p.sm} />
+          </section>
+        )}
 
         {/* Image */}
         <section class="contents">

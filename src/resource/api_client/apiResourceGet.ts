@@ -1,7 +1,9 @@
+import type { PaginationOptions } from "convex/server"
 import * as a from "valibot"
 import { createResult, createResultError, type Result, resultTryParsingFetchErr } from "#result"
 import { envBaseUrlApiResult } from "#src/app/env/public/envBaseUrlApiResult.ts"
-import { type ResourceFilesModel, resourceFilesSchema } from "#src/resource/model/ResourceFilesModel.ts"
+import type { ResourceFilesPageModel } from "#src/resource/model/ResourceFilesPageModel.ts"
+import { resourceFilesPageSchema } from "#src/resource/model/ResourceFilesPageModel.ts"
 
 export const apiBaseResource = "/api/resource"
 export const apiPathResourceGet = "/get"
@@ -9,9 +11,10 @@ export const apiPathResourceGet = "/get"
 export interface ResourceGetProps {
   resourceId: string
   token?: string
+  paginationOpts?: Pick<PaginationOptions, "cursor" | "numItems">
 }
 
-export async function apiResourceGet(props: ResourceGetProps): Promise<Result<ResourceFilesModel>> {
+export async function apiResourceGet(props: ResourceGetProps): Promise<Result<ResourceFilesPageModel>> {
   const op = "apiResourceGet"
 
   if (!props.resourceId) return createResultError(op, "!resourceId")
@@ -28,6 +31,14 @@ export async function apiResourceGet(props: ResourceGetProps): Promise<Result<Re
     url.searchParams.append("token", props.token)
   }
 
+  if (props.paginationOpts?.cursor) {
+    url.searchParams.append("cursor", props.paginationOpts.cursor)
+  }
+
+  if (props.paginationOpts?.numItems !== undefined) {
+    url.searchParams.append("numItems", String(props.paginationOpts.numItems))
+  }
+
   const response = await fetch(url.toString(), {
     method: "GET",
     headers: {
@@ -41,7 +52,7 @@ export async function apiResourceGet(props: ResourceGetProps): Promise<Result<Re
     return resultTryParsingFetchErr(op, text, response.status, response.statusText)
   }
 
-  const schema = a.pipe(a.string(), a.parseJson(), resourceFilesSchema)
+  const schema = a.pipe(a.string(), a.parseJson(), resourceFilesPageSchema)
 
   const parseResult = a.safeParse(schema, text)
   if (!parseResult.success) {

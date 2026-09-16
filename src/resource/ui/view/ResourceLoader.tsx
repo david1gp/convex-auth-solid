@@ -4,12 +4,10 @@ import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import type { FileModel } from "#src/file/model/FileModel.ts"
 import type { HasResourceId } from "#src/resource/model/HasResourceId.ts"
 import type { HasResourceModel } from "#src/resource/model/HasResourceModel.ts"
-import type { ResourceFilesModel } from "#src/resource/model/ResourceFilesModel.ts"
-import { resourceFilesSchema } from "#src/resource/model/ResourceFilesModel.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
+import { resourceSchema } from "#src/resource/model/resourceSchema.ts"
 import { resourceNameSet } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
@@ -22,19 +20,17 @@ export interface ResourceLoaderProps extends HasResourceId, MayHaveClass {
   ResourceComponent: (p: ResourceComponentProps) => JSXElement
 }
 
-export interface ResourceComponentProps extends HasResourceModel, MayHaveClass {
-  files?: FileModel[]
-}
+export interface ResourceComponentProps extends HasResourceModel, MayHaveClass {}
 
 export function ResourceLoader(p: ResourceLoaderProps) {
-  const getDataQuery = createQuery(api.resource.resourceFilesGetQuery, {
+  const getDataQuery = createQuery(api.resource.resourceGetQuery, {
     token: userTokenGet(),
     resourceId: p.resourceId,
   })
-  const getData = createQueryCached<ResourceFilesModel | null>(
+  const getData = createQueryCached<ResourceModel | null>(
     getDataQuery,
-    "resourceFilesGetQuery" + "/" + p.resourceId,
-    a.union([resourceFilesSchema, a.null()]),
+    `resourceGetQuery/${p.resourceId}`,
+    a.union([resourceSchema, a.null()]),
   )
   createEffect(() => {
     const got = getData()
@@ -42,7 +38,7 @@ export function ResourceLoader(p: ResourceLoaderProps) {
     if (!got.success) return
     const data = got.data
     if (!data) return
-    const name = data.resource.name
+    const name = data.name
     if (!name) return
     resourceNameSet(p.resourceId, name)
   })
@@ -57,8 +53,7 @@ export function ResourceLoader(p: ResourceLoaderProps) {
       <Match when={hasData(getData())}>
         {(getLoadedData) =>
           p.ResourceComponent({
-            resource: getLoadedData().resource,
-            files: getLoadedData().files,
+            resource: getLoadedData(),
             class: p.class,
           })
         }
@@ -67,16 +62,13 @@ export function ResourceLoader(p: ResourceLoaderProps) {
   )
 }
 
-type LoadedDataOrNull = {
-  resource: ResourceModel
-  files: FileModel[]
-} | null
+type LoadedDataOrNull = ResourceModel | null
 
-function hasData(data: Result<ResourceFilesModel | null> | undefined): LoadedDataOrNull {
+function hasData(data: Result<ResourceModel | null> | undefined): LoadedDataOrNull {
   if (!data) return null
   if (!data.success) return null
   if (!data.data) return null
-  return { resource: data.data.resource, files: data.data.files }
+  return data.data
 }
 
 function ResourceLoading() {

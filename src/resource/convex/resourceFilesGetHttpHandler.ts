@@ -2,6 +2,7 @@ import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
 import { visibility } from "#src/resource/model_field/visibility.ts"
+import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 
 export const apiPathResourceGet = "/get"
@@ -12,6 +13,9 @@ export async function resourceGetRequestHandler(ctx: ActionCtx, request: Request
 
   // Get required query parameters
   const resourceId = url.searchParams.get("resourceId")
+  const numItemsResult = parseNumItems(url.searchParams.get("numItems"))
+  if (!numItemsResult.success) return badRequest(op, numItemsResult.errorMessage)
+  const cursor = url.searchParams.get("cursor")
 
   if (!resourceId) {
     return new Response(jsonStringifyPretty(createResultError(op, "Missing required parameter: resourceId")), {
@@ -25,6 +29,10 @@ export async function resourceGetRequestHandler(ctx: ActionCtx, request: Request
   // Get resource files using the new query
   const resourceFilesResult = await ctx.runQuery(internal.resource.resourceFilesGetInternalQuery, {
     resourceId,
+    paginationOpts: {
+      cursor: cursor || paginationDefaultOptions.cursor,
+      numItems: numItemsResult.data,
+    },
   })
 
   if (!resourceFilesResult.success) {
@@ -58,6 +66,24 @@ export async function resourceGetRequestHandler(ctx: ActionCtx, request: Request
 
   return new Response(jsonStringifyPretty(resourceFiles), {
     status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+function parseNumItems(raw: string | null) {
+  if (!raw) return { success: true as const, data: paginationDefaultOptions.numItems }
+  const numItems = Number(raw)
+  if (!Number.isInteger(numItems) || numItems < 1) {
+    return { success: false as const, errorMessage: "numItems must be a positive integer" }
+  }
+  return { success: true as const, data: numItems }
+}
+
+function badRequest(op: string, errorMessage: string) {
+  return new Response(jsonStringifyPretty(createResultError(op, errorMessage)), {
+    status: 400,
     headers: {
       "Content-Type": "application/json",
     },
