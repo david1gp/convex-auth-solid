@@ -25,6 +25,8 @@
     "test": "bun test --env-file .env.development",
     "test:w": "bun test --env-file .env.development --watch",
     "convex:dev": "export CI=1 && clear && bun run convex dev --env-file=.env.development",
+    "convex:logs:development": "bun ./node_modules/convex/bin/main.js logs --env-file .env.development",
+    "convex:logs:production": "bun ./node_modules/convex/bin/main.js logs --env-file .env.production",
     "convex:dev:dev": "export CI=1 && clear && convex dev --local",
     "convex:dev:test": "export CI=1 && convex dev --local --once",
     "convex:test": "export CI=1 && convex dev --local --once",
