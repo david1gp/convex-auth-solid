@@ -10,7 +10,8 @@ import { NavOrg } from "#src/app/nav/NavOrg.tsx"
 import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { urlUserProfileMe } from "#src/auth/url/pageRouteAuth.ts"
-import type { DocOrg } from "#src/org/org_convex/IdOrg.ts"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
 import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
 import { urlOrgLeave } from "#src/org/org_url/urlOrg.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
@@ -82,14 +83,14 @@ function OrgLeave(p: OrgLeaveProps) {
         <ErrorPage title={(getOrg()! as ResultErr).errorMessage} />
       </Match>
       <Match when={true}>
-        <OrgLeaveView org={(getOrg() as ResultOk<any>).data.org} />
+        <OrgLeaveView org={(getOrg() as ResultOk<OrgViewPageType>).data.org} />
       </Match>
     </Switch>
   )
 }
 
 interface OrgLeaveViewProps extends MayHaveClass {
-  org: DocOrg
+  org: OrgModel
 }
 
 function OrgLeaveView(p: OrgLeaveViewProps) {

@@ -1,21 +1,22 @@
 import { mdiAccountMultiple } from "@adaptive-ds/mdi/mdiAccountMultiple.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { useParams } from "@tanstack/solid-router"
-import { type Accessor, createEffect, For, Match, Switch } from "solid-js"
-import * as a from "valibot"
+import { For, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
-import type { Result, ResultOk } from "#result"
+import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import type { WorkspaceMemberModel } from "#src/workspace/member_model/WorkspaceMemberModel.ts"
+import { workspaceMemberSchema } from "#src/workspace/member_model/WorkspaceMemberSchema.ts"
 import {
   urlWorkspaceMemberAdd,
   urlWorkspaceMemberEdit,
@@ -51,29 +52,21 @@ export function WorkspaceMemberListPage() {
 
 function getPageTitle(workspaceName?: string) {
   const name = workspaceName ?? ttc("Workspace")
-  return name + " " + ttc("Members")
+  return `${name} ${ttc("Members")}`
 }
 
 type WorkspaceMember = WorkspaceMemberModel
 
-type FetchWorkspaceMembers = Accessor<Result<WorkspaceMember[]> | undefined>
-
 interface WorkspaceMemberListLoaderProps extends HasWorkspaceHandle {}
 
 function WorkspaceMemberListLoader(p: WorkspaceMemberListLoaderProps) {
-  const getWorkspaceMembersQuery: FetchWorkspaceMembers = createQuery(api.workspace.workspaceMemberListQuery, {
-    token: userTokenGet(),
-    workspaceHandle: p.workspaceHandle,
-  })
-  const getWorkspaceMembersResult = createQueryCached<WorkspaceMember[]>(
-    getWorkspaceMembersQuery,
-    "workspaceMemberListQuery" + "/" + p.workspaceHandle,
-    a.any(),
-  )
-  createEffect(() => {
-    const workspaceMembersResult = getWorkspaceMembersResult()
-    if (!workspaceMembersResult) return
-    if (!workspaceMembersResult.success) return
+  const pagination = cursorPaginationCreate({
+    query: api.workspace.workspaceMemberListQuery,
+    queryKey: "workspaceMemberListQuery",
+    args: () => ({ token: userTokenGet(), workspaceHandle: p.workspaceHandle }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    scope: () => p.workspaceHandle,
+    itemSchema: workspaceMemberSchema,
   })
 
   return (
@@ -88,17 +81,16 @@ function WorkspaceMemberListLoader(p: WorkspaceMemberListLoaderProps) {
       </PageHeader>
 
       <Switch fallback={<p>Fallback content</p>}>
-        <Match when={getWorkspaceMembersResult() === undefined}>
+        <Match when={pagination.page() === undefined}>
           <WorkspaceMemberLoading />
         </Match>
-        <Match when={!hasWorkspaceMembers(getWorkspaceMembersResult())}>
+        <Match when={resultHasNoWorkspaceMembers(pagination.page())}>
           <NoWorkspaceMembers />
         </Match>
-        <Match when={true}>
-          <WorkspaceMemberList
-            workspaceHandle={p.workspaceHandle}
-            getWorkspaceMembers={getWorkspaceMembers(getWorkspaceMembersResult())}
-          />
+        <Match when={getWorkspaceMembersPage(pagination.page())}>
+          {(getPage) => (
+            <WorkspaceMemberList workspaceHandle={p.workspaceHandle} members={getPage().page} pagination={pagination} />
+          )}
         </Match>
       </Switch>
     </>
@@ -113,34 +105,43 @@ export function NoWorkspaceMembers(p: MayHaveClassAndChildren) {
   )
 }
 
-function getWorkspaceMembers(
-  workspaceMembersResult: Result<WorkspaceMember[]> | undefined,
-): Accessor<WorkspaceMember[]> {
-  return () => {
-    return (workspaceMembersResult as ResultOk<WorkspaceMember[]>).data
-  }
-}
-
 interface WorkspaceMemberListProps extends HasWorkspaceHandle {
-  getWorkspaceMembers: Accessor<WorkspaceMember[]>
+  members: WorkspaceMember[]
+  pagination: ReturnType<typeof cursorPaginationCreate<typeof api.workspace.workspaceMemberListQuery, WorkspaceMember>>
 }
 
 function WorkspaceMemberList(p: WorkspaceMemberListProps) {
   return (
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getWorkspaceMembers()}>
-        {(member) => <WorkspaceMemberLink workspaceHandle={p.workspaceHandle} member={member} />}
-      </For>
-    </div>
+    <>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <For each={p.members}>
+          {(member) => <WorkspaceMemberLink workspaceHandle={p.workspaceHandle} member={member} />}
+        </For>
+      </div>
+      <PaginationControls
+        page={() => p.pagination.history().length + 1}
+        canPrevious={p.pagination.canPrevious}
+        canNext={p.pagination.canNext}
+        previous={p.pagination.previous}
+        next={p.pagination.next}
+        loading={p.pagination.loading}
+      />
+    </>
   )
 }
 
-function hasWorkspaceMembers(workspaceMembersResult: Result<WorkspaceMember[]> | undefined): WorkspaceMember[] | null {
-  if (!workspaceMembersResult) return null
-  if (!workspaceMembersResult.success) return null
-  const workspaceMembers = workspaceMembersResult.data
-  if (workspaceMembers.length <= 0) return null
-  return workspaceMembers
+function getWorkspaceMembersPage(
+  workspaceMembersResult: Result<PaginationResultType<WorkspaceMember>> | undefined,
+): PaginationResultType<WorkspaceMember> | null {
+  if (!workspaceMembersResult?.success) return null
+  return workspaceMembersResult.data
+}
+
+function resultHasNoWorkspaceMembers(
+  workspaceMembersResult: Result<PaginationResultType<WorkspaceMember>> | undefined,
+): boolean {
+  const page = getWorkspaceMembersPage(workspaceMembersResult)
+  return page !== null && page.page.length <= 0
 }
 
 function WorkspaceMemberLoading() {

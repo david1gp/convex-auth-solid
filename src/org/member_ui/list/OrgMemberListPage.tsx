@@ -1,23 +1,23 @@
 import { mdiAccountMultiple } from "@adaptive-ds/mdi/mdiAccountMultiple.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { useParams } from "@tanstack/solid-router"
-import { type Accessor, createEffect, For, Match, Switch } from "solid-js"
-import * as a from "valibot"
+import { For, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
-import type { Result, ResultOk } from "#result"
+import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavOrg } from "#src/app/nav/NavOrg.tsx"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import type { OrgMemberModel } from "#src/org/member_model/OrgMemberModel.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { type OrgMemberProfile, orgMemberProfileSchema } from "#src/org/member_model/OrgMemberProfile.ts"
 import { urlOrgMemberAdd, urlOrgMemberList, urlOrgMemberView } from "#src/org/member_url/urlOrgMember.ts"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
@@ -47,30 +47,21 @@ export function OrgMemberListPage() {
 
 function getPageTitle(orgName?: string) {
   const name = orgName ?? ttc("Organization")
-  return name + " " + ttc("Members")
+  return `${name} ${ttc("Members")}`
 }
 
-type OrgMember = OrgMemberModel
-
-type FetchOrgMembers = Accessor<Result<OrgMember[]> | undefined>
+type OrgMember = OrgMemberProfile
 
 interface OrgMemberListLoaderProps extends HasOrgHandle {}
 
 function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
-  const getOrgMembersQuery: FetchOrgMembers = createQuery(api.org.orgMembersListQuery, {
-    token: userTokenGet(),
-    orgHandle: p.orgHandle,
-  })
-  const getOrgMembersResult = createQueryCached<OrgMember[]>(
-    getOrgMembersQuery,
-    "orgMembersListQuery" + "/" + p.orgHandle,
-    a.any(),
-  )
-  createEffect(() => {
-    const orgMembersResult = getOrgMembersResult()
-    if (!orgMembersResult) return
-    if (!orgMembersResult.success) return
-    // orgMemberListSignal.set(orgMembersResult.data)
+  const pagination = cursorPaginationCreate({
+    query: api.org.orgMembersListQuery,
+    queryKey: "orgMembersListQuery",
+    args: () => ({ token: userTokenGet(), orgHandle: p.orgHandle }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    scope: () => p.orgHandle,
+    itemSchema: orgMemberProfileSchema,
   })
 
   return (
@@ -85,14 +76,14 @@ function OrgMemberListLoader(p: OrgMemberListLoaderProps) {
       </PageHeader>
 
       <Switch fallback={<p>Fallback content</p>}>
-        <Match when={getOrgMembersResult() === undefined}>
+        <Match when={pagination.page() === undefined}>
           <OrgMemberLoading />
         </Match>
-        <Match when={!hasOrgMembers(getOrgMembersResult())}>
+        <Match when={resultHasNoOrgMembers(pagination.page())}>
           <NoOrgMembers />
         </Match>
-        <Match when={true}>
-          <OrgMemberList orgHandle={p.orgHandle} getOrgMembers={getOrgMembers(getOrgMembersResult())} />
+        <Match when={getOrgMembersPage(pagination.page())}>
+          {(getPage) => <OrgMemberList orgHandle={p.orgHandle} members={getPage().page} pagination={pagination} />}
         </Match>
       </Switch>
     </>
@@ -107,30 +98,39 @@ export function NoOrgMembers(p: MayHaveClassAndChildren) {
   )
 }
 
-function getOrgMembers(orgMembersResult: Result<OrgMember[]> | undefined): Accessor<OrgMember[]> {
-  return () => {
-    return (orgMembersResult as ResultOk<OrgMember[]>).data
-  }
-}
-
 interface OrgMemberListProps extends HasOrgHandle {
-  getOrgMembers: Accessor<OrgMember[]>
+  members: OrgMember[]
+  pagination: ReturnType<typeof cursorPaginationCreate<typeof api.org.orgMembersListQuery, OrgMember>>
 }
 
 function OrgMemberList(p: OrgMemberListProps) {
   return (
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getOrgMembers()}>{(member) => <OrgMemberLink orgHandle={p.orgHandle} member={member} />}</For>
-    </div>
+    <>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <For each={p.members}>{(member) => <OrgMemberLink orgHandle={p.orgHandle} member={member} />}</For>
+      </div>
+      <PaginationControls
+        page={() => p.pagination.history().length + 1}
+        canPrevious={p.pagination.canPrevious}
+        canNext={p.pagination.canNext}
+        previous={p.pagination.previous}
+        next={p.pagination.next}
+        loading={p.pagination.loading}
+      />
+    </>
   )
 }
 
-function hasOrgMembers(orgMembersResult: Result<OrgMember[]> | undefined): OrgMember[] | null {
-  if (!orgMembersResult) return null
-  if (!orgMembersResult.success) return null
-  const orgMembers = orgMembersResult.data
-  if (orgMembers.length <= 0) return null
-  return orgMembers
+function getOrgMembersPage(
+  orgMembersResult: Result<PaginationResultType<OrgMember>> | undefined,
+): PaginationResultType<OrgMember> | null {
+  if (!orgMembersResult?.success) return null
+  return orgMembersResult.data
+}
+
+function resultHasNoOrgMembers(orgMembersResult: Result<PaginationResultType<OrgMember>> | undefined): boolean {
+  const page = getOrgMembersPage(orgMembersResult)
+  return page !== null && page.page.length <= 0
 }
 
 function OrgMemberLoading() {

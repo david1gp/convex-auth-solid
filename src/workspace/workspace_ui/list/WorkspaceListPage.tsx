@@ -1,16 +1,20 @@
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
-import { type Accessor, createEffect, For, Match, Switch } from "solid-js"
+import { createEffect, For, Match, Switch } from "solid-js"
+import type * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
-import type { Result, ResultOk } from "#result"
+import type { Result } from "#result"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
 import { LinkLikeText } from "#src/ui/links/LinkLikeText.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
-import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
-import { workspaceListSignal } from "#src/workspace/workspace_ui/list/workspaceListSignal.ts"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
+import type { WorkspaceModel } from "#src/workspace/workspace_model/WorkspaceModel.ts"
+import { workspaceSchema } from "#src/workspace/workspace_model/workspaceSchema.ts"
+import { workspaceListSignalAdd } from "#src/workspace/workspace_ui/list/workspaceListSignal.ts"
 import { urlWorkspaceAdd, urlWorkspaceView } from "#src/workspace/workspace_url/urlWorkspace.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
@@ -29,24 +33,27 @@ export function WorkspaceListPage() {
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(_orgName?: string, _workspaceName?: string) {
   return ttt("Workspaces")
 }
 
-type Workspace = DocWorkspace
+type Workspace = a.InferOutput<typeof workspaceSchema>
 
-type FetchWorkspaces = Accessor<Result<Workspace[]> | undefined>
-
-function WorkspaceListLoader(p: {}) {
-  // console.log("WorkspaceList.getSession", p.getSession())
-  const getWorkspacesResult: FetchWorkspaces = createQuery(api.workspace.workspacesListQuery, {
-    token: userTokenGet(),
+function WorkspaceListLoader() {
+  const pagination = cursorPaginationCreate({
+    query: api.workspace.workspacesListQuery,
+    queryKey: "workspacesListQuery",
+    args: () => ({ token: userTokenGet() }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    itemSchema: workspaceSchema,
   })
   createEffect(() => {
-    const workspacesResult = getWorkspacesResult()
+    const workspacesResult = pagination.page()
     if (!workspacesResult) return
     if (!workspacesResult.success) return
-    workspaceListSignal.set(workspacesResult.data)
+    for (const workspace of workspacesResult.data.page as WorkspaceModel[]) {
+      workspaceListSignalAdd(workspace)
+    }
   })
 
   return (
@@ -56,14 +63,14 @@ function WorkspaceListLoader(p: {}) {
       </PageHeader>
 
       <Switch fallback={<p>Fallback content</p>}>
-        <Match when={getWorkspacesResult() === undefined}>
+        <Match when={pagination.page() === undefined}>
           <WorkspacesLoading />
         </Match>
-        <Match when={!hasWorkspaces(getWorkspacesResult())}>
+        <Match when={resultHasNoWorkspaces(pagination.page())}>
           <NoWorkspaces />
         </Match>
-        <Match when={true}>
-          <WorkspaceList getWorkspaces={getWorkspaces(getWorkspacesResult())} />
+        <Match when={getWorkspacesPage(pagination.page())}>
+          {(getPage) => <WorkspaceList workspaces={getPage().page} pagination={pagination} />}
         </Match>
       </Switch>
     </>
@@ -82,30 +89,39 @@ export function NoWorkspaces(p: MayHaveClassAndChildren) {
   )
 }
 
-function getWorkspaces(workspacesResult: Result<Workspace[]> | undefined): Accessor<Workspace[]> {
-  return () => {
-    return (workspacesResult as ResultOk<Workspace[]>).data
-  }
-}
-
 interface WorkspaceListProps {
-  getWorkspaces: Accessor<Workspace[]>
+  workspaces: Workspace[]
+  pagination: ReturnType<typeof cursorPaginationCreate<typeof api.workspace.workspacesListQuery, Workspace>>
 }
 
 function WorkspaceList(p: WorkspaceListProps) {
   return (
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <For each={p.getWorkspaces()}>{(w) => <WorkspaceLink workspace={w} />}</For>
-    </div>
+    <>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <For each={p.workspaces}>{(w) => <WorkspaceLink workspace={w} />}</For>
+      </div>
+      <PaginationControls
+        page={() => p.pagination.history().length + 1}
+        canPrevious={p.pagination.canPrevious}
+        canNext={p.pagination.canNext}
+        previous={p.pagination.previous}
+        next={p.pagination.next}
+        loading={p.pagination.loading}
+      />
+    </>
   )
 }
 
-function hasWorkspaces(workspacesResult: Result<Workspace[]> | undefined): Workspace[] | null {
-  if (!workspacesResult) return null
-  if (!workspacesResult.success) return null
-  const workspaces = workspacesResult.data
-  if (workspaces.length <= 0) return null
-  return workspaces
+function getWorkspacesPage(
+  workspacesResult: Result<PaginationResultType<Workspace>> | undefined,
+): PaginationResultType<Workspace> | null {
+  if (!workspacesResult?.success) return null
+  return workspacesResult.data
+}
+
+function resultHasNoWorkspaces(workspacesResult: Result<PaginationResultType<Workspace>> | undefined): boolean {
+  const page = getWorkspacesPage(workspacesResult)
+  return page !== null && page.page.length <= 0
 }
 
 function WorkspaceLink(p: { workspace: Workspace }) {

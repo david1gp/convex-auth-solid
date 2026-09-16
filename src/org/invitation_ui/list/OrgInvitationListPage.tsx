@@ -1,15 +1,15 @@
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { useParams } from "@tanstack/solid-router"
-import { type Accessor, createEffect, For, Match, Show, Switch, splitProps } from "solid-js"
-import * as a from "valibot"
+import { For, Match, Show, Switch, splitProps } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.tsx"
 import { LinkLikeNavText } from "#src/app/nav/links/LinkLikeNavText.tsx"
 import { NavOrg } from "#src/app/nav/NavOrg.tsx"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
+import { orgInvitationSchema } from "#src/org/invitation_model/orgInvitationSchema.ts"
 import type { OrgInvitationsProps } from "#src/org/invitation_ui/list/OrgInvitationListSection.tsx"
 import { OrgInvitationCard } from "#src/org/invitation_ui/view/OrgInvitationCard.tsx"
 import { urlOrgInvitationAdd } from "#src/org/invitation_url/urlOrgInvitation.ts"
@@ -18,8 +18,9 @@ import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
@@ -56,28 +57,19 @@ function ListPage(p: ListPageProps) {
 
 function getPageTitle(orgName?: string) {
   const name = orgName ?? ttc("Organization")
-  return name + " " + ttc("Invitations")
+  return `${name} ${ttc("Invitations")}`
 }
-
-type FetchOrgInvitations = Accessor<Result<OrgInvitationModel[]> | undefined>
 
 interface OrgInvitationListLoaderProps extends HasOrgHandle {}
 
 function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
-  const getOrgInvitationsQuery: FetchOrgInvitations = createQuery(api.org.orgInvitationsListQuery, {
-    token: userTokenGet(),
-    orgHandle: p.orgHandle,
-  })
-  const getOrgInvitationsResult = createQueryCached<OrgInvitationModel[]>(
-    getOrgInvitationsQuery,
-    "orgInvitationsListQuery" + "/" + p.orgHandle,
-    a.any(),
-  )
-  createEffect(() => {
-    const orgInvitationsResult = getOrgInvitationsResult()
-    if (!orgInvitationsResult) return
-    if (!orgInvitationsResult.success) return
-    // orgInvitationListSignal.set(orgInvitationsResult.data)
+  const pagination = cursorPaginationCreate({
+    query: api.org.orgInvitationsListQuery,
+    queryKey: "orgInvitationsListQuery",
+    args: () => ({ token: userTokenGet(), orgHandle: p.orgHandle }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    scope: () => p.orgHandle,
+    itemSchema: orgInvitationSchema,
   })
 
   return (
@@ -92,50 +84,62 @@ function OrgInvitationListLoader(p: OrgInvitationListLoaderProps) {
         </LinkButtonInternal>
       </PageHeader>
       <Switch fallback={<p>Fallback content</p>}>
-        <Match when={getOrgInvitationsResult() === undefined}>
+        <Match when={pagination.page() === undefined}>
           <OrgInvitationLoading />
         </Match>
-        <Match when={!hasOrgInvitations(getOrgInvitationsResult())}>
+        <Match when={resultHasNoOrgInvitations(pagination.page())}>
           <NoOrgInvitationsSection />
         </Match>
-        <Match when={getData(getOrgInvitationsResult)}>
-          {(gotData) => <OrgInvitationList orgHandle={p.orgHandle} {...gotData()} />}
+        <Match when={getOrgInvitationsPage(pagination.page())}>
+          {(getPage) => (
+            <OrgInvitationList orgHandle={p.orgHandle} invitations={getPage().page} pagination={pagination} />
+          )}
         </Match>
       </Switch>
     </>
   )
 }
 
-function getData(
-  orgInvitationsResult: () => Result<OrgInvitationModel[]> | undefined,
-): { invitations: OrgInvitationModel[] } | null {
-  const result = orgInvitationsResult()
-  if (!result || !result.success) return null
-  return { invitations: result.data }
+function getOrgInvitationsPage(
+  orgInvitationsResult: Result<PaginationResultType<OrgInvitationModel>> | undefined,
+): PaginationResultType<OrgInvitationModel> | null {
+  if (!orgInvitationsResult?.success) return null
+  return orgInvitationsResult.data
 }
 
-function hasOrgInvitations(
-  orgInvitationsResult: Result<OrgInvitationModel[]> | undefined,
-): OrgInvitationModel[] | null {
-  if (!orgInvitationsResult) return null
-  if (!orgInvitationsResult.success) return null
-  const orgInvitations = orgInvitationsResult.data
-  if (orgInvitations.length <= 0) return null
-  return orgInvitations
+function resultHasNoOrgInvitations(
+  orgInvitationsResult: Result<PaginationResultType<OrgInvitationModel>> | undefined,
+): boolean {
+  const page = getOrgInvitationsPage(orgInvitationsResult)
+  return page !== null && page.page.length <= 0
 }
 
 function OrgInvitationLoading() {
   return <LoadingSection loadingSubject={ttc("Organization Invitations")} />
 }
 
-function OrgInvitationList(p: OrgInvitationsProps) {
-  const [s, rest] = splitProps(p, ["class"])
+interface OrgInvitationListPageProps extends Omit<OrgInvitationsProps, "pagination"> {
+  pagination: ReturnType<typeof cursorPaginationCreate<typeof api.org.orgInvitationsListQuery, OrgInvitationModel>>
+}
+
+function OrgInvitationList(p: OrgInvitationListPageProps) {
+  const [, rest] = splitProps(p, ["class", "pagination", "loading"])
   return (
-    <Show when={p.invitations.length > 0} fallback={<NoOrgInvitationsSection />}>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <For each={p.invitations}>{(invitation) => <OrgInvitationCard {...rest} invitation={invitation} />}</For>
-      </div>
-    </Show>
+    <>
+      <Show when={p.invitations.length > 0} fallback={<NoOrgInvitationsSection />}>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <For each={p.invitations}>{(invitation) => <OrgInvitationCard {...rest} invitation={invitation} />}</For>
+        </div>
+      </Show>
+      <PaginationControls
+        page={() => p.pagination.history().length + 1}
+        canPrevious={p.pagination.canPrevious}
+        canNext={p.pagination.canNext}
+        previous={p.pagination.previous}
+        next={p.pagination.next}
+        loading={p.pagination.loading}
+      />
+    </>
   )
 }
 

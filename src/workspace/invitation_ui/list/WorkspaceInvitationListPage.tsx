@@ -1,21 +1,22 @@
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { useParams } from "@tanstack/solid-router"
-import { type Accessor, createEffect, For, Match, Show, Switch, splitProps } from "solid-js"
-import * as a from "valibot"
+import { For, Match, Show, Switch, splitProps } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.tsx"
 import { LinkLikeNavText } from "#src/app/nav/links/LinkLikeNavText.tsx"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
+import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { PageHeader } from "#src/ui/header/PageHeader.tsx"
 import { NoData } from "#src/ui/illustrations/NoData.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
+import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
+import { workspaceInvitationSchema } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import type { WorkspaceInvitationsProps } from "#src/workspace/invitation_ui/list/WorkspaceInvitationListSection.tsx"
 import { WorkspaceInvitationCard } from "#src/workspace/invitation_ui/view/WorkspaceInvitationCard.tsx"
 import { urlWorkspaceInvitationAdd } from "#src/workspace/invitation_url/urlWorkspaceInvitation.ts"
@@ -56,30 +57,19 @@ function ListPage(p: ListPageProps) {
 
 function getPageTitle(workspaceName?: string) {
   const name = workspaceName ?? ttc("Workspace")
-  return name + " " + ttc("Invitations")
+  return `${name} ${ttc("Invitations")}`
 }
-
-type FetchWorkspaceInvitations = Accessor<Result<WorkspaceInvitationModel[]> | undefined>
 
 interface WorkspaceInvitationListLoaderProps extends HasWorkspaceHandle {}
 
 function WorkspaceInvitationListLoader(p: WorkspaceInvitationListLoaderProps) {
-  const getWorkspaceInvitationsQuery: FetchWorkspaceInvitations = createQuery(
-    api.workspace.workspaceInvitationsListQuery,
-    {
-      token: userTokenGet(),
-      workspaceHandle: p.workspaceHandle,
-    },
-  )
-  const getWorkspaceInvitationsResult = createQueryCached<WorkspaceInvitationModel[]>(
-    getWorkspaceInvitationsQuery,
-    "workspaceInvitationsListQuery" + "/" + p.workspaceHandle,
-    a.any(),
-  )
-  createEffect(() => {
-    const workspaceInvitationsResult = getWorkspaceInvitationsResult()
-    if (!workspaceInvitationsResult) return
-    if (!workspaceInvitationsResult.success) return
+  const pagination = cursorPaginationCreate({
+    query: api.workspace.workspaceInvitationsListQuery,
+    queryKey: "workspaceInvitationsListQuery",
+    args: () => ({ token: userTokenGet(), workspaceHandle: p.workspaceHandle }),
+    identity: () => userSessionSignal.get()?.profile.userId ?? null,
+    scope: () => p.workspaceHandle,
+    itemSchema: workspaceInvitationSchema,
   })
 
   return (
@@ -98,50 +88,70 @@ function WorkspaceInvitationListLoader(p: WorkspaceInvitationListLoaderProps) {
         </LinkButtonInternal>
       </PageHeader>
       <Switch fallback={<p>Fallback content</p>}>
-        <Match when={getWorkspaceInvitationsResult() === undefined}>
+        <Match when={pagination.page() === undefined}>
           <WorkspaceInvitationLoading />
         </Match>
-        <Match when={!hasWorkspaceInvitations(getWorkspaceInvitationsResult())}>
+        <Match when={resultHasNoWorkspaceInvitations(pagination.page())}>
           <NoWorkspaceInvitationsSection />
         </Match>
-        <Match when={getData(getWorkspaceInvitationsResult)}>
-          {(gotData) => <WorkspaceInvitationList workspaceHandle={p.workspaceHandle} {...gotData()} />}
+        <Match when={getWorkspaceInvitationsPage(pagination.page())}>
+          {(getPage) => (
+            <WorkspaceInvitationList
+              workspaceHandle={p.workspaceHandle}
+              invitations={getPage().page}
+              pagination={pagination}
+            />
+          )}
         </Match>
       </Switch>
     </>
   )
 }
 
-function getData(
-  workspaceInvitationsResult: () => Result<WorkspaceInvitationModel[]> | undefined,
-): { invitations: WorkspaceInvitationModel[] } | null {
-  const result = workspaceInvitationsResult()
-  if (!result || !result.success) return null
-  return { invitations: result.data }
+function getWorkspaceInvitationsPage(
+  workspaceInvitationsResult: Result<PaginationResultType<WorkspaceInvitationModel>> | undefined,
+): PaginationResultType<WorkspaceInvitationModel> | null {
+  if (!workspaceInvitationsResult?.success) return null
+  return workspaceInvitationsResult.data
 }
 
-function hasWorkspaceInvitations(
-  workspaceInvitationsResult: Result<WorkspaceInvitationModel[]> | undefined,
-): WorkspaceInvitationModel[] | null {
-  if (!workspaceInvitationsResult) return null
-  if (!workspaceInvitationsResult.success) return null
-  const workspaceInvitations = workspaceInvitationsResult.data
-  if (workspaceInvitations.length <= 0) return null
-  return workspaceInvitations
+function resultHasNoWorkspaceInvitations(
+  workspaceInvitationsResult: Result<PaginationResultType<WorkspaceInvitationModel>> | undefined,
+): boolean {
+  const page = getWorkspaceInvitationsPage(workspaceInvitationsResult)
+  return page !== null && page.page.length <= 0
 }
 
 function WorkspaceInvitationLoading() {
   return <LoadingSection loadingSubject={ttc("Workspace Invitations")} />
 }
 
-function WorkspaceInvitationList(p: WorkspaceInvitationsProps) {
-  const [s, rest] = splitProps(p, ["class"])
+interface WorkspaceInvitationListPageProps extends WorkspaceInvitationsProps {
+  pagination: ReturnType<
+    typeof cursorPaginationCreate<typeof api.workspace.workspaceInvitationsListQuery, WorkspaceInvitationModel>
+  >
+}
+
+function WorkspaceInvitationList(p: WorkspaceInvitationListPageProps) {
+  const [, rest] = splitProps(p, ["class", "pagination"])
   return (
-    <Show when={p.invitations.length > 0} fallback={<NoWorkspaceInvitationsSection />}>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <For each={p.invitations}>{(invitation) => <WorkspaceInvitationCard {...rest} invitation={invitation} />}</For>
-      </div>
-    </Show>
+    <>
+      <Show when={p.invitations.length > 0} fallback={<NoWorkspaceInvitationsSection />}>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <For each={p.invitations}>
+            {(invitation) => <WorkspaceInvitationCard {...rest} invitation={invitation} />}
+          </For>
+        </div>
+      </Show>
+      <PaginationControls
+        page={() => p.pagination.history().length + 1}
+        canPrevious={p.pagination.canPrevious}
+        canNext={p.pagination.canNext}
+        previous={p.pagination.previous}
+        next={p.pagination.next}
+        loading={p.pagination.loading}
+      />
+    </>
   )
 }
 

@@ -13,7 +13,9 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
 import { orgInvitationSchema } from "#src/org/invitation_model/orgInvitationSchema.ts"
 import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.ts"
-import type { DocOrg } from "#src/org/org_convex/IdOrg.ts"
+import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
+import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
+import { orgViewPageSchema } from "#src/org/org_model/OrgViewPageType.ts"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import type { HasOrgInvitationCode } from "#src/org/org_model_field/HasOrgInvitationCode.ts"
 import { orgRoleGetText } from "#src/org/org_model_field/orgRoleGetText.ts"
@@ -84,17 +86,17 @@ function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
     createQuery(api.org.orgInvitationGetQuery, {
       invitationCode: p.invitationCode,
     }),
-    "orgInvitationGetQuery" + "/" + p.invitationCode,
+    `orgInvitationGetQuery/${p.invitationCode}`,
     a.nullable(orgInvitationSchema),
   )
 
-  const getOrg = createQueryCached(
+  const getOrg = createQueryCached<OrgViewPageType>(
     createQuery(api.org.orgGetPageQuery, {
       token: userTokenGet(),
       orgHandle: p.orgHandle,
     }),
-    "orgGetPageQuery" + "/" + p.orgHandle,
-    a.any(),
+    `orgGetPageQuery/${p.orgHandle}`,
+    orgViewPageSchema,
   )
 
   return (
@@ -114,7 +116,7 @@ function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
       <Match when={true}>
         <OrgInvitationAcceptView
           invitation={(invitationQuery() as ResultOk<DocOrgInvitation>).data}
-          org={(getOrg() as ResultOk<any>).data.org}
+          org={(getOrg() as ResultOk<OrgViewPageType>).data.org}
         />
       </Match>
     </Switch>
@@ -123,7 +125,7 @@ function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
 
 interface InvitationDetailsProps extends MayHaveClass {
   invitation: DocOrgInvitation
-  org: DocOrg
+  org: OrgModel
 }
 
 function OrgInvitationAcceptView(p: InvitationDetailsProps) {
