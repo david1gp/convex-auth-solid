@@ -1,5 +1,5 @@
 import { debounce } from "@solid-primitives/scheduled"
-import { onMount } from "solid-js"
+import { onCleanup, onMount } from "solid-js"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 
@@ -13,46 +13,39 @@ export interface FilterSignal<T = Record<string, string>> {
 
 export function createFilterSignal<T extends Record<string, string>>(defaultValue: T): FilterSignal<T> {
   const signal = createSignalObject<T>(defaultValue)
-  let url: URL | null = null
-
   onMount(() => {
-    url = new URL(window.location.href)
     loadFiltersFromUrl()
+    window.addEventListener("popstate", loadFiltersFromUrl)
+  })
+
+  onCleanup(() => {
+    debouncedUrlUpdate.clear()
+    if (typeof window !== "undefined") window.removeEventListener("popstate", loadFiltersFromUrl)
   })
 
   function loadFiltersFromUrl() {
-    if (!url) return
-    const filters: Partial<T> = {}
-
-    Object.keys(defaultValue).forEach((key) => {
-      const value = url!.searchParams.get(key)
-      if (value !== null) {
-        filters[key as keyof T] = value as T[keyof T]
-      }
-    })
-
-    if (Object.keys(filters).length > 0) {
-      signal.set({ ...defaultValue, ...filters })
-    }
+    debouncedUrlUpdate.clear()
+    const url = new URL(window.location.href)
+    signal.set(filterSignalValueFromUrl(defaultValue, url))
   }
 
   const debouncedUrlUpdate = debounce(() => {
-    if (!url) url = new URL(window.location.href)
+    const currentUrl = new URL(window.location.href)
     const currentFilters = signal.get()
 
     // Clear all filter params
     Object.keys(defaultValue).forEach((key) => {
-      url!.searchParams.delete(key)
+      currentUrl.searchParams.delete(key)
     })
 
     // Set active filter params
     Object.entries(currentFilters).forEach(([key, value]) => {
       if (value !== defaultValue[key as keyof T]) {
-        url!.searchParams.set(key, value)
+        currentUrl.searchParams.set(key, value)
       }
     })
 
-    window.history.replaceState(null, "", url.href)
+    window.history.replaceState(null, "", currentUrl.href)
   }, debounceMs)
 
   return {
@@ -75,4 +68,17 @@ export function createFilterSignal<T extends Record<string, string>>(defaultValu
       return Object.entries(current).some(([key, value]) => value !== defaultValue[key as keyof T])
     },
   }
+}
+
+export function filterSignalValueFromUrl<T extends Record<string, string>>(defaultValue: T, url: URL): T {
+  const filters: Partial<T> = {}
+
+  Object.keys(defaultValue).forEach((key) => {
+    const value = url.searchParams.get(key)
+    if (value !== null) {
+      filters[key as keyof T] = value as T[keyof T]
+    }
+  })
+
+  return { ...defaultValue, ...filters }
 }

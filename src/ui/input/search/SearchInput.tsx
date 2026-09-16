@@ -1,6 +1,6 @@
 import { mdiMagnify } from "@adaptive-ds/mdi/mdiMagnify.js"
 import { debounce } from "@solid-primitives/scheduled"
-import { onMount } from "solid-js"
+import { onCleanup, onMount } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import { Input } from "#ui/input/input/Input.jsx"
@@ -14,31 +14,45 @@ import { generateId12 } from "#utils/ran/generateId12.js"
 
 export interface ResourceListSearchProps extends MayHaveId, MayHaveClass, MayHaveChildren {
   searchSignal: SignalObject<string>
+  searchState?: object
+  debounceMs?: number
   placeholder?: string
 }
 
 const searchKey = "search"
 
 export function SearchInput(p: ResourceListSearchProps) {
-  let url: URL | null = null
-
   onMount(() => {
-    url = new URL(window.location.href)
-    const search = url.searchParams.get(searchKey)
-    if (!search) return
-    p.searchSignal.set(search)
+    if (p.searchState) return
+    loadSearchFromUrl()
+    window.addEventListener("popstate", loadSearchFromUrl)
   })
 
-  const debouncedSearch = debounce((value: string) => {
-    if (!url) url = new URL(window.location.href)
+  onCleanup(() => {
+    if (!p.searchState && typeof window !== "undefined") window.removeEventListener("popstate", loadSearchFromUrl)
+  })
+
+  const debouncedSearch = debounce(() => {
+    if (p.searchState) return
+    const currentUrl = new URL(window.location.href)
     const search = p.searchSignal.get()
-    url.searchParams.set(searchKey, search)
-    window.history.replaceState(null, "", url.href)
-  }, debounceMs)
+    if (search) {
+      currentUrl.searchParams.set(searchKey, search)
+    } else {
+      currentUrl.searchParams.delete(searchKey)
+    }
+    window.history.replaceState(null, "", currentUrl.href)
+  }, p.debounceMs ?? debounceMs)
+
+  function loadSearchFromUrl() {
+    const currentUrl = new URL(window.location.href)
+    const search = currentUrl.searchParams.get(searchKey)
+    p.searchSignal.set(search ?? "")
+  }
 
   function handleInputChange(value: string) {
     p.searchSignal.set(value)
-    debouncedSearch(value)
+    if (!p.searchState) debouncedSearch()
   }
 
   const id = p.id ?? generateId12()
