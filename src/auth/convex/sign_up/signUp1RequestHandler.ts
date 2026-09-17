@@ -3,7 +3,7 @@ import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createError } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
-import { sendEmailSignUp } from "#src/auth/convex/email/sendEmailSignUp.ts"
+import { emailSignUpSend } from "#src/auth/convex/email/emailSignUpSend.ts"
 import { generateOtpCode } from "#src/auth/convex/pw/generateOtpCode.ts"
 import { hashPassword2 } from "#src/auth/convex/pw/hashPassword.ts"
 import { signUpErrorMessages } from "#src/auth/convex/sign_up/signUpErrorMessages.ts"
@@ -83,7 +83,7 @@ export async function signUp1RequestHandler(ctx: ActionCtx, request: Request): P
   const confirmUrl = new URL(pageRouteAuth.signUpConfirmEmail, hostnameApp)
   confirmUrl.searchParams.set("email", email)
   confirmUrl.searchParams.set("code", code)
-  await sendEmailSignUp(name, email, code, confirmUrl.toString(), l)
+  await emailSignUpSend(name, email, code, confirmUrl.toString(), l)
 
   return new Response("Sign up code sent", { status: 200 })
 }
