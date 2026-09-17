@@ -4,7 +4,7 @@
   "scripts": {
     "cc": "clear && bun --env-file=.env.development run convex codegen",
     "t": "clear && bun run tsgo",
-    "type-check": "bun run tsgo",
+    "type-check": "bun tsc --noEmit",
     "deploy": "bun run frontend:deploy",
     "frontend:deploy": "bun run rsbuild:deploy",
     "frontend:upload": "bun run wrangler pages deploy ./dist --project-name=convex-auth-solid --commit-dirty=true",
