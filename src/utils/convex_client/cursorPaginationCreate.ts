@@ -9,7 +9,7 @@ import { paginationPageCacheSave } from "#src/utils/cache/paginationPageCacheSav
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationResultSchema } from "#src/utils/convex_backend/paginationResultSchema.ts"
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { debounceMs as defaultDebounceMs } from "#src/utils/ui/debounceMs.ts"
 
 type CursorQueryArgs<Query extends FunctionReference<"query">> = Omit<FunctionArgs<Query>, "paginationOpts">
@@ -115,7 +115,7 @@ export function cursorPaginationCreate<Query extends FunctionReference<"query">,
       },
     } as FunctionArgs<Query>
   }
-  const queryResult = createQuery<Query>(options.query, queryArgs)
+  const queryResult = queryCreate<Query>(options.query, queryArgs)
 
   const currentCacheKey = () => {
     const snapshot = stateSynchronize()

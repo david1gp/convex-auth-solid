@@ -18,7 +18,7 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { urlUserProfileMe, urlUserProfileMeChangePassword } from "#src/auth/url/pageRouteAuth.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { Button } from "#ui/interactive/button/Button.jsx"
@@ -158,7 +158,7 @@ function PasswordChangeStep2Form(p: {
     return password.length >= requiredPasswordLength
   }
 
-  const passwordChangeConfirmMutation = createMutation(api.auth.userPasswordChange2ConfirmMutation)
+  const passwordChangeConfirmMutation = mutationCreate(api.auth.userPasswordChange2ConfirmMutation)
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault()

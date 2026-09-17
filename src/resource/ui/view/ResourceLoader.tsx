@@ -12,7 +12,7 @@ import { resourceNameSet } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
@@ -23,7 +23,7 @@ export interface ResourceLoaderProps extends HasResourceId, MayHaveClass {
 export interface ResourceComponentProps extends HasResourceModel, MayHaveClass {}
 
 export function ResourceLoader(p: ResourceLoaderProps) {
-  const getDataQuery = createQuery(api.resource.resourceGetQuery, {
+  const getDataQuery = queryCreate(api.resource.resourceGetQuery, {
     token: userTokenGet(),
     resourceId: p.resourceId,
   })

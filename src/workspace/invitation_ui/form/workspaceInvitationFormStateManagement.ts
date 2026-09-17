@@ -5,14 +5,11 @@ import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
-import type {
-  DocWorkspaceInvitation,
-  IdWorkspaceInvitation,
-} from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
+import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 import {
   type WorkspaceInvitationFormField,
   workspaceInvitationFormConfig,
@@ -56,22 +53,21 @@ function createWorkspaceInvitationErrorState(): WorkspaceInvitationFormErrorStat
 export type WorkspaceInvitationFormStateManagement = {
   mode: FormMode
   isSubmitting: SignalObject<boolean>
-  serverState: SignalObject<DocWorkspaceInvitation>
+  serverState: SignalObject<WorkspaceInvitationModel>
   state: WorkspaceInvitationFormState
   errors: WorkspaceInvitationFormErrorState
   hasErrors: () => boolean
   fillTestData: () => void
-  loadData: (data: DocWorkspaceInvitation) => void
+  loadData: (data: WorkspaceInvitationModel) => void
   validateOnChange: (field: WorkspaceInvitationFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => Promise<void>
   debouncedSave: () => void
 }
 
-function createEmptyDocWorkspaceInvitation(): DocWorkspaceInvitation {
+function createEmptyWorkspaceInvitation(): WorkspaceInvitationModel {
   const now = new Date()
   const iso = now.toISOString()
   return {
-    _id: "" as IdWorkspaceInvitation,
     workspaceHandle: "",
     invitedEmail: "",
     invitationCode: "",
@@ -81,7 +77,6 @@ function createEmptyDocWorkspaceInvitation(): DocWorkspaceInvitation {
     expiresAt: iso,
     createdAt: iso,
     updatedAt: iso,
-    _creationTime: now.getMilliseconds(),
   }
 }
 
@@ -99,10 +94,10 @@ export function workspaceInvitationFormStateManagement(
   mode: FormMode,
   workspaceHandle: string,
   invitationCode?: string,
-  workspaceInvitation?: DocWorkspaceInvitation,
+  workspaceInvitation?: WorkspaceInvitationModel,
 ): WorkspaceInvitationFormStateManagement {
   const actions: WorkspaceInvitationFormActions = createActions(mode, workspaceHandle, invitationCode)
-  const serverState = createSignalObject(createEmptyDocWorkspaceInvitation())
+  const serverState = createSignalObject(createEmptyWorkspaceInvitation())
   const isSubmitting = createSignalObject(false)
   const state = createWorkspaceInvitationFormState()
 
@@ -121,7 +116,7 @@ export function workspaceInvitationFormStateManagement(
     isSubmitting,
     serverState,
     state,
-    loadData: (data: DocWorkspaceInvitation) => loadData(data, serverState, state),
+    loadData: (data: WorkspaceInvitationModel) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
@@ -135,8 +130,8 @@ export function workspaceInvitationFormStateManagement(
 }
 
 function loadData(
-  data: DocWorkspaceInvitation,
-  serverState: SignalObject<DocWorkspaceInvitation>,
+  data: WorkspaceInvitationModel,
+  serverState: SignalObject<WorkspaceInvitationModel>,
   state: WorkspaceInvitationFormState,
 ): void {
   serverState.set(data)
@@ -195,7 +190,7 @@ function validateFieldResult(field: WorkspaceInvitationFormField, value: string)
 async function handleSubmit(
   e: SubmitEvent,
   isSubmitting: SignalObject<boolean>,
-  serverState: SignalObject<DocWorkspaceInvitation>,
+  serverState: SignalObject<WorkspaceInvitationModel>,
   state: WorkspaceInvitationFormState,
   errors: WorkspaceInvitationFormErrorState,
   actions: WorkspaceInvitationFormActions,
@@ -273,14 +268,14 @@ function createActions(
 ): WorkspaceInvitationFormActions {
   const actions: WorkspaceInvitationFormActions = {}
   if (mode === formMode.add) {
-    const addMutation = createMutation(api.workspace.workspaceInvitation20InitMutation)
+    const addMutation = mutationCreate(api.workspace.workspaceInvitation20InitMutation)
     actions.add = async (data) => addAction(data, workspaceHandle, addMutation)
   }
   if (mode === formMode.edit) {
     // Edit functionality not implemented for invitations yet
   }
   if (mode === formMode.remove) {
-    const dismissMutation = createMutation(api.workspace.workspaceInvitation60DismissMutation)
+    const dismissMutation = mutationCreate(api.workspace.workspaceInvitation60DismissMutation)
     actions.remove = async () => removeAction(workspaceHandle, invitationCode, dismissMutation)
   }
   return actions

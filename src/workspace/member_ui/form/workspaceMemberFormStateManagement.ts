@@ -6,7 +6,7 @@ import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
@@ -246,15 +246,15 @@ function createActions(
 ): WorkspaceMemberFormActions {
   const actions: WorkspaceMemberFormActions = {}
   if (mode === formMode.add) {
-    const addMutation = createMutation(api.workspace.workspaceMemberCreateMutation)
+    const addMutation = mutationCreate(api.workspace.workspaceMemberCreateMutation)
     actions.add = async (data) => addAction(data, workspaceHandle, addMutation)
   }
   if (mode === formMode.edit) {
-    const editMutation = createMutation(api.workspace.workspaceMemberEditMutation)
+    const editMutation = mutationCreate(api.workspace.workspaceMemberEditMutation)
     actions.edit = async (data) => editAction(data, workspaceHandle, memberId, editMutation)
   }
   if (mode === formMode.remove) {
-    const deleteMutation = createMutation(api.workspace.workspaceMemberDeleteMutation)
+    const deleteMutation = mutationCreate(api.workspace.workspaceMemberDeleteMutation)
     actions.remove = async () => removeAction(workspaceHandle, memberId, deleteMutation)
   }
   return actions

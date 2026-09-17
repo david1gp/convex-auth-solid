@@ -23,8 +23,8 @@ import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
 import { urlOrgView } from "#src/org/org_url/urlOrg.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
@@ -83,7 +83,7 @@ interface OrgInvitationAcceptProps extends HasOrgHandle, HasOrgInvitationCode {}
 
 function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
   const invitationQuery = createQueryCached(
-    createQuery(api.org.orgInvitationGetQuery, {
+    queryCreate(api.org.orgInvitationGetQuery, {
       invitationCode: p.invitationCode,
     }),
     `orgInvitationGetQuery/${p.invitationCode}`,
@@ -91,7 +91,7 @@ function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
   )
 
   const getOrg = createQueryCached<OrgViewPageType>(
-    createQuery(api.org.orgGetPageQuery, {
+    queryCreate(api.org.orgGetPageQuery, {
       token: userTokenGet(),
       orgHandle: p.orgHandle,
     }),
@@ -150,7 +150,7 @@ function AcceptSection(p: InvitationDetailsProps) {
 }
 
 function AcceptButton(p: InvitationDetailsProps) {
-  const acceptMutation = createMutation(api.org.orgInvitation50AcceptMutation)
+  const acceptMutation = mutationCreate(api.org.orgInvitation50AcceptMutation)
 
   async function handleAccept() {
     const result = await acceptMutation({

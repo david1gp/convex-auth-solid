@@ -10,7 +10,7 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { FileModel } from "#src/file/model/FileModel.ts"
 import { type FileFormField, fileFormConfig, fileFormField } from "#src/file/ui/form/fileFormField.ts"
 import { urlResourceList, urlResourceView } from "#src/resource/url/urlResource.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
@@ -234,11 +234,11 @@ export type FileFormDeleteFn = () => Promise<void>
 function createActions(mode: FormMode, file: FileModel): FileFormActions {
   const actions: FileFormActions = {}
   if (mode === formMode.edit) {
-    const editMutation = createMutation(api.file.fileEditMutation)
+    const editMutation = mutationCreate(api.file.fileEditMutation)
     actions.edit = async (data) => editAction(data, file, mode, editMutation)
   }
   if (mode === formMode.remove) {
-    const deleteMutation = createMutation(api.file.fileDeleteMutation)
+    const deleteMutation = mutationCreate(api.file.fileDeleteMutation)
     actions.delete = async () => removeAction(file, deleteMutation)
   }
   return actions

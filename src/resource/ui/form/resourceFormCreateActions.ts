@@ -6,7 +6,7 @@ import { resourceFormLocalStorage } from "#src/resource/ui/form/resourceFormLoca
 import type { ResourceFormData } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { resourceNameSet } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { urlResourceList, urlResourceView } from "#src/resource/url/urlResource.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
 import { type FormMode, formMode } from "#ui/input/form/formMode.ts"
@@ -28,15 +28,15 @@ export type ResourceFormDeleteFn = () => Promise<void>
 export function resourceFormCreateActions(mode: FormMode, resourceId: string | undefined): ResourceFormActions {
   const actions: ResourceFormActions = {}
   if (mode === formMode.add) {
-    const addMutation = createMutation(api.resource.resourceCreateMutation)
+    const addMutation = mutationCreate(api.resource.resourceCreateMutation)
     actions.create = async (data) => createAction(data, addMutation)
   }
   if (mode === formMode.edit) {
-    const editMutation = createMutation(api.resource.resourceEditMutation)
+    const editMutation = mutationCreate(api.resource.resourceEditMutation)
     actions.edit = async (data) => editAction(data, resourceId, mode, editMutation)
   }
   if (mode === formMode.remove) {
-    const deleteMutation = createMutation(api.resource.resourceDeleteMutation)
+    const deleteMutation = mutationCreate(api.resource.resourceDeleteMutation)
     actions.delete = async () => removeAction(resourceId, mode, deleteMutation)
   }
   return actions

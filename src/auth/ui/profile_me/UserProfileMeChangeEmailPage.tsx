@@ -17,7 +17,7 @@ import { userSessionGet, userTokenGet } from "#src/auth/ui/signals/userSessionSi
 import { urlUserProfileMe, urlUserProfileMeChangeEmail } from "#src/auth/url/pageRouteAuth.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { Button } from "#ui/interactive/button/Button.jsx"
@@ -232,7 +232,7 @@ function EmailChangeStep2Form(p: {
   isSubmitting: SignalObject<boolean>
   currentStep: SignalObject<number>
 }) {
-  const emailChangeConfirmMutation = createMutation(api.auth.userEmailChange2ConfirmMutation)
+  const emailChangeConfirmMutation = mutationCreate(api.auth.userEmailChange2ConfirmMutation)
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault()

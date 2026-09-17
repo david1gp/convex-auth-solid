@@ -10,8 +10,8 @@ import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import { workspaceInvitationSchema } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
@@ -66,7 +66,7 @@ interface WorkspaceInvitationAcceptProps extends HasWorkspaceInvitationCode {}
 
 function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
   const invitationQuery = createQueryCached(
-    createQuery(api.workspace.workspaceInvitationGetQuery, {
+    queryCreate(api.workspace.workspaceInvitationGetQuery, {
       invitationCode: p.invitationCode,
     }),
     "workspaceInvitationGetQuery" + "/" + p.invitationCode,
@@ -82,7 +82,7 @@ function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
   const workspaceHandle = () => invitationData()?.workspaceHandle ?? ""
 
   const getWorkspace = createQueryCached(
-    createQuery(api.workspace.workspaceGetQuery, {
+    queryCreate(api.workspace.workspaceGetQuery, {
       token: userTokenGet(),
       workspaceHandle: workspaceHandle(),
     }),
@@ -141,7 +141,7 @@ function AcceptSection(p: InvitationDetailsProps) {
 }
 
 function AcceptButton(p: InvitationDetailsProps) {
-  const acceptMutation = createMutation(api.workspace.workspaceInvitation50AcceptMutation)
+  const acceptMutation = mutationCreate(api.workspace.workspaceInvitation50AcceptMutation)
 
   async function handleAccept() {
     const result = await acceptMutation({

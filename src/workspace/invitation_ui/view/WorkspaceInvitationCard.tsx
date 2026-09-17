@@ -6,7 +6,7 @@ import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
@@ -83,7 +83,7 @@ function Right(p: WorkspaceInvitationCardProps) {
 
 function WorkspaceInvitationActions(p: WorkspaceInvitationCardProps) {
   const resendAction = createAction(api.workspace.workspaceInvitation30ResendAction)
-  const dismissAction = createMutation(api.workspace.workspaceInvitation60DismissMutation)
+  const dismissAction = mutationCreate(api.workspace.workspaceInvitation60DismissMutation)
 
   async function resendClick() {
     const result = await resendAction({

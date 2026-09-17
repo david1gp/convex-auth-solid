@@ -18,7 +18,7 @@ import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -70,7 +70,7 @@ function getPageTitle(orgName?: string, _workspaceName?: string) {
 interface OrgViewLoaderProps extends HasOrgHandle, MayHaveClass {}
 
 function OrgViewLoader(p: OrgViewLoaderProps) {
-  const getDataQuery = createQuery(api.org.orgGetPageQuery, {
+  const getDataQuery = queryCreate(api.org.orgGetPageQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })

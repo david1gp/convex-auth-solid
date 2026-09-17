@@ -9,7 +9,7 @@ import type { OrgMemberProfile } from "#src/org/member_model/OrgMemberProfile.ts
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { ClipboardCopyButtonIcon } from "#src/ui/links/ClipboardCopyButtonIcon.tsx"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
@@ -83,8 +83,8 @@ function ShowTimes(p: OrgMemberCardProps) {
 }
 
 function OrgMemberActions(p: OrgMemberCardProps) {
-  const editMutation = createMutation(api.org.orgMemberEditMutation)
-  const deleteMutation = createMutation(api.org.orgMemberDeleteMutation)
+  const editMutation = mutationCreate(api.org.orgMemberEditMutation)
+  const deleteMutation = mutationCreate(api.org.orgMemberDeleteMutation)
 
   async function editClick() {
     const newRole = p.member.role === "member" ? "guest" : "member"

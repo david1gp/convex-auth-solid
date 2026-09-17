@@ -10,7 +10,7 @@ import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import type { HasOrgMemberId } from "#src/org/org_model_field/HasOrgMemberId.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { resultHasData } from "#src/utils/result/resultHasData.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { HasFormModeMutate } from "#ui/input/form/formModeMutate.ts"
@@ -19,7 +19,7 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 interface OrgMemberMutateProps extends HasOrgHandle, HasOrgMemberId, HasFormModeMutate, MayHaveClass {}
 
 export function OrgMemberMutate(p: OrgMemberMutateProps) {
-  const getMember = createQuery(api.org.orgMemberGetQuery, {
+  const getMember = queryCreate(api.org.orgMemberGetQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
     memberId: p.memberId as IdOrgMember,

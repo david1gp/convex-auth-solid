@@ -6,7 +6,7 @@ import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { ClipboardCopyButtonIcon } from "#src/ui/links/ClipboardCopyButtonIcon.tsx"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
 import type { WorkspaceMemberProfile } from "#src/workspace/member_model/WorkspaceMemberProfile.ts"
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model_field/HasWorkspaceHandle.ts"
@@ -83,8 +83,8 @@ function ShowTimes(p: WorkspaceMemberCardProps) {
 }
 
 function WorkspaceMemberActions(p: WorkspaceMemberCardProps) {
-  const editMutation = createMutation(api.workspace.workspaceMemberEditMutation)
-  const deleteMutation = createMutation(api.workspace.workspaceMemberDeleteMutation)
+  const editMutation = mutationCreate(api.workspace.workspaceMemberEditMutation)
+  const deleteMutation = mutationCreate(api.workspace.workspaceMemberDeleteMutation)
 
   async function editClick() {
     const newRole = p.member.role === "member" ? "guest" : "member"

@@ -1,6 +1,7 @@
 import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
+import type { ResultErr } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
@@ -15,7 +16,7 @@ import {
 } from "#src/auth/ui/profile/userProfileFormState.ts"
 import { urlUserProfileView } from "#src/auth/url/pageRouteAuth.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
@@ -53,7 +54,7 @@ interface UserProfileLoaderProps {
 }
 
 function UserProfileLoader(p: UserProfileLoaderProps) {
-  const getData = createQuery(api.auth.userGetByUsernameQuery, {
+  const getData = queryCreate(api.auth.userGetByUsernameQuery, {
     username: p.username,
   })
   return (
@@ -64,11 +65,26 @@ function UserProfileLoader(p: UserProfileLoaderProps) {
       <Match when={getData() === null}>
         <ErrorPage title={ttc("User not found")} />
       </Match>
-      <Match when={getData()}>
-        <UserProfileDisplay data={getData()!} />
+      <Match when={isResultErr(getData())}>
+        <ErrorPage title={userProfileErrorMessageGet(getData())} />
       </Match>
+      <Match when={userProfileDataGet(getData())}>{(data) => <UserProfileDisplay data={data()} />}</Match>
     </Switch>
   )
+}
+
+function isResultErr(value: DocUser | ResultErr | null | undefined): value is ResultErr {
+  return value !== null && typeof value === "object" && "success" in value && value.success === false
+}
+
+function userProfileErrorMessageGet(value: DocUser | ResultErr | null | undefined): string {
+  if (!isResultErr(value)) return ttc("Error loading user profile")
+  return value.errorMessage || ttc("Error loading user profile")
+}
+
+function userProfileDataGet(value: DocUser | ResultErr | null | undefined): DocUser | null {
+  if (!value || isResultErr(value)) return null
+  return value
 }
 
 interface UserProfileDisplayProps {

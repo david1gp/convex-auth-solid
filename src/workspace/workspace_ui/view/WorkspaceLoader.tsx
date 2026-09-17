@@ -5,7 +5,7 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import styles from "#src/ui/loaders/AnimateFadeIn.module.css"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
 import type { HasWorkspaceHandle } from "#src/workspace/workspace_model/HasWorkspaceHandle.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
@@ -20,7 +20,7 @@ export interface WorkspaceComponentProps extends MayHaveClass {
 }
 
 export function WorkspaceLoader(p: WorkspaceLoaderProps) {
-  const getData = createQuery(api.workspace.workspaceGetQuery, {
+  const getData = queryCreate(api.workspace.workspaceGetQuery, {
     token: userTokenGet(),
     workspaceHandle: p.workspaceHandle,
   })

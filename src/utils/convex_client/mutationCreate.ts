@@ -1,13 +1,16 @@
 import type { FunctionArgs, FunctionReference, FunctionReturnType } from "convex/server"
 import { useContext } from "solid-js"
+import { createResultError, type ResultErr } from "#result"
 import { ConvexContext } from "./convexContext.js"
 
-export function createMutation<Mutation extends FunctionReference<"mutation">>(
+export function mutationCreate<Mutation extends FunctionReference<"mutation">>(
   mutation: Mutation,
-): (args?: FunctionArgs<Mutation>) => Promise<FunctionReturnType<Mutation>> {
+): (args?: FunctionArgs<Mutation>) => Promise<FunctionReturnType<Mutation> | ResultErr> {
+  const op = "mutationCreate"
   const convex = useContext(ConvexContext)
   if (convex === undefined) {
-    throw "No convex context"
+    const error = createResultError(op, "No convex context")
+    return () => Promise.resolve(error)
   }
   return (args) => {
     const fullArgs = args ?? {}

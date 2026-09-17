@@ -15,8 +15,8 @@ import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
 import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
 import { urlOrgLeave } from "#src/org/org_url/urlOrg.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
@@ -69,7 +69,7 @@ interface OrgLeaveProps {
 }
 
 function OrgLeave(p: OrgLeaveProps) {
-  const getOrg = createQuery(api.org.orgGetPageQuery, {
+  const getOrg = queryCreate(api.org.orgGetPageQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
@@ -114,7 +114,7 @@ function LeaveSection(p: { orgHandle: string; orgName: string }) {
 }
 
 function LeaveButton(p: { orgHandle: string }) {
-  const leaveMutation = createMutation(api.org.orgLeaveMutation)
+  const leaveMutation = mutationCreate(api.org.orgLeaveMutation)
   const [isLoading, setIsLoading] = createSignal(false)
 
   async function handleLeave() {

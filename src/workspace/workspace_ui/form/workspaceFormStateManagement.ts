@@ -6,7 +6,7 @@ import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
 import { handleGenerate } from "#src/utils/valibot/handleSchema.ts"
@@ -344,15 +344,15 @@ function createActions(
 ): WorkspaceFormActions {
   const actions: WorkspaceFormActions = {}
   if (mode === formMode.add) {
-    const addMutation = createMutation(api.workspace.workspaceCreateMutation)
+    const addMutation = mutationCreate(api.workspace.workspaceCreateMutation)
     actions.create = async (data) => createAction(data, addMutation, navigate)
   }
   if (mode === formMode.edit) {
-    const editMutation = createMutation(api.workspace.workspaceEditMutation)
+    const editMutation = mutationCreate(api.workspace.workspaceEditMutation)
     actions.edit = async (data) => editAction(data, workspaceHandle, mode, editMutation, navigate)
   }
   if (mode === formMode.remove) {
-    const deleteMutation = createMutation(api.workspace.workspaceDeleteMutation)
+    const deleteMutation = mutationCreate(api.workspace.workspaceDeleteMutation)
     actions.delete = async () => removeAction(workspaceHandle, mode, deleteMutation, navigate)
   }
   return actions

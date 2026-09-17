@@ -7,7 +7,7 @@ import { type Language, language } from "#src/app/i18n/language.ts"
 import { languageSignalGet } from "#src/app/i18n/languageSignal.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import type { DocOrgInvitation, IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 import {
   type OrgInvitationFormField,
   orgInvitationFormConfig,
@@ -19,7 +19,7 @@ import {
 } from "#src/org/invitation_ui/form/orgInvitationFormLocalStorage.ts"
 import { urlOrgInvitationList } from "#src/org/invitation_url/urlOrgInvitation.ts"
 import { type OrgRole, orgRole } from "#src/org/org_model_field/orgRole.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
@@ -63,22 +63,21 @@ function createOrgInvitationErrorState(): OrgInvitationFormErrorState {
 export type OrgInvitationFormStateManagement = {
   mode: FormMode
   isSubmitting: SignalObject<boolean>
-  serverState: SignalObject<DocOrgInvitation>
+  serverState: SignalObject<OrgInvitationModel>
   state: OrgInvitationFormState
   errors: OrgInvitationFormErrorState
   hasErrors: () => boolean
   fillTestData: () => void
-  loadData: (data: DocOrgInvitation) => void
+  loadData: (data: OrgInvitationModel) => void
   validateOnChange: (field: OrgInvitationFormField) => Scheduled<[value: string]>
   handleSubmit: (e: SubmitEvent) => Promise<void>
   debouncedSave: () => void
 }
 
-function createEmptyDocOrgInvitation(): DocOrgInvitation {
+function createEmptyOrgInvitation(): OrgInvitationModel {
   const now = new Date()
   const iso = now.toISOString()
   return {
-    _id: "" as IdOrgInvitation,
     orgHandle: "",
     invitedName: "",
     invitedEmail: "",
@@ -90,7 +89,6 @@ function createEmptyDocOrgInvitation(): DocOrgInvitation {
     emailSendAmount: 0,
     createdAt: iso,
     updatedAt: iso,
-    _creationTime: now.getMilliseconds(),
   }
 }
 
@@ -108,10 +106,10 @@ export function orgInvitationFormStateManagement(
   mode: FormMode,
   orgHandle: string,
   invitationCode?: string,
-  orgInvitation?: DocOrgInvitation,
+  orgInvitation?: OrgInvitationModel,
 ): OrgInvitationFormStateManagement {
   const actions: OrgInvitationFormActions = createActions(mode, orgHandle, invitationCode)
-  const serverState = createSignalObject(createEmptyDocOrgInvitation())
+  const serverState = createSignalObject(createEmptyOrgInvitation())
   const isSubmitting = createSignalObject(false)
   const state = createOrgInvitationFormState()
 
@@ -130,7 +128,7 @@ export function orgInvitationFormStateManagement(
     isSubmitting,
     serverState,
     state,
-    loadData: (data: DocOrgInvitation) => loadData(data, serverState, state),
+    loadData: (data: OrgInvitationModel) => loadData(data, serverState, state),
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
@@ -144,8 +142,8 @@ export function orgInvitationFormStateManagement(
 }
 
 function loadData(
-  data: DocOrgInvitation,
-  serverState: SignalObject<DocOrgInvitation>,
+  data: OrgInvitationModel,
+  serverState: SignalObject<OrgInvitationModel>,
   state: OrgInvitationFormState,
 ): void {
   serverState.set(data)
@@ -210,7 +208,7 @@ function validateFieldResult(field: OrgInvitationFormField, value: string | Lang
 async function handleSubmit(
   e: SubmitEvent,
   isSubmitting: SignalObject<boolean>,
-  serverState: SignalObject<DocOrgInvitation>,
+  serverState: SignalObject<OrgInvitationModel>,
   state: OrgInvitationFormState,
   errors: OrgInvitationFormErrorState,
   actions: OrgInvitationFormActions,
@@ -298,14 +296,14 @@ function createActions(
 ): OrgInvitationFormActions {
   const actions: OrgInvitationFormActions = {}
   if (mode === formMode.add) {
-    const addMutation = createMutation(api.org.orgInvitation20InitMutation)
+    const addMutation = mutationCreate(api.org.orgInvitation20InitMutation)
     actions.add = async (data) => addAction(data, orgHandle, addMutation)
   }
   if (mode === formMode.edit) {
     // Edit functionality not implemented for invitations yet
   }
   if (mode === formMode.remove) {
-    const resendAction = createMutation(api.org.orgInvitation60DismissMutation)
+    const resendAction = mutationCreate(api.org.orgInvitation60DismissMutation)
     actions.remove = async () => removeAction(orgHandle, invitationCode, resendAction)
   }
   return actions

@@ -15,7 +15,7 @@ import {
 } from "#src/org/invitation_ui/view/orgInvitationStatus.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
-import { createMutation } from "#src/utils/convex_client/createMutation.ts"
+import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
@@ -83,7 +83,7 @@ function Right(p: OrgInvitationCardProps) {
 
 function OrgInvitationActions(p: OrgInvitationCardProps) {
   const resendAction = createAction(api.org.orgInvitation30ResendAction)
-  const dismissAction = createMutation(api.org.orgInvitation60DismissMutation)
+  const dismissAction = mutationCreate(api.org.orgInvitation60DismissMutation)
 
   async function resendClick() {
     const allowResendingIn = allowEmailResendingInSeconds(

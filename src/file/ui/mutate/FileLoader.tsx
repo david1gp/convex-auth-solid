@@ -10,7 +10,7 @@ import type { HasFileId } from "#src/file/model_field/HasFileId.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { resultHasData } from "#src/utils/result/resultHasData.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -22,7 +22,7 @@ export interface FileLoaderProps extends HasFileId, MayHaveClass {
 export interface FileComponentProps extends HasFileModel, MayHaveClass {}
 
 export function FileLoader(p: FileLoaderProps) {
-  const getDataQuery = createQuery(api.file.fileGetQuery, {
+  const getDataQuery = queryCreate(api.file.fileGetQuery, {
     token: userTokenGet(),
     fileId: p.fileId,
   })

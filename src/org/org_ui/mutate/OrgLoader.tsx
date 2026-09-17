@@ -8,7 +8,7 @@ import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
-import { createQuery } from "#src/utils/convex_client/createQuery.ts"
+import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { resultHasData } from "#src/utils/result/resultHasData.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
@@ -20,7 +20,7 @@ export interface OrgLoaderProps extends HasOrgHandle, MayHaveClass {
 export interface OrgComponentProps extends HasOrgModel, MayHaveClass {}
 
 export function OrgLoader(p: OrgLoaderProps) {
-  const getDataQuery = createQuery(api.org.orgGetQuery, {
+  const getDataQuery = queryCreate(api.org.orgGetQuery, {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
