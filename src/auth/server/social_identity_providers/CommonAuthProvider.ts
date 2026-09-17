@@ -1,6 +1,6 @@
 import * as a from "valibot"
 import { loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
-import { valibotFieldToConvexValidator } from "#src/utils/convex/valibotToConvex.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 const commonAuthProviderDataSchema = {
   providerId: a.string(),
@@ -27,6 +27,12 @@ const oidcAuthProviderSchema = a.object({
   ...commonAuthProviderDataSchema,
 })
 
+const commonAuthProviderArgsFields = {
+  provider: a.enum(loginProvider),
+  issuer: a.optional(a.string()),
+  ...commonAuthProviderDataSchema,
+} as const
+
 export const commonAuthProviderSchema = a.union([
   legacyAuthProviderSchema,
   devAuthProviderSchema,
@@ -35,7 +41,7 @@ export const commonAuthProviderSchema = a.union([
 
 export type CommonAuthProvider = a.InferOutput<typeof commonAuthProviderSchema>
 
-export const commonAuthProviderValidator = valibotFieldToConvexValidator(commonAuthProviderSchema)
+export const commonAuthProviderValidator = valibotToConvex(commonAuthProviderArgsFields)
 
 export function getUserNameFromCommonAuthProvider(
   user: Pick<CommonAuthProvider, "givenName" | "familyName" | "username" | "email">,
