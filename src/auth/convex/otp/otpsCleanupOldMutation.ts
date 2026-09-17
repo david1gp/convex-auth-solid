@@ -12,7 +12,7 @@ export async function otpCleanupOldFn(ctx: MutationCtx): Promise<{ deleted: numb
   const oldCodes = await ctx.db
     .query("authOtps")
     .filter((q) => q.lt(q.field("createdAt"), oneDayAgo))
-    .collect()
+    .take(100)
 
   let deletedCount = 0
   for (const code of oldCodes) {
