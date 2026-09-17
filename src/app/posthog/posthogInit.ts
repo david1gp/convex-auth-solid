@@ -58,16 +58,3 @@ export function posthogInit(session?: UserSession) {
 
   posthog.init(idResult.data, config, name)
 }
-
-export function posthogIdentify(session: UserSession) {
-  if (!enablePosthog()) {
-    return
-  }
-  const user = session.profile
-  const distinctId = user.email ?? user.username ?? user.userId
-  posthog.identify(distinctId, user)
-}
-
-export function posthogReset() {
-  posthog.reset()
-}

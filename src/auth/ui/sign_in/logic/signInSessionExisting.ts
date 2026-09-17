@@ -1,4 +1,4 @@
-import { posthogIdentify } from "#src/app/posthog/posthog.ts"
+import { posthogIdentify } from "#src/app/posthog/posthogIdentify.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
 
