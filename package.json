@@ -28,6 +28,8 @@
     "convex:dev": "export CI=1 && clear && bun run convex dev --env-file=.env.development",
     "convex:logs:development": "bun ./node_modules/convex/bin/main.js logs --env-file .env.development",
     "convex:logs:production": "bun ./node_modules/convex/bin/main.js logs --env-file .env.production",
+    "convex:env:upload:development": "bash ops/convex/preview.bash env",
+    "convex:env:upload:production": "bash ops/convex/production.bash env",
     "convex:dev:dev": "export CI=1 && clear && convex dev --local",
     "convex:dev:test": "export CI=1 && convex dev --local --once",
     "convex:test": "export CI=1 && convex dev --local --once",
