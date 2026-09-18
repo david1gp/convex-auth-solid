@@ -1,5 +1,6 @@
+import { useLocation } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
-import { accessBlocked } from "#src/app/layout/accessUnlocked.ts"
+import { appMembershipAccessIsBlocked } from "#src/app/layout/appMembershipAccessIsBlocked.ts"
 import { LayoutWrapperConvex } from "#src/app/layout/LayoutWrapperConvex.tsx"
 import { AccessBlocked } from "#src/auth/ui/locked/AccessBlocked.tsx"
 import { SignInPageLoader } from "#src/auth/ui/sign_in/page/SignInPageLoader.tsx"
@@ -12,13 +13,14 @@ export interface LayoutWrapperAppProps extends MayHaveChildren, MayHaveTitle {}
 
 export function LayoutWrapperApp(p: LayoutWrapperAppProps) {
   userSessionsSignalRegisterHandler()
+  const location = useLocation()
 
   return (
     <Switch>
       <Match when={!userSessionSignal.get()}>
         <SignInPageLoader />
       </Match>
-      <Match when={accessBlocked(userSessionSignal.get())}>
+      <Match when={appMembershipAccessIsBlocked(userSessionSignal.get(), location().pathname)}>
         <AccessBlocked />
       </Match>
       <Match when={true}>

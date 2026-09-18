@@ -82,10 +82,10 @@ function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
   const workspaceHandle = () => invitationData()?.workspaceHandle ?? ""
 
   const getWorkspace = createQueryCached(
-    queryCreate(api.workspace.workspaceGetQuery, {
+    queryCreate(api.workspace.workspaceGetQuery, () => ({
       token: userTokenGet(),
       workspaceHandle: workspaceHandle(),
-    }),
+    })),
     "workspaceGetQuery" + "/" + workspaceHandle(),
     a.any(),
   )
