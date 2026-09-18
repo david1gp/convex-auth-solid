@@ -21,7 +21,7 @@ export async function updateUserFromAuthProviderFn(
 
   const userName = getUserNameFromCommonAuthProvider(authProvider, user.name || "Updated User")
   const userImage = authProvider.image ?? user.image
-  const userEmail = authProvider.email ?? user.email
+  const userEmail = authProvider.email || user.email
 
   // Only update if at least one field has changed
   const nameChanged = userName !== user.name

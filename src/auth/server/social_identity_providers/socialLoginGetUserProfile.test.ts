@@ -1,0 +1,95 @@
+import { expect, test } from "bun:test"
+import { githubOauthTokenRootUrl } from "#src/auth/server/social_identity_providers/getGithubOathToken.ts"
+import { githubOauthUserProfileRootUrl } from "#src/auth/server/social_identity_providers/getGithubUserProfile.ts"
+import { microsoftOauthTokenRootUrl } from "#src/auth/server/social_identity_providers/getMicrosoftOauthToken.ts"
+import { microsoftOauthUserProfileRootUrl } from "#src/auth/server/social_identity_providers/getMicrosoftUserProfile.ts"
+import { socialLoginGetUserProfile } from "#src/auth/server/social_identity_providers/socialLoginGetUserProfile.ts"
+
+test("the development social provider omits its unavailable email", async () => {
+  const result = await socialLoginGetUserProfile.dev("dev-user")
+
+  expect(result.success).toBe(true)
+  if (result.success) expect(result.data).not.toHaveProperty("email")
+})
+
+test("GitHub and Microsoft omit profiles without an email", async () => {
+  await withEnvironment(
+    {
+      GITHUB_CLIENT_SECRET: "github-secret",
+      PUBLIC_GITHUB_CLIENT_ID: "github-client",
+      MICROSOFT_CLIENT_SECRET: "microsoft-secret",
+      PUBLIC_MICROSOFT_CLIENT_ID: "microsoft-client",
+      PUBLIC_BASE_URL_API: "https://api.example.test",
+    },
+    async () => {
+      const result = await withFetch(
+        async (input) => {
+          const url = String(input)
+          if (url.startsWith(githubOauthTokenRootUrl)) return new Response("access_token=github-token")
+          if (url === githubOauthUserProfileRootUrl) {
+            return Response.json({
+              login: "github-user",
+              id: 123,
+              avatar_url: "",
+              name: "GitHub User",
+              email: null,
+              created_at: "2026-09-18T00:00:00.000Z",
+              updated_at: "2026-09-18T00:00:00.000Z",
+            })
+          }
+          if (url === microsoftOauthTokenRootUrl) return new Response("access_token=microsoft-token")
+          if (url === microsoftOauthUserProfileRootUrl) {
+            return Response.json({
+              id: "microsoft-user",
+              displayName: "Microsoft User",
+              givenName: "Microsoft",
+              surname: "User",
+              mail: null,
+              userPrincipalName: "microsoft-user@example.test",
+            })
+          }
+          return new Response("not found", { status: 404 })
+        },
+        async () => {
+          const githubResult = await socialLoginGetUserProfile.github("github-code")
+          const microsoftResult = await socialLoginGetUserProfile.microsoft("microsoft-code")
+          return { githubResult, microsoftResult }
+        },
+      )
+
+      expect(result.githubResult.success).toBe(true)
+      expect(result.microsoftResult.success).toBe(true)
+      if (result.githubResult.success) expect(result.githubResult.data).not.toHaveProperty("email")
+      if (result.microsoftResult.success) expect(result.microsoftResult.data).not.toHaveProperty("email")
+    },
+  )
+})
+
+async function withFetch<T>(
+  implementation: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
+  callback: () => Promise<T>,
+) {
+  const previous = globalThis.fetch
+  globalThis.fetch = Object.assign(implementation, { preconnect: previous.preconnect })
+  try {
+    return await callback()
+  } finally {
+    globalThis.fetch = previous
+  }
+}
+
+async function withEnvironment<T>(values: Record<string, string>, callback: () => Promise<T>): Promise<T> {
+  const previousValues = new Map<string, string | undefined>()
+  for (const [name, value] of Object.entries(values)) {
+    previousValues.set(name, process.env[name])
+    process.env[name] = value
+  }
+  try {
+    return await callback()
+  } finally {
+    for (const [name, value] of previousValues) {
+      if (value === undefined) delete process.env[name]
+      else process.env[name] = value
+    }
+  }
+}

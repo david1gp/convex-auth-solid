@@ -1,6 +1,7 @@
 import * as a from "valibot"
 import { loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 
 const commonAuthProviderDataSchema = {
   providerId: a.string(),
@@ -8,7 +9,7 @@ const commonAuthProviderDataSchema = {
   familyName: a.string(),
   image: a.string(),
   username: a.string(),
-  email: a.string(),
+  email: a.optional(emailSchema),
 } as const
 
 const legacyAuthProviderSchema = a.object({

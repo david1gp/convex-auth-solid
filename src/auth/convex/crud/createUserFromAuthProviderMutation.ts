@@ -55,7 +55,7 @@ export async function createUserFromAuthProviderFn(
   const toCreate = {
     name: userName,
     image: authProvider.image,
-    email: authProvider.email,
+    ...(authProvider.email && { email: authProvider.email }),
     role: userRole.user,
     createdAt: iso,
     updatedAt: iso,

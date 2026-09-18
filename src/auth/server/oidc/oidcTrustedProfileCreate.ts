@@ -13,6 +13,6 @@ export function oidcTrustedProfileCreate(
     familyName: claims.family_name ?? "",
     image: claims.picture ?? "",
     username: claims.preferred_username ?? "",
-    email: claims.email_verified === true ? (claims.email ?? "") : "",
+    ...(claims.email_verified === true && claims.email ? { email: claims.email } : {}),
   }
 }

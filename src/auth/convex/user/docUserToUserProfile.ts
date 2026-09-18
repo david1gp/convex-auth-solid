@@ -9,10 +9,11 @@ export function docUserToUserProfile(u: DocUser, orgHandle?: string, orgRole?: O
     _creationTime,
     // filter private fields
     hashedPassword,
+    email,
     // rest
     ...rest
   } = u
-  const profile: UserProfile = { userId: _id as string, ...rest }
+  const profile: UserProfile = { userId: _id as string, ...rest, ...(email ? { email } : {}) }
   if (orgHandle) profile.orgHandle = orgHandle
   if (orgRole) profile.orgRole = orgRole
   return profile

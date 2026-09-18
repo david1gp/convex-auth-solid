@@ -66,7 +66,7 @@ function convertGithubProfile({ id, email, avatar_url, login, name }: GitHubUser
     familyName: "",
     image: avatar_url,
     // email
-    email: email ?? "",
+    ...(email ? { email } : {}),
     username: login,
   }
 }
@@ -113,8 +113,6 @@ async function oauthDev(code: string): PromiseResult<CommonAuthProvider> {
     givenName: code,
     familyName: "",
     image: "",
-    // email
-    email: "",
     username: "",
   }
   // data
@@ -151,8 +149,7 @@ function convertMicrosoftProfile(p: MicrosoftUserProfile): CommonAuthProvider {
     givenName: p.givenName ?? "",
     familyName: p.surname ?? "",
     image: "",
-    // email
-    email: p.mail ?? "",
+    ...(p.mail ? { email: p.mail } : {}),
     username: p.displayName,
   }
 }
