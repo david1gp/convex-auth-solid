@@ -42,6 +42,11 @@ describe("searchFilterStateCreate", () => {
     expect(new URL(currentUrl).searchParams.get("search")).toBe("next")
     expect(new URL(currentUrl).searchParams.get("type")).toBe("strategy")
 
+    state!.searchSignal.set("")
+    await new Promise((resolve) => setTimeout(resolve, 15))
+    expect(state!.debouncedSearch()).toBe("")
+    expect(new URL(currentUrl).searchParams.has("search")).toBe(false)
+
     currentUrl = "https://example.test/resources?search=back&type=report"
     for (const listener of listeners) listener()
     expect(state!.searchSignal.get()).toBe("back")

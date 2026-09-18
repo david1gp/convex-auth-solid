@@ -73,7 +73,7 @@ function ResourceListLoader() {
     <>
       <div class="flex flex-wrap gap-2 justify-between mb-4">
         <div class="flex flex-wrap gap-2 items-center">
-          <SearchInput searchSignal={searchState.searchSignal} searchState={searchState} debounceMs={0} />
+          <SearchInput searchSignal={searchState.searchSignal} searchState={searchState} />
           <SearchFilterPopover filterSignal={searchState.filterSignal} filterFields={resourceFilterFields} />
           <SearchFilterButtons filterSignal={searchState.filterSignal} filterFields={resourceFilterFields} />
         </div>
@@ -87,7 +87,7 @@ function ResourceListLoader() {
         <Match when={resultHasErrorMessage(pagination.page())}>
           {(errorMessage) => <ErrorPage title={errorMessage()} />}
         </Match>
-        <Match when={resultHasNoResources(pagination.page())}>
+        <Match when={resultHasNoResources(pagination.page(), pagination.canPrevious())}>
           <NoResources />
         </Match>
         <Match when={getResourcesPage(pagination.page())}>
@@ -129,9 +129,12 @@ function getResourcesPage(
   return result.data
 }
 
-function resultHasNoResources(result: Result<PaginationResultType<ResourceModel>> | undefined): boolean {
+function resultHasNoResources(
+  result: Result<PaginationResultType<ResourceModel>> | undefined,
+  canPrevious: boolean,
+): boolean {
   const page = getResourcesPage(result)
-  return page !== null && page.page.length <= 0
+  return page !== null && page.isDone && !canPrevious && page.page.length <= 0
 }
 
 function ResourceList(p: ResourceListProps) {
