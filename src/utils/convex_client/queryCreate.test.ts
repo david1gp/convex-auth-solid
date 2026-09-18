@@ -1,9 +1,15 @@
-import { describe, expect, test } from "bun:test"
+import { describe, expect, mock, test } from "bun:test"
 import type { FunctionReference } from "convex/server"
-import { createRoot, getOwner } from "solid-js"
 import { createResult, createResultError } from "#result"
-import { ConvexContext } from "./convexContext.ts"
-import { queryCreate } from "./queryCreate.ts"
+
+const solidJsClientPath = "solid-js/dist/solid.js"
+type SolidJsModule = typeof import("solid-js")
+const solidJsClient = (await import(solidJsClientPath)) as unknown as SolidJsModule
+mock.module("solid-js", () => solidJsClient)
+const { createRoot, createSignal, getOwner } = solidJsClient
+const { ConvexContext } = await import("./convexContext.ts")
+const { queryCreate } = await import("./queryCreate.ts")
+mock.restore()
 
 type QueryUpdate = (value: unknown) => void
 
@@ -47,6 +53,35 @@ describe("queryCreate", () => {
     const rawResult = { value: "raw" }
     client.update?.(rawResult)
     expect(getResult?.()).toBe(rawResult)
+    dispose()
+  })
+
+  test("resubscribes when reactive arguments change", async () => {
+    const client = new FakeConvexClient()
+    const subscriptions: unknown[] = []
+    client.onUpdate = (_query, args, update) => {
+      subscriptions.push(args)
+      client.update = update
+      return () => undefined
+    }
+
+    let setWorkspaceHandle: ((value: string) => void) | undefined
+    const dispose = createRoot((disposeRoot) => {
+      const owner = getOwner()!
+      owner.context = { [ConvexContext.id]: client }
+      const [workspaceHandle, setHandle] = createSignal("")
+      setWorkspaceHandle = setHandle
+      queryCreate(query, () => ({ workspaceHandle: workspaceHandle() }))
+      return disposeRoot
+    })
+
+    expect(subscriptions).toEqual([{ workspaceHandle: "" }])
+    setWorkspaceHandle?.("e2e-increment1-workspace-20260918-0859")
+    await Promise.resolve()
+    expect(subscriptions).toEqual([
+      { workspaceHandle: "" },
+      { workspaceHandle: "e2e-increment1-workspace-20260918-0859" },
+    ])
     dispose()
   })
 })
