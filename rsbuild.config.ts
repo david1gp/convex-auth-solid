@@ -4,7 +4,7 @@ import { pluginSolid } from "@rsbuild/plugin-solid"
 
 export default defineConfig({
   server: {
-    port: 3016,
+    port: Number(process.env.PREVIEW_WEB_PORT ?? 3016),
     strictPort: true,
   },
   html: {
