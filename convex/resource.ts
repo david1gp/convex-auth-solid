@@ -2,6 +2,7 @@ import { resourceCreateInternalMutation, resourceCreateMutation } from "#src/res
 import {
   resourceDeleteInternalMutation,
   resourceDeleteMutation,
+  resourceFileRelationshipsDeleteInternalMutation,
   resourceOrgResourcesDeleteInternalMutation,
 } from "#src/resource/convex/resourceDeleteMutation.ts"
 import {
@@ -36,6 +37,7 @@ export {
   resourceFileAddMutation,
   resourceFileListInternalQuery,
   resourceFileListQuery,
+  resourceFileRelationshipsDeleteInternalMutation,
   resourceFileRemoveInternalMutation,
   resourceFileRemoveMutation,
   // Resource Files Get

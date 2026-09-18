@@ -64,6 +64,9 @@ export async function resourceEditFn(ctx: MutationCtx, args: ResourceEditValidat
   if (!resource) {
     return createResultError(op, "Resource not found", resourceId)
   }
+  if (resource.deletedAt) {
+    return createResultError(op, "Resource is being deleted", resourceId)
+  }
 
   // Update file assignments if provided
   if (fileIds !== undefined) {

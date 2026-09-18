@@ -52,13 +52,16 @@ export async function resourceListFn(
 function resourceQuery(ctx: QueryCtx, args: ResourceListValidatorType) {
   const searchText = args.searchText?.trim()
   if (searchText) {
-    return ctx.db.query("resources").withSearchIndex("search", (q) => {
-      let filter = q.search("searchText", searchText)
-      if (args.type) filter = filter.eq("type", args.type)
-      if (args.visibility) filter = filter.eq("visibility", args.visibility)
-      if (args.l) filter = filter.eq("language", args.l)
-      return filter
-    })
+    return ctx.db
+      .query("resources")
+      .withSearchIndex("search", (q) => {
+        let filter = q.search("searchText", searchText)
+        if (args.type) filter = filter.eq("type", args.type)
+        if (args.visibility) filter = filter.eq("visibility", args.visibility)
+        if (args.l) filter = filter.eq("language", args.l)
+        return filter
+      })
+      .filter((q) => q.eq(q.field("deletedAt"), undefined))
   }
 
   const filters = [args.type, args.visibility, args.l].filter((value) => value !== undefined)
@@ -69,10 +72,10 @@ function resourceQuery(ctx: QueryCtx, args: ResourceListValidatorType) {
       : args.l
         ? ctx.db.query("resources").withIndex("language", (q) => q.eq("language", args.l))
         : ctx.db.query("resources")
-  if (filters.length === 0) return resources
+  if (filters.length === 0) return resources.filter((q) => q.eq(q.field("deletedAt"), undefined))
 
   return resources.filter((q) => {
-    const expressions = []
+    const expressions = [q.eq(q.field("deletedAt"), undefined)]
     if (args.type) expressions.push(q.eq(q.field("type"), args.type))
     if (args.visibility) expressions.push(q.eq(q.field("visibility"), args.visibility))
     if (args.l) expressions.push(q.eq(q.field("language"), args.l))
@@ -127,5 +130,5 @@ async function resourceModelForOrgResource(ctx: QueryCtx, orgResource: DocOrgRes
     .query("resources")
     .withIndex("resourceId", (q) => q.eq("resourceId", orgResource.resourceId))
     .unique()
-  return resource ? resourceDocToModel(resource) : null
+  return resource && !resource.deletedAt ? resourceDocToModel(resource) : null
 }

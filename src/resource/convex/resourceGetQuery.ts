@@ -42,15 +42,15 @@ export async function resourceGetFn(
 }
 
 export async function resourceGetDocFn(ctx: QueryCtx, resourceId: string): Promise<DocResource | null> {
-  const op = "resourceGetFn"
-  return await ctx.db
+  const resource = await ctx.db
     .query("resources")
     .withIndex("resourceId", (q) => q.eq("resourceId", resourceId))
     .unique()
+  if (resource?.deletedAt) return null
+  return resource
 }
 
 export async function resourceGetModelFn(ctx: QueryCtx, resourceId: string): Promise<ResourceModel | null> {
-  const op = "resourceGetFn"
   const got = await resourceGetDocFn(ctx, resourceId)
   if (!got) return got
   return resourceDocToModel(got)

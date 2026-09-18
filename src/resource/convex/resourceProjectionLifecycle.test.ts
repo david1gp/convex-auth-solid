@@ -2,7 +2,7 @@ import { expect, test } from "bun:test"
 import type { MutationCtx } from "#convex/_generated/server.js"
 import { orgCleanupIfEmptyFn } from "#src/org/org_convex/orgCleanupIfEmptyMutation.ts"
 import { orgDeleteMutationFn } from "#src/org/org_convex/orgDeleteMutation.ts"
-import { resourceDeleteFn } from "./resourceDeleteMutation.ts"
+import { resourceDeleteFn, resourceOrgResourcesDeleteInternalMutation } from "./resourceDeleteMutation.ts"
 import { resourceEditOrgResourceProjectionsInternalMutation as resourceEditProjectionMutation } from "./resourceEditMutation.ts"
 import { resourceSearchProjectionBackfillInternalMutation } from "./resourceSearchProjectionBackfillMutation.ts"
 
@@ -48,6 +48,11 @@ function createCtx(options: {
             if (table === "orgs") return resources[0]
             return undefined
           },
+          first: async () => {
+            if (table === "resources") return resources[0]
+            if (table === "orgs") return resources[0]
+            return undefined
+          },
           collect: async () => {
             if (table === "orgMembers") return members
             return []
@@ -84,6 +89,10 @@ function createCtx(options: {
       },
       patch: async (table: string, id: string, patch: Record<string, unknown>) => {
         patched.push([table, id, patch])
+        if (table === "resources") {
+          const resource = resources.find((entry) => entry._id === id)
+          if (resource) Object.assign(resource, patch)
+        }
       },
     },
     scheduler: {
@@ -96,8 +105,8 @@ function createCtx(options: {
   return { ctx, deleted, patched, scheduled }
 }
 
-test("resource deletion removes org resource projections", async () => {
-  const { ctx, deleted, scheduled } = createCtx({
+test("resource deletion schedules organization projection cleanup after file cleanup", async () => {
+  const { ctx, deleted, patched, scheduled } = createCtx({
     resources: [{ _id: "resource-doc", resourceId: "resource-1" }],
     pages: {
       orgResources: {
@@ -110,25 +119,53 @@ test("resource deletion removes org resource projections", async () => {
 
   await resourceDeleteFn(ctx, { resourceId: "resource-1" })
 
+  expect(deleted).toEqual([])
+  expect(patched).toEqual([["resources", "resource-doc", { deletedAt: expect.any(String) }]])
+  expect(scheduled).toHaveLength(1)
+  expect(scheduled[0]?.args).toMatchObject({
+    resourceId: "resource-1",
+    paginationOpts: { cursor: null },
+  })
+})
+
+test("final organization projection cleanup deletes the tombstoned resource after its last page", async () => {
+  const { ctx, deleted, scheduled } = createCtx({
+    resources: [{ _id: "resource-doc", resourceId: "resource-1", deletedAt: "2026-09-18T00:00:00.000Z" }],
+    pages: {
+      orgResources: {
+        page: [{ _id: "org-resource-doc", resourceId: "resource-1" }],
+        isDone: true,
+        continueCursor: "cursor-done",
+      },
+    },
+  })
+
+  await mutationHandler(resourceOrgResourcesDeleteInternalMutation)(ctx, {
+    resourceDocId: "resource-doc",
+    resourceId: "resource-1",
+    paginationOpts: { numItems: 50, cursor: null },
+  })
+
   expect(deleted).toEqual([
     ["orgResources", "org-resource-doc"],
     ["resources", "resource-doc"],
   ])
-  expect(scheduled).toHaveLength(1)
-  expect(scheduled[0]?.args).toMatchObject({
-    resourceId: "resource-1",
-    paginationOpts: { cursor: "cursor-next" },
-  })
+  expect(scheduled).toHaveLength(0)
 })
 
-test("idempotent resource deletion also removes orphan projections", async () => {
-  const { ctx, deleted } = createCtx({
+test("idempotent resource deletion schedules orphan projection cleanup after file cleanup", async () => {
+  const { ctx, deleted, scheduled } = createCtx({
     orgResources: [{ _id: "orphan-org-resource", resourceId: "missing-resource" }],
   })
 
   await resourceDeleteFn(ctx, { resourceId: "missing-resource" })
 
-  expect(deleted).toEqual([["orgResources", "orphan-org-resource"]])
+  expect(deleted).toEqual([])
+  expect(scheduled).toHaveLength(1)
+  expect(scheduled[0]?.args).toMatchObject({
+    resourceId: "missing-resource",
+    paginationOpts: { cursor: null },
+  })
 })
 
 test("organization deletion removes its resource projections", async () => {

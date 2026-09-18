@@ -1,6 +1,8 @@
 import { v } from "convex/values"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
-import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
+import { createResult, createResultError, type PromiseResult } from "#result"
+import { resourceGetDocFn } from "#src/resource/convex/resourceGetQuery.ts"
+import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
@@ -15,7 +17,7 @@ export const resourceFileAddValidator = v.object(resourceFileAddFields)
 
 export const resourceFileAddMutation = mutation({
   args: createTokenValidator(resourceFileAddFields),
-  handler: async (ctx, args) => authMutationWrapResult(ctx, args, resourceFileAddMutationFn),
+  handler: async (ctx, args) => authMutationResult(ctx, args, resourceFileAddMutationFn),
 })
 
 export const resourceFileAddInternalMutation = internalMutation({
@@ -26,12 +28,16 @@ export const resourceFileAddInternalMutation = internalMutation({
 export async function resourceFileAddMutationFn(
   ctx: MutationCtx,
   args: MeetingOrgAddMutationValidatorType,
-): Promise<null> {
+): PromiseResult<null> {
   const op = "resourceFileAddMutationFn"
+  const resource = await resourceGetDocFn(ctx, args.resourceId)
+  if (!resource) {
+    return createResultError(op, "Resource not found", args.resourceId)
+  }
   await ctx.db.insert("resourceFiles", {
     resourceId: args.resourceId,
     fileId: args.fileId,
     createdAt: nowIso(),
   })
-  return null
+  return createResult(null)
 }

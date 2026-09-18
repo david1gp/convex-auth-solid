@@ -105,10 +105,18 @@ async function removeAction(
     toastAdd({ title: "!resourceId", variant: toastVariant.error })
     return
   }
-  const deleteResult = await deleteMutation({
-    token: userTokenGet(),
-    resourceId,
-  })
+  let deleteResult: Result<null> | undefined
+  try {
+    deleteResult = await deleteMutation({
+      token: userTokenGet(),
+      resourceId,
+    })
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error("removeAction", error)
+    toastAdd({ title: errorMessage, variant: toastVariant.error })
+    return
+  }
   if (!deleteResult.success) {
     console.error(deleteResult)
     toastAdd({ title: deleteResult.errorMessage, variant: toastVariant.error })

@@ -45,6 +45,14 @@ export async function resourceCreateFn(ctx: MutationCtx, args: ResourceCreateVal
   }
   const { fileIds, ...rest } = parse.output
 
+  const existingResource = await ctx.db
+    .query("resources")
+    .withIndex("resourceId", (q) => q.eq("resourceId", rest.resourceId))
+    .first()
+  if (existingResource) {
+    return createResultError(op, "Resource already exists", rest.resourceId)
+  }
+
   const now = nowIso()
   const searchProjection = resourceSearchProjection(rest)
   const id = await ctx.db.insert("resources", {
