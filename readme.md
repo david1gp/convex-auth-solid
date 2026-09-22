@@ -121,6 +121,8 @@ OIDC_CLIENT_ID="replace-with-client-id"
 OIDC_CLIENT_SECRET="replace-with-client-secret"
 # Optional; defaults to: openid profile email
 OIDC_SCOPES="openid profile email"
+# Optional Zitadel role synchronization (server-only); adds the Zitadel per-role scopes
+OIDC_ZITADEL_ORG_ID="380716752838852623"
 ```
 
 `OIDC_ISSUER` must be an HTTPS issuer without a query string or fragment.
@@ -173,11 +175,18 @@ Callback:     https://api.example.com/api/auth/oidc/callback
 Client ID:    <zitadel-client-id>
 Secret:       <zitadel-client-secret>  # confidential clients only
 Scopes:       openid profile email
+Organization: 380716752838852623
 ```
 
 The issuer must be the same value advertised by Zitadel discovery. Keep client
 credentials in the Convex/server environment and configure Zitadel's access
-policies separately from this generic OIDC integration.
+policies separately from this generic OIDC integration. When
+`OIDC_ZITADEL_ORG_ID` is set, the server requests
+`urn:zitadel:iam:org:project:role:user`,
+`urn:zitadel:iam:org:project:role:admin`, and
+`urn:zitadel:iam:org:project:role:dev`, then maps verified current-project roles
+for that organization as `dev > admin > user`; missing or non-matching roles map
+to `user`. Without it, OIDC keeps the generic behavior.
 
 ### Convex integration notes
 

@@ -3,6 +3,7 @@ import { createResult, createResultError, type PromiseResult } from "#result"
 import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFromAuthProviderMutation.ts"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
 import { linkAuthToExistingUserFn } from "#src/auth/convex/crud/linkAuthToExistingUserFn.ts"
+import { userRoleSyncFromAuthProviderFn } from "#src/auth/convex/crud/userRoleSyncFromAuthProviderFn.ts"
 import type { DocAuthAccount } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
 import { createUserSessionTimes, type UserSession } from "#src/auth/model/UserSession.ts"
@@ -40,11 +41,14 @@ export async function findOrCreateUserFn(
     const user = await ctx.db.get("users", existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
     if (user.deletedAt) return createResultError(op, "User account has been deleted")
-    const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, user._id)
-    const userProfile = docUserToUserProfile(user, orgHandle, orgRole)
+    const syncedUserResult = await userRoleSyncFromAuthProviderFn(ctx, user._id, authData)
+    if (!syncedUserResult.success) return syncedUserResult
+    const syncedUser = syncedUserResult.data
+    const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, syncedUser._id)
+    const userProfile = docUserToUserProfile(syncedUser, orgHandle, orgRole)
     return createResult({
       profile: userProfile,
-      hasPw: !!user.hashedPassword,
+      hasPw: !!syncedUser.hashedPassword,
       signedInMethod: authData.provider,
       ...createUserSessionTimes(),
     })

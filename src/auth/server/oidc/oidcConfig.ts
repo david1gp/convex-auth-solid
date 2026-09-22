@@ -3,4 +3,5 @@ export type OidcConfig = {
   clientId: string
   clientSecret?: string
   scopes: readonly string[]
+  zitadelOrgId?: string
 }

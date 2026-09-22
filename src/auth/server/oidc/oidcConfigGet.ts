@@ -4,6 +4,11 @@ import { privateEnvVariableName } from "#src/app/env/privateEnvVariableName.ts"
 import type { OidcConfig } from "#src/auth/server/oidc/oidcConfig.ts"
 
 const oidcDefaultScopes = ["openid", "profile", "email"] as const
+const oidcZitadelRoleScopes = [
+  "urn:zitadel:iam:org:project:role:user",
+  "urn:zitadel:iam:org:project:role:admin",
+  "urn:zitadel:iam:org:project:role:dev",
+] as const
 const oidcScopeCharacterPattern = /^[\u0021\u0023-\u005B\u005D-\u007E]+$/u
 
 export function oidcConfigGet(): Result<OidcConfig> {
@@ -26,7 +31,16 @@ export function oidcConfigGet(): Result<OidcConfig> {
   }
 
   const clientSecret = process.env[privateEnvVariableName.OIDC_CLIENT_SECRET] || undefined
-  return createResult({ issuer, clientId, clientSecret, scopes: [...new Set(scopes)] })
+  const zitadelOrgId = process.env[privateEnvVariableName.OIDC_ZITADEL_ORG_ID]?.trim() || undefined
+  if (zitadelOrgId && !/^\d+$/u.test(zitadelOrgId)) return createResultError(op, "invalid OIDC_ZITADEL_ORG_ID")
+  const configuredScopes = zitadelOrgId ? [...scopes, ...oidcZitadelRoleScopes] : scopes
+  return createResult({
+    issuer,
+    clientId,
+    clientSecret,
+    scopes: [...new Set(configuredScopes)],
+    ...(zitadelOrgId ? { zitadelOrgId } : {}),
+  })
 }
 
 function oidcHttpsUrlIsValid(value: string): boolean {

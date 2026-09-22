@@ -1,9 +1,11 @@
 import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import type { UserRole } from "#src/auth/model_field/userRole.ts"
 import type { OidcIdTokenClaims } from "#src/auth/server/oidc/oidcIdTokenClaimsSchema.ts"
 import type { CommonAuthProvider } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 
 export function oidcTrustedProfileCreate(
   claims: OidcIdTokenClaims,
+  role?: UserRole,
 ): Extract<CommonAuthProvider, { provider: typeof loginProvider.oidc }> {
   return {
     provider: loginProvider.oidc,
@@ -14,5 +16,6 @@ export function oidcTrustedProfileCreate(
     image: claims.picture ?? "",
     username: claims.preferred_username ?? "",
     ...(claims.email_verified === true && claims.email ? { email: claims.email } : {}),
+    ...(role ? { role } : {}),
   }
 }

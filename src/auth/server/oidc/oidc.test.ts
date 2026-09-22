@@ -32,6 +32,7 @@ test("oidcConfigGet reads server-only OIDC settings and defaults scopes", async 
       OIDC_CLIENT_ID: "client-id",
       OIDC_CLIENT_SECRET: undefined,
       OIDC_SCOPES: undefined,
+      OIDC_ZITADEL_ORG_ID: undefined,
     },
     async () => {
       const result = oidcConfigGet()
@@ -49,7 +50,38 @@ test("oidcConfigGet reads server-only OIDC settings and defaults scopes", async 
   )
 
   await withEnvironment(
-    { OIDC_ISSUER: "https://issuer.example", OIDC_CLIENT_ID: "client-id", OIDC_SCOPES: "profile email" },
+    {
+      OIDC_ISSUER: "https://issuer.example",
+      OIDC_CLIENT_ID: "client-id",
+      OIDC_CLIENT_SECRET: undefined,
+      OIDC_SCOPES: "openid profile custom-scope urn:zitadel:iam:org:project:role:user openid",
+      OIDC_ZITADEL_ORG_ID: "380716752838852623",
+    },
+    async () => {
+      const result = oidcConfigGet()
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.zitadelOrgId).toBe("380716752838852623")
+        expect(result.data.scopes).toEqual([
+          "openid",
+          "profile",
+          "custom-scope",
+          "urn:zitadel:iam:org:project:role:user",
+          "urn:zitadel:iam:org:project:role:admin",
+          "urn:zitadel:iam:org:project:role:dev",
+        ])
+      }
+    },
+  )
+
+  await withEnvironment(
+    {
+      OIDC_ISSUER: "https://issuer.example",
+      OIDC_CLIENT_ID: "client-id",
+      OIDC_SCOPES: "profile email",
+      OIDC_ZITADEL_ORG_ID: undefined,
+    },
     async () => {
       expect(oidcConfigGet().success).toBe(false)
     },
@@ -166,7 +198,12 @@ test("oidcIdTokenVerify validates a signed ID token with discovered JWKS", async
   const jwk = await exportJWK(publicKey)
   const currentDate = new Date("2026-09-14T00:00:00.000Z")
   const nowSeconds = Math.floor(currentDate.getTime() / 1000)
-  const idToken = await new SignJWT({ nonce: "nonce-value", email: "user@example.com", email_verified: true })
+  const idToken = await new SignJWT({
+    nonce: "nonce-value",
+    email: "user@example.com",
+    email_verified: true,
+    "urn:zitadel:iam:org:project:roles": [{ admin: { "380716752838852623": "contentoren.example" } }],
+  })
     .setProtectedHeader({ alg: "RS256", kid: "test-key" })
     .setIssuer(oidcConfig.issuer)
     .setSubject("subject-1")
@@ -186,6 +223,9 @@ test("oidcIdTokenVerify validates a signed ID token with discovered JWKS", async
     expect(result.data.iss).toBe(oidcConfig.issuer)
     expect(result.data.sub).toBe("subject-1")
     expect(result.data.email).toBe("user@example.com")
+    expect(result.data["urn:zitadel:iam:org:project:roles"]).toEqual([
+      { admin: { "380716752838852623": "contentoren.example" } },
+    ])
   }
 
   const nonceFailure = await withFetch(fetchJwks, () =>

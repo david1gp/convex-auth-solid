@@ -9,6 +9,7 @@ import { oidcIdTokenVerify } from "#src/auth/server/oidc/oidcIdTokenVerify.ts"
 import { oidcTokenExchange } from "#src/auth/server/oidc/oidcTokenExchange.ts"
 import { oidcTransactionCookie } from "#src/auth/server/oidc/oidcTransactionCookie.ts"
 import { oidcTrustedProfileCreate } from "#src/auth/server/oidc/oidcTrustedProfileCreate.ts"
+import { oidcZitadelRoleGet } from "#src/auth/server/oidc/oidcZitadelRoleGet.ts"
 
 export async function signInViaOidcCallbackRequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "signInViaOidcCallbackRequestHandler"
@@ -71,7 +72,12 @@ export async function signInViaOidcCallbackRequestHandler(ctx: ActionCtx, reques
     return oidcRequestErrorResponseCreate(op, "could not verify OIDC ID token", 400, clearCookieHeaders)
   }
 
-  const providerInfo = oidcTrustedProfileCreate(claimsResult.data)
+  const providerInfo = oidcTrustedProfileCreate(
+    claimsResult.data,
+    configResult.data.zitadelOrgId
+      ? oidcZitadelRoleGet(claimsResult.data["urn:zitadel:iam:org:project:roles"], configResult.data.zitadelOrgId)
+      : undefined,
+  )
   let sessionResult: Awaited<ReturnType<ActionCtx["runMutation"]>>
   try {
     sessionResult = await ctx.runMutation(internal.auth.signInUsingSocialAuth3InternalMutation, providerInfo)

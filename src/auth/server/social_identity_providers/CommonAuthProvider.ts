@@ -1,5 +1,6 @@
 import * as a from "valibot"
 import { loginProvider, socialLoginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { userRoleSchema } from "#src/auth/model_field/userRole.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 
@@ -26,11 +27,13 @@ const oidcAuthProviderSchema = a.object({
   provider: a.literal(loginProvider.oidc),
   issuer: a.pipe(a.string(), a.minLength(1)),
   ...commonAuthProviderDataSchema,
+  role: a.optional(userRoleSchema),
 })
 
 const commonAuthProviderArgsFields = {
   provider: a.enum(loginProvider),
   issuer: a.optional(a.string()),
+  role: a.optional(userRoleSchema),
   ...commonAuthProviderDataSchema,
 } as const
 

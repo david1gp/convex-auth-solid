@@ -1,5 +1,7 @@
 import * as a from "valibot"
 
+const oidcZitadelProjectRolesSchema = a.array(a.record(a.string(), a.record(a.string(), a.string())))
+
 const oidcIdTokenClaimsSchema = a.object({
   iss: a.pipe(a.string(), a.minLength(1)),
   sub: a.pipe(a.string(), a.minLength(1)),
@@ -32,6 +34,7 @@ const oidcIdTokenClaimsSchema = a.object({
   c_hash: a.optional(a.string()),
   s_hash: a.optional(a.string()),
   jti: a.optional(a.string()),
+  "urn:zitadel:iam:org:project:roles": a.optional(oidcZitadelProjectRolesSchema),
 })
 
 export type OidcIdTokenClaims = a.InferOutput<typeof oidcIdTokenClaimsSchema>

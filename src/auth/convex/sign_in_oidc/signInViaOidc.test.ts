@@ -5,6 +5,7 @@ import { addHttpRoutesAuth } from "#src/auth/convex/addHttpRoutesAuth.ts"
 import { findOrCreateUserFn } from "#src/auth/convex/crud/findOrCreateUserFn.ts"
 import { createHonoDispatcher } from "#src/auth/convex/headers/createHonoDispatcher.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
+import { urlSignInViaOidc } from "#src/auth/url/urlSignInViaOidc.ts"
 import { base64urlDecodeObject } from "#utils/url/base64url.js"
 
 const issuer = "https://issuer.example.test"
@@ -43,10 +44,7 @@ test("OIDC routes complete a verified session through Hono", async () => {
       async () => {
         const dispatcher = createHonoDispatcher()
         addHttpRoutesAuth(dispatcher)
-        const startResponse = await dispatcher.fetch(
-          new Request(`${apiBaseUrl}/api/auth/oidc/start?returnTo=%2Fgroups%3Ffrom%3Doidc`),
-          ctx,
-        )
+        const startResponse = await dispatcher.fetch(new Request(urlSignInViaOidc("/groups?from=oidc#top")), ctx)
         expect(startResponse.status).toBe(302)
 
         const authorizationUrl = new URL(startResponse.headers.get("location") ?? "")
@@ -69,6 +67,7 @@ test("OIDC routes complete a verified session through Hono", async () => {
         expect(location.origin).toBe(appBaseUrl)
         expect(location.pathname).toBe("/groups")
         expect(location.searchParams.get("from")).toBe("oidc")
+        expect(location.hash).toBe("#top")
         expect(base64urlDecodeObject(location.searchParams.get("userSession") ?? "").success).toBe(true)
         expect(mutationCalls).toEqual([
           {
@@ -264,6 +263,7 @@ async function withEnvironment<T>(callback: () => Promise<T>): Promise<T> {
     "OIDC_CLIENT_ID",
     "OIDC_CLIENT_SECRET",
     "OIDC_SCOPES",
+    "OIDC_ZITADEL_ORG_ID",
     "PUBLIC_BASE_URL_API",
     "PUBLIC_BASE_URL_APP",
     "PUBLIC_BASE_URL_SITE",
@@ -274,6 +274,7 @@ async function withEnvironment<T>(callback: () => Promise<T>): Promise<T> {
   process.env.OIDC_CLIENT_ID = clientId
   delete process.env.OIDC_CLIENT_SECRET
   delete process.env.OIDC_SCOPES
+  delete process.env.OIDC_ZITADEL_ORG_ID
   process.env.PUBLIC_BASE_URL_API = apiBaseUrl
   process.env.PUBLIC_BASE_URL_APP = appBaseUrl
   process.env.PUBLIC_BASE_URL_SITE = appBaseUrl

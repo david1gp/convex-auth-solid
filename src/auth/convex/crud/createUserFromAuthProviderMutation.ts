@@ -56,7 +56,7 @@ export async function createUserFromAuthProviderFn(
     name: userName,
     image: authProvider.image,
     ...(authProvider.email && { email: authProvider.email }),
-    role: userRole.user,
+    role: authProvider.provider === loginProvider.oidc ? (authProvider.role ?? userRole.user) : userRole.user,
     createdAt: iso,
     updatedAt: iso,
   } as const satisfies WithoutSystemFields<DocUser>
