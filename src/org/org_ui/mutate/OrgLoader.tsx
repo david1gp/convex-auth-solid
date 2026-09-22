@@ -4,6 +4,7 @@ import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { HasOrgModel } from "#src/org/org_model/HasOrgModel.ts"
+import { orgSchema } from "#src/org/org_model/orgSchema.ts"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
@@ -24,7 +25,7 @@ export function OrgLoader(p: OrgLoaderProps) {
     token: userTokenGet(),
     orgHandle: p.orgHandle,
   })
-  const getData = createQueryCached(getDataQuery, "orgGetQuery" + "/" + p.orgHandle, a.any())
+  const getData = createQueryCached(getDataQuery, "orgGetQuery" + "/" + p.orgHandle, a.nullable(orgSchema))
   createEffect(() => {
     console.log("OrgLoader", getData())
   })

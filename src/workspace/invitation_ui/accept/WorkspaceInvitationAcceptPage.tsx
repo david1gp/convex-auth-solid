@@ -16,6 +16,7 @@ import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import { workspaceInvitationSchema } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
+import { workspaceSchema } from "#src/workspace/workspace_model/workspaceSchema.ts"
 import type { HasWorkspaceInvitationCode } from "#src/workspace/workspace_model_field/HasWorkspaceInvitationCode.ts"
 import { workspaceRoleGetText } from "#src/workspace/workspace_model_field/workspaceRoleGetText.ts"
 import { WorkspaceViewInformation } from "#src/workspace/workspace_ui/view/WorkspaceViewInformation.tsx"
@@ -87,7 +88,7 @@ function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
       workspaceHandle: workspaceHandle(),
     })),
     "workspaceGetQuery" + "/" + workspaceHandle(),
-    a.any(),
+    a.nullable(workspaceSchema),
   )
 
   return (
