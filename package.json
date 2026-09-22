@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "cc": "clear && bun --env-file=.env.development run convex codegen",
-    "t": "clear && bun run tsgo",
+    "t": "clear && bun run tsc",
     "type-check": "bun tsc --noEmit",
     "deploy": "bun run frontend:deploy",
     "frontend:deploy": "bun run rsbuild:deploy",
