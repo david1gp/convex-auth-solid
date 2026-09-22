@@ -9,6 +9,7 @@ export const pageRouteAuth = {
   signIn: "/sign-in",
   signInEnterOtp: "/sign-in-enter-otp",
   signInError: "/sign-in-error",
+  sso: "/sso",
   userProfileMe: "/profile",
   userProfileMeEdit: "/profile/edit",
   userProfileMeChangePassword: "/profile/change-password",

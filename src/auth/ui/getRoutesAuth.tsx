@@ -18,6 +18,11 @@ const SignInErrorPage = lazy(() =>
     default: c.SignInErrorPage,
   })),
 )
+const SsoPage = lazy(() =>
+  import("#src/sso/ui/AllgroupsSsoPage.tsx").then((c) => ({
+    default: c.AllgroupsSsoPage,
+  })),
+)
 const RegistrationConfirmEmailPage = lazy(() =>
   import("#src/auth/ui/sign_up/email/SignUpConfirmEmailPage.tsx").then((c) => ({
     default: c.SignUpConfirmEmailPage,
@@ -71,6 +76,7 @@ export function getRoutesAuth(): RouteObject[] {
     signIn: SignInPage,
     signInEnterOtp: SignInViaEmailEnterOtpPage,
     signInError: SignInErrorPage,
+    sso: SsoPage,
     userProfileMe: UserProfileMePage,
     userProfileMeEdit: UserProfileMeEditPage,
     userProfileMeChangePassword: UserProfileMeChangePasswordPage,

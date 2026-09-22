@@ -13,4 +13,5 @@ export const pageNameAuth = {
   userProfileMeImage: "userProfileMeImage",
   userProfileMeDelete: "userProfileMeDelete",
   userProfileView: "userProfileView",
+  sso: "sso",
 } as const
