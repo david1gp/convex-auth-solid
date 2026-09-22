@@ -1,9 +1,10 @@
-import { v } from "convex/values"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { handleSchema } from "#src/utils/valibot/handleSchema.ts"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import type { DocUser } from "#src/auth/convex/IdUser.ts"
 
 export const userGetByUsernameQuery = query({
-  args: { username: v.string() },
+  args: valibotToConvex({ username: handleSchema }),
   handler: async (ctx: QueryCtx, args) => userGetByNicknameQueryFn(ctx, args.username),
 })
 

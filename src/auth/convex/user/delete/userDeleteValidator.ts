@@ -1,10 +1,12 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const userDeleteFields = {
-  email: v.optional(v.string()),
-} as const
+export const userDeleteFields = valibotToConvex({
+  email: a.optional(a.string()),
+})
 
 export const userDeleteValidatorInternal = v.object({
   ...userDeleteFields,
@@ -13,9 +15,7 @@ export const userDeleteValidatorInternal = v.object({
 
 export type UserDeleteValidatorInternalType = typeof userDeleteValidatorInternal.type
 
-export const userDeleteFieldsPublic = {
-  email: v.optional(v.string()),
-} as const
+export const userDeleteFieldsPublic = userDeleteFields
 
 export const userDeleteValidatorPublic = createTokenValidator(userDeleteFieldsPublic)
 

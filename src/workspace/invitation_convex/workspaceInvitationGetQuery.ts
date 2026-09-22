@@ -1,15 +1,17 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docWorkspaceInvitationToModel } from "#src/workspace/invitation_convex/docWorkspaceInvitationToModel.ts"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const workspaceInvitationGetFields = {
-  workspaceHandle: v.optional(v.string()),
-  invitationCode: v.string(),
-  updatedAt: v.optional(v.string()),
-} as const
+export const workspaceInvitationGetFields = valibotToConvex({
+  workspaceHandle: a.optional(a.string()),
+  invitationCode: a.string(),
+  updatedAt: a.optional(a.string()),
+})
 
 export type WorkspaceInvitationGetValidatorType = typeof workspaceInvitationGetValidator.type
 export const workspaceInvitationGetValidator = v.object(workspaceInvitationGetFields)

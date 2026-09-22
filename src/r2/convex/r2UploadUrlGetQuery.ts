@@ -1,13 +1,14 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import type { PromiseResult } from "#result"
 import { r2ApiGetUploadUrl } from "#src/r2/api_r2/r2ApiGetUploadUrl.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const r2UploadUrlGetFields = {
-  fileId: v.string(),
-} as const
+const r2UploadUrlGetSchemaFields = { fileId: a.string() } as const
+export const r2UploadUrlGetFields = valibotToConvex(r2UploadUrlGetSchemaFields)
 
 export type R2UploadUrlGetValidatorType = typeof r2UploadUrlGetValidator.type
 export const r2UploadUrlGetValidator = v.object(r2UploadUrlGetFields)

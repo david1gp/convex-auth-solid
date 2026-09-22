@@ -1,14 +1,14 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type OrgCleanupIfEmptyValidatorType = typeof orgCleanupIfEmptyValidator.type
 
-export const orgCleanupIfEmptyFields = {
-  orgHandle: v.string(),
-} as const
+export const orgCleanupIfEmptyFields = valibotToConvex({ orgHandle: a.string() })
 
 export const orgCleanupIfEmptyValidator = v.object(orgCleanupIfEmptyFields)
 

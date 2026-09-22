@@ -1,13 +1,19 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import type { QueryCtx } from "#convex/_generated/server.js"
 import type { DocAuthAccount } from "#src/auth/convex/IdUser.ts"
 import { loginProviderValidator } from "#src/auth/model_field/loginMethodValidator.ts"
 import { loginProvider } from "#src/auth/model_field/socialLoginProvider.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+
+const findUserByAuthAccountFields = valibotToConvex({
+  issuer: a.optional(a.string()),
+  providerId: a.string(),
+})
 
 export const findUserByAuthAccountValidator = v.object({
   provider: loginProviderValidator,
-  issuer: v.optional(v.string()),
-  providerId: v.string(),
+  ...findUserByAuthAccountFields,
 })
 
 export async function findUserByAuthAccountFn(

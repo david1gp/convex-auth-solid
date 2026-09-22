@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import { type ActionCtx, action } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
@@ -7,13 +8,14 @@ import { stt1 } from "#src/utils/i18n/stt.ts"
 import { workspaceInvitation31SendFn } from "#src/workspace/invitation_convex/workspaceInvitation31SendInternalAction.ts"
 import { allowEmailResendingInSeconds } from "#src/workspace/invitation_model/allowEmailResendingInSeconds.ts"
 import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type WorkspaceInvitationResendValidatorType = typeof workspaceInvitation30ResendValidator.type
 
-export const workspaceInvitationResendFields = {
-  token: v.string(),
-  invitationCode: v.string(),
-} as const
+export const workspaceInvitationResendFields = valibotToConvex({
+  token: a.string(),
+  invitationCode: a.string(),
+})
 
 export const workspaceInvitation30ResendValidator = v.object(workspaceInvitationResendFields)
 

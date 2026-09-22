@@ -5,11 +5,17 @@ import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
 import { otpSaveFn } from "#src/auth/convex/otp/otpSaveFn.ts"
 import { otpPurpose } from "#src/auth/model_field/otpPurpose.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
+
+const signInViaEmailSaveCodeFields = {
+  email: emailSchema,
+} as const
+
+const signInViaEmailSaveCodeConvexFields = valibotToConvex(signInViaEmailSaveCodeFields)
 
 export type SignInViaEmailSaveCodeValidatorType = typeof signInViaEmailSaveCodeValidator.type
-export const signInViaEmailSaveCodeValidator = v.object({
-  email: v.string(),
-})
+export const signInViaEmailSaveCodeValidator = v.object(signInViaEmailSaveCodeConvexFields)
 
 export const signInViaEmail2InternalMutation = internalMutation({
   args: signInViaEmailSaveCodeValidator,

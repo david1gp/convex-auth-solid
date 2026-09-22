@@ -1,37 +1,39 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import {
   type GenerateEmailOrgInvitationProps,
   sendEmailOrgInvitation,
 } from "#src/auth/convex/email/sendEmailOrgInvitation.ts"
 import type { OrgInvitationDataModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
 import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.ts"
-import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
+import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type OrgInvitationSendEmailValidatorType = typeof orgInvitationSendEmailValidator.type
 
-export const orgInvitationSendEmailFields = {
+export const orgInvitationSendEmailFields = valibotToConvex({
   // token: v.string(),
   // id
-  orgHandle: v.string(),
+  orgHandle: a.string(),
   // data
-  invitationCode: v.string(),
+  invitationCode: a.string(),
   // invite
-  invitedName: v.string(),
-  invitedEmail: v.string(),
-  l: languageValidator,
+  invitedName: a.string(),
+  invitedEmail: a.string(),
+  l: languageSchema,
   // by
-  invitedByName: v.string(),
-  invitedByEmail: v.string(),
+  invitedByName: a.string(),
+  invitedByEmail: a.string(),
   // org
-  orgName: v.string(),
-  role: orgRoleValidator,
-}
+  orgName: a.string(),
+  role: orgInvitationDataSchemaFields.role,
+})
 
 export const orgInvitationSendEmailValidator = v.object(orgInvitationSendEmailFields)
 

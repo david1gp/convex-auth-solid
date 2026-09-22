@@ -16,7 +16,7 @@ import { nowIso } from "#utils/date/nowIso.js"
 export const resourceEditFields = {
   ...valibotToConvex(resourceDataSchemaFields),
   // Files
-  fileIds: v.optional(v.array(v.string())),
+  ...valibotToConvex({ fileIds: a.optional(a.array(a.string())) }),
 }
 export const resourceEditValidator = v.object(resourceEditFields)
 export type ResourceEditValidatorType = typeof resourceEditValidator.type
@@ -32,7 +32,7 @@ export const resourceEditInternalMutation = internalMutation({
 })
 
 const resourceEditOrgResourceProjectionsFields = {
-  resourceId: v.string(),
+  ...valibotToConvex({ resourceId: a.string() }),
   paginationOpts: paginationOptsValidator,
 } as const
 

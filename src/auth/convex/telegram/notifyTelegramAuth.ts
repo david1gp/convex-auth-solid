@@ -1,14 +1,20 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type ActionCtx, internalAction } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { envEnvModeResult } from "#src/app/env/public/envEnvModeResult.ts"
 import { sendTelegramMessageAuth } from "#src/auth/convex/telegram/sendTelegramMessageTechnical.ts"
 import { userSessionValidator } from "#src/auth/model/userSessionValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { envMode } from "#ui/env/envMode.ts"
+
+const notifyTelegramAuthFields = valibotToConvex({
+  operationName: a.string(),
+})
 
 export const notifyTelegramAuthValidator = v.object({
   userSession: userSessionValidator,
-  operationName: v.string(),
+  ...notifyTelegramAuthFields,
 })
 
 export type NotifyTelegramAuthValidatorType = typeof notifyTelegramAuthValidator.type

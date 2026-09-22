@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
@@ -9,12 +10,11 @@ import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.
 import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutationTokenToUserId.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { createUserIdValidator } from "#src/utils/convex_backend/createUserIdValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
-export const workspaceLeaveFields = {
-  workspaceHandle: v.string(),
-} as const
+export const workspaceLeaveFields = valibotToConvex({ workspaceHandle: a.string() })
 
 export const workspaceLeaveValidator = createUserIdValidator(workspaceLeaveFields)
 

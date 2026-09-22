@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { fileDocToModel } from "#src/file/convex/fileDocToModel.ts"
@@ -7,11 +8,14 @@ import type { FileModel } from "#src/file/model/FileModel.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const fileGetFields = {
-  fileId: v.string(),
-  updatedAt: v.optional(v.string()),
+const fileGetSchemaFields = {
+  fileId: a.string(),
+  updatedAt: a.optional(a.string()),
 } as const
+
+export const fileGetFields = valibotToConvex(fileGetSchemaFields)
 
 export type FileGetValidatorType = typeof fileGetValidator.type
 export const fileGetValidator = v.object(fileGetFields)

@@ -1,4 +1,4 @@
-import { v } from "convex/values"
-import { workspaceRole } from "#src/workspace/workspace_model_field/workspaceRole.ts"
+import { valibotFieldToConvexValidator } from "#src/utils/convex/valibotToConvex.ts"
+import { workspaceRoleSchema } from "#src/workspace/workspace_model_field/workspaceRole.ts"
 
-export const workspaceRoleValidator = v.union(v.literal(workspaceRole.member), v.literal(workspaceRole.guest))
+export const workspaceRoleValidator = valibotFieldToConvexValidator(workspaceRoleSchema)

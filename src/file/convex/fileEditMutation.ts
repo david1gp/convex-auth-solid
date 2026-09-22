@@ -1,22 +1,26 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
-import { languageOrNoneValidator } from "#src/app/i18n/language.ts"
+import { languageOrNoneSchema } from "#src/app/i18n/language.ts"
 import { fileGetByIdFn } from "#src/file/convex/fileGetByIdFn.ts"
 import type { DocFile } from "#src/file/convex/IdFile.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type FileEditValidatorType = typeof fileEditValidator.type
 
-export const fileEditFields = {
-  fileId: v.string(),
+const fileEditSchemaFields = {
+  fileId: a.string(),
   // data
-  displayName: v.optional(v.string()),
-  language: v.optional(languageOrNoneValidator),
+  displayName: a.optional(a.string()),
+  language: a.optional(languageOrNoneSchema),
 } as const
+
+export const fileEditFields = valibotToConvex(fileEditSchemaFields)
 
 export const fileEditValidator = v.object(fileEditFields)
 

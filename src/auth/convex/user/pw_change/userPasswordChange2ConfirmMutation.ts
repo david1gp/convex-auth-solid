@@ -1,4 +1,3 @@
-import { v } from "convex/values"
 import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createError, type PromiseResult } from "#result"
@@ -19,12 +18,13 @@ import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAnd
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
 import { createUserIdValidator } from "#src/utils/convex_backend/createUserIdValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
-const userPasswordChange2ConfirmFieldsBase = {
-  newPassword: v.string(),
-  confirmationCode: v.string(),
-} as const
+const userPasswordChange2ConfirmFieldsBase = valibotToConvex({
+  newPassword: passwordSchema,
+  confirmationCode: a.string(),
+})
 
 export const userPasswordChange2ConfirmValidatorInternal = createUserIdValidator(userPasswordChange2ConfirmFieldsBase)
 export type UserPasswordChangeConfirmTypeInternal = typeof userPasswordChange2ConfirmValidatorInternal.type

@@ -4,6 +4,7 @@ import { createError, createResult, type Result } from "#result"
 import { type UserProfile, userProfileSchema } from "#src/auth/model/UserProfile.ts"
 import { type LoginMethod, loginMethodSchema } from "#src/auth/model_field/loginMethod.ts"
 import { tokenValidDurationInDays } from "#src/auth/server/jwt_token/tokenValidDurationInDays.ts"
+import { tokenSchema } from "#src/utils/valibot/tokenSchema.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 
 export type UserSession = {
@@ -16,7 +17,7 @@ export type UserSession = {
 }
 
 export const userSessionSchema = a.object({
-  token: a.string(),
+  token: tokenSchema,
   profile: userProfileSchema,
   hasPw: a.boolean(),
   signedInMethod: loginMethodSchema,

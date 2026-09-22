@@ -1,12 +1,14 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import { resourceGetModelFn } from "#src/resource/convex/resourceGetQuery.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
-import { resourceTypeValidator } from "#src/resource/model_field/resourceType.ts"
-import { visibilityValidator } from "#src/resource/model_field/visibility.ts"
+import { resourceTypeSchema } from "#src/resource/model_field/resourceType.ts"
+import { visibilitySchema } from "#src/resource/model_field/visibility.ts"
 import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
@@ -14,11 +16,13 @@ import type { PaginationResultType } from "#src/utils/convex_backend/paginationR
 export type OrgResourceListValidatorType = typeof orgResourceListValidator.type
 
 export const orgResourceListFields = {
-  orgHandle: v.string(),
-  l: v.optional(languageValidator),
-  type: v.optional(resourceTypeValidator),
-  visibility: v.optional(visibilityValidator),
-  searchText: v.optional(v.string()),
+  ...valibotToConvex({
+    orgHandle: a.string(),
+    l: a.optional(languageSchema),
+    type: a.optional(resourceTypeSchema),
+    visibility: a.optional(visibilitySchema),
+    searchText: a.optional(a.string()),
+  }),
   paginationOpts: paginationOptsValidator,
 } as const
 

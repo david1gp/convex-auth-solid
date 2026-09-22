@@ -1,12 +1,12 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const workspaceHandleAvailableFields = {
-  workspaceHandle: v.string(),
-} as const
+export const workspaceHandleAvailableFields = valibotToConvex({ workspaceHandle: a.string() })
 
 export type WorkspaceHandleAvailableValidatorType = typeof workspaceHandleAvailableValidator.type
 export const workspaceHandleAvailableValidator = v.object(workspaceHandleAvailableFields)

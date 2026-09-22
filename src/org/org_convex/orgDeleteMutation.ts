@@ -1,18 +1,18 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
 import { vIdOrg } from "#src/org/org_convex/vIdOrg.ts"
 import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 
 export type OrgDeleteValidatorType = typeof orgDeleteValidator.type
 
-export const orgDeleteFields = {
-  orgHandle: v.string(),
-} as const
+export const orgDeleteFields = valibotToConvex({ orgHandle: a.string() })
 
 export const orgDeleteValidator = v.object(orgDeleteFields)
 
@@ -23,7 +23,7 @@ export const orgDeleteMutation = mutation({
 
 const orgResourceProjectionsDeleteFields = {
   orgId: v.optional(vIdOrg),
-  orgHandle: v.string(),
+  ...valibotToConvex({ orgHandle: a.string() }),
   paginationOpts: paginationOptsValidator,
 } as const
 

@@ -1,17 +1,20 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import type { DocKv } from "#src/file/kv/IdKv.ts"
 import { kvGetQueryFn2 } from "#src/file/kv/kvGetQuery.ts"
 import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type KvSetType = typeof kvSetValidator.type
 
-export const kvSetFields = {
-  key: v.string(),
-  data: v.string(),
-  updatedAt: v.optional(v.string()),
+const kvSetSchemaFields = {
+  key: a.string(),
+  data: a.string(),
+  updatedAt: a.optional(a.string()),
 } as const
+export const kvSetFields = valibotToConvex(kvSetSchemaFields)
 
 export const kvSetValidator = v.object(kvSetFields)
 

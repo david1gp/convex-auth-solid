@@ -1,16 +1,15 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { IdOrgMember } from "#src/org/member_convex/IdOrgMember.ts"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type OrgMemberDeleteValidatorType = typeof orgMemberDeleteValidator.type
 
-export const orgMemberDeleteFields = {
-  memberId: v.string(),
-  orgHandle: v.string(),
-} as const
+export const orgMemberDeleteFields = valibotToConvex({ memberId: a.string(), orgHandle: a.string() })
 
 export const orgMemberDeleteValidator = v.object(orgMemberDeleteFields)
 

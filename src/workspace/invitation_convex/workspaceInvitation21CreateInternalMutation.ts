@@ -1,20 +1,24 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
 import type { IdWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
-import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
-import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
+import {
+  workspaceInvitationDataSchemaFields,
+  workspaceInvitationStatus,
+} from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
-export const workspaceInvitationCreateDataFields = {
-  workspaceHandle: v.string(),
-  invitationCode: v.string(),
-  invitedEmail: v.string(),
-  role: workspaceRoleValidator,
-  invitedBy: v.string(),
-  status: v.literal(workspaceInvitationStatus.pending),
-  expiresAt: v.string(),
-} as const
+export const workspaceInvitationCreateDataFields = valibotToConvex({
+  workspaceHandle: workspaceInvitationDataSchemaFields.workspaceHandle,
+  invitationCode: a.string(),
+  invitedEmail: workspaceInvitationDataSchemaFields.invitedEmail,
+  role: workspaceInvitationDataSchemaFields.role,
+  invitedBy: a.string(),
+  status: a.literal(workspaceInvitationStatus.pending),
+  expiresAt: workspaceInvitationDataSchemaFields.expiresAt,
+})
 
 export const workspaceInvitationCreateMutationValidator = v.object(workspaceInvitationCreateDataFields)
 

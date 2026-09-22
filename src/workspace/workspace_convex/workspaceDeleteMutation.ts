@@ -1,13 +1,13 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type WorkspaceDeleteValidatorType = typeof workspaceDeleteValidator.type
 
-export const workspaceDeleteFields = {
-  workspaceHandle: v.string(),
-} as const
+export const workspaceDeleteFields = valibotToConvex({ workspaceHandle: a.string() })
 
 export const workspaceDeleteValidator = v.object(workspaceDeleteFields)
 

@@ -1,6 +1,4 @@
-import { v } from "convex/values"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 
-export const fieldsConvexCreatedAtUpdatedAt = {
-  createdAt: v.string(),
-  updatedAt: v.string(),
-} as const
+export const fieldsConvexCreatedAtUpdatedAt = valibotToConvex(fieldsSchemaCreatedAtUpdatedAt)

@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import type { PromiseResult } from "#result"
 import type { DocUser, IdUser } from "#src/auth/convex/IdUser.ts"
@@ -10,12 +11,13 @@ import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutatio
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.ts"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
-const userEmailChangeConfirmFieldsBase = {
-  newEmail: v.string(),
-  confirmationCode: v.string(),
-} as const
+const userEmailChangeConfirmFieldsBase = valibotToConvex({
+  newEmail: a.string(),
+  confirmationCode: a.string(),
+})
 
 export const userEmailChangeConfirmValidatorInternal = v.object({
   ...userEmailChangeConfirmFieldsBase,

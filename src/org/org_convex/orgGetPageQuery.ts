@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docOrgToModel } from "#src/org/org_convex/docOrgInvitationToModel.ts"
@@ -7,10 +8,9 @@ import { orgGetByHandleFn } from "#src/org/org_convex/orgGetByHandleFn.ts"
 import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const orgGetPageFields = {
-  orgHandle: v.string(),
-} as const
+export const orgGetPageFields = valibotToConvex({ orgHandle: a.string() })
 
 export type OrgGetPageValidatorType = typeof orgGetPageValidator.type
 export const orgGetPageValidator = v.object(orgGetPageFields)

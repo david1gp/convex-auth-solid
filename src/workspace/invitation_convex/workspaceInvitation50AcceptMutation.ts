@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
@@ -12,14 +13,15 @@ import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetU
 import { stt } from "#src/utils/i18n/stt.ts"
 import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type WorkspaceInvitationAcceptValidatorType = typeof workspaceInvitationAcceptValidator.type
 
-export const workspaceInvitationAcceptFields = {
-  token: v.string(),
-  workspaceHandle: v.optional(v.string()),
-  invitationCode: v.string(),
-}
+export const workspaceInvitationAcceptFields = valibotToConvex({
+  token: a.string(),
+  workspaceHandle: a.optional(a.string()),
+  invitationCode: a.string(),
+})
 
 export const workspaceInvitationAcceptValidator = v.object(workspaceInvitationAcceptFields)
 

@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import type { DocResource } from "#src/resource/convex/IdResource.ts"
@@ -6,11 +7,13 @@ import { resourceDocToModel } from "#src/resource/convex/resourceDocToModel.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const resourceGetFields = {
-  resourceId: v.string(),
-  updatedAt: v.optional(v.string()),
+const resourceGetSchemaFields = {
+  resourceId: a.string(),
+  updatedAt: a.optional(a.string()),
 } as const
+export const resourceGetFields = valibotToConvex(resourceGetSchemaFields)
 
 export type ResourceGetValidatorType = typeof resourceGetValidator.type
 export const resourceGetValidator = v.object(resourceGetFields)

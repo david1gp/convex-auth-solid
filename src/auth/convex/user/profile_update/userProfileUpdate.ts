@@ -1,17 +1,16 @@
-import { v } from "convex/values"
 import * as a from "valibot"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const userProfileUpdateSchema = a.object({
-  token: a.string(),
+const userProfileUpdateFieldsSchema = {
   name: a.optional(a.string()),
   image: a.optional(a.string()),
   bio: a.optional(a.string()),
   url: a.optional(a.string()),
+} as const
+
+export const userProfileUpdateSchema = a.object({
+  token: a.string(),
+  ...userProfileUpdateFieldsSchema,
 })
 
-export const userProfileUpdateFields = {
-  name: v.optional(v.string()),
-  image: v.optional(v.string()),
-  bio: v.optional(v.string()),
-  url: v.optional(v.string()),
-} as const
+export const userProfileUpdateFields = valibotToConvex(userProfileUpdateFieldsSchema)

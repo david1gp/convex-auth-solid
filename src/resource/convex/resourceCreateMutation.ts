@@ -15,7 +15,7 @@ export type ResourceCreateValidatorType = typeof resourceCreateValidator.type
 export const resourceCreateFields = {
   ...valibotToConvex(resourceDataSchemaFields),
   // Files
-  fileIds: v.optional(v.array(v.string())),
+  ...valibotToConvex({ fileIds: a.optional(a.array(a.string())) }),
 }
 
 export const resourceCreateValidator = v.object(resourceCreateFields)

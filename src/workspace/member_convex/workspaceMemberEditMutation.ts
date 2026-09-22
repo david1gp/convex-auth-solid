@@ -1,19 +1,21 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import type { DocWorkspaceMember, IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
-import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
+import { workspaceMemberDataSchemaFields } from "#src/workspace/member_model/WorkspaceMemberSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type WorkspaceMemberEditValidatorType = typeof workspaceMemberEditValidator.type
 
-export const workspaceMemberEditFields = {
-  memberId: v.string(),
-  workspaceHandle: v.string(),
-  role: v.optional(workspaceRoleValidator),
-} as const
+export const workspaceMemberEditFields = valibotToConvex({
+  memberId: a.string(),
+  workspaceHandle: workspaceMemberDataSchemaFields.workspaceHandle,
+  role: a.optional(workspaceMemberDataSchemaFields.role),
+})
 
 export const workspaceMemberEditValidator = v.object(workspaceMemberEditFields)
 

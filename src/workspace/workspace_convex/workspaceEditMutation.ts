@@ -4,22 +4,22 @@ import { internalMutation, type MutationCtx, mutation } from "#convex/_generated
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
-import { workspaceDataSchema } from "#src/workspace/workspace_model/workspaceSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { workspaceDataSchema, workspaceDataSchemaFields } from "#src/workspace/workspace_model/workspaceSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 import type { DocWorkspace } from "./IdWorkspace.js"
 
 export type WorkspaceEditValidatorType = typeof workspaceEditValidator.type
 
-export const workspaceEditValidator = v
-  .object({
-    workspaceHandle: v.string(),
-    // data
-    name: v.optional(v.string()),
-    description: v.optional(v.string()),
-    image: v.optional(v.string()),
-    url: v.optional(v.string()),
-  })
-  .partial()
+const workspaceEditSchemaFields = {
+  workspaceHandle: va.optional(workspaceDataSchemaFields.workspaceHandle),
+  name: va.optional(workspaceDataSchemaFields.name),
+  description: va.optional(workspaceDataSchemaFields.description),
+  image: va.optional(workspaceDataSchemaFields.image),
+  url: va.optional(workspaceDataSchemaFields.url),
+} as const
+
+export const workspaceEditValidator = v.object(valibotToConvex(workspaceEditSchemaFields))
 
 export const workspaceEditMutation = mutation({
   args: createTokenValidator(workspaceEditValidator.fields),

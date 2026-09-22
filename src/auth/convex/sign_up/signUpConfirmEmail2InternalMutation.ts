@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, createResult, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
@@ -8,13 +9,19 @@ import { loginMethod } from "#src/auth/model_field/loginMethod.ts"
 import { userRole } from "#src/auth/model_field/userRole.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
+const signUpConfirmEmailFields = {
+  email: emailSchema,
+  code: a.string(),
+} as const
+
+const signUpConfirmEmailConvexFields = valibotToConvex(signUpConfirmEmailFields)
+
 export type SignUpConfirmValidatorType = typeof signUpConfirmEmailValidator.type
-export const signUpConfirmEmailValidator = v.object({
-  email: v.string(),
-  code: v.string(),
-})
+export const signUpConfirmEmailValidator = v.object(signUpConfirmEmailConvexFields)
 
 export const signUpConfirmEmail2InternalMutation = internalMutation({
   args: signUpConfirmEmailValidator,

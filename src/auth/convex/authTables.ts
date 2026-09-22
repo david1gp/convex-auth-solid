@@ -1,24 +1,70 @@
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
+import * as a from "valibot"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
-import { loginMethodValidator, loginProviderValidator } from "#src/auth/model_field/loginMethodValidator.ts"
-import { otpPurposeValidator } from "#src/auth/model_field/otpPurpose.ts"
-import { userRoleValidator } from "#src/auth/model_field/userRoleValidator.ts"
-import { fieldsConvexCreatedAtUpdatedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAt.ts"
-import { fieldsConvexCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsConvexCreatedAtUpdatedAtDeletedAt.ts"
+import { userDataSchemaFields } from "#src/auth/model/userDataSchemaFields.ts"
+import { loginMethodSchema } from "#src/auth/model_field/loginMethod.ts"
+import { otpPurposeSchema } from "#src/auth/model_field/otpPurpose.ts"
+import { otpSchema } from "#src/auth/model_field/otpSchema.ts"
+import { loginProviderSchema } from "#src/auth/model_field/socialLoginProvider.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
+import { tokenSchema } from "#src/utils/valibot/tokenSchema.ts"
+import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
+
+const authUserDataSchemaFields = {
+  ...userDataSchemaFields,
+  hashedPassword: a.optional(a.string()),
+} as const
+
+const authAccountDataSchemaFields = {
+  provider: loginProviderSchema,
+  issuer: a.optional(a.string()),
+  providerAccountId: a.string(),
+} as const
+
+const authSessionDataSchemaFields = {
+  loginMethod: loginMethodSchema,
+  token: tokenSchema,
+  expiresAt: dateTimeSchema,
+} as const
+
+const authRateLimitDataSchemaFields = {
+  identifier: a.string(),
+  attemptsLeft: a.number(),
+  lastAttemptedAt: a.number(),
+} as const
+
+const authUserEmailRegistrationDataSchemaFields = {
+  email: emailSchema,
+  code: otpSchema,
+  name: userDataSchemaFields.name,
+  hashedPassword: a.optional(a.string()),
+  createdAt: dateTimeSchema,
+  consumedAt: a.optional(dateTimeSchema),
+} as const
+
+const authEmailLoginCodeDataSchemaFields = {
+  code: otpSchema,
+  email: emailSchema,
+  createdAt: dateTimeSchema,
+  consumedAt: a.optional(dateTimeSchema),
+} as const
+
+const authOtpDataSchemaFields = {
+  name: a.string(),
+  email: emailSchema,
+  code: otpSchema,
+  purpose: otpPurposeSchema,
+  createdAt: dateTimeSchema,
+  consumedAt: a.optional(dateTimeSchema),
+} as const
 
 export const authTables = {
   users: defineTable({
-    name: v.string(),
-    username: v.optional(v.string()),
-    image: v.optional(v.string()),
-    bio: v.optional(v.string()),
-    url: v.optional(v.string()),
-    email: v.optional(v.string()),
-    emailVerifiedAt: v.optional(v.string()),
-    hashedPassword: v.optional(v.string()),
-    role: userRoleValidator,
-    ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
+    ...valibotToConvex(authUserDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAtDeletedAt),
   })
     //
     .index("email", ["email"])
@@ -26,10 +72,8 @@ export const authTables = {
 
   authAccounts: defineTable({
     userId: vIdUser,
-    provider: loginProviderValidator,
-    issuer: v.optional(v.string()),
-    providerAccountId: v.string(),
-    ...fieldsConvexCreatedAtUpdatedAt,
+    ...valibotToConvex(authAccountDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
   })
     //
     .index("userIdAndProvider", ["userId", "provider"])
@@ -38,51 +82,34 @@ export const authTables = {
 
   authSessions: defineTable({
     userId: vIdUser,
-    loginMethod: v.union(loginMethodValidator),
-    token: v.string(),
-    expiresAt: v.string(),
-    ...fieldsConvexCreatedAtUpdatedAtDeletedAt,
+    ...valibotToConvex(authSessionDataSchemaFields),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAtDeletedAt),
   })
     //
     .index("userId", ["userId"]),
 
   authRateLimits: defineTable({
-    identifier: v.string(),
-    attemptsLeft: v.number(),
-    lastAttemptedAt: v.number(),
+    ...valibotToConvex(authRateLimitDataSchemaFields),
   })
     //
     .index("identifier", ["identifier"]),
 
   authUserEmailRegistrations: defineTable({
-    email: v.string(),
-    code: v.string(),
-    name: v.string(),
-    hashedPassword: v.optional(v.string()),
-    createdAt: v.string(),
-    consumedAt: v.optional(v.string()),
+    ...valibotToConvex(authUserEmailRegistrationDataSchemaFields),
   })
     //
     .index("emailCode", ["email", "code"]),
 
   authEmailLoginCodes: defineTable({
     userId: vIdUser,
-    code: v.string(),
-    email: v.string(),
-    createdAt: v.string(),
-    consumedAt: v.optional(v.string()),
+    ...valibotToConvex(authEmailLoginCodeDataSchemaFields),
   })
     //
     .index("emailCode", ["email", "code"]),
 
   authOtps: defineTable({
     userId: vIdUser,
-    name: v.string(),
-    email: v.string(),
-    code: v.string(),
-    purpose: otpPurposeValidator,
-    createdAt: v.string(),
-    consumedAt: v.optional(v.string()),
+    ...valibotToConvex(authOtpDataSchemaFields),
   })
     //
     .index("emailCode", ["email", "code"]),

@@ -4,7 +4,7 @@ import { internal } from "#convex/_generated/api.js"
 import { type ActionCtx, action, internalAction } from "#convex/_generated/server.js"
 import type { PromiseResult } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import { sendEmailChangeEmail } from "#src/auth/convex/email/sendEmailChangeEmail.ts"
 import type { DocUser } from "#src/auth/convex/IdUser.ts"
 import { verifyHashedPassword2 } from "#src/auth/convex/pw/verifyHashedPassword.ts"
@@ -15,13 +15,16 @@ import { authActionTokenToUserId } from "#src/utils/convex_backend/authActionTok
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.ts"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 
-export const userEmailChangeFieldsBase = {
-  newEmail: v.string(),
-  currentPassword: v.optional(v.string()),
-  l: languageValidator,
+const userEmailChangeSchemaFields = {
+  newEmail: a.string(),
+  currentPassword: a.optional(a.string()),
+  l: languageSchema,
 } as const
+
+export const userEmailChangeFieldsBase = valibotToConvex(userEmailChangeSchemaFields)
 
 export const userEmailChangeValidatorPublic = createTokenValidator(userEmailChangeFieldsBase)
 export type UserEmailChangeTypePublic = typeof userEmailChangeValidatorPublic.type

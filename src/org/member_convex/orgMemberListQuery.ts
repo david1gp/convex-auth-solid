@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
@@ -6,6 +7,7 @@ import { docOrgMemberToModel } from "#src/org/member_convex/docOrgMemberToModel.
 import type { OrgMemberProfile } from "#src/org/member_model/OrgMemberProfile.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
@@ -13,7 +15,7 @@ import type { PaginationResultType } from "#src/utils/convex_backend/paginationR
 export type OrgMembersListValidatorType = typeof orgMembersListValidator.type
 
 export const orgMembersListFields = {
-  orgHandle: v.string(),
+  ...valibotToConvex({ orgHandle: a.string() }),
   paginationOpts: paginationOptsValidator,
 } as const
 

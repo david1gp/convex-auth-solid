@@ -1,27 +1,27 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
 import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 import { orgInvitation21CreateMutationFn } from "#src/org/invitation_convex/orgInvitation21CreateInternalMutation.ts"
 import { orgMemberGetByUserIdFn } from "#src/org/member_convex/orgMemberGetByUserIdFn.ts"
-import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
+import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { generateId12 } from "#utils/ran/generateId12.js"
 
 export type OrgInvitationCreateValidatorType = typeof orgInvitationCreateActionValidator.type
 
-export const orgInvitationInitMutationFields = {
-  token: v.string(),
-  // id
-  orgHandle: v.string(),
-  invitedName: v.string(),
-  invitedEmail: v.string(),
-  l: languageValidator,
-  // data
-  role: orgRoleValidator,
-}
+export const orgInvitationInitMutationFields = valibotToConvex({
+  token: a.string(),
+  orgHandle: orgInvitationDataSchemaFields.orgHandle,
+  invitedName: orgInvitationDataSchemaFields.invitedName,
+  invitedEmail: orgInvitationDataSchemaFields.invitedEmail,
+  l: languageSchema,
+  role: orgInvitationDataSchemaFields.role,
+})
 
 export const orgInvitationCreateActionValidator = v.object(orgInvitationInitMutationFields)
 

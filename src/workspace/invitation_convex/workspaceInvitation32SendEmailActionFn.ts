@@ -1,19 +1,21 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { envBaseUrlAppResult } from "#src/app/env/public/envBaseUrlAppResult.ts"
-import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
+import { workspaceInvitationDataSchemaFields } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type WorkspaceInvitationSendEmailValidatorType = typeof workspaceInvitationSendEmailValidator.type
 
-export const workspaceInvitationSendEmailFields = {
-  workspaceHandle: v.string(),
-  invitationCode: v.string(),
-  invitedEmail: v.string(),
-  invitedByName: v.string(),
-  invitedByEmail: v.string(),
-  workspaceName: v.string(),
-  role: workspaceRoleValidator,
-}
+export const workspaceInvitationSendEmailFields = valibotToConvex({
+  workspaceHandle: a.string(),
+  invitationCode: a.string(),
+  invitedEmail: a.string(),
+  invitedByName: a.string(),
+  invitedByEmail: a.string(),
+  workspaceName: a.string(),
+  role: workspaceInvitationDataSchemaFields.role,
+})
 
 export const workspaceInvitationSendEmailValidator = v.object(workspaceInvitationSendEmailFields)
 

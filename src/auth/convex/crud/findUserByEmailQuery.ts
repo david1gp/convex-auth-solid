@@ -1,9 +1,10 @@
-import { v } from "convex/values"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { internalQuery, type QueryCtx } from "#convex/_generated/server.js"
 import type { DocUser } from "#src/auth/convex/IdUser.ts"
 
 export const findUserByEmailInternalQuery = internalQuery({
-  args: { email: v.string() },
+  args: valibotToConvex({ email: emailSchema }),
   handler: async (ctx: QueryCtx, args) => findUserByEmailFn(ctx, args.email),
 })
 

@@ -1,6 +1,7 @@
-import { v } from "convex/values"
 import * as a from "valibot"
+import { v } from "convex/values"
 import { type LanguageOrNone, languageOrNoneSchema } from "#src/app/i18n/language.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { stringSchemaUrl } from "#src/utils/valibot/stringSchema.ts"
 import { intSchemaMin0 } from "#utils/valibot/intSchema.js"
 
@@ -30,15 +31,15 @@ export const fileDataUnuploadedSchemaFields = {
 
 export const fileDataUnaploadedSchema = a.object(fileDataUnuploadedSchemaFields)
 
-export const fileDataUnuploadedConvexFields = {
-  displayName: v.string(),
-  // technical data
-  fileSize: v.number(),
-  contentType: v.string(),
-  // image
-  imageWidth: v.optional(v.number()),
-  imageHeight: v.optional(v.number()),
-} as const
+// Keep the existing Convex input shape: language is validated by the model
+// schema but is not part of this helper's accepted Convex shape.
+export const fileDataUnuploadedConvexFields = valibotToConvex({
+  displayName: fileDataUnuploadedSchemaFields.displayName,
+  fileSize: fileDataUnuploadedSchemaFields.fileSize,
+  contentType: fileDataUnuploadedSchemaFields.contentType,
+  imageWidth: fileDataUnuploadedSchemaFields.imageWidth,
+  imageHeight: fileDataUnuploadedSchemaFields.imageHeight,
+})
 
 export const fileDataUnuploadedValidator = v.object(fileDataUnuploadedConvexFields)
 

@@ -1,16 +1,18 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
 
 export type WorkspaceMemberDeleteValidatorType = typeof workspaceMemberDeleteValidator.type
 
-export const workspaceMemberDeleteFields = {
-  memberId: v.string(),
-  workspaceHandle: v.string(),
-} as const
+export const workspaceMemberDeleteFields = valibotToConvex({
+  memberId: a.string(),
+  workspaceHandle: a.string(),
+})
 
 export const workspaceMemberDeleteValidator = v.object(workspaceMemberDeleteFields)
 

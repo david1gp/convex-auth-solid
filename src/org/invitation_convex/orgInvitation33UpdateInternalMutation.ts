@@ -4,7 +4,7 @@ import { internalMutation, type MutationCtx } from "#convex/_generated/server.js
 import { createError, createResult, type PromiseResult } from "#result"
 import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
 import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
-import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type OrgInvitationUpdateValidatorType = typeof orgInvitationUpdateValidator.type
@@ -12,14 +12,15 @@ export type OrgInvitationUpdateValidatorType = typeof orgInvitationUpdateValidat
 export const orgInvitationUpdateFields = {
   // token: v.string(),
   _id: v.id("orgInvitations"),
-  // data
-  orgHandle: v.optional(v.string()),
-  invitedEmail: v.optional(v.string()),
-  invitationCode: v.optional(v.string()),
-  role: v.optional(orgRoleValidator),
-  invitedBy: v.optional(v.string()),
-  emailSendAt: v.optional(v.string()),
-  emailSendAmount: v.optional(v.number()),
+  ...valibotToConvex({
+    orgHandle: a.optional(orgInvitationDataSchemaFields.orgHandle),
+    invitedEmail: a.optional(orgInvitationDataSchemaFields.invitedEmail),
+    invitationCode: a.optional(orgInvitationDataSchemaFields.invitationCode),
+    role: a.optional(orgInvitationDataSchemaFields.role),
+    invitedBy: a.optional(orgInvitationDataSchemaFields.invitedBy),
+    emailSendAt: a.optional(orgInvitationDataSchemaFields.emailSendAt),
+    emailSendAmount: a.optional(orgInvitationDataSchemaFields.emailSendAmount),
+  }),
 } as const
 
 // export const orgInvitationUpdateFields = {

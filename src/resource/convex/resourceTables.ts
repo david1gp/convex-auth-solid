@@ -1,8 +1,8 @@
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
+import * as a from "valibot"
 import { resourceDataSchemaFields } from "#src/resource/model/resourceSchema.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
-import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
+import { fieldsSchemaCreatedAtUpdatedAtDeletedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAtDeletedAt.ts"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
 import { dateTimeSchema } from "#utils/valibot/dateTimeSchema.js"
 
@@ -15,9 +15,8 @@ const resourceFilesDataSchemaFields = {
 export const resourceTables = {
   resources: defineTable({
     ...valibotToConvex(resourceDataSchemaFields),
-    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
-    deletedAt: v.optional(v.string()),
-    searchText: v.optional(v.string()),
+    ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAtDeletedAt),
+    ...valibotToConvex({ searchText: a.optional(a.string()) }),
   })
     //
     .index("resourceId", ["resourceId"])

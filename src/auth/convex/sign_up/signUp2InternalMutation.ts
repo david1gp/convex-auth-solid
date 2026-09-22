@@ -1,14 +1,20 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import type { IdAuthUserEmailRegistration } from "#src/auth/convex/IdUser.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
+import { stringSchemaName } from "#src/utils/valibot/stringSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
-export const signUpCodeFields = {
-  name: v.string(),
-  email: v.string(),
-  hashedPassword: v.optional(v.string()),
-  code: v.string(),
+const signUpCodeSchemaFields = {
+  name: stringSchemaName,
+  email: emailSchema,
+  hashedPassword: a.optional(a.string()),
+  code: a.string(),
 } as const
+
+export const signUpCodeFields = valibotToConvex(signUpCodeSchemaFields)
 
 export type SignUpCodeValidatorType = typeof signUpCodeValidator.type
 export const signUpCodeValidator = v.object(signUpCodeFields)

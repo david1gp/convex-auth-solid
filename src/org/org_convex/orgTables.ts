@@ -1,10 +1,10 @@
 import { defineTable } from "convex/server"
-import { v } from "convex/values"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import * as a from "valibot"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import { vIdOrg } from "#src/org/org_convex/vIdOrg.ts"
 import { orgDataSchemaFields } from "#src/org/org_model/orgSchema.ts"
-import { resourceTypeValidator } from "#src/resource/model_field/resourceType.ts"
-import { visibilityValidator } from "#src/resource/model_field/visibility.ts"
+import { resourceTypeSchema } from "#src/resource/model_field/resourceType.ts"
+import { visibilitySchema } from "#src/resource/model_field/visibility.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { fieldsSchemaCreatedAtUpdatedAt } from "#src/utils/data/fieldsSchemaCreatedAtUpdatedAt.ts"
 import { stringSchemaId } from "#src/utils/valibot/stringSchema.ts"
@@ -31,12 +31,14 @@ export const orgTables = {
     .index("orgHandle", ["orgHandle"]),
 
   orgResources: defineTable({
-    ...valibotToConvex(orgResourceDataSchemaFields),
     orgId: vIdOrg,
-    searchText: v.optional(v.string()),
-    type: v.optional(resourceTypeValidator),
-    visibility: v.optional(visibilityValidator),
-    language: v.optional(languageValidator),
+    ...valibotToConvex({
+      ...orgResourceDataSchemaFields,
+      searchText: a.optional(a.string()),
+      type: a.optional(resourceTypeSchema),
+      visibility: a.optional(visibilitySchema),
+      language: a.optional(languageSchema),
+    }),
   })
     //
     .index("orgHandle", ["orgHandle"])

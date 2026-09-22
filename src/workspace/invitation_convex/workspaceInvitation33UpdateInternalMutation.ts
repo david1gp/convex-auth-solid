@@ -4,20 +4,23 @@ import { internalMutation, type MutationCtx } from "#convex/_generated/server.js
 import { createError, createResult, type PromiseResult } from "#result"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import { workspaceInvitationDataSchemaFields } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
-import { workspaceRoleValidator } from "#src/workspace/workspace_model_field/workspaceRoleValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type WorkspaceInvitationUpdateValidatorType = typeof workspaceInvitationUpdateValidator.type
 
 export const workspaceInvitationUpdateFields = {
   _id: v.id("workspaceInvitations"),
-  workspaceHandle: v.optional(v.string()),
-  invitedEmail: v.optional(v.string()),
-  invitationCode: v.optional(v.string()),
-  role: v.optional(workspaceRoleValidator),
-  invitedBy: v.optional(v.string()),
-  status: v.optional(v.string()),
-  expiresAt: v.optional(v.string()),
+  ...valibotToConvex({
+    workspaceHandle: a.optional(workspaceInvitationDataSchemaFields.workspaceHandle),
+    invitedEmail: a.optional(workspaceInvitationDataSchemaFields.invitedEmail),
+    invitationCode: a.optional(workspaceInvitationDataSchemaFields.invitationCode),
+    role: a.optional(workspaceInvitationDataSchemaFields.role),
+    invitedBy: a.optional(workspaceInvitationDataSchemaFields.invitedBy),
+    // Keep these input fields broad as in the existing Convex validator.
+    status: a.optional(a.string()),
+    expiresAt: a.optional(a.string()),
+  }),
 } as const
 
 export const workspaceInvitationUpdateValidator = v.object(workspaceInvitationUpdateFields)

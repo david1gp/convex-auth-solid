@@ -11,11 +11,14 @@ import { authMutationTokenToUserId } from "#src/utils/convex_backend/authMutatio
 import { createErrorAndLogError } from "#src/utils/convex_backend/createErrorAndLogError.ts"
 import { createErrorAndLogWarn } from "#src/utils/convex_backend/createErrorAndLogWarn.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-const userPasswordChangeFieldsBase = {
-  currentPassword: v.optional(v.string()),
-  newPassword: v.string(),
+const userPasswordChangeSchemaFields = {
+  currentPassword: a.optional(a.string()),
+  newPassword: a.string(),
 } as const
+
+const userPasswordChangeFieldsBase = valibotToConvex(userPasswordChangeSchemaFields)
 
 export const userPasswordChangeValidatorInternal = v.object({
   ...userPasswordChangeFieldsBase,

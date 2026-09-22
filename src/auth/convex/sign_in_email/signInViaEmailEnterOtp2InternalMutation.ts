@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createError, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
@@ -11,13 +12,19 @@ import { loginMethod } from "#src/auth/model_field/loginMethod.ts"
 import { otpPurpose } from "#src/auth/model_field/otpPurpose.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
 import { orgMemberGetHandleAndRoleFn } from "#src/org/member_convex/orgMemberGetHandleAndRoleInternalQuery.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { emailSchema } from "#src/utils/valibot/emailSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
+const signInViaEmailEnterOtpFields = {
+  email: emailSchema,
+  code: a.string(),
+} as const
+
+const signInViaEmailEnterOtpConvexFields = valibotToConvex(signInViaEmailEnterOtpFields)
+
 export type signInViaEmailEnterOtp2ValidatorType = typeof signInViaEmailEnterOtp2Validator.type
-export const signInViaEmailEnterOtp2Validator = v.object({
-  email: v.string(),
-  code: v.string(),
-})
+export const signInViaEmailEnterOtp2Validator = v.object(signInViaEmailEnterOtpConvexFields)
 
 export const signInViaEmailEnterOtp2InternalMutation = internalMutation({
   args: signInViaEmailEnterOtp2Validator,

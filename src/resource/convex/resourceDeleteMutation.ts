@@ -1,17 +1,17 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type ResourceDeleteValidatorType = typeof resourceDeleteValidator.type
 
-export const resourceDeleteFields = {
-  resourceId: v.string(),
-} as const
+export const resourceDeleteFields = valibotToConvex({ resourceId: a.string() })
 
 export const resourceDeleteValidator = v.object(resourceDeleteFields)
 
@@ -26,7 +26,7 @@ export const resourceDeleteInternalMutation = internalMutation({
 })
 
 const resourceFileRelationshipsDeleteFields = {
-  resourceId: v.string(),
+  ...valibotToConvex({ resourceId: a.string() }),
   resourceDocId: v.optional(v.id("resources")),
   paginationOpts: paginationOptsValidator,
 } as const
@@ -39,7 +39,7 @@ export const resourceFileRelationshipsDeleteInternalMutation = internalMutation(
 })
 
 const resourceOrgResourcesDeleteFields = {
-  resourceId: v.string(),
+  ...valibotToConvex({ resourceId: a.string() }),
   resourceDocId: v.optional(v.id("resources")),
   paginationOpts: paginationOptsValidator,
 } as const

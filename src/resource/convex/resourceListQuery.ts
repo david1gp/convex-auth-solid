@@ -1,26 +1,32 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import type { DocOrgResource } from "#src/resource/convex/IdResource.ts"
 import { resourceDocToModel } from "#src/resource/convex/resourceDocToModel.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
-import { resourceTypeValidator } from "#src/resource/model_field/resourceType.ts"
-import { visibilityValidator } from "#src/resource/model_field/visibility.ts"
+import { resourceTypeSchema } from "#src/resource/model_field/resourceType.ts"
+import { visibilitySchema } from "#src/resource/model_field/visibility.ts"
 import { authQueryWrapResult } from "#src/utils/convex_backend/authQueryWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import { paginationResultMap } from "#src/utils/convex_backend/paginationResultMap.ts"
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
 import { notEmptyFilter } from "#utils/arr/notEmptyFilter.js"
 
+const resourceListSchemaFields = {
+  l: a.optional(languageSchema),
+  orgHandle: a.optional(a.string()),
+  meetingId: a.optional(a.string()),
+  type: a.optional(resourceTypeSchema),
+  visibility: a.optional(visibilitySchema),
+  searchText: a.optional(a.string()),
+} as const
+
 export const resourceListFields = {
-  l: v.optional(languageValidator),
-  orgHandle: v.optional(v.string()),
-  meetingId: v.optional(v.string()),
-  type: v.optional(resourceTypeValidator),
-  visibility: v.optional(visibilityValidator),
-  searchText: v.optional(v.string()),
+  ...valibotToConvex(resourceListSchemaFields),
   paginationOpts: paginationOptsValidator,
 } as const
 

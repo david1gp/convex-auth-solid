@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { saveTokenIntoSessionReturnExpiresAtFn } from "#src/auth/convex/crud/saveTokenIntoSessionReturnExpiresAtMutation.ts"
@@ -11,14 +12,15 @@ import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetU
 import { orgGetQueryInternalFn } from "#src/org/org_convex/orgGetQuery.ts"
 import { stt } from "#src/utils/i18n/stt.ts"
 import { nowIso } from "#utils/date/nowIso.js"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type OrgInvitationAcceptValidatorType = typeof orgInvitationAcceptValidator.type
 
-export const orgInvitationAcceptFields = {
-  token: v.string(),
-  orgHandle: v.optional(v.string()),
-  invitationCode: v.string(),
-}
+export const orgInvitationAcceptFields = valibotToConvex({
+  token: a.string(),
+  orgHandle: a.optional(a.string()),
+  invitationCode: a.string(),
+})
 
 export const orgInvitationAcceptValidator = v.object(orgInvitationAcceptFields)
 

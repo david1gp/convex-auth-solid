@@ -1,20 +1,22 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import { type ActionCtx, action } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.ts"
 import { orgInvitation31SendFn } from "#src/org/invitation_convex/orgInvitation31SendInternalAction.ts"
 import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.ts"
 import { stt1 } from "#src/utils/i18n/stt.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type OrgInvitationResendValidatorType = typeof orgInvitation30ResendValidator.type
 
-export const orgInvitationResendFields = {
-  token: v.string(),
-  invitationCode: v.string(),
-  l: v.optional(languageValidator),
-} as const
+export const orgInvitationResendFields = valibotToConvex({
+  token: a.string(),
+  invitationCode: a.string(),
+  l: a.optional(languageSchema),
+})
 
 export const orgInvitation30ResendValidator = v.object(orgInvitationResendFields)
 

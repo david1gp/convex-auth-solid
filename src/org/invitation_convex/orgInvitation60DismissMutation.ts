@@ -1,14 +1,14 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authMutationResult } from "#src/utils/convex_backend/authMutationResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type OrgInvitationDismissValidatorType = typeof orgInvitationDismissValidator.type
 
-export const orgInvitationDismissFields = {
-  invitationCode: v.string(),
-} as const
+export const orgInvitationDismissFields = valibotToConvex({ invitationCode: a.string() })
 
 export const orgInvitationDismissValidator = v.object(orgInvitationDismissFields)
 

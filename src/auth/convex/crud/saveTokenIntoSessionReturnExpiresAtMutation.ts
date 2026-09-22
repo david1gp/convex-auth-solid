@@ -7,12 +7,18 @@ import { vIdUser } from "#src/auth/convex/vIdUser.ts"
 import type { LoginMethod } from "#src/auth/model_field/loginMethod.ts"
 import { loginMethodValidator } from "#src/auth/model_field/loginMethodValidator.ts"
 import { tokenValidDurationInDays } from "#src/auth/server/jwt_token/tokenValidDurationInDays.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { tokenSchema } from "#src/utils/valibot/tokenSchema.ts"
+
+const authSessionInsertFields = valibotToConvex({
+  token: tokenSchema,
+})
 
 export type AuthSessionInsertValidatorType = typeof authSessionInsertValidator.type
 export const authSessionInsertValidator = v.object({
   userId: vIdUser,
   loginMethod: loginMethodValidator,
-  token: v.string(),
+  ...authSessionInsertFields,
 })
 
 export const authSessionInsertInternalMutation = internalMutation({

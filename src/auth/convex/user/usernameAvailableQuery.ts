@@ -1,10 +1,14 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
-export const usernameAvailableFields = {
-  username: v.string(),
+const usernameAvailableSchemaFields = {
+  username: a.string(),
 } as const
+
+export const usernameAvailableFields = valibotToConvex(usernameAvailableSchemaFields)
 
 export type UsernameAvailableValidatorType = typeof usernameAvailableValidator.type
 export const usernameAvailableValidator = v.object(usernameAvailableFields)

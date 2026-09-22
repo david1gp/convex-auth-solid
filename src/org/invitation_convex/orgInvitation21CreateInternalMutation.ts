@@ -1,23 +1,22 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx } from "#convex/_generated/server.js"
 import { createResult, type PromiseResult } from "#result"
-import { languageValidator } from "#src/app/i18n/language.ts"
+import { languageSchema } from "#src/app/i18n/language.ts"
 import type { IdOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
-import { orgRoleValidator } from "#src/org/org_model_field/orgRoleValidator.ts"
+import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
-export const orgInvitationCreateDataFields = {
-  // ids
-  orgHandle: v.string(),
-  invitationCode: v.string(),
-  // invited
-  invitedName: v.string(),
-  invitedEmail: v.string(),
-  l: languageValidator,
-  // data
-  role: orgRoleValidator,
-  invitedBy: v.string(),
-} as const
+export const orgInvitationCreateDataFields = valibotToConvex({
+  orgHandle: orgInvitationDataSchemaFields.orgHandle,
+  invitationCode: a.string(),
+  invitedName: orgInvitationDataSchemaFields.invitedName,
+  invitedEmail: orgInvitationDataSchemaFields.invitedEmail,
+  l: languageSchema,
+  role: orgInvitationDataSchemaFields.role,
+  invitedBy: a.string(),
+})
 
 export const orgInvitationCreateMutationValidator = v.object(orgInvitationCreateDataFields)
 

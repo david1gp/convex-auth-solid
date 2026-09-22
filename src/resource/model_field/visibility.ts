@@ -1,5 +1,5 @@
-import { v } from "convex/values"
 import * as a from "valibot"
+import { valibotFieldToConvexValidator } from "#src/utils/convex/valibotToConvex.ts"
 
 export type Visibility = keyof typeof visibility
 
@@ -12,9 +12,4 @@ export const visibility = {
 
 export const visibilitySchema = a.enum(visibility)
 
-export const visibilityValidator = v.union(
-  v.literal(visibility.public),
-  v.literal(visibility.member),
-  v.literal(visibility.org),
-  // v.literal(visibility.creator),
-)
+export const visibilityValidator = valibotFieldToConvexValidator(visibilitySchema)

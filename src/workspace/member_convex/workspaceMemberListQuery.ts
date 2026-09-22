@@ -1,8 +1,10 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import { paginationResultMap } from "#src/utils/convex_backend/paginationResultMap.ts"
@@ -13,7 +15,7 @@ import type { WorkspaceMemberModel } from "#src/workspace/member_model/Workspace
 export type WorkspaceMembersListValidatorType = typeof workspaceMembersListValidator.type
 
 export const workspaceMembersListFields = {
-  workspaceHandle: v.string(),
+  ...valibotToConvex({ workspaceHandle: a.string() }),
   paginationOpts: paginationOptsValidator,
 } as const
 

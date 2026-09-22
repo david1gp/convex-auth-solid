@@ -1,4 +1,5 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
@@ -7,10 +8,10 @@ import { paginationResultMap } from "#src/utils/convex_backend/paginationResultM
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
 import { docWorkspaceInvitationToModel } from "#src/workspace/invitation_convex/docWorkspaceInvitationToModel.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export const workspaceInvitationsListFields = {
-  workspaceHandle: v.string(),
-  token: v.string(),
+  ...valibotToConvex({ workspaceHandle: a.string(), token: a.string() }),
   paginationOpts: paginationOptsValidator,
 } as const
 

@@ -1,5 +1,6 @@
 import type { PaginationOptions } from "convex/server"
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalQuery, type QueryCtx, query } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { fileDocToModel } from "#src/file/convex/fileDocToModel.ts"
@@ -9,13 +10,18 @@ import { resourceGetDocFn } from "#src/resource/convex/resourceGetQuery.ts"
 import type { ResourceFilesPageModel } from "#src/resource/model/ResourceFilesPageModel.ts"
 import { authQueryResult } from "#src/utils/convex_backend/authQueryResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { paginationDefaultOptions } from "#src/utils/convex_backend/paginationDefaultOptions.ts"
 import { paginationOptsValidator } from "#src/utils/convex_backend/paginationOptsValidator.ts"
 import { notEmptyFilter } from "#utils/arr/notEmptyFilter.js"
 
+const resourceFilesGetSchemaFields = {
+  resourceId: a.string(),
+  updatedAt: a.optional(a.string()),
+} as const
+
 export const resourceFilesGetFields = {
-  resourceId: v.string(),
-  updatedAt: v.optional(v.string()),
+  ...valibotToConvex(resourceFilesGetSchemaFields),
   paginationOpts: paginationOptsValidator,
 } as const
 

@@ -1,5 +1,5 @@
-import { v } from "convex/values"
 import * as a from "valibot"
+import { valibotFieldToConvexValidator } from "#src/utils/convex/valibotToConvex.ts"
 
 export type Language = keyof typeof language
 
@@ -17,7 +17,7 @@ export function isEn(l: Language): boolean {
 
 export const languageSchema = a.enum(language)
 
-export const languageValidator = v.union(v.literal(language.en), v.literal(language.ru), v.literal(language.tj))
+export const languageValidator = valibotFieldToConvexValidator(languageSchema)
 
 export function languageParseString<T>(s: string, fallback: T): Language | T {
   const parsed = a.safeParse(languageSchema, s)
@@ -38,9 +38,4 @@ export const languageOrNone = {
 
 export const languageOrNoneSchema = a.enum(languageOrNone)
 
-export const languageOrNoneValidator = v.union(
-  v.literal(languageOrNone.none),
-  v.literal(language.en),
-  v.literal(language.ru),
-  v.literal(language.tj),
-)
+export const languageOrNoneValidator = valibotFieldToConvexValidator(languageOrNoneSchema)

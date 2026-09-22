@@ -1,15 +1,16 @@
 import { v } from "convex/values"
+import * as a from "valibot"
 import { internalMutation, type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { fileGetByIdFn } from "#src/file/convex/fileGetByIdFn.ts"
 import { resourceFileRemoveMutationFn } from "#src/resource/convex/resourceFileRemoveMutation.ts"
 import { authMutationWrapResult } from "#src/utils/convex_backend/authMutationWrapResult.ts"
 import { createTokenValidator } from "#src/utils/convex_backend/createTokenValidator.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type FileDeleteValidatorType = typeof fileDeleteValidator.type
 
-export const fileDeleteFields = {
-  fileId: v.string(),
-} as const
+const fileDeleteSchemaFields = { fileId: a.string() } as const
+export const fileDeleteFields = valibotToConvex(fileDeleteSchemaFields)
 
 export const fileDeleteValidator = v.object(fileDeleteFields)
 
