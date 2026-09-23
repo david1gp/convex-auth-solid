@@ -103,6 +103,21 @@ Quick link
    bun run dev
    ```
 
+## SSO end-to-end test
+
+Run the focused Playwright workflow with `bun run test:e2e`. It targets the local UI service at `http://localhost:3012` by default; set `E2E_BASE_URL` to override it. The default reflects this repo's running `convex-auth-ui` systemd service/registry port; Rsbuild's fallback when started outside that service is `3016`.
+
+The UI and its configured API/Convex services must be running with SSO enabled. The test uses the configured Zitadel `ssotest` identity (`testuser` in the `contentoren` CLI profile) by default: provide both `E2E_AUTH_USERNAME` and `E2E_AUTH_PASSWORD` to override, or configure `zitadel-cli` so these commands work:
+
+`PUBLIC_OIDC_ENABLED` controls whether the frontend renders the SSO link; passing it only to `bun run test:e2e` does not change an already-running frontend. Set it in the frontend's environment and restart/rebuild that service. The API/Convex actions must separately have the server-only OIDC settings and a valid registered callback URL; a frontend flag alone cannot configure OIDC.
+
+```sh
+zitadel-cli credentials get testuser --profile contentoren --field username
+zitadel-cli credentials get testuser --profile contentoren --field password
+```
+
+Install Playwright's Chromium browser once with `bunx playwright install chromium` (`bunx playwright install --with-deps chromium` on a fresh Linux host). Then run `bun run test:e2e`. Never commit credentials.
+
 ## Optional OIDC sign-in
 
 OIDC is an optional, server-configured sign-in method. The template keeps the
