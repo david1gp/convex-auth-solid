@@ -9,7 +9,10 @@ is no self-hosted prod Convex deployment.
 
 - **david (local)** — dev. Domains
   `app./convex./api./dash.convex-auth.dev` (+ `.com` variants, in `/etc/hosts`,
-  behind david's user Caddy which imports `ops/caddy/Caddyfile`).
+  behind david's user Caddy which imports `ops/caddy/Caddyfile`). Localhost
+  direct origins are also available: UI `http://localhost:3012`, Convex
+  backend `http://127.0.0.1:3240`, and Convex HTTP actions/API
+  `http://127.0.0.1:3241`.
 
 ## Env files (all gitignored; template: `ops/convex/env.docker.example`)
 
@@ -32,7 +35,8 @@ Units reference `%h/convex-auth-solid`, a symlink to the repo checkout that
 `~/.config/systemd/user` units.
 
 - **`convex-auth-backend.service`** — self-hosted Convex backend, published on
-  `127.0.0.1:3230`/`:3231` (allgroups-chat owns 3210/3211, dcc-app 3220/3221).
+  `127.0.0.1:3240`/`:3241` (container ports 3210/3211; other local services
+  own adjacent host ports).
   `Notify=healthy` keeps it "activating" until its healthcheck passes.
 - **`convex-auth-dashboard.service`** — Convex dashboard on `127.0.0.1:6793`.
   `Requires=`/`After=` the backend.
@@ -40,7 +44,7 @@ Units reference `%h/convex-auth-solid`, a symlink to the repo checkout that
   --env-file=.env.development`): compiles `convex/` and pushes to this
   machine's backend. `Wants=` starts the backend.
 - **`convex-auth-ui.service`** — demo frontend dev server (`bun run dev` →
-  rsbuild, `:3016`).
+  rsbuild, `:3012` from `.env.development`; `:3016` is the standalone fallback).
 
 Quadlet services auto-enable on boot via their `[Install]` section — just
 `start` them (the two bun units still need `enable --now`).

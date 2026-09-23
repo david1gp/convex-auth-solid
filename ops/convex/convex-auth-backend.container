@@ -4,8 +4,8 @@
 # Quadlet turns this into `convex-auth-backend.service` on `daemon-reload`.
 #
 # No host networking: the backend always listens on 3210/3211 in-container and
-# allgroups-chat owns those host ports on david's machine. Publish distinct
-# localhost ports instead (Caddy proxies convex./api.convex-auth.dev to them).
+# Other local deployments already use the adjacent host-port range. Publish
+# distinct localhost ports instead; Caddy may proxy the dev hostnames here.
 #
 # https://github.com/get-convex/convex-backend/pkgs/container/convex-backend
 # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
@@ -18,8 +18,8 @@ Wants=network-online.target
 ContainerName=convex-auth-backend
 Image=ghcr.io/get-convex/convex-backend:latest
 AutoUpdate=registry
-PublishPort=127.0.0.1:3230:3210
-PublishPort=127.0.0.1:3231:3211
+PublishPort=127.0.0.1:3240:3210
+PublishPort=127.0.0.1:3241:3211
 Volume=convex-auth-data.volume:/convex/data
 EnvironmentFile=%h/convex-auth-solid/ops/convex/.env.docker
 # Compose defaults that aren't in .env.docker:
