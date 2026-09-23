@@ -1,6 +1,7 @@
 import type { MutationCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFromAuthProviderMutation.ts"
+import { findUserByAuthAccountFn } from "#src/auth/convex/crud/findUserByAuthAccountFn.ts"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
 import { linkAuthToExistingUserFn } from "#src/auth/convex/crud/linkAuthToExistingUserFn.ts"
 import { userRoleSyncFromAuthProviderFn } from "#src/auth/convex/crud/userRoleSyncFromAuthProviderFn.ts"
@@ -20,23 +21,11 @@ export async function findOrCreateUserFn(
   const op = "findOrCreateUser"
 
   // Check for existing auth account
-  const existingAuthAccount: DocAuthAccount | null =
-    authData.provider === loginProvider.oidc
-      ? await ctx.db
-          .query("authAccounts")
-          .withIndex("providerIssuerAndAccountId", (q) =>
-            q
-              .eq("provider", authData.provider)
-              .eq("issuer", authData.issuer)
-              .eq("providerAccountId", authData.providerId),
-          )
-          .unique()
-      : await ctx.db
-          .query("authAccounts")
-          .withIndex("providerAndAccountId", (q) =>
-            q.eq("provider", authData.provider).eq("providerAccountId", authData.providerId),
-          )
-          .unique()
+  const existingAuthAccount: DocAuthAccount | null = await findUserByAuthAccountFn(ctx, {
+    provider: authData.provider,
+    ...(authData.provider === loginProvider.oidc && { issuer: authData.issuer }),
+    providerId: authData.providerId,
+  })
   if (existingAuthAccount) {
     const user = await ctx.db.get("users", existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)

@@ -1,6 +1,5 @@
-import * as a from "valibot"
 import { createResult, createResultError, type Result } from "#result"
-import { type UserSession, userSessionSchema } from "#src/auth/model/UserSession.ts"
+import { type UserSession, userSessionParse } from "#src/auth/model/UserSession.ts"
 import { userRole } from "#src/auth/model_field/userRole.ts"
 import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
 import { createSignalObject, type SetterSimplified, type SignalObject } from "#ui/utils/createSignalObject.ts"
@@ -55,25 +54,21 @@ function shouldAutologin(sessions: UserSession[]): UserSession | null {
   // const isSingle = sessions.length === 1
   const single = sessions[0]
   if (!single) return null
-  const hasUserRole = single.profile.role == userRole.user
+  const hasUserRole = single.profile.role === userRole.user
   if (!hasUserRole) return null
   return single
 }
 
 function userSessionLoadFromSessionStorage(): Result<UserSession> {
-  const op = "userSessionsLoadFromLocalStorage"
+  const op = "userSessionLoadFromSessionStorage"
   const read = sessionStorage.getItem(userSessionsSessionStorageKey)
   if (!read) return createResultError(op, "no userSession saved in sessionStorage")
-  const schema = a.pipe(a.string(), a.parseJson(), userSessionSchema)
-  const parsing = a.safeParse(schema, read)
-  if (!parsing.success) {
-    return createResultError(op, a.summarize(parsing.issues), read)
-  }
-  return createResult(parsing.output)
+  const parsing = userSessionParse(op, read)
+  if (!parsing.success) return parsing
+  return createResult(parsing.data)
 }
 
 function userSessionSaveToSessionStorage(sessions: UserSession | null) {
-  const op = "userSessionSaveToSessionStorage"
   const serialized = JSON.stringify(sessions, null, 2)
   sessionStorage.setItem(userSessionsSessionStorageKey, serialized)
 }

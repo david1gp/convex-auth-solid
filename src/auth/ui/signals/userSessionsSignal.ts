@@ -72,7 +72,6 @@ export function userSessionsLoadFromLocalStorage() {
 }
 
 export function userSessionsSaveToLocalStorage(sessions: UserSession[]) {
-  const op = "userSessionsSaveToLocalStorage"
   const serialized = JSON.stringify(sessions, null, 2)
   localStorage.setItem(userSessionsLocalStorageKey, serialized)
 }
@@ -81,7 +80,7 @@ import { onCleanup, onMount } from "solid-js"
 
 export function userSessionsSignalRegisterHandler(signal = userSessionsSignal) {
   function handleStorageEvent(event: StorageEvent) {
-    if (event.key != userSessionsLocalStorageKey) return
+    if (event.key !== userSessionsLocalStorageKey) return
     if (event.newValue == null) return
     const schema = a.pipe(a.string(), a.parseJson(), userSessionsSchema)
     const parsing = a.safeParse(schema, event.newValue)
@@ -90,11 +89,11 @@ export function userSessionsSignalRegisterHandler(signal = userSessionsSignal) {
     }
   }
   onMount(() => {
-    if (typeof window == "undefined") return
+    if (typeof window === "undefined") return
     window.addEventListener("storage", handleStorageEvent)
   })
   onCleanup(() => {
-    if (typeof window == "undefined") return
+    if (typeof window === "undefined") return
     window.removeEventListener("storage", handleStorageEvent)
   })
 }
