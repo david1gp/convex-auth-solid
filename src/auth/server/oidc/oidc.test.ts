@@ -54,6 +54,30 @@ test("oidcConfigGet reads server-only OIDC settings and defaults scopes", async 
       OIDC_ISSUER: "https://issuer.example",
       OIDC_CLIENT_ID: "client-id",
       OIDC_CLIENT_SECRET: undefined,
+      OIDC_SCOPES: "openid profile email",
+      OIDC_ZITADEL_ORG_ID: "380716752838852623",
+    },
+    async () => {
+      const result = oidcConfigGet()
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.scopes).toEqual([
+          "openid",
+          "profile",
+          "email",
+          "urn:zitadel:iam:org:project:role:user",
+          "urn:zitadel:iam:org:project:role:admin",
+        ])
+      }
+    },
+  )
+
+  await withEnvironment(
+    {
+      OIDC_ISSUER: "https://issuer.example",
+      OIDC_CLIENT_ID: "client-id",
+      OIDC_CLIENT_SECRET: undefined,
       OIDC_SCOPES: "openid profile custom-scope urn:zitadel:iam:org:project:role:user openid",
       OIDC_ZITADEL_ORG_ID: "380716752838852623",
     },
@@ -69,7 +93,6 @@ test("oidcConfigGet reads server-only OIDC settings and defaults scopes", async 
           "custom-scope",
           "urn:zitadel:iam:org:project:role:user",
           "urn:zitadel:iam:org:project:role:admin",
-          "urn:zitadel:iam:org:project:role:dev",
         ])
       }
     },
@@ -259,7 +282,10 @@ test("oidcTransactionCookie signs transactions and rejects tampering or state mi
     expect(read.success).toBe(true)
     if (read.success) expect(read.data.returnTo).toBe("/after-sign-in?tab=home")
 
-    const tamperedCookie = `${cookie.slice(0, -1)}${cookie.endsWith("a") ? "b" : "a"}`
+    const [cookiePrefix, cookieValue = ""] = cookie.split("=", 2)
+    const [encodedPayload, signature = ""] = cookieValue.split(".", 2)
+    const tamperedSignature = `${signature.startsWith("A") ? "B" : "A"}${signature.slice(1)}`
+    const tamperedCookie = `${cookiePrefix}=${encodedPayload}.${tamperedSignature}`
     const tampered = await oidcTransactionCookie.readHeaders(
       new Request(request, { headers: { cookie: tamperedCookie } }),
       created.data.transaction.state,

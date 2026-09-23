@@ -41,9 +41,9 @@ export function addHttpRoutesAuth(dispatcher: HonoDispatcher) {
     httpMethod.GET,
     signInViaOidcCallbackRequestHandler,
   )
-  // Oauth / Dev
-  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signInViaDev, httpMethod.GET, async (ctx, request) => {
-    return signInUsingSocialAuth1RequestHandler(loginProvider.dev, ctx, request)
+  // Oauth / Admin
+  addRouteWithCors(dispatcher, apiAuthBasePath + apiPathAuth.signInViaAdmin, httpMethod.GET, async (ctx, request) => {
+    return signInUsingSocialAuth1RequestHandler(loginProvider.admin, ctx, request)
   })
 
   // Sign up routes

@@ -1,7 +1,7 @@
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
-import { enableSignInDev } from "#src/app/config/enableSignInDev.ts"
+import { enableSignInAdmin } from "#src/app/config/enableSignInAdmin.ts"
 import { signInCallbackCompletionResponseCreate } from "#src/auth/convex/sign_in_shared/signInCallbackCompletionResponseCreate.ts"
 import { signInUsingSocialAuth2ActionFn } from "#src/auth/convex/sign_in_social/signInUsingSocialAuth2ActionFn.ts"
 import type { UserSession } from "#src/auth/model/UserSession.ts"
@@ -31,8 +31,8 @@ export async function signInUsingSocialAuth1RequestHandler(
     return new Response(jsonStringifyPretty(err), { status: 400 })
   }
 
-  if (provider === loginProvider.dev && !enableSignInDev()) {
-    const errorMessage = "Dev provider disabled"
+  if (provider === loginProvider.admin && !enableSignInAdmin()) {
+    const errorMessage = "Admin provider disabled"
     const err = createResultError(op, errorMessage)
     console.warn(err)
     return new Response(jsonStringifyPretty(err), { status: 400 })

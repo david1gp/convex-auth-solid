@@ -1,6 +1,6 @@
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { userRoleIsDevOrAdmin } from "#src/auth/model_field/userRole.ts"
+import { userRoleIsAdmin } from "#src/auth/model_field/userRole.ts"
 import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { OrgFormImage } from "#src/org/org_ui/form/OrgFormImage.tsx"
@@ -29,12 +29,12 @@ export function OrgForm(p: OrgContentProps) {
   if (isDevEnv()) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
-  const isAdminOrDev = () => userRoleIsDevOrAdmin(userSessionGet().profile.role)
+  const isAdmin = () => userRoleIsAdmin(userSessionGet().profile.role)
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
       <div class="flex flex-wrap justify-between items-center mt-6 mb-2">
         <h1 class="text-2xl font-bold">{getOrgTitle(p.mode)}</h1>
-        <Show when={p.mode === formMode.edit && isAdminOrDev()}>
+        <Show when={p.mode === formMode.edit && isAdmin()}>
           <LinkButtonInternal
             icon={formModeIcon.remove}
             to={urlOrgRemove(p.sm.state.orgHandle.get())}

@@ -7,7 +7,6 @@ const oidcDefaultScopes = ["openid", "profile", "email"] as const
 const oidcZitadelRoleScopes = [
   "urn:zitadel:iam:org:project:role:user",
   "urn:zitadel:iam:org:project:role:admin",
-  "urn:zitadel:iam:org:project:role:dev",
 ] as const
 const oidcScopeCharacterPattern = /^[\u0021\u0023-\u005B\u005D-\u007E]+$/u
 

@@ -17,7 +17,7 @@ export type LoginProvider = keyof typeof loginProvider
 export const loginProvider = {
   ...socialLoginProvider,
   oidc: "oidc",
-  dev: "dev",
+  admin: "admin",
 } as const
 
 export const loginProviderSchema = a.enum(loginProvider)

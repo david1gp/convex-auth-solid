@@ -21,7 +21,7 @@ import {
 export const socialLoginGetUserProfile = {
   github: oauthGithub,
   google: oauthGoogle,
-  dev: oauthDev,
+  admin: oauthAdmin,
   microsoft: oauthMicrosoft,
 } satisfies Record<
   Exclude<LoginProvider, typeof loginProvider.oidc>,
@@ -103,11 +103,11 @@ function convertGoogleProfile({ id, given_name, family_name, email, picture }: G
   }
 }
 
-async function oauthDev(code: string): PromiseResult<CommonAuthProvider> {
-  const op = "oauthDev"
+async function oauthAdmin(code: string): PromiseResult<CommonAuthProvider> {
+  const op = "oauthAdmin"
   const data: CommonAuthProvider = {
     // provider
-    provider: "dev",
+    provider: loginProvider.admin,
     providerId: code,
     // data
     givenName: code,

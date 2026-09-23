@@ -1,8 +1,8 @@
 import { mdiAccountHardHat } from "@adaptive-ds/mdi/mdiAccountHardHat.js"
-import { enableSignInDev } from "#src/app/config/enableSignInDev.ts"
+import { enableSignInAdmin } from "#src/app/config/enableSignInAdmin.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { AuthSectionCard } from "#src/auth/ui/shared/AuthSectionCard.tsx"
-import { urlAuthDev } from "#src/auth/url/urlAuthProvider.ts"
+import { urlAuthAdmin } from "#src/auth/url/urlAuthProvider.ts"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
@@ -13,14 +13,14 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
-export function DevLoginSection(p: MayHaveClass) {
-  if (!enableSignInDev()) return null
+export function AdminLoginSection(p: MayHaveClass) {
+  if (!enableSignInAdmin()) return null
 
   return (
     <AuthSectionCard icon={mdiAccountHardHat} title={ttc("Admin")} subtitle={ttc("In dev mode only")}>
       <form
         //
-        id="devSignInForm"
+        id="adminSignInForm"
         onSubmit={onSubmitFn}
         autocomplete="on"
         class={classArr("flex flex-col gap-4 w-full")}
@@ -40,7 +40,7 @@ export function DevLoginSection(p: MayHaveClass) {
           onInput={(value) => userIdInputSignal.set(value)}
           onBlur={() => {}}
         />
-        <DevLoginButton />
+        <AdminLoginButton />
       </form>
     </AuthSectionCard>
   )
@@ -48,7 +48,7 @@ export function DevLoginSection(p: MayHaveClass) {
 
 function onSubmitFn(e: SubmitEvent) {
   e.preventDefault()
-  const url = getDevUrl()
+  const url = getAdminUrl()
   console.log("userId", userIdInputSignal.get())
   console.log("url", url)
   navigateTo(url)
@@ -56,16 +56,16 @@ function onSubmitFn(e: SubmitEvent) {
 
 const userIdInputSignal = createSignalObject("adaptive-sm")
 
-function DevLoginButton(p: MayHaveClass) {
+function AdminLoginButton(p: MayHaveClass) {
   const text = ttc("Sign in")
   return (
-    <LinkButtonExternal href={getDevUrl()} variant={buttonVariant.filledIndigo} class={p.class}>
+    <LinkButtonExternal href={getAdminUrl()} variant={buttonVariant.filledIndigo} class={p.class}>
       {text}
     </LinkButtonExternal>
   )
 }
 
-function getDevUrl() {
+function getAdminUrl() {
   const currentUrl = urlSignInRedirectUrl()
-  return urlAuthDev(userIdInputSignal.get(), currentUrl)
+  return urlAuthAdmin(userIdInputSignal.get(), currentUrl)
 }

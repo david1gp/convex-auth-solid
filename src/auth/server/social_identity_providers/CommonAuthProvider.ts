@@ -18,8 +18,8 @@ const legacyAuthProviderSchema = a.object({
   ...commonAuthProviderDataSchema,
 })
 
-const devAuthProviderSchema = a.object({
-  provider: a.literal(loginProvider.dev),
+const adminAuthProviderSchema = a.object({
+  provider: a.literal(loginProvider.admin),
   ...commonAuthProviderDataSchema,
 })
 
@@ -39,7 +39,7 @@ const commonAuthProviderArgsFields = {
 
 export const commonAuthProviderSchema = a.union([
   legacyAuthProviderSchema,
-  devAuthProviderSchema,
+  adminAuthProviderSchema,
   oidcAuthProviderSchema,
 ])
 

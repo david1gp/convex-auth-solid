@@ -5,11 +5,14 @@ import { microsoftOauthTokenRootUrl } from "#src/auth/server/social_identity_pro
 import { microsoftOauthUserProfileRootUrl } from "#src/auth/server/social_identity_providers/getMicrosoftUserProfile.ts"
 import { socialLoginGetUserProfile } from "#src/auth/server/social_identity_providers/socialLoginGetUserProfile.ts"
 
-test("the development social provider omits its unavailable email", async () => {
-  const result = await socialLoginGetUserProfile.dev("dev-user")
+test("the admin social provider omits its unavailable email and keeps the user role path separate", async () => {
+  const result = await socialLoginGetUserProfile.admin("admin-user")
 
   expect(result.success).toBe(true)
-  if (result.success) expect(result.data).not.toHaveProperty("email")
+  if (result.success) {
+    expect(result.data).not.toHaveProperty("email")
+    expect(result.data.provider).toBe("admin")
+  }
 })
 
 test("GitHub and Microsoft omit profiles without an email", async () => {

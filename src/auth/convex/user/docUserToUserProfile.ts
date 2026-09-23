@@ -13,7 +13,12 @@ export function docUserToUserProfile(u: DocUser, orgHandle?: string, orgRole?: O
     // rest
     ...rest
   } = u
-  const profile: UserProfile = { userId: _id as string, ...rest, ...(email ? { email } : {}) }
+  const profile: UserProfile = {
+    userId: _id as string,
+    ...rest,
+    role: u.role,
+    ...(email ? { email } : {}),
+  }
   if (orgHandle) profile.orgHandle = orgHandle
   if (orgRole) profile.orgRole = orgRole
   return profile

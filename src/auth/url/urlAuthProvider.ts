@@ -20,8 +20,6 @@ function urlOAuthSwitcher(provider: SocialLoginProvider, redirectUrl: string = "
       return urlAuthGoogle(redirectUrl)
     case socialLoginProvider.microsoft:
       return urlAuthMicrosoft(redirectUrl)
-    // case loginProvider.dev:
-    //   return urlAuthDev(redirectUrl)
   }
 }
 
@@ -69,8 +67,8 @@ function urlAuthGoogle(redirectUrl: string = ""): string {
   return `${rootUrl}?${qs.toString()}`
 }
 
-export function urlAuthDev(userId: string, redirectUrl: string = ""): string {
-  const rootUrl = urlAuthSignInUsingOauth(loginProvider.dev)
+export function urlAuthAdmin(userId: string, redirectUrl: string = ""): string {
+  const rootUrl = urlAuthSignInUsingOauth(loginProvider.admin)
   const options = {
     code: userId,
     state: redirectUrl,

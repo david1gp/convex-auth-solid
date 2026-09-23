@@ -96,10 +96,48 @@ test("OIDC role synchronization assigns a configured role to a new user", async 
     familyName: "Hopper",
     image: "",
     username: "grace",
-    role: "dev",
+    role: "admin",
   })
 
   expect(result.success).toBe(true)
-  expect(rows.users[0]?.role).toBe("dev")
-  if (result.success) expect(result.data.role).toBe("dev")
+  expect(rows.users[0]?.role).toBe("admin")
+  if (result.success) expect(result.data.role).toBe("admin")
+})
+
+test("the admin provider creates a normal user rather than granting admin", async () => {
+  const rows = { users: [] as Record<string, unknown>[], authAccounts: [] as Record<string, unknown>[] }
+  const ctx = {
+    db: {
+      query(_table: keyof typeof rows) {
+        const builder = {
+          withIndex(_name: string, callback: (query: { eq: (field: string, value: unknown) => unknown }) => unknown) {
+            const query = { eq: () => query }
+            callback(query)
+            return builder
+          },
+          unique: async () => null,
+        }
+        return builder
+      },
+      insert: async (table: keyof typeof rows, value: Record<string, unknown>) => {
+        const row = { ...value, _id: `${table}-1`, _creationTime: Date.now() }
+        rows[table].push(row)
+        return row._id
+      },
+    },
+  } as never
+
+  const result = await createUserFromAuthProviderFn(ctx, {
+    provider: "admin",
+    providerId: "admin-user",
+    givenName: "Admin",
+    familyName: "User",
+    image: "",
+    username: "admin-user",
+  })
+
+  expect(result.success).toBe(true)
+  expect(rows.users[0]?.role).toBe("user")
+  expect(rows.authAccounts[0]?.provider).toBe("admin")
+  if (result.success) expect(result.data.role).toBe("user")
 })

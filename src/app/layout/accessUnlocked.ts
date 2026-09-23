@@ -1,14 +1,14 @@
 import type { UserSession } from "#src/auth/model/UserSession.ts"
-import { userRoleIsDevOrAdmin } from "#src/auth/model_field/userRole.ts"
+import { userRoleIsAdmin } from "#src/auth/model_field/userRole.ts"
 
 const log = false
 
 export function accessUnlocked(session: UserSession | undefined | null) {
-  if (!session || !session.profile) {
+  if (!session?.profile) {
     if (log) console.info("!session", "-> access blocked")
     return false
   }
-  if (userRoleIsDevOrAdmin(session.profile.role)) {
+  if (userRoleIsAdmin(session.profile.role)) {
     if (log) console.info("role check -> access granted")
     return true
   }

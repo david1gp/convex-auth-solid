@@ -1,7 +1,7 @@
 // import { AuthMiniHero } from "#src/auth/AuthMiniHero.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
-import { DevLoginSection } from "#src/auth/ui/sign_in/dev/DevLoginSection.tsx"
+import { AdminLoginSection } from "#src/auth/ui/sign_in/admin/AdminLoginSection.tsx"
 import { SignInWithAnExistingSession } from "#src/auth/ui/sign_in/existing/SignInWithAnExistingSession.tsx"
 import { AuthLegalAgree } from "#src/auth/ui/sign_in/legal/AuthLegalAgree.tsx"
 import { authLegalAgreeVariant } from "#src/auth/ui/sign_in/legal/authLegalAgreeVariant.tsx"
@@ -21,7 +21,7 @@ export function SignInPageSocialOnly(p: SignInPageSocialOnlyProps) {
         {/* <AuthMiniHero /> */}
         <SignInWithAnExistingSession class="" />
         <SocialLoginButtonsSection class="" />
-        <DevLoginSection class="" />
+        <AdminLoginSection class="" />
         <AuthLegalAgree variant={authLegalAgreeVariant.signIn} />
       </div>
     </div>

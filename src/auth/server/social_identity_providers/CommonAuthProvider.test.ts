@@ -3,9 +3,9 @@ import * as a from "valibot"
 import { commonAuthProviderSchema } from "#src/auth/server/social_identity_providers/CommonAuthProvider.ts"
 
 const providerWithoutEmail = {
-  provider: "dev",
-  providerId: "dev-user",
-  givenName: "Dev",
+  provider: "admin",
+  providerId: "admin-user",
+  givenName: "Admin",
   familyName: "User",
   image: "",
   username: "",

@@ -183,10 +183,18 @@ credentials in the Convex/server environment and configure Zitadel's access
 policies separately from this generic OIDC integration. When
 `OIDC_ZITADEL_ORG_ID` is set, the server requests
 `urn:zitadel:iam:org:project:role:user`,
-`urn:zitadel:iam:org:project:role:admin`, and
-`urn:zitadel:iam:org:project:role:dev`, then maps verified current-project roles
-for that organization as `dev > admin > user`; missing or non-matching roles map
-to `user`. Without it, OIDC keeps the generic behavior.
+`urn:zitadel:iam:org:project:role:admin`.
+Verified current-project roles for that organization map to the canonical local
+roles `user` and `admin`; missing or non-matching roles map to `user`. This
+application does not change Zitadel roles or assignments.
+Without the organization setting, OIDC keeps the generic behavior.
+
+### Admin sign-in
+
+The `admin` provider is available only in development environments at
+`/api/auth/admin`. It creates ordinary `user` accounts; only trusted OIDC role
+synchronization can assign the `admin` role. The canonical persisted values are
+the `user`/`admin` roles and the `admin` provider.
 
 ### Convex integration notes
 

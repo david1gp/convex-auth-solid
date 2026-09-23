@@ -44,7 +44,7 @@ test("Hono dispatcher keeps the existing HTTP route surface", () => {
     "GET /api/auth/google",
     "GET /api/auth/oidc/start",
     "GET /api/auth/oidc/callback",
-    "GET /api/auth/dev",
+    "GET /api/auth/admin",
     "POST /api/auth/sign-up",
     "POST /api/auth/sign-up-confirm-email",
     "POST /api/auth/sign-in-via-pw",
@@ -68,6 +68,9 @@ test("Hono dispatcher keeps the existing HTTP route surface", () => {
     const optionsRoute = route.replace(/^(GET|POST) /, "OPTIONS ")
     expect(routeKeys.has(optionsRoute)).toBe(true)
   }
+
+  expect(routeKeys.has("GET /api/auth/dev")).toBe(false)
+  expect(routeKeys.has("OPTIONS /api/auth/dev")).toBe(false)
 
   expect(routeKeys.size).toBe(expectedRoutes.length * 2)
 })
