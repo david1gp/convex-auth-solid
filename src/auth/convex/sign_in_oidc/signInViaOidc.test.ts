@@ -87,6 +87,77 @@ test("OIDC routes complete a verified session through Hono", async () => {
   })
 })
 
+test("OIDC callback enriches blank token name and picture only from matching UserInfo", async () => {
+  await withEnvironment(async () => {
+    const { privateKey, publicJwk } = await signingKeysCreate()
+    const mutationCalls: unknown[] = []
+    const ctx = actionContextCreate(mutationCalls, [], createUserSession())
+    let nonce = ""
+    let userInfoCalls = 0
+
+    await withFetch(
+      async (input, init) => {
+        const request = new Request(input, init)
+        if (request.url === `${issuer}/.well-known/openid-configuration`)
+          return Response.json({ ...discovery, userinfo_endpoint: `${issuer}/userinfo` })
+        if (request.url === discovery.token_endpoint)
+          return Response.json({
+            id_token: await idTokenCreate(privateKey, nonce, {
+              given_name: " ",
+              family_name: "Lovelace",
+              picture: " ",
+            }),
+            access_token: "provider-secret",
+          })
+        if (request.url === discovery.jwks_uri) return Response.json({ keys: [publicJwk] })
+        if (request.url === `${issuer}/userinfo`) {
+          userInfoCalls += 1
+          expect(request.headers.get("Authorization")).toBe("Bearer provider-secret")
+          return Response.json({
+            sub: "subject-123",
+            name: "Ada Lovelace",
+            picture: "https://example.test/ada.png",
+            email: "unverified@example.test",
+            role: "admin",
+          })
+        }
+        return new Response("not found", { status: 404 })
+      },
+      async () => {
+        const dispatcher = createHonoDispatcher()
+        addHttpRoutesAuth(dispatcher)
+        const start = await dispatcher.fetch(new Request(urlSignInViaOidc("/")), ctx)
+        const authorization = new URL(start.headers.get("location") ?? "")
+        nonce = authorization.searchParams.get("nonce") ?? ""
+        const cookie = start.headers.get("set-cookie")?.split(";", 1)[0] ?? ""
+        const state = authorization.searchParams.get("state") ?? ""
+        const response = await dispatcher.fetch(
+          new Request(`${callbackUrl}?state=${encodeURIComponent(state)}&code=authorization-code`, {
+            headers: { Cookie: cookie },
+          }),
+          ctx,
+        )
+
+        expect(response.status).toBe(302)
+        expect(userInfoCalls).toBe(1)
+        expect(mutationCalls).toEqual([
+          {
+            provider: "oidc",
+            issuer,
+            providerId: "subject-123",
+            givenName: "Ada Lovelace",
+            familyName: "",
+            image: "https://example.test/ada.png",
+            username: "ada",
+            email: "ada@example.test",
+          },
+        ])
+        expect(response.headers.get("location")).not.toContain("provider-secret")
+      },
+    )
+  })
+})
+
 test("OIDC callback rejects a denied provider response and clears a validated transaction", async () => {
   await withEnvironment(async () => {
     const dispatcher = createHonoDispatcher()
@@ -143,7 +214,11 @@ async function signingKeysCreate() {
   return { privateKey, publicJwk: { ...publicJwk, alg: "RS256", kid: "oidc-test-key", use: "sig" } }
 }
 
-async function idTokenCreate(privateKey: CryptoKey, nonce: string): Promise<string> {
+async function idTokenCreate(
+  privateKey: CryptoKey,
+  nonce: string,
+  overrides: Record<string, unknown> = {},
+): Promise<string> {
   const now = Math.floor(Date.now() / 1000)
   return new SignJWT({
     nonce,
@@ -152,6 +227,7 @@ async function idTokenCreate(privateKey: CryptoKey, nonce: string): Promise<stri
     given_name: "Ada",
     family_name: "User",
     preferred_username: "ada",
+    ...overrides,
   })
     .setProtectedHeader({ alg: "RS256", kid: "oidc-test-key" })
     .setIssuer(issuer)

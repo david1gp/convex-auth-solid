@@ -19,27 +19,26 @@ export async function updateUserFromAuthProviderFn(
     return createResultError(op, "User not found by userId: ", userId)
   }
 
-  const userName = getUserNameFromCommonAuthProvider(authProvider, user.name || "Updated User")
-  const userImage = authProvider.image ?? user.image
-  const userEmail = authProvider.email || user.email
+  // Existing names must not be replaced by username/email fallbacks when the provider omits a real name.
+  const userName = getUserNameFromCommonAuthProvider(
+    { ...authProvider, username: "", email: undefined },
+    user.name || "Updated User",
+  )
+  const userImage = authProvider.image.trim() ? authProvider.image : user.image
 
   // Only update if at least one field has changed
   const nameChanged = userName !== user.name
   const imageChanged = userImage !== user.image
-  const emailChanged = userEmail !== user.email
 
-  if (!nameChanged && !imageChanged && !emailChanged) {
+  if (!nameChanged && !imageChanged) {
     console.log(userId, "no changes")
     return createResult(userId)
   }
   if (nameChanged) console.log(userId, "name changed", user.name, "->", userName)
   if (imageChanged) console.log(userId, "image changed", user.image, "->", userImage)
-  if (emailChanged) console.log(userId, "email changed", user.email, "->", userEmail)
-
   await ctx.db.patch("users", userId, {
     ...(nameChanged && { name: userName }),
     ...(imageChanged && { image: userImage }),
-    ...(emailChanged && { email: userEmail }),
   })
 
   // Update auth account if needed

@@ -51,10 +51,14 @@ export function getUserNameFromCommonAuthProvider(
   user: Pick<CommonAuthProvider, "givenName" | "familyName" | "username" | "email">,
   ifMissing: string,
 ): string {
-  if (user.givenName && user.familyName) return `${user.givenName} ${user.familyName}`
-  if (user.givenName) return user.givenName
-  if (user.familyName) return user.familyName
-  if (user.username) return user.username
-  if (user.email) return user.email
+  const givenName = user.givenName.trim()
+  const familyName = user.familyName.trim()
+  const username = user.username.trim()
+  const email = user.email?.trim()
+  if (givenName && familyName) return `${givenName} ${familyName}`
+  if (givenName) return givenName
+  if (familyName) return familyName
+  if (username) return username
+  if (email) return email
   return ifMissing
 }

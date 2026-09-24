@@ -6,14 +6,18 @@ import type { CommonAuthProvider } from "#src/auth/server/social_identity_provid
 export function oidcTrustedProfileCreate(
   claims: OidcIdTokenClaims,
   role?: UserRole,
+  userInfo?: { name?: string; picture?: string },
 ): Extract<CommonAuthProvider, { provider: typeof loginProvider.oidc }> {
+  const givenName = claims.given_name?.trim()
+  const fullName = claims.name?.trim() || userInfo?.name?.trim()
+  const tokenPicture = claims.picture?.trim() ? claims.picture : undefined
   return {
     provider: loginProvider.oidc,
     issuer: claims.iss,
     providerId: claims.sub,
-    givenName: claims.given_name ?? claims.name ?? "",
-    familyName: claims.family_name ?? "",
-    image: claims.picture ?? "",
+    givenName: givenName || fullName || "",
+    familyName: givenName || !fullName ? (claims.family_name ?? "") : "",
+    image: tokenPicture ?? userInfo?.picture ?? "",
     username: claims.preferred_username ?? "",
     ...(claims.email_verified === true && claims.email ? { email: claims.email } : {}),
     ...(role ? { role } : {}),

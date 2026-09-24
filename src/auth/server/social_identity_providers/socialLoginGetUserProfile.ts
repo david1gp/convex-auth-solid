@@ -86,7 +86,14 @@ async function oauthGoogle(code: string): PromiseResult<CommonAuthProvider> {
   return createResult(convertGoogleProfile(profileOrError.data))
 }
 
-function convertGoogleProfile({ id, given_name, family_name, email, picture }: GoogleUserProfile): CommonAuthProvider {
+function convertGoogleProfile({
+  id,
+  given_name,
+  family_name,
+  email,
+  verified_email,
+  picture,
+}: GoogleUserProfile): CommonAuthProvider {
   const providerId = id
   const provider = socialLoginProvider.google
   return {
@@ -98,7 +105,7 @@ function convertGoogleProfile({ id, given_name, family_name, email, picture }: G
     familyName: family_name ?? "",
     image: picture,
     // email
-    email,
+    ...(verified_email ? { email } : {}),
     username: "",
   }
 }

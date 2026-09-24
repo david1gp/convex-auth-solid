@@ -4,6 +4,7 @@ import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFr
 import { findUserByAuthAccountFn } from "#src/auth/convex/crud/findUserByAuthAccountFn.ts"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
 import { linkAuthToExistingUserFn } from "#src/auth/convex/crud/linkAuthToExistingUserFn.ts"
+import { updateUserFromAuthProviderFn } from "#src/auth/convex/crud/updateUserFromAuthProviderFn.ts"
 import { userRoleSyncFromAuthProviderFn } from "#src/auth/convex/crud/userRoleSyncFromAuthProviderFn.ts"
 import type { DocAuthAccount } from "#src/auth/convex/IdUser.ts"
 import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
@@ -30,6 +31,8 @@ export async function findOrCreateUserFn(
     const user = await ctx.db.get("users", existingAuthAccount.userId)
     if (!user) return createResultError(op, "User not found by userId", existingAuthAccount.userId)
     if (user.deletedAt) return createResultError(op, "User account has been deleted")
+    const profileUpdateResult = await updateUserFromAuthProviderFn(ctx, user._id, authData)
+    if (!profileUpdateResult.success) return profileUpdateResult
     const syncedUserResult = await userRoleSyncFromAuthProviderFn(ctx, user._id, authData)
     if (!syncedUserResult.success) return syncedUserResult
     const syncedUser = syncedUserResult.data
@@ -49,8 +52,12 @@ export async function findOrCreateUserFn(
     if (existingUser) {
       if (existingUser.deletedAt) return createResultError(op, "User account has been deleted")
       await linkAuthToExistingUserFn(ctx, existingUser._id, authData.provider, authData.providerId)
+      const profileUpdateResult = await updateUserFromAuthProviderFn(ctx, existingUser._id, authData)
+      if (!profileUpdateResult.success) return profileUpdateResult
+      const updatedUser = await ctx.db.get("users", existingUser._id)
+      if (!updatedUser) return createResultError(op, "User not found by userId", existingUser._id)
       const { orgHandle, orgRole } = await orgMemberGetHandleAndRoleFn(ctx, existingUser._id)
-      const userProfile = docUserToUserProfile(existingUser, orgHandle, orgRole)
+      const userProfile = docUserToUserProfile(updatedUser, orgHandle, orgRole)
       return createResult({
         profile: userProfile,
         hasPw: !!existingUser.hashedPassword,

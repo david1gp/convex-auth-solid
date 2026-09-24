@@ -9,6 +9,7 @@ import { oidcIdTokenVerify } from "#src/auth/server/oidc/oidcIdTokenVerify.ts"
 import { oidcTokenExchange } from "#src/auth/server/oidc/oidcTokenExchange.ts"
 import { oidcTransactionCookie } from "#src/auth/server/oidc/oidcTransactionCookie.ts"
 import { oidcTrustedProfileCreate } from "#src/auth/server/oidc/oidcTrustedProfileCreate.ts"
+import { oidcUserInfoGet } from "#src/auth/server/oidc/oidcUserInfoGet.ts"
 import { oidcZitadelRoleGet } from "#src/auth/server/oidc/oidcZitadelRoleGet.ts"
 
 export async function signInViaOidcCallbackRequestHandler(ctx: ActionCtx, request: Request): Promise<Response> {
@@ -72,11 +73,20 @@ export async function signInViaOidcCallbackRequestHandler(ctx: ActionCtx, reques
     return oidcRequestErrorResponseCreate(op, "could not verify OIDC ID token", 400, clearCookieHeaders)
   }
 
+  const idTokenName = claimsResult.data.given_name?.trim() || claimsResult.data.name?.trim()
+  const userInfoResult = await oidcUserInfoGet({
+    discovery: discoveryResult.data,
+    accessToken: tokenResult.data.access_token,
+    subject: claimsResult.data.sub,
+    needsName: !idTokenName,
+    needsPicture: !claimsResult.data.picture?.trim(),
+  })
   const providerInfo = oidcTrustedProfileCreate(
     claimsResult.data,
     configResult.data.zitadelOrgId
       ? oidcZitadelRoleGet(claimsResult.data["urn:zitadel:iam:org:project:roles"], configResult.data.zitadelOrgId)
       : undefined,
+    userInfoResult.success ? userInfoResult.data : undefined,
   )
   let sessionResult: Awaited<ReturnType<ActionCtx["runMutation"]>>
   try {

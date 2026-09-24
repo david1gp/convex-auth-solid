@@ -3,6 +3,88 @@ import { createUserFromAuthProviderFn } from "#src/auth/convex/crud/createUserFr
 import { findOrCreateUserFn } from "#src/auth/convex/crud/findOrCreateUserFn.ts"
 import type { UserRole } from "#src/auth/model_field/userRole.ts"
 
+function persistenceCtx(rows: {
+  users: Record<string, any>[]
+  authAccounts: Record<string, any>[]
+  orgMembers: Record<string, any>[]
+}) {
+  return {
+    db: {
+      query(table: keyof typeof rows) {
+        let filters: Record<string, unknown> = {}
+        const builder = {
+          withIndex(_name: string, callback: (query: { eq: (field: string, value: unknown) => unknown }) => unknown) {
+            filters = {}
+            const query = {
+              eq: (field: string, value: unknown) => {
+                filters[field] = value
+                return query
+              },
+            }
+            callback(query)
+            return builder
+          },
+          unique: async () =>
+            rows[table].find((row) => Object.entries(filters).every(([key, value]) => row[key] === value)) ?? null,
+          first: async () =>
+            rows[table].find((row) => Object.entries(filters).every(([key, value]) => row[key] === value)) ?? null,
+        }
+        return builder
+      },
+      get: async (table: keyof typeof rows, id: string) => rows[table].find((row) => row._id === id) ?? null,
+      patch: async (table: keyof typeof rows, id: string, value: Record<string, unknown>) => {
+        const row = rows[table].find((candidate) => candidate._id === id)
+        if (row) Object.assign(row, value)
+      },
+      insert: async (table: keyof typeof rows, value: Record<string, unknown>) => {
+        const row = { ...value, _id: `${table}-${rows[table].length + 1}`, _creationTime: Date.now() }
+        rows[table].push(row)
+        return row._id
+      },
+    },
+  } as never
+}
+
+function provider(overrides: Record<string, unknown> = {}) {
+  return {
+    provider: "google" as const,
+    providerId: "google-subject",
+    givenName: "Updated",
+    familyName: "Person",
+    image: "https://example.test/new.png",
+    username: "updated-person",
+    email: "person@example.test",
+    ...overrides,
+  }
+}
+
+function existingUser(overrides: Record<string, unknown> = {}) {
+  return {
+    _id: "user-1",
+    _creationTime: Date.now(),
+    name: "Original Person",
+    image: "https://example.test/old.png",
+    email: "person@example.test",
+    role: "user",
+    createdAt: "2026-09-22T00:00:00.000Z",
+    updatedAt: "2026-09-22T00:00:00.000Z",
+    ...overrides,
+  }
+}
+
+function authAccount(overrides: Record<string, unknown> = {}) {
+  return {
+    _id: "account-1",
+    _creationTime: Date.now(),
+    userId: "user-1",
+    provider: "google",
+    providerAccountId: "google-subject",
+    createdAt: "2026-09-22T00:00:00.000Z",
+    updatedAt: "2026-09-22T00:00:00.000Z",
+    ...overrides,
+  }
+}
+
 test("OIDC role synchronization upgrades and downgrades an existing user on each login", async () => {
   const user = {
     _id: "user-1",
@@ -140,4 +222,138 @@ test("the admin provider creates a normal user rather than granting admin", asyn
   expect(rows.users[0]?.role).toBe("user")
   expect(rows.authAccounts[0]?.provider).toBe("admin")
   if (result.success) expect(result.data.role).toBe("user")
+})
+
+test("an existing social account refreshes supplied name and picture without replacing its email or local role", async () => {
+  const user = existingUser({ role: "admin" })
+  const rows = { users: [user], authAccounts: [authAccount()], orgMembers: [] }
+
+  const result = await findOrCreateUserFn(persistenceCtx(rows), provider({ email: "someone-elses@example.test" }))
+
+  expect(result.success).toBe(true)
+  expect(user.name).toBe("Updated Person")
+  expect(user.image).toBe("https://example.test/new.png")
+  expect(user.email).toBe("person@example.test")
+  expect(user.role).toBe("admin")
+  if (result.success) expect(result.data.profile.role).toBe("admin")
+})
+
+test("the first social link refreshes supplied profile fields but keeps the matched email", async () => {
+  const user = existingUser()
+  const rows = { users: [user], authAccounts: [], orgMembers: [] }
+
+  const result = await findOrCreateUserFn(persistenceCtx(rows), provider())
+
+  expect(result.success).toBe(true)
+  expect(rows.authAccounts).toHaveLength(1)
+  expect(user.name).toBe("Updated Person")
+  expect(user.image).toBe("https://example.test/new.png")
+  expect(user.email).toBe("person@example.test")
+})
+
+test("a new social user persists the provider name and picture", async () => {
+  const rows = { users: [], authAccounts: [], orgMembers: [] }
+
+  const result = await findOrCreateUserFn(persistenceCtx(rows), provider())
+
+  expect(result.success).toBe(true)
+  expect(rows.users).toHaveLength(1)
+  expect(rows.users[0]?.name).toBe("Updated Person")
+  expect(rows.users[0]?.image).toBe("https://example.test/new.png")
+  if (result.success) {
+    expect(result.data.profile.name).toBe("Updated Person")
+    expect(result.data.profile.image).toBe("https://example.test/new.png")
+  }
+})
+
+test("a new social user without profile fields gets the existing minimal defaults", async () => {
+  const rows = { users: [], authAccounts: [], orgMembers: [] }
+  const authData = provider({ givenName: "", familyName: "", username: "", image: "", email: undefined })
+
+  const result = await findOrCreateUserFn(persistenceCtx(rows), authData)
+
+  expect(result.success).toBe(true)
+  expect(rows.users[0]?.name).toBe("New User")
+  expect(rows.users[0]?.image).toBe("")
+})
+
+test("name-only and picture-only provider updates refresh independently", async () => {
+  const nameUser = existingUser()
+  const nameRows = { users: [nameUser], authAccounts: [authAccount()], orgMembers: [] }
+  await findOrCreateUserFn(persistenceCtx(nameRows), provider({ image: "", email: undefined }))
+  expect(nameUser.name).toBe("Updated Person")
+  expect(nameUser.image).toBe("https://example.test/old.png")
+
+  const pictureUser = existingUser()
+  const pictureRows = { users: [pictureUser], authAccounts: [authAccount()], orgMembers: [] }
+  await findOrCreateUserFn(
+    persistenceCtx(pictureRows),
+    provider({
+      givenName: "",
+      familyName: "",
+      username: "",
+      image: "https://example.test/picture-only.png",
+      email: undefined,
+    }),
+  )
+  expect(pictureUser.name).toBe("Original Person")
+  expect(pictureUser.image).toBe("https://example.test/picture-only.png")
+})
+
+test("absent and blank provider profile fields do not erase a real name or picture", async () => {
+  const user = existingUser()
+  const rows = { users: [user], authAccounts: [authAccount()], orgMembers: [] }
+  await findOrCreateUserFn(
+    persistenceCtx(rows),
+    provider({ givenName: " ", familyName: "", username: "", image: "   ", email: undefined }),
+  )
+  expect(user.name).toBe("Original Person")
+  expect(user.image).toBe("https://example.test/old.png")
+})
+
+test("a provider username without a real name cannot overwrite an existing name", async () => {
+  const user = existingUser()
+  const rows = { users: [user], authAccounts: [authAccount()], orgMembers: [] }
+  const result = await findOrCreateUserFn(
+    persistenceCtx(rows),
+    provider({ givenName: "", familyName: "", username: "login-name", image: "", email: undefined }),
+  )
+
+  expect(result.success).toBe(true)
+  expect(user.name).toBe("Original Person")
+  expect(user.image).toBe("https://example.test/old.png")
+})
+
+test("an existing social account cannot claim another user's email", async () => {
+  const user = existingUser()
+  const otherUser = existingUser({ _id: "user-2", email: "collision@example.test", name: "Other Person" })
+  const rows = { users: [user, otherUser], authAccounts: [authAccount()], orgMembers: [] }
+  const result = await findOrCreateUserFn(persistenceCtx(rows), provider({ email: "collision@example.test" }))
+  expect(result.success).toBe(true)
+  expect(user.email).toBe("person@example.test")
+  expect(otherUser.email).toBe("collision@example.test")
+  expect(rows.authAccounts).toHaveLength(1)
+})
+
+test("OIDC does not link an account by email", async () => {
+  const existing = existingUser({ email: "collision@example.test" })
+  const rows = { users: [existing], authAccounts: [], orgMembers: [] }
+  const oidcProvider = {
+    provider: "oidc" as const,
+    issuer: "https://issuer.example.test",
+    providerId: "oidc-subject",
+    givenName: "New",
+    familyName: "Person",
+    image: "",
+    username: "new-person",
+    email: "collision@example.test",
+  }
+
+  const result = await findOrCreateUserFn(persistenceCtx(rows), oidcProvider)
+
+  expect(result.success).toBe(true)
+  expect(rows.users).toHaveLength(2)
+  expect(rows.authAccounts).toHaveLength(1)
+  expect(rows.authAccounts[0]?.userId).not.toBe(existing._id)
+  expect(existing.email).toBe("collision@example.test")
 })

@@ -23,7 +23,6 @@ export const googleOauthUserProfileRootUrl = "https://www.googleapis.com/oauth2/
  * https://github.com/nextauthjs/next-auth/blob/main/packages/core/src/providers/google.ts
  */
 export async function getGoogleUserProfile({
-  id_token,
   access_token,
 }: {
   id_token: string
@@ -31,9 +30,9 @@ export async function getGoogleUserProfile({
 }): PromiseResult<GoogleUserProfile> {
   const op = "getGoogleUserProfile"
   const provider = loginProvider.google
-  const r = await fetch(`${googleOauthUserProfileRootUrl}?alt=json&access_token=${access_token}`, {
+  const r = await fetch(googleOauthUserProfileRootUrl, {
     headers: {
-      Authorization: `Bearer ${id_token}`,
+      Authorization: `Bearer ${access_token}`,
     },
   })
   const text = await r.text()

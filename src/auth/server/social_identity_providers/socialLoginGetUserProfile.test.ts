@@ -1,6 +1,11 @@
 import { expect, test } from "bun:test"
 import { githubOauthTokenRootUrl } from "#src/auth/server/social_identity_providers/getGithubOathToken.ts"
 import { githubOauthUserProfileRootUrl } from "#src/auth/server/social_identity_providers/getGithubUserProfile.ts"
+import { googleOAuthTokenRootUrl } from "#src/auth/server/social_identity_providers/getGoogleOauthToken.ts"
+import {
+  getGoogleUserProfile,
+  googleOauthUserProfileRootUrl,
+} from "#src/auth/server/social_identity_providers/getGoogleUserProfile.ts"
 import { microsoftOauthTokenRootUrl } from "#src/auth/server/social_identity_providers/getMicrosoftOauthToken.ts"
 import { microsoftOauthUserProfileRootUrl } from "#src/auth/server/social_identity_providers/getMicrosoftUserProfile.ts"
 import { socialLoginGetUserProfile } from "#src/auth/server/social_identity_providers/socialLoginGetUserProfile.ts"
@@ -13,6 +18,64 @@ test("the admin social provider omits its unavailable email and keeps the user r
     expect(result.data).not.toHaveProperty("email")
     expect(result.data.provider).toBe("admin")
   }
+})
+
+test("Google profile uses only an Authorization header for its access token", async () => {
+  const result = await withFetch(
+    async (input, init) => {
+      expect(String(input)).toBe(googleOauthUserProfileRootUrl)
+      expect(new Headers(init?.headers).get("Authorization")).toBe("Bearer access-secret")
+      return Response.json({
+        id: "google-user",
+        email: "user@example.test",
+        verified_email: true,
+        name: "Google User",
+        given_name: "Google",
+        picture: "",
+      })
+    },
+    () => getGoogleUserProfile({ id_token: "id-secret", access_token: "access-secret" }),
+  )
+
+  expect(result.success).toBe(true)
+})
+
+test("Google does not provide an unverified email for account linking", async () => {
+  await withEnvironment(
+    {
+      GOOGLE_CLIENT_SECRET: "google-secret",
+      PUBLIC_GOOGLE_CLIENT_ID: "google-client",
+      PUBLIC_BASE_URL_API: "https://api.example.test",
+    },
+    async () => {
+      const result = await withFetch(
+        async (input) => {
+          if (String(input) === googleOAuthTokenRootUrl)
+            return Response.json({
+              access_token: "google-secret",
+              id_token: "id-token",
+              expires_in: 3600,
+              refresh_token: "refresh-secret",
+              token_type: "Bearer",
+              scope: "openid profile email",
+            })
+          if (String(input) === googleOauthUserProfileRootUrl)
+            return Response.json({
+              id: "google-user",
+              email: "unverified@example.test",
+              verified_email: false,
+              name: "Google User",
+              given_name: "Google",
+              picture: "",
+            })
+          return new Response("not found", { status: 404 })
+        },
+        () => socialLoginGetUserProfile.google("authorization-code"),
+      )
+      expect(result.success).toBe(true)
+      if (result.success) expect(result.data).not.toHaveProperty("email")
+    },
+  )
 })
 
 test("GitHub and Microsoft omit profiles without an email", async () => {
