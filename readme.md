@@ -103,9 +103,15 @@ Quick link
    bun run dev
    ```
 
-## SSO end-to-end test
+## End-to-end tests
 
-Run the focused Playwright workflow with `bun run test:e2e`. It targets the local UI service at `http://localhost:3012` by default; set `E2E_BASE_URL` to override it. The default reflects this repo's running `convex-auth-ui` systemd service/registry port; Rsbuild's fallback when started outside that service is `3016`.
+`bun run test:e2e` runs the E2E suites against the **production logical target** by default; `bun run test:e2e:dev` selects the development target. This repository does not yet have a production deployment, so both targets temporarily fall back to `http://localhost:3012` (the registered UI service; Rsbuild's fallback outside that service is `3016`). Configure targets independently with `E2E_PRODUCTION_BASE_URL` and `E2E_DEV_BASE_URL`. A target-specific value takes precedence; `E2E_BASE_URL` remains a shared fallback for either target, followed by localhost. URLs must be absolute HTTP(S) URLs.
+
+The runner discovers `e2e/workflows/**/*.test.ts`, sorts the paths, and runs each suite sequentially in its own Rstest process. It checkpoints completed suites separately for each target and resolved base URL. If a suite fails, rerunning the same target and URL resumes by skipping suites already completed; suites newly discovered since the checkpoint are still run. Checkpoints expire after 24 hours. Each invocation also sweeps expired checkpoints; successful runs remove their checkpoint after cleanup, while failures retain the current checkpoint for resume.
+
+Suites must leave shared SSO fixtures alone: the pre-existing Zitadel test account and `local-sso-e2e` organization/membership are not owned by an E2E run and must never be deleted. For any future run-created resource, use an unmistakable ID beginning `e2e-<runId>-` and register it immediately after creation with `e2eOwnedResourceRegister({ resourceType, resourceId })` from `e2e/config/e2eOwnedResourceRegister.ts`. Registration records the resource's type, ID, owning run, and creation time in that run's checkpoint. A resource type must have a verified cleanup adapter before it is used: cleanup fails closed for unknown types and retains the checkpoint if deletion/removal cannot be verified. The current SSO suite creates no per-run resources.
+
+### SSO test requirements
 
 The UI and its configured API/Convex services must be running with SSO enabled. The test uses the configured Zitadel `ssotest` identity (`testuser` in the `contentoren` CLI profile) by default: provide both `E2E_AUTH_USERNAME` and `E2E_AUTH_PASSWORD` to override, or configure `zitadel-cli` so these commands work:
 
@@ -116,7 +122,7 @@ zitadel-cli credentials get testuser --profile contentoren --field username
 zitadel-cli credentials get testuser --profile contentoren --field password
 ```
 
-Install Playwright's Chromium browser once with `bunx playwright install chromium` (`bunx playwright install --with-deps chromium` on a fresh Linux host). Then run `bun run test:e2e`. Never commit credentials.
+Install Playwright's Chromium browser once with `bunx playwright install chromium` (`bunx playwright install --with-deps chromium` on a fresh Linux host). Then run either E2E command above. Never commit credentials.
 
 ## Optional OIDC sign-in
 
