@@ -17,6 +17,7 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 export interface ResourceViewProps extends HasResourceModel, MayHaveClass {
   showCardWrapper?: boolean
   showMetaDates?: boolean
+  editHref?: string
 }
 
 export function ResourceViewDetailed(p: ResourceViewProps) {
@@ -60,7 +61,7 @@ function Header(p: ResourceViewProps) {
       }
     >
       <LinkButtonIconOnlyInternal
-        to={urlResourceEdit(p.resource.resourceId)}
+        to={p.editHref ?? urlResourceEdit(p.resource.resourceId)}
         variant={buttonVariant.ghost}
         icon={formModeIcon.edit}
         title={ttc("Edit")}

@@ -13,13 +13,14 @@ import { classMerge } from "#ui/utils/classMerge.ts"
 export interface ResourceCardLinkProps {
   resource: ResourceModel
   class?: string
+  href?: string
 }
 
 export function ResourceCardLink(p: ResourceCardLinkProps) {
   return (
     <LinkButtonInternal
       variant={buttonVariant.filled}
-      to={urlResourceView(p.resource.resourceId)}
+      to={p.href ?? urlResourceView(p.resource.resourceId)}
       class={classMerge(
         classesCard,
         "pl-4",

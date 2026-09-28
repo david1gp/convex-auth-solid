@@ -16,6 +16,7 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 export interface OrgViewProps extends MayHaveClass {
   org: OrgModel
   showEditButton: boolean
+  editHref?: string
 }
 
 export function OrgViewInformation(p: OrgViewProps) {
@@ -27,7 +28,7 @@ export function OrgViewInformation(p: OrgViewProps) {
       <ShowUrl {...p} />
       {p.showEditButton && (
         <LinkButtonInternal
-          to={urlOrgEdit(p.org.orgHandle)}
+          to={p.editHref ?? urlOrgEdit(p.org.orgHandle)}
           variant={buttonVariant.ghost}
           icon={formModeIcon.edit}
           class="flex mt-4"

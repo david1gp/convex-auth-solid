@@ -12,10 +12,11 @@ export function enterOtpFormStateCreate(props: () => EnterOtpFormProps) {
   const otpError = createSignalObject("")
   const isSubmitting = createSignalObject(false)
   const otp = createSignalObject("")
-  const email = createSignalObject("")
+  const email = createSignalObject(props().initialEmail ?? "")
   let url: URL | null = null
 
   onMount(() => {
+    if (props().initialEmail !== undefined) return
     url = createUrl()
     const emailParam = searchParamGet("email", url)
     if (emailParam) email.set(emailParam)

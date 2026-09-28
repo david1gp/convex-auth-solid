@@ -1,20 +1,12 @@
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { createEffect, For, Match, Switch } from "solid-js"
-import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
-import type { Language } from "#src/app/i18n/language.ts"
+import { pageDemoHref } from "#src/app/demos/pageDemoHref.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavResource } from "#src/app/nav/NavResource.tsx"
-import { userSessionSignal, userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
-import { resourceSchema } from "#src/resource/model/resourceSchema.ts"
-import {
-  type ResourceFilterState,
-  resourceFilterCreate,
-  resourceFilterFields,
-} from "#src/resource/model_field/resourceFilterFields.ts"
-import type { ResourceType } from "#src/resource/model_field/resourceType.ts"
-import type { Visibility } from "#src/resource/model_field/visibility.ts"
+import { resourceFilterFields } from "#src/resource/model_field/resourceFilterFields.ts"
+import { resourceListLoaderStateCreate } from "#src/resource/ui/list/resourceListLoaderStateCreate.ts"
 import { resourceNameAddList } from "#src/resource/ui/resourceNameRecordSignal.ts"
 import { ResourceCardLink } from "#src/resource/ui/shared/ResourceCardLink.tsx"
 import { urlResourceAdd } from "#src/resource/url/urlResource.ts"
@@ -22,12 +14,10 @@ import { NoData } from "#src/ui/illustrations/NoData.tsx"
 import { SearchFilterButtons } from "#src/ui/input/search/SearchFilterButtons.tsx"
 import { SearchFilterPopover } from "#src/ui/input/search/SearchFilterPopover.tsx"
 import { SearchInput } from "#src/ui/input/search/SearchInput.tsx"
-import { searchFilterStateCreate } from "#src/ui/input/search/searchFilterStateCreate.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { LoadingSection } from "#src/ui/pages/LoadingSection.tsx"
 import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
 import type { PaginationResultType } from "#src/utils/convex_backend/paginationResultType.ts"
-import { cursorPaginationCreate } from "#src/utils/convex_client/cursorPaginationCreate.ts"
 import { resultHasErrorMessage } from "#src/utils/result/resultHasErrorMessage.ts"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
@@ -37,75 +27,59 @@ import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.ts"
 
-export function ResourceListPage() {
+export function ResourceListPage(p: { demo?: { resources: () => ResourceModel[] } }) {
   return (
     <PageWrapper>
-      <NavResource getResourcePageTitle={() => ttc("Resources")} />
-      <ResourceListLoader />
+      {!p.demo && <NavResource getResourcePageTitle={() => ttc("Resources")} />}
+      <ResourceListLoader demo={p.demo} />
     </PageWrapper>
   )
 }
 
-function ResourceListLoader() {
-  const searchState = searchFilterStateCreate<ResourceFilterState>(resourceFilterCreate())
-  const getResourceFilters = () => {
-    const filters = searchState.debouncedFilters()
-    return {
-      searchText: searchState.debouncedSearch() || undefined,
-      type: (filters.type || undefined) as ResourceType | undefined,
-      visibility: (filters.visibility || undefined) as Visibility | undefined,
-      l: (filters.language || undefined) as Language | undefined,
-    }
-  }
-  const pagination = cursorPaginationCreate({
-    query: api.resource.resourcesListQuery,
-    queryKey: "resourcesListQuery",
-    args: () => ({
-      token: userTokenGet(),
-      ...getResourceFilters(),
-    }),
-    identity: () => userSessionSignal.get()?.profile.userId ?? null,
-    filters: getResourceFilters,
-    itemSchema: resourceSchema,
-  })
+function ResourceListLoader(p: { demo?: { resources: () => ResourceModel[] } }) {
+  const state = resourceListLoaderStateCreate(() => p.demo)
 
   return (
     <>
       <div class="flex flex-wrap gap-2 justify-between mb-4">
         <div class="flex flex-wrap gap-2 items-center">
-          <SearchInput searchSignal={searchState.searchSignal} searchState={searchState} />
-          <SearchFilterPopover filterSignal={searchState.filterSignal} filterFields={resourceFilterFields} />
-          <SearchFilterButtons filterSignal={searchState.filterSignal} filterFields={resourceFilterFields} />
+          <SearchInput searchSignal={state.searchState.searchSignal} searchState={state.searchState} />
+          <SearchFilterPopover filterSignal={state.searchState.filterSignal} filterFields={resourceFilterFields} />
+          <SearchFilterButtons filterSignal={state.searchState.filterSignal} filterFields={resourceFilterFields} />
         </div>
-        <ResourceCreateLink />
+        <ResourceCreateLink demo={!!p.demo} />
       </div>
 
-      <Switch>
-        <Match when={pagination.page() === undefined}>
-          <LoadingSection loadingSubject={ttc("Resources")} />
-        </Match>
-        <Match when={resultHasErrorMessage(pagination.page())}>
-          {(errorMessage) => <ErrorPage title={errorMessage()} />}
-        </Match>
-        <Match when={resultHasNoResources(pagination.page(), pagination.canPrevious())}>
-          <NoResources />
-        </Match>
-        <Match when={getResourcesPage(pagination.page())}>
-          {(getPage) => (
-            <>
-              <ResourceList resources={getPage().page} />
-              <PaginationControls
-                page={() => pagination.history().length + 1}
-                canPrevious={pagination.canPrevious}
-                canNext={pagination.canNext}
-                previous={pagination.previous}
-                next={pagination.next}
-                loading={pagination.loading}
-              />
-            </>
-          )}
-        </Match>
-      </Switch>
+      {p.demo ? (
+        <ResourceList resources={state.demoResources()} demo />
+      ) : (
+        <Switch>
+          <Match when={state.pagination?.page() === undefined}>
+            <LoadingSection loadingSubject={ttc("Resources")} />
+          </Match>
+          <Match when={resultHasErrorMessage(state.pagination?.page())}>
+            {(errorMessage) => <ErrorPage title={errorMessage()} />}
+          </Match>
+          <Match when={resultHasNoResources(state.pagination?.page(), state.pagination!.canPrevious())}>
+            <NoResources />
+          </Match>
+          <Match when={getResourcesPage(state.pagination?.page())}>
+            {(getPage) => (
+              <>
+                <ResourceList resources={getPage().page} />
+                <PaginationControls
+                  page={() => state.pagination!.history().length + 1}
+                  canPrevious={state.pagination!.canPrevious}
+                  canNext={state.pagination!.canNext}
+                  previous={state.pagination!.previous}
+                  next={state.pagination!.next}
+                  loading={state.pagination!.loading}
+                />
+              </>
+            )}
+          </Match>
+        </Switch>
+      )}
     </>
   )
 }
@@ -120,6 +94,7 @@ export function NoResources(p: MayHaveClassAndChildren) {
 
 interface ResourceListProps extends MayHaveClass {
   resources: ResourceModel[]
+  demo?: boolean
 }
 
 function getResourcesPage(
@@ -134,11 +109,12 @@ function resultHasNoResources(
   canPrevious: boolean,
 ): boolean {
   const page = getResourcesPage(result)
-  return page !== null && page.isDone && !canPrevious && page.page.length <= 0
+  return !!page?.isDone && !canPrevious && page.page.length <= 0
 }
 
 function ResourceList(p: ResourceListProps) {
   createEffect(() => {
+    if (p.demo) return
     const got = p.resources
     if (!got) return
     if (got.length <= 0) return
@@ -146,14 +122,25 @@ function ResourceList(p: ResourceListProps) {
   })
   return (
     <div class={classArr(classesGridCols2xl, "gap-4")}>
-      <For each={p.resources}>{(r) => <ResourceCardLink resource={r} />}</For>
+      <For each={p.resources} fallback={p.demo ? <NoResources /> : undefined}>
+        {(r) => (
+          <ResourceCardLink
+            resource={r}
+            href={p.demo ? pageDemoHref("/resources/:resourceId", { resourceId: r.resourceId }) : undefined}
+          />
+        )}
+      </For>
     </div>
   )
 }
 
-function ResourceCreateLink() {
+function ResourceCreateLink(p: { demo?: boolean }) {
   return (
-    <LinkButtonInternal icon={mdiPlus} to={urlResourceAdd()} variant={buttonVariant.filledGreen}>
+    <LinkButtonInternal
+      icon={mdiPlus}
+      to={p.demo ? pageDemoHref("/resources/add") : urlResourceAdd()}
+      variant={buttonVariant.filledGreen}
+    >
       {ttc("Create Resource")}
     </LinkButtonInternal>
   )

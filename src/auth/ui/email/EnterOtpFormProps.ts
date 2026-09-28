@@ -7,4 +7,6 @@ export interface EnterOtpFormProps extends MayHaveClass {
   instruction: string
   buttonText: string
   actionFn: (otp: string, email: string, returnPath: string) => Promise<void>
+  /** Demo-only initial value; bypass URL and redirect parsing when supplied. */
+  initialEmail?: string
 }

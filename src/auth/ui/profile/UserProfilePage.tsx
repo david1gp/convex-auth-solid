@@ -1,99 +1,58 @@
-import { useParams } from "@tanstack/solid-router"
 import { Match, Switch } from "solid-js"
-import { api } from "#convex/_generated/api.js"
-import type { ResultErr } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
 import { NavCenter } from "#src/app/nav/NavCenter.tsx"
 import { NavStatic } from "#src/app/nav/NavStatic.tsx"
-import type { DocUser } from "#src/auth/convex/IdUser.ts"
-import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile.ts"
-import { UserProfileForm } from "#src/auth/ui/profile/UserProfileForm.tsx"
-import {
-  type UserProfileFormStateManagement,
-  userProfileFormStateManagement,
-} from "#src/auth/ui/profile/userProfileFormState.ts"
 import { urlUserProfileView } from "#src/auth/url/pageRouteAuth.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
-import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
-import { formMode } from "#ui/input/form/formMode.ts"
-import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
+import { PageWrapper } from "#ui/static/page/PageWrapper.tsx"
+import { UserProfileView } from "./UserProfileView.tsx"
+import { userProfileLoaderStateCreate } from "./userProfileLoaderStateCreate.ts"
+import { userProfilePageStateCreate } from "./userProfilePageStateCreate.ts"
 
 export function UserProfilePage() {
-  const params = useParams({ strict: false })
-  const getUsername = () => params().username
+  const state = userProfilePageStateCreate()
   return (
     <Switch>
-      <Match when={!getUsername()}>
+      <Match when={!state.username()}>
         <ErrorPage title={ttc("Missing :username in path")} />
       </Match>
-      <Match when={getUsername()}>
+      <Match when={state.username()}>
         <PageWrapper>
           <NavStatic
             dense={true}
             childrenLeft={
               <>
                 <NavBreadcrumbSeparator />
-                <NavLinkButton href={urlUserProfileView(getUsername()!)} isActive={true}>
+                <NavLinkButton href={urlUserProfileView(state.username()!)} isActive={true}>
                   {ttc("User Profile")}
                 </NavLinkButton>
               </>
             }
             childrenCenter={<NavCenter hasBreadcrumbs={false} />}
           />
-          <UserProfileLoader username={getUsername()!} />
+          <UserProfileLoader username={state.username()!} />
         </PageWrapper>
       </Match>
     </Switch>
   )
 }
 
-interface UserProfileLoaderProps {
-  username: string
-}
-
-function UserProfileLoader(p: UserProfileLoaderProps) {
-  const getData = queryCreate(api.auth.userGetByUsernameQuery, {
-    username: p.username,
-  })
+function UserProfileLoader(p: { username: string }) {
+  const state = userProfileLoaderStateCreate(() => p.username)
   return (
     <Switch>
-      <Match when={getData() === undefined}>
+      <Match when={state.loading()}>
         <ErrorPage title={ttc("Error loading user profile")} />
       </Match>
-      <Match when={getData() === null}>
+      <Match when={state.missing()}>
         <ErrorPage title={ttc("User not found")} />
       </Match>
-      <Match when={isResultErr(getData())}>
-        <ErrorPage title={userProfileErrorMessageGet(getData())} />
+      <Match when={state.error()}>
+        <ErrorPage title={state.error()} />
       </Match>
-      <Match when={userProfileDataGet(getData())}>{(data) => <UserProfileDisplay data={data()} />}</Match>
+      <Match when={state.profile()}>{(profile) => <UserProfileView profile={profile()} />}</Match>
     </Switch>
   )
-}
-
-function isResultErr(value: DocUser | ResultErr | null | undefined): value is ResultErr {
-  return value !== null && typeof value === "object" && "success" in value && value.success === false
-}
-
-function userProfileErrorMessageGet(value: DocUser | ResultErr | null | undefined): string {
-  if (!isResultErr(value)) return ttc("Error loading user profile")
-  return value.errorMessage || ttc("Error loading user profile")
-}
-
-function userProfileDataGet(value: DocUser | ResultErr | null | undefined): DocUser | null {
-  if (!value || isResultErr(value)) return null
-  return value
-}
-
-interface UserProfileDisplayProps {
-  data: DocUser
-}
-
-function UserProfileDisplay(p: UserProfileDisplayProps) {
-  const mode = formMode.view
-  const sm: UserProfileFormStateManagement = userProfileFormStateManagement(mode, {})
-  sm.loadData(docUserToUserProfile(p.data))
-  return <UserProfileForm sm={sm} mode={mode} class="max-w-4xl mx-auto" />
 }

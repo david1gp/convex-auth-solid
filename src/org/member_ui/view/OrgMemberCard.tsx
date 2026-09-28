@@ -21,6 +21,7 @@ import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 export interface OrgMemberCardProps extends MayHaveClass, HasOrgHandle {
   member: OrgMemberProfile
   showActions: boolean
+  demo?: boolean
 }
 
 export function OrgMemberCard(p: OrgMemberCardProps) {
@@ -38,14 +39,18 @@ export function OrgMemberCard(p: OrgMemberCardProps) {
 
       {p.member.profile.email && (
         <div class="flex flex-wrap gap-1">
-          <LinkButtonExternal
-            variant={buttonVariant.subtle}
-            icon={mdiEmailOutline}
-            href={"mailto:" + p.member.profile.email}
-            class="flex-1 flex"
-          >
-            {p.member.profile.email}
-          </LinkButtonExternal>
+          {p.demo ? (
+            <span class="flex-1">{p.member.profile.email}</span>
+          ) : (
+            <LinkButtonExternal
+              variant={buttonVariant.subtle}
+              icon={mdiEmailOutline}
+              href={`mailto:${p.member.profile.email}`}
+              class="flex-1 flex"
+            >
+              {p.member.profile.email}
+            </LinkButtonExternal>
+          )}
           <ClipboardCopyButtonIcon
             data={p.member.profile.email}
             copyText={ttc("Copy E-Mail to clipboard")}

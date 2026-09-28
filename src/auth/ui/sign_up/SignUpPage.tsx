@@ -1,5 +1,5 @@
 import { mdiAccountPlus } from "@adaptive-ds/mdi/mdiAccountPlus.js"
-import type { Component } from "solid-js"
+import { type Component, Show } from "solid-js"
 import { enableGithub } from "#src/app/config/enableGithub.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavAuth } from "#src/app/nav/NavAuth.tsx"
@@ -8,14 +8,15 @@ import { AuthSectionCard } from "#src/auth/ui/shared/AuthSectionCard.tsx"
 import { SignInWithAnExistingSession } from "#src/auth/ui/sign_in/existing/SignInWithAnExistingSession.tsx"
 import { socialProviderButtonProps } from "#src/auth/ui/sign_in/social/SocialProviderButtonProps.ts"
 import { SignUpEmailPasswordForm } from "#src/auth/ui/sign_up/form/SignUpEmailPasswordForm.tsx"
+import { signUpDemoStateCreate } from "#src/auth/ui/sign_up/form/signUpDemoStateCreate.ts"
 import { SignInButtonLink } from "#src/auth/ui/sign_up/SignInButtonLink.tsx"
-import { userSessionsSignal } from "#src/auth/ui/signals/userSessionsSignal.ts"
+import { signUpPageContentStateCreate } from "#src/auth/ui/sign_up/signUpPageContentStateCreate.ts"
 import { urlAuthProvider } from "#src/auth/url/urlAuthProvider.ts"
 import { urlSignInRedirectUrl } from "#src/auth/url/urlSignInRedirectUrl.ts"
 import { searchParamGet } from "#src/utils/router/searchParamGet.ts"
 import { classesBgGray } from "#ui/classes/classesBg.jsx"
 import { buttonSize, buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButtonExternal } from "#ui/interactive/link/LinkButton.jsx"
+import { LinkButtonExternal, LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { linkIcons } from "#ui/static/icon/linkIcons.ts"
 import { Img } from "#ui/static/img/Img.jsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.jsx"
@@ -47,24 +48,42 @@ export const SignUpPage: Component<SignUpPageProps> = (p) => {
   )
 }
 
-function SignUpPageContent() {
+export function SignUpPageContent(p: { demo?: boolean; signInHref?: string; confirmHref?: string; message?: string }) {
+  const state = signUpPageContentStateCreate(() => p)
   return (
     <PageWrapper
       innerClass={classArr(
         // "max-w-7xl",
         // "max-w-4xl",
-        userSessionsSignal.get().length === 0 && "max-w-4xl",
+        state.sessionsCount() === 0 && "max-w-4xl",
         // "flex flex-col gap-8",
         "grid grid-cols-1",
-        userSessionsSignal.get().length > 0 ? "lg:grid-cols-3" : "lg:grid-cols-2",
+        state.sessionsCount() > 0 ? "lg:grid-cols-3" : "lg:grid-cols-2",
         "gap-8",
       )}
     >
-      <SignInWithAnExistingSession h2Class="mb-2" innerClass="grid gap-4" />
-      <SignUpEmailPasswordSection />
+      <Show when={!p.demo}>
+        <SignInWithAnExistingSession h2Class="mb-2" innerClass="grid gap-4" />
+      </Show>
+      <SignUpEmailPasswordSection demo={p.demo} />
       <div class="flex flex-col gap-8">
-        <SignUpSocialSection />
-        <HaveAnAccountSection />
+        <Show
+          when={!p.demo}
+          fallback={
+            <section class="space-y-3">
+              <h2 class="text-xl font-semibold">Demo only</h2>
+              <p>No account is created or email sent.</p>
+              <p role="status">{p.message}</p>
+              <Show when={state.confirmHref()}>
+                {(href) => <LinkButtonInternal to={href()}>Continue to confirmation demo</LinkButtonInternal>}
+              </Show>
+              <LinkButtonInternal to={p.signInHref ?? "#"}>Sign in demo</LinkButtonInternal>
+            </section>
+          }
+        >
+          <SignUpSocialSection />
+          <HaveAnAccountSection />
+        </Show>
       </div>
     </PageWrapper>
   )
@@ -102,7 +121,7 @@ function RightSide() {
   )
 }
 
-function SignUpEmailPasswordSection() {
+function SignUpEmailPasswordSection(p: { demo?: boolean } = {}) {
   return (
     <AuthSectionCard
       icon={mdiAccountPlus}
@@ -110,7 +129,7 @@ function SignUpEmailPasswordSection() {
       subtitle={ttc("Join us and start your journey")}
       class="space-y-4 max-w-2xl"
     >
-      <SignUpEmailPasswordForm />
+      <SignUpEmailPasswordForm stateFactory={p.demo ? signUpDemoStateCreate : undefined} />
     </AuthSectionCard>
   )
 }

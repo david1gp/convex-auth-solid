@@ -12,28 +12,21 @@ import { signInSessionNew } from "#src/auth/ui/sign_in/logic/signInSessionNew.ts
 import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import type { DocOrgInvitation } from "#src/org/invitation_convex/IdOrgInvitation.ts"
 import { orgInvitationSchema } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { OrgInvitationAcceptView } from "#src/org/invitation_ui/accept/OrgInvitationAcceptView.tsx"
 import { urlOrgInvitationAccept } from "#src/org/invitation_url/urlOrgInvitation.ts"
-import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
 import { orgViewPageSchema } from "#src/org/org_model/OrgViewPageType.ts"
 import type { HasOrgHandle } from "#src/org/org_model_field/HasOrgHandle.ts"
 import type { HasOrgInvitationCode } from "#src/org/org_model_field/HasOrgInvitationCode.ts"
-import { orgRoleGetText } from "#src/org/org_model_field/orgRoleGetText.ts"
-import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
 import { urlOrgView } from "#src/org/org_url/urlOrg.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { createQueryCached } from "#src/utils/cache/createQueryCached.ts"
 import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
-import { Button } from "#ui/interactive/button/Button.jsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
-import { classesCardWrapperP8 } from "#ui/static/card/classesCardWrapper.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { classArr } from "#ui/utils/classArr.ts"
-import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export function OrgInvitationAcceptPage() {
   const params = useParams({ strict: false })
@@ -54,7 +47,7 @@ export function OrgInvitationAcceptPage() {
   )
 }
 
-interface OrgInvitationPageProps extends MayHaveClass {
+interface OrgInvitationPageProps {
   orgHandle: string
   invitationCode: string
 }
@@ -114,7 +107,7 @@ function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
         <ErrorPage title={(getOrg()! as ResultErr).errorMessage} />
       </Match>
       <Match when={true}>
-        <OrgInvitationAcceptView
+        <OrgInvitationAcceptLive
           invitation={(invitationQuery() as ResultOk<DocOrgInvitation>).data}
           org={(getOrg() as ResultOk<OrgViewPageType>).data.org}
         />
@@ -123,33 +116,12 @@ function OrgInvitationAccept(p: OrgInvitationAcceptProps) {
   )
 }
 
-interface InvitationDetailsProps extends MayHaveClass {
+interface InvitationDetailsProps {
   invitation: DocOrgInvitation
-  org: OrgModel
+  org: OrgViewPageType["org"]
 }
 
-function OrgInvitationAcceptView(p: InvitationDetailsProps) {
-  return (
-    <div class="space-y-6">
-      <OrgViewInformation showEditButton={false} org={p.org} />
-      <AcceptSection {...p} />
-    </div>
-  )
-}
-
-function AcceptSection(p: InvitationDetailsProps) {
-  return (
-    <section class={classArr(classesCardWrapperP8, "max-w-md mx-auto", "mt-10 mb-15")}>
-      <h2 class="text-xl font-semibold mb-4">{ttc("Accept Invitation")}</h2>
-      <p class="text-muted-foreground mb-4">
-        {ttc("You have been invited to join as")} {orgRoleGetText(p.invitation.role)}.
-      </p>
-      <AcceptButton {...p} />
-    </section>
-  )
-}
-
-function AcceptButton(p: InvitationDetailsProps) {
+function OrgInvitationAcceptLive(p: InvitationDetailsProps) {
   const acceptMutation = mutationCreate(api.org.orgInvitation50AcceptMutation)
 
   async function handleAccept() {
@@ -172,9 +144,5 @@ function AcceptButton(p: InvitationDetailsProps) {
     const url = urlOrgView(p.org.orgHandle)
     navigateTo(url)
   }
-  return (
-    <Button variant={buttonVariant.filledIndigo} onClick={handleAccept}>
-      {ttc("Accept Invitation")}
-    </Button>
-  )
+  return <OrgInvitationAcceptView invitation={p.invitation} org={p.org} onAccept={handleAccept} />
 }

@@ -18,6 +18,8 @@ export interface OrgInvitationsProps extends HasOrgHandle, MayHaveClass {
   invitations: OrgInvitationModel[]
   pagination?: OrgInvitationListPagination
   loading?: boolean
+  addHref?: string
+  demo?: boolean
 }
 
 export interface OrgInvitationListPagination {
@@ -37,7 +39,9 @@ export function OrgInvitationListSection(p: OrgInvitationsProps) {
       <Show when={!p.loading} fallback={<p class="text-muted-foreground">{ttc("Loading invitations...")}</p>}>
         <Show when={p.invitations.length > 0} fallback={<NoOrgInvitationsText />}>
           <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <For each={p.invitations}>{(invitation) => <OrgInvitationCard {...rest} invitation={invitation} />}</For>
+            <For each={p.invitations}>
+              {(invitation) => <OrgInvitationCard invitation={invitation} demo={p.demo} />}
+            </For>
           </div>
         </Show>
       </Show>
@@ -63,9 +67,9 @@ function NoOrgInvitationsText() {
 
 function Header(p: OrgInvitationsProps) {
   return (
-    <SectionHeader icon={mdiEmail} to={urlOrgInvitationAdd(p.orgHandle)} title={ttc("Member Invitations")}>
+    <SectionHeader icon={mdiEmail} to={p.addHref ?? urlOrgInvitationAdd(p.orgHandle)} title={ttc("Member Invitations")}>
       <LinkButtonInternal
-        to={urlOrgInvitationAdd(p.orgHandle)}
+        to={p.addHref ?? urlOrgInvitationAdd(p.orgHandle)}
         variant={buttonVariant.subtle}
         icon={formModeIcon.add}
         class="hover:bg-gray-200"

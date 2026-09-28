@@ -3,6 +3,7 @@
 import { RouterProvider } from "@tanstack/solid-router"
 import { render } from "solid-js/web"
 import { demoList } from "#src/app/demos/demoList.ts"
+import { pageDemoRoutesCreate } from "#src/app/demos/pageDemoRoutesCreate.tsx"
 import { getRoutesApp } from "#src/app/getRoutesApp.tsx"
 import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.tsx"
 import { NavDemo } from "#src/app/nav/NavDemo.tsx"
@@ -41,7 +42,7 @@ const routesApp = [
 const routesDemo = [
   {
     component: LayoutWrapperDemo,
-    children: generateDemoRoutes(demoList, "/demos", NavDemo),
+    children: [...pageDemoRoutesCreate(), ...generateDemoRoutes(demoList, "/demos", NavDemo)],
   },
 ]
 

@@ -3,7 +3,7 @@ import { useParams } from "@tanstack/solid-router"
 import { createSignal, Match, Switch } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import type { ResultErr, ResultOk } from "#result"
-import { ttc, ttc1 } from "#src/app/i18n/ttc.ts"
+import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavOrg } from "#src/app/nav/NavOrg.tsx"
@@ -12,18 +12,14 @@ import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { urlUserProfileMe } from "#src/auth/url/pageRouteAuth.ts"
 import type { OrgModel } from "#src/org/org_model/OrgModel.ts"
 import type { OrgViewPageType } from "#src/org/org_model/OrgViewPageType.ts"
-import { OrgViewInformation } from "#src/org/org_ui/view/OrgViewInformation.tsx"
+import { OrgLeaveView } from "#src/org/org_ui/mutate/OrgLeaveView.tsx"
 import { urlOrgLeave } from "#src/org/org_url/urlOrg.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
 import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
-import { Button } from "#ui/interactive/button/Button.jsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
-import { classesCardWrapperP8 } from "#ui/static/card/classesCardWrapper.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export function OrgLeavePage() {
@@ -83,7 +79,7 @@ function OrgLeave(p: OrgLeaveProps) {
         <ErrorPage title={(getOrg()! as ResultErr).errorMessage} />
       </Match>
       <Match when={true}>
-        <OrgLeaveView org={(getOrg() as ResultOk<OrgViewPageType>).data.org} />
+        <OrgLeaveViewLive org={(getOrg() as ResultOk<OrgViewPageType>).data.org} />
       </Match>
     </Switch>
   )
@@ -93,27 +89,7 @@ interface OrgLeaveViewProps extends MayHaveClass {
   org: OrgModel
 }
 
-function OrgLeaveView(p: OrgLeaveViewProps) {
-  return (
-    <div class="space-y-6">
-      <OrgViewInformation showEditButton={false} org={p.org} />
-      <LeaveSection orgHandle={p.org.orgHandle!} orgName={p.org.name!} />
-    </div>
-  )
-}
-
-function LeaveSection(p: { orgHandle: string; orgName: string }) {
-  return (
-    <section class={classArr(classesCardWrapperP8, "max-w-md mx-auto", "mt-10 mb-15")}>
-      <h2 class="text-xl font-semibold mb-4">{ttc("Leave Organization?")}</h2>
-      <p class="text-muted-foreground mb-2">{ttc1("Are you sure you want to leave [X]?", p.orgName)}</p>
-      <p class="text-muted-foreground mb-6">{ttc("You will lose access to all previously created data")}</p>
-      <LeaveButton orgHandle={p.orgHandle} />
-    </section>
-  )
-}
-
-function LeaveButton(p: { orgHandle: string }) {
+function OrgLeaveViewLive(p: OrgLeaveViewProps) {
   const leaveMutation = mutationCreate(api.org.orgLeaveMutation)
   const [isLoading, setIsLoading] = createSignal(false)
 
@@ -121,7 +97,7 @@ function LeaveButton(p: { orgHandle: string }) {
     setIsLoading(true)
     const leaveResult = await leaveMutation({
       token: userTokenGet(),
-      orgHandle: p.orgHandle,
+      orgHandle: p.org.orgHandle,
     })
 
     if (!leaveResult.success) {
@@ -138,9 +114,5 @@ function LeaveButton(p: { orgHandle: string }) {
     window.location.href = urlUserProfileMe()
   }
 
-  return (
-    <Button variant={buttonVariant.filledRed} onClick={handleLeave} disabled={isLoading()} class="w-full">
-      {ttc("Leave Organization")}
-    </Button>
-  )
+  return <OrgLeaveView org={p.org} onLeave={handleLeave} loading={isLoading()} />
 }

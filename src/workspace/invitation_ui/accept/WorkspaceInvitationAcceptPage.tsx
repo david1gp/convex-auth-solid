@@ -15,19 +15,14 @@ import { queryCreate } from "#src/utils/convex_client/queryCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import { workspaceInvitationSchema } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { WorkspaceInvitationAcceptView } from "#src/workspace/invitation_ui/accept/WorkspaceInvitationAcceptView.tsx"
 import type { DocWorkspace } from "#src/workspace/workspace_convex/IdWorkspace.ts"
 import { workspaceSchema } from "#src/workspace/workspace_model/workspaceSchema.ts"
 import type { HasWorkspaceInvitationCode } from "#src/workspace/workspace_model_field/HasWorkspaceInvitationCode.ts"
-import { workspaceRoleGetText } from "#src/workspace/workspace_model_field/workspaceRoleGetText.ts"
-import { WorkspaceViewInformation } from "#src/workspace/workspace_ui/view/WorkspaceViewInformation.tsx"
 import { urlWorkspaceView } from "#src/workspace/workspace_url/urlWorkspace.ts"
-import { Button } from "#ui/interactive/button/Button.jsx"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
-import { classesCardWrapperP8 } from "#ui/static/card/classesCardWrapper.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { classArr } from "#ui/utils/classArr.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 
 export function WorkspaceInvitationAcceptPage() {
@@ -66,18 +61,19 @@ function getPageTitle() {
 interface WorkspaceInvitationAcceptProps extends HasWorkspaceInvitationCode {}
 
 function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
+  const acceptMutation = mutationCreate(api.workspace.workspaceInvitation50AcceptMutation)
   const invitationQuery = createQueryCached(
     queryCreate(api.workspace.workspaceInvitationGetQuery, {
       invitationCode: p.invitationCode,
     }),
-    "workspaceInvitationGetQuery" + "/" + p.invitationCode,
+    `workspaceInvitationGetQuery/${p.invitationCode}`,
     a.nullable(workspaceInvitationSchema),
   )
 
   const invitationResult = () => invitationQuery()
   const invitationData = () => {
     const result = invitationResult()
-    if (!result || !result.success) return null
+    if (!result?.success) return null
     return result.data
   }
   const workspaceHandle = () => invitationData()?.workspaceHandle ?? ""
@@ -87,7 +83,7 @@ function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
       token: userTokenGet(),
       workspaceHandle: workspaceHandle(),
     })),
-    "workspaceGetQuery" + "/" + workspaceHandle(),
+    `workspaceGetQuery/${workspaceHandle()}`,
     a.nullable(workspaceSchema),
   )
 
@@ -109,63 +105,32 @@ function WorkspaceInvitationAccept(p: WorkspaceInvitationAcceptProps) {
         <WorkspaceInvitationAcceptView
           invitation={(invitationResult() as ResultOk<DocWorkspaceInvitation>).data}
           workspace={(getWorkspace() as ResultOk<DocWorkspace>).data}
+          onAccept={() => handleAccept((invitationResult() as ResultOk<DocWorkspaceInvitation>).data, acceptMutation)}
         />
       </Match>
     </Switch>
   )
 }
 
-interface InvitationDetailsProps extends MayHaveClass {
-  invitation: DocWorkspaceInvitation
-  workspace: DocWorkspace
-}
+async function handleAccept(
+  invitation: DocWorkspaceInvitation,
+  acceptMutation: ReturnType<typeof mutationCreate<typeof api.workspace.workspaceInvitation50AcceptMutation>>,
+) {
+  const result = await acceptMutation({
+    token: userTokenGet(),
+    invitationCode: invitation.invitationCode,
+  })
 
-function WorkspaceInvitationAcceptView(p: InvitationDetailsProps) {
-  return (
-    <div class="space-y-6">
-      <WorkspaceViewInformation showEditButton={false} workspace={p.workspace} />
-      <AcceptSection {...p} />
-    </div>
-  )
-}
-
-function AcceptSection(p: InvitationDetailsProps) {
-  return (
-    <section class={classArr(classesCardWrapperP8, "max-w-md mx-auto", "mt-10 mb-15")}>
-      <h2 class="text-xl font-semibold mb-4">{ttc("Accept Invitation")}</h2>
-      <p class="text-muted-foreground mb-4">
-        {ttc("You have been invited to join workspace as")} {workspaceRoleGetText(p.invitation.role)}.
-      </p>
-      <AcceptButton {...p} />
-    </section>
-  )
-}
-
-function AcceptButton(p: InvitationDetailsProps) {
-  const acceptMutation = mutationCreate(api.workspace.workspaceInvitation50AcceptMutation)
-
-  async function handleAccept() {
-    const result = await acceptMutation({
-      token: userTokenGet(),
-      invitationCode: p.invitation.invitationCode,
+  if (!result.success) {
+    toastAdd({
+      icon: mdiAccountAlert,
+      title: result.errorMessage,
+      variant: toastVariant.error,
     })
-
-    if (!result.success) {
-      toastAdd({
-        icon: mdiAccountAlert,
-        title: result.errorMessage,
-        variant: toastVariant.error,
-      })
-      return
-    }
-    const session = result.data
-    signInSessionNew(session)
-    const url = urlWorkspaceView(p.invitation.workspaceHandle)
-    navigateTo(url)
+    return
   }
-  return (
-    <Button variant={buttonVariant.filledIndigo} onClick={handleAccept}>
-      {ttc("Accept Invitation")}
-    </Button>
-  )
+  const session = result.data
+  signInSessionNew(session)
+  const url = urlWorkspaceView(invitation.workspaceHandle)
+  navigateTo(url)
 }

@@ -2,28 +2,23 @@ import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { AuthLegalAgree } from "#src/auth/ui/sign_in/legal/AuthLegalAgree.tsx"
 import { authLegalAgreeVariant } from "#src/auth/ui/sign_in/legal/authLegalAgreeVariant.tsx"
-import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.ts"
-import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { Checkbox } from "#ui/input/check/Checkbox.jsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { signUpCreateStateManagement, signUpFormField } from "./signUpCreateFormState.js"
+import { type SignUpUiStateManagement, signUpFormField } from "./signUpCreateFormState.js"
+import { signUpEmailPasswordFormStateCreate } from "./signUpEmailPasswordFormStateCreate.ts"
 
-interface SignUpEmailPasswordFormProps extends MayHaveClass {}
+interface SignUpEmailPasswordFormProps extends MayHaveClass {
+  stateFactory?: () => SignUpUiStateManagement
+}
 
 export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
-  const sm = signUpCreateStateManagement()
-
-  if (isDevEnv()) {
-    addKeyboardListenerAlt("t", sm.fillTestData)
-  }
-
-  const showRequired = false
+  const sm = signUpEmailPasswordFormStateCreate(() => p)
 
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-6", p.class)}>
@@ -31,7 +26,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         config={{
           ...formFieldConfigs.name,
           placeholder: () => "My Name",
-          required: showRequired,
+          required: false,
         }}
         value={sm.state.name.get()}
         error={sm.errors.name.get()}
@@ -47,7 +42,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
         config={{
           ...formFieldConfigs.email,
           placeholder: () => "my.email@gmail.com",
-          required: showRequired,
+          required: false,
         }}
         value={sm.state.email.get()}
         error={sm.errors.email.get()}
@@ -66,7 +61,7 @@ export function SignUpEmailPasswordForm(p: SignUpEmailPasswordFormProps) {
           placeholder: () => ttc("******"),
           type: "password",
           autocomplete: "new-password",
-          required: showRequired,
+          required: false,
         }}
         value={sm.state.pw.get()}
         error={sm.errors.pw.get()}

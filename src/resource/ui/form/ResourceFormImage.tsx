@@ -14,6 +14,7 @@ import { createSignalObject } from "#ui/utils/createSignalObject.ts"
 
 interface HasResourceFormStateManagement {
   sm: ResourceFormStateManagement
+  showUpload?: boolean
 }
 
 export function ResourceFormImage(p: HasResourceFormStateManagement) {
@@ -37,14 +38,14 @@ export function ResourceFormImage(p: HasResourceFormStateManagement) {
     <div class="space-y-4">
       <Show when={hasImageUrl()}>
         <div class="flex flex-col gap-2 max-w-sm">
-          <img src={p.sm.state.image.get()} alt="Image preview" class="w-full" />
+          <img src={p.sm.state.image.get()} alt="Preview" class="w-full" />
           <ButtonIcon icon={mdiTrashCanOutline} variant={buttonVariant.outline} class="" onClick={handleRemoveImage}>
             {ttc("Remove image")}
           </ButtonIcon>
         </div>
       </Show>
 
-      <Show when={!hasImageUrl()}>
+      <Show when={p.showUpload !== false && !hasImageUrl()}>
         <div class="flex flex-col gap-2">
           <Label>{ttc("Upload an image directly")}</Label>
           <UploadAreaImage

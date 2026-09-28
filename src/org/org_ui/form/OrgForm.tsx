@@ -1,14 +1,11 @@
 import { Show } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { userRoleIsAdmin } from "#src/auth/model_field/userRole.ts"
-import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
-import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { OrgFormImage } from "#src/org/org_ui/form/OrgFormImage.tsx"
 import { orgFormConfig, orgFormField } from "#src/org/org_ui/form/orgFormField.ts"
 import type { OrgFormStateManagement } from "#src/org/org_ui/form/orgFormStateManagement.ts"
+import { orgFormViewStateCreate } from "#src/org/org_ui/form/orgFormViewStateCreate.ts"
 import { urlOrgRemove } from "#src/org/org_url/urlOrg.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
-import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { type FormMode, formMode, getFormModeTitle } from "#ui/input/form/formMode.ts"
 import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
@@ -23,18 +20,19 @@ interface HasOrgFormStateManagement {
 
 export interface OrgContentProps extends MayHaveClass, HasOrgFormStateManagement {
   mode: FormMode
+  demo?: boolean
 }
 
 export function OrgForm(p: OrgContentProps) {
-  if (isDevEnv()) {
-    addKeyboardListenerAlt("t", p.sm.fillTestData)
-  }
-  const isAdmin = () => userRoleIsAdmin(userSessionGet().profile.role)
+  const state = orgFormViewStateCreate(
+    () => p.demo ?? false,
+    () => p.sm.fillTestData,
+  )
   return (
     <section class={classMerge("px-2 sm:px-4 pb-10", "text-gray-900 dark:text-gray-100", p.class)}>
       <div class="flex flex-wrap justify-between items-center mt-6 mb-2">
         <h1 class="text-2xl font-bold">{getOrgTitle(p.mode)}</h1>
-        <Show when={p.mode === formMode.edit && isAdmin()}>
+        <Show when={p.mode === formMode.edit && state.isAdmin()}>
           <LinkButtonInternal
             icon={formModeIcon.remove}
             to={urlOrgRemove(p.sm.state.orgHandle.get())}
@@ -50,7 +48,7 @@ export function OrgForm(p: OrgContentProps) {
         {p.mode === formMode.add && <HandleField sm={p.sm} />}
         <DescriptionField sm={p.sm} />
         <UrlField sm={p.sm} />
-        <ImageField sm={p.sm} />
+        <OrgFormImage sm={p.sm} demo={p.demo} />
         <ButtonIcon
           type="submit"
           icon={formModeIcon[p.mode]}
@@ -127,10 +125,6 @@ function UrlField(p: HasOrgFormStateManagement) {
       onBlur={(value) => p.sm.validateOnChange(orgFormField.url)(value)}
     />
   )
-}
-
-function ImageField(p: HasOrgFormStateManagement) {
-  return <OrgFormImage sm={p.sm} />
 }
 
 function getOrgTitle(mode: FormMode): string {

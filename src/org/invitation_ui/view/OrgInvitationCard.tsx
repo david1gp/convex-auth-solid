@@ -28,6 +28,7 @@ import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.
 
 export interface OrgInvitationCardProps extends MayHaveClass {
   invitation: OrgInvitationModel
+  demo?: boolean
 }
 
 export function OrgInvitationCard(p: OrgInvitationCardProps) {
@@ -46,7 +47,7 @@ export function OrgInvitationCard(p: OrgInvitationCardProps) {
         <Right {...p} />
       </div>
       <OrgInvitationStatusTextDetails invitation={p.invitation} />
-      <OrgInvitationActions {...p} />
+      {!p.demo && <OrgInvitationActions {...p} />}
     </section>
   )
 }

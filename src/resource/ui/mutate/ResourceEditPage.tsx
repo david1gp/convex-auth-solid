@@ -3,6 +3,8 @@ import { Match, Switch } from "solid-js"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavResource } from "#src/app/nav/NavResource.tsx"
+import type { ResourceModel } from "#src/resource/model/ResourceModel.ts"
+import type { ResourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { ResourceMutate } from "#src/resource/ui/mutate/ResourceMutate.tsx"
 import { urlResourceEdit } from "#src/resource/url/urlResource.ts"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
@@ -11,9 +13,11 @@ import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
 const mode = formMode.edit
 
-export function ResourceEditPage() {
+export function ResourceEditPage(p: {
+  demo?: { resourceId: string; resource: ResourceModel; form: ResourceFormStateManagement; removeHref: string }
+}) {
   const params = useParams({ strict: false })
-  const getResourceIdParam = () => params().resourceId
+  const getResourceIdParam = () => p.demo?.resourceId ?? params().resourceId
   return (
     <Switch>
       <Match when={!getResourceIdParam()}>
@@ -22,12 +26,22 @@ export function ResourceEditPage() {
       <Match when={getResourceIdParam()}>
         {(getResourceId) => (
           <PageWrapper>
-            <NavResource getResourcePageTitle={getPageTitle} resourceId={getResourceId()}>
-              <NavLinkButton href={urlResourceEdit(getResourceId())} isActive={true}>
-                {ttc("Edit")}
-              </NavLinkButton>
-            </NavResource>
-            <ResourceMutate mode={mode} resourceId={getResourceId()} />
+            {!p.demo && (
+              <NavResource getResourcePageTitle={getPageTitle} resourceId={getResourceId()}>
+                <NavLinkButton href={urlResourceEdit(getResourceId())} isActive={true}>
+                  {ttc("Edit")}
+                </NavLinkButton>
+              </NavResource>
+            )}
+            {p.demo ? (
+              <ResourceMutate
+                mode={mode}
+                resourceId={getResourceId()}
+                demo={{ resource: p.demo.resource, form: p.demo.form, removeHref: p.demo.removeHref }}
+              />
+            ) : (
+              <ResourceMutate mode={mode} resourceId={getResourceId()} />
+            )}
           </PageWrapper>
         )}
       </Match>

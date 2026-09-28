@@ -1,0 +1,71 @@
+import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
+import { For, Show } from "solid-js"
+import { ttc } from "#src/app/i18n/ttc.ts"
+import type { OrgInvitationModel } from "#src/org/invitation_model/OrgInvitationModel.ts"
+import type { OrgInvitationListPagination } from "#src/org/invitation_ui/list/OrgInvitationListSection.tsx"
+import { OrgInvitationCard } from "#src/org/invitation_ui/view/OrgInvitationCard.tsx"
+import { urlOrgInvitationAdd } from "#src/org/invitation_url/urlOrgInvitation.ts"
+import { PageHeader } from "#src/ui/header/PageHeader.tsx"
+import { NoData } from "#src/ui/illustrations/NoData.tsx"
+import { PaginationControls } from "#src/ui/pagination/PaginationControls.tsx"
+import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
+
+interface OrgInvitationListViewProps {
+  orgHandle: string
+  invitations: OrgInvitationModel[]
+  addHref?: string
+  acceptHref?: (code: string) => string
+  demo?: boolean
+  pagination?: OrgInvitationListPagination
+}
+
+export function OrgInvitationListView(p: OrgInvitationListViewProps) {
+  return (
+    <>
+      <PageHeader
+        title={ttc("Organization Invitations")}
+        subtitle={ttc("Manage invitations of this organization")}
+        class="mb-4"
+      >
+        <LinkButtonInternal
+          icon={mdiPlus}
+          to={p.addHref ?? urlOrgInvitationAdd(p.orgHandle)}
+          variant={buttonVariant.filledGreen}
+        >
+          {ttc("Add Invitation")}
+        </LinkButtonInternal>
+      </PageHeader>
+      <Show when={p.invitations.length > 0} fallback={<NoData noDataText={ttc("No Organization Invitations")} />}>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <For each={p.invitations}>
+            {(invitation) => (
+              <div>
+                <OrgInvitationCard invitation={invitation} demo={p.demo} />
+                <Show when={p.acceptHref}>
+                  {(href) => (
+                    <LinkButtonInternal to={href()(invitation.invitationCode)}>
+                      {ttc("Accept Invitation")}
+                    </LinkButtonInternal>
+                  )}
+                </Show>
+              </div>
+            )}
+          </For>
+        </div>
+      </Show>
+      <Show when={p.invitations.length > 0 && p.pagination}>
+        {(pagination) => (
+          <PaginationControls
+            page={() => pagination().history().length + 1}
+            canPrevious={pagination().canPrevious}
+            canNext={pagination().canNext}
+            previous={pagination().previous}
+            next={pagination().next}
+            loading={pagination().loading}
+          />
+        )}
+      </Show>
+    </>
+  )
+}

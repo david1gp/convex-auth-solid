@@ -2,20 +2,23 @@ import { ttc } from "#src/app/i18n/ttc.ts"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavResource } from "#src/app/nav/NavResource.tsx"
 import { ResourceForm } from "#src/resource/ui/form/ResourceForm.tsx"
+import type { ResourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { resourceFormStateManagement } from "#src/resource/ui/form/resourceFormStateManagement.ts"
 import { urlResourceAdd } from "#src/resource/url/urlResource.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 
-export function ResourceAddPage() {
+export function ResourceAddPage(p: { demoState?: ResourceFormStateManagement }) {
   return (
     <PageWrapper>
-      <NavResource getResourcePageTitle={getPageTitle}>
-        <NavLinkButton href={urlResourceAdd()} isActive={true}>
-          {ttc("Create")}
-        </NavLinkButton>
-      </NavResource>
-      <ResourceAddLoader />
+      {!p.demoState && (
+        <NavResource getResourcePageTitle={getPageTitle}>
+          <NavLinkButton href={urlResourceAdd()} isActive={true}>
+            {ttc("Create")}
+          </NavLinkButton>
+        </NavResource>
+      )}
+      {p.demoState ? <ResourceAdd sm={p.demoState} /> : <ResourceAddLoader />}
     </PageWrapper>
   )
 }
@@ -62,12 +65,20 @@ export function ResourceAddLoader() {
 }
 
 export interface ResourceAddProps {
-  orgOptions: OrgModel[]
+  orgOptions?: OrgModel[]
+  sm?: ResourceFormStateManagement
 }
 
-export function ResourceAdd(_p: ResourceAddProps) {
-  const sm = resourceFormStateManagement(formMode.add)
-  return <ResourceForm mode={formMode.add} sm={sm} />
+export function ResourceAdd(p: ResourceAddProps) {
+  const sm = p.sm ?? resourceFormStateManagement(formMode.add)
+  return (
+    <ResourceForm
+      mode={formMode.add}
+      sm={sm}
+      showFiles={p.sm ? false : undefined}
+      showImageUpload={p.sm ? false : undefined}
+    />
+  )
 }
 
 function getOrgOptionsPage(result: ReturnType<ReturnType<typeof createQueryOrgList>["page"]>) {

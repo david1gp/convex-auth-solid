@@ -8,8 +8,8 @@ import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { ThemeButton } from "#ui/interactive/theme/ThemeButton.tsx"
 import { classArr } from "#ui/utils/classArr.ts"
 
-export function AllgroupsSsoPage() {
-  const state = allgroupsSsoPageStateCreate()
+export function AllgroupsSsoPage(p: { stateFactory?: typeof allgroupsSsoPageStateCreate }) {
+  const state = (p.stateFactory ?? allgroupsSsoPageStateCreate)()
 
   return (
     <div class="relative grid min-h-dvh place-items-center overflow-hidden bg-slate-50 px-5 py-10 dark:bg-slate-950">

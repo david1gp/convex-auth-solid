@@ -18,10 +18,11 @@ interface HasWorkspaceMemberFormStateManagement {
 
 export interface WorkspaceMemberContentProps extends MayHaveClass, HasWorkspaceMemberFormStateManagement {
   mode: FormMode
+  demo?: boolean
 }
 
 export function WorkspaceMemberForm(p: WorkspaceMemberContentProps) {
-  if (isDevEnv()) {
+  if (isDevEnv() && !p.demo) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (

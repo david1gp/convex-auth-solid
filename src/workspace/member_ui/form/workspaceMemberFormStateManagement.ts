@@ -5,7 +5,6 @@ import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import type { IdUser } from "#src/auth/convex/IdUser.ts"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
@@ -98,13 +97,16 @@ export function workspaceMemberFormStateManagement(
   workspaceHandle: string,
   memberId?: IdWorkspaceMember,
   workspaceMember?: WorkspaceMemberModel,
+  actionsOverride?: WorkspaceMemberFormActions,
 ): WorkspaceMemberFormStateManagement {
-  const actions: WorkspaceMemberFormActions = createActions(mode, workspaceHandle, memberId)
+  const actions: WorkspaceMemberFormActions = actionsOverride ?? createActions(mode, workspaceHandle, memberId)
   const serverState = createSignalObject(createEmptyWorkspaceMember())
   const isSubmitting = createSignalObject(false)
   const state = createWorkspaceMemberFormState()
   if (workspaceMember) {
     loadData(workspaceMember, serverState, state)
+  } else if (actionsOverride) {
+    state.role.set(workspaceRole.member)
   }
   const errors = createWorkspaceMemberErrorState()
   return {
@@ -116,8 +118,8 @@ export function workspaceMemberFormStateManagement(
     errors,
     hasErrors: () => hasErrors(errors),
     fillTestData: () => fillTestData(state, errors),
-    validateOnChange: (field: WorkspaceMemberFormField) => validateOnChange(field, state, errors),
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSubmitting, serverState, state, errors, actions),
+    validateOnChange: (field: WorkspaceMemberFormField) => validateOnChange(field, errors),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSubmitting, state, errors, actions),
   }
 }
 
@@ -138,26 +140,17 @@ function fillTestData(state: WorkspaceMemberFormState, errors: WorkspaceMemberFo
   state.role.set("member")
 
   for (const field of Object.values(workspaceMemberFormField)) {
-    updateFieldError(field, state[field].get(), state, errors)
+    updateFieldError(field, state[field].get(), errors)
   }
 }
 
-function validateOnChange(
-  field: WorkspaceMemberFormField,
-  state: WorkspaceMemberFormState,
-  errors: WorkspaceMemberFormErrorState,
-) {
+function validateOnChange(field: WorkspaceMemberFormField, errors: WorkspaceMemberFormErrorState) {
   return debounce((value: string) => {
-    updateFieldError(field, value, state, errors)
+    updateFieldError(field, value, errors)
   }, debounceMs)
 }
 
-function updateFieldError(
-  field: WorkspaceMemberFormField,
-  value: string,
-  state: WorkspaceMemberFormState,
-  errors: WorkspaceMemberFormErrorState,
-) {
+function updateFieldError(field: WorkspaceMemberFormField, value: string, errors: WorkspaceMemberFormErrorState) {
   const result = validateFieldResult(field, value)
   const errorSig = errors[field as keyof typeof errors]
   if (result.success) {
@@ -181,7 +174,6 @@ function validateFieldResult(field: WorkspaceMemberFormField, value: string) {
 async function handleSubmit(
   e: SubmitEvent,
   isSubmitting: SignalObject<boolean>,
-  serverState: SignalObject<WorkspaceMemberModel>,
   state: WorkspaceMemberFormState,
   errors: WorkspaceMemberFormErrorState,
   actions: WorkspaceMemberFormActions,
@@ -282,6 +274,7 @@ async function addAction(
   workspaceHandle: string,
   addMutation: (data: WorkspaceMemberCreateMutationProps) => Promise<Result<IdWorkspaceMember>>,
 ): Promise<void> {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   const memberIdResult = await addMutation({
     token: userTokenGet(),
     workspaceHandle,
@@ -306,6 +299,7 @@ async function editAction(
   memberId: IdWorkspaceMember | undefined,
   editMutation: (data: WorkspaceMemberEditMutationProps) => Promise<Result<null>>,
 ) {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   if (!memberId) {
     toastAdd({ title: "!memberId", variant: toastVariant.error })
     return
@@ -329,6 +323,7 @@ async function removeAction(
   memberId: IdWorkspaceMember | undefined,
   deleteMutation: (data: WorkspaceMemberRemoveMutationProps) => Promise<Result<null>>,
 ) {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   if (!memberId) {
     toastAdd({ title: "!memberId", variant: toastVariant.error })
     return

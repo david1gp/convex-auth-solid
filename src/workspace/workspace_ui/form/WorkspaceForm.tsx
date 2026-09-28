@@ -33,10 +33,12 @@ interface HasOrgFormStateManagement {
 export interface WorkspaceContentProps extends MayHaveClass, HasOrgFormStateManagement {
   workspaceHandle?: string
   mode: FormMode
+  removeHref?: string
+  demo?: boolean
 }
 
 export function WorkspaceForm(p: WorkspaceContentProps) {
-  if (isDevEnv()) {
+  if (isDevEnv() && !p.demo) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (
@@ -46,7 +48,7 @@ export function WorkspaceForm(p: WorkspaceContentProps) {
         {p.mode === formMode.edit && (
           <LinkButtonInternal
             icon={formModeIcon.remove}
-            to={urlWorkspaceRemove(p.workspaceHandle ?? "missing")}
+            to={p.removeHref ?? urlWorkspaceRemove(p.workspaceHandle ?? "missing")}
             variant={buttonVariant.link}
           >
             {ttt("Remove")}

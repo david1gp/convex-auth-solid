@@ -26,10 +26,11 @@ export interface WorkspaceInvitationContentProps
     MayHaveClass,
     HasWorkspaceInvitationFormStateManagement {
   mode: FormMode
+  demo?: boolean
 }
 
 export function WorkspaceInvitationForm(p: WorkspaceInvitationContentProps) {
-  if (isDevEnv()) {
+  if (!p.demo && isDevEnv()) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (

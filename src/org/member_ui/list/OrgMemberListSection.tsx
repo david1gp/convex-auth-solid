@@ -14,6 +14,7 @@ export interface OrgMemberListProps extends HasOrgHandle, MayHaveClass {
   members: OrgMemberProfile[]
   pagination?: OrgMemberListPagination
   loading?: boolean
+  demo?: boolean
 }
 
 export interface OrgMemberListPagination {
@@ -35,7 +36,12 @@ export function OrgMemberListSection(p: OrgMemberListProps) {
           <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <For each={p.members}>
               {(member) => (
-                <OrgMemberCard showActions={showMemberActionsNotImplemented} orgHandle={p.orgHandle} member={member} />
+                <OrgMemberCard
+                  showActions={showMemberActionsNotImplemented}
+                  orgHandle={p.orgHandle}
+                  member={member}
+                  demo={p.demo}
+                />
               )}
             </For>
           </div>

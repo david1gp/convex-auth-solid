@@ -32,10 +32,12 @@ export interface ResourceFormProps extends MayHaveClass, HasResourceFormStateMan
   resourceId?: string
   mode: FormMode
   showFiles?: boolean
+  showImageUpload?: boolean
+  removeHref?: string
 }
 
 export function ResourceForm(p: ResourceFormProps) {
-  if (isDevEnv()) {
+  if (isDevEnv() && p.showImageUpload !== false) {
     addKeyboardListenerAlt("t", p.sm.fillTestData)
   }
   return (
@@ -50,7 +52,7 @@ export function ResourceForm(p: ResourceFormProps) {
         <h1 class="text-2xl font-bold">{getResourceTitle(p.mode)}</h1>
         {p.mode === formMode.edit && (
           <LinkButtonInternal
-            to={urlResourceRemove(p.sm.serverState.get().resource.resourceId)}
+            to={p.removeHref ?? urlResourceRemove(p.sm.serverState.get().resource.resourceId)}
             icon={formModeIcon.remove}
             variant={buttonVariant.link}
           >
@@ -89,7 +91,7 @@ export function ResourceForm(p: ResourceFormProps) {
         {/* Image */}
         <section class="contents">
           <h2 class="text-2xl font-semibold mb-4 text-muted-foreground">{resourceMetaSectionGetText("image")}</h2>
-          <ResourceFormImage sm={p.sm} />
+          <ResourceFormImage sm={p.sm} showUpload={p.showImageUpload} />
         </section>
 
         <div class="hidden md:flex" />

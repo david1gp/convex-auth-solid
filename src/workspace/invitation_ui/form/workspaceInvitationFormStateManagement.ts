@@ -4,7 +4,6 @@ import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { navigateTo } from "#src/utils/router/navigateTo.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
@@ -95,13 +94,15 @@ export function workspaceInvitationFormStateManagement(
   workspaceHandle: string,
   invitationCode?: string,
   workspaceInvitation?: WorkspaceInvitationModel,
+  injectedActions?: WorkspaceInvitationFormActions,
 ): WorkspaceInvitationFormStateManagement {
-  const actions: WorkspaceInvitationFormActions = createActions(mode, workspaceHandle, invitationCode)
+  const actions: WorkspaceInvitationFormActions =
+    injectedActions ?? createActions(mode, workspaceHandle, invitationCode)
   const serverState = createSignalObject(createEmptyWorkspaceInvitation())
   const isSubmitting = createSignalObject(false)
   const state = createWorkspaceInvitationFormState()
 
-  if (mode === formMode.add) {
+  if (mode === formMode.add && !injectedActions) {
     workspaceInvitationFormLocalStorage.loadData((data) => loadPartialData(data, state))
   } else if (workspaceInvitation) {
     loadData(workspaceInvitation, serverState, state)
@@ -109,7 +110,7 @@ export function workspaceInvitationFormStateManagement(
 
   const errors = createWorkspaceInvitationErrorState()
 
-  const debouncedSave = workspaceInvitationFormLocalStorage.createDebounceSave(mode, state)
+  const debouncedSave = injectedActions ? () => {} : workspaceInvitationFormLocalStorage.createDebounceSave(mode, state)
 
   return {
     mode,
@@ -122,9 +123,9 @@ export function workspaceInvitationFormStateManagement(
     fillTestData: () => fillTestData(state, errors),
     validateOnChange: (field: WorkspaceInvitationFormField) => {
       debouncedSave()
-      return validateOnChange(field, state, errors)
+      return validateOnChange(field, errors)
     },
-    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSubmitting, serverState, state, errors, actions),
+    handleSubmit: (e: SubmitEvent) => handleSubmit(e, isSubmitting, state, errors, actions),
     debouncedSave,
   }
 }
@@ -153,24 +154,19 @@ function fillTestData(state: WorkspaceInvitationFormState, errors: WorkspaceInvi
   state.role.set("member")
 
   for (const field of Object.values(workspaceInvitationFormField)) {
-    updateFieldError(field, state[field as keyof typeof state].get(), state, errors)
+    updateFieldError(field, state[field as keyof typeof state].get(), errors)
   }
 }
 
-function validateOnChange(
-  field: WorkspaceInvitationFormField,
-  state: WorkspaceInvitationFormState,
-  errors: WorkspaceInvitationFormErrorState,
-) {
+function validateOnChange(field: WorkspaceInvitationFormField, errors: WorkspaceInvitationFormErrorState) {
   return debounce((value: string) => {
-    updateFieldError(field, value, state, errors)
+    updateFieldError(field, value, errors)
   }, debounceMs)
 }
 
 function updateFieldError(
   field: WorkspaceInvitationFormField,
   value: string,
-  state: WorkspaceInvitationFormState,
   errors: WorkspaceInvitationFormErrorState,
 ) {
   const result = validateFieldResult(field, value)
@@ -190,7 +186,6 @@ function validateFieldResult(field: WorkspaceInvitationFormField, value: string)
 async function handleSubmit(
   e: SubmitEvent,
   isSubmitting: SignalObject<boolean>,
-  serverState: SignalObject<WorkspaceInvitationModel>,
   state: WorkspaceInvitationFormState,
   errors: WorkspaceInvitationFormErrorState,
   actions: WorkspaceInvitationFormActions,
@@ -296,6 +291,7 @@ async function addAction(
   workspaceHandle: string,
   addMutation: (data: WorkspaceInvitationCreateMutationProps) => Promise<Result<string>>,
 ): Promise<void> {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   const invitationIdResult = await addMutation({
     token: userTokenGet(),
     workspaceHandle,
@@ -324,6 +320,7 @@ async function removeAction(
     toastAdd({ title: "!invitationCode", variant: toastVariant.error })
     return
   }
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   const result = await dismissAction({
     token: userTokenGet(),
     invitationCode,

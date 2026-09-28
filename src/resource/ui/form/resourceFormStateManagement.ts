@@ -91,16 +91,19 @@ export function resourceFormStateManagement(
   resourceId?: string,
   resource?: ResourceModel,
   files?: FileModel[],
+  options?: { actions: ResourceFormActions; persist: false },
 ): ResourceFormStateManagement {
   const serverState = createSignalObject(createEmptyResourceFiles())
   const isSubmitting = createSignalObject(false)
   const state = resourceFormStateCreate()
-  const actions: ResourceFormActions = resourceFormCreateActions(mode, resourceId)
+  const actions: ResourceFormActions = options ? options.actions : resourceFormCreateActions(mode, resourceId)
 
   if (mode === formMode.add) {
-    const loadedData = resourceFormLocalStorage.loadFromLocalStorage()
-    if (loadedData.success) {
-      loadData(loadedData.data.resource, serverState, state, loadedData.data.files, mode)
+    if (!options) {
+      const loadedData = resourceFormLocalStorage.loadFromLocalStorage()
+      if (loadedData.success) {
+        loadData(loadedData.data.resource, serverState, state, loadedData.data.files, mode)
+      }
     }
   } else if (resource) {
     loadData(resource, serverState, state, files, mode)
@@ -108,7 +111,7 @@ export function resourceFormStateManagement(
 
   const errors = resourceCreateErrorState()
 
-  const debouncedSave = resourceFormLocalStorage.createDebounceSave(mode, state)
+  const debouncedSave = options ? () => {} : resourceFormLocalStorage.createDebounceSave(mode, state)
 
   return {
     mode,

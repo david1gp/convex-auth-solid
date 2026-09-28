@@ -3,11 +3,9 @@ import { mdiEmailFast } from "@adaptive-ds/mdi/mdiEmailFast.js"
 import { Show } from "solid-js"
 import { api } from "#convex/_generated/api.js"
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { DateView } from "#src/ui/date/DateView.tsx"
 import { createAction } from "#src/utils/convex_client/createAction.ts"
 import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
-import type { DocWorkspaceInvitation } from "#src/workspace/invitation_convex/IdWorkspaceInvitation.ts"
 import type { WorkspaceInvitationModel } from "#src/workspace/invitation_model/WorkspaceInvitationModel.ts"
 import { workspaceInvitationShowRole } from "#src/workspace/invitation_model/workspaceInvitationShowRole.ts"
 import {
@@ -18,6 +16,7 @@ import {
 import { workspaceRoleGetText } from "#src/workspace/workspace_model_field/workspaceRoleGetText.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
+import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
 import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
 import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { Icon } from "#ui/static/icon/Icon.jsx"
@@ -28,6 +27,9 @@ import type { MayHaveClassAndChildren } from "#ui/utils/MayHaveClassAndChildren.
 
 export interface WorkspaceInvitationCardProps extends MayHaveClass {
   invitation: WorkspaceInvitationModel
+  onResend?: (code: string) => void
+  onDismiss?: (code: string) => void
+  acceptHref?: string
 }
 
 export function WorkspaceInvitationCard(p: WorkspaceInvitationCardProps) {
@@ -82,11 +84,12 @@ function Right(p: WorkspaceInvitationCardProps) {
 }
 
 function WorkspaceInvitationActions(p: WorkspaceInvitationCardProps) {
-  const resendAction = createAction(api.workspace.workspaceInvitation30ResendAction)
-  const dismissAction = mutationCreate(api.workspace.workspaceInvitation60DismissMutation)
-
+  const resendAction = p.onResend ? undefined : createAction(api.workspace.workspaceInvitation30ResendAction)
+  const dismissAction = p.onDismiss ? undefined : mutationCreate(api.workspace.workspaceInvitation60DismissMutation)
   async function resendClick() {
-    const result = await resendAction({
+    if (p.onResend) return p.onResend(p.invitation.invitationCode)
+    const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
+    const result = await resendAction!({
       token: userTokenGet(),
       invitationCode: p.invitation.invitationCode,
     })
@@ -98,7 +101,9 @@ function WorkspaceInvitationActions(p: WorkspaceInvitationCardProps) {
   }
 
   async function dismissClick() {
-    const gotResult = await dismissAction({
+    if (p.onDismiss) return p.onDismiss(p.invitation.invitationCode)
+    const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
+    const gotResult = await dismissAction!({
       token: userTokenGet(),
       invitationCode: p.invitation.invitationCode,
     })
@@ -111,6 +116,11 @@ function WorkspaceInvitationActions(p: WorkspaceInvitationCardProps) {
 
   return (
     <div class="flex flex-wrap gap-2">
+      <Show when={p.acceptHref && p.invitation.status === "pending"}>
+        <LinkButtonInternal to={p.acceptHref!} variant={buttonVariant.outline}>
+          {ttc("Accept Invitation")}
+        </LinkButtonInternal>
+      </Show>
       <ButtonIcon variant={buttonVariant.outline} icon={mdiEmailFast} onClick={resendClick} class="flex-1">
         {ttc("Resend")}
       </ButtonIcon>
@@ -140,7 +150,7 @@ function WorkspaceInvitationStatusTextDetails(p: WorkspaceInvitationStatusProps)
   return (
     <Show when={p.invitation.expiresAt}>
       {(getDate) => (
-        <DateView date={getDate()} start={<span class="text-muted-foreground mr-1">{ttc("Expires") + ":"}</span>} />
+        <DateView date={getDate()} start={<span class="text-muted-foreground mr-1">{`${ttc("Expires")}:`}</span>} />
       )}
     </Show>
   )

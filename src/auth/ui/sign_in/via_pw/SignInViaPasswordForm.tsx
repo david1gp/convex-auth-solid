@@ -1,20 +1,18 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { addKeyboardListenerAlt } from "#src/auth/ui/sign_up/form/addKeyboardListenerAlt.ts"
+import { signInViaPasswordFormStateCreate } from "#src/auth/ui/sign_in/via_pw/signInViaPasswordFormStateCreate.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { formFieldConfigs } from "#src/ui/form/formFieldConfigs.ts"
-import { isDevEnv } from "#src/utils/env/isDevEnv.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { ButtonIcon } from "#ui/interactive/button/ButtonIcon.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
-import { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreateStateManagement.js"
+import type { signInViaPasswordCreateStateManagement } from "./signInViaPasswordCreateStateManagement.js"
 
-export function SignInViaPasswordForm(p: MayHaveClass) {
-  const sm = signInViaPasswordCreateStateManagement()
-  if (isDevEnv()) {
-    addKeyboardListenerAlt("t", sm.fillTestData)
-  }
+export function SignInViaPasswordForm(
+  p: MayHaveClass & { stateFactory?: typeof signInViaPasswordCreateStateManagement },
+) {
+  const sm = signInViaPasswordFormStateCreate(() => p.stateFactory)
 
   return (
     <form onSubmit={sm.handleSubmit} autocomplete="on" class={classMerge("flex flex-col gap-4", p.class)}>
@@ -30,11 +28,8 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
         value={sm.state.email.get()}
         error={sm.errors.email.get()}
         mode={formMode.add}
-        onInput={(value) => {
-          sm.state.email.set(value)
-          sm.validateOnChange("email")(value)
-        }}
-        onBlur={(value) => sm.validateOnChange("email")(value)}
+        onInput={sm.emailInput}
+        onBlur={sm.emailBlur}
       />
       <FormFieldInput
         config={{
@@ -49,11 +44,8 @@ export function SignInViaPasswordForm(p: MayHaveClass) {
         value={sm.state.password.get()}
         error={sm.errors.password.get()}
         mode={formMode.add}
-        onInput={(value) => {
-          sm.state.password.set(value)
-          sm.validateOnChange("password")(value)
-        }}
-        onBlur={(value) => sm.validateOnChange("password")(value)}
+        onInput={sm.passwordInput}
+        onBlur={sm.passwordBlur}
       />
       <ButtonIcon
         type="submit"

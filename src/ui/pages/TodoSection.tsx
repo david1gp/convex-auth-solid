@@ -10,6 +10,7 @@ import type { MayHaveTitle } from "#ui/utils/MayHaveTitle.ts"
 
 export interface TodoSectionProps extends MayHaveTitle, MayHaveId, MayHaveChildrenAndClass {
   iconClass?: string
+  demo?: boolean
 }
 
 export function TodoSection(p: TodoSectionProps) {
@@ -21,8 +22,8 @@ export function TodoSection(p: TodoSectionProps) {
         <h2 class={"mb-4 text-3xl"}>{ttc("Work in progress")}</h2>
         <p class={"text-xl"}>{ttc("The current section is still under development and therefore not yet available")}</p>
         <div class={"mt-6 flex flex-wrap items-center gap-1"}>
-          <GoBackLinkButton />
-          <GoHomeLinkButton />
+          {!p.demo && <GoBackLinkButton />}
+          <GoHomeLinkButton homeHref={p.demo ? "/demos/pages/root" : "/"} />
         </div>
       </div>
     </section>

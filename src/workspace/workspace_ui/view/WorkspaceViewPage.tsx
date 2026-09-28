@@ -1,112 +1,34 @@
-import { useParams } from "@tanstack/solid-router"
-import { For, Match, Show, Switch } from "solid-js"
+import { Match, Switch } from "solid-js"
 import { NavWorkspace } from "#src/app/nav/NavWorkspace.tsx"
 import { LinkLikeText } from "#src/ui/links/LinkLikeText.tsx"
 import { ErrorPage } from "#src/ui/pages/ErrorPage.tsx"
-import { type WorkspaceComponentProps, WorkspaceLoader } from "#src/workspace/workspace_ui/view/WorkspaceLoader.tsx"
-import { urlWorkspaceEdit } from "#src/workspace/workspace_url/urlWorkspace.ts"
+import { WorkspaceLoader } from "#src/workspace/workspace_ui/view/WorkspaceLoader.tsx"
+import { WorkspaceView } from "#src/workspace/workspace_ui/view/WorkspaceView.tsx"
+import { workspaceViewPageStateCreate } from "#src/workspace/workspace_ui/view/workspaceViewPageStateCreate.ts"
 import { ttt } from "#ui/i18n/ttt.ts"
-import { formModeIcon } from "#ui/input/form/formModeIcon.ts"
-import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
-import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import { Img } from "#ui/static/img/Img.jsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
-import { classArr } from "#ui/utils/classArr.ts"
 
 export function WorkspaceViewPage() {
-  const params = useParams({ strict: false })
-  const getWorkspaceHandle = () => params().workspaceHandle
+  const state = workspaceViewPageStateCreate()
   return (
     <Switch>
-      <Match when={!getWorkspaceHandle()}>
+      <Match when={!state.workspaceHandle()}>
         <ErrorPage title={ttt("Missing :workspaceHandle in path")} />
       </Match>
-      <Match when={getWorkspaceHandle()}>
+      <Match when={state.workspaceHandle()}>
         <PageWrapper>
-          <NavWorkspace getWorkspacePageTitle={getPageTitle} workspaceHandle={getWorkspaceHandle()}>
+          <NavWorkspace getWorkspacePageTitle={getPageTitle} workspaceHandle={state.workspaceHandle()}>
             <LinkLikeText>{ttt("View")}</LinkLikeText>
           </NavWorkspace>
-          <WorkspaceLoader workspaceHandle={getWorkspaceHandle()!} WorkspaceComponent={WorkspaceView} />
+          <WorkspaceLoader workspaceHandle={state.workspaceHandle()!} WorkspaceComponent={WorkspaceView} />
         </PageWrapper>
       </Match>
     </Switch>
   )
 }
 
-function getPageTitle(orgName?: string, workspaceName?: string) {
+function getPageTitle(_orgName?: string, workspaceName?: string) {
   let title = "Workspace"
-  if (workspaceName) {
-    title += " " + workspaceName
-  }
+  if (workspaceName) title += ` ${workspaceName}`
   return title
-}
-
-function WorkspaceView(p: WorkspaceComponentProps) {
-  return (
-    <div class="flex flex-col gap-4">
-      <ShowImg {...p} />
-      <div class="flex flex-wrap justify-between">
-        <h1 class="text-2xl font-bold">{p.workspace.name}</h1>
-        <LinkButtonInternal
-          to={urlWorkspaceEdit(p.workspace.workspaceHandle)}
-          variant={buttonVariant.contrast}
-          icon={formModeIcon.edit}
-        >
-          {ttt("Edit")}
-        </LinkButtonInternal>
-      </div>
-      <ShowDescription {...p} />
-      <ShowUrl {...p} />
-    </div>
-  )
-}
-
-function ShowImg(p: WorkspaceComponentProps) {
-  return (
-    <Show when={p.workspace.image}>
-      {(getImageUrl) => (
-        <Img
-          src={getImageUrl()}
-          alt={ttt("Logo of ") + " " + p.workspace.name}
-          class={classArr("h-40 rounded-xl mx-auto mb-6")}
-        />
-      )}
-    </Show>
-  )
-}
-
-function ShowDescription(p: WorkspaceComponentProps) {
-  return (
-    <Show when={p.workspace.description}>
-      {(getDescription) => (
-        <div class="text-lg mx-auto text-pretty mb-4">
-          <Description description={getDescription()} />
-        </div>
-      )}
-    </Show>
-  )
-}
-
-function Description(p: { description: string }) {
-  const lines = p.description.split("\n")
-  return <For each={lines}>{(line) => <p>{line}</p>}</For>
-}
-
-function ShowUrl(p: WorkspaceComponentProps) {
-  return (
-    <Show when={p.workspace.url}>
-      {(getUrl) => (
-        <a
-          href={getUrl()}
-          class={classArr(
-            "text-lg font-semibold",
-            "text-black dark:text-white", // text color
-            "underline decoration-2 underline-offset-4",
-          )}
-        >
-          {getUrl()}
-        </a>
-      )}
-    </Show>
-  )
 }

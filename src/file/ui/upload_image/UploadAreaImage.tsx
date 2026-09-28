@@ -1,6 +1,6 @@
-import { type Accessor, type JSX, Show } from "solid-js"
+import { type Accessor, Show } from "solid-js"
 import type { FileModel } from "#src/file/model/FileModel.ts"
-import { type UploadStatus, uploadImageTexts, uploadStatus } from "#src/file/model_field/uploadStatus.ts"
+import { uploadImageTexts } from "#src/file/model_field/uploadStatus.ts"
 import type { UploadAreaFileInfo } from "#src/file/ui/stats/UploadAreaFileInfo.ts"
 import { UploadFileStats } from "#src/file/ui/stats/UploadFileStats.tsx"
 import { UploadAreaImageView } from "#src/file/ui/upload_image/UploadAreaImageView.tsx"
@@ -10,68 +10,29 @@ import { classMerge } from "#ui/utils/classMerge.ts"
 import type { SignalObject } from "#ui/utils/createSignalObject.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { MayHaveId } from "#ui/utils/MayHaveId.ts"
-import { generateId12 } from "#utils/ran/generateId12.js"
+import { uploadAreaImageStateCreate } from "./uploadAreaImageStateCreate.ts"
 
 export interface UploadAreaImageProps extends MayHaveResourceId, MayHaveId, MayHaveClass {
   hasUploaded: Accessor<boolean>
   info: SignalObject<UploadAreaFileInfo | null>
   error?: SignalObject<string | null>
   onUploadSuccess?: (file: FileModel) => void
+  /** Inject local selection handling without entering the production upload transport. */
+  onFileSelect?: (file: File) => void | Promise<void>
 }
 
 export function UploadAreaImage(p: UploadAreaImageProps) {
-  if (!p.id) p.id = generateId12()
-
-  const fileChangeHandler = createFileChangeHandler(p)
-
-  const getCurrentStatus = () => getUploadStatus(p.error?.get() ?? null, p.info.get(), p.hasUploaded())
+  const state = uploadAreaImageStateCreate(p, uploadHandlerImage, uploadImageTexts.onlyImages)
 
   return (
     <>
-      <label for={p.id} class={classMerge("flex cursor-pointer flex-col items-center", p.class)}>
-        <UploadAreaImageView status={getCurrentStatus()} error={p.error?.get()} info={p.info.get()} />
+      <label for={state.id()} class={classMerge("flex cursor-pointer flex-col items-center", p.class)}>
+        <UploadAreaImageView status={state.status()} error={p.error?.get()} info={p.info.get()} />
       </label>
-      <input id={p.id} type="file" accept="image/*" class="hidden" onChange={fileChangeHandler} />
+      <input id={state.id()} type="file" accept="image/*" class="hidden" onChange={state.fileChange} />
       <Show when={p.info.get()}>
         <UploadFileStats info={p.info.get()!} />
       </Show>
     </>
   )
-}
-
-function getUploadStatus(error: string | null, info: UploadAreaFileInfo | null, hasUploaded: boolean): UploadStatus {
-  if (error) return uploadStatus.error
-  if (info) return uploadStatus.uploading
-  if (hasUploaded) return uploadStatus.uploaded
-  return uploadStatus.empty
-}
-
-function validateImageFile(file: File): { isValid: boolean; error?: string } {
-  if (!file.type.startsWith("image/")) {
-    return { isValid: false, error: uploadImageTexts.onlyImages() }
-  }
-  return { isValid: true }
-}
-
-function createFileChangeHandler(p: UploadAreaImageProps): JSX.ChangeEventHandlerUnion<HTMLInputElement, Event> {
-  return async (e) => {
-    const files = e.currentTarget.files
-    if (!files || !files[0]) return
-
-    const file = files[0]
-    const validation = validateImageFile(file)
-
-    if (!validation.isValid) {
-      p.error?.set(validation.error!)
-      return
-    }
-
-    await uploadHandlerImage({
-      resourceId: p.resourceId,
-      file,
-      uploadInfo: p.info,
-      uploadError: p.error,
-      onUploadSuccess: p.onUploadSuccess,
-    })
-  }
 }

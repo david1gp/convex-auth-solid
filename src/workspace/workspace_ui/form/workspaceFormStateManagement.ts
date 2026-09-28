@@ -5,7 +5,6 @@ import { useNavigate } from "@tanstack/solid-router"
 import * as a from "valibot"
 import { api } from "#convex/_generated/api.js"
 import type { Result } from "#result"
-import { userTokenGet } from "#src/auth/ui/signals/userSessionSignal.ts"
 import { mutationCreate } from "#src/utils/convex_client/mutationCreate.ts"
 import { debounceMs } from "#src/utils/ui/debounceMs.ts"
 import type { HasToken } from "#src/utils/ui/HasToken.ts"
@@ -102,9 +101,11 @@ export function workspaceFormStateManagement(
   mode: FormMode,
   workspaceHandle?: string,
   workspace?: DocWorkspace,
+  actionsOverride?: WorkspaceFormActions,
 ): WorkspaceFormStateManagement {
-  const navigator = useNavigate()
-  const actions: WorkspaceFormActions = createActions(mode, workspaceHandle, navigator)
+  // A provided action set is fully local; do not even initialize a production mutation or router hook.
+  const navigator = actionsOverride ? undefined : useNavigate()
+  const actions: WorkspaceFormActions = actionsOverride ?? createActions(mode, workspaceHandle, navigator!)
   const serverState = createSignalObject(createEmptyDocWorkspace())
   const isSaving = createSignalObject(false)
   const state = workspaceCreateState()
@@ -191,19 +192,7 @@ function updateFieldError(field: WorkspaceFormField, value: string, errors: Work
 }
 
 function validateFieldResult(field: WorkspaceFormField, value: string) {
-  let schema
-  if (field === workspaceFormField.name) {
-    schema = workspaceDataSchemaFields.name
-  } else if (field === workspaceFormField.workspaceHandle) {
-    schema = workspaceDataSchemaFields.workspaceHandle
-  } else if (field === workspaceFormField.description) {
-    schema = workspaceDataSchemaFields.description
-  } else if (field === workspaceFormField.image) {
-    schema = workspaceDataSchemaFields.image
-  } else if (field === workspaceFormField.url) {
-    schema = workspaceDataSchemaFields.url
-  }
-  return a.safeParse(schema!, value)
+  return a.safeParse(workspaceDataSchemaFields[field], value)
 }
 
 //
@@ -372,6 +361,7 @@ async function createAction(
   addMutation: (data: WorkspaceCreateMutationProps) => Promise<Result<IdWorkspace>>,
   navigate: NavigateTo,
 ): Promise<void> {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   const workspaceIdResult = await addMutation({
     token: userTokenGet(),
     // data
@@ -397,6 +387,7 @@ async function editAction(
   editMutation: (data: WorkspaceEditMutationProps) => Promise<Result<null>>,
   navigate: NavigateTo,
 ) {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   if (!workspaceHandle) {
     toastAdd({ title: "!workspaceHandle", variant: toastVariant.error })
     return
@@ -422,6 +413,7 @@ async function removeAction(
   deleteMutation: (data: WorkspaceRemoveMutationProps) => Promise<Result<null>>,
   navigate: NavigateTo,
 ) {
+  const { userTokenGet } = await import("#src/auth/ui/signals/userSessionSignal.ts")
   if (!workspaceHandle) {
     toastAdd({ title: "!workspaceHandle", variant: toastVariant.error })
     return

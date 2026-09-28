@@ -32,6 +32,10 @@ function ChildrenLeft(p: DemoNavDataProps) {
       <Show when={p.category && p.compName}>
         <ChildrenLeftComp {...p} />
       </Show>
+      <NavSeparatingSlash />
+      <LinkButtonInternal variant={buttonVariant.ghost} to="/demos/pages" class="text-lg font-medium">
+        Page demos
+      </LinkButtonInternal>
     </>
   )
 }
@@ -65,7 +69,7 @@ function ComponentPopover(
 ) {
   if (!s.category || !s.compName) return null
   const links = objectEntries(s.demoList)
-    .filter(([category, tree]) => category === s.category)
+    .filter(([category]) => category === s.category)
     .flatMap(([category, tree]) => objectKeys(tree).map((compName) => `${s.demoPrefix}/${category}/${compName}`))
   if (!links || links.length <= 0) return null
   return (
