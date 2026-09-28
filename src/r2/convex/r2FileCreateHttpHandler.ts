@@ -2,9 +2,10 @@ import * as a from "valibot"
 import { internal } from "#convex/_generated/api.js"
 import type { ActionCtx } from "#convex/_generated/server.js"
 import { createResultError } from "#result"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
+import { authorizationHeaderGetToken } from "#src/auth/server/authorizationHeaderGetToken.ts"
 import type { FileDataModelWithUserMetadata } from "#src/file/model/FileModel.ts"
 import { fileDataSchema } from "#src/file/model/fileSchema.ts"
+import { authActionCredentialResolve } from "#src/utils/convex_backend/authActionCredentialResolve.ts"
 import { jsonStringifyPretty } from "#utils/json/jsonStringifyPretty.js"
 
 export const apiPathR2FileCreate = "/fileCreate"
@@ -12,19 +13,19 @@ export const apiPathR2FileCreate = "/fileCreate"
 export async function r2FileCreateHttpHandler(ctx: ActionCtx, request: Request): Promise<Response> {
   const op = "r2FileCreateHttpHandler"
 
-  const authorization = request.headers.get("authorization")
-  if (!authorization) {
+  const token = authorizationHeaderGetToken(request.headers.get("authorization"))
+  if (!token) {
     const errorMessage = "Missing authorization header"
     console.warn(op, errorMessage)
     const err = createResultError(op, errorMessage)
     return new Response(jsonStringifyPretty(err), { status: 400 })
   }
 
-  const tokenResult = await verifyTokenGetUserId(authorization)
-  if (!tokenResult.success) {
-    return new Response(jsonStringifyPretty(tokenResult), { status: 400 })
+  const credentialResult = await authActionCredentialResolve(ctx, token)
+  if (!credentialResult.success) {
+    return new Response(jsonStringifyPretty(credentialResult), { status: 400 })
   }
-  const userId = tokenResult.data
+  const userId = credentialResult.data.userId
 
   const user = await ctx.runQuery(internal.auth.userGetInternalQuery, {
     userId,

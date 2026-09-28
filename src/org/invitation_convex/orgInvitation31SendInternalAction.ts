@@ -4,14 +4,14 @@ import { api, internal } from "#convex/_generated/api.js"
 import { type ActionCtx, internalAction } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
 import { languageSchema } from "#src/app/i18n/language.ts"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 import {
   type OrgInvitationSendEmailValidatorType,
   orgInvitation32SendEmailActionFn,
 } from "#src/org/invitation_convex/orgInvitation32SendEmailActionFn.ts"
 import { allowEmailResendingInSeconds } from "#src/org/invitation_model/allowEmailResendingInSeconds.ts"
-import { stt1 } from "#src/utils/i18n/stt.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { authActionCredentialResolve } from "#src/utils/convex_backend/authActionCredentialResolve.ts"
+import { stt1 } from "#src/utils/i18n/stt.ts"
 
 export type OrgInvitationSendValidatorType = typeof orgInvitation31SendValidator.type
 
@@ -30,14 +30,14 @@ export const orgInvitation31SendInternalAction = internalAction({
 
 export async function orgInvitation31SendFn(ctx: ActionCtx, args: OrgInvitationSendValidatorType): PromiseResult<null> {
   const op = "orgInvitationResend"
-  const verifiedResult = await verifyTokenGetUserId(args.token)
-  if (!verifiedResult.success) {
-    console.info(verifiedResult)
-    return verifiedResult
+  const credentialResult = await authActionCredentialResolve(ctx, args.token)
+  if (!credentialResult.success) {
+    console.info(credentialResult)
+    return credentialResult
   }
 
   const invitedBy = await ctx.runQuery(internal.auth.userGetInternalQuery, {
-    userId: verifiedResult.data,
+    userId: credentialResult.data.userId,
   })
   if (!invitedBy) {
     return createResultError(op, "!user")

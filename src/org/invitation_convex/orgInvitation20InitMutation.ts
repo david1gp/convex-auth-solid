@@ -5,11 +5,11 @@ import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { languageSchema } from "#src/app/i18n/language.ts"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
 import { orgInvitation21CreateMutationFn } from "#src/org/invitation_convex/orgInvitation21CreateInternalMutation.ts"
-import { orgMemberGetByUserIdFn } from "#src/org/member_convex/orgMemberGetByUserIdFn.ts"
 import { orgInvitationDataSchemaFields } from "#src/org/invitation_model/orgInvitationSchema.ts"
+import { orgMemberGetByUserIdFn } from "#src/org/member_convex/orgMemberGetByUserIdFn.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { authCredentialResolve } from "#src/utils/convex_backend/authCredentialResolve.ts"
 import { generateId12 } from "#utils/ran/generateId12.js"
 
 export type OrgInvitationCreateValidatorType = typeof orgInvitationCreateActionValidator.type
@@ -36,12 +36,12 @@ export async function orgInvitation20InitMutationFn(
 ): PromiseResult<string> {
   const op = "orgInvitation20InitMutationFn"
 
-  const verifiedResult = await verifyTokenGetUserId(args.token)
-  if (!verifiedResult.success) {
-    console.info(verifiedResult)
-    return verifiedResult
+  const credentialResult = await authCredentialResolve(ctx, args.token)
+  if (!credentialResult.success) {
+    console.info(credentialResult)
+    return credentialResult
   }
-  const invitedBy = verifiedResult.data
+  const invitedBy = credentialResult.data.userId
 
   const org = await ctx.db
     .query("orgs")

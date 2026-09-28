@@ -9,6 +9,7 @@ import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import { UserProfileMeEditForm } from "./UserProfileMeEditForm.js"
 import { userProfileMeEditFormStateManagement } from "./userProfileMeEditFormState.js"
+import { userProfileMeEditViewStateCreate } from "./userProfileMeEditViewStateCreate.ts"
 
 export function UserProfileMeEditPage() {
   return (
@@ -28,25 +29,23 @@ export function UserProfileMeEditPage() {
             </>
           }
         />
-        <PageContent />
+        <UserProfileMeEditView profile={userSessionGet().profile} />
       </PageWrapper>
     </LayoutWrapperAuth>
   )
 }
 
-function PageContent() {
-  const session = userSessionGet()
-  const initialData = {
-    name: session.profile.name,
-    bio: session.profile.bio || "",
-    url: session.profile.url || "",
-  }
-  const sm = userProfileMeEditFormStateManagement(initialData)
+export function UserProfileMeEditView(p: {
+  profile: Pick<ReturnType<typeof userSessionGet>["profile"], "name" | "bio" | "url">
+  onSave?: (sm: ReturnType<typeof userProfileMeEditFormStateManagement>) => void
+  cancelHref?: string
+}) {
+  const state = userProfileMeEditViewStateCreate(() => p)
 
   return (
     <div class={classMerge("max-w-4xl mx-auto px-4 py-8")}>
       <h1 class="text-3xl font-bold mb-4">{ttc("Edit Profile")}</h1>
-      <UserProfileMeEditForm sm={sm} />
+      <UserProfileMeEditForm sm={state.sm} onSave={p.onSave} cancelHref={p.cancelHref} />
     </div>
   )
 }

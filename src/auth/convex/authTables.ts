@@ -1,6 +1,7 @@
 import { defineTable } from "convex/server"
 import * as a from "valibot"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
+import { apiKeyNameSchema } from "#src/auth/model/apiKeyNameSchema.ts"
 import { userDataSchemaFields } from "#src/auth/model/userDataSchemaFields.ts"
 import { loginMethodSchema } from "#src/auth/model_field/loginMethod.ts"
 import { otpPurposeSchema } from "#src/auth/model_field/otpPurpose.ts"
@@ -61,6 +62,17 @@ const authOtpDataSchemaFields = {
   consumedAt: a.optional(dateTimeSchema),
 } as const
 
+const authApiKeyDataSchemaFields = {
+  name: apiKeyNameSchema,
+  digest: a.string(),
+  previewFirst3: a.string(),
+  previewLast3: a.string(),
+  createdAt: dateTimeSchema,
+  expiresAt: a.optional(dateTimeSchema),
+  revokedAt: a.optional(dateTimeSchema),
+  expiredAt: a.optional(dateTimeSchema),
+} as const
+
 export const authTables = {
   users: defineTable({
     ...valibotToConvex(authUserDataSchemaFields),
@@ -113,4 +125,12 @@ export const authTables = {
   })
     //
     .index("emailCode", ["email", "code"]),
+
+  authApiKeys: defineTable({
+    userId: vIdUser,
+    ...valibotToConvex(authApiKeyDataSchemaFields),
+  })
+    //
+    .index("userId", ["userId"])
+    .index("digest", ["digest"]),
 } as const

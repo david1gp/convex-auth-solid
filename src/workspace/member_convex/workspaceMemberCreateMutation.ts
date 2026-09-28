@@ -3,10 +3,10 @@ import * as a from "valibot"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { vIdUser } from "#src/auth/convex/vIdUser.ts"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { authCredentialResolve } from "#src/utils/convex_backend/authCredentialResolve.ts"
 import type { IdWorkspaceMember } from "#src/workspace/member_convex/IdWorkspaceMember.ts"
 import { workspaceMemberDataSchemaFields } from "#src/workspace/member_model/WorkspaceMemberSchema.ts"
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 import { nowIso } from "#utils/date/nowIso.js"
 
 export type WorkspaceMemberCreateValidatorType = typeof workspaceMemberCreateValidator.type
@@ -33,12 +33,12 @@ export async function workspaceMemberCreateFn(
 ): PromiseResult<IdWorkspaceMember> {
   const op = "workspaceMemberCreateFn"
 
-  const verifiedResult = await verifyTokenGetUserId(args.token)
-  if (!verifiedResult.success) {
-    console.info(verifiedResult)
-    return verifiedResult
+  const credentialResult = await authCredentialResolve(ctx, args.token)
+  if (!credentialResult.success) {
+    console.info(credentialResult)
+    return credentialResult
   }
-  const invitedBy = verifiedResult.data
+  const invitedBy = credentialResult.data.userId
 
   const user = await ctx.db.get("users", args.userId)
   if (!user) {

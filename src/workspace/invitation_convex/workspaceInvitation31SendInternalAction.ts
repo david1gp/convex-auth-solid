@@ -3,7 +3,8 @@ import * as a from "valibot"
 import { api, internal } from "#convex/_generated/api.js"
 import { type ActionCtx, internalAction } from "#convex/_generated/server.js"
 import { createResultError, type PromiseResult } from "#result"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { authActionCredentialResolve } from "#src/utils/convex_backend/authActionCredentialResolve.ts"
 import { stt1 } from "#src/utils/i18n/stt.ts"
 import {
   type WorkspaceInvitationSendEmailValidatorType,
@@ -11,7 +12,6 @@ import {
 } from "#src/workspace/invitation_convex/workspaceInvitation32SendEmailActionFn.ts"
 import { allowEmailResendingInSeconds } from "#src/workspace/invitation_model/allowEmailResendingInSeconds.ts"
 import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type WorkspaceInvitationSendValidatorType = typeof workspaceInvitation31SendValidator.type
 
@@ -32,14 +32,14 @@ export async function workspaceInvitation31SendFn(
   args: WorkspaceInvitationSendValidatorType,
 ): PromiseResult<null> {
   const op = "workspaceInvitationResend"
-  const verifiedResult = await verifyTokenGetUserId(args.token)
-  if (!verifiedResult.success) {
-    console.info(verifiedResult)
-    return verifiedResult
+  const credentialResult = await authActionCredentialResolve(ctx, args.token)
+  if (!credentialResult.success) {
+    console.info(credentialResult)
+    return credentialResult
   }
 
   const invitedBy = await ctx.runQuery(internal.auth.userGetInternalQuery, {
-    userId: verifiedResult.data,
+    userId: credentialResult.data.userId,
   })
   if (!invitedBy) {
     return createResultError(op, "!user")

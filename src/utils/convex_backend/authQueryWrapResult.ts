@@ -1,6 +1,6 @@
 import type { QueryCtx } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
-import { verifyTokenResult } from "#src/auth/server/jwt_token/verifyTokenResult.ts"
+import { authCredentialResolve } from "#src/utils/convex_backend/authCredentialResolve.ts"
 
 export async function authQueryWrapResult<T extends { token: string }, R>(
   ctx: QueryCtx,
@@ -11,7 +11,7 @@ export async function authQueryWrapResult<T extends { token: string }, R>(
   if (!args.token) {
     return createResultError(op, "missing token")
   }
-  const verifiedResult = await verifyTokenResult(args.token)
+  const verifiedResult = await authCredentialResolve(ctx, args.token)
   if (!verifiedResult.success) {
     console.info(verifiedResult)
     return verifiedResult

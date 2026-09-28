@@ -11,6 +11,7 @@ export const pageRouteAuth = {
   signInError: "/sign-in-error",
   sso: "/sso",
   userProfileMe: "/profile",
+  userProfileMeApiKeys: "/profile/api-keys",
   userProfileMeEdit: "/profile/edit",
   userProfileMeChangePassword: "/profile/change-password",
   userProfileMeChangeEmail: "/profile/change-email",
@@ -33,6 +34,10 @@ export function urlUserProfileView(username: string) {
 
 export function urlUserProfileMe() {
   return pageRouteAuth.userProfileMe
+}
+
+export function urlUserProfileMeApiKeys() {
+  return pageRouteAuth.userProfileMeApiKeys
 }
 
 export function urlUserProfileMeEdit() {

@@ -43,6 +43,11 @@ const UserProfileMePage = lazy(() =>
     default: c.UserProfileMePage,
   })),
 )
+const UserProfileMeApiKeysPage = lazy(() =>
+  import("#src/auth/ui/profile_me/UserProfileMeApiKeysPage.tsx").then((c) => ({
+    default: c.UserProfileMeApiKeysPage,
+  })),
+)
 const UserProfileMeEditPage = lazy(() =>
   import("#src/auth/ui/profile_me/UserProfileMeEditPage.tsx").then((c) => ({
     default: c.UserProfileMeEditPage,
@@ -78,6 +83,7 @@ export function getRoutesAuth(): RouteObject[] {
     signInError: SignInErrorPage,
     sso: SsoPage,
     userProfileMe: UserProfileMePage,
+    userProfileMeApiKeys: UserProfileMeApiKeysPage,
     userProfileMeEdit: UserProfileMeEditPage,
     userProfileMeChangePassword: UserProfileMeChangePasswordPage,
     userProfileMeChangeEmail: UserProfileMeChangeEmailPage,

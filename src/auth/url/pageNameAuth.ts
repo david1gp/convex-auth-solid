@@ -7,6 +7,7 @@ export const pageNameAuth = {
   signInEnterOtp: "signInEnterOtp",
   signInError: "signInError",
   userProfileMe: "userProfileMe",
+  userProfileMeApiKeys: "userProfileMeApiKeys",
   userProfileMeEdit: "userProfileMeEdit",
   userProfileMeChangePassword: "userProfileMeChangePassword",
   userProfileMeChangeEmail: "userProfileMeChangeEmail",

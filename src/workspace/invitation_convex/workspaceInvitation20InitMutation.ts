@@ -4,11 +4,11 @@ import { internal } from "#convex/_generated/api.js"
 import { type MutationCtx, mutation } from "#convex/_generated/server.js"
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
-import { workspaceInvitation21CreateMutationFn } from "#src/workspace/invitation_convex/workspaceInvitation21CreateInternalMutation.ts"
-import { workspaceMemberGetByUserIdFn } from "#src/workspace/member_convex/workspaceMemberGetByUserIdFn.ts"
-import { workspaceInvitationDataSchemaFields } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { authCredentialResolve } from "#src/utils/convex_backend/authCredentialResolve.ts"
+import { workspaceInvitation21CreateMutationFn } from "#src/workspace/invitation_convex/workspaceInvitation21CreateInternalMutation.ts"
+import { workspaceInvitationDataSchemaFields } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
+import { workspaceMemberGetByUserIdFn } from "#src/workspace/member_convex/workspaceMemberGetByUserIdFn.ts"
 import { generateId12 } from "#utils/ran/generateId12.js"
 
 export type WorkspaceInvitationCreateValidatorType = typeof workspaceInvitationCreateActionValidator.type
@@ -33,12 +33,12 @@ export async function workspaceInvitation20InitMutationFn(
 ): PromiseResult<string> {
   const op = "workspaceInvitation20InitMutationFn"
 
-  const verifiedResult = await verifyTokenGetUserId(args.token)
-  if (!verifiedResult.success) {
-    console.info(verifiedResult)
-    return verifiedResult
+  const credentialResult = await authCredentialResolve(ctx, args.token)
+  if (!credentialResult.success) {
+    console.info(credentialResult)
+    return credentialResult
   }
-  const invitedBy = verifiedResult.data
+  const invitedBy = credentialResult.data.userId
 
   const workspace = await ctx.db
     .query("workspaces")

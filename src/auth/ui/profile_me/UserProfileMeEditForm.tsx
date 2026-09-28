@@ -1,41 +1,33 @@
 import { ttc } from "#src/app/i18n/ttc.ts"
-import { apiAuthProfileUpdate } from "#src/auth/api_client/apiAuthProfileUpdate.ts"
-import type { UserProfileFieldsTypePublic } from "#src/auth/convex/user/profile_update/userProfileUpdateMutation.ts"
 import { userProfileFormConfig } from "#src/auth/ui/profile/userProfileFormField.ts"
-import { userSessionGet, userSessionSignal } from "#src/auth/ui/signals/userSessionSignal.ts"
-import { userSessionsSignalAdd } from "#src/auth/ui/signals/userSessionsSignal.ts"
 import { urlUserProfileMe } from "#src/auth/url/pageRouteAuth.ts"
 import { FormFieldInput } from "#src/ui/form/FormFieldInput.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { Button } from "#ui/interactive/button/Button.jsx"
 import { buttonVariant } from "#ui/interactive/button/buttonCva.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.jsx"
-import { toastAdd } from "#ui/interactive/toast/toastAdd.ts"
-import { toastVariant } from "#ui/interactive/toast/toastVariant.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import type { UserProfileMeEditFormStateManagement } from "./userProfileMeEditFormState.js"
+import { userProfileMeEditFormViewStateCreate } from "./userProfileMeEditFormViewStateCreate.ts"
 
 export interface UserProfileMeEditFormProps extends MayHaveClass {
   sm: UserProfileMeEditFormStateManagement
+  onSave?: (sm: UserProfileMeEditFormStateManagement) => void
+  cancelHref?: string
 }
 
 export function UserProfileMeEditForm(p: UserProfileMeEditFormProps) {
+  const state = userProfileMeEditFormViewStateCreate(() => p)
   return (
     <div class={classMerge("bg-white dark:bg-gray-800 rounded-lg shadow-md p-6", p.class)}>
-      <form
-        class="space-y-6"
-        onSubmit={(e) => {
-          e.preventDefault()
-          handleSave(p.sm)
-        }}
-      >
+      <form class="space-y-6" onSubmit={state.handleSubmit}>
         <NameField sm={p.sm} />
         <BioField sm={p.sm} />
         <UrlField sm={p.sm} />
 
         <div class="mt-6 flex justify-end space-x-4">
-          <LinkButtonInternal to={urlUserProfileMe()} variant={buttonVariant.link}>
+          <LinkButtonInternal to={p.cancelHref ?? urlUserProfileMe()} variant={buttonVariant.link}>
             {ttc("Cancel")}
           </LinkButtonInternal>
           <Button type="submit" variant={buttonVariant.filledIndigo} disabled={p.sm.isLoading.get()}>
@@ -106,35 +98,4 @@ function UrlField(p: HasUserProfileMeEditFormStateManagement) {
       />
     </div>
   )
-}
-
-async function handleSave(sm: UserProfileMeEditFormStateManagement): Promise<void> {
-  sm.isLoading.set(true)
-
-  const changedFields = sm.getChangedFields()
-  const formData: UserProfileFieldsTypePublic = {
-    token: userSessionGet().token,
-    name: changedFields.name,
-    bio: changedFields.bio,
-    url: changedFields.url,
-  }
-
-  const result = await apiAuthProfileUpdate(formData)
-
-  if (!result.success) {
-    toastAdd({
-      title: ttc("Update Failed"),
-      description: result.errorMessage,
-      variant: toastVariant.error,
-    })
-  } else if (result.success) {
-    toastAdd({
-      title: ttc("Profile Updated"),
-      variant: toastVariant.success,
-    })
-    const newSession = result.data
-    userSessionsSignalAdd(newSession)
-    userSessionSignal.set(newSession)
-  }
-  sm.isLoading.set(false)
 }

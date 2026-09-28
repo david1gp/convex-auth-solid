@@ -9,11 +9,11 @@ import { docUserToUserProfile } from "#src/auth/convex/user/docUserToUserProfile
 import type { UserSession } from "#src/auth/model/UserSession.ts"
 import { loginMethod } from "#src/auth/model_field/loginMethod.ts"
 import { createTokenResult } from "#src/auth/server/jwt_token/createTokenResult.ts"
-import { verifyTokenGetUserId } from "#src/auth/server/jwt_token/verifyTokenGetUserId.ts"
+import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
+import { authCredentialResolve } from "#src/utils/convex_backend/authCredentialResolve.ts"
 import { stt } from "#src/utils/i18n/stt.ts"
 import { workspaceInvitationStatus } from "#src/workspace/invitation_model/WorkspaceInvitationSchema.ts"
 import { nowIso } from "#utils/date/nowIso.js"
-import { valibotToConvex } from "#src/utils/convex/valibotToConvex.ts"
 
 export type WorkspaceInvitationAcceptValidatorType = typeof workspaceInvitationAcceptValidator.type
 
@@ -36,12 +36,12 @@ export async function workspaceInvitation50AcceptFn(
 ): PromiseResult<UserSession> {
   const op = "workspaceInvitationAccept"
 
-  const verifiedResult = await verifyTokenGetUserId(args.token)
-  if (!verifiedResult.success) {
-    console.info(verifiedResult)
-    return verifiedResult
+  const credentialResult = await authCredentialResolve(ctx, args.token)
+  if (!credentialResult.success) {
+    console.info(credentialResult)
+    return credentialResult
   }
-  const userId = verifiedResult.data
+  const userId = credentialResult.data.userId
 
   const invitation = await ctx.db
     .query("workspaceInvitations")

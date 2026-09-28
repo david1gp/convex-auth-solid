@@ -2,6 +2,7 @@ import { internalMutation, type MutationCtx, mutation } from "#convex/_generated
 import { createResult, createResultError, type PromiseResult } from "#result"
 import { findUserByEmailFn } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
 import { userDeleteHardOtps } from "#src/auth/convex/user/delete_hard/userDeleteHardOtps.ts"
+import { userDeleteHardApiKeys } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardApiKeys.ts"
 import { userDeleteHardAuthAccounts } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthAccounts.ts"
 import { userDeleteHardAuthSessions } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardAuthSessions.ts"
 import { userDeleteHardEmailLoginCodes } from "#src/auth/convex/user/delete_hard_parts/userDeleteHardEmailLoginCodes.ts"
@@ -45,6 +46,7 @@ export async function userDeleteHardMutationFn(
 
   // Clean up ALL dependent records in dependency order
   await userDeleteHardAuthSessions(ctx, userId)
+  await userDeleteHardApiKeys(ctx, userId)
   await userDeleteHardOtps(ctx, userId)
   await userDeleteHardEmailLoginCodes(ctx, userId)
   await userDeleteHardAuthAccounts(ctx, userId)

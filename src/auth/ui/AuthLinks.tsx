@@ -1,8 +1,9 @@
+import { pageDemoHref } from "#src/app/demos/pageDemoHref.ts"
 import { type PageNameAuth, pageNameAuth } from "#src/auth/url/pageNameAuth.ts"
 import { pageRouteAuth } from "#src/auth/url/pageRouteAuth.ts"
 import { BulletLinksO } from "#ui/interactive/list/BulletLinksO.jsx"
 
-export function AuthLinks() {
+export function AuthLinks(p: { demo?: boolean } = {}) {
   const authLinks = [
     { key: "signUp", label: "Sign Up" },
     { key: "signUpConfirmEmail", label: "Sign Up Confirm Email" },
@@ -13,7 +14,12 @@ export function AuthLinks() {
 
   const urlObjects = authLinks.reduce(
     (acc, { key, label }) => {
-      acc[label] = pageRouteAuth[pageNameAuth[key]]
+      const route = pageRouteAuth[pageNameAuth[key]]
+      acc[label] = p.demo
+        ? pageDemoHref(
+            route as "/sign-up" | "/sign-up-confirm-email" | "/sign-in" | "/sign-in-enter-otp" | "/sign-in-error",
+          )
+        : route
       return acc
     },
     {} as Record<string, string>,

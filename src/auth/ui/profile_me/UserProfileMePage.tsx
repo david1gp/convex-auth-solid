@@ -1,6 +1,8 @@
 import { mdiLocationExit } from "@adaptive-ds/mdi/mdiLocationExit.js"
 import { mdiSquareEditOutline } from "@adaptive-ds/mdi/mdiSquareEditOutline.js"
+import { Link } from "@tanstack/solid-router"
 import { Show } from "solid-js"
+import { Dynamic } from "solid-js/web"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
@@ -13,13 +15,7 @@ import {
   userProfileFormStateManagement,
 } from "#src/auth/ui/profile/userProfileFormState.ts"
 import { userSessionGet } from "#src/auth/ui/signals/userSessionSignal.ts"
-import {
-  urlUserProfileMe,
-  urlUserProfileMeChangeEmail,
-  urlUserProfileMeChangePassword,
-  urlUserProfileMeEdit,
-  urlUserProfileMeImage,
-} from "#src/auth/url/pageRouteAuth.ts"
+import { urlUserProfileMe } from "#src/auth/url/pageRouteAuth.ts"
 import { orgNameGet } from "#src/org/org_ui/orgNameRecordSignal.ts"
 import { urlOrgLeave, urlOrgView } from "#src/org/org_url/urlOrg.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
@@ -32,6 +28,7 @@ import { classArr } from "#ui/utils/classArr.ts"
 import { classMerge } from "#ui/utils/classMerge.ts"
 import type { MayHaveClass } from "#ui/utils/MayHaveClass.ts"
 import { capitalizeFirstLetter } from "#utils/text/capitalizeFirstLetter.js"
+import { userProfileMeViewStateCreate } from "./userProfileMeViewStateCreate.ts"
 
 export function UserProfileMePage() {
   return (
@@ -47,7 +44,7 @@ export function UserProfileMePage() {
             </>
           }
         />
-        <PageContent />
+        <UserProfileMeView profile={userSessionGet().profile} />
         {/* <PageContent /> */}
       </PageWrapper>
     </LayoutWrapperAuth>
@@ -61,16 +58,18 @@ function PageContent1() {
   return <UserProfileForm sm={sm} mode={mode} class="max-w-4xl mx-auto" />
 }
 
-function PageContent() {
-  const userSession = userSessionGet()
-  const userProfile = userSession.profile
+export function UserProfileMeView(p: {
+  profile: UserProfile
+  hrefs?: { image: string; edit: string; email: string; password: string; apiKeys: string }
+}) {
+  const state = userProfileMeViewStateCreate(() => p)
   return (
     <div class={classMerge("max-w-2xl mx-auto", "space-y-6")}>
-      <ProfileSectionImage image={userProfile.image} name={userProfile.name} />
-      <ProfileSectionInfo userProfile={userProfile} />
-      <ProfileSectionEmail email={userProfile.email} />
-      <ProfileSectionOrg orgHandle={userProfile.orgHandle} orgRole={userProfile.orgRole} />
-      <ProfileSectionActions />
+      <ProfileSectionImage image={p.profile.image} name={p.profile.name} href={state.hrefs().image} demo={!!p.hrefs} />
+      <ProfileSectionInfo userProfile={p.profile} editHref={state.hrefs().edit} demo={!!p.hrefs} />
+      <ProfileSectionEmail email={p.profile.email} emailHref={state.hrefs().email} />
+      <ProfileSectionOrg orgHandle={p.profile.orgHandle} orgRole={p.profile.orgRole} demo={!!p.hrefs} />
+      <ProfileSectionActions passwordHref={state.hrefs().password} apiKeysHref={state.hrefs().apiKeys} />
     </div>
   )
 }
@@ -78,13 +77,17 @@ function PageContent() {
 interface ProfileSectionImageProps extends MayHaveClass {
   image?: string
   name: string
+  href: string
+  demo?: boolean
 }
 
 function ProfileSectionImage(p: ProfileSectionImageProps) {
   return (
     <div class="flex justify-center -mb-7">
-      <a
-        href={urlUserProfileMeImage()}
+      <Dynamic
+        component={p.demo ? Link : "a"}
+        to={p.demo ? p.href : undefined}
+        href={p.href}
         class={classMerge(
           "group relative w-32 h-32 rounded-full overflow-hidden border-4 border-gray-200 dark:border-gray-700",
           "z-10",
@@ -101,26 +104,26 @@ function ProfileSectionImage(p: ProfileSectionImageProps) {
         <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
           <Icon path={mdiSquareEditOutline} class="w-8 h-8 fill-white text-white" />
         </div>
-      </a>
+      </Dynamic>
     </div>
   )
 }
 
-function ProfileSectionInfo(p: { userProfile: Pick<UserProfile, "name" | "bio" | "url"> }) {
+function ProfileSectionInfo(p: {
+  userProfile: Pick<UserProfile, "name" | "bio" | "url">
+  editHref: string
+  demo?: boolean
+}) {
   return (
     <section id="info" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{p.userProfile.name}</h2>
-        <LinkButtonIconOnlyInternal
-          to={urlUserProfileMeEdit()}
-          icon={mdiSquareEditOutline}
-          variant={buttonVariant.link}
-        />
+        <LinkButtonIconOnlyInternal to={p.editHref} icon={mdiSquareEditOutline} variant={buttonVariant.link} />
       </div>
 
       {p.userProfile.bio && <p class="text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{p.userProfile.bio}</p>}
 
-      {p.userProfile.url && (
+      {p.userProfile.url && !p.demo && (
         <a
           href={p.userProfile.url}
           target="_blank"
@@ -134,7 +137,7 @@ function ProfileSectionInfo(p: { userProfile: Pick<UserProfile, "name" | "bio" |
   )
 }
 
-function ProfileSectionEmail(p: { email?: string }) {
+function ProfileSectionEmail(p: { email?: string; emailHref: string }) {
   return (
     <section id="email" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <div class="flex items-center justify-between">
@@ -142,17 +145,13 @@ function ProfileSectionEmail(p: { email?: string }) {
           <span class="text-sm text-muted-foreground font-medium">{ttc("Email")}</span>
           <p class="text-gray-900 dark:text-gray-100">{p.email ?? ""}</p>
         </div>
-        <LinkButtonIconOnlyInternal
-          to={urlUserProfileMeChangeEmail()}
-          icon={mdiSquareEditOutline}
-          variant={buttonVariant.link}
-        />
+        <LinkButtonIconOnlyInternal to={p.emailHref} icon={mdiSquareEditOutline} variant={buttonVariant.link} />
       </div>
     </section>
   )
 }
 
-function ProfileSectionOrg(p: { orgHandle?: string; orgRole?: string }) {
+function ProfileSectionOrg(p: { orgHandle?: string; orgRole?: string; demo?: boolean }) {
   return (
     <section id="org" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <Show
@@ -173,17 +172,23 @@ function ProfileSectionOrg(p: { orgHandle?: string; orgRole?: string }) {
                 <span class="text-sm text-muted-foreground font-medium">{ttc("Organization")}</span>
                 <br />
                 <div class="flex flex-wrap gap-2">
-                  <LinkButtonInternal to={urlOrgView(orgHandle())} variant={buttonVariant.link} class="pl-0">
+                  <LinkButtonInternal
+                    to={p.demo ? "/demos/pages" : urlOrgView(orgHandle())}
+                    variant={buttonVariant.link}
+                    class="pl-0"
+                  >
                     {orgName ?? orgHandle()}
                   </LinkButtonInternal>
                   {p.orgRole && <p class="text-gray-600 dark:text-gray-400 py-2">{capitalizeFirstLetter(p.orgRole)}</p>}
                 </div>
               </div>
-              <LinkButtonIconOnlyInternal
-                to={urlOrgLeave(orgHandle())}
-                icon={mdiLocationExit}
-                variant={buttonVariant.link}
-              />
+              <Show when={!p.demo}>
+                <LinkButtonIconOnlyInternal
+                  to={urlOrgLeave(orgHandle())}
+                  icon={mdiLocationExit}
+                  variant={buttonVariant.link}
+                />
+              </Show>
             </div>
           )
         }}
@@ -192,17 +197,16 @@ function ProfileSectionOrg(p: { orgHandle?: string; orgRole?: string }) {
   )
 }
 
-function ProfileSectionActions() {
+function ProfileSectionActions(p: { passwordHref: string; apiKeysHref: string }) {
   return (
     <section id="actions" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <h3 class="text-sm text-muted-foreground font-medium">{ttc("Account Actions")}</h3>
       <div class={classArr("grid grid-cols-1 md:grid-cols-3 gap-4")}>
-        <LinkButtonInternal
-          to={urlUserProfileMeChangePassword()}
-          variant={buttonVariant.link}
-          class="justify-start pl-0"
-        >
+        <LinkButtonInternal to={p.passwordHref} variant={buttonVariant.link} class="justify-start pl-0">
           {ttc("Change Password")}
+        </LinkButtonInternal>
+        <LinkButtonInternal to={p.apiKeysHref} variant={buttonVariant.link} class="justify-start pl-0">
+          {ttc("API Keys")}
         </LinkButtonInternal>
       </div>
     </section>
