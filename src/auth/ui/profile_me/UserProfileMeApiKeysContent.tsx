@@ -1,5 +1,7 @@
 import { mdiCheckboxMarkedOutline } from "@adaptive-ds/mdi/mdiCheckboxMarkedOutline.js"
+import { mdiClose } from "@adaptive-ds/mdi/mdiClose.js"
 import { mdiContentCopy } from "@adaptive-ds/mdi/mdiContentCopy.js"
+import { mdiPencil } from "@adaptive-ds/mdi/mdiPencil.js"
 import { mdiPlus } from "@adaptive-ds/mdi/mdiPlus.js"
 import { mdiRefresh } from "@adaptive-ds/mdi/mdiRefresh.js"
 import { mdiTrashCanOutline } from "@adaptive-ds/mdi/mdiTrashCanOutline.js"
@@ -97,7 +99,47 @@ export function UserProfileMeApiKeysContent(p: { stateFactory: typeof userProfil
                 <For each={page().page}>
                   {(key) => (
                     <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-2">
-                      <h3 class="font-semibold">{key.name}</h3>
+                      <Show when={state.editingId() === key.id} fallback={<h3 class="font-semibold">{key.name}</h3>}>
+                        <form class="space-y-2" onSubmit={state.saveEdit}>
+                          <label class="block space-y-1">
+                            <span>{ttc("Name")}</span>
+                            <input
+                              class="block w-full rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 p-2"
+                              type="text"
+                              required
+                              maxLength={80}
+                              value={state.editName()}
+                              onInput={(e) => state.editNameChange(e.currentTarget.value)}
+                            />
+                          </label>
+                          <Show when={state.editError()}>
+                            {(message) => (
+                              <p role="alert" class="text-red-600">
+                                {message()}
+                              </p>
+                            )}
+                          </Show>
+                          <div class="flex gap-2">
+                            <ButtonIcon
+                              icon={mdiCheckboxMarkedOutline}
+                              type="submit"
+                              variant={buttonVariant.filledIndigo}
+                              disabled={state.busy()}
+                            >
+                              {ttc("Save")}
+                            </ButtonIcon>
+                            <ButtonIcon
+                              icon={mdiClose}
+                              type="button"
+                              variant={buttonVariant.outline}
+                              disabled={state.busy()}
+                              onClick={state.cancelEdit}
+                            >
+                              {ttc("Cancel")}
+                            </ButtonIcon>
+                          </div>
+                        </form>
+                      </Show>
                       <code>{key.maskedCredential}</code>
                       <p>
                         {ttc("Created")}: <DateView date={key.createdAt} />
@@ -116,12 +158,23 @@ export function UserProfileMeApiKeysContent(p: { stateFactory: typeof userProfil
                             ? ttc("Revoked")
                             : ttc("Expired")}
                       </p>
-                      <Show when={key.status === "active"}>
-                        <div class="flex gap-2">
+                      <div class="flex gap-2 flex-wrap">
+                        <Show when={state.editingId() !== key.id}>
+                          <ButtonIcon
+                            icon={mdiPencil}
+                            type="button"
+                            variant={buttonVariant.outline}
+                            disabled={state.busy() || !!state.credential()}
+                            onClick={() => state.edit(key)}
+                          >
+                            {ttc("Edit")}
+                          </ButtonIcon>
+                        </Show>
+                        <Show when={key.status === "active"}>
                           <ButtonIcon
                             icon={mdiRefresh}
                             variant={buttonVariant.outline}
-                            disabled={state.busy() || !!state.credential()}
+                            disabled={state.busy() || state.editingId() === key.id || !!state.credential()}
                             onClick={() => state.rotate(key)}
                           >
                             {ttc("Rotate")}
@@ -129,13 +182,13 @@ export function UserProfileMeApiKeysContent(p: { stateFactory: typeof userProfil
                           <ButtonIcon
                             icon={mdiTrashCanOutline}
                             variant={buttonVariant.outline}
-                            disabled={state.busy() || !!state.credential()}
+                            disabled={state.busy() || state.editingId() === key.id || !!state.credential()}
                             onClick={() => state.revoke(key)}
                           >
                             {ttc("Revoke")}
                           </ButtonIcon>
-                        </div>
-                      </Show>
+                        </Show>
+                      </div>
                     </article>
                   )}
                 </For>

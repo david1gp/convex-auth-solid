@@ -122,6 +122,57 @@ describe("API key page demo state", () => {
     }
   })
 
+  test("clears the current edit and feedback when moving between pages", async () => {
+    const { state, dispose } = createRoot((disposeRoot) => ({
+      state: userProfileMeApiKeysDemoStateCreate({ confirm: () => true }),
+      dispose: disposeRoot,
+    }))
+    try {
+      for (let i = 0; i < 5; i++) {
+        state.nameChange(`Key ${i}`)
+        await state.create(submit)
+        state.dismiss()
+      }
+
+      const firstPageKey = state.page()!.page[0]!
+      state.edit(firstPageKey)
+      state.editNameChange("   ")
+      await state.saveEdit(submit)
+      expect(state.editError()).toContain("Name")
+
+      state.next()
+      expect(state.pageNumber()).toBe(2)
+      expect(state.editingId()).toBeNull()
+      expect(state.editName()).toBe("")
+      expect(state.editError()).toBe("")
+
+      const secondPageKey = state.page()!.page[0]!
+      expect(secondPageKey.status).toBe("active")
+      await state.revoke(secondPageKey)
+      expect(state.page()!.page[0]!.status).toBe("revoked")
+
+      state.edit(secondPageKey)
+      state.editNameChange("   ")
+      await state.saveEdit(submit)
+      expect(state.editError()).toContain("Name")
+      state.previous()
+      expect(state.editingId()).toBeNull()
+      expect(state.editName()).toBe("")
+      expect(state.editError()).toBe("")
+
+      state.edit(firstPageKey)
+      state.editNameChange("   ")
+      await state.saveEdit(submit)
+      expect(state.editError()).toContain("Name")
+      state.next()
+      expect(state.editingId()).toBeNull()
+      expect(state.editName()).toBe("")
+      expect(state.editError()).toBe("")
+    } finally {
+      dispose()
+    }
+  })
+
   test("preserves key mutations and sequence across remounts without persisting plaintext secrets", async () => {
     const first = createRoot((dispose) => ({
       state: userProfileMeApiKeysDemoStateCreate({ confirm: () => true }),
@@ -173,6 +224,86 @@ describe("API key page demo state", () => {
       expect(state.credential()).toBe("")
     } finally {
       dispose()
+    }
+  })
+
+  test("edits active, revoked and expired names locally, validates input and preserves metadata across remounts", async () => {
+    const originalFetch = globalThis.fetch
+    let requests = 0
+    globalThis.fetch = (() => {
+      requests += 1
+      throw new Error("unexpected network call")
+    }) as unknown as typeof fetch
+    let now = Date.parse("2026-09-28T10:00:00.000Z")
+    const first = createRoot((dispose) => ({ state: userProfileMeApiKeysDemoStateCreate({ now: () => now }), dispose }))
+    try {
+      const { state } = first
+      const active = state.page()!.page[0]!
+      const revoked = state.page()!.page[1]!
+      state.edit(active)
+      state.editNameChange("Discarded")
+      state.cancelEdit()
+      expect(state.editingId()).toBeNull()
+      expect(state.page()!.page[0]).toEqual(active)
+
+      state.edit(active)
+      state.editNameChange("   ")
+      await state.saveEdit(submit)
+      expect(state.editError()).toContain("Name")
+      state.editNameChange("x".repeat(81))
+      await state.saveEdit(submit)
+      expect(state.editError()).toContain("Name")
+      expect(state.page()!.page[0]).toEqual(active)
+      state.cancelEdit()
+      expect(state.editError()).toBe("")
+      expect(state.editName()).toBe("")
+
+      state.edit(active)
+      state.editNameChange("  Renamed integration  ")
+      await state.saveEdit(submit)
+      expect(state.editingId()).toBeNull()
+      expect(state.editError()).toBe("")
+      expect(state.page()!.page[0]).toEqual({ ...active, name: "Renamed integration" })
+
+      state.edit(revoked)
+      state.editNameChange("Retired renamed")
+      await state.saveEdit(submit)
+      expect(state.page()!.page[1]).toEqual({ ...revoked, name: "Retired renamed" })
+
+      state.nameChange("Short lived")
+      state.expiryChange("1-day")
+      await state.create(submit)
+      state.dismiss()
+      now += 2 * 24 * 60 * 60 * 1000
+      const expired = state.page()!.page[0]!
+      expect(expired.status).toBe("expired")
+      state.edit(expired)
+      state.editNameChange("Expired renamed")
+      await state.saveEdit(submit)
+      expect(state.page()!.page[0]).toEqual({ ...expired, name: "Expired renamed" })
+
+      first.dispose()
+      const second = createRoot((dispose) => ({
+        state: userProfileMeApiKeysDemoStateCreate({ now: () => now }),
+        dispose,
+      }))
+      try {
+        expect(second.state.page()!.page.map((key) => key.name)).toEqual([
+          "Expired renamed",
+          "Renamed integration",
+          "Retired renamed",
+        ])
+        expect(second.state.credential()).toBe("")
+        expect(
+          JSON.stringify(pageDemoFixtureStoreGet().get<{ get: () => unknown }>("auth:api-keys")!.get()),
+        ).not.toContain("demo_key_")
+        expect(requests).toBe(0)
+      } finally {
+        second.dispose()
+      }
+    } finally {
+      first.dispose()
+      globalThis.fetch = originalFetch
     }
   })
 })

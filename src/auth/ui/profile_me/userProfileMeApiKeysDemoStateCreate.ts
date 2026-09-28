@@ -52,6 +52,9 @@ export function userProfileMeApiKeysDemoStateCreate(
   const expiryPreset = createSignalObject<ApiKeyExpiryPreset>("1-month")
   const credential = createSignalObject("")
   const error = createSignalObject("")
+  const editingId = createSignalObject<ApiKeyListItem["id"] | null>(null)
+  const editName = createSignalObject("")
+  const editError = createSignalObject("")
   const pageIndex = createSignalObject(0)
   const pageSize = 5
 
@@ -104,6 +107,39 @@ export function userProfileMeApiKeysDemoStateCreate(
       )
   }
 
+  function edit(key: ApiKeyListItem) {
+    if (credential.get()) return
+    editingId.set(key.id)
+    editName.set(key.name)
+    editError.set("")
+  }
+
+  function cancelEdit() {
+    editingId.set(null)
+    editName.set("")
+    editError.set("")
+  }
+
+  async function saveEdit(event: SubmitEvent) {
+    event.preventDefault()
+    const id = editingId.get()
+    if (!id || credential.get()) return
+    const parsed = a.safeParse(apiKeyNameSchema, editName.get())
+    if (!parsed.success) {
+      editError.set(ttc("Name must be 1–80 characters"))
+      return
+    }
+    if (!sharedFixture.get().keys.some((key) => key.id === id)) {
+      editError.set(ttc("Could not rename API key. Please try again."))
+      return
+    }
+    sharedFixture.set({
+      ...sharedFixture.get(),
+      keys: sharedFixture.get().keys.map((key) => (key.id === id ? { ...key, name: parsed.output } : key)),
+    })
+    cancelEdit()
+  }
+
   async function create(event: SubmitEvent) {
     event.preventDefault()
     if (credential.get()) return
@@ -118,7 +154,7 @@ export function userProfileMeApiKeysDemoStateCreate(
   }
 
   async function revoke(key: ApiKeyListItem) {
-    if (credential.get() || !keyIsActive(key.id)) return
+    if (credential.get() || editingId.get() === key.id || !keyIsActive(key.id)) return
     if (!confirm(ttc("Revoke this API key? This cannot be undone."))) return
     sharedFixture.set({
       ...sharedFixture.get(),
@@ -132,7 +168,7 @@ export function userProfileMeApiKeysDemoStateCreate(
   }
 
   async function rotate(key: ApiKeyListItem) {
-    if (credential.get() || !keyIsActive(key.id)) return
+    if (credential.get() || editingId.get() === key.id || !keyIsActive(key.id)) return
     if (!confirm(ttc("Rotate this API key? The old credential will stop working immediately."))) return
     sharedFixture.set({
       ...sharedFixture.get(),
@@ -161,9 +197,14 @@ export function userProfileMeApiKeysDemoStateCreate(
     pageNumber: () => pageIndex.get() + 1,
     canPrevious: () => pageIndex.get() > 0,
     canNext: () => !page().isDone,
-    previous: () => pageIndex.set(Math.max(0, pageIndex.get() - 1)),
+    previous: () => {
+      cancelEdit()
+      pageIndex.set(Math.max(0, pageIndex.get() - 1))
+    },
     next: () => {
-      if (!page().isDone) pageIndex.set(pageIndex.get() + 1)
+      if (page().isDone) return
+      cancelEdit()
+      pageIndex.set(pageIndex.get() + 1)
     },
     loading: () => false,
     page,
@@ -179,6 +220,13 @@ export function userProfileMeApiKeysDemoStateCreate(
     dismiss: () => credential.set(""),
     busy: () => false,
     error: error.get,
+    editingId: editingId.get,
+    editName: editName.get,
+    editNameChange: editName.set,
+    editError: editError.get,
+    edit,
+    cancelEdit,
+    saveEdit,
     create,
     revoke,
     rotate,

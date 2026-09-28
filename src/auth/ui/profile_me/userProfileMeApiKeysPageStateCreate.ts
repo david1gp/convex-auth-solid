@@ -23,17 +23,63 @@ export function userProfileMeApiKeysPageStateCreate() {
   const createMutation = mutationCreate(api.auth.apiKeyCreateMutation)
   const revokeMutation = mutationCreate(api.auth.apiKeyRevokeMutation)
   const rotateMutation = mutationCreate(api.auth.apiKeyRotateMutation)
+  const renameMutation = mutationCreate(api.auth.apiKeyRenameMutation)
   const name = createSignalObject("")
   const expiryPreset = createSignalObject<ApiKeyExpiryPreset>("1-month")
   const credential = createSignalObject("")
   const busy = createSignalObject(false)
   const error = createSignalObject("")
+  const editingId = createSignalObject<ApiKeyListItem["id"] | null>(null)
+  const editName = createSignalObject("")
+  const editError = createSignalObject("")
   let mounted = true
 
   onCleanup(() => {
     mounted = false
     credential.set("")
   })
+
+  function edit(key: ApiKeyListItem) {
+    if (busy.get() || credential.get()) return
+    editingId.set(key.id)
+    editName.set(key.name)
+    editError.set("")
+  }
+
+  function cancelEdit() {
+    if (busy.get()) return
+    editingId.set(null)
+    editName.set("")
+    editError.set("")
+  }
+
+  async function saveEdit(event: SubmitEvent) {
+    event.preventDefault()
+    const id = editingId.get()
+    if (!id || busy.get() || credential.get()) return
+    const parsed = a.safeParse(apiKeyNameSchema, editName.get())
+    if (!parsed.success) {
+      editError.set(ttc("Name must be 1–80 characters"))
+      return
+    }
+    busy.set(true)
+    editError.set("")
+    try {
+      const result = await renameMutation({ token: userTokenGet(), id, name: parsed.output })
+      if (!mounted) return
+      if (!result.success) {
+        editError.set(ttc("Could not rename API key. Please try again."))
+        return
+      }
+      pagination.reset()
+      editingId.set(null)
+      editName.set("")
+    } catch {
+      if (mounted) editError.set(ttc("Could not rename API key. Please try again."))
+    } finally {
+      busy.set(false)
+    }
+  }
 
   async function create(e: SubmitEvent) {
     e.preventDefault()
@@ -67,7 +113,13 @@ export function userProfileMeApiKeysPageStateCreate() {
   }
 
   async function revoke(key: ApiKeyListItem) {
-    if (busy.get() || credential.get() || !window.confirm(ttc("Revoke this API key? This cannot be undone."))) return
+    if (
+      busy.get() ||
+      editingId.get() === key.id ||
+      credential.get() ||
+      !window.confirm(ttc("Revoke this API key? This cannot be undone."))
+    )
+      return
     busy.set(true)
     error.set("")
     try {
@@ -84,6 +136,7 @@ export function userProfileMeApiKeysPageStateCreate() {
   async function rotate(key: ApiKeyListItem) {
     if (
       busy.get() ||
+      editingId.get() === key.id ||
       credential.get() ||
       !window.confirm(ttc("Rotate this API key? The old credential will stop working immediately."))
     )
@@ -121,8 +174,18 @@ export function userProfileMeApiKeysPageStateCreate() {
     pageNumber: () => pagination.history().length + 1,
     canPrevious: pagination.canPrevious,
     canNext: pagination.canNext,
-    previous: pagination.previous,
-    next: pagination.next,
+    previous: () => {
+      editingId.set(null)
+      editName.set("")
+      editError.set("")
+      pagination.previous()
+    },
+    next: () => {
+      editingId.set(null)
+      editName.set("")
+      editError.set("")
+      pagination.next()
+    },
     loading: pagination.loading,
     page: () => {
       const result = pagination.page()
@@ -143,6 +206,13 @@ export function userProfileMeApiKeysPageStateCreate() {
     dismiss: () => credential.set(""),
     busy: busy.get,
     error: error.get,
+    editingId: editingId.get,
+    editName: editName.get,
+    editNameChange: editName.set,
+    editError: editError.get,
+    edit,
+    cancelEdit,
+    saveEdit,
     create,
     revoke,
     rotate,
