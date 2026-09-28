@@ -2,6 +2,25 @@ import { defineConfig } from "@rsbuild/core"
 import { pluginBabel } from "@rsbuild/plugin-babel"
 import { pluginSolid } from "@rsbuild/plugin-solid"
 
+const publicEnvNames = [
+  "PUBLIC_ENV_MODE",
+  "PUBLIC_BASE_URL_SITE",
+  "PUBLIC_BASE_URL_APP",
+  "PUBLIC_BASE_URL_API",
+  "PUBLIC_BASE_URL_CONVEX",
+  "PUBLIC_BASE_URL_R2",
+  "PUBLIC_OIDC_ENABLED",
+  "PUBLIC_OIDC_LABEL",
+  "PUBLIC_GITHUB_CLIENT_ID",
+  "PUBLIC_GOOGLE_CLIENT_ID",
+  "PUBLIC_MICROSOFT_CLIENT_ID",
+  "PUBLIC_POSTHOG_APP_ID",
+] as const
+
+const publicProcessEnvDefines = Object.fromEntries(
+  publicEnvNames.map((name) => [`process.env.${name}`, JSON.stringify(process.env[name]) ?? "undefined"]),
+)
+
 export default defineConfig({
   server: {
     port: Number(process.env.PREVIEW_WEB_PORT ?? 3016),
@@ -23,8 +42,7 @@ export default defineConfig({
       "import.meta.env.PUBLIC_BASE_URL_APP": JSON.stringify(process.env.PUBLIC_BASE_URL_APP),
       "import.meta.env.PUBLIC_BASE_URL_CONVEX": JSON.stringify(process.env.PUBLIC_BASE_URL_CONVEX),
       "import.meta.env.PUBLIC_BASE_URL_API": JSON.stringify(process.env.PUBLIC_BASE_URL_API),
-      "process.env.PUBLIC_OIDC_ENABLED": JSON.stringify(process.env.PUBLIC_OIDC_ENABLED),
-      "process.env.PUBLIC_OIDC_LABEL": JSON.stringify(process.env.PUBLIC_OIDC_LABEL),
+      ...publicProcessEnvDefines,
       "import.meta.env.PUBLIC_GITHUB_CLIENT_ID": JSON.stringify(process.env.PUBLIC_GITHUB_CLIENT_ID),
       "import.meta.env.PUBLIC_GOOGLE_CLIENT_ID": JSON.stringify(process.env.PUBLIC_GOOGLE_CLIENT_ID),
       "import.meta.env.PUBLIC_MICROSOFT_CLIENT_ID": JSON.stringify(process.env.PUBLIC_MICROSOFT_CLIENT_ID),
