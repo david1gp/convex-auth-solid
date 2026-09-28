@@ -12,7 +12,6 @@ import { OrgForm } from "#src/org/org_ui/form/OrgForm.tsx"
 import { OrgListView } from "#src/org/org_ui/list/OrgListView.tsx"
 import { OrgLeaveView } from "#src/org/org_ui/mutate/OrgLeaveView.tsx"
 import { OrgViewContent } from "#src/org/org_ui/view/OrgViewContent.tsx"
-import { TodoPage } from "#src/ui/pages/TodoPage.tsx"
 import { formMode } from "#ui/input/form/formMode.ts"
 import { LinkButtonInternal } from "#ui/interactive/link/LinkButton.tsx"
 import { PageWrapper } from "#ui/static/page/PageWrapper.jsx"
@@ -175,7 +174,7 @@ function OrgDemoMemberAdd() {
 function OrgDemoMemberView() {
   const state = orgMemberDemoStateCreate()
   return (
-    <>
+    <PageWrapper>
       <nav class="flex flex-wrap gap-3 my-4">
         <LinkButtonInternal to={pageDemoHref("/org/:orgHandle/members", { orgHandle: state.orgHandle() })}>
           Members
@@ -200,9 +199,23 @@ function OrgDemoMemberView() {
         </Show>
       </nav>
       <Show when={state.member()} fallback={<p>Member not found in demo fixtures.</p>}>
-        <TodoPage demo />
+        {(member) => (
+          <section class="mx-auto max-w-2xl space-y-4 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-500 dark:bg-stone-800">
+            <h1 class="text-2xl font-semibold">{member().profile.name}</h1>
+            <dl class="grid gap-2 sm:grid-cols-2">
+              <div>
+                <dt class="font-medium">User ID</dt>
+                <dd>{member().userId}</dd>
+              </div>
+              <div>
+                <dt class="font-medium">Organization role</dt>
+                <dd class="capitalize">{member().role}</dd>
+              </div>
+            </dl>
+          </section>
+        )}
       </Show>
-    </>
+    </PageWrapper>
   )
 }
 

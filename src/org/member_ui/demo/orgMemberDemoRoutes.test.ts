@@ -1,5 +1,6 @@
 import { afterEach, expect, mock, test } from "bun:test"
 import { createRoot } from "solid-js"
+import { pageDemoHref } from "#src/app/demos/pageDemoHref.ts"
 import { pageDemoFixtureStoreGet } from "#src/app/demos/pageDemoFixtureStoreGet.ts"
 import { formMode } from "#ui/input/form/formMode.ts"
 
@@ -20,15 +21,29 @@ afterEach(() => {
   visited.length = 0
 })
 
-test("org member view, edit and remove are activated through the org renderer map using production views", async () => {
+test("org member detail shows fixture identity and role with navigable demo actions", async () => {
   const renderer = await Bun.file(new URL("../../org_ui/demo/orgDemoRendererMap.tsx", import.meta.url)).text()
   for (const action of ["view", "edit", "remove"]) {
     expect(renderer).toContain(`"/org/:orgHandle/members/:memberId/${action}": OrgDemoMember`)
   }
-  expect(renderer).toContain("<TodoPage demo />")
+  expect(renderer).toContain('<h1 class="text-2xl font-semibold">{member().profile.name}</h1>')
+  expect(renderer).toContain('<dt class="font-medium">User ID</dt>')
+  expect(renderer).toContain("<dd>{member().userId}</dd>")
+  expect(renderer).toContain('<dt class="font-medium">Organization role</dt>')
+  expect(renderer).toContain('<dd class="capitalize">{member().role}</dd>')
+  expect(renderer).toContain('to={pageDemoHref("/org/:orgHandle/members", { orgHandle: state.orgHandle() })}')
+  expect(renderer).toContain('"/org/:orgHandle/members/:memberId/edit"')
+  expect(renderer).toContain('"/org/:orgHandle/members/:memberId/remove"')
   expect(renderer).toContain("<OrgMemberForm mode={formMode.edit} sm={state.form} />")
   expect(renderer).toContain("<OrgMemberForm mode={formMode.remove} sm={state.form} />")
   expect(renderer).toContain("viewHref={(memberId) =>")
+  expect(pageDemoHref("/org/:orgHandle/members", { orgHandle: "sample-org" })).toBe("/demos/org/sample-org/members")
+  expect(
+    pageDemoHref("/org/:orgHandle/members/:memberId/edit", { orgHandle: "sample-org", memberId: "member-1" }),
+  ).toBe("/demos/org/sample-org/members/member-1/edit")
+  expect(
+    pageDemoHref("/org/:orgHandle/members/:memberId/remove", { orgHandle: "sample-org", memberId: "member-1" }),
+  ).toBe("/demos/org/sample-org/members/member-1/remove")
 })
 
 test("editing a selected member changes only its shared organization fixture and navigates to its demo view", async () => {
@@ -55,7 +70,7 @@ test("editing a selected member changes only its shared organization fixture and
       "guest",
     )
     expect(orgDemoStateCreate().members()[0]?.role).toBe("guest")
-    expect(visited).toEqual(["/demos/pages/org/sample-org/members/member-1/view"])
+    expect(visited).toEqual(["/demos/org/sample-org/members/member-1/view"])
     const otherPage = orgMemberDemoStateCreate(formMode.remove)
     expect(otherPage.form.state.role.get()).toBe("guest")
   } finally {
@@ -94,7 +109,7 @@ test("removing a member updates the shared fixture and the next add does not reu
         .members()
         .map((item) => item.memberId),
     ).toEqual(["member-2"])
-    expect(visited.at(-1)).toBe("/demos/pages/org/sample-org/members")
+    expect(visited.at(-1)).toBe("/demos/org/sample-org/members")
     const add = orgMemberDemoStateCreate()
     add.chooseUser("another-user")
     await add.form.handleSubmit({ preventDefault() {} } as SubmitEvent)

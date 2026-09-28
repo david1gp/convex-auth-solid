@@ -6,32 +6,44 @@ import { pageRouteInventory } from "#src/app/demos/pageRouteInventory.ts"
 describe("page demo routing", () => {
   test("registers a catalog and exactly one dedicated route per inventory entry", () => {
     const paths = pageDemoRoutePathsCreate()
-    expect(paths).toHaveLength(49)
-    expect(paths[0]).toBe("/demos/pages")
-    expect(new Set(paths).size).toBe(49)
-    expect(paths.slice(1)).toEqual(
-      pageRouteInventory.map(({ route }) => `/demos/pages${route === "/" ? "/root" : route}`),
-    )
+    expect(paths).toHaveLength(48)
+    expect(new Set(paths).size).toBe(48)
+    expect(paths).toEqual(pageRouteInventory.map(({ route }) => `/demos${route === "/" ? "/root" : route}`))
+    expect(paths).toContain("/demos/root")
+    expect(paths).not.toContain("/demos/pages")
   })
 
   test("builds clickable sample URLs from explicit params without linking to live pages", () => {
     const mountedPaths = pageDemoRoutePathsCreate()
     for (const [index, { route }] of pageRouteInventory.entries()) {
       const href = pageDemoHref(route)
-      expect(href).toStartWith("/demos/pages/")
+      expect(href).toStartWith("/demos/")
       expect(href).not.toContain(":")
       expect(href).not.toContain("undefined")
-      const mountedPattern = mountedPaths[index + 1]!.replace(/:([^/]+)/g, "[^/]+")
+      const mountedPattern = mountedPaths[index]!.replace(/:([^/]+)/g, "[^/]+")
       expect(href).toMatch(new RegExp(`^${mountedPattern}$`))
     }
-    expect(pageDemoHref("/")).toBe("/demos/pages/root")
-    expect(pageDemoHref("/overview")).toBe("/demos/pages/overview")
-    expect(pageDemoHref("/org/:orgHandle/members/:memberId/edit")).toBe(
-      "/demos/pages/org/sample-org/members/member-1/edit",
-    )
+    expect(pageDemoHref("/")).toBe("/demos/root")
+    expect(pageDemoHref("/overview")).toBe("/demos/overview")
+    expect(pageDemoHref("/org/:orgHandle/members/:memberId/edit")).toBe("/demos/org/sample-org/members/member-1/edit")
     expect(pageDemoHref("/org/:orgHandle/members/:memberId/edit", { orgHandle: "other org", memberId: "m/1" })).toBe(
-      "/demos/pages/org/other%20org/members/m%2F1/edit",
+      "/demos/org/other%20org/members/m%2F1/edit",
     )
+  })
+
+  test("registers page details before component routes under the shared catalog", async () => {
+    const [demoRoutes, pageRoutes] = await Promise.all([
+      Bun.file(new URL("./demoRoutesCreate.tsx", import.meta.url)).text(),
+      Bun.file(new URL("./pageDemoRoutesCreate.tsx", import.meta.url)).text(),
+    ])
+
+    expect(pageRoutes).toContain("const detailPaths = pageDemoRoutePathsCreate()")
+    expect(pageRoutes).toContain("path: detailPaths[index]!")
+    expect(demoRoutes).toContain("...pageRoutes,")
+    expect(demoRoutes).toContain('{ path: "/demos", component: DemoCatalog }')
+    expect(demoRoutes).toContain('path: "/demos/pages"')
+    expect(demoRoutes).toContain('({ path }) => path !== "/demos" && path !== "/demos/*" && !pagePaths.has(path)')
+    expect(demoRoutes.match(/component: DemoCatalog/g)).toHaveLength(1)
   })
 
   test("keeps all production page imports as inert metadata, never route components", () => {

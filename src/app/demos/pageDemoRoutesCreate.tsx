@@ -5,12 +5,9 @@ import type { RouteObject } from "#ui/demo_pages/RouteConfig.ts"
 
 /** Dedicated routes, independent of the scanner-owned component demoList. */
 export function pageDemoRoutesCreate(): RouteObject[] {
-  const [catalogPath, ...detailPaths] = pageDemoRoutePathsCreate()
-  return [
-    { path: catalogPath!, component: PageDemoBoundary },
-    ...pageRouteInventory.map((entry, index) => ({
-      path: detailPaths[index]!,
-      component: () => <PageDemoBoundary entry={entry} />,
-    })),
-  ]
+  const detailPaths = pageDemoRoutePathsCreate()
+  return pageRouteInventory.map((entry, index) => ({
+    path: detailPaths[index]!,
+    component: () => <PageDemoBoundary entry={entry} />,
+  }))
 }

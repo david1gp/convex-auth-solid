@@ -30,12 +30,12 @@ test("editing and removing an organization update only the shared gallery fixtur
     edit.form.state.name.set("Renamed Organization")
     await edit.form.handleSubmit({ preventDefault() {} } as SubmitEvent)
     expect(edit.org()?.name).toBe("Renamed Organization")
-    expect(visited).toEqual(["/demos/pages/org/sample-org"])
+    expect(visited).toEqual(["/demos/org/sample-org"])
     const remove = orgDemoStateCreate(formMode.remove)
     await remove.form.handleSubmit({ preventDefault() {} } as SubmitEvent)
     expect(remove.org()).toBeUndefined()
     expect(orgDemoStateCreate().orgs()).toEqual([])
-    expect(visited.at(-1)).toBe("/demos/pages/org")
+    expect(visited.at(-1)).toBe("/demos/org")
   } finally {
     dispose()
     globalThis.fetch = originalFetch
@@ -61,7 +61,7 @@ test("adding a member updates the organization-scoped gallery list without netwo
       ["new-user", "guest"],
     ])
     expect(orgMemberDemoStateCreate().members()).toHaveLength(2)
-    expect(visited).toEqual(["/demos/pages/org/sample-org/members"])
+    expect(visited).toEqual(["/demos/org/sample-org/members"])
     await state.form.handleSubmit({ preventDefault() {} } as SubmitEvent)
     expect(state.members()).toHaveLength(2)
     expect(state.userError()).toContain("already a member")
@@ -86,7 +86,7 @@ test("leaving an organization removes only local gallery access", async () => {
     expect(state.org()?.orgHandle).toBe("sample-org")
     await state.leave()
     expect(state.orgs()).toEqual([])
-    expect(visited).toEqual(["/demos/pages/org"])
+    expect(visited).toEqual(["/demos/org"])
   } finally {
     dispose()
     globalThis.fetch = originalFetch

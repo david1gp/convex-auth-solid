@@ -22,7 +22,7 @@ test("workspace edit and remove forms update only the shared demo fixture", asyn
     edit.state.name.set("Renamed in gallery")
     await edit.handleSubmit({ preventDefault() {} } as SubmitEvent)
     expect(state.workspace()?.name).toBe("Renamed in gallery")
-    expect(state.removeHref("sample-workspace")).toBe("/demos/pages/w/sample-workspace/remove")
+    expect(state.removeHref("sample-workspace")).toBe("/demos/w/sample-workspace/remove")
     const remove = state.removeState(state.workspace()!)
     await remove.handleSubmit({ preventDefault() {} } as SubmitEvent)
     expect(state.workspace()).toBeUndefined()

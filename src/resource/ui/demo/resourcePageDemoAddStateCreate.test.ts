@@ -49,7 +49,7 @@ describe("resource page demo fixtures", () => {
       const resources = resourcePageDemoFixturesGet()
       expect(resources.resources()).toHaveLength(2)
       expect(resources.get("demo-resource-2")?.name).toBe("Local example")
-      expect(state.createdHref()).toBe("/demos/pages/resources/demo-resource-2")
+      expect(state.createdHref()).toBe("/demos/resources/demo-resource-2")
     } finally {
       dispose()
     }

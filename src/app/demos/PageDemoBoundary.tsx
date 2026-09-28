@@ -47,25 +47,13 @@ export function PageDemoBoundary(p: { entry?: (typeof pageRouteInventory)[number
     <ConvexContext.Provider value={undefined}>
       <main class="mx-auto max-w-4xl p-4">
         <nav class="flex gap-4">
-          <LinkButtonInternal to="/demos">Component demos</LinkButtonInternal>
-          <LinkButtonInternal to="/demos/pages">Page demos</LinkButtonInternal>
+          <LinkButtonInternal to="/demos">All demos</LinkButtonInternal>
         </nav>
         <Show
           when={p.entry}
           fallback={
             <>
-              <h1 class="my-4 text-2xl font-semibold">Page demo catalog</h1>
-              <ul>
-                <For each={state.links}>
-                  {(item) => (
-                    <li>
-                      <LinkButtonInternal to={item.href}>
-                        {item.title} — {item.route}
-                      </LinkButtonInternal>
-                    </li>
-                  )}
-                </For>
-              </ul>
+              <h1 class="my-4 text-2xl font-semibold">Page demo not found</h1>
             </>
           }
         >

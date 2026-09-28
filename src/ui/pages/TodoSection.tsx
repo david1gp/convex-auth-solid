@@ -1,4 +1,5 @@
 import { mdiCrane } from "@adaptive-ds/mdi/mdiCrane.js"
+import { pageDemoHref } from "#src/app/demos/pageDemoHref.ts"
 import { ttc } from "#src/app/i18n/ttc.ts"
 import { GoBackLinkButton } from "#src/ui/links/GoBackLinkButton.tsx"
 import { GoHomeLinkButton } from "#src/ui/links/GoHomeLinkButton.tsx"
@@ -23,7 +24,7 @@ export function TodoSection(p: TodoSectionProps) {
         <p class={"text-xl"}>{ttc("The current section is still under development and therefore not yet available")}</p>
         <div class={"mt-6 flex flex-wrap items-center gap-1"}>
           {!p.demo && <GoBackLinkButton />}
-          <GoHomeLinkButton homeHref={p.demo ? "/demos/pages/root" : "/"} />
+          <GoHomeLinkButton homeHref={p.demo ? pageDemoHref("/") : "/"} />
         </div>
       </div>
     </section>

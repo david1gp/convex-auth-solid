@@ -46,7 +46,7 @@ test("adding, editing, and removing a workspace member update only the local fix
     expect(state.add.members().map((member) => member.userId)).toEqual(["sample-user", "new-user"])
     expect(state.add.members()[1]?.role).toBe(workspaceRole.guest)
     expect(state.add.editHref(state.add.createdId())).toBe(
-      "/demos/pages/workspace/sample-workspace/members/demo-member-2/edit",
+      "/demos/workspace/sample-workspace/members/demo-member-2/edit",
     )
     expect(workspaceMemberDemoStateCreate(() => "sample-workspace").members()).toHaveLength(2)
     await state.add.form.handleSubmit({ preventDefault() {} } as SubmitEvent)
@@ -56,7 +56,7 @@ test("adding, editing, and removing a workspace member update only the local fix
     const edit = state.edit()
     expect(edit.form.state.role.get()).toBe(workspaceRole.guest)
     expect(edit.member()?.userId).toBe("new-user")
-    expect(edit.deleteHref()).toBe("/demos/pages/workspace/sample-workspace/members/demo-member-2/delete")
+    expect(edit.deleteHref()).toBe("/demos/workspace/sample-workspace/members/demo-member-2/delete")
     edit.form.state.role.set(workspaceRole.member)
     await edit.form.handleSubmit({ preventDefault() {} } as SubmitEvent)
     expect(edit.saved()).toBe(true)
@@ -69,7 +69,7 @@ test("adding, editing, and removing a workspace member update only the local fix
     expect(remove.saved()).toBe(true)
     expect(remove.member()).toBeUndefined()
     expect(state.add.members().map((member) => member.userId)).toEqual(["sample-user"])
-    expect(remove.listHref()).toBe("/demos/pages/workspace/sample-workspace/members")
+    expect(remove.listHref()).toBe("/demos/workspace/sample-workspace/members")
   } finally {
     dispose()
     globalThis.fetch = originalFetch

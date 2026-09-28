@@ -9,16 +9,14 @@ import { orgInvitationDemoFixturesGet } from "#src/org/invitation_ui/demo/orgInv
 afterEach(() => pageDemoFixtureStoreGet().clear())
 
 test("invitation list, add and accept links stay inside the gallery", () => {
-  expect(pageDemoHref("/org/:orgHandle/invitations", { orgHandle: "team" })).toBe("/demos/pages/org/team/invitations")
-  expect(pageDemoHref("/org/:orgHandle/invitations/add", { orgHandle: "team" })).toBe(
-    "/demos/pages/org/team/invitations/add",
-  )
+  expect(pageDemoHref("/org/:orgHandle/invitations", { orgHandle: "team" })).toBe("/demos/org/team/invitations")
+  expect(pageDemoHref("/org/:orgHandle/invitations/add", { orgHandle: "team" })).toBe("/demos/org/team/invitations/add")
   expect(
     pageDemoHref("/org/:orgHandle/invitations/:invitationCode/accept", {
       orgHandle: "team",
       invitationCode: "invite-2",
     }),
-  ).toBe("/demos/pages/org/team/invitations/invite-2/accept")
+  ).toBe("/demos/org/team/invitations/invite-2/accept")
 })
 
 test("adding a local invitation keeps earlier invitations, creates unique codes, and sends no email", () => {

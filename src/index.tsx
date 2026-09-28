@@ -2,12 +2,9 @@
 
 import { RouterProvider } from "@tanstack/solid-router"
 import { render } from "solid-js/web"
-import { DemoCatalog } from "#src/app/demos/DemoCatalog.tsx"
-import { demoList } from "#src/app/demos/demoList.ts"
-import { pageDemoRoutesCreate } from "#src/app/demos/pageDemoRoutesCreate.tsx"
+import { demoRoutesCreate } from "#src/app/demos/demoRoutesCreate.tsx"
 import { getRoutesApp } from "#src/app/getRoutesApp.tsx"
 import { LayoutWrapperApp } from "#src/app/layout/LayoutWrapperApp.tsx"
-import { NavDemo } from "#src/app/nav/NavDemo.tsx"
 import { posthogInit } from "#src/app/posthog/posthogInit.ts"
 import { buildRouter } from "#src/app/router/buildRouter.tsx"
 import { getRoutesAuth } from "#src/auth/ui/getRoutesAuth.tsx"
@@ -18,7 +15,6 @@ import { getRoutesResource } from "#src/resource/url/getRoutesResource.ts"
 import { getRoutesWorkspaceInvitation } from "#src/workspace/invitation_url/getRoutesWorkspaceInvitation.ts"
 import { getRoutesWorkspaceMember } from "#src/workspace/member_url/getRoutesWorkspaceMember.ts"
 import { getRoutesWorkspace } from "#src/workspace/workspace_url/getRoutesWorkspace.ts"
-import { generateDemoRoutes } from "#ui/demo_pages/generateDemoRoutes.tsx"
 import { LayoutWrapperDemo } from "#ui/static/layout/LayoutWrapperDemo.tsx"
 import "./tailwind.css"
 
@@ -43,22 +39,7 @@ const routesApp = [
 const routesDemo = [
   {
     component: LayoutWrapperDemo,
-    children: [
-      ...pageDemoRoutesCreate(),
-      { path: "/demos", component: DemoCatalog },
-      ...generateDemoRoutes(demoList, "/demos", NavDemo)
-        .filter(({ path }) => path !== "/demos")
-        .map((route) => {
-          if (route.path !== "/demos/*" || !route.component) return route
-
-          const DemoFallback = route.component
-          return {
-            ...route,
-            component: () =>
-              window.location.pathname.replace(/\/$/, "") === "/demos" ? <DemoCatalog /> : <DemoFallback />,
-          }
-        }),
-    ],
+    children: [...demoRoutesCreate()],
   },
 ]
 

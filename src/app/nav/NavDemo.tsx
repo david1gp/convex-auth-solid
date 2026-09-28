@@ -33,8 +33,8 @@ function ChildrenLeft(p: DemoNavDataProps) {
         <ChildrenLeftComp {...p} />
       </Show>
       <NavSeparatingSlash />
-      <LinkButtonInternal variant={buttonVariant.ghost} to="/demos/pages" class="text-lg font-medium">
-        Page demos
+      <LinkButtonInternal variant={buttonVariant.ghost} to="/demos" class="text-lg font-medium">
+        All demos
       </LinkButtonInternal>
     </>
   )

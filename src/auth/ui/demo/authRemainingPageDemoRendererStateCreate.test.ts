@@ -35,7 +35,7 @@ test("valid demo sign-up reveals the confirmation link with the saved email and 
   expect(page.confirmHref()).toBeUndefined()
   form.state.terms.set(true)
   form.handleSubmit({ preventDefault() {} } as SubmitEvent)
-  expect(page.confirmHref()).toBe("/demos/pages/sign-up-confirm-email")
+  expect(page.confirmHref()).toBe("/demos/sign-up-confirm-email")
   expect(renderer.signUpMessage()).toContain("No account")
   expect(form.state.pw.get()).toBe("")
   const confirmation = authRemainingPageDemoRendererStateCreate()

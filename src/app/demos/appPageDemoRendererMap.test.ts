@@ -16,7 +16,7 @@ describe("app core page demos", () => {
 
   test("demo cross-links resolve only to isolated gallery URLs", () => {
     for (const route of ["/", "/overview", "/todo"] as const) {
-      expect(pageDemoHref(route)).toStartWith("/demos/pages/")
+      expect(pageDemoHref(route)).toStartWith("/demos/")
       expect(pageDemoHref(route)).not.toBe(route)
     }
   })

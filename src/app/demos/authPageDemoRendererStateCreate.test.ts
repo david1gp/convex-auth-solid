@@ -22,7 +22,7 @@ test("email demo validates locally and shares the entered address with the OTP d
   form.handleSubmit(event)
   expect(form.errors.email.get()).toBe("")
   expect(demo.store.email.get()).toBe("alice@example.com")
-  expect(demo.otpHref).toBe("/demos/pages/sign-in-enter-otp")
+  expect(demo.otpHref).toBe("/demos/sign-in-enter-otp")
 })
 
 test("password and OTP demo submits update memory without signing in or navigating", async () => {
@@ -36,6 +36,6 @@ test("password and OTP demo submits update memory without signing in or navigati
 
   await demo.confirm("123456", demo.store.email.get())
   expect(demo.store.message.get()).toContain("123456")
-  expect(demo.signInHref).toBe("/demos/pages/sign-in")
-  expect(demo.errorHref).toBe("/demos/pages/sign-in-error")
+  expect(demo.signInHref).toBe("/demos/sign-in")
+  expect(demo.errorHref).toBe("/demos/sign-in-error")
 })

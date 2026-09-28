@@ -4,6 +4,7 @@ import { Link } from "@tanstack/solid-router"
 import { Show } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { ttc } from "#src/app/i18n/ttc.ts"
+import { pageDemoHref } from "#src/app/demos/pageDemoHref.ts"
 import { LayoutWrapperAuth } from "#src/app/layout/LayoutWrapperAuth.tsx"
 import { NavLinkButton } from "#src/app/nav/links/NavLinkButton.tsx"
 import { NavBreadcrumbSeparator } from "#src/app/nav/NavBreadcrumbSeparator.tsx"
@@ -173,7 +174,7 @@ function ProfileSectionOrg(p: { orgHandle?: string; orgRole?: string; demo?: boo
                 <br />
                 <div class="flex flex-wrap gap-2">
                   <LinkButtonInternal
-                    to={p.demo ? "/demos/pages" : urlOrgView(orgHandle())}
+                    to={p.demo ? pageDemoHref("/org/:orgHandle", { orgHandle: orgHandle() }) : urlOrgView(orgHandle())}
                     variant={buttonVariant.link}
                     class="pl-0"
                   >
