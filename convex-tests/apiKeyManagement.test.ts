@@ -96,6 +96,100 @@ test("API key creation rejects blank, oversized, and unsupported expiry input", 
   ).rejects.toThrow()
 })
 
+test("API key rename trims the name and preserves credential metadata on expired revoked keys", async () => {
+  const t = convexTest(schema, modules)
+  const secret = process.env.AUTH_SECRET
+  if (!secret) throw new Error("AUTH_SECRET is required for API key management tests")
+  const keyId = await t.run(async (ctx) => {
+    const createdAt = new Date().toISOString()
+    const userId = await ctx.db.insert("users", { name: "Owner", role: "user", createdAt, updatedAt: createdAt })
+    return ctx.db.insert("authApiKeys", {
+      userId,
+      name: "before",
+      digest: "credential-digest",
+      previewFirst3: "abc",
+      previewLast3: "xyz",
+      createdAt,
+      expiresAt: "2000-01-01T00:00:00.000Z",
+      revokedAt: createdAt,
+    })
+  })
+  const userId = await t.run(async (ctx) => (await ctx.db.get("authApiKeys", keyId))!.userId)
+  const token = await createToken(userId, secret)
+  const before = await t.run((ctx) => ctx.db.get("authApiKeys", keyId))
+
+  const renamed = await t.mutation(api.auth.apiKeyRenameMutation, { token, id: keyId, name: "  production deploy  " })
+
+  expect(renamed.success).toBe(true)
+  const after = await t.run((ctx) => ctx.db.get("authApiKeys", keyId))
+  expect(after).toEqual({ ...before, name: "production deploy" })
+})
+
+test("API key rename denies foreign and missing IDs with the same not-found response", async () => {
+  const t = convexTest(schema, modules)
+  const secret = process.env.AUTH_SECRET
+  if (!secret) throw new Error("AUTH_SECRET is required for API key management tests")
+  const users = await t.run(async (ctx) => {
+    const createdAt = new Date().toISOString()
+    const ownerId = await ctx.db.insert("users", { name: "Owner", role: "user", createdAt, updatedAt: createdAt })
+    const otherId = await ctx.db.insert("users", { name: "Other", role: "user", createdAt, updatedAt: createdAt })
+    const keyId = await ctx.db.insert("authApiKeys", {
+      userId: ownerId,
+      name: "owned",
+      digest: "credential-digest",
+      previewFirst3: "abc",
+      previewLast3: "xyz",
+      createdAt,
+    })
+    const missingId = await ctx.db.insert("authApiKeys", {
+      userId: ownerId,
+      name: "deleted",
+      digest: "deleted-digest",
+      previewFirst3: "abc",
+      previewLast3: "xyz",
+      createdAt,
+    })
+    await ctx.db.delete("authApiKeys", missingId)
+    return { otherId, keyId, missingId }
+  })
+  const token = await createToken(users.otherId, secret)
+
+  const foreign = await t.mutation(api.auth.apiKeyRenameMutation, { token, id: users.keyId, name: "changed" })
+  const missing = await t.mutation(api.auth.apiKeyRenameMutation, {
+    token,
+    id: users.missingId,
+    name: "changed",
+  })
+
+  expect(foreign).toEqual(missing)
+  expect(foreign.success).toBe(false)
+  expect(await t.run((ctx) => ctx.db.get("authApiKeys", users.keyId))).toMatchObject({ name: "owned" })
+})
+
+test("API key rename rejects blank and oversized names", async () => {
+  const t = convexTest(schema, modules)
+  const secret = process.env.AUTH_SECRET
+  if (!secret) throw new Error("AUTH_SECRET is required for API key management tests")
+  const { userId, keyId } = await t.run(async (ctx) => {
+    const createdAt = new Date().toISOString()
+    const userId = await ctx.db.insert("users", { name: "Owner", role: "user", createdAt, updatedAt: createdAt })
+    const keyId = await ctx.db.insert("authApiKeys", {
+      userId,
+      name: "original",
+      digest: "credential-digest",
+      previewFirst3: "abc",
+      previewLast3: "xyz",
+      createdAt,
+    })
+    return { userId, keyId }
+  })
+  const token = await createToken(userId, secret)
+
+  expect((await t.mutation(api.auth.apiKeyRenameMutation, { token, id: keyId, name: "   " })).success).toBe(false)
+  expect((await t.mutation(api.auth.apiKeyRenameMutation, { token, id: keyId, name: "x".repeat(81) })).success).toBe(false)
+  expect(await t.run((ctx) => ctx.db.get("authApiKeys", keyId))).toMatchObject({ name: "original" })
+})
+
 test("API key listing marks expired keys and supports keys without expiry", async () => {
   const t = convexTest(schema, modules)
   const secret = process.env.AUTH_SECRET

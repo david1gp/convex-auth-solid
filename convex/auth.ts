@@ -3,6 +3,7 @@ export { apiKeyCredentialResolveQuery } from "#src/auth/convex/apiKey/apiKeyCred
 export { apiKeyExpireInternalMutation } from "#src/auth/convex/apiKey/apiKeyExpireInternalMutation.ts"
 export { apiKeyListQuery } from "#src/auth/convex/apiKey/apiKeyListQuery.ts"
 export { apiKeyRevokeMutation } from "#src/auth/convex/apiKey/apiKeyRevokeMutation.ts"
+export { apiKeyRenameMutation } from "#src/auth/convex/apiKey/apiKeyRenameMutation.ts"
 export { apiKeyRotateMutation } from "#src/auth/convex/apiKey/apiKeyRotateMutation.ts"
 export { createUserFromAuthProviderInternalMutation } from "#src/auth/convex/crud/createUserFromAuthProviderMutation.ts"
 export { findUserByEmailInternalQuery } from "#src/auth/convex/crud/findUserByEmailQuery.ts"
