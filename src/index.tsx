@@ -2,6 +2,7 @@
 
 import { RouterProvider } from "@tanstack/solid-router"
 import { render } from "solid-js/web"
+import { DemoCatalog } from "#src/app/demos/DemoCatalog.tsx"
 import { demoList } from "#src/app/demos/demoList.ts"
 import { pageDemoRoutesCreate } from "#src/app/demos/pageDemoRoutesCreate.tsx"
 import { getRoutesApp } from "#src/app/getRoutesApp.tsx"
@@ -42,7 +43,22 @@ const routesApp = [
 const routesDemo = [
   {
     component: LayoutWrapperDemo,
-    children: [...pageDemoRoutesCreate(), ...generateDemoRoutes(demoList, "/demos", NavDemo)],
+    children: [
+      ...pageDemoRoutesCreate(),
+      { path: "/demos", component: DemoCatalog },
+      ...generateDemoRoutes(demoList, "/demos", NavDemo)
+        .filter(({ path }) => path !== "/demos")
+        .map((route) => {
+          if (route.path !== "/demos/*" || !route.component) return route
+
+          const DemoFallback = route.component
+          return {
+            ...route,
+            component: () =>
+              window.location.pathname.replace(/\/$/, "") === "/demos" ? <DemoCatalog /> : <DemoFallback />,
+          }
+        }),
+    ],
   },
 ]
 
