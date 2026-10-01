@@ -13,7 +13,7 @@ export async function userDeleteHardOrgMemberships(ctx: MutationCtx, userId: IdU
   // Update invitations where user was the inviter to set invitedBy to null
   const invitationsWhereUserInvited = await ctx.db
     .query("orgInvitations")
-    .filter((q) => q.eq(q.field("invitedBy"), userId))
+    .withIndex("invitedBy", (q) => q.eq("invitedBy", userId))
     .collect()
 
   await Promise.all(

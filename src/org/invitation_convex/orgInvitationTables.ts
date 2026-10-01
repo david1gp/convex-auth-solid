@@ -11,5 +11,6 @@ export const orgInvitationTables = {
     //
     .index("orgHandle", ["orgHandle"])
     .index("invitedEmail", ["invitedEmail"])
-    .index("invitationCode", ["invitationCode"]),
+    .index("invitationCode", ["invitationCode"])
+    .index("invitedBy", ["invitedBy"]),
 } as const

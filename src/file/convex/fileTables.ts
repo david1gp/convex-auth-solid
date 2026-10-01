@@ -23,5 +23,6 @@ export const fileTables = {
     ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAtDeletedAt),
   })
     //
-    .index("fileId", ["fileId"]),
+    .index("fileId", ["fileId"])
+    .index("userId", ["userId"]),
 } as const

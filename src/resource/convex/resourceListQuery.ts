@@ -58,16 +58,13 @@ export async function resourceListFn(
 function resourceQuery(ctx: QueryCtx, args: ResourceListValidatorType) {
   const searchText = args.searchText?.trim()
   if (searchText) {
-    return ctx.db
-      .query("resources")
-      .withSearchIndex("search", (q) => {
-        let filter = q.search("searchText", searchText)
-        if (args.type) filter = filter.eq("type", args.type)
-        if (args.visibility) filter = filter.eq("visibility", args.visibility)
-        if (args.l) filter = filter.eq("language", args.l)
-        return filter
-      })
-      .filter((q) => q.eq(q.field("deletedAt"), undefined))
+    return ctx.db.query("resources").withSearchIndex("search", (q) => {
+      let filter = q.search("searchText", searchText).eq("deletedAt", undefined)
+      if (args.type) filter = filter.eq("type", args.type)
+      if (args.visibility) filter = filter.eq("visibility", args.visibility)
+      if (args.l) filter = filter.eq("language", args.l)
+      return filter
+    })
   }
 
   const filters = [args.type, args.visibility, args.l].filter((value) => value !== undefined)
@@ -77,8 +74,8 @@ function resourceQuery(ctx: QueryCtx, args: ResourceListValidatorType) {
       ? ctx.db.query("resources").withIndex("visibility", (q) => q.eq("visibility", args.visibility))
       : args.l
         ? ctx.db.query("resources").withIndex("language", (q) => q.eq("language", args.l))
-        : ctx.db.query("resources")
-  if (filters.length === 0) return resources.filter((q) => q.eq(q.field("deletedAt"), undefined))
+        : ctx.db.query("resources").withIndex("deletedAt", (q) => q.eq("deletedAt", undefined))
+  if (filters.length === 0) return resources
 
   return resources.filter((q) => {
     const expressions = [q.eq(q.field("deletedAt"), undefined)]

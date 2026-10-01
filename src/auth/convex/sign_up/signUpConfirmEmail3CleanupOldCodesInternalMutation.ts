@@ -13,7 +13,7 @@ export async function signUpConfirmEmail3CleanupOldCodesInternalMutationFn(
 
   const oldCodes = await ctx.db
     .query("authUserEmailRegistrations")
-    .filter((q) => q.lt(q.field("createdAt"), oneDayAgo))
+    .withIndex("createdAt", (q) => q.lt("createdAt", oneDayAgo))
     .collect()
 
   let deletedCount = 0

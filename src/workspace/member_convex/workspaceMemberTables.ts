@@ -19,5 +19,6 @@ export const workspaceMemberTables = {
     ...valibotToConvex(fieldsSchemaCreatedAtUpdatedAt),
   })
     .index("workspaceId", ["workspaceId"])
-    .index("userId", ["userId"]),
+    .index("userId", ["userId"])
+    .index("userIdWorkspaceId", ["userId", "workspaceId"]),
 } as const

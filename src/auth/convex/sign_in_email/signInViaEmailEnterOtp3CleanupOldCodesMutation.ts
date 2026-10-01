@@ -12,7 +12,7 @@ export async function signInViaEmailEnterOtp3CleanupOldCodesFn(ctx: MutationCtx)
 
   const oldCodes = await ctx.db
     .query("authEmailLoginCodes")
-    .filter((q) => q.lt(q.field("createdAt"), week1Ago))
+    .withIndex("createdAt", (q) => q.lt("createdAt", week1Ago))
     .collect()
 
   let deletedCount = 0

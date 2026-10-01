@@ -41,8 +41,7 @@ export async function workspaceLeaveFn(
 
   const member = await ctx.db
     .query("workspaceMembers")
-    .withIndex("userId", (q) => q.eq("userId", args.userId))
-    .filter((q) => q.eq(q.field("workspaceId"), workspace._id))
+    .withIndex("userIdWorkspaceId", (q) => q.eq("userId", args.userId).eq("workspaceId", workspace._id))
     .first()
 
   if (!member) {

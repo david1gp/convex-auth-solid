@@ -23,14 +23,16 @@ export const resourceTables = {
     .index("visibility", ["visibility"])
     .index("type", ["type"])
     .index("language", ["language"])
+    .index("deletedAt", ["deletedAt"])
     .searchIndex("search", {
       searchField: "searchText",
-      filterFields: ["type", "visibility", "language"],
+      filterFields: ["type", "visibility", "language", "deletedAt"],
     }),
 
   resourceFiles: defineTable({
     ...valibotToConvex(resourceFilesDataSchemaFields),
   })
     //
-    .index("resourceId", ["resourceId"]),
+    .index("resourceId", ["resourceId"])
+    .index("resourceIdFileId", ["resourceId", "fileId"]),
 } as const

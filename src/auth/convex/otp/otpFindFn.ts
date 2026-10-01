@@ -12,9 +12,9 @@ export async function otpFindFn(
 
   const otpRecord = await ctx.db
     .query("authOtps")
-    .withIndex("emailCode", (q) => q.eq("email", email).eq("code", code))
-    .filter((q) => q.eq(q.field("purpose"), purpose))
-    .filter((q) => q.eq(q.field("consumedAt"), undefined))
+    .withIndex("emailCodePurposeConsumedAt", (q) =>
+      q.eq("email", email).eq("code", code).eq("purpose", purpose).eq("consumedAt", undefined),
+    )
     .first()
 
   if (!otpRecord) {

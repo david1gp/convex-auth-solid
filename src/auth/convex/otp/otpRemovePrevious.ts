@@ -10,10 +10,10 @@ export async function otpRemovePreviousFn(
 
   const existingCodes = await ctx.db
     .query("authOtps")
-    .filter((q) => q.eq(q.field("userId"), userId))
-    .filter((q) => q.eq(q.field("email"), email))
-    .filter((q) => q.eq(q.field("purpose"), purpose))
-    .filter((q) => q.eq(q.field("consumedAt"), undefined))
+    .withIndex("userId", (q) => q.eq("userId", userId))
+    .filter((q) =>
+      q.and(q.eq(q.field("email"), email), q.eq(q.field("purpose"), purpose), q.eq(q.field("consumedAt"), undefined)),
+    )
     .collect()
 
   for (const code of existingCodes) {

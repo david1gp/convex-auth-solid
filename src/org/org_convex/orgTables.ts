@@ -43,6 +43,7 @@ export const orgTables = {
     //
     .index("orgHandle", ["orgHandle"])
     .index("resourceId", ["resourceId"])
+    .index("orgHandleResourceId", ["orgHandle", "resourceId"])
     .searchIndex("search", {
       searchField: "searchText",
       filterFields: ["orgHandle", "type", "visibility", "language"],

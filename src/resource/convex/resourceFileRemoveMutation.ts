@@ -32,8 +32,7 @@ export async function resourceFileRemoveMutationFn(
   const op = "resourceFileRemoveMutationFn"
   const list = await ctx.db
     .query("resourceFiles")
-    .withIndex("resourceId", (q) => q.eq("resourceId", args.resourceId))
-    .filter((q) => q.eq(q.field("fileId"), args.fileId))
+    .withIndex("resourceIdFileId", (q) => q.eq("resourceId", args.resourceId).eq("fileId", args.fileId))
     .collect()
   await Promise.all(list.map((e) => ctx.db.delete("resourceFiles", e._id)))
   return null

@@ -110,21 +110,26 @@ export const authTables = {
     ...valibotToConvex(authUserEmailRegistrationDataSchemaFields),
   })
     //
-    .index("emailCode", ["email", "code"]),
+    .index("emailCode", ["email", "code"])
+    .index("createdAt", ["createdAt"]),
 
   authEmailLoginCodes: defineTable({
     userId: vIdUser,
     ...valibotToConvex(authEmailLoginCodeDataSchemaFields),
   })
     //
-    .index("emailCode", ["email", "code"]),
+    .index("emailCode", ["email", "code"])
+    .index("userId", ["userId"])
+    .index("createdAt", ["createdAt"]),
 
   authOtps: defineTable({
     userId: vIdUser,
     ...valibotToConvex(authOtpDataSchemaFields),
   })
     //
-    .index("emailCode", ["email", "code"]),
+    .index("emailCode", ["email", "code"])
+    .index("userId", ["userId"])
+    .index("emailCodePurposeConsumedAt", ["email", "code", "purpose", "consumedAt"]),
 
   authApiKeys: defineTable({
     userId: vIdUser,

@@ -20,5 +20,6 @@ export const orgMemberTables = {
   })
     //
     .index("orgId", ["orgId"])
-    .index("userId", ["userId"]),
+    .index("userId", ["userId"])
+    .index("userIdOrgId", ["userId", "orgId"]),
 } as const

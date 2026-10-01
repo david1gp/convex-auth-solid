@@ -38,8 +38,7 @@ export async function orgResourceRemoveMutationFn(
   }
   const list = await ctx.db
     .query("orgResources")
-    .withIndex("orgHandle", (q) => q.eq("orgHandle", args.orgHandle))
-    .filter((q) => q.eq(q.field("resourceId"), args.resourceId))
+    .withIndex("orgHandleResourceId", (q) => q.eq("orgHandle", args.orgHandle).eq("resourceId", args.resourceId))
     .collect()
   await Promise.all(list.map((e) => ctx.db.delete("orgResources", e._id)))
   return createResult(null)
